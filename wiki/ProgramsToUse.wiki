@@ -1,0 +1,9 @@
+#summary One-sentence summary of this page.
+
+Список программ, необходимых для разработки:
+ * SVN Client: 
+  * консольный классический [http://subversion.apache.org/packages.html#windows link]
+  * консольный из cygwin
+  * графический понятный aka черепашка *(recommended)* [http://tortoisesvn.net/downloads.html link] 
+  * встраиваемый в студию ankhsvn []
+ * MS VS 2010
