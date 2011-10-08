@@ -1,0 +1,5 @@
+c:\users\user\documents\visual studio 2010\Projects\FirstHomeTask\FirstHomeTask\bin\Debug\FirstHomeTask.exe
+c:\users\user\documents\visual studio 2010\Projects\FirstHomeTask\FirstHomeTask\bin\Debug\FirstHomeTask.pdb
+c:\users\user\documents\visual studio 2010\Projects\FirstHomeTask\FirstHomeTask\obj\x86\Debug\ResolveAssemblyReference.cache
+c:\users\user\documents\visual studio 2010\Projects\FirstHomeTask\FirstHomeTask\obj\x86\Debug\FirstHomeTask.exe
+c:\users\user\documents\visual studio 2010\Projects\FirstHomeTask\FirstHomeTask\obj\x86\Debug\FirstHomeTask.pdb
