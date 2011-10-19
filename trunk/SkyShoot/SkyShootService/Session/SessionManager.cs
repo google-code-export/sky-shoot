@@ -34,7 +34,7 @@ namespace SkyShootService.Session
         public GameDescription CreateGame(GameMode mode, int maxPlayers, string playerName)
         {
             /* IMHO лучше использовать List<string>, чем string[]. Т.к. это очень сильно 
-             * упростит программирование и удаление отключившихся игроков.
+             * упростит программирование и удаление отключившихся игроков. А так же работу метода JoinGame
              */
 
             string[] PlayerNames;
