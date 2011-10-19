@@ -5,12 +5,16 @@ namespace SkyShoot.Contracts.Session
     [DataContract]
     public class GameDescription
     {
-        public GameDescription(string[] players, int maxPlayersAllowed, GameMode gameType)
+        public GameDescription(string[] players, int maxPlayersAllowed, GameMode gameType, int gameID)
         {
+            GameID = gameID;
             Players = players;
             MaximumPlayersAllowed = maxPlayersAllowed;
             GameType = gameType;
         }
+
+        [DataMember]
+        public int GameID { get; private set; }
 
         [DataMember]
         public string[] Players { get; private set; }
