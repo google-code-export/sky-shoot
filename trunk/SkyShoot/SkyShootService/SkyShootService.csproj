@@ -68,6 +68,7 @@
     </Compile>
     <Compile Include="IService1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Session\SessionManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
