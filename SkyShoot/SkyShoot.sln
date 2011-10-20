@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyShoot.Contracts", "SkySh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyShootService", "SkyShootService\SkyShootService.csproj", "{62C758FD-8BF4-42E4-9747-7926D8824506}"
 EndProject
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "SkyShoot.AzureServer", "SkyShoot.AzureServer\SkyShoot.AzureServer.ccproj", "{ECA63E7E-751E-4BD1-A35E-24FD0CF6B55D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{62C758FD-8BF4-42E4-9747-7926D8824506}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62C758FD-8BF4-42E4-9747-7926D8824506}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62C758FD-8BF4-42E4-9747-7926D8824506}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECA63E7E-751E-4BD1-A35E-24FD0CF6B55D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECA63E7E-751E-4BD1-A35E-24FD0CF6B55D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECA63E7E-751E-4BD1-A35E-24FD0CF6B55D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECA63E7E-751E-4BD1-A35E-24FD0CF6B55D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
