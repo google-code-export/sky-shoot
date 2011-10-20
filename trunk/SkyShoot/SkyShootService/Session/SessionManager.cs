@@ -23,7 +23,7 @@ namespace SkyShootService.Session
             try
             {
                 for (int i = 0; i < game.Players.Length; i++)
-                    if (game.Players[i] != null) {
+                    if (game.Players[i] == null) {
                         game.Players[i] = PlayerName;
                         return true;
                     }
