@@ -2,6 +2,12 @@
 
 namespace SkyShoot.Contracts.Session
 {
+    /* Вопрос что использовать, строки или список я оставил открытым,
+     * т.к. не совсем понял, использовать List<string> или List<Player>?
+     * Понятно, что во втором случае, придется создавать класс описывающий
+     * игрока. Либо использовать, к примеру List<AMob>.
+     */
+
     [DataContract]
     public class GameDescription
     {

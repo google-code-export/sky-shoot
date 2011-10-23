@@ -20,6 +20,8 @@ namespace SkyShootService.Session
 
         public bool JoinGame(GameDescription game, string PlayerName)
         {
+            game = GameDescriptions.Find(curGame => curGame.GameID == game.GameID);
+
             try
             {
                 for (int i = 0; i < game.Players.Length; i++)
