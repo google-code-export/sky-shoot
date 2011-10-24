@@ -37,12 +37,12 @@
     <ServiceConfiguration Include="ServiceConfiguration.Cloud.cscfg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SkyShootService\SkyShootService.csproj">
-      <Name>SkyShootService</Name>
+    <ProjectReference Include="..\SkyShootService\SkyShoot.Service.csproj">
+      <Name>SkyShoot.Service</Name>
       <Project>{62c758fd-8bf4-42e4-9747-7926d8824506}</Project>
       <Private>True</Private>
       <RoleType>Web</RoleType>
-      <RoleName>SkyShootService</RoleName>
+      <RoleName>SkyShoot.Service</RoleName>
       <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
     </ProjectReference>
   </ItemGroup>
