@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using SkyShoot.Contracts.Session;
 
-namespace SkyShootService.Session
+namespace SkyShoot.Service.Session
 {
     public class SessionManager
     {
