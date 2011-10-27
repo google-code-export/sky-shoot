@@ -8,8 +8,10 @@ namespace SkyShoot.Service.Session
 {
     public class SessionManager
     {
+        //Содержит текущие игры
         private List<GameDescription> GameDescriptions;
 
+        //Уникальный идентификатор, который присваивается каждой игре при её создании
         private int GameID;
 
         public SessionManager()
@@ -18,19 +20,16 @@ namespace SkyShoot.Service.Session
             GameID = 1;
         }
 
+        //Добавляем игрока в текущую игру.
         public bool JoinGame(GameDescription game, string PlayerName)
         {
             game = GameDescriptions.Find(curGame => curGame.GameID == game.GameID);
 
             try
             {
-                for (int i = 0; i < game.Players.Length; i++)
-                {
-                    if (game.Players[i] == null)
-                    {
-                        game.Players[i] = PlayerName;
-                        return true;
-                    }
+                if(game.Players.Find(x => x == PlayerName) == null){
+                    game.Players.Add(PlayerName);
+                    return true;
                 }
                 return false;
             }
@@ -40,25 +39,38 @@ namespace SkyShoot.Service.Session
             }
         }
 
+        //Создаем новую игру
         public GameDescription CreateGame(GameMode mode, int maxPlayers, string playerName)
         {
-            /* IMHO лучше использовать List<string>, чем string[]. Т.к. это очень сильно 
-             * упростит программирование и удаление отключившихся игроков. А так же работу метода JoinGame
-             */
+            List<string> playerNames;
+            playerNames = new List<string>();
+            playerNames.Add(playerName);
 
-            string[] PlayerNames;
-            PlayerNames = new string[maxPlayers];
-            PlayerNames[0] = playerName;
-
-            var gameDescription = new GameDescription(PlayerNames, maxPlayers, mode, GameID++);
+            var gameDescription = new GameDescription(playerNames, maxPlayers, mode, GameID++);
             GameDescriptions.Add(gameDescription);
 
             return gameDescription;
         }
 
+        //Возвращает список игр.
         public GameDescription[] GetGameList()
         {
             return GameDescriptions.ToArray();
+        }
+
+        //Ищем игру, в которой находится игрок и удаляем его оттуда.
+        public bool LeaveGame(string playerName)
+        {
+            try
+            {
+                var game = GameDescriptions.Find(gameDescription => gameDescription.Players.Find(player => player == playerName) != null);
+                game.Players.Remove(playerName);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }
