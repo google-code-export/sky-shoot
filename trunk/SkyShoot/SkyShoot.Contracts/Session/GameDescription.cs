@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using System.Collections.Generic;
 
 namespace SkyShoot.Contracts.Session
 {
@@ -11,7 +12,7 @@ namespace SkyShoot.Contracts.Session
     [DataContract]
     public class GameDescription
     {
-        public GameDescription(string[] players, int maxPlayersAllowed, GameMode gameType, int gameID)
+        public GameDescription(List<string> players, int maxPlayersAllowed, GameMode gameType, int gameID)
         {
             GameID = gameID;
             Players = players;
@@ -23,7 +24,7 @@ namespace SkyShoot.Contracts.Session
         public int GameID { get; private set; }
 
         [DataMember]
-        public string[] Players { get; private set; }
+        public List<string> Players { get; private set; }
 
         [DataMember]
         public int MaximumPlayersAllowed { get; private set; }
