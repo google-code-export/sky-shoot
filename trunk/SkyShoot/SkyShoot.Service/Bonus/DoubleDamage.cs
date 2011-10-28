@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SkyShoot.Service.Bonus
 {
-    public class DoubleDamage : Bonus
+    public class DoubleDamage : ABonus
     {
         public DoubleDamage(Guid id, DateTime startTime)
             : base(id, 1, 2, 30000, startTime) { }

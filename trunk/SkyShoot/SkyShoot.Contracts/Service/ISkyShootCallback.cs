@@ -22,11 +22,11 @@ namespace SkyShoot.Contracts.Service
 
         void MobDead(AMob mob);
 
-        void BonusDropped(ABonus bonus);
+        void BonusDropped(AObtainableDamageModifier bonus);
 
-        void BonusExpired(ABonus bonus);
+        void BonusExpired(AObtainableDamageModifier bonus);
 
-        void BonusDisappeared(ABonus bonus);
+        void BonusDisappeared(AObtainableDamageModifier bonus);
 
         void GameOver();
 

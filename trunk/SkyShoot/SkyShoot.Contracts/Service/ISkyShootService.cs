@@ -33,7 +33,7 @@ namespace SkyShoot.Contracts.Service
         void Shoot(PointF direction);
 
         [OperationContract(IsOneWay = true)]
-        void TakeBonus(ABonus bonus);
+        void TakeBonus(AObtainableDamageModifier bonus);
 
         [OperationContract]
         void TakePerk(Perk perk);

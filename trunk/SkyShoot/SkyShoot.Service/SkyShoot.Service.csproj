@@ -64,7 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Account\AccountManager.cs" />
-    <Compile Include="Bonus\Bonus.cs" />
+    <Compile Include="Bonus\ABonus.cs" />
     <Compile Include="Bonus\DoubleDamage.cs" />
     <Compile Include="Bonus\Shield.cs" />
     <Compile Include="Service1.svc.cs">
@@ -73,12 +73,12 @@
     <Compile Include="IService1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Session\SessionManager.cs" />
-    <Compile Include="Weapon\Bullets\Bullet.cs" />
+    <Compile Include="Weapon\Bullets\ABullet.cs" />
     <Compile Include="Weapon\Bullets\PistolBullet.cs" />
     <Compile Include="Weapon\Bullets\ShotgunBullet.cs" />
     <Compile Include="Weapon\Pistol.cs" />
     <Compile Include="Weapon\Shotgun.cs" />
-    <Compile Include="Weapon\Weapon.cs" />
+    <Compile Include="Weapon\AWeapon.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
