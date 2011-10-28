@@ -21,14 +21,14 @@ namespace SkyShoot.Service.Session
         }
 
         //Добавляем игрока в текущую игру.
-        public bool JoinGame(GameDescription game, string PlayerName)
+        public bool JoinGame(GameDescription game, string playerName)
         {
             game = GameDescriptions.Find(curGame => curGame.GameID == game.GameID);
 
             try
             {
-                if(game.Players.Find(x => x == PlayerName) == null){
-                    game.Players.Add(PlayerName);
+                if(game.Players.Contains(playerName)){
+                    game.Players.Add(playerName);
                     return true;
                 }
                 return false;
@@ -63,7 +63,7 @@ namespace SkyShoot.Service.Session
         {
             try
             {
-                var game = GameDescriptions.Find(gameDescription => gameDescription.Players.Find(player => player == playerName) != null);
+                var game = GameDescriptions.Find(gameDescription => gameDescription.Players.Contains(playerName) != false);
                 game.Players.Remove(playerName);
                 return true;
             }
