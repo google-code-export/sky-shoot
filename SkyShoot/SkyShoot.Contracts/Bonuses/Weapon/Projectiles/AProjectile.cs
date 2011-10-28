@@ -24,9 +24,10 @@ namespace SkyShoot.Contracts.Bonuses.Weapon.Projectiles
         public AMob Owner { get; private set; }
 
         [DataMember]
-        public PointF Coordinates { get; protected set; }
+        public PointF Coordinates { get; protected set; } // вероятно, set должен быть public-методом
 
         [DataMember]
-        public PointF Orientation { get; protected set; }
+//        public PointF Orientation { get; protected set; }
+        public PointF Direction { get; protected set; }
     }
 }
