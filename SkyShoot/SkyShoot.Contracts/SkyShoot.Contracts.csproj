@@ -43,7 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bonuses\ABonus.cs" />
+    <Compile Include="Bonuses\AObtainableDamageModifier.cs" />
     <Compile Include="Bonuses\Weapon\Projectiles\AProjectile.cs" />
     <Compile Include="Mobs\AMob.cs" />
     <Compile Include="Perks\Perk.cs" />
@@ -56,7 +56,7 @@
     <Compile Include="Session\GameMode.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Bonuses\Bonuses\" />
+    <Folder Include="Bonuses\Bonus\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

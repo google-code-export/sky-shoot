@@ -10,7 +10,7 @@ using SkyShoot.Contracts.Mobs;
 
 namespace SkyShoot.Service.Weapon
 {
-    public class Pistol : Weapon
+    public class Pistol : AWeapon
     {
         public Pistol(Guid id) : base(id) { }
 
