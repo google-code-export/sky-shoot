@@ -1,36 +1,38 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
+
+using Microsoft.Xna.Framework;
 
 namespace SkyShoot.Contracts.Mobs
 {
     [DataContract]
     public abstract class AMob
     {
-        protected AMob(PointF coordinates,Guid id)
-        {
-            RunVector = ShootVector = new PointF(0, 1);
-            Coordinates = coordinates;
-            Id = id;
-        }
+
+        [DataMember]
+        public abstract bool IsPlayer { get; }
 
         [DataMember]
         public Guid Id { get; private set; }
 
         [DataMember]
-        public PointF RunVector { get; protected set; }
+        public Vector2 RunVector { get; protected set; }
 
         [DataMember]
-        public PointF ShootVector { get; protected set; }
+        public Vector2 ShootVector { get; protected set; }
 
         [DataMember]
-        public PointF Coordinates { get; protected set; }
+        public Vector2 Coordinates { get; protected set; }
 
         [DataMember]
-        public abstract bool IsPlayer { get; }
+        public int HealthAmount { get; set; }
+
+        protected AMob(Vector2 coordinates, Guid id)
+        {
+            RunVector = ShootVector = new Vector2(0, 1);
+            Coordinates = coordinates;
+            Id = id;
+        }
 
         // расширить типом моба, размером, цветом, и т.д.
     }

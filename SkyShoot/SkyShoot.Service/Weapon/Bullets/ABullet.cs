@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Drawing;
 
-using SkyShoot.Contracts.Bonuses.Weapon.Projectiles;
 using SkyShoot.Contracts.Mobs;
+using SkyShoot.Contracts.Weapon.Projectiles;
 
 namespace SkyShoot.Service.Weapon.Bullets
 {

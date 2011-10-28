@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{27DFF06E-1942-47CE-8BF4-02F7CB108F6A}</ProjectGuid>
+    <ProjectGuid>{D06C047C-F816-493C-A21A-23FA583D15CB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SkyShoot.Contracts</RootNamespace>
-    <AssemblyName>SkyShoot.Contracts</AssemblyName>
+    <RootNamespace>SkyShoot.Client</RootNamespace>
+    <AssemblyName>SkyShoot.Client</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -35,8 +35,6 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,24 +42,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bonuses\AObtainableDamageModifier.cs" />
-    <Compile Include="Mobs\AMob.cs" />
-    <Compile Include="Perks\Perk.cs" />
-    <Compile Include="Session\TileSet.cs" />
-    <Compile Include="Session\GameDescription.cs" />
-    <Compile Include="Service\ISkyShootCallback.cs" />
-    <Compile Include="Service\ISkyShootService.cs" />
+    <Compile Include="Game\GameController.cs" />
+    <Compile Include="Game\GameFactory.cs" />
+    <Compile Include="Game\GameLevel.cs" />
+    <Compile Include="Game\GameView.cs" />
+    <Compile Include="Players\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Session\GameLevel.cs" />
-    <Compile Include="Session\GameMode.cs" />
-    <Compile Include="Weapon\Projectiles\AProjectile.cs" />
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
+    <ProjectReference Include="..\SkyShoot.Contracts\SkyShoot.Contracts.csproj">
+      <Project>{27DFF06E-1942-47CE-8BF4-02F7CB108F6A}</Project>
+      <Name>SkyShoot.Contracts</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Bonuses\" />
+    <Folder Include="View\" />
+    <Folder Include="Weapon\Bullets\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

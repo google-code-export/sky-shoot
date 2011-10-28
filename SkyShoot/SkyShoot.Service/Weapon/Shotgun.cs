@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Drawing;
 
-using SkyShoot.Contracts.Bonuses.Weapon.Projectiles;
+using SkyShoot.Contracts.Weapon.Projectiles;
 using SkyShoot.Service.Weapon.Bullets;
 using SkyShoot.Contracts.Mobs;
 
