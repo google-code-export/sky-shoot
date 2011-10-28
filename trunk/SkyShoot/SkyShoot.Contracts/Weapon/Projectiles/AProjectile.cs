@@ -1,12 +1,9 @@
-п»їusing System;
-using System.Collections.Generic;
+using System;
 using System.Drawing;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 using SkyShoot.Contracts.Mobs;
 
-namespace SkyShoot.Contracts.Bonuses.Weapon.Projectiles
+namespace SkyShoot.Contracts.Weapon.Projectiles
 {
     [DataContract]
     public abstract class AProjectile
@@ -24,7 +21,7 @@ namespace SkyShoot.Contracts.Bonuses.Weapon.Projectiles
         public AMob Owner { get; private set; }
 
         [DataMember]
-        public PointF Coordinates { get; protected set; } // РІРµСЂРѕСЏС‚РЅРѕ, set РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ public-РјРµС‚РѕРґРѕРј
+        public PointF Coordinates { get; protected set; } // вероятно, set должен быть public-методом
 
         [DataMember]
 //        public PointF Orientation { get; protected set; }

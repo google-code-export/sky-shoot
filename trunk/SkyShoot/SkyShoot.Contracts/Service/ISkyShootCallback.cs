@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using SkyShoot.Contracts.Bonuses;
-using SkyShoot.Contracts.Bonuses.Weapon.Projectiles;
+﻿using SkyShoot.Contracts.Bonuses;
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Session;
+using SkyShoot.Contracts.Weapon.Projectiles;
 
 namespace SkyShoot.Contracts.Service
 {
