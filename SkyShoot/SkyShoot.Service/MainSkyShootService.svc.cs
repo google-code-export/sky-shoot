@@ -38,7 +38,8 @@ namespace SkyShoot.Service
 
         public Contracts.Session.GameDescription CreateGame(Contracts.Session.GameMode mode, int maxPlayers)
         {
-            return _sessionManager.CreateGame(mode, maxPlayers, "user"); // потом вместо "user" будет имя из Client'а
+            //Позже заменить 4ый параметр на какую-нибудь переменную.
+            return _sessionManager.CreateGame(mode,maxPlayers,"user",Contracts.Session.TileSet.Grass); // потом вместо "user" будет имя из Client'а
         }
 
         public bool JoinGame(Contracts.Session.GameDescription game)

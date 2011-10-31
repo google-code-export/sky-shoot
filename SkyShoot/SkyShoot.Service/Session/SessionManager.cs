@@ -38,15 +38,15 @@ namespace SkyShoot.Service.Session
                 return false;
             }
         }
-
+        
         //Создаем новую игру
-        public GameDescription CreateGame(GameMode mode, int maxPlayers, string playerName,TileSet tileSet, GameMode gameMode)
+        public GameDescription CreateGame(GameMode mode, int maxPlayers, string playerName,TileSet tileSet)
         {
             List<string> playerNames;
             playerNames = new List<string>();
             playerNames.Add(playerName);
 
-            var gameSession = new GameSession(tileSet, playerNames, maxPlayers, gameMode, GameID);
+            var gameSession = new GameSession(tileSet, playerNames, maxPlayers, mode, GameID);
             GameSessions.Add(gameSession);
 
             return gameSession.LocalGameDescription;
