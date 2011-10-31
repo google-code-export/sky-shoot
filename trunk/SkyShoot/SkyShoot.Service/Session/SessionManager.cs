@@ -9,21 +9,21 @@ namespace SkyShoot.Service.Session
     public class SessionManager
     {
         //Содержит текущие игры
-        private List<GameDescription> GameDescriptions;
+        private List<GameSession> GameSessions;
 
         //Уникальный идентификатор, который присваивается каждой игре при её создании
         private int GameID;
 
         public SessionManager()
         {
-            GameDescriptions = new List<GameDescription>();
+            GameSessions = new List<GameSession>();
             GameID = 1;
         }
 
         //Добавляем игрока в текущую игру.
         public bool JoinGame(GameDescription game, string playerName)
         {
-            game = GameDescriptions.Find(curGame => curGame.GameID == game.GameID);
+            game = GameSessions.Find(curGame => curGame.LocalGameDescription.GameID == game.GameID).LocalGameDescription;
 
             try
             {
@@ -40,22 +40,30 @@ namespace SkyShoot.Service.Session
         }
 
         //Создаем новую игру
-        public GameDescription CreateGame(GameMode mode, int maxPlayers, string playerName)
+        public GameDescription CreateGame(GameMode mode, int maxPlayers, string playerName,TileSet tileSet, GameMode gameMode)
         {
             List<string> playerNames;
             playerNames = new List<string>();
             playerNames.Add(playerName);
 
-            var gameDescription = new GameDescription(playerNames, maxPlayers, mode, GameID++);
-            GameDescriptions.Add(gameDescription);
+            var gameSession = new GameSession(tileSet, playerNames, maxPlayers, gameMode, GameID);
+            GameSessions.Add(gameSession);
 
-            return gameDescription;
+            return gameSession.LocalGameDescription;
         }
 
         //Возвращает список игр.
         public GameDescription[] GetGameList()
         {
-            return GameDescriptions.ToArray();
+            var gameSessions = GameSessions.ToArray();
+            var gameDescriptions = new List<GameDescription>();
+
+            for (int i = 0; i < gameSessions.Length; i++)
+            {
+                gameDescriptions.Add(gameSessions[i].LocalGameDescription);
+            }
+
+            return gameDescriptions.ToArray();
         }
 
         //Ищем игру, в которой находится игрок и удаляем его оттуда.
@@ -63,8 +71,8 @@ namespace SkyShoot.Service.Session
         {
             try
             {
-                var game = GameDescriptions.Find(gameDescription => gameDescription.Players.Contains(playerName));
-                game.Players.Remove(playerName);
+                var game = GameSessions.Find(gameSession => gameSession.LocalGameDescription.Players.Contains(playerName));
+                game.LocalGameDescription.Players.Remove(playerName);
                 return true;
             }
             catch (Exception)
