@@ -71,6 +71,7 @@
       <DependentUpon>MainSkyShootService.svc</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Session\GameSession.cs" />
     <Compile Include="Session\SessionManager.cs" />
     <Compile Include="Weapon\Bullets\ABullet.cs" />
     <Compile Include="Weapon\Bullets\PistolBullet.cs" />

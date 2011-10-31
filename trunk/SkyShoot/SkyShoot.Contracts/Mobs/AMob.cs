@@ -27,11 +27,17 @@ namespace SkyShoot.Contracts.Mobs
         [DataMember]
         public int HealthAmount { get; set; }
 
+		[DataMember]
+		public float Radius { get; set; } // размер моба
+
+		[DataMember]
+		public float Speed { get; set; } //скорость: пикселы в миллисекунду
+
         protected AMob(Vector2 coordinates, Guid id)
         {
             RunVector = ShootVector = new Vector2(0, 1);
             Coordinates = coordinates;
-            Id = id;
+            Id = id;	
         }
 
         // расширить типом моба, размером, цветом, и т.д.
