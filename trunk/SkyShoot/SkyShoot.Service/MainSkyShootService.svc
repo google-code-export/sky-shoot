@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="SkyShoot.Service.MainSkyShootService" CodeBehind="MainSkyShootService.svc.cs" %>
