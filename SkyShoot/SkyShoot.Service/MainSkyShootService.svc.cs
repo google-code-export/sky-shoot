@@ -14,29 +14,36 @@ namespace SkyShoot.Service
     public class MainSkyShootService : ISkyShootService
     {
 
+        private Account.AccountManager _accountManager = new Account.AccountManager();
+        private Session.SessionManager _sessionManager = new Session.SessionManager();
+
         public bool Register(string username, string password)
         {
-            throw new NotImplementedException();
+            bool result = _accountManager.Register(username, password);
+            // метод будет расширен, когда появится класс Client
+            return result;
         }
 
         public bool Login(string username, string password)
         {
-            throw new NotImplementedException();
+            bool result = _accountManager.Login(username, password);
+            // метод будет расширен, когда появится класс Client
+            return result;
         }
 
         public Contracts.Session.GameDescription[] GetGameList()
         {
-            throw new NotImplementedException();
+            return _sessionManager.GetGameList();
         }
 
         public Contracts.Session.GameDescription CreateGame(Contracts.Session.GameMode mode, int maxPlayers)
         {
-            throw new NotImplementedException();
+            return _sessionManager.CreateGame(mode, maxPlayers, "user"); // потом вместо "user" будет имя из Client'а
         }
 
         public bool JoinGame(Contracts.Session.GameDescription game)
         {
-            throw new NotImplementedException();
+            return _sessionManager.JoinGame(game, "user"); // потом вместо "user" будет имя из Client'а
         }
 
         public void Move(System.Drawing.PointF direction)
@@ -61,7 +68,9 @@ namespace SkyShoot.Service
 
         public void LeaveGame()
         {
-            throw new NotImplementedException();
+            bool result = _sessionManager.LeaveGame("user"); // потом вместо "user" будет имя из Client'а
+            if (!result)
+            { /* что-то сделать, например, добавить сообщение в лог */ }
         }
     }
 }
