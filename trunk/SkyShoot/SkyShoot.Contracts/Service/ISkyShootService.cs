@@ -3,6 +3,7 @@ using System.ServiceModel;
 using SkyShoot.Contracts.Bonuses;
 using SkyShoot.Contracts.Perks;
 using SkyShoot.Contracts.Session;
+using Microsoft.Xna.Framework;
 
 namespace SkyShoot.Contracts.Service
 {
@@ -27,10 +28,10 @@ namespace SkyShoot.Contracts.Service
         // Временное решение. Заменить на vector2 из XNA
         // Вектор нормализован, модуль 1
         [OperationContract(IsOneWay = true)]
-        void Move(PointF direction);
+        void Move(Vector2 direction);
 
         [OperationContract(IsOneWay = true)]
-        void Shoot(PointF direction);
+        void Shoot(Vector2 direction);
 
         [OperationContract(IsOneWay = true)]
         void TakeBonus(AObtainableDamageModifier bonus);
