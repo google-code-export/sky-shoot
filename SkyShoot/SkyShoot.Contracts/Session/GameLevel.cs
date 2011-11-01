@@ -26,15 +26,15 @@ namespace SkyShoot.Contracts.Session
 			var realHeight=levelHeight-mob.Radius;
 			var realWidth=levelWidth-mob.Radius;
 			var newCoord = new Vector2(mob.Coordinates.X + mob.Speed * MOVEMENTTIME * mob.RunVector.X, mob.Coordinates.Y + mob.Speed * MOVEMENTTIME * mob.RunVector.Y);
-			if(System.Math.Abs(mob.Coordinates.X) <= realWidth)
-				newCoord.X=System.Math.Min(System.Math.Abs(newCoord.X), realWidth) * System.Math.Sign(newCoord.X);
+			if(Math.Abs(mob.Coordinates.X) <= realWidth)
+				newCoord.X=Math.Min(Math.Abs(newCoord.X), realWidth) * Math.Sign(newCoord.X);
 			else
-				newCoord.X=System.Math.Min(System.Math.Abs(newCoord.X), realWidth+LEVELBORDER) * System.Math.Sign(newCoord.X);
+				newCoord.X=Math.Min(Math.Abs(newCoord.X), realWidth+LEVELBORDER) * Math.Sign(newCoord.X);
 				
-			if (System.Math.Abs(mob.Coordinates.Y) <= realHeight)
-				newCoord.Y = System.Math.Min(System.Math.Abs(newCoord.Y), realHeight) * System.Math.Sign(newCoord.Y);
+			if (Math.Abs(mob.Coordinates.Y) <= realHeight)
+				newCoord.Y = Math.Min(Math.Abs(newCoord.Y), realHeight) * Math.Sign(newCoord.Y);
 			else
-				newCoord.Y = System.Math.Min(System.Math.Abs(newCoord.Y), realHeight + LEVELBORDER) * System.Math.Sign(newCoord.Y);
+				newCoord.Y = Math.Min(Math.Abs(newCoord.Y), realHeight + LEVELBORDER) * Math.Sign(newCoord.Y);
 
 			return newCoord;
 		}
