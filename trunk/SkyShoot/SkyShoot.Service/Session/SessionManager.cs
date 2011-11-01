@@ -9,21 +9,21 @@ namespace SkyShoot.Service.Session
     public class SessionManager
     {
         //Содержит текущие игры
-        private List<GameSession> GameSessions;
+        private List<GameSession> _gameSessions;
 
         //Уникальный идентификатор, который присваивается каждой игре при её создании
-        private int GameID;
+        private int _gameID;
 
         public SessionManager()
         {
-            GameSessions = new List<GameSession>();
-            GameID = 1;
+            _gameSessions = new List<GameSession>();
+            _gameID = 1;
         }
 
         //Добавляем игрока в текущую игру.
         public bool JoinGame(GameDescription game, string playerName)
         {
-            game = GameSessions.Find(curGame => curGame.LocalGameDescription.GameID == game.GameID).LocalGameDescription;
+            game = _gameSessions.Find(curGame => curGame.LocalGameDescription.GameID == game.GameID).LocalGameDescription;
 
             try
             {
@@ -46,8 +46,8 @@ namespace SkyShoot.Service.Session
             playerNames = new List<string>();
             playerNames.Add(playerName);
 
-            var gameSession = new GameSession(tileSet, playerNames, maxPlayers, mode, GameID);
-            GameSessions.Add(gameSession);
+            var gameSession = new GameSession(tileSet, playerNames, maxPlayers, mode, _gameID);
+            _gameSessions.Add(gameSession);
 
             return gameSession.LocalGameDescription;
         }
@@ -55,7 +55,7 @@ namespace SkyShoot.Service.Session
         //Возвращает список игр.
         public GameDescription[] GetGameList()
         {
-            var gameSessions = GameSessions.ToArray();
+            var gameSessions = _gameSessions.ToArray();
             var gameDescriptions = new List<GameDescription>();
 
             for (int i = 0; i < gameSessions.Length; i++)
@@ -71,7 +71,7 @@ namespace SkyShoot.Service.Session
         {
             try
             {
-                var game = GameSessions.Find(gameSession => gameSession.LocalGameDescription.Players.Contains(playerName));
+                var game = _gameSessions.Find(gameSession => gameSession.LocalGameDescription.Players.Contains(playerName));
                 game.LocalGameDescription.Players.Remove(playerName);
                 return true;
             }
