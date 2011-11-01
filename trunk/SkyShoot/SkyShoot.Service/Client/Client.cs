@@ -14,7 +14,7 @@ namespace SkyShoot.Service.Client
             this.Name = username;
         }
 
-        public void GameStart(Contracts.Mobs.AMob mob, Contracts.Session.GameLevel arena)
+        public void GameStart(Contracts.Mobs.AMob[] mobs, Contracts.Session.GameLevel arena)
         {
             throw new NotImplementedException();
         }

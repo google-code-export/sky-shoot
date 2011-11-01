@@ -15,11 +15,14 @@ namespace SkyShoot.Client.game
             _gameView = new GameView();
         }
 
-        public void GameStart(AMob mob, Contracts.Session.GameLevel arena)
+        public void GameStart(AMob[] mobs, Contracts.Session.GameLevel arena)
         {
             _arena = GameFactory.CreateClientGameLevel(arena);
-            var clientMob = GameFactory.CreateClientMob(mob);
-            _arena.AddMob(clientMob);
+            foreach (AMob mob in mobs)
+            {
+                var clientMob = GameFactory.CreateClientMob(mob);
+                _arena.AddMob(clientMob);
+            }
         }
 
         public void Shoot(AProjectile projectile)
