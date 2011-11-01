@@ -3,12 +3,13 @@ using System.Drawing;
 
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Weapon.Projectiles;
+using Microsoft.Xna.Framework;
 
 namespace SkyShoot.Service.Weapon.Bullets
 {
     public abstract class ABullet : AProjectile
     {
-        protected ABullet(AMob owner, Guid id, PointF direction,
+        protected ABullet(AMob owner, Guid id, Vector2 direction,
             float velocity, float damage, EnumBulletType type)
             : base(owner, id)
         {

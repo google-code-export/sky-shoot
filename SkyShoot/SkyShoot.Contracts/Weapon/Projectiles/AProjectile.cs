@@ -3,6 +3,8 @@ using System.Drawing;
 using System.Runtime.Serialization;
 using SkyShoot.Contracts.Mobs;
 
+using Microsoft.Xna.Framework;
+
 namespace SkyShoot.Contracts.Weapon.Projectiles
 {
     [DataContract]
@@ -21,10 +23,10 @@ namespace SkyShoot.Contracts.Weapon.Projectiles
         public AMob Owner { get; private set; }
 
         [DataMember]
-        public PointF Coordinates { get; protected set; } // вероятно, set должен быть public-методом
+        public Vector2 Coordinates { get; protected set; } // вероятно, set должен быть public-методом
 
         [DataMember]
 //        public PointF Orientation { get; protected set; }
-        public PointF Direction { get; protected set; }
+        public Vector2 Direction { get; protected set; }
     }
 }
