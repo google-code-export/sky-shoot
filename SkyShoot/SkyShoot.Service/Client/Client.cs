@@ -7,7 +7,7 @@ namespace SkyShoot.Service.Client
 {
     public class Client : SkyShoot.Contracts.Mobs.AMob, SkyShoot.Contracts.Service.ISkyShootCallback 
     {
-        public string Name { private set; public get; }
+        public string Name;
 
         public Client(string username) : base(new Microsoft.Xna.Framework.Vector2(0, 0), new Guid())
         {
@@ -67,6 +67,11 @@ namespace SkyShoot.Service.Client
         public void SynchroFrame(Contracts.Mobs.AMob[] mob)
         {
             throw new NotImplementedException();
+        }
+
+        public override bool IsPlayer
+        {
+            get { throw new NotImplementedException(); }
         }
     }
 }
