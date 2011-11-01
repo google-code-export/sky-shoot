@@ -7,7 +7,7 @@ namespace SkyShoot.Contracts.Service
 {
     public interface ISkyShootCallback
     {
-        void GameStart(AMob mob, GameLevel arena); // зачем нам тут параметр AMob, если мы сами - этот AMob ?
+        void GameStart(AMob[] mobs, GameLevel arena);
 
         void Shoot(AProjectile projectile);
 
