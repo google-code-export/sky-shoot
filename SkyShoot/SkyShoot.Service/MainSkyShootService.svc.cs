@@ -7,6 +7,7 @@ using System.ServiceModel.Web;
 using System.Text;
 
 using SkyShoot.Contracts.Service;
+using SkyShoot.Service.Client;
 
 namespace SkyShoot.Service
 {
@@ -17,17 +18,27 @@ namespace SkyShoot.Service
         private Account.AccountManager _accountManager = new Account.AccountManager();
         private Session.SessionManager _sessionManager = new Session.SessionManager();
 
+        private List<Client.Client> _clientsList = new List<Client.Client>();
+
         public bool Register(string username, string password)
         {
             bool result = _accountManager.Register(username, password);
-            // метод будет расширен, когда появится класс Client
+
+//            bool loginResult = Login(username, password);
+
             return result;
         }
 
         public bool Login(string username, string password)
         {
             bool result = _accountManager.Login(username, password);
-            // метод будет расширен, когда появится класс Client
+
+            if (result)
+            {
+                Client.Client client = new Client.Client(username);
+                _clientsList.Add(client);
+            }
+
             return result;
         }
 
@@ -39,7 +50,7 @@ namespace SkyShoot.Service
         public Contracts.Session.GameDescription CreateGame(Contracts.Session.GameMode mode, int maxPlayers)
         {
             //Позже заменить 4ый параметр на какую-нибудь переменную.
-            return _sessionManager.CreateGame(mode,maxPlayers,"user",Contracts.Session.TileSet.Grass); // потом вместо "user" будет имя из Client'а
+            return _sessionManager.CreateGame(mode, maxPlayers, "user", Contracts.Session.TileSet.Grass); // потом вместо "user" будет имя из Client'а
         }
 
         public bool JoinGame(Contracts.Session.GameDescription game)
