@@ -12,6 +12,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyShoot.Client", "SkyShoot
 		{27DFF06E-1942-47CE-8BF4-02F7CB108F6A} = {27DFF06E-1942-47CE-8BF4-02F7CB108F6A}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyShoot.Game", "C:\SkyShoot\SkyShoot\SkyShoot.Game\SkyShoot.Game\SkyShoot.Game.csproj", "{BDF55567-2EB5-4DFE-A2EB-F7946B548C3A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyShoot.GameContent", "C:\SkyShoot\SkyShoot\SkyShoot.Game\SkyShoot.GameContent\SkyShoot.GameContent.contentproj", "{0E5C34A9-89F1-4FF3-908E-D594DF3868E4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,6 +76,26 @@ Global
 		{D06C047C-F816-493C-A21A-23FA583D15CB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{D06C047C-F816-493C-A21A-23FA583D15CB}.Release|Win32.ActiveCfg = Release|Any CPU
 		{D06C047C-F816-493C-A21A-23FA583D15CB}.Release|x86.ActiveCfg = Release|Any CPU
+		{BDF55567-2EB5-4DFE-A2EB-F7946B548C3A}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{BDF55567-2EB5-4DFE-A2EB-F7946B548C3A}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{BDF55567-2EB5-4DFE-A2EB-F7946B548C3A}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{BDF55567-2EB5-4DFE-A2EB-F7946B548C3A}.Debug|Win32.ActiveCfg = Debug|x86
+		{BDF55567-2EB5-4DFE-A2EB-F7946B548C3A}.Debug|x86.ActiveCfg = Debug|x86
+		{BDF55567-2EB5-4DFE-A2EB-F7946B548C3A}.Debug|x86.Build.0 = Debug|x86
+		{BDF55567-2EB5-4DFE-A2EB-F7946B548C3A}.Release|Any CPU.ActiveCfg = Release|x86
+		{BDF55567-2EB5-4DFE-A2EB-F7946B548C3A}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{BDF55567-2EB5-4DFE-A2EB-F7946B548C3A}.Release|Mixed Platforms.Build.0 = Release|x86
+		{BDF55567-2EB5-4DFE-A2EB-F7946B548C3A}.Release|Win32.ActiveCfg = Release|x86
+		{BDF55567-2EB5-4DFE-A2EB-F7946B548C3A}.Release|x86.ActiveCfg = Release|x86
+		{BDF55567-2EB5-4DFE-A2EB-F7946B548C3A}.Release|x86.Build.0 = Release|x86
+		{0E5C34A9-89F1-4FF3-908E-D594DF3868E4}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{0E5C34A9-89F1-4FF3-908E-D594DF3868E4}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{0E5C34A9-89F1-4FF3-908E-D594DF3868E4}.Debug|Win32.ActiveCfg = Debug|x86
+		{0E5C34A9-89F1-4FF3-908E-D594DF3868E4}.Debug|x86.ActiveCfg = Debug|x86
+		{0E5C34A9-89F1-4FF3-908E-D594DF3868E4}.Release|Any CPU.ActiveCfg = Release|x86
+		{0E5C34A9-89F1-4FF3-908E-D594DF3868E4}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{0E5C34A9-89F1-4FF3-908E-D594DF3868E4}.Release|Win32.ActiveCfg = Release|x86
+		{0E5C34A9-89F1-4FF3-908E-D594DF3868E4}.Release|x86.ActiveCfg = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
