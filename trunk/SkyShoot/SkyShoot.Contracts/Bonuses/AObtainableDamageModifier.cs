@@ -14,8 +14,13 @@ namespace SkyShoot.Contracts.Bonuses
             Id = id;
         }
 
+        public AObtainableDamageModifier()
+        {
+      
+        }
+
         [DataMember]
-        public Guid Id { get; private set; }
+        public Guid Id { get; set; }
 
         // расширить
     }
