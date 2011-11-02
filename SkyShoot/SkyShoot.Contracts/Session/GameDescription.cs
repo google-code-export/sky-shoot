@@ -20,16 +20,21 @@ namespace SkyShoot.Contracts.Session
             GameType = gameType;
         }
 
-        [DataMember]
-        public int GameID { get; private set; }
+        public GameDescription()
+        {
+           
+        }
 
         [DataMember]
-        public List<string> Players { get; private set; }
+        public int GameID { get; set; }
 
         [DataMember]
-        public int MaximumPlayersAllowed { get; private set; }
+        public List<string> Players { get; set; }
 
         [DataMember]
-        public GameMode GameType { get; private set; }
+        public int MaximumPlayersAllowed { get; set; }
+
+        [DataMember]
+        public GameMode GameType { get; set; }
     }
 }

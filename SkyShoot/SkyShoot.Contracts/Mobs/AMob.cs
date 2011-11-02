@@ -13,16 +13,16 @@ namespace SkyShoot.Contracts.Mobs
         public abstract bool IsPlayer { get; }
 
         [DataMember]
-        public Guid Id { get; private set; }
+        public Guid Id { get; set; }
 
         [DataMember]
-        public Vector2 RunVector { get; protected set; }
+        public Vector2 RunVector { get; set; }
 
         [DataMember]
-        public Vector2 ShootVector { get; protected set; }
+        public Vector2 ShootVector { get; set; }
 
         [DataMember]
-        public Vector2 Coordinates { get; protected set; }
+        public Vector2 Coordinates { get; set; }
 
         [DataMember]
         public int HealthAmount { get; set; }
@@ -38,6 +38,11 @@ namespace SkyShoot.Contracts.Mobs
             RunVector = ShootVector = new Vector2(0, 1);
             Coordinates = coordinates;
             Id = id;	
+        }
+
+        public AMob()
+        {
+            	
         }
 
         // расширить типом моба, размером, цветом, и т.д.

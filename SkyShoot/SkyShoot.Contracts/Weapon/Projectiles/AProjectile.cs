@@ -16,17 +16,22 @@ namespace SkyShoot.Contracts.Weapon.Projectiles
             Id = id;
         }
 
-        [DataMember]
-        public Guid Id { get; private set; }
+        public AProjectile()
+        {
+            Owner = null;
+        }
 
         [DataMember]
-        public AMob Owner { get; private set; }
+        public Guid Id { get; set; }
 
         [DataMember]
-        public Vector2 Coordinates { get; protected set; } // вероятно, set должен быть public-методом
+        public AMob Owner { get; set; }
 
         [DataMember]
-//        public PointF Orientation { get; protected set; }
-        public Vector2 Direction { get; protected set; }
+        public Vector2 Coordinates { get; set; } // вероятно, set должен быть public-методом
+
+        [DataMember]
+//      public Vector2 Orientation { get; set; }
+        public Vector2 Direction { get; set; }
     }
 }

@@ -20,6 +20,11 @@ namespace SkyShoot.Contracts.Session
         {
             UsedTileSet = usedTileSet;
         }
+        
+        public GameLevel()
+        {
+            
+        }
 
 		public Vector2 ComputeMovement(AMob mob)
 		{
@@ -41,10 +46,7 @@ namespace SkyShoot.Contracts.Session
 
         [DataMember]
         public TileSet UsedTileSet
-        {
-            get;
-            private set;
-        }
+        { get; set; }
 
     }
 }
