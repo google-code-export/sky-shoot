@@ -8,6 +8,8 @@ using System.Text;
 
 using SkyShoot.Contracts.Service;
 using SkyShoot.Service.Client;
+using Microsoft.Xna.Framework;
+
 
 namespace SkyShoot.Service
 {
@@ -58,12 +60,12 @@ namespace SkyShoot.Service
             return _sessionManager.JoinGame(game, "user"); // потом вместо "user" будет имя из Client'а
         }
 
-        public void Move(System.Drawing.PointF direction)
+        public void Move(Vector2 direction)
         {
             throw new NotImplementedException();
         }
 
-        public void Shoot(System.Drawing.PointF direction)
+        public void Shoot(Vector2 direction)
         {
             throw new NotImplementedException();
         }
