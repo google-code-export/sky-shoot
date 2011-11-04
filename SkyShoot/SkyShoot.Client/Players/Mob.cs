@@ -1,20 +1,18 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-
 using SkyShoot.Client.View;
 
 namespace SkyShoot.Client.Players
 {
-    class Player : AMob
+    class Mob : AMob
     {
-
         public override bool IsPlayer
         {
-            get { return true; }
+            get { return false; }
         }
 
-        public Player(Vector2 coordinates, Guid id)
+        public Mob(Vector2 coordinates, Guid id)
             : base(coordinates, id)
         {
 

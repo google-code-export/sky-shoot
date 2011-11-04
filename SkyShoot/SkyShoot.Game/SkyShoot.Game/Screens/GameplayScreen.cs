@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SkyShoot.Client.Game;
 using SkyShoot.Game.ScreenManager;
 using Microsoft.Xna.Framework.Content;
 using System.Threading;
@@ -13,10 +14,14 @@ namespace SkyShoot.Game.Screens
     class GameplayScreen:GameScreen
     {
         ContentManager content;
+
+        private GameModel _gameModel;
+
         public GameplayScreen()
         {
-            
+            //_gameModel = new GameModel();
         }
+
         public override void LoadContent()
         {
             if (content == null)
@@ -36,7 +41,7 @@ namespace SkyShoot.Game.Screens
 
         public override void HandleInput(InputState input)
         {            
-            //SkyShoot.Client.game.GameController.HandleInput(input);
+            //SkyShoot.Client.Game.GameController.HandleInput(input);
         }
 
         public override void Draw(Microsoft.Xna.Framework.GameTime gameTime)
@@ -45,7 +50,7 @@ namespace SkyShoot.Game.Screens
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
             graphicsDevice.Clear(Color.SkyBlue);
 
-            //SkyShoot.Client.game.GameView.Draw(spriteBatch);
+            _gameModel.Draw(spriteBatch);
         }
     }
 }

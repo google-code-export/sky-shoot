@@ -1,35 +1,34 @@
 ﻿using System;
 
-using SkyShoot.Client.Game;
+using SkyShoot.Client.Bonuses;
 using SkyShoot.Client.Players;
+using SkyShoot.Client.Weapon;
 
 using SkyShoot.Contracts.Bonuses;
-using SkyShoot.Contracts.Mobs;
-using SkyShoot.Contracts.Weapon.Projectiles;
 
-namespace SkyShoot.Client.game
+namespace SkyShoot.Client.Game
 {
     class GameFactory
     {
 
-        public static AMob CreateClientMob(AMob mob)
+        public static AMob CreateClientMob(Contracts.Mobs.AMob mob)
         {
             if (mob.IsPlayer)
                 return new Player(mob.Coordinates, mob.Id);
             return null;
         }
 
-        public static GameLevel CreateClientGameLevel(Contracts.Session.GameLevel gameLevel)
+        public static GameModel CreateClientGameLevel(Contracts.Session.GameLevel gameLevel)
         {
-            return new GameLevel(gameLevel.UsedTileSet);
+            return new GameModel(gameLevel.UsedTileSet);
         }
  
-        public static AObtainableDamageModifier CreateClientBonus(AObtainableDamageModifier bonus)
+        public static ABonus CreateClientBonus(AObtainableDamageModifier bonus)
         {
             throw new NotImplementedException();
         }
 
-        public static AProjectile CreateClientProjectile(AProjectile projectile)
+        public static AProjectile CreateClientProjectile(Contracts.Weapon.Projectiles.AProjectile projectile)
         {
             throw new NotImplementedException();
         }

@@ -1,9 +1,10 @@
 using System;
-using System.Drawing;
+
 using System.Runtime.Serialization;
-using SkyShoot.Contracts.Mobs;
 
 using Microsoft.Xna.Framework;
+
+using SkyShoot.Contracts.Mobs;
 
 namespace SkyShoot.Contracts.Weapon.Projectiles
 {

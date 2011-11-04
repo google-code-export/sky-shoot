@@ -72,7 +72,7 @@ namespace SkyShoot.Service
 
         public void TakeBonus(Contracts.Bonuses.AObtainableDamageModifier bonus)
         {
-            throw new NotImplementedException();
+            bonus.Owner.State |= bonus.Type;
         }
 
         public void TakePerk(Contracts.Perks.Perk perk)

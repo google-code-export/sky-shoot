@@ -1,14 +1,13 @@
-﻿using SkyShoot.Client.Game;
-using SkyShoot.Contracts.Bonuses;
+﻿using SkyShoot.Contracts.Bonuses;
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Weapon.Projectiles;
 
-namespace SkyShoot.Client.game
+namespace SkyShoot.Client.Game
 {
     class GameController:Contracts.Service.ISkyShootCallback
     {
         private GameView _gameView;
-        private GameLevel _arena;
+        private GameModel _arena;
 
         private GameController()
         {
