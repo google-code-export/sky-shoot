@@ -21,35 +21,38 @@ namespace SkyShoot.Service.Session
         }
 
         //Добавляем игрока в текущую игру.
-        public bool JoinGame(GameDescription game, string playerName)
+        public GameSession JoinGame(GameDescription game, string playerName)
         {
-            game = _gameSessions.Find(curGame => curGame.LocalGameDescription.GameID == game.GameID).LocalGameDescription;
+            GameSession session = _gameSessions.Find(curGame => curGame.LocalGameDescription.GameID == game.GameID);
 
             try
             {
-                if(game.Players.Contains(playerName)){
-                    game.Players.Add(playerName);
-                    return true;
+                if(session.LocalGameDescription.Players.Contains(playerName)){
+                    session.LocalGameDescription.Players.Add(playerName);
+                    return session;
                 }
-                return false;
+                return null;
             }
             catch (Exception)
             {
-                return false;
+                return null;
             }
         }
         
         //Создаем новую игру
-        public GameDescription CreateGame(GameMode mode, int maxPlayers, string playerName,TileSet tileSet)
+        public GameSession CreateGame(GameMode mode, int maxPlayers, Client.Client client,TileSet tileSet)
         {
-            List<string> playerNames;
-            playerNames = new List<string>();
-            playerNames.Add(playerName);
+            //List<string> playerNames;
+            //playerNames = new List<string>();
+            //playerNames.Add(playerName);
 
-            var gameSession = new GameSession(tileSet, playerNames, maxPlayers, mode, _gameID);
+            List<Client.Client> clients = new List<Client.Client>();
+            clients.Add(client);
+
+            GameSession gameSession = new GameSession(tileSet, clients, maxPlayers, mode, _gameID);
             _gameSessions.Add(gameSession);
 
-            return gameSession.LocalGameDescription;
+            return gameSession;
         }
 
         //Возвращает список игр.

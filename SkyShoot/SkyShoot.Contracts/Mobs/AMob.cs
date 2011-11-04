@@ -11,7 +11,7 @@ namespace SkyShoot.Contracts.Mobs
     {
 
         [DataMember]
-        public abstract bool IsPlayer { get; }
+        public bool IsPlayer { get; set; }
 
         [DataMember]
         public Guid Id { get; set; }
