@@ -48,7 +48,6 @@
     <Compile Include="Game\GameFactory.cs" />
     <Compile Include="Game\GameLevel.cs" />
     <Compile Include="Game\GameModel.cs" />
-    <Compile Include="Game\GameView.cs" />
     <Compile Include="Players\AMob.cs" />
     <Compile Include="Players\Mob.cs" />
     <Compile Include="Players\Player.cs" />
