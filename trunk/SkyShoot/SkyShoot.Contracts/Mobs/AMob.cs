@@ -2,6 +2,7 @@
 using System.Runtime.Serialization;
 
 using Microsoft.Xna.Framework;
+using SkyShoot.Contracts.Bonuses;
 
 namespace SkyShoot.Contracts.Mobs
 {
@@ -33,6 +34,9 @@ namespace SkyShoot.Contracts.Mobs
 		[DataMember]
 		public float Speed { get; set; } //скорость: пикселы в миллисекунду
 
+        [DataMember] 
+        public AObtainableDamageModifier.AObtainableDamageModifiers State;
+
         protected AMob(Vector2 coordinates, Guid id)
         {
             RunVector = ShootVector = new Vector2(0, 1);
@@ -40,9 +44,8 @@ namespace SkyShoot.Contracts.Mobs
             Id = id;	
         }
 
-        public AMob()
-        {
-            	
+        protected AMob()
+        {         	
         }
 
         // расширить типом моба, размером, цветом, и т.д.

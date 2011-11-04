@@ -1,56 +1,23 @@
 ﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using SkyShoot.Contracts.Mobs;
-using SkyShoot.Contracts.Session;
-using SkyShoot.Contracts.Weapon.Projectiles;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using SkyShoot.Client.View;
 
 namespace SkyShoot.Client.Game
 {
-    class GameLevel
+    public class GameLevel : IDrawable 
     {
 
-        public TileSet UsedTileSet { get; private set; }
+        public Texture2D Texture { get; private set; }
 
-        public IDictionary<Guid, AMob> Mobs { get; private set;  }
-
-        public IDictionary<Guid, AProjectile> Projectiles { get; private set; }
-
-        public GameLevel(TileSet usedTileSet)
+        public void AddTexture(Texture2D texture, Vector2 position)
         {
-            UsedTileSet = usedTileSet;
-            Mobs = new ConcurrentDictionary<Guid, AMob>();
-            Projectiles = new ConcurrentDictionary<Guid, AProjectile>();
+            throw new NotImplementedException();
         }
 
-        public void AddMob(AMob mob)
+        public void Draw(SpriteBatch spriteBatch)
         {
-            Mobs.Add(mob.Id, mob);
-        }
-
-        public void AddProjectile(AProjectile projectile)
-        {
-            Projectiles.Add(projectile.Id, projectile);
-        }
-
-        public AMob GetMob(Guid id)
-        {
-            return Mobs[id];
-        }
-
-        public AProjectile GetProjectile(Guid id)
-        {
-            return Projectiles[id];
-        }
-
-        public void RemoveMob(Guid id)
-        {
-            Mobs.Remove(id);
-        }
-
-        public void RemoveProjectile(Guid id)
-        {
-            Projectiles.Remove(id);
+            spriteBatch.Draw(Texture, Vector2.Zero, Color.White);
         }
 
     }

@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -42,12 +43,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bonuses\ABonus.cs" />
     <Compile Include="Game\GameController.cs" />
     <Compile Include="Game\GameFactory.cs" />
     <Compile Include="Game\GameLevel.cs" />
+    <Compile Include="Game\GameModel.cs" />
     <Compile Include="Game\GameView.cs" />
+    <Compile Include="Players\AMob.cs" />
+    <Compile Include="Players\Mob.cs" />
     <Compile Include="Players\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View\IDrawable.cs" />
+    <Compile Include="Weapon\AProjectile.cs" />
+    <Compile Include="Weapon\Bullets\ABullet.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SkyShoot.Contracts\SkyShoot.Contracts.csproj">
@@ -55,11 +63,7 @@
       <Name>SkyShoot.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Bonuses\" />
-    <Folder Include="View\" />
-    <Folder Include="Weapon\Bullets\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
