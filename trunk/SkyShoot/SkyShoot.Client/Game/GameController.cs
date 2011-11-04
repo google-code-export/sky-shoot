@@ -6,12 +6,10 @@ namespace SkyShoot.Client.Game
 {
     class GameController:Contracts.Service.ISkyShootCallback
     {
-        private GameView _gameView;
         private GameModel _arena;
 
         private GameController()
         {
-            _gameView = new GameView();
         }
 
         public void GameStart(AMob[] mobs, Contracts.Session.GameLevel arena)
