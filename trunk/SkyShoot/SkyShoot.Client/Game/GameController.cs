@@ -1,6 +1,7 @@
 ﻿using SkyShoot.Contracts.Bonuses;
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Weapon.Projectiles;
+using Microsoft.Xna.Framework;
 
 namespace SkyShoot.Client.Game
 {
@@ -41,6 +42,11 @@ namespace SkyShoot.Client.Game
         public void MobDead(AMob mob)
         {
             _arena.RemoveMob(mob.Id);
+        }
+
+        public void MobMoved(AMob mob, Vector2 direction)
+        {
+            throw new System.NotImplementedException();
         }
 
         public void BonusDropped(AObtainableDamageModifier bonus)

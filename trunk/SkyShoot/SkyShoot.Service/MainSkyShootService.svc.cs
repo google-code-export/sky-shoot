@@ -9,25 +9,27 @@ using System.Text;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Service.Client;
 using Microsoft.Xna.Framework;
+using SkyShoot.Service.Session;
 
 
 namespace SkyShoot.Service
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "MainSkyShootService" in code, svc and config file together.
+    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple,
+        InstanceContextMode = InstanceContextMode.PerSession)]
     public class MainSkyShootService : ISkyShootService
     {
-
         private Account.AccountManager _accountManager = new Account.AccountManager();
         private Session.SessionManager _sessionManager = new Session.SessionManager();
 
-        private List<Client.Client> _clientsList = new List<Client.Client>();
+        private Client.Client _client;
+
+        private GameSession _session;
+
+        private static List<Client.Client> _clientsList = new List<Client.Client>();
 
         public bool Register(string username, string password)
         {
             bool result = _accountManager.Register(username, password);
-
-//            bool loginResult = Login(username, password);
-
             return result;
         }
 
@@ -37,8 +39,9 @@ namespace SkyShoot.Service
 
             if (result)
             {
-                Client.Client client = new Client.Client(username);
-                _clientsList.Add(client);
+                _client = new Client.Client(username, 
+                    OperationContext.Current.GetCallbackChannel<ISkyShootCallback>(), true);
+                _clientsList.Add(_client);
             }
 
             return result;
@@ -49,20 +52,23 @@ namespace SkyShoot.Service
             return _sessionManager.GetGameList();
         }
 
-        public Contracts.Session.GameDescription CreateGame(Contracts.Session.GameMode mode, int maxPlayers)
+        public bool CreateGame(Contracts.Session.GameMode mode, int maxPlayers)
         {
-            //Позже заменить 4ый параметр на какую-нибудь переменную.
-            return _sessionManager.CreateGame(mode, maxPlayers, "user", Contracts.Session.TileSet.Grass); // потом вместо "user" будет имя из Client'а
+            
+            return ( _sessionManager.CreateGame(mode, maxPlayers, _client, Contracts.Session.TileSet.Grass) != null );
         }
 
         public bool JoinGame(Contracts.Session.GameDescription game)
         {
-            return _sessionManager.JoinGame(game, "user"); // потом вместо "user" будет имя из Client'а
+            _session = _sessionManager.JoinGame(game, _client.Name);
+            if (_session == null)
+                return false;
+            return true;
         }
 
         public void Move(Vector2 direction)
         {
-            throw new NotImplementedException();
+            _session.Move(_client, direction);
         }
 
         public void Shoot(Vector2 direction)
@@ -82,7 +88,7 @@ namespace SkyShoot.Service
 
         public void LeaveGame()
         {
-            bool result = _sessionManager.LeaveGame("user"); // потом вместо "user" будет имя из Client'а
+            bool result = _sessionManager.LeaveGame(_client.Name);
             if (!result)
             { /* что-то сделать, например, добавить сообщение в лог */ }
         }
