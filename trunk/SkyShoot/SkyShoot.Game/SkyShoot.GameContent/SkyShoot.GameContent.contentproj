@@ -49,13 +49,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SandLandscape.jpg">
-      <Name>SandLandscape</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Textures\blood_samples\blood_01.png">
       <Name>blood_01</Name>
       <Importer>TextureImporter</Importer>
