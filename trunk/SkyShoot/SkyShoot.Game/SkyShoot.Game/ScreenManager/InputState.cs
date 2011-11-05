@@ -1,55 +1,52 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Microsoft.Xna.Framework;
+
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework;
 
 namespace SkyShoot.Game.ScreenManager
 {
     public class InputState
     {
-        public KeyboardState CurrentKeyboardState { get { return currentKeyboardState; } }
-        private KeyboardState currentKeyboardState;
+        public KeyboardState CurrentKeyboardState { get { return _currentKeyboardState; } }
+        private KeyboardState _currentKeyboardState;
 
-        public MouseState CurrentMouseState { get { return currentMouseState; } }
-        private MouseState currentMouseState;
+        public MouseState CurrentMouseState { get { return _currentMouseState; } }
+        private MouseState _currentMouseState;
 
-        public GamePadState CurrentGamePadState { get { return currentGamePadState; } }
-        private GamePadState currentGamePadState;
+        public GamePadState CurrentGamePadState { get { return _currentGamePadState; } }
+        private GamePadState _currentGamePadState;
 
 
-        public KeyboardState LastKeyState { get { return lastKeyState; } }
-        private KeyboardState lastKeyState;
+        public KeyboardState LastKeyState { get { return _lastKeyState; } }
+        private KeyboardState _lastKeyState;
 
-        public MouseState LastMouseState { get { return lastMouseState; } }
-        private MouseState lastMouseState;
+        public MouseState LastMouseState { get { return _lastMouseState; } }
+        private MouseState _lastMouseState;
 
-        public GamePadState LastGamePadState { get { return lastGamePadState; } }
-        private GamePadState lastGamePadState;
+        public GamePadState LastGamePadState { get { return _lastGamePadState; } }
+        private GamePadState _lastGamePadState;
 
 
 
         public InputState()
         {
-            currentKeyboardState = Keyboard.GetState();
-            currentGamePadState = GamePad.GetState(PlayerIndex.One);
-            currentMouseState = Mouse.GetState();
+            _currentKeyboardState = Keyboard.GetState();
+            _currentGamePadState = GamePad.GetState(PlayerIndex.One);
+            _currentMouseState = Mouse.GetState();
 
-            lastKeyState = new KeyboardState();
-            lastGamePadState = new GamePadState(); 
+            _lastKeyState = new KeyboardState();
+            _lastGamePadState = new GamePadState(); 
 
         }
 
         public void Update()
         {
-            lastKeyState = currentKeyboardState;
-            lastGamePadState = currentGamePadState;
-            lastMouseState = currentMouseState;
+            _lastKeyState = _currentKeyboardState;
+            _lastGamePadState = _currentGamePadState;
+            _lastMouseState = _currentMouseState;
 
-            currentKeyboardState = Keyboard.GetState();
-            currentGamePadState = GamePad.GetState(Microsoft.Xna.Framework.PlayerIndex.One);
-            currentMouseState = Mouse.GetState();
+            _currentKeyboardState = Keyboard.GetState();
+            _currentGamePadState = GamePad.GetState(Microsoft.Xna.Framework.PlayerIndex.One);
+            _currentMouseState = Mouse.GetState();
         }
 
         public Vector2 RunVector
@@ -57,29 +54,31 @@ namespace SkyShoot.Game.ScreenManager
             get
             {
                 Vector2 runVector = Vector2.Zero;
-                if (currentGamePadState.IsConnected) runVector = currentGamePadState.ThumbSticks.Left;
+                if (_currentGamePadState.IsConnected) 
+                    runVector = _currentGamePadState.ThumbSticks.Left;
                 else
                 {
-                    if (currentKeyboardState.IsKeyDown(Keys.Up)) runVector += Vector2.UnitY;
-                    if (currentKeyboardState.IsKeyDown(Keys.Down)) runVector -= Vector2.UnitY;
-                    if (currentKeyboardState.IsKeyDown(Keys.Left)) runVector -= Vector2.UnitX;
-                    if (currentKeyboardState.IsKeyDown(Keys.Right)) runVector += Vector2.UnitX;
+                    if (_currentKeyboardState.IsKeyDown(Keys.Up)) runVector -= Vector2.UnitY;
+                    if (_currentKeyboardState.IsKeyDown(Keys.Down)) runVector += Vector2.UnitY;
+                    if (_currentKeyboardState.IsKeyDown(Keys.Left)) runVector -= Vector2.UnitX;
+                    if (_currentKeyboardState.IsKeyDown(Keys.Right)) runVector += Vector2.UnitX;
                 }
-                runVector.Normalize();
+                if(runVector.Length() > 0)
+                    runVector.Normalize();
                 return runVector;
             }
         }
 
         public bool KeyPressed(Keys key)
         {
-            return (currentKeyboardState.IsKeyDown(key) &&
-                    lastKeyState.IsKeyUp(key));
+            return (_currentKeyboardState.IsKeyDown(key) &&
+                    _lastKeyState.IsKeyUp(key));
         }
 
         public bool ButtonPressed(Buttons button)
         {
-            return (currentGamePadState.IsButtonDown(button) &&
-                    lastGamePadState.IsButtonDown(button));
+            return (_currentGamePadState.IsButtonDown(button) &&
+                    _lastGamePadState.IsButtonDown(button));
         }
 
         public bool IsMenuSelect()

@@ -1,5 +1,7 @@
 using System;
+
 using Microsoft.Xna.Framework;
+
 using Microsoft.Xna.Framework.Graphics;
 
 namespace SkyShoot.Game.Client.Players
@@ -7,21 +9,19 @@ namespace SkyShoot.Game.Client.Players
     class Player : AMob
     {
 
-        //public bool IsPlayer
-        //{
-        //    set;
-        //    get { return true; }
-        //}
-
-        public Player(Vector2 coordinates, Guid id)
-            : base(coordinates, id)
+        public Player(Vector2 coordinates, Guid id, Texture2D texture)
+            : base(coordinates, id, texture)
         {
-
+            IsPlayer = true;
+            //todo temporary
+            Speed = (float)0.5;
+            Coordinates = new Vector2(100, 100);
+            RunVector = Vector2.Zero;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            throw new NotImplementedException();
+            spriteBatch.Draw(Texture, Coordinates, Color.White);
         }
 
     }

@@ -88,10 +88,10 @@ namespace SkyShoot.Game.ScreenManager
 
         public virtual void UnloadContent() { }
 
-        public virtual void Update(GameTime gameTime, bool otherScreenHasFocus,
+        public virtual void Update(GameTime gameTime, bool otherHasFocus,
                                                       bool coveredByOtherScreen)
         {
-            this.otherScreenHasFocus = otherScreenHasFocus;
+            this.otherScreenHasFocus = otherHasFocus;
 
             if (isExiting)
             {

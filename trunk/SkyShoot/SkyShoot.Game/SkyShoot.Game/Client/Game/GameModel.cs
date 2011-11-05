@@ -1,7 +1,12 @@
 using System;
+
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+
+using Microsoft.Xna.Framework;
+
 using Microsoft.Xna.Framework.Graphics;
+
 using SkyShoot.Game.Client.Players;
 using SkyShoot.Game.Client.Weapon;
 
@@ -51,6 +56,17 @@ namespace SkyShoot.Game.Client.Game
         public void RemoveProjectile(Guid id)
         {
             Projectiles.Remove(id);
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            //Update Mobs
+            foreach (var aMob in Mobs)
+            {
+                aMob.Value.Update(gameTime);
+            }
+
+            //todo update projectiles
         }
 
         public void Draw(SpriteBatch spriteBatch)

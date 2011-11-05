@@ -60,6 +60,13 @@ namespace SkyShoot.Game.Screens
             _gameController.HandleInput(input);
         }
 
+        public override void Update(GameTime gameTime, bool otherHasFocus, bool coveredByOtherScreen)
+        {
+            base.Update(gameTime, otherHasFocus, coveredByOtherScreen);
+
+            _gameController.GameModel.Update(gameTime);
+        }
+
         public override void Draw(GameTime gameTime)
         {
             GraphicsDevice graphicsDevice = ScreenManager.GraphicsDevice;
