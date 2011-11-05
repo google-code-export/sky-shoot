@@ -8,8 +8,6 @@ using Microsoft.Xna.Framework.Graphics;
 using SkyShoot.Client.Players;
 using SkyShoot.Client.Weapon;
 
-using SkyShoot.Contracts.Session;
-
 namespace SkyShoot.Client.Game
 {
     public class GameModel
@@ -20,10 +18,10 @@ namespace SkyShoot.Client.Game
 
         public IDictionary<Guid, AProjectile> Projectiles { get; private set; }
 
-        public GameModel(TileSet usedTileSet)
+        public GameModel(GameLevel gameLevel)
         {
-            //UsedTileSet = usedTileSet;
-            //todo create game level based from tileSet;
+            GameLevel = gameLevel;
+
             Mobs = new ConcurrentDictionary<Guid, AMob>();
             Projectiles = new ConcurrentDictionary<Guid, AProjectile>();
         }
@@ -60,18 +58,24 @@ namespace SkyShoot.Client.Game
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            spriteBatch.Begin();
+
             //draw background
             GameLevel.Draw(spriteBatch);
 
+            //draw mobs
             foreach (var aMob in Mobs)
             {
                 aMob.Value.Draw(spriteBatch);
             }
 
+            //draw projectiles
             foreach (var aProjectile in Projectiles)
             {
                 aProjectile.Value.Draw(spriteBatch);
             }
+
+            spriteBatch.End();
 
         }
 

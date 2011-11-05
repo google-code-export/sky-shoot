@@ -2,7 +2,7 @@
 
 namespace SkyShoot.Client.View
 {
-    interface IDrawable
+    public interface IDrawable
     {
         void Draw(SpriteBatch spriteBatch);
     }
