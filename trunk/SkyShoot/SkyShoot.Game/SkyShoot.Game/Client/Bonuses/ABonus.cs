@@ -1,10 +1,9 @@
-﻿using System;
+using System;
 using Microsoft.Xna.Framework.Graphics;
-using SkyShoot.Client.View;
-
 using SkyShoot.Contracts.Bonuses;
+using SkyShoot.Game.Client.View;
 
-namespace SkyShoot.Client.Bonuses
+namespace SkyShoot.Game.Client.Bonuses
 {
     public abstract class ABonus : AObtainableDamageModifier, IDrawable
     {

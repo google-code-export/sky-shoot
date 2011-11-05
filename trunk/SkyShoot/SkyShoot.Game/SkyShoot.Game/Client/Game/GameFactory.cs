@@ -1,12 +1,10 @@
-﻿using System;
-
-using SkyShoot.Client.Bonuses;
-using SkyShoot.Client.Players;
-using SkyShoot.Client.Weapon;
-
+using System;
 using SkyShoot.Contracts.Bonuses;
+using SkyShoot.Game.Client.Bonuses;
+using SkyShoot.Game.Client.Players;
+using SkyShoot.Game.Client.Weapon;
 
-namespace SkyShoot.Client.Game
+namespace SkyShoot.Game.Client.Game
 {
     class GameFactory
     {
@@ -32,8 +30,6 @@ namespace SkyShoot.Client.Game
         {
             throw new NotImplementedException();
         }
-
-
 
     }
 }

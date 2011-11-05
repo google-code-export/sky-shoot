@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using Microsoft.Xna.Framework.Graphics;
-using SkyShoot.Client.Players;
-using SkyShoot.Client.View;
+using SkyShoot.Game.Client.Players;
+using SkyShoot.Game.Client.View;
 
-namespace SkyShoot.Client.Weapon
+namespace SkyShoot.Game.Client.Weapon
 {
     public abstract class AProjectile : Contracts.Weapon.Projectiles.AProjectile, IDrawable
     {

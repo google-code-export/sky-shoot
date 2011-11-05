@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using Microsoft.Xna.Framework;
-using SkyShoot.Client.Players;
+using SkyShoot.Game.Client.Players;
 
-namespace SkyShoot.Client.Weapon.Bullets
+namespace SkyShoot.Game.Client.Weapon.Bullets
 {
     public abstract class ABullet : AProjectile
     {

@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SkyShoot.Client.View;
+using IDrawable = SkyShoot.Game.Client.View.IDrawable;
 
-namespace SkyShoot.Client.Players
+namespace SkyShoot.Game.Client.Players
 {
     public abstract class AMob : Contracts.Mobs.AMob, IDrawable
     {

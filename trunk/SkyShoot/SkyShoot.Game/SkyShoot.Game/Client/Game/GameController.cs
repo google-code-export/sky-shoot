@@ -1,11 +1,10 @@
-﻿using SkyShoot.Contracts.Bonuses;
-using SkyShoot.Contracts.Mobs;
-
-using SkyShoot.Contracts.Weapon.Projectiles;
-
 using Microsoft.Xna.Framework;
+using SkyShoot.Contracts.Bonuses;
+using SkyShoot.Contracts.Mobs;
+using SkyShoot.Contracts.Weapon.Projectiles;
+using SkyShoot.Game.ScreenManager;
 
-namespace SkyShoot.Client.Game
+namespace SkyShoot.Game.Client.Game
 {
     public class GameController:Contracts.Service.ISkyShootCallback
     {
@@ -20,6 +19,9 @@ namespace SkyShoot.Client.Game
             GameStart(new AMob[0], new Contracts.Session.GameLevel(Contracts.Session.TileSet.Sand));
         }
 
+        //
+        //<-- server input -->
+        //
         public void GameStart(AMob[] mobs, Contracts.Session.GameLevel arena)
         {
             GameModel = new GameModel(GameFactory.CreateClientGameLevel(arena));
@@ -85,5 +87,14 @@ namespace SkyShoot.Client.Game
         {
             throw new System.NotImplementedException();
         }
+
+        //
+        //<-- client input -->
+        //
+        public void HandleInput(InputState inputState)
+        {
+            
+        }
+
     }
 }

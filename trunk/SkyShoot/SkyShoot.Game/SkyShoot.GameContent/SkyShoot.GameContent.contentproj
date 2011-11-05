@@ -219,18 +219,20 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Textures\man_etc\man.png">
-      <Name>man</Name>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\Mobs\Man.png">
+      <Name>Man</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Textures\man_etc\spider.png">
-      <Name>spider</Name>
+    <Compile Include="Textures\Mobs\Spider1.png">
+      <Name>Spider1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Textures\man_etc\spider2.png">
-      <Name>spider2</Name>
+    <Compile Include="Textures\Mobs\Spider2.png">
+      <Name>Spider2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

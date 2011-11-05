@@ -1,14 +1,11 @@
-﻿using System;
-
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-
 using Microsoft.Xna.Framework.Graphics;
+using SkyShoot.Game.Client.Players;
+using SkyShoot.Game.Client.Weapon;
 
-using SkyShoot.Client.Players;
-using SkyShoot.Client.Weapon;
-
-namespace SkyShoot.Client.Game
+namespace SkyShoot.Game.Client.Game
 {
     public class GameModel
     {

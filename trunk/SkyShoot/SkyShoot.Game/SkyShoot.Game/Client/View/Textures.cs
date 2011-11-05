@@ -1,11 +1,13 @@
-﻿using Microsoft.Xna.Framework;
-
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace SkyShoot.Client.View
+namespace SkyShoot.Game.Client.View
 {
     public static class Textures
     {
+        public const int StonesAmount = 4;
+        public const int MobsAmount = 2;
+
         //current graphic device
         public static GraphicsDevice GraphicsDevice;
 
@@ -17,10 +19,11 @@ namespace SkyShoot.Client.View
         public static Texture2D VolcanicLandscape;
 
         //stone textures
-        public static Texture2D[] Stones = new Texture2D[4];
+        public static Texture2D[] Stones = new Texture2D[StonesAmount];
 
+        //mob textures
         public static Texture2D PlayerTexture;
-        public static Texture2D MobTexture;
+        public static Texture2D[] MobTextures = new Texture2D[MobsAmount];
 
         //add small texture into big texture at Vector2D position
         public static void Merge(Texture2D big, Texture2D small, Vector2 position)
