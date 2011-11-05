@@ -80,10 +80,10 @@ namespace SkyShoot.Game.Screens
         }
 
 
-        public override void Update(GameTime gameTime, bool otherScreenHasFocus,
+        public override void Update(GameTime gameTime, bool otherHasFocus,
                                                        bool coveredByOtherScreen)
         {
-            base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
+            base.Update(gameTime, otherHasFocus, coveredByOtherScreen);
             UpdateMenuEntryLocations();
 
             for (int i = 0; i < menuEntries.Count; i++)

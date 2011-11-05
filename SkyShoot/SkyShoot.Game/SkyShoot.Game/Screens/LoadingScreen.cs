@@ -23,10 +23,10 @@ namespace SkyShoot.Game.Screens
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
         }
 
-        public override void Update(GameTime gameTime, bool otherScreenHasFocus,
+        public override void Update(GameTime gameTime, bool otherHasFocus,
                                                bool coveredByOtherScreen)
         {
-            base.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
+            base.Update(gameTime, otherHasFocus, coveredByOtherScreen);
 
             if (otherScreensAreGone)
             {

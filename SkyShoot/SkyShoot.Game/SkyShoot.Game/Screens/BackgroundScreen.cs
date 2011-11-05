@@ -42,10 +42,10 @@ namespace SkyShoot.Game.Screens
             content.Unload();
         }
 
-        public override void Update(GameTime gameTime, bool otherScreenHasFocus,
+        public override void Update(GameTime gameTime, bool otherHasFocus,
                                                        bool coveredByOtherScreen)
         {
-            base.Update(gameTime, otherScreenHasFocus, false);
+            base.Update(gameTime, otherHasFocus, false);
         }
 
 

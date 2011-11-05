@@ -1,7 +1,10 @@
 using System;
+
 using SkyShoot.Contracts.Bonuses;
+
 using SkyShoot.Game.Client.Bonuses;
 using SkyShoot.Game.Client.Players;
+using SkyShoot.Game.Client.View;
 using SkyShoot.Game.Client.Weapon;
 
 namespace SkyShoot.Game.Client.Game
@@ -12,8 +15,9 @@ namespace SkyShoot.Game.Client.Game
         public static AMob CreateClientMob(Contracts.Mobs.AMob mob)
         {
             if (mob.IsPlayer)
-                return new Player(mob.Coordinates, mob.Id);
-            return null;
+                return new Player(mob.Coordinates, mob.Id, Textures.PlayerTexture);
+            //todo mob type
+            return new Mob(mob.Coordinates, mob.Id, Textures.MobTextures[0]);
         }
 
         public static GameLevel CreateClientGameLevel(Contracts.Session.GameLevel gameLevel)

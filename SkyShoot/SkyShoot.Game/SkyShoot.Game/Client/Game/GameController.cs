@@ -1,8 +1,11 @@
+using System;
 using Microsoft.Xna.Framework;
 using SkyShoot.Contracts.Bonuses;
-using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Weapon.Projectiles;
+using SkyShoot.Game.Client.Players;
+using SkyShoot.Game.Client.View;
 using SkyShoot.Game.ScreenManager;
+using AMob = SkyShoot.Contracts.Mobs.AMob;
 
 namespace SkyShoot.Game.Client.Game
 {
@@ -11,12 +14,18 @@ namespace SkyShoot.Game.Client.Game
 
         public GameModel GameModel { get; private set; }
 
+        //todo temporary!
+        private static readonly Guid Id= new Guid();
+        private readonly AMob _testMob = new Player(Vector2.Zero, Id, Textures.PlayerTexture);
+        private readonly AMob[] _mobs = new AMob[1]; 
+
         public GameController()
         {
             //todo initialize connection with server
 
             //todo temporary!
-            GameStart(new AMob[0], new Contracts.Session.GameLevel(Contracts.Session.TileSet.Sand));
+            _mobs[0] = _testMob;
+            GameStart(_mobs, new Contracts.Session.GameLevel(Contracts.Session.TileSet.Sand));
         }
 
         //
@@ -93,7 +102,7 @@ namespace SkyShoot.Game.Client.Game
         //
         public void HandleInput(InputState inputState)
         {
-            
+            GameModel.GetMob(Id).RunVector = inputState.RunVector;
         }
 
     }
