@@ -1,6 +1,6 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Graphics;
 
-namespace SkyShoot.Client.View
+namespace SkyShoot.Game.Client.View
 {
     public interface IDrawable
     {

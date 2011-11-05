@@ -2,10 +2,8 @@
 
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-
-using SkyShoot.Client.Game;
-using SkyShoot.Client.View;
-
+using SkyShoot.Game.Client.Game;
+using SkyShoot.Game.Client.View;
 using SkyShoot.Game.ScreenManager;
 
 namespace SkyShoot.Game.Screens
@@ -35,8 +33,15 @@ namespace SkyShoot.Game.Screens
             Textures.VolcanicLandscape = _content.Load<Texture2D>("Textures/Landscapes/VolcanicLandscape");
 
             //load stones
-            for (int i = 1; i <= 4; i++)
+            for (int i = 1; i <= Textures.StonesAmount; i++)
                 Textures.Stones[i - 1] = _content.Load<Texture2D>("Textures/Landscapes/Stone" + i);
+
+            //load player
+            Textures.PlayerTexture = _content.Load<Texture2D>("Textures/Mobs/Man");
+
+            //load mobs
+            for (int i = 1; i <= Textures.MobsAmount; i++)
+                Textures.MobTextures[i - 1] = _content.Load<Texture2D>("Textures/Mobs/Spider" + i);
 
             //todo temporary!
             _gameController = new GameController();
@@ -52,7 +57,7 @@ namespace SkyShoot.Game.Screens
 
         public override void HandleInput(InputState input)
         {            
-            //SkyShoot.Client.Game.GameController.HandleInput(input);
+            _gameController.HandleInput(input);
         }
 
         public override void Draw(GameTime gameTime)

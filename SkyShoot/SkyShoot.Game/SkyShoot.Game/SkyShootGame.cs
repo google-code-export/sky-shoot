@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
-
-using SkyShoot.Client.View;
+using SkyShoot.Game.Client.View;
 
 namespace SkyShoot.Game
 {

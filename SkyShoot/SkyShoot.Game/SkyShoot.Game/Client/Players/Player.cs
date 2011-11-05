@@ -1,17 +1,22 @@
-﻿using System;
-
+using System;
 using Microsoft.Xna.Framework;
-
 using Microsoft.Xna.Framework.Graphics;
 
-namespace SkyShoot.Client.Players
+namespace SkyShoot.Game.Client.Players
 {
-    class Mob : AMob
+    class Player : AMob
     {
-        public Mob(Vector2 coordinates, Guid id)
+
+        //public bool IsPlayer
+        //{
+        //    set;
+        //    get { return true; }
+        //}
+
+        public Player(Vector2 coordinates, Guid id)
             : base(coordinates, id)
         {
-            IsPlayer = false;
+
         }
 
         public override void Draw(SpriteBatch spriteBatch)
