@@ -1,31 +1,38 @@
 ﻿using SkyShoot.Contracts.Bonuses;
 using SkyShoot.Contracts.Mobs;
+
 using SkyShoot.Contracts.Weapon.Projectiles;
+
 using Microsoft.Xna.Framework;
 
 namespace SkyShoot.Client.Game
 {
-    class GameController:Contracts.Service.ISkyShootCallback
+    public class GameController:Contracts.Service.ISkyShootCallback
     {
-        private GameModel _arena;
 
-        private GameController()
+        public GameModel GameModel { get; private set; }
+
+        public GameController()
         {
+            //todo initialize connection with server
+
+            //todo temporary!
+            GameStart(new AMob[0], new Contracts.Session.GameLevel(Contracts.Session.TileSet.Sand));
         }
 
         public void GameStart(AMob[] mobs, Contracts.Session.GameLevel arena)
         {
-            _arena = GameFactory.CreateClientGameLevel(arena);
+            GameModel = new GameModel(GameFactory.CreateClientGameLevel(arena));
             foreach (AMob mob in mobs)
             {
                 var clientMob = GameFactory.CreateClientMob(mob);
-                _arena.AddMob(clientMob);
+                GameModel.AddMob(clientMob);
             }
         }
 
         public void Shoot(AProjectile projectile)
         {
-            _arena.AddProjectile(GameFactory.CreateClientProjectile(projectile));
+            GameModel.AddProjectile(GameFactory.CreateClientProjectile(projectile));
         }
 
         public void SpawnMob(AMob mob)
@@ -36,12 +43,12 @@ namespace SkyShoot.Client.Game
         public void Hit(AMob mob, AProjectile projectile)
         {
             //todo
-            _arena.GetMob(mob.Id).HealthAmount -= 10;
+            GameModel.GetMob(mob.Id).HealthAmount -= 10;
         }
 
         public void MobDead(AMob mob)
         {
-            _arena.RemoveMob(mob.Id);
+            GameModel.RemoveMob(mob.Id);
         }
 
         public void MobMoved(AMob mob, Vector2 direction)

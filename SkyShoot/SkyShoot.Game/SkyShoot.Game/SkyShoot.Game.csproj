@@ -133,6 +133,10 @@
       <Project>{D06C047C-F816-493C-A21A-23FA583D15CB}</Project>
       <Name>SkyShoot.Client</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\SkyShoot.Contracts\SkyShoot.Contracts.csproj">
+      <Project>{27DFF06E-1942-47CE-8BF4-02F7CB108F6A}</Project>
+      <Name>SkyShoot.Contracts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SkyShoot.GameContent\SkyShoot.GameContent.contentproj">
       <Name>SkyShoot.GameContent</Name>
       <XnaReferenceType>Content</XnaReferenceType>

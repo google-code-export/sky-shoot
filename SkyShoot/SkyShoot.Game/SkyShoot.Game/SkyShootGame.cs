@@ -1,33 +1,28 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
+
+using SkyShoot.Client.View;
 
 namespace SkyShoot.Game
 {
     public class SkyShootGame : Microsoft.Xna.Framework.Game
     {
-        GraphicsDeviceManager graphics;
-        ScreenManager.ScreenManager screenManager;
+        private GraphicsDeviceManager _graphics;
+        private ScreenManager.ScreenManager _screenManager;
 
         public SkyShootGame()
         {
-            graphics = new GraphicsDeviceManager(this);
+            _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
 
         protected override void Initialize()
         {
-            screenManager = new ScreenManager.ScreenManager(this);
-            Components.Add(screenManager);
-            screenManager.AddScreen(new Screens.BackgroundScreen(Color.LightSeaGreen));
-            screenManager.AddScreen(new Screens.MainMenuScreen());
+            Textures.GraphicsDevice = GraphicsDevice;
+
+            _screenManager = new ScreenManager.ScreenManager(this);
+            Components.Add(_screenManager);
+            _screenManager.AddScreen(new Screens.BackgroundScreen(Color.LightSeaGreen));
+            _screenManager.AddScreen(new Screens.MainMenuScreen());
             base.Initialize();
 
         }

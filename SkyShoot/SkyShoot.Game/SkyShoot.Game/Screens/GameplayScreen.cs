@@ -1,42 +1,53 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using SkyShoot.Client.Game;
-using SkyShoot.Game.ScreenManager;
+﻿using Microsoft.Xna.Framework;
+
 using Microsoft.Xna.Framework.Content;
-using System.Threading;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
+
+using SkyShoot.Client.Game;
+using SkyShoot.Client.View;
+
+using SkyShoot.Game.ScreenManager;
 
 namespace SkyShoot.Game.Screens
 {
-    class GameplayScreen:GameScreen
+    class GameplayScreen : GameScreen
     {
-        ContentManager content;
+        private ContentManager _content;
 
-        private GameModel _gameModel;
+        private GameController _gameController;
 
         public GameplayScreen()
         {
-            //_gameModel = new GameModel();
+            //todo uncomment this!
+            //_gameController = new GameController();
         }
 
         public override void LoadContent()
         {
-            if (content == null)
-                content = new ContentManager(ScreenManager.Game.Services, "Content");
+            if (_content == null)
+                _content = new ContentManager(ScreenManager.Game.Services, "Content");
 
-            //пока что делаем вид что загружаем контент xD
-            Thread.Sleep(1000);
+            //load landscapes
+            Textures.SandLandscape     = _content.Load<Texture2D>("Textures/Landscapes/SandLandscape");
+            Textures.GrassLandscape    = _content.Load<Texture2D>("Textures/Landscapes/GrassLandscape");
+            Textures.SnowLandscape     = _content.Load<Texture2D>("Textures/Landscapes/SnowLandscape");
+            Textures.DesertLandscape   = _content.Load<Texture2D>("Textures/Landscapes/DesertLandscape");
+            Textures.VolcanicLandscape = _content.Load<Texture2D>("Textures/Landscapes/VolcanicLandscape");
+
+            //load stones
+            for (int i = 1; i <= 4; i++)
+                Textures.Stones[i - 1] = _content.Load<Texture2D>("Textures/Landscapes/Stone" + i);
+
+            //todo temporary!
+            _gameController = new GameController();
 
             ScreenManager.Game.ResetElapsedTime();
         }
 
         public override void UnloadContent()
         {
-            if (content != null)
-                content.Unload();
+            if (_content != null)
+                _content.Unload();
         }
 
         public override void HandleInput(InputState input)
@@ -44,13 +55,13 @@ namespace SkyShoot.Game.Screens
             //SkyShoot.Client.Game.GameController.HandleInput(input);
         }
 
-        public override void Draw(Microsoft.Xna.Framework.GameTime gameTime)
+        public override void Draw(GameTime gameTime)
         {
             GraphicsDevice graphicsDevice = ScreenManager.GraphicsDevice;
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
             graphicsDevice.Clear(Color.SkyBlue);
 
-            _gameModel.Draw(spriteBatch);
+            _gameController.GameModel.Draw(spriteBatch);
         }
     }
 }
