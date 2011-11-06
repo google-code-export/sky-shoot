@@ -24,8 +24,7 @@ namespace SkyShoot.Service.Logger
                                     account.TableEndpoint.AbsoluteUri, account.Credentials);
         }
 
-
-        public override void WriteLine(string message)
+        public override void Write(string  message)
         {
             try
             {
@@ -35,6 +34,11 @@ namespace SkyShoot.Service.Logger
             {
 
             }
+        }
+
+        public override void WriteLine(string message)
+        {
+            Write(message + System.Environment.NewLine);
         }
 
         public override void Fail(string message)
@@ -48,11 +52,5 @@ namespace SkyShoot.Service.Logger
 
             }
         }
-
-        public override void Write(string message)
-        {
-            throw new NotImplementedException();
-        }
-
     }
 }
