@@ -7,25 +7,26 @@ using System.ServiceModel.Web;
 using System.Text;
 
 using SkyShoot.Contracts.Service;
-using SkyShoot.Service.Client;
 using Microsoft.Xna.Framework;
 using SkyShoot.Service.Session;
+using SkyShoot.Contracts.Mobs;
 
 
 namespace SkyShoot.Service
 {
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple,
         InstanceContextMode = InstanceContextMode.PerSession)]
-    public class MainSkyShootService : ISkyShootService
+    public class MainSkyShootService : AMob, ISkyShootService, ISkyShootCallback
     {
+        private ISkyShootCallback _callback;
+        public string Name;
+
         private Account.AccountManager _accountManager = new Account.AccountManager();
         private Session.SessionManager _sessionManager = new Session.SessionManager();
 
-        private Client.Client _client;
+        private static List<MainSkyShootService> _clientsList = new List<MainSkyShootService>();
 
-        private GameSession _session;
-
-        private static List<Client.Client> _clientsList = new List<Client.Client>();
+        public MainSkyShootService() : base(new Microsoft.Xna.Framework.Vector2(0, 0), new Guid()) {}
 
         public bool Register(string username, string password)
         {
@@ -39,9 +40,11 @@ namespace SkyShoot.Service
 
             if (result)
             {
-                _client = new Client.Client(username, 
-                    OperationContext.Current.GetCallbackChannel<ISkyShootCallback>(), true);
-                _clientsList.Add(_client);
+                this.Name = username;
+                this._callback = OperationContext.Current.GetCallbackChannel<ISkyShootCallback>();
+                this.IsPlayer = true;
+
+                _clientsList.Add(this);
             }
 
             return result;
@@ -55,20 +58,22 @@ namespace SkyShoot.Service
         public bool CreateGame(Contracts.Session.GameMode mode, int maxPlayers)
         {
             
-            return ( _sessionManager.CreateGame(mode, maxPlayers, _client, Contracts.Session.TileSet.Grass) != null );
+            return ( _sessionManager.CreateGame(mode, maxPlayers, this, Contracts.Session.TileSet.Grass) != null );
         }
 
         public bool JoinGame(Contracts.Session.GameDescription game)
         {
-            _session = _sessionManager.JoinGame(game, _client.Name);
-            if (_session == null)
-                return false;
-            return true;
+            return _sessionManager.JoinGame(game, this.Name);
         }
 
-        public void Move(Vector2 direction)
+        public event SomebodyMovesHadler MeMoved;
+
+        public void Move(Vector2 direction) // приходит снаружи от клиента
         {
-            _session.Move(_client, direction);
+            if (MeMoved != null)
+            {
+                MeMoved(this, direction);
+            }
         }
 
         public void Shoot(Vector2 direction)
@@ -88,9 +93,76 @@ namespace SkyShoot.Service
 
         public void LeaveGame()
         {
-            bool result = _sessionManager.LeaveGame(_client.Name);
+            bool result = _sessionManager.LeaveGame(this.Name);
             if (!result)
-            { /* что-то сделать, например, добавить сообщение в лог */ }
+            { /* что-то сделать, например, добавить сообщение в лог */
+                return;
+            }
+
+            _clientsList.Remove(this);
+        }
+
+        public void GameStart(Contracts.Mobs.AMob[] mobs, Contracts.Session.GameLevel arena)
+        {
+            _callback.GameStart(mobs, arena);
+        }
+
+        public void Shoot(Contracts.Weapon.Projectiles.AProjectile projectile)
+        {
+            _callback.Shoot(projectile);
+        }
+
+        public void SpawnMob(Contracts.Mobs.AMob mob)
+        {
+            _callback.SpawnMob(mob);
+        }
+
+        public void Hit(Contracts.Mobs.AMob mob, Contracts.Weapon.Projectiles.AProjectile projectile)
+        {
+            _callback.Hit(mob, projectile);
+        }
+
+        public void MobDead(Contracts.Mobs.AMob mob)
+        {
+            _callback.MobDead(mob);
+        }
+
+        public void MobMoved(Contracts.Mobs.AMob mob, Vector2 direction)
+        {
+            if (mob == this)
+                return;
+
+            _callback.MobMoved(mob, direction);
+        }
+
+        public void BonusDropped(Contracts.Bonuses.AObtainableDamageModifier bonus)
+        {
+            _callback.BonusDropped(bonus);
+        }
+
+        public void BonusExpired(Contracts.Bonuses.AObtainableDamageModifier bonus)
+        {
+            _callback.BonusExpired(bonus);
+        }
+
+        public void BonusDisappeared(Contracts.Bonuses.AObtainableDamageModifier bonus)
+        {
+            _callback.BonusDisappeared(bonus);
+        }
+
+        public void GameOver()
+        {
+            _callback.GameOver();
+        }
+
+        public void PlayerLeft(Contracts.Mobs.AMob mob)
+        {
+            _callback.PlayerLeft(mob);
+        }
+
+        public void SynchroFrame(Contracts.Mobs.AMob[] mobs)
+        {
+            _callback.SynchroFrame(mobs);
         }
     }
 }

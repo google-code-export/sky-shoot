@@ -21,7 +21,7 @@ namespace SkyShoot.Service.Session
         }
 
         //Добавляем игрока в текущую игру.
-        public GameSession JoinGame(GameDescription game, string playerName)
+        public bool JoinGame(GameDescription game, string playerName)
         {
             GameSession session = _gameSessions.Find(curGame => curGame.LocalGameDescription.GameID == game.GameID);
 
@@ -29,24 +29,20 @@ namespace SkyShoot.Service.Session
             {
                 if(session.LocalGameDescription.Players.Contains(playerName)){
                     session.LocalGameDescription.Players.Add(playerName);
-                    return session;
+                    return true;
                 }
-                return null;
+                return false;
             }
             catch (Exception)
             {
-                return null;
+                return false;
             }
         }
         
         //Создаем новую игру
-        public GameSession CreateGame(GameMode mode, int maxPlayers, Client.Client client,TileSet tileSet)
+        public GameSession CreateGame(GameMode mode, int maxPlayers, MainSkyShootService client, TileSet tileSet)
         {
-            //List<string> playerNames;
-            //playerNames = new List<string>();
-            //playerNames.Add(playerName);
-
-            List<Client.Client> clients = new List<Client.Client>();
+            List<MainSkyShootService> clients = new List<MainSkyShootService>();
             clients.Add(client);
 
             GameSession gameSession = new GameSession(tileSet, clients, maxPlayers, mode, _gameID);
