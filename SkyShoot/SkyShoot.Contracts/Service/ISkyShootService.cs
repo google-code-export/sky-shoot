@@ -4,12 +4,16 @@ using SkyShoot.Contracts.Bonuses;
 using SkyShoot.Contracts.Perks;
 using SkyShoot.Contracts.Session;
 using Microsoft.Xna.Framework;
+using SkyShoot.Contracts.Mobs;
 
 namespace SkyShoot.Contracts.Service
 {
+    public delegate void SomebodyMovesHadler(AMob sender, Vector2 direction);
+
     [ServiceContract(CallbackContract = typeof(ISkyShootCallback))]
     public interface ISkyShootService
     {
+
         [OperationContract(IsInitiating = true)]
         bool Register(string username, string password);
 
