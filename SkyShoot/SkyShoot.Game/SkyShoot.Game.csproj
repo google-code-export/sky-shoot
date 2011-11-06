@@ -141,7 +141,7 @@
     <Content Include="GameThumbnail.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\SkyShoot.Contracts\SkyShoot.Contracts.csproj">
+    <ProjectReference Include="..\SkyShoot.Contracts\SkyShoot.Contracts.csproj">
       <Project>{27DFF06E-1942-47CE-8BF4-02F7CB108F6A}</Project>
       <Name>SkyShoot.Contracts</Name>
     </ProjectReference>
