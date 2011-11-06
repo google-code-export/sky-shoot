@@ -16,14 +16,6 @@ namespace SkyShoot.Service.Logger
 
         }
 
-        public IQueryable<Record> Record
-        {
-            get
-            {
-                return this.CreateQuery<Record>("Records");
-            }
-        }
-
         public void AddRecord(string message, string level)
         {
             this.AddObject("Records", new Record { Message = message, Level = level });
