@@ -7,9 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyShoot.Service", "SkyShoo
 EndProject
 Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "SkyShoot.AzureServer", "SkyShoot.AzureServer\SkyShoot.AzureServer.ccproj", "{ECA63E7E-751E-4BD1-A35E-24FD0CF6B55D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyShoot.Game", "SkyShoot.Game\SkyShoot.Game\SkyShoot.Game.csproj", "{BDF55567-2EB5-4DFE-A2EB-F7946B548C3A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyShoot.Game", "SkyShoot.Game\SkyShoot.Game.csproj", "{BDF55567-2EB5-4DFE-A2EB-F7946B548C3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyShoot.GameContent", "SkyShoot.Game\SkyShoot.GameContent\SkyShoot.GameContent.contentproj", "{0E5C34A9-89F1-4FF3-908E-D594DF3868E4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyShoot.GameContent", "SkyShoot.GameContent\SkyShoot.GameContent.contentproj", "{0E5C34A9-89F1-4FF3-908E-D594DF3868E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
