@@ -74,6 +74,9 @@
     <Compile Include="Bonus\ABonus.cs" />
     <Compile Include="Bonus\DoubleDamage.cs" />
     <Compile Include="Bonus\Shield.cs" />
+    <Compile Include="Logger\DataServiceContext.cs" />
+    <Compile Include="Logger\Record.cs" />
+    <Compile Include="Logger\TableTraceListener.cs" />
     <Compile Include="MainSkyShootService.svc.cs">
       <DependentUpon>MainSkyShootService.svc</DependentUpon>
     </Compile>
