@@ -22,7 +22,7 @@ namespace SkyShoot.Service
         public string Name;
 
         private Account.AccountManager _accountManager = new Account.AccountManager();
-        private Session.SessionManager _sessionManager = new Session.SessionManager();
+        private Session.SessionManager _sessionManager = Session.SessionManager.Instance;
 
         private static List<MainSkyShootService> _clientsList = new List<MainSkyShootService>();
 
