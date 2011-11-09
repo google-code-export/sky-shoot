@@ -82,7 +82,7 @@
     </Compile>
     <Compile Include="Mobs\IMobFactory.cs" />
     <Compile Include="Mobs\Mob.cs" />
-    <Compile Include="Mobs\SpiderMobFactory.cs" />
+    <Compile Include="Mobs\SpiderFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Session\GameSession.cs" />
     <Compile Include="Session\SessionManager.cs" />
