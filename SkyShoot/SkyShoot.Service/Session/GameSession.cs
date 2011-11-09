@@ -9,12 +9,13 @@ using SkyShoot.Contracts.Service;
 
 namespace SkyShoot.Service.Session
 {
-    
-
     public class GameSession
     {
 		private GameLevel _gameLevel;
 		private List<AMob> Mobs;
+        private SpiderFactory _spiderMobFactory;
+
+
 
 		public GameDescription LocalGameDescription { get; private set; }
 
@@ -31,7 +32,8 @@ namespace SkyShoot.Service.Session
                 player.MeMoved += new SomebodyMovesHadler(SomebodyMoved);
             }
 
-//			LocalGameDescription = new GameDescription(players, maxPlayersAllowed, gameType, gameID);
+            _spiderMobFactory= new SpiderFactory(_gameLevel, 100, 100, 100); // характеристики моба ИЗМЕНИТЬ!
+            // LocalGameDescription = new GameDescription(players, maxPlayersAllowed, gameType, gameID);
             // @todo: получить список имен из players
         }
 

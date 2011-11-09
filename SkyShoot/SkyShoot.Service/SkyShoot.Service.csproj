@@ -80,6 +80,9 @@
     <Compile Include="MainSkyShootService.svc.cs">
       <DependentUpon>MainSkyShootService.svc</DependentUpon>
     </Compile>
+    <Compile Include="Mobs\IMobFactory.cs" />
+    <Compile Include="Mobs\Mob.cs" />
+    <Compile Include="Mobs\SpiderMobFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Session\GameSession.cs" />
     <Compile Include="Session\SessionManager.cs" />
