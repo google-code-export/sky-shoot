@@ -15,7 +15,7 @@ namespace SkyShoot.Service.Account
         // Account key: Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==
         // прописывается в Web.config
 
-        string storageConnectionString = ConfigurationManager.ConnectionStrings["Storage"].ConnectionString;
+        static string storageConnectionString = ConfigurationManager.ConnectionStrings["Storage"].ConnectionString;
         TableHelper TableHelper = new TableHelper(storageConnectionString);
 
         /**

@@ -21,14 +21,15 @@ namespace SkyShoot.Service.Session
         }
 
         //Добавляем игрока в текущую игру.
-        public bool JoinGame(GameDescription game, string playerName)
+        public bool JoinGame(GameDescription game, MainSkyShootService player)
         {
             GameSession session = _gameSessions.Find(curGame => curGame.LocalGameDescription.GameID == game.GameID);
 
             try
             {
-                if(session.LocalGameDescription.Players.Contains(playerName)){
-                    session.LocalGameDescription.Players.Add(playerName);
+                if(session.LocalGameDescription.Players.Contains(player.Name)){
+                    session.LocalGameDescription.Players.Add(player.Name);
+                    session.players.Add(player);
                     return true;
                 }
                 return false;

@@ -34,5 +34,11 @@ namespace SkyShoot.Contracts.Weapon.Projectiles
         [DataMember]
 //      public Vector2 Orientation { get; set; }
         public Vector2 Direction { get; set; }
+
+        [DataMember]
+        public float Speed { get; set; }
+
+        [DataMember]
+        public int Timer { get; set; }
     }
 }

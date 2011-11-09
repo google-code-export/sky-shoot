@@ -63,7 +63,7 @@ namespace SkyShoot.Service
 
         public bool JoinGame(Contracts.Session.GameDescription game)
         {
-            return _sessionManager.JoinGame(game, this.Name);
+            return _sessionManager.JoinGame(game, this);
         }
 
         public event SomebodyMovesHadler MeMoved;
