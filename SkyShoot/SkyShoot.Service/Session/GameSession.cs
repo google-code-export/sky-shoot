@@ -7,6 +7,7 @@ using SkyShoot.Contracts.Mobs;
 using Microsoft.Xna.Framework;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Weapon.Projectiles;
+using System.Timers;
 
 namespace SkyShoot.Service.Session
 {
@@ -18,7 +19,6 @@ namespace SkyShoot.Service.Session
         public List<AProjectile> projectiles { get; set; }
         private int _movementTime;
         private SpiderFactory _spiderFactory;
-
 
 		public GameDescription LocalGameDescription { get; private set; }
 
@@ -41,11 +41,9 @@ namespace SkyShoot.Service.Session
                 playerNames.Add(player.Name);
             }
 
-
-
 			LocalGameDescription = new GameDescription(playerNames, maxPlayersAllowed, gameType, gameID);
             _spiderFactory= new SpiderFactory(_gameLevel, 100, 100, 100); // характеристики моба ИЗМЕНИТЬ!
-            
+
         }
 
         public event SomebodyMovesHadler SomebodyMoves;
@@ -61,7 +59,8 @@ namespace SkyShoot.Service.Session
         // здесь будут производится обработка всех действий
         public void update() 
         {
-            
+            var begin = System.DateTime.Now.Ticks * 10000;              
+
             foreach(AMob mob in mobs){
                 // @TODO АИ мобов 
                 mob.Coordinates = ComputeMovement(mob);
@@ -69,16 +68,27 @@ namespace SkyShoot.Service.Session
             foreach(AMob player in players)
                 player.Coordinates = ComputeMovement(player);
 
-            //TODO collision detection;
-
+            //@TODO collision detection;
+            
             foreach (AProjectile projectile in projectiles)
             {
-                if (projectile.Timer <= 0) projectiles.Remove(projectile);//тут скорее всего будет ошибка
                 projectile.Coordinates += projectile.Direction*projectile.Speed;
                 projectile.Timer--;
+                
             }
+            projectiles.RemoveAll(x=>(x.Timer<=0));
+
+            var end = System.DateTime.Now.Ticks * 10000;
+
+            var a = new Timer((double) Math.Max(1,_movementTime-(end-begin)));
+            a.Elapsed +=new ElapsedEventHandler(TimerElapsedListener);
         }
-       
+
+        private void TimerElapsedListener(object sender,EventArgs e)
+        {
+            update();
+        }
+
         public Vector2 ComputeMovement(AMob mob)
 		{
 			var realHeight=_gameLevel.levelHeight-mob.Radius;
