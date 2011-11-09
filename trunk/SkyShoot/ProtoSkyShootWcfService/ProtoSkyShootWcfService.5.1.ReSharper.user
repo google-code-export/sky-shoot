@@ -1,0 +1,121 @@
+<Configuration>
+  <SettingsComponent>
+    <string />
+    <integer />
+    <boolean>
+      <setting name="SolutionAnalysisEnabled">False</setting>
+    </boolean>
+  </SettingsComponent>
+  <RecentFiles>
+    <RecentFiles>
+      <File id="61FD3C02-D6BA-4830-8916-52B585DB4D95/f:IMyService.cs" caret="364" fromTop="11" />
+      <File id="61FD3C02-D6BA-4830-8916-52B585DB4D95/f:ICallback.cs" caret="270" fromTop="14" />
+      <File id="A62ED8BB-B5A4-40A0-A7A4-6CC1DD194718/f:CustomData.cs" caret="328" fromTop="12" />
+      <File id="61FD3C02-D6BA-4830-8916-52B585DB4D95/f:MyService.cs" caret="627" fromTop="14" />
+      <File id="191684A6-3DA2-475C-80B9-E44E32A9D972/f:Program.cs" caret="455" fromTop="3" />
+      <File id="61FD3C02-D6BA-4830-8916-52B585DB4D95/f:Program.cs" caret="1067" fromTop="17" />
+    </RecentFiles>
+    <RecentEdits>
+      <File id="A62ED8BB-B5A4-40A0-A7A4-6CC1DD194718/f:CustomData.cs" caret="186" fromTop="8" />
+      <File id="A62ED8BB-B5A4-40A0-A7A4-6CC1DD194718/f:CustomData.cs" caret="299" fromTop="13" />
+      <File id="61FD3C02-D6BA-4830-8916-52B585DB4D95/f:IMyService.cs" caret="248" fromTop="6" />
+      <File id="61FD3C02-D6BA-4830-8916-52B585DB4D95/f:Program.cs" caret="1196" fromTop="15" />
+      <File id="61FD3C02-D6BA-4830-8916-52B585DB4D95/f:Program.cs" caret="590" fromTop="11" />
+      <File id="61FD3C02-D6BA-4830-8916-52B585DB4D95/f:MyService.cs" caret="295" fromTop="6" />
+      <File id="61FD3C02-D6BA-4830-8916-52B585DB4D95/f:Program.cs" caret="1060" fromTop="17" />
+      <File id="61FD3C02-D6BA-4830-8916-52B585DB4D95/f:ICallback.cs" caret="156" fromTop="7" />
+      <File id="61FD3C02-D6BA-4830-8916-52B585DB4D95/f:ICallback.cs" caret="1792" fromTop="14" />
+      <File id="191684A6-3DA2-475C-80B9-E44E32A9D972/f:Program.cs" caret="198" fromTop="7" />
+      <File id="191684A6-3DA2-475C-80B9-E44E32A9D972/f:Program.cs" caret="929" fromTop="16" />
+      <File id="191684A6-3DA2-475C-80B9-E44E32A9D972/f:Program.cs" caret="369" fromTop="2" />
+      <File id="61FD3C02-D6BA-4830-8916-52B585DB4D95/f:MyService.cs" caret="587" fromTop="13" />
+      <File id="191684A6-3DA2-475C-80B9-E44E32A9D972/f:Program.cs" caret="116" fromTop="4" />
+      <File id="191684A6-3DA2-475C-80B9-E44E32A9D972/f:Program.cs" caret="840" fromTop="10" />
+    </RecentEdits>
+  </RecentFiles>
+  <NAntValidationSettings>
+    <NAntPath value="" />
+  </NAntValidationSettings>
+  <UnitTestRunner>
+    <Providers />
+  </UnitTestRunner>
+  <UnitTestRunnerNUnit>
+    <NUnitInstallDir IsNull="False">
+    </NUnitInstallDir>
+    <UseAddins>Never</UseAddins>
+  </UnitTestRunnerNUnit>
+  <CompletionStatisticsManager>
+    <ItemStatistics item="Default">
+      <Item value="public" priority="1" />
+      <Item value="string" priority="2" />
+      <Item value="int" priority="0" />
+      <Item value="DataContract" priority="0" />
+      <Item value="OperationContract" priority="0" />
+      <Item value="IMyService`0" priority="2" />
+      <Item value="return" priority="0" />
+      <Item value="data" priority="2" />
+      <Item value="void" priority="0" />
+      <Item value="CallbackContract" priority="0" />
+      <Item value="typeof" priority="3" />
+      <Item value="ICallback`0" priority="1" />
+      <Item value="Console`0" priority="5" />
+      <Item value="new" priority="4" />
+      <Item value="Uri" priority="0" />
+      <Item value="host" priority="4" />
+      <Item value="NetTcpBinding`0" priority="0" />
+      <Item value="SecurityMode`0" priority="0" />
+      <Item value="ConcurrencyMode" priority="0" />
+      <Item value="ConcurrencyMode`0" priority="0" />
+      <Item value="InstanceContextMode`0" priority="1" />
+      <Item value="class" priority="0" />
+      <Item value="ServiceReference1" priority="1" />
+      <Item value="IMyServiceCallback`0" priority="0" />
+      <Item value="var" priority="0" />
+      <Item value="MyServiceClient`0" priority="0" />
+      <Item value="InstanceContext" priority="0" />
+      <Item value="client" priority="0" />
+      <Item value="CustomData" priority="0" />
+      <Item value="ExtensionData" priority="0" />
+      <Item value="MyData" priority="0" />
+      <Item value="OperationContext`0" priority="0" />
+      <Item value="callback" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:ProtoSkyShootWCFContracts.CustomData">
+      <Item value="MyData" priority="2" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.Console">
+      <Item value="Write`0" priority="0" />
+      <Item value="ReadKey`0" priority="1" />
+      <Item value="WriteLine`0" priority="2" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.ServiceModel.ServiceHost">
+      <Item value="Open`0" priority="0" />
+      <Item value="Close`0" priority="0" />
+      <Item value="AddServiceEndpoint`0" priority="1" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.ServiceModel.SecurityMode">
+      <Item value="None" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.ServiceModel.ConcurrencyMode">
+      <Item value="Multiple" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.ServiceModel.InstanceContextMode">
+      <Item value="Single" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.ServiceModel.Description.MetadataExchangeBindings">
+      <Item value="CreateMexTcpBinding`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:ProtoSkyShootWCFClient.ServiceReference1.MyServiceClient">
+      <Item value="GetMyData`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.ServiceModel.OperationContext">
+      <Item value="Current" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.ServiceModel.OperationContext">
+      <Item value="GetCallbackChannel`1" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:ProtoSkyShootWcfService.ICallback">
+      <Item value="NotifyClient`0" priority="0" />
+    </ItemStatistics>
+  </CompletionStatisticsManager>
+</Configuration>

@@ -1,0 +1,7 @@
+c:\users\станислав сартасов\documents\visual studio 2010\Projects\ProtoSkyShootWcfService\ProtoSkyShootWcfService\bin\Debug\ProtoSkyShootWcfService.exe
+c:\users\станислав сартасов\documents\visual studio 2010\Projects\ProtoSkyShootWcfService\ProtoSkyShootWcfService\bin\Debug\ProtoSkyShootWcfService.pdb
+c:\users\станислав сартасов\documents\visual studio 2010\Projects\ProtoSkyShootWcfService\ProtoSkyShootWcfService\bin\Debug\ProtoSkyShootWCFContracts.dll
+c:\users\станислав сартасов\documents\visual studio 2010\Projects\ProtoSkyShootWcfService\ProtoSkyShootWcfService\bin\Debug\ProtoSkyShootWCFContracts.pdb
+c:\users\станислав сартасов\documents\visual studio 2010\Projects\ProtoSkyShootWcfService\ProtoSkyShootWcfService\obj\x86\Debug\ResolveAssemblyReference.cache
+c:\users\станислав сартасов\documents\visual studio 2010\Projects\ProtoSkyShootWcfService\ProtoSkyShootWcfService\obj\x86\Debug\ProtoSkyShootWcfService.exe
+c:\users\станислав сартасов\documents\visual studio 2010\Projects\ProtoSkyShootWcfService\ProtoSkyShootWcfService\obj\x86\Debug\ProtoSkyShootWcfService.pdb
