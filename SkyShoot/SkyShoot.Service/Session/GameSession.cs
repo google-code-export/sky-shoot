@@ -17,7 +17,7 @@ namespace SkyShoot.Service.Session
         public List<AMob> mobs{get; set;}
         public List<AProjectile> projectiles { get; set; }
         private int _movementTime;
-        private SpiderFactory _spiderMobFactory;
+        private SpiderFactory _spiderFactory;
 
 
 		public GameDescription LocalGameDescription { get; private set; }
@@ -44,7 +44,7 @@ namespace SkyShoot.Service.Session
 
 
 			LocalGameDescription = new GameDescription(playerNames, maxPlayersAllowed, gameType, gameID);
-            _spiderMobFactory= new SpiderFactory(_gameLevel, 100, 100, 100); // характеристики моба ИЗМЕНИТЬ!
+            _spiderFactory= new SpiderFactory(_gameLevel, 100, 100, 100); // характеристики моба ИЗМЕНИТЬ!
             
         }
 

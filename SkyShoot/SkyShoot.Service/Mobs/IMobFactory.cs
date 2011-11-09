@@ -7,6 +7,6 @@ namespace SkyShoot.Contracts.Mobs
 {
     public interface IMobFactory
     {
-        //public Mob CreateMob(List<string> targetPlayers);
+        Mob CreateMob(List<AMob> targetPlayers);
     }
 }
