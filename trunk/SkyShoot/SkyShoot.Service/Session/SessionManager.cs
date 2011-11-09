@@ -8,14 +8,27 @@ namespace SkyShoot.Service.Session
 {
     public class SessionManager
     {
+        private static bool isInitialised=false;
+
+        public static SessionManager Instance
+        {
+            get
+            {
+                return isInitialised ? Instance : new SessionManager();
+            }
+            set{ Instance = value; }
+        }
+
         //Содержит текущие игры
         private List<GameSession> _gameSessions;
 
         //Уникальный идентификатор, который присваивается каждой игре при её создании
         private int _gameID;
 
-        public SessionManager()
+        private SessionManager()
         {
+            isInitialised = true;
+            Instance = this;
             _gameSessions = new List<GameSession>();
             _gameID = 1;
         }
