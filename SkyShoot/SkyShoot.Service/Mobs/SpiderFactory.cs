@@ -9,55 +9,62 @@ namespace SkyShoot.Contracts.Mobs
 {
     public class SpiderFactory : IMobFactory
     {
-        private Random _random = new Random();
         private Double _width;
         private Double _height;
         private Double _border;
-        private int _healthAmount;
-        private float _radius;
-        private float _speed;
+        private const int _healthAmount = 100; //Изменить на реальные параметры
+        private const float _radius = 100; //Изменить на реальные параметры
+        private const float _speed = 100; //Изменить на реальные параметры
 
 
-        public SpiderFactory(GameLevel gameLevel, int healthAmount, float radius, float speed)
+        public SpiderFactory(GameLevel gameLevel)
         {
             _width = gameLevel.levelWidth;
-            _height = gameLevel.levelHeight;
+            _height =  gameLevel.levelHeight;
             _border = gameLevel.LEVELBORDER;
-            _healthAmount = healthAmount;
-            _speed = speed;
-            _radius = radius;
         }
 
-        public Mob CreateMob(List<AMob> targetPlayers)
+        private Random _random = new Random();
+
+        public Mob CreateMob()
         {
-            Double x = _random.NextDouble() * (_border + _width);
-            Double y;
+            int x;
+            int y;
 
             // присваивание случайных координат созданному мобу
-            if (x <= _border || x >= _width)
+            if (_random.Next(2) == 0) //длина
             {
-                y = _random.NextDouble() * (_border + _height);
+                x = _random.Next((int) (-_width - _border), (int) (_width + _border));
+
+                if (_random.Next(2) == 0) // верх
+                {
+                    y = _random.Next((int) _height, (int) (_height + _border));
+                }
+                else //низ
+                {
+                    y = _random.Next((int)(-_height - _border), (int) -_height);
+                }
             }
-            else
+            else // высота
             {
-                if (_random.Next(1) == 0)
+                y = _random.Next((int) (-_height - _border), (int)(_height + _border));
+
+                if (_random.Next(2) == 0) // левая
                 {
-                    y = _random.NextDouble() * _border;
+                    x = _random.Next((int) (-_width - _border), (int) -_width);
                 }
-                else 
+                else // правая
                 {
-                    y = _height - _random.NextDouble() * _border;
+                    x = _random.Next((int) _width, (int) (_width + _border));
                 }
+
             }
 
             var spider = new Mob();
-            // поиск цели и логика атак/преследования потом
-
             spider.Coordinates = new Vector2((float) x, (float) y);
             spider.Radius = _radius;
             spider.Speed = _speed;
             spider.HealthAmount = _healthAmount;
-
             return spider;
         }
     }

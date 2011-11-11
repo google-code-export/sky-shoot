@@ -45,8 +45,7 @@ namespace SkyShoot.Service.Session
             }
 
 			LocalGameDescription = new GameDescription(playerNames, maxPlayersAllowed, gameType, gameID);
-            _spiderFactory= new SpiderFactory(_gameLevel, 100, 100, 100); // характеристики моба ИЗМЕНИТЬ!
-
+            _spiderFactory= new SpiderFactory(_gameLevel);
         }
 
         public event SomebodyMovesHadler SomebodyMoves;
