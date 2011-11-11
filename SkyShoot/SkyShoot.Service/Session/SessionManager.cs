@@ -51,7 +51,7 @@ namespace SkyShoot.Service.Session
         }
         
         //Создаем новую игру
-        public GameSession CreateGame(GameMode mode, int maxPlayers, MainSkyShootService client, TileSet tileSet)
+        public GameDescription CreateGame(GameMode mode, int maxPlayers, MainSkyShootService client, TileSet tileSet)
         {
             List<MainSkyShootService> clients = new List<MainSkyShootService>();
             clients.Add(client);
@@ -59,7 +59,7 @@ namespace SkyShoot.Service.Session
             GameSession gameSession = new GameSession(tileSet, clients, maxPlayers, mode, _gameID);
             _gameSessions.Add(gameSession);
 
-            return gameSession;
+            return gameSession.LocalGameDescription;
         }
 
         //Возвращает список игр.
