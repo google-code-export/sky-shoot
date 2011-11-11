@@ -10,7 +10,7 @@ namespace SkyShoot.Contracts.Service
     {
         void GameStart(AMob[] mobs, GameLevel arena);
 
-        void Shoot(AProjectile projectile); // лучше передавать массив AProjectile[] projectiles
+        void MobShot(AMob mob, AProjectile[] projectiles); // лучше передавать массив AProjectile[] projectiles
 
         void SpawnMob(AMob mob);
 

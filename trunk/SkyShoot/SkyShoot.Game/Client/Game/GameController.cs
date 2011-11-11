@@ -105,5 +105,11 @@ namespace SkyShoot.Game.Client.Game
             GameModel.GetMob(Id).RunVector = inputState.RunVector;
         }
 
+
+
+        public void MobShot(AMob mob, AProjectile[] projectiles)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

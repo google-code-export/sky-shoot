@@ -9,6 +9,8 @@ using SkyShoot.Contracts.Mobs;
 namespace SkyShoot.Contracts.Service
 {
     public delegate void SomebodyMovesHadler(AMob sender, Vector2 direction);
+    public delegate void ClientShootsHandler(AMob sender, Vector2 direction);
+    public delegate void SomebodyShootsHandler(AMob sender, SkyShoot.Contracts.Weapon.Projectiles.AProjectile[] projectiles);
 
     [ServiceContract(CallbackContract = typeof(ISkyShootCallback))]
     public interface ISkyShootService

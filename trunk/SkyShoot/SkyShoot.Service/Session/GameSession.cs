@@ -38,6 +38,9 @@ namespace SkyShoot.Service.Session
                 this.SomebodyMoves += new SomebodyMovesHadler(player.MobMoved);
                 player.MeMoved += new SomebodyMovesHadler(SomebodyMoved);
 
+                this.SomebodyShoots += new SomebodyShootsHandler(player.MobShot);
+                player.MeShot += new ClientShootsHandler(SomebodyShot);
+
                 playerNames.Add(player.Name);
             }
 
@@ -47,12 +50,23 @@ namespace SkyShoot.Service.Session
         }
 
         public event SomebodyMovesHadler SomebodyMoves;
+        public event SomebodyShootsHandler SomebodyShoots;
 
         public void SomebodyMoved(AMob sender, Vector2 direction)
         {
             if (SomebodyMoves != null)
             {
                 SomebodyMoves(sender, direction);
+            }
+        }
+
+        public void SomebodyShot(AMob sender, Vector2 direction)
+        {
+            if (SomebodyShoots != null)
+            {
+                if ((sender as MainSkyShootService).Weapon != null)
+                    SomebodyShoots(sender, 
+                        (sender as MainSkyShootService).Weapon.CreateBullets(sender, direction));
             }
         }
 

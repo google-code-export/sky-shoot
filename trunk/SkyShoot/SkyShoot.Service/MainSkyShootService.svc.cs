@@ -10,6 +10,8 @@ using SkyShoot.Contracts.Service;
 using Microsoft.Xna.Framework;
 using SkyShoot.Service.Session;
 using SkyShoot.Contracts.Mobs;
+using SkyShoot.Service.Weapon;
+using SkyShoot.Contracts.Weapon.Projectiles;
 
 
 namespace SkyShoot.Service
@@ -20,6 +22,8 @@ namespace SkyShoot.Service
     {
         private ISkyShootCallback _callback;
         public string Name;
+
+        public AWeapon Weapon { get; set; }
 
         private Account.AccountManager _accountManager = new Account.AccountManager();
         private Session.SessionManager _sessionManager = Session.SessionManager.Instance;
@@ -67,6 +71,7 @@ namespace SkyShoot.Service
         }
 
         public event SomebodyMovesHadler MeMoved;
+        public event ClientShootsHandler MeShot;
 
         public void Move(Vector2 direction) // приходит снаружи от клиента
         {
@@ -78,7 +83,10 @@ namespace SkyShoot.Service
 
         public void Shoot(Vector2 direction)
         {
-            throw new NotImplementedException();
+            if (MeShot != null)
+            {
+                MeShot(this, direction);
+            }
         }
 
         public void TakeBonus(Contracts.Bonuses.AObtainableDamageModifier bonus)
@@ -107,11 +115,6 @@ namespace SkyShoot.Service
             _callback.GameStart(mobs, arena);
         }
 
-        public void Shoot(Contracts.Weapon.Projectiles.AProjectile projectile)
-        {
-            _callback.Shoot(projectile);
-        }
-
         public void SpawnMob(Contracts.Mobs.AMob mob)
         {
             _callback.SpawnMob(mob);
@@ -133,6 +136,14 @@ namespace SkyShoot.Service
                 return;
 
             _callback.MobMoved(mob, direction);
+        }
+
+        public void MobShot(Contracts.Mobs.AMob mob, SkyShoot.Contracts.Weapon.Projectiles.AProjectile[] projectiles)
+        {
+            if (mob == this)
+                return;
+
+            _callback.MobShot(mob, projectiles);
         }
 
         public void BonusDropped(Contracts.Bonuses.AObtainableDamageModifier bonus)
