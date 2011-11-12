@@ -9,12 +9,9 @@ namespace SkyShoot.Contracts.Mobs
 {
     public class SpiderFactory : IMobFactory
     {
-        private Double _width;
-        private Double _height;
-        private Double _border;
-        private const int _healthAmount = 100; //Изменить на реальные параметры
-        private const float _radius = 100; //Изменить на реальные параметры
-        private const float _speed = 100; //Изменить на реальные параметры
+        private float _width;
+        private float _height;
+        private float _border;
 
 
         public SpiderFactory(GameLevel gameLevel)
@@ -61,10 +58,8 @@ namespace SkyShoot.Contracts.Mobs
             }
 
             var spider = new Mob();
-            spider.Coordinates = new Vector2((float) x, (float) y);
-            spider.Radius = _radius;
-            spider.Speed = _speed;
-            spider.HealthAmount = _healthAmount;
+            spider.Coordinates = new Vector2((float) x, (float ) y);
+
             return spider;
         }
     }
