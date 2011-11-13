@@ -1,5 +1,0 @@
-c:\users\станислав сартасов\documents\visual studio 2010\Projects\ProtoSkyShootWcfService\ProtoSkyShootWCFContracts\bin\Debug\ProtoSkyShootWCFContracts.dll
-c:\users\станислав сартасов\documents\visual studio 2010\Projects\ProtoSkyShootWcfService\ProtoSkyShootWCFContracts\bin\Debug\ProtoSkyShootWCFContracts.pdb
-c:\users\станислав сартасов\documents\visual studio 2010\Projects\ProtoSkyShootWcfService\ProtoSkyShootWCFContracts\obj\Debug\ResolveAssemblyReference.cache
-c:\users\станислав сартасов\documents\visual studio 2010\Projects\ProtoSkyShootWcfService\ProtoSkyShootWCFContracts\obj\Debug\ProtoSkyShootWCFContracts.dll
-c:\users\станислав сартасов\documents\visual studio 2010\Projects\ProtoSkyShootWcfService\ProtoSkyShootWCFContracts\obj\Debug\ProtoSkyShootWCFContracts.pdb
