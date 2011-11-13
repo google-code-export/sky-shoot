@@ -10,9 +10,7 @@
 -->
 <ServiceDefinition name="SkyShoot.AzureServer" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition">
   <WorkerRole name="SkyShoot.Service" vmsize="Small">
-    <Imports>
-      <Import moduleName="Diagnostics" />
-    </Imports>
+    <Imports></Imports>
     <Endpoints>
       <InputEndpoint name="SkyShootEndpoint" protocol="tcp" port="777" />
     </Endpoints>

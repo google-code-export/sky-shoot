@@ -36,20 +36,20 @@ namespace SkyShoot.Service
             return true;
         }
 
-        public bool Login(string username, string password)
+        public Guid? Login(string username, string password)
         {
             bool result = true; //_accountManager.Login(username, password);
 
             if (result)
             {
-                this.Name = username;
-                this._callback = OperationContext.Current.GetCallbackChannel<ISkyShootCallback>();
-                this.IsPlayer = true;
+                Name = username;
+                _callback = OperationContext.Current.GetCallbackChannel<ISkyShootCallback>();
+                IsPlayer = true;
 
                 ClientsList.Add(this);
             }
 
-            return result;
+            return result ? Id : (Guid?)null;
         }
 
         public Contracts.Session.GameDescription[] GetGameList()
