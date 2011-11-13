@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Configuration;
-using System.IO;
+
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using Microsoft.WindowsAzure.ServiceRuntime;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.StorageClient;
+using System.Configuration;
+
 using System.Data.Services.Client;
+
+using Microsoft.WindowsAzure;
+
+using Microsoft.WindowsAzure.StorageClient;
+using Microsoft.WindowsAzure.ServiceRuntime;
 
 namespace SkyShoot.Service.Account
 {

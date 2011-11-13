@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="8b672fb7-20e3-4142-a88a-1f3cf7304b0c" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="d6902ddc-2867-439f-8378-a00eb8f7fd4f" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <EnableDataBinding>true</EnableDataBinding>
@@ -18,18 +18,17 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:777/MainSkyShootService.svc" Protocol="http" SourceId="1" />
+    <MetadataSource Address="net.tcp://localhost:777/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="MainSkyShootService.wsdl" MetadataType="Wsdl" ID="4b223bb8-8fd2-4313-89ed-3f93bee645aa" SourceId="1" SourceUrl="http://localhost:777/MainSkyShootService.svc?wsdl" />
-    <MetadataFile FileName="MainSkyShootService.disco" MetadataType="Disco" ID="ec7413c0-44b2-48f5-babc-e97c938e3d5d" SourceId="1" SourceUrl="http://localhost:777/MainSkyShootService.svc?disco" />
-    <MetadataFile FileName="MainSkyShootService.xsd" MetadataType="Schema" ID="6eeb86be-aeee-4743-adba-9eb018b7aa17" SourceId="1" SourceUrl="http://localhost:777/MainSkyShootService.svc?xsd=xsd0" />
-    <MetadataFile FileName="MainSkyShootService1.xsd" MetadataType="Schema" ID="3e8f5ad4-06ae-4aeb-8daa-2aecb5be7371" SourceId="1" SourceUrl="http://localhost:777/MainSkyShootService.svc?xsd=xsd1" />
-    <MetadataFile FileName="MainSkyShootService2.xsd" MetadataType="Schema" ID="d2f76f83-bfa8-49a7-ba51-96c91d4fa275" SourceId="1" SourceUrl="http://localhost:777/MainSkyShootService.svc?xsd=xsd2" />
-    <MetadataFile FileName="MainSkyShootService3.xsd" MetadataType="Schema" ID="f2725085-88db-4fbb-8e18-06171fe3915c" SourceId="1" SourceUrl="http://localhost:777/MainSkyShootService.svc?xsd=xsd3" />
-    <MetadataFile FileName="MainSkyShootService4.xsd" MetadataType="Schema" ID="e8bb266d-5973-4cd0-a042-8210c7fd111f" SourceId="1" SourceUrl="http://localhost:777/MainSkyShootService.svc?xsd=xsd4" />
-    <MetadataFile FileName="MainSkyShootService5.xsd" MetadataType="Schema" ID="57872f03-b072-4d3a-84af-4bbda5eae425" SourceId="1" SourceUrl="http://localhost:777/MainSkyShootService.svc?xsd=xsd5" />
-    <MetadataFile FileName="MainSkyShootService6.xsd" MetadataType="Schema" ID="7440a19d-c0af-4451-a691-bbd70b0be6cb" SourceId="1" SourceUrl="http://localhost:777/MainSkyShootService.svc?xsd=xsd6" />
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="456e9016-edfc-4e17-88e1-22910aaa8d59" SourceId="1" SourceUrl="net.tcp://localhost:777/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="354b3215-da47-4191-a692-6885183a774e" SourceId="1" SourceUrl="net.tcp://localhost:777/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="2f0eaf9f-d364-439d-8d94-6e17e17ccbac" SourceId="1" SourceUrl="net.tcp://localhost:777/mex" />
+    <MetadataFile FileName="SkyShoot.Contracts.Session.xsd" MetadataType="Schema" ID="1443d8d8-c9be-45cb-8e69-b2657d66ee38" SourceId="1" SourceUrl="net.tcp://localhost:777/mex" />
+    <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="948f2450-d03c-498f-9cc3-481d734a7af1" SourceId="1" SourceUrl="net.tcp://localhost:777/mex" />
+    <MetadataFile FileName="Microsoft.Xna.Framework.xsd" MetadataType="Schema" ID="d217dceb-ae9e-48a5-af28-39e4fef7c5a7" SourceId="1" SourceUrl="net.tcp://localhost:777/mex" />
+    <MetadataFile FileName="SkyShoot.Contracts.Bonuses.xsd" MetadataType="Schema" ID="bc1a8175-1607-418f-a3ca-81405a8ae1b9" SourceId="1" SourceUrl="net.tcp://localhost:777/mex" />
+    <MetadataFile FileName="SkyShoot.Contracts.Perks.xsd" MetadataType="Schema" ID="997b816a-4bd8-42eb-bf61-93241c312570" SourceId="1" SourceUrl="net.tcp://localhost:777/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

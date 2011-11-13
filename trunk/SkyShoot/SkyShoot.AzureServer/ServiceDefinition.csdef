@@ -1,21 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ServiceDefinition name="SkyShoot.AzureServer" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition">
-  <WebRole name="SkyShoot.Service" vmsize="Small">
-    <Sites>
-      <Site name="Web">
-        <Bindings>
-          <Binding name="Endpoint1" endpointName="SkyShootEndpoint" />
-        </Bindings>
-      </Site>
-    </Sites>
-    <Endpoints>
-      <InputEndpoint name="SkyShootEndpoint" protocol="http" port="777" />
-    </Endpoints>
+  <WorkerRole name="SkyShoot.Service" vmsize="Small">
     <Imports>
       <Import moduleName="Diagnostics" />
     </Imports>
-    <ConfigurationSettings>
-      <Setting name="DataConnectionString" />
-    </ConfigurationSettings>
-  </WebRole>
+    <Endpoints>
+      <InputEndpoint name="SkyShootEndpoint" protocol="tcp" port="777" />
+    </Endpoints>
+  </WorkerRole>
 </ServiceDefinition>

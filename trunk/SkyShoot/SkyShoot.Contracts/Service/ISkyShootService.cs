@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using System.ServiceModel;
+﻿using System.ServiceModel;
 using SkyShoot.Contracts.Bonuses;
 using SkyShoot.Contracts.Perks;
 using SkyShoot.Contracts.Session;
@@ -10,7 +9,7 @@ namespace SkyShoot.Contracts.Service
 {
     public delegate void SomebodyMovesHadler(AMob sender, Vector2 direction);
     public delegate void ClientShootsHandler(AMob sender, Vector2 direction);
-    public delegate void SomebodyShootsHandler(AMob sender, SkyShoot.Contracts.Weapon.Projectiles.AProjectile[] projectiles);
+    public delegate void SomebodyShootsHandler(AMob sender, Weapon.Projectiles.AProjectile[] projectiles);
 
     [ServiceContract(CallbackContract = typeof(ISkyShootCallback))]
     public interface ISkyShootService

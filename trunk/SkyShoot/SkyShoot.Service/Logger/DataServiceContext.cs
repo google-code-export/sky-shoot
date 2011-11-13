@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Microsoft.WindowsAzure.StorageClient;
+﻿using Microsoft.WindowsAzure.StorageClient;
 using Microsoft.WindowsAzure;
 
 namespace SkyShoot.Service.Logger

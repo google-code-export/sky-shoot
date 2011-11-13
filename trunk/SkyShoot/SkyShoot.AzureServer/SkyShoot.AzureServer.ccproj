@@ -39,9 +39,9 @@
   <ItemGroup>
     <ProjectReference Include="..\SkyShoot.Service\SkyShoot.Service.csproj">
       <Name>SkyShoot.Service</Name>
-      <Project>{62c758fd-8bf4-42e4-9747-7926d8824506}</Project>
+      <Project>{732b4d54-9127-4ebf-83dc-8fc246a22ab1}</Project>
       <Private>True</Private>
-      <RoleType>Web</RoleType>
+      <RoleType>Worker</RoleType>
       <RoleName>SkyShoot.Service</RoleName>
       <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
     </ProjectReference>
