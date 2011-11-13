@@ -1,6 +1,0 @@
-<Modules>
-  <Module PersistentId="61FD3C02-D6BA-4830-8916-52B585DB4D95" ModuleId="ProtoSkyShootWcfService" />
-  <Module PersistentId="C5BA271E-E5DF-417D-865C-C009C179FFDA" ModuleId="ProtoSkyShootWCFData" />
-  <Module PersistentId="A62ED8BB-B5A4-40A0-A7A4-6CC1DD194718" ModuleId="ProtoSkyShootWCFContracts" />
-  <Module PersistentId="191684A6-3DA2-475C-80B9-E44E32A9D972" ModuleId="ProtoSkyShootWCFClient" />
-</Modules>
