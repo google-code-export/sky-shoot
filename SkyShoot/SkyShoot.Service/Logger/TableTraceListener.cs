@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+
+using System.Data.Services.Client;
+
+using Microsoft.WindowsAzure;
 
 using Microsoft.WindowsAzure.StorageClient;
-using System.Data.Services.Client;
-using Microsoft.WindowsAzure;
 
 namespace SkyShoot.Service.Logger
 {

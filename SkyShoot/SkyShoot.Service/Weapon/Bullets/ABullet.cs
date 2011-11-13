@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Weapon.Projectiles;
