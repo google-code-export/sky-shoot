@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="MainSkyShootService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:777/MainSkyShootService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:777/MainSkyShootService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:777/MainSkyShootService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/SkyShoot.Contracts.Session" />
+      <xsd:import schemaLocation="http://localhost:777/MainSkyShootService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://localhost:777/MainSkyShootService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Microsoft.Xna.Framework" />
+      <xsd:import schemaLocation="http://localhost:777/MainSkyShootService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/SkyShoot.Contracts.Bonuses" />
+      <xsd:import schemaLocation="http://localhost:777/MainSkyShootService.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/SkyShoot.Contracts.Perks" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ISkyShootService_Register_InputMessage">
+    <wsdl:part name="parameters" element="tns:Register" />
+  </wsdl:message>
+  <wsdl:message name="ISkyShootService_Register_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegisterResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISkyShootService_Login_InputMessage">
+    <wsdl:part name="parameters" element="tns:Login" />
+  </wsdl:message>
+  <wsdl:message name="ISkyShootService_Login_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISkyShootService_GetGameList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetGameList" />
+  </wsdl:message>
+  <wsdl:message name="ISkyShootService_GetGameList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetGameListResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISkyShootService_CreateGame_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateGame" />
+  </wsdl:message>
+  <wsdl:message name="ISkyShootService_CreateGame_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateGameResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISkyShootService_JoinGame_InputMessage">
+    <wsdl:part name="parameters" element="tns:JoinGame" />
+  </wsdl:message>
+  <wsdl:message name="ISkyShootService_JoinGame_OutputMessage">
+    <wsdl:part name="parameters" element="tns:JoinGameResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISkyShootService_Move_InputMessage">
+    <wsdl:part name="parameters" element="tns:Move" />
+  </wsdl:message>
+  <wsdl:message name="ISkyShootService_Shoot_InputMessage">
+    <wsdl:part name="parameters" element="tns:Shoot" />
+  </wsdl:message>
+  <wsdl:message name="ISkyShootService_TakeBonus_InputMessage">
+    <wsdl:part name="parameters" element="tns:TakeBonus" />
+  </wsdl:message>
+  <wsdl:message name="ISkyShootService_TakePerk_InputMessage">
+    <wsdl:part name="parameters" element="tns:TakePerk" />
+  </wsdl:message>
+  <wsdl:message name="ISkyShootService_TakePerk_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TakePerkResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISkyShootService_LeaveGame_InputMessage">
+    <wsdl:part name="parameters" element="tns:LeaveGame" />
+  </wsdl:message>
+  <wsdl:message name="ISkyShootService_LeaveGame_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LeaveGameResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ISkyShootService">
+    <wsdl:operation name="Register">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISkyShootService/Register" message="tns:ISkyShootService_Register_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISkyShootService/RegisterResponse" message="tns:ISkyShootService_Register_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISkyShootService/Login" message="tns:ISkyShootService_Login_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISkyShootService/LoginResponse" message="tns:ISkyShootService_Login_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetGameList">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISkyShootService/GetGameList" message="tns:ISkyShootService_GetGameList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISkyShootService/GetGameListResponse" message="tns:ISkyShootService_GetGameList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateGame">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISkyShootService/CreateGame" message="tns:ISkyShootService_CreateGame_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISkyShootService/CreateGameResponse" message="tns:ISkyShootService_CreateGame_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="JoinGame">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISkyShootService/JoinGame" message="tns:ISkyShootService_JoinGame_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISkyShootService/JoinGameResponse" message="tns:ISkyShootService_JoinGame_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Move">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISkyShootService/Move" message="tns:ISkyShootService_Move_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Shoot">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISkyShootService/Shoot" message="tns:ISkyShootService_Shoot_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TakeBonus">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISkyShootService/TakeBonus" message="tns:ISkyShootService_TakeBonus_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TakePerk">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISkyShootService/TakePerk" message="tns:ISkyShootService_TakePerk_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISkyShootService/TakePerkResponse" message="tns:ISkyShootService_TakePerk_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LeaveGame">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISkyShootService/LeaveGame" message="tns:ISkyShootService_LeaveGame_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISkyShootService/LeaveGameResponse" message="tns:ISkyShootService_LeaveGame_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_ISkyShootService" type="tns:ISkyShootService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Register">
+      <soap:operation soapAction="http://tempuri.org/ISkyShootService/Register" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <soap:operation soapAction="http://tempuri.org/ISkyShootService/Login" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGameList">
+      <soap:operation soapAction="http://tempuri.org/ISkyShootService/GetGameList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateGame">
+      <soap:operation soapAction="http://tempuri.org/ISkyShootService/CreateGame" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="JoinGame">
+      <soap:operation soapAction="http://tempuri.org/ISkyShootService/JoinGame" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Move">
+      <soap:operation soapAction="http://tempuri.org/ISkyShootService/Move" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="Shoot">
+      <soap:operation soapAction="http://tempuri.org/ISkyShootService/Shoot" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="TakeBonus">
+      <soap:operation soapAction="http://tempuri.org/ISkyShootService/TakeBonus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="TakePerk">
+      <soap:operation soapAction="http://tempuri.org/ISkyShootService/TakePerk" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LeaveGame">
+      <soap:operation soapAction="http://tempuri.org/ISkyShootService/LeaveGame" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MainSkyShootService">
+    <wsdl:port name="BasicHttpBinding_ISkyShootService" binding="tns:BasicHttpBinding_ISkyShootService">
+      <soap:address location="http://localhost:777/MainSkyShootService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
