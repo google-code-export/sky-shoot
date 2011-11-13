@@ -40,7 +40,7 @@ namespace SkyShoot.Service
 
         public bool Login(string username, string password)
         {
-            bool result = _accountManager.Login(username, password);
+            bool result = true;//_accountManager.Login(username, password);
 
             if (result)
             {

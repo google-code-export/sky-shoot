@@ -22,6 +22,8 @@ namespace SkyShoot.Game.Client.Game
         public GameController()
         {
             //todo initialize connection with server
+            var service = new MainService.SkyShootServiceClient();
+            Console.WriteLine(service.Login("test", "test"));
 
             //todo temporary!
             _mobs[0] = _testMob;
