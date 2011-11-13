@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
   <xs:import namespace="http://schemas.datacontract.org/2004/07/SkyShoot.Contracts.Session" />
   <xs:import namespace="http://schemas.datacontract.org/2004/07/Microsoft.Xna.Framework" />
   <xs:import namespace="http://schemas.datacontract.org/2004/07/SkyShoot.Contracts.Bonuses" />
@@ -30,7 +31,7 @@
   <xs:element name="LoginResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="LoginResult" type="xs:boolean" />
+        <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="LoginResult" nillable="true" type="q1:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -42,14 +43,14 @@
   <xs:element name="GetGameListResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/SkyShoot.Contracts.Session" minOccurs="0" name="GetGameListResult" nillable="true" type="q1:ArrayOfGameDescription" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/SkyShoot.Contracts.Session" minOccurs="0" name="GetGameListResult" nillable="true" type="q2:ArrayOfGameDescription" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="CreateGame">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/SkyShoot.Contracts.Session" minOccurs="0" name="mode" type="q2:GameMode" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/SkyShoot.Contracts.Session" minOccurs="0" name="mode" type="q3:GameMode" />
         <xs:element minOccurs="0" name="maxPlayers" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
@@ -64,7 +65,7 @@
   <xs:element name="JoinGame">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/SkyShoot.Contracts.Session" minOccurs="0" name="game" nillable="true" type="q3:GameDescription" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/SkyShoot.Contracts.Session" minOccurs="0" name="game" nillable="true" type="q4:GameDescription" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -78,28 +79,28 @@
   <xs:element name="Move">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Microsoft.Xna.Framework" minOccurs="0" name="direction" type="q4:Vector2" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Microsoft.Xna.Framework" minOccurs="0" name="direction" type="q5:Vector2" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="Shoot">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Microsoft.Xna.Framework" minOccurs="0" name="direction" type="q5:Vector2" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Microsoft.Xna.Framework" minOccurs="0" name="direction" type="q6:Vector2" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="TakeBonus">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/SkyShoot.Contracts.Bonuses" minOccurs="0" name="bonus" nillable="true" type="q6:AObtainableDamageModifier" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/SkyShoot.Contracts.Bonuses" minOccurs="0" name="bonus" nillable="true" type="q7:AObtainableDamageModifier" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="TakePerk">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/SkyShoot.Contracts.Perks" minOccurs="0" name="perk" nillable="true" type="q7:Perk" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/SkyShoot.Contracts.Perks" minOccurs="0" name="perk" nillable="true" type="q8:Perk" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

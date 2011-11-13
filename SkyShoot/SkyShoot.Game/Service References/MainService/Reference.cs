@@ -19,7 +19,7 @@ namespace SkyShoot.Game.MainService {
         bool Register(string username, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISkyShootService/Login", ReplyAction="http://tempuri.org/ISkyShootService/LoginResponse")]
-        bool Login(string username, string password);
+        System.Nullable<System.Guid> Login(string username, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISkyShootService/GetGameList", ReplyAction="http://tempuri.org/ISkyShootService/GetGameListResponse")]
         SkyShoot.Contracts.Session.GameDescription[] GetGameList();
@@ -77,7 +77,7 @@ namespace SkyShoot.Game.MainService {
             return base.Channel.Register(username, password);
         }
         
-        public bool Login(string username, string password) {
+        public System.Nullable<System.Guid> Login(string username, string password) {
             return base.Channel.Login(username, password);
         }
         

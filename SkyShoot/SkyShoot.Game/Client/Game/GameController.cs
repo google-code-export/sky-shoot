@@ -1,10 +1,15 @@
 using System;
+
 using Microsoft.Xna.Framework;
+
 using SkyShoot.Contracts.Bonuses;
 using SkyShoot.Contracts.Weapon.Projectiles;
-using SkyShoot.Game.Client.Players;
-using SkyShoot.Game.Client.View;
+
 using SkyShoot.Game.ScreenManager;
+
+using SkyShoot.Game.Client.View;
+using SkyShoot.Game.Client.Players;
+
 using AMob = SkyShoot.Contracts.Mobs.AMob;
 
 namespace SkyShoot.Game.Client.Game

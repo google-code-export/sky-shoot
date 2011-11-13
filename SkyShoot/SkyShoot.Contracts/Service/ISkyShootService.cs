@@ -1,9 +1,13 @@
-﻿using System.ServiceModel;
-using SkyShoot.Contracts.Bonuses;
-using SkyShoot.Contracts.Perks;
-using SkyShoot.Contracts.Session;
-using Microsoft.Xna.Framework;
+﻿using System;
+
+using System.ServiceModel;
+
 using SkyShoot.Contracts.Mobs;
+using SkyShoot.Contracts.Perks;
+using SkyShoot.Contracts.Bonuses;
+using SkyShoot.Contracts.Session;
+
+using Microsoft.Xna.Framework;
 
 namespace SkyShoot.Contracts.Service
 {
@@ -19,7 +23,7 @@ namespace SkyShoot.Contracts.Service
         bool Register(string username, string password);
 
         [OperationContract(IsInitiating = true)]
-        bool Login(string username, string password);
+        Guid? Login(string username, string password);
 
         [OperationContract]
         GameDescription[] GetGameList();
@@ -30,8 +34,6 @@ namespace SkyShoot.Contracts.Service
         [OperationContract]
         bool JoinGame(GameDescription game);
 
-        // Временное решение. Заменить на vector2 из XNA
-        // Вектор нормализован, модуль 1
         [OperationContract(IsOneWay = true)]
         void Move(Vector2 direction);
 
