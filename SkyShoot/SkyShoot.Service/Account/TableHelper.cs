@@ -211,7 +211,12 @@ namespace SkyShoot.Service.Account
             }
         }
 
-
+        public static string GetRandomString()
+        {
+            string path = Path.GetRandomFileName();
+            path = path.Replace(".", "");
+            return path;
+        }
 
     }
 }

@@ -24,11 +24,14 @@ namespace SkyShoot.Service.Account
 
         (!) нужно будет делать регистрацию приводя все знаки username / password к строчным
         ещё проверять нужно будет пароли и имена, чтобы они содержали только a-z,A-Z,1-9 ,-,_ и никаких пробелов
+          
+        Пароль в эти функции уже должен приходить как md5 хеш, это делается при вызове функций на клиенте...только где это писать
         **/
 
         public bool Register(string username, string password)
         {
             Account account = null;
+
             if (TableHelper.GetEntity<Account>("AccountsTable", "account", username, out account))
             {
                 if (account != null)
@@ -37,8 +40,12 @@ namespace SkyShoot.Service.Account
                 }
                 else
                 {
+                    string salt = TableHelper.GetRandomString();
+                    string password_hash = HashHelper.GetMd5Hash(salt + password + salt);
+
                     if (TableHelper.InsertEntity("AccountsTable",
-                    new Account("account", username) { Login = username, Password = password, Email = "--", Info = "--" })) // пока Email и Info будут пустовать 
+                    new Account("account", username) { Login = username, HashPassword = password_hash, Salt = salt,
+                                                       Email = "--", Info = "--" })) // пока Email и Info будут пустовать 
                     {
                         return true; // регистрация прошла успешно!
                     }
@@ -62,7 +69,7 @@ namespace SkyShoot.Service.Account
             {
                 if (account != null)
                 {
-                    if (account.Password == password)
+                    if (HashHelper.verifyMd5Hash( account.Salt + password + account.Salt, account.HashPassword))
                     {
                         return true; // залогинились
                     }
@@ -87,8 +94,11 @@ namespace SkyShoot.Service.Account
         {
             if (Login(username, password))
             {
+                string salt = TableHelper.GetRandomString();
+                string password_hash = HashHelper.GetMd5Hash(salt + new_password + salt);
+
                 if (TableHelper.ReplaceUpdateEntity("AccountTable", "account", username,
-                    new Account("account", username) { Password = new_password }))
+                    new Account("account", username) { HashPassword = password_hash, Salt = salt }))
                 {
                     return true;
                 }
