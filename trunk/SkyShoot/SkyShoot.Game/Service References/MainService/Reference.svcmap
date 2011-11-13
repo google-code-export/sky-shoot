@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="8b672fb7-20e3-4142-a88a-1f3cf7304b0c" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:777/MainSkyShootService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="MainSkyShootService.wsdl" MetadataType="Wsdl" ID="4b223bb8-8fd2-4313-89ed-3f93bee645aa" SourceId="1" SourceUrl="http://localhost:777/MainSkyShootService.svc?wsdl" />
+    <MetadataFile FileName="MainSkyShootService.disco" MetadataType="Disco" ID="ec7413c0-44b2-48f5-babc-e97c938e3d5d" SourceId="1" SourceUrl="http://localhost:777/MainSkyShootService.svc?disco" />
+    <MetadataFile FileName="MainSkyShootService.xsd" MetadataType="Schema" ID="6eeb86be-aeee-4743-adba-9eb018b7aa17" SourceId="1" SourceUrl="http://localhost:777/MainSkyShootService.svc?xsd=xsd0" />
+    <MetadataFile FileName="MainSkyShootService1.xsd" MetadataType="Schema" ID="3e8f5ad4-06ae-4aeb-8daa-2aecb5be7371" SourceId="1" SourceUrl="http://localhost:777/MainSkyShootService.svc?xsd=xsd1" />
+    <MetadataFile FileName="MainSkyShootService2.xsd" MetadataType="Schema" ID="d2f76f83-bfa8-49a7-ba51-96c91d4fa275" SourceId="1" SourceUrl="http://localhost:777/MainSkyShootService.svc?xsd=xsd2" />
+    <MetadataFile FileName="MainSkyShootService3.xsd" MetadataType="Schema" ID="f2725085-88db-4fbb-8e18-06171fe3915c" SourceId="1" SourceUrl="http://localhost:777/MainSkyShootService.svc?xsd=xsd3" />
+    <MetadataFile FileName="MainSkyShootService4.xsd" MetadataType="Schema" ID="e8bb266d-5973-4cd0-a042-8210c7fd111f" SourceId="1" SourceUrl="http://localhost:777/MainSkyShootService.svc?xsd=xsd4" />
+    <MetadataFile FileName="MainSkyShootService5.xsd" MetadataType="Schema" ID="57872f03-b072-4d3a-84af-4bbda5eae425" SourceId="1" SourceUrl="http://localhost:777/MainSkyShootService.svc?xsd=xsd5" />
+    <MetadataFile FileName="MainSkyShootService6.xsd" MetadataType="Schema" ID="7440a19d-c0af-4451-a691-bbd70b0be6cb" SourceId="1" SourceUrl="http://localhost:777/MainSkyShootService.svc?xsd=xsd6" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

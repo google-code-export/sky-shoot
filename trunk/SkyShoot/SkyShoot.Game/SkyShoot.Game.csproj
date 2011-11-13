@@ -147,36 +147,36 @@
   <ItemGroup>
     <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png" />
-    <None Include="Service References\MainService\MainSkyShootService1.disco" />
-    <None Include="Properties\DataSources\SkyShoot.Contracts.Session.GameDescription.datasource" />
-    <None Include="Service References\MainService\MainSkyShootService1.wsdl" />
-    <None Include="Service References\MainService\MainSkyShootService7.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\MainService\MainSkyShootService71.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\MainService\MainSkyShootService72.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\MainService\MainSkyShootService73.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\MainService\MainSkyShootService74.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\MainService\MainSkyShootService75.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\MainService\MainSkyShootService76.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Service References\MainService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <None Include="Service References\MainService\configuration.svcinfo" />
     <None Include="Service References\MainService\configuration91.svcinfo" />
+    <None Include="Service References\MainService\MainSkyShootService.disco" />
+    <None Include="Properties\DataSources\SkyShoot.Contracts.Session.GameDescription.datasource" />
+    <None Include="Service References\MainService\MainSkyShootService.wsdl" />
+    <None Include="Service References\MainService\MainSkyShootService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MainService\MainSkyShootService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MainService\MainSkyShootService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MainService\MainSkyShootService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MainService\MainSkyShootService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MainService\MainSkyShootService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MainService\MainSkyShootService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SkyShoot.Contracts\SkyShoot.Contracts.csproj">
