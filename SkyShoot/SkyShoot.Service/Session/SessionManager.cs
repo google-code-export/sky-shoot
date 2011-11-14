@@ -40,6 +40,13 @@ namespace SkyShoot.Service.Session
                 if(session.LocalGameDescription.Players.Contains(player.Name)){
                     session.LocalGameDescription.Players.Add(player.Name);
                     session.players.Add(player);
+
+                    //Т.к. наша игра сама решает, когда начать игру, то запускаем игру.
+                    if (session.players.Count == session.LocalGameDescription.MaximumPlayersAllowed)
+                    {
+                        StartGame(session.LocalGameDescription);
+                    }
+
                     return true;
                 }
                 return false;
@@ -59,7 +66,21 @@ namespace SkyShoot.Service.Session
             GameSession gameSession = new GameSession(tileSet, clients, maxPlayers, mode, _gameID);
             _gameSessions.Add(gameSession);
 
+            //Т.к. наша игра сама решает, когда начать игру, то запускаем игру.
+            if (maxPlayers == 1)
+            {
+                StartGame(gameSession.LocalGameDescription);
+            }
+
             return gameSession.LocalGameDescription;
+        }
+
+        public bool StartGame(GameDescription game)
+        {
+            GameSession session = _gameSessions.Find(curGame => curGame.LocalGameDescription.GameID == game.GameID);
+
+            //Вернет false если игра уже началась.
+            return session.Start();
         }
 
         //Возвращает список игр.
