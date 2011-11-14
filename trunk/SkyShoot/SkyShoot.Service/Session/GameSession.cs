@@ -13,19 +13,26 @@ namespace SkyShoot.Service.Session
 {
     public class GameSession
     {
-		private GameLevel _gameLevel;
+        //Хотя на сервере ни о каких кадрах речи не идет, всё же думаю, 
+        //что это имя очень точно отражает суть константы.
+        const int FPS = 1000/60;
+
 		public List<AMob> players{get; set;}
         public List<AMob> mobs{get; set;}
         public List<AProjectile> projectiles { get; set; }
-        private int _movementTime;
+
+        public GameDescription LocalGameDescription { get; private set; }
+
+        public bool IsStarted {get; set; }
+
+        private Timer _gameTimer;
+        private GameLevel _gameLevel;
         private SpiderFactory _spiderFactory;
 
-		public GameDescription LocalGameDescription { get; private set; }
 
 		public GameSession(TileSet tileSet, List<MainSkyShootService> clients, int maxPlayersAllowed, GameMode gameType, int gameID)
         {
-            _movementTime = 1000 / 60;
-
+            IsStarted = false;
 			_gameLevel = new GameLevel(tileSet);
 
             players = new List<AMob>();
@@ -51,7 +58,7 @@ namespace SkyShoot.Service.Session
         public event SomebodyMovesHadler SomebodyMoves;
         public event SomebodyShootsHandler SomebodyShoots;
 
-        public void SomebodyMoved(AMob sender, Vector2 direction)
+        private void SomebodyMoved(AMob sender, Vector2 direction)
         {
             if (SomebodyMoves != null)
             {
@@ -59,7 +66,7 @@ namespace SkyShoot.Service.Session
             }
         }
 
-        public void SomebodyShot(AMob sender, Vector2 direction)
+        private void SomebodyShot(AMob sender, Vector2 direction)
         {
             if (SomebodyShoots != null)
             {
@@ -70,10 +77,8 @@ namespace SkyShoot.Service.Session
         }
 
         // здесь будут производится обработка всех действий
-        public void update() 
-        {
-            var begin = System.DateTime.Now.Ticks * 10000;              
-
+        private void update() 
+        {   
             foreach(AMob mob in mobs){
                 // @TODO АИ мобов 
                 mob.Coordinates = ComputeMovement(mob);
@@ -90,23 +95,30 @@ namespace SkyShoot.Service.Session
                 
             }
             projectiles.RemoveAll(x=>(x.Timer<=0));
-
-            var end = System.DateTime.Now.Ticks * 10000;
-
-            var a = new Timer((double) Math.Max(1,_movementTime-(end-begin)));
-            a.Elapsed +=new ElapsedEventHandler(TimerElapsedListener);
         }
+
+        public bool Start()
+        {
+            if (IsStarted) return false;
+            IsStarted = true;
+
+            _gameTimer = new Timer(FPS);
+            _gameTimer.Elapsed += new ElapsedEventHandler(TimerElapsedListener);
+
+            return true;
+        }
+
 
         private void TimerElapsedListener(object sender,EventArgs e)
         {
             update();
         }
 
-        public Vector2 ComputeMovement(AMob mob)
+        private Vector2 ComputeMovement(AMob mob)
 		{
 			var realHeight=_gameLevel.levelHeight-mob.Radius;
 			var realWidth=_gameLevel.levelWidth-mob.Radius;
-			var newCoord = new Vector2(mob.Coordinates.X + mob.Speed * _movementTime * mob.RunVector.X, mob.Coordinates.Y + mob.Speed * _movementTime * mob.RunVector.Y);
+			var newCoord = new Vector2(mob.Coordinates.X + mob.Speed * FPS * mob.RunVector.X, mob.Coordinates.Y + mob.Speed * FPS * mob.RunVector.Y);
 			if(Math.Abs(mob.Coordinates.X) <= realWidth)
 				newCoord.X=Math.Min(Math.Abs(newCoord.X), realWidth) * Math.Sign(newCoord.X);
 			else
