@@ -44,7 +44,10 @@ namespace SkyShoot.Service.Session
                     //Т.к. наша игра сама решает, когда начать игру, то запускаем игру.
                     if (session.players.Count == session.LocalGameDescription.MaximumPlayersAllowed)
                     {
-                        StartGame(session.LocalGameDescription);
+                        if (!StartGame(session.LocalGameDescription))
+                        {
+                            return false;
+                        }
                     }
 
                     return true;
