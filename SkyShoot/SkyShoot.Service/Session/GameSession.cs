@@ -11,13 +11,14 @@ using System.Timers;
 
 namespace SkyShoot.Service.Session
 {
+	
     public class GameSession
     {
-        //Хотя на сервере ни о каких кадрах речи не идет, всё же думаю, 
+		 //Хотя на сервере ни о каких кадрах речи не идет, всё же думаю, 
         //что это имя очень точно отражает суть константы.
         const int FPS = 1000/60;
 
-		public List<AMob> players{get; set;}
+		public List<MainSkyShootService> players{get; set;}
         public List<AMob> mobs{get; set;}
         public List<AProjectile> projectiles { get; set; }
 
@@ -28,28 +29,17 @@ namespace SkyShoot.Service.Session
         private Timer _gameTimer;
         private GameLevel _gameLevel;
         private SpiderFactory _spiderFactory;
+        private int _timerCounter;
 
 
-		public GameSession(TileSet tileSet, List<MainSkyShootService> clients, int maxPlayersAllowed, GameMode gameType, int gameID)
+		public GameSession(TileSet tileSet, int maxPlayersAllowed, GameMode gameType, int gameID)
         {
             IsStarted = false;
 			_gameLevel = new GameLevel(tileSet);
 
-            players = new List<AMob>();
-            players.AddRange(clients.ToArray()); // здесь возможен exception
+            players = new List<MainSkyShootService>();
 
             var playerNames = new List<string>();
-
-            foreach (MainSkyShootService player in clients)
-            {
-                this.SomebodyMoves += new SomebodyMovesHadler(player.MobMoved);
-                player.MeMoved += new SomebodyMovesHadler(SomebodyMoved);
-
-                this.SomebodyShoots += new SomebodyShootsHandler(player.MobShot);
-                player.MeShot += new ClientShootsHandler(SomebodyShot);
-
-                playerNames.Add(player.Name);
-            }
 
 			LocalGameDescription = new GameDescription(playerNames, maxPlayersAllowed, gameType, gameID);
             _spiderFactory= new SpiderFactory(_gameLevel);
@@ -57,6 +47,7 @@ namespace SkyShoot.Service.Session
 
         public event SomebodyMovesHadler SomebodyMoves;
         public event SomebodyShootsHandler SomebodyShoots;
+        public event StartGameHandler StartGame;
 
         private void SomebodyMoved(AMob sender, Vector2 direction)
         {
@@ -94,20 +85,56 @@ namespace SkyShoot.Service.Session
                 projectile.Timer--;
                 
             }
-            projectiles.RemoveAll(x=>(x.Timer<=0));
+			projectiles.RemoveAll(x => (x.Timer <= 0));
+			_timerCounter++;
+			if (_timerCounter % 60 == 0 )
+				foreach (MainSkyShootService player in players)
+				{
+					player.SynchroFrame(mobs.ToArray());
+				}
+
         }
 
         public bool Start()
         {
-            if (IsStarted) return false;
+			if (IsStarted) return false;
             IsStarted = true;
 
+			foreach (MainSkyShootService player in players)
+			{
+				this.SomebodyMoves += new SomebodyMovesHadler(player.MobMoved);
+				player.MeMoved += new SomebodyMovesHadler(SomebodyMoved);
+
+				this.SomebodyShoots += new SomebodyShootsHandler(player.MobShot);
+				player.MeShot += new ClientShootsHandler(SomebodyShot);
+
+				
+			}
+
             _gameTimer = new Timer(FPS);
+            _gameTimer.AutoReset = true;
             _gameTimer.Elapsed += new ElapsedEventHandler(TimerElapsedListener);
+			_gameTimer.Start();
+            _timerCounter = 1;
 
             return true;
         }
 
+		public bool AddPlayer(MainSkyShootService player)
+		{
+			if (players.Count >= LocalGameDescription.MaximumPlayersAllowed)
+				return false;
+
+			players.Add(player);
+			LocalGameDescription.Players.Add(player.Name);
+			StartGame += new StartGameHandler(player.GameStart);
+			if (players.Count >= LocalGameDescription.MaximumPlayersAllowed)
+			{
+				StartGame(mobs.ToArray(), _gameLevel);
+				Start();
+			}
+			return true;
+		}
 
         private void TimerElapsedListener(object sender,EventArgs e)
         {

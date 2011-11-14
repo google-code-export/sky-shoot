@@ -34,10 +34,12 @@ namespace SkyShoot.Service.Session
         public bool JoinGame(GameDescription game, MainSkyShootService player)
         {
             GameSession session = _gameSessions.Find(curGame => curGame.LocalGameDescription.GameID == game.GameID);
+			return session.AddPlayer(player);
 
-            try
+
+            /*try
             {
-                if(session.LocalGameDescription.Players.Contains(player.Name)){
+                if(!session.LocalGameDescription.Players.Contains(player.Name)){
                     session.LocalGameDescription.Players.Add(player.Name);
                     session.players.Add(player);
 
@@ -57,23 +59,22 @@ namespace SkyShoot.Service.Session
             catch (Exception)
             {
                 return false;
-            }
+            }*/
         }
         
         //Создаем новую игру
         public GameDescription CreateGame(GameMode mode, int maxPlayers, MainSkyShootService client, TileSet tileSet)
         {
-            List<MainSkyShootService> clients = new List<MainSkyShootService>();
-            clients.Add(client);
 
-            GameSession gameSession = new GameSession(tileSet, clients, maxPlayers, mode, _gameID);
+            GameSession gameSession = new GameSession(tileSet, maxPlayers, mode, _gameID);
             _gameSessions.Add(gameSession);
 
+			gameSession.AddPlayer(client);
             //Т.к. наша игра сама решает, когда начать игру, то запускаем игру.
-            if (maxPlayers == 1)
+            /*if (maxPlayers == 1)
             {
                 StartGame(gameSession.LocalGameDescription);
-            }
+            }*/
 
             return gameSession.LocalGameDescription;
         }
@@ -107,6 +108,8 @@ namespace SkyShoot.Service.Session
             {
                 var game = _gameSessions.Find(gameSession => gameSession.LocalGameDescription.Players.Contains(playerName));
                 game.LocalGameDescription.Players.Remove(playerName);
+                game.players.RemoveAll(x => x.Name == playerName);
+                if (game.players.Count == 0) _gameSessions.Remove(game);
                 return true;
             }
             catch (Exception)
