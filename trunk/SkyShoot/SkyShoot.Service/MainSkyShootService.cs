@@ -169,6 +169,7 @@ namespace SkyShoot.Service
             _callback.PlayerLeft(mob);
         }
 
+
         public void SynchroFrame(AMob[] mobs)
         {
             _callback.SynchroFrame(mobs);
