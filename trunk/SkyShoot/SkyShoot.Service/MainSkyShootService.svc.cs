@@ -112,22 +112,29 @@ namespace SkyShoot.Service
 
         public void GameStart(Contracts.Mobs.AMob[] mobs, Contracts.Session.GameLevel arena)
         {
-            _callback.GameStart(mobs, arena);
+            Contracts.Mobs.AMob[] Mobs = new Contracts.Mobs.AMob[mobs.Length];
+            for (int i = 0; i < mobs.Length; i++)
+                Mobs[i] = new AMob(mobs[i]);
+
+                _callback.GameStart(Mobs, arena);
         }
 
         public void SpawnMob(Contracts.Mobs.AMob mob)
         {
-            _callback.SpawnMob(mob);
+            AMob Mob = new AMob(mob);
+            _callback.SpawnMob(Mob);
         }
 
         public void Hit(Contracts.Mobs.AMob mob, Contracts.Weapon.Projectiles.AProjectile projectile)
         {
-            _callback.Hit(mob, projectile);
+            AMob Mob = new AMob(mob);
+            _callback.Hit(Mob, projectile);
         }
 
         public void MobDead(Contracts.Mobs.AMob mob)
         {
-            _callback.MobDead(mob);
+            AMob Mob = new AMob(mob);
+            _callback.MobDead(Mob);
         }
 
         public void MobMoved(Contracts.Mobs.AMob mob, Vector2 direction)
@@ -135,7 +142,8 @@ namespace SkyShoot.Service
             if (mob == this)
                 return;
 
-            _callback.MobMoved(mob, direction);
+            AMob Mob = new AMob(mob);
+            _callback.MobMoved(Mob, direction);
         }
 
         public void MobShot(Contracts.Mobs.AMob mob, SkyShoot.Contracts.Weapon.Projectiles.AProjectile[] projectiles)
@@ -143,7 +151,8 @@ namespace SkyShoot.Service
             if (mob == this)
                 return;
 
-            _callback.MobShot(mob, projectiles);
+            AMob Mob = new AMob(mob);
+            _callback.MobShot(Mob, projectiles);
         }
 
         public void BonusDropped(Contracts.Bonuses.AObtainableDamageModifier bonus)
@@ -168,12 +177,17 @@ namespace SkyShoot.Service
 
         public void PlayerLeft(Contracts.Mobs.AMob mob)
         {
-            _callback.PlayerLeft(mob);
+            AMob Mob = new AMob(mob);
+            _callback.PlayerLeft(Mob);
         }
 
         public void SynchroFrame(Contracts.Mobs.AMob[] mobs)
         {
-            _callback.SynchroFrame(mobs);
+            Contracts.Mobs.AMob[] Mobs = new Contracts.Mobs.AMob[mobs.Length];
+            for (int i = 0; i < mobs.Length; i++)
+                Mobs[i] = new AMob(mobs[i]);
+
+            _callback.SynchroFrame(Mobs);
         }
     }
 }

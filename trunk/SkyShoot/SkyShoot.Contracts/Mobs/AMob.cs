@@ -7,7 +7,7 @@ using SkyShoot.Contracts.Bonuses;
 namespace SkyShoot.Contracts.Mobs
 {
     [DataContract]
-    public abstract class AMob
+    public class AMob
     {
 
         [DataMember]
@@ -37,14 +37,27 @@ namespace SkyShoot.Contracts.Mobs
         [DataMember] 
         public AObtainableDamageModifier.AObtainableDamageModifiers State;
 
-        protected AMob(Vector2 coordinates, Guid id)
+        public AMob(Vector2 coordinates, Guid id)
         {
             RunVector = ShootVector = new Vector2(0, 1);
             Coordinates = coordinates;
             Id = id;	
         }
 
-        protected AMob()
+        public AMob(AMob other)
+        {
+            this.Coordinates = other.Coordinates;
+            this.Id = other.Id;
+            this.HealthAmount = other.HealthAmount;
+            this.IsPlayer = other.IsPlayer;
+            this.Radius = other.Radius;
+            this.RunVector = other.RunVector;
+            this.ShootVector = other.ShootVector;
+            this.Speed = other.Speed;
+            this.State = other.State;
+        }
+
+        public AMob()
         {         	
         }
 

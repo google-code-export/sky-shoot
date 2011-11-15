@@ -51,6 +51,7 @@ namespace SkyShoot.Service.Session
 
         private void SomebodyMoved(AMob sender, Vector2 direction)
         {
+            sender.RunVector = direction;
             if (SomebodyMoves != null)
             {
                 SomebodyMoves(sender, direction);
@@ -59,6 +60,7 @@ namespace SkyShoot.Service.Session
 
         private void SomebodyShot(AMob sender, Vector2 direction)
         {
+            sender.ShootVector = direction;
             if (SomebodyShoots != null)
             {
                 if ((sender as MainSkyShootService).Weapon != null)
