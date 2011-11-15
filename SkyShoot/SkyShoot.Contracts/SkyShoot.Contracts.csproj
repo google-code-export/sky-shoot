@@ -56,7 +56,6 @@
     <Compile Include="Session\GameMode.cs" />
     <Compile Include="Weapon\Projectiles\AProjectile.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
