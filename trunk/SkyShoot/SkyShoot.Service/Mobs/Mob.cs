@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using SkyShoot.Contracts.Service;
+using SkyShoot.Service;
 
 namespace SkyShoot.Contracts.Mobs
 {
@@ -12,7 +14,7 @@ namespace SkyShoot.Contracts.Mobs
         private const float _radius = 100; // заменить
         private static Double _health = 100; // заменить начальное здоровье
 
-        public AMob targetPlayer { get; set; }
+        public MainSkyShootService targetPlayer { get; set; }
 
         public Mob()
         {
@@ -24,12 +26,12 @@ namespace SkyShoot.Contracts.Mobs
             Radius = _radius;
         }
 
-        private void FindTarget(List<AMob> targetPlayers) 
+        public void FindTarget(List<MainSkyShootService> targetPlayers) 
         {
             float distance = 1000000;
             float temp;
 
-            foreach (AMob player in targetPlayers)
+            foreach (MainSkyShootService player in targetPlayers)
             {
                 temp = Vector2.Distance(Coordinates, player.Coordinates);
 
@@ -41,12 +43,18 @@ namespace SkyShoot.Contracts.Mobs
             }
         }
 
-        public void Attack(List<AMob> tartgetPlayers) 
+        public event SomebodyMovesHadler MeMoved;
+
+        public void Move() 
         {
-            FindTarget(tartgetPlayers);
             RunVector =new Vector2(targetPlayer.Coordinates.X - Coordinates.X, targetPlayer.Coordinates.Y - Coordinates.Y);
             RunVector.Normalize();
             ShootVector = RunVector;
+
+            if (MeMoved != null)
+            {
+                MeMoved(this, RunVector);
+            }
         }
     }
 }

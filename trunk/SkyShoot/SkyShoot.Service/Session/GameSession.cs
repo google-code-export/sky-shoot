@@ -19,7 +19,7 @@ namespace SkyShoot.Service.Session
         const int FPS = 1000/60;
 
 		public List<MainSkyShootService> players{get; set;}
-        public List<AMob> mobs{get; set;}
+        public List<Mob> mobs{get; set;}
         public List<AProjectile> projectiles { get; set; }
 
         public GameDescription LocalGameDescription { get; private set; }
@@ -29,8 +29,8 @@ namespace SkyShoot.Service.Session
         private Timer _gameTimer;
         private GameLevel _gameLevel;
         private SpiderFactory _spiderFactory;
-        private int _timerCounter;
-
+        private long _timerCounter;
+        private long _intervalToSpawn = 0;
 
 		public GameSession(TileSet tileSet, int maxPlayersAllowed, GameMode gameType, int gameID)
         {
@@ -69,13 +69,42 @@ namespace SkyShoot.Service.Session
             }
         }
 
+        //фунция для спавна мобов
+        public bool SpawnMob()
+        {
+            if (_intervalToSpawn == 0)
+            {
+                _intervalToSpawn = (long) Math.Exp(4.8 - _timerCounter/40000)+3;
+                return true;
+            }
+            else
+            {
+                _intervalToSpawn--;
+                return false;
+            }
+        }
+
         // здесь будут производится обработка всех действий
         private void update() 
-        {   
-            foreach(AMob mob in mobs){
-                // @TODO АИ мобов 
-                mob.Coordinates = ComputeMovement(mob);
+        {
+            if (SpawnMob())
+            {
+                mobs.Add(_spiderFactory.CreateMob());
             }
+
+            if (_timerCounter % 6 == 0)// раз в 6 тиков(0.1 секунды)
+            {
+                foreach(Mob mob in mobs)
+                {
+                    if (!players.Contains(mob.targetPlayer)) // проверяем цель
+                    {
+                        mob.FindTarget(players);
+                    }
+                    mob.Move();
+                    mob.Coordinates = ComputeMovement(mob);
+                }
+            }
+
             foreach(AMob player in players)
                 player.Coordinates = ComputeMovement(player);
 
