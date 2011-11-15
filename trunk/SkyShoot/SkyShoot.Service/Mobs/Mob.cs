@@ -45,7 +45,7 @@ namespace SkyShoot.Contracts.Mobs
 
         public event SomebodyMovesHadler MeMoved;
 
-        public void Move() 
+        public virtual void Move() 
         {
             RunVector =new Vector2(targetPlayer.Coordinates.X - Coordinates.X, targetPlayer.Coordinates.Y - Coordinates.Y);
             RunVector.Normalize();
@@ -57,7 +57,7 @@ namespace SkyShoot.Contracts.Mobs
             }
         }
 
-        public void Think(long counter, List<MainSkyShootService> players)
+        public virtual void Think(long counter, List<MainSkyShootService> players)
         {
             if (counter % 6 == 0)// раз в 6 тиков(0.1 секунды)
             {
