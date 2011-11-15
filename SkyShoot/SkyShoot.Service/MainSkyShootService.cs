@@ -1,178 +1,215 @@
 ﻿using System;
-
 using System.Collections.Generic;
-
+using System.Linq;
+using System.Runtime.Serialization;
 using System.ServiceModel;
+//using System.ServiceModel.Web;
+using System.Text;
 
-using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Service;
-
-using SkyShoot.Service.Weapon;
-
 using Microsoft.Xna.Framework;
+using SkyShoot.Service.Session;
+using SkyShoot.Contracts.Mobs;
+using SkyShoot.Service.Weapon;
+using SkyShoot.Contracts.Weapon.Projectiles;
+
 
 namespace SkyShoot.Service
 {
-    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple,
-        InstanceContextMode = InstanceContextMode.PerSession)]
-    public class MainSkyShootService : AMob, ISkyShootService, ISkyShootCallback
-    {
-        private ISkyShootCallback _callback;
-        public string Name;
+	static class TypeConverter
+	{
+		public static AMob Mob(AMob m)
+		{
+			return new AMob(m);
+		}
 
-        public AWeapon Weapon { get; set; }
+		public static AMob[] Mobs(AMob[] ms)
+		{
+			AMob[] rs = new AMob[ms.Length];
+			for (int i = 0; i < ms.Length; i++)
+			{
+				rs[i] = new AMob(ms[i]);
+			}
+			return rs;
+		}
+	}
 
-        //private readonly Account.AccountManager _accountManager = new Account.AccountManager();
-        private readonly Session.SessionManager _sessionManager = Session.SessionManager.Instance;
+	[ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple,
+			InstanceContextMode = InstanceContextMode.PerSession)]
+	public class MainSkyShootService : AMob, ISkyShootService, ISkyShootCallback
+	{
+		private ISkyShootCallback _callback;
+		public string Name;
 
-        private static readonly List<MainSkyShootService> ClientsList = new List<MainSkyShootService>();
+		public AWeapon Weapon { get; set; }
 
-        public MainSkyShootService() : base(new Vector2(0, 0), new Guid()) { }
+		private Account.AccountManager _accountManager = new Account.AccountManager();
+		private Session.SessionManager _sessionManager = Session.SessionManager.Instance;
 
-        public bool Register(string username, string password)
-        {
-            //bool result = _accountManager.Register(username, password);
-            //return result;
-            return true;
-        }
+		private static List<MainSkyShootService> _clientsList = new List<MainSkyShootService>();
 
-        public Guid? Login(string username, string password)
-        {
-            bool result = true; //_accountManager.Login(username, password);
+		public MainSkyShootService() : base(new Microsoft.Xna.Framework.Vector2(0, 0), new Guid()) { }
 
-            if (result)
-            {
-                Name = username;
-                _callback = OperationContext.Current.GetCallbackChannel<ISkyShootCallback>();
-                IsPlayer = true;
+		public bool Register(string username, string password)
+		{
+			bool result = _accountManager.Register(username, password);
+			return result;
+		}
 
-                ClientsList.Add(this);
-            }
+		public Guid? Login(string username, string password)
+		{
+			bool result = _accountManager.Login(username, password);
 
-            return result ? Id : (Guid?)null;
-        }
+			if (result)
+			{
+				this.Name = username;
+				this._callback = OperationContext.Current.GetCallbackChannel<ISkyShootCallback>();
+				this.IsPlayer = true;
 
-        public Contracts.Session.GameDescription[] GetGameList()
-        {
-            return _sessionManager.GetGameList();
-        }
+				_clientsList.Add(this);
+			}
+			else
+			{
+				return null;
+			}
 
-        public bool CreateGame(Contracts.Session.GameMode mode, int maxPlayers)
-        {
+			return this.Id;
+		}
 
-            return (_sessionManager.CreateGame(mode, maxPlayers, this, Contracts.Session.TileSet.Grass) != null);
-        }
+		public Contracts.Session.GameDescription[] GetGameList()
+		{
+			return _sessionManager.GetGameList();
+		}
 
-        public bool JoinGame(Contracts.Session.GameDescription game)
-        {
-            return _sessionManager.JoinGame(game, this);
-        }
+		public bool CreateGame(Contracts.Session.GameMode mode, int maxPlayers)
+		{
 
-        public event SomebodyMovesHadler MeMoved;
-        public event ClientShootsHandler MeShot;
+			return (_sessionManager.CreateGame(mode, maxPlayers, this, Contracts.Session.TileSet.Grass) != null);
+		}
 
-        public void Move(Vector2 direction) // приходит снаружи от клиента
-        {
-            if (MeMoved != null)
-            {
-                MeMoved(this, direction);
-            }
-        }
+		public bool JoinGame(Contracts.Session.GameDescription game)
+		{
+			return _sessionManager.JoinGame(game, this);
+		}
 
-        public void Shoot(Vector2 direction)
-        {
-            if (MeShot != null)
-            {
-                MeShot(this, direction);
-            }
-        }
+		public event SomebodyMovesHadler MeMoved;
+		public event ClientShootsHandler MeShot;
 
-        public void TakeBonus(Contracts.Bonuses.AObtainableDamageModifier bonus)
-        {
-            bonus.Owner.State |= bonus.Type;
-        }
+		public void Move(Vector2 direction) // приходит снаружи от клиента
+		{
+			if (MeMoved != null)
+			{
+				MeMoved(this, direction);
+			}
+		}
 
-        public void TakePerk(Contracts.Perks.Perk perk)
-        {
-            throw new NotImplementedException();
-        }
+		public void Shoot(Vector2 direction)
+		{
+			if (MeShot != null)
+			{
+				MeShot(this, direction);
+			}
+		}
 
-        public void LeaveGame()
-        {
-            bool result = _sessionManager.LeaveGame(Name);
-            if (!result)
-            { /* что-то сделать, например, добавить сообщение в лог */
-                return;
-            }
+		public void TakeBonus(Contracts.Bonuses.AObtainableDamageModifier bonus)
+		{
+			bonus.Owner.State |= bonus.Type;
+		}
 
-            ClientsList.Remove(this);
-        }
+		public void TakePerk(Contracts.Perks.Perk perk)
+		{
+			throw new NotImplementedException();
+		}
 
-        public void GameStart(AMob[] mobs, Contracts.Session.GameLevel arena)
-        {
-            _callback.GameStart(mobs, arena);
-        }
+		public void LeaveGame()
+		{
+			bool result = _sessionManager.LeaveGame(this.Name);
+			if (!result)
+			{ /* что-то сделать, например, добавить сообщение в лог */
+				return;
+			}
 
-        public void SpawnMob(AMob mob)
-        {
-            _callback.SpawnMob(mob);
-        }
+			_clientsList.Remove(this);
+		}
 
-        public void Hit(AMob mob, Contracts.Weapon.Projectiles.AProjectile projectile)
-        {
-            _callback.Hit(mob, projectile);
-        }
+		public void GameStart(Contracts.Mobs.AMob[] mobs, Contracts.Session.GameLevel arena)
+		{
+			Contracts.Mobs.AMob[] Mobs = new Contracts.Mobs.AMob[mobs.Length];
+			for (int i = 0; i < mobs.Length; i++)
+				Mobs[i] = new AMob(mobs[i]);
 
-        public void MobDead(AMob mob)
-        {
-            _callback.MobDead(mob);
-        }
+			_callback.GameStart(Mobs, arena);
+		}
 
-        public void MobMoved(AMob mob, Vector2 direction)
-        {
-            if (mob == this)
-                return;
+		public void SpawnMob(Contracts.Mobs.AMob mob)
+		{
+			AMob Mob = new AMob(mob);
+			_callback.SpawnMob(Mob);
+		}
 
-            _callback.MobMoved(mob, direction);
-        }
+		public void Hit(Contracts.Mobs.AMob mob, Contracts.Weapon.Projectiles.AProjectile projectile)
+		{
+			AMob Mob = new AMob(mob);
+			_callback.Hit(Mob, projectile);
+		}
 
-        public void MobShot(AMob mob, Contracts.Weapon.Projectiles.AProjectile[] projectiles)
-        {
-            if (mob == this)
-                return;
+		public void MobDead(Contracts.Mobs.AMob mob)
+		{
+			AMob Mob = new AMob(mob);
+			_callback.MobDead(Mob);
+		}
 
-            _callback.MobShot(mob, projectiles);
-        }
+		public void MobMoved(Contracts.Mobs.AMob mob, Vector2 direction)
+		{
+			if (mob == this)
+				return;
 
-        public void BonusDropped(Contracts.Bonuses.AObtainableDamageModifier bonus)
-        {
-            _callback.BonusDropped(bonus);
-        }
+			AMob Mob = new AMob(mob);
+			_callback.MobMoved(Mob, direction);
+		}
 
-        public void BonusExpired(Contracts.Bonuses.AObtainableDamageModifier bonus)
-        {
-            _callback.BonusExpired(bonus);
-        }
+		public void MobShot(Contracts.Mobs.AMob mob, SkyShoot.Contracts.Weapon.Projectiles.AProjectile[] projectiles)
+		{
+			if (mob == this)
+				return;
 
-        public void BonusDisappeared(Contracts.Bonuses.AObtainableDamageModifier bonus)
-        {
-            _callback.BonusDisappeared(bonus);
-        }
+			AMob Mob = new AMob(mob);
+			_callback.MobShot(Mob, projectiles);
+		}
 
-        public void GameOver()
-        {
-            _callback.GameOver();
-        }
+		public void BonusDropped(Contracts.Bonuses.AObtainableDamageModifier bonus)
+		{
+			_callback.BonusDropped(bonus);
+		}
 
-        public void PlayerLeft(AMob mob)
-        {
-            _callback.PlayerLeft(mob);
-        }
+		public void BonusExpired(Contracts.Bonuses.AObtainableDamageModifier bonus)
+		{
+			_callback.BonusExpired(bonus);
+		}
 
+		public void BonusDisappeared(Contracts.Bonuses.AObtainableDamageModifier bonus)
+		{
+			_callback.BonusDisappeared(bonus);
+		}
 
-        public void SynchroFrame(AMob[] mobs)
-        {
-            _callback.SynchroFrame(mobs);
-        }
-    }
+		public void GameOver()
+		{
+			_callback.GameOver();
+		}
+
+		public void PlayerLeft(Contracts.Mobs.AMob mob)
+		{
+			AMob Mob = new AMob(mob);
+			_callback.PlayerLeft(Mob);
+		}
+
+		public void SynchroFrame(Contracts.Mobs.AMob[] mobs)
+		{
+			Contracts.Mobs.AMob[] Mobs = new Contracts.Mobs.AMob[mobs.Length];
+			for (int i = 0; i < mobs.Length; i++)
+				Mobs[i] = new AMob(mobs[i]);
+
+			_callback.SynchroFrame(Mobs);
+		}
+	}
 }
