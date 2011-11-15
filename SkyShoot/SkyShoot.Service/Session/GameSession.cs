@@ -70,39 +70,31 @@ namespace SkyShoot.Service.Session
         }
 
         //фунция для спавна мобов
-        public bool SpawnMob()
+        public void SpawnMob()
         {
             if (_intervalToSpawn == 0)
             {
                 _intervalToSpawn = (long) Math.Exp(4.8 - _timerCounter/40000)+3;
-                return true;
+                
+                var mob = _spiderFactory.CreateMob();
+                mobs.Add(mob);
+                mob.MeMoved += new SomebodyMovesHadler(SomebodyMoved);
             }
             else
             {
                 _intervalToSpawn--;
-                return false;
             }
         }
 
         // здесь будут производится обработка всех действий
         private void update() 
         {
-            if (SpawnMob())
-            {
-                mobs.Add(_spiderFactory.CreateMob());
-            }
+            SpawnMob();
 
-            if (_timerCounter % 6 == 0)// раз в 6 тиков(0.1 секунды)
+            foreach(Mob mob in mobs)
             {
-                foreach(Mob mob in mobs)
-                {
-                    if (!players.Contains(mob.targetPlayer)) // проверяем цель
-                    {
-                        mob.FindTarget(players);
-                    }
-                    mob.Move();
-                    mob.Coordinates = ComputeMovement(mob);
-                }
+                mob.Think(_timerCounter, players); // да, да у нас моб думает
+                mob.Coordinates = ComputeMovement(mob);
             }
 
             foreach(AMob player in players)

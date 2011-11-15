@@ -56,5 +56,17 @@ namespace SkyShoot.Contracts.Mobs
                 MeMoved(this, RunVector);
             }
         }
+
+        public void Think(long counter, List<MainSkyShootService> players)
+        {
+            if (counter % 6 == 0)// раз в 6 тиков(0.1 секунды)
+            {
+                if (!players.Contains(targetPlayer))
+                {
+                    FindTarget(players);
+                }
+                Move();
+            }
+        }
     }
 }
