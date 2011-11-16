@@ -15,13 +15,13 @@ namespace SkyShoot.Game.Client.Players
             IsPlayer = true;
             //todo temporary
             Speed = (float)0.5;
-            Coordinates = new Vector2(100, 100);
+            Coordinates = coordinates;
             RunVector = Vector2.Zero;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Texture, Coordinates, Color.White);
+            base.Draw(spriteBatch);
         }
 
     }

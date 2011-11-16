@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 using SkyShoot.Game.Client.Players;
+using SkyShoot.Game.Client.View;
 using SkyShoot.Game.Client.Weapon;
 
 namespace SkyShoot.Game.Client.Game
@@ -20,9 +21,13 @@ namespace SkyShoot.Game.Client.Game
 
         public IDictionary<Guid, AProjectile> Projectiles { get; private set; }
 
+        public Camera2D Camera2D { get; private set; }
+
         public GameModel(GameLevel gameLevel)
         {
             GameLevel = gameLevel;
+
+            Camera2D = new Camera2D(GameLevel.Width, GameLevel.Height);
 
             Mobs = new ConcurrentDictionary<Guid, AMob>();
             Projectiles = new ConcurrentDictionary<Guid, AProjectile>();
@@ -71,18 +76,29 @@ namespace SkyShoot.Game.Client.Game
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin();
 
-            //draw background
+            Vector2 myPosition = GetMob(GameController.MyId).Coordinates;
+
+            Camera2D.Position = myPosition;
+
+            spriteBatch.Begin(SpriteSortMode.Immediate, 
+                BlendState.AlphaBlend,
+                null,
+                null,
+                null,
+                null,
+                Camera2D.GetTransformation(Textures.GraphicsDevice));
+
+            // draw background
             GameLevel.Draw(spriteBatch);
 
-            //draw mobs
+            // draw mobs
             foreach (var aMob in Mobs)
             {
                 aMob.Value.Draw(spriteBatch);
             }
 
-            //draw projectiles
+            // draw projectiles
             foreach (var aProjectile in Projectiles)
             {
                 aProjectile.Value.Draw(spriteBatch);

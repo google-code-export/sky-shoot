@@ -1,8 +1,13 @@
 using System;
+
 using Microsoft.Xna.Framework;
+
 using Microsoft.Xna.Framework.Graphics;
+
 using SkyShoot.Contracts.Session;
+
 using SkyShoot.Game.Client.View;
+
 using IDrawable = SkyShoot.Game.Client.View.IDrawable;
 
 namespace SkyShoot.Game.Client.Game
@@ -10,9 +15,19 @@ namespace SkyShoot.Game.Client.Game
     public class GameLevel : IDrawable
     {
 
-        public const int StonesNumber = 10;
+        public const int StonesNumber = 50;
 
-        public Texture2D Texture { get; private set; }
+        private static Texture2D _texture;
+
+        public static int Width
+        {
+            get { return _texture.Width; }
+        }
+
+        public static int Height
+        {
+            get { return _texture.Height; }
+        }
 
         public GameLevel(TileSet tileSet)
         {
@@ -20,38 +35,36 @@ namespace SkyShoot.Game.Client.Game
             switch (tileSet)
             {
                 case TileSet.Grass:
-                    Texture = Textures.GrassLandscape; break;
+                    _texture = Textures.GrassLandscape; break;
                 case TileSet.Desert:
-                    Texture = Textures.DesertLandscape; break;
+                    _texture = Textures.DesertLandscape; break;
                 case TileSet.Sand:
-                    Texture = Textures.SandLandscape; break;
+                    _texture = Textures.SandLandscape; break;
                 case TileSet.Snow:
-                    Texture = Textures.SnowLandscape; break;
+                    _texture = Textures.SnowLandscape; break;
                 case TileSet.Volcanic:
-                    Texture = Textures.VolcanicLandscape; break;
+                    _texture = Textures.VolcanicLandscape; break;
             }
 
             var random = new Random();
-            
-            int width = Textures.GraphicsDevice.Viewport.Width;
-            int height = Textures.GraphicsDevice.Viewport.Height;
 
             for (int i = 0; i < StonesNumber; i++) {
-                var randomPosition = new Vector2(random.Next(width), random.Next(height));
                 int stone = random.Next(3);
-                Textures.Merge(Texture, Textures.Stones[stone], randomPosition);
+                var randomPosition = new Vector2(random.Next(Width - Textures.Stones[stone].Width),
+                    random.Next(Height - Textures.Stones[stone].Height));
+                Textures.Merge(_texture, Textures.Stones[stone], randomPosition);
             }
 
         }
 
         public void AddTexture(Texture2D texture, Vector2 position)
         {
-            Textures.Merge(Texture, texture, position);
+            Textures.Merge(_texture, texture, position);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Texture, Vector2.Zero, Color.White);
+            spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
         }
 
     }

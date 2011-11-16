@@ -22,8 +22,7 @@ namespace SkyShoot.Contracts.Mobs
         [DataMember]
         public Vector2 ShootVector { get; set; }
 
-        [DataMember]
-        public Vector2 Coordinates { get; set; }
+        [DataMember] public Vector2 Coordinates;
 
         [DataMember]
         public int HealthAmount { get; set; }

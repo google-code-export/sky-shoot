@@ -61,7 +61,7 @@ namespace SkyShoot.Game.Screens
         {
             ScreenManager.Game.Exit();
         }
-        public override void Draw(Microsoft.Xna.Framework.GameTime gameTime)
+        public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
             GraphicsDevice graphics = ScreenManager.GraphicsDevice;
