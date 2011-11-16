@@ -19,16 +19,27 @@ namespace SkyShoot.Game.Client.Game
 
         public GameModel GameModel { get; private set; }
 
+        public static Guid MyId { get; private set; }
+        
         //todo temporary!
-        private static readonly Guid Id= new Guid();
-        private readonly AMob _testMob = new Player(Vector2.Zero, Id, Textures.PlayerTexture);
+        private readonly AMob _testMob = new Player(Vector2.Zero, MyId, Textures.PlayerTexture);
         private readonly AMob[] _mobs = new AMob[1]; 
 
         public GameController()
         {
-            //todo initialize connection with server
+
             var service = new MainService.SkyShootServiceClient();
-            Console.WriteLine(service.Login("test", "test"));
+
+            Guid? login = service.Login("test", "test");
+            if(login.HasValue)
+            {
+                MyId = login.Value;
+            }
+            else
+            {
+                //todo popup
+                Console.WriteLine("Connection failed");
+            }
 
             //todo temporary!
             _mobs[0] = _testMob;
@@ -109,7 +120,14 @@ namespace SkyShoot.Game.Client.Game
         //
         public void HandleInput(InputState inputState)
         {
-            GameModel.GetMob(Id).RunVector = inputState.RunVector;
+            GameModel.GetMob(MyId).RunVector = inputState.RunVector;
+            var mouseState = inputState.CurrentMouseState;
+            var mouseCoordinates = new Vector2(mouseState.X, mouseState.Y);
+
+            var aMob = GameModel.GetMob(MyId);
+            aMob.ShootVector = GameModel.Camera2D.ConvertToLocal(aMob.Coordinates) - mouseCoordinates;
+            if(aMob.ShootVector.Length() > 0)
+                aMob.ShootVector.Normalize();
         }
 
 

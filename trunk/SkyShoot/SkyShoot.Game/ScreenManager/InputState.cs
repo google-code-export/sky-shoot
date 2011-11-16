@@ -45,7 +45,7 @@ namespace SkyShoot.Game.ScreenManager
             _lastMouseState = _currentMouseState;
 
             _currentKeyboardState = Keyboard.GetState();
-            _currentGamePadState = GamePad.GetState(Microsoft.Xna.Framework.PlayerIndex.One);
+            _currentGamePadState = GamePad.GetState(PlayerIndex.One);
             _currentMouseState = Mouse.GetState();
         }
 
@@ -58,10 +58,14 @@ namespace SkyShoot.Game.ScreenManager
                     runVector = _currentGamePadState.ThumbSticks.Left;
                 else
                 {
-                    if (_currentKeyboardState.IsKeyDown(Keys.Up)) runVector -= Vector2.UnitY;
-                    if (_currentKeyboardState.IsKeyDown(Keys.Down)) runVector += Vector2.UnitY;
-                    if (_currentKeyboardState.IsKeyDown(Keys.Left)) runVector -= Vector2.UnitX;
-                    if (_currentKeyboardState.IsKeyDown(Keys.Right)) runVector += Vector2.UnitX;
+                    if (_currentKeyboardState.IsKeyDown(Keys.Up)    || _currentKeyboardState.IsKeyDown(Keys.W)) 
+                        runVector -= Vector2.UnitY;
+                    if (_currentKeyboardState.IsKeyDown(Keys.Down)  || _currentKeyboardState.IsKeyDown(Keys.S)) 
+                        runVector += Vector2.UnitY;
+                    if (_currentKeyboardState.IsKeyDown(Keys.Left)  || _currentKeyboardState.IsKeyDown(Keys.A)) 
+                        runVector -= Vector2.UnitX;
+                    if (_currentKeyboardState.IsKeyDown(Keys.Right) || _currentKeyboardState.IsKeyDown(Keys.D)) 
+                        runVector += Vector2.UnitX;
                 }
                 if(runVector.Length() > 0)
                     runVector.Normalize();

@@ -43,7 +43,7 @@ namespace SkyShoot.Service
 
 		public AWeapon Weapon { get; set; }
 
-		private Account.AccountManager _accountManager = new Account.AccountManager();
+		//private Account.AccountManager _accountManager = new Account.AccountManager();
 		private Session.SessionManager _sessionManager = Session.SessionManager.Instance;
 
 		private static List<MainSkyShootService> _clientsList = new List<MainSkyShootService>();
@@ -52,13 +52,14 @@ namespace SkyShoot.Service
 
 		public bool Register(string username, string password)
 		{
-			bool result = _accountManager.Register(username, password);
-			return result;
+			//bool result = _accountManager.Register(username, password);
+			//return result;
+		    return true;
 		}
 
 		public Guid? Login(string username, string password)
 		{
-			bool result = _accountManager.Login(username, password);
+            bool result = true;//_accountManager.Login(username, password);
 
 			if (result)
 			{

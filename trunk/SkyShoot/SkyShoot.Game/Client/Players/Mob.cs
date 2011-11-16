@@ -3,6 +3,7 @@ using System;
 using Microsoft.Xna.Framework;
 
 using Microsoft.Xna.Framework.Graphics;
+using SkyShoot.Game.ScreenManager;
 
 namespace SkyShoot.Game.Client.Players
 {
@@ -16,7 +17,7 @@ namespace SkyShoot.Game.Client.Players
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Texture, Coordinates, Color.White);
+            base.Draw(spriteBatch);
         }
 
     }
