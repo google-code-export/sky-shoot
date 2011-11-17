@@ -5,11 +5,18 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Nuclex.UserInterface;
+using Nuclex.Input;
 
 namespace SkyShoot.Game.ScreenManager
 {
     public class ScreenManager : DrawableGameComponent
     {
+        GuiManager gui;
+        InputManager inputManager;
+
+        public GuiManager Gui { get { return gui; } }
+
         List<GameScreen> screens = new List<GameScreen>();
         List<GameScreen> screensToUpdate = new List<GameScreen>();
         InputState input = new InputState();
@@ -33,8 +40,14 @@ namespace SkyShoot.Game.ScreenManager
             font = content.Load<SpriteFont>("menufont");
             foreach (GameScreen screen in screens)
             {
-                screen.LoadContent();
+                screen.LoadContent(); 
             }
+
+            gui = new GuiManager(Game.Services);
+            gui.Visible = false;
+            inputManager = new InputManager(Game.Services, Game.Window.Handle);
+            Game.Components.Add(gui);
+            Game.Components.Add(inputManager);
         }
         protected override void UnloadContent()
         {
