@@ -61,7 +61,7 @@ namespace SkyShoot.Contracts.Mobs
         {
             if (counter % 6 == 0)// раз в 6 тиков(0.1 секунды)
             {
-                if (!players.Contains(targetPlayer))
+                if (!players.Contains(targetPlayer) || targetPlayer == null)
                 {
                     FindTarget(players);
                 }
