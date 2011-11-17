@@ -47,8 +47,7 @@ namespace SkyShoot.Game.Screens
 
         void PlayGameMenuEntrySelected(object sender, EventArgs e)
         {
-            foreach (GameScreen screen in ScreenManager.GetScreens()) screen.ExitScreen();
-            ScreenManager.AddScreen(new LoadingScreen(true, new GameplayScreen()));
+            ScreenManager.AddScreen(new LoginScreen()); 
         }
 
 
@@ -70,5 +69,10 @@ namespace SkyShoot.Game.Screens
             float transitionOffset = (float)Math.Pow(TransitionPosition, 2);            
         }
 
+        protected override void OnCancel()
+        {
+            base.OnCancel();
+            ScreenManager.Game.Exit();
+        }
     }
 }
