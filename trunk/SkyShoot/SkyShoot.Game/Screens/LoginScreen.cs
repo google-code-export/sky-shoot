@@ -87,7 +87,7 @@ namespace SkyShoot.Game.Screens
         }
         private void BackButtonPressed(object sender, EventArgs args)
         {
-            ExitScreen();   
+            ExitScreen();
         }
         private void LoginButtonPressed(object sender, EventArgs args)
         {
@@ -97,8 +97,8 @@ namespace SkyShoot.Game.Screens
             else
             {
                 // todo login
-                foreach (GameScreen screen in ScreenManager.GetScreens()) screen.ExitScreen();
-                ScreenManager.AddScreen(new LoadingScreen(true, new GameplayScreen()));
+               // foreach (GameScreen screen in ScreenManager.GetScreens()) screen.ExitScreen();
+                ScreenManager.AddScreen( new MultiplayerScreen());
             }
         }
         public override void Draw(GameTime gameTime)

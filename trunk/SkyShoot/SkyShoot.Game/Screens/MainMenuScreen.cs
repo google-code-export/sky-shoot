@@ -17,16 +17,17 @@ namespace SkyShoot.Game.Screens
             : base("SkyShoot")
         {
 
+            MenuEntry multiplayerMenuEntry = new MenuEntry("Multiplayer");
             MenuEntry playGameMenuEntry = new MenuEntry("Start");
             MenuEntry optionsMenuEntry = new MenuEntry("Options");
             MenuEntry exitMenuEntry = new MenuEntry("Exit");
-            
 
+            multiplayerMenuEntry.Selected += MultiplayerMenuEntrySelected;
             playGameMenuEntry.Selected += PlayGameMenuEntrySelected;
             optionsMenuEntry.Selected += OptionsMenuEntrySelected;
             exitMenuEntry.Selected += ExitMenuEntrySelected;
 
-
+            MenuEntries.Add(multiplayerMenuEntry);
             MenuEntries.Add(playGameMenuEntry);
             MenuEntries.Add(optionsMenuEntry);
             MenuEntries.Add(exitMenuEntry);
@@ -60,6 +61,12 @@ namespace SkyShoot.Game.Screens
         {
             ScreenManager.Game.Exit();
         }
+
+        void MultiplayerMenuEntrySelected(object sender, EventArgs e)
+        {
+            ScreenManager.AddScreen(new LoginScreen());
+        }
+
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
