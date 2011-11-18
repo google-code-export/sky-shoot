@@ -152,15 +152,13 @@ namespace SkyShoot.Service.Session
 
 				this.SomebodyShoots += new SomebodyShootsHandler(player.MobShot);
 				player.MeShot += new ClientShootsHandler(SomebodyShot);
-
-				
 			}
 
             _gameTimer = new Timer(FPS);
             _gameTimer.AutoReset = true;
             _gameTimer.Elapsed += new ElapsedEventHandler(TimerElapsedListener);
 			_gameTimer.Start();
-            _timerCounter = 1;
+            _timerCounter = 0;
 
             return true;
         }
