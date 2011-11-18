@@ -95,6 +95,7 @@ namespace SkyShoot.Service.Session
 
             for (int i = 0; i < gameSessions.Length; i++)
             {
+                if (gameSessions[i].IsStarted) continue;
                 gameDescriptions.Add(gameSessions[i].LocalGameDescription);
             }
 
