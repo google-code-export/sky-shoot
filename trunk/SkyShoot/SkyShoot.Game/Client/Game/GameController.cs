@@ -1,8 +1,9 @@
 using System;
-
+using System.ServiceModel;
 using Microsoft.Xna.Framework;
 
 using SkyShoot.Contracts.Bonuses;
+using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Weapon.Projectiles;
 
 using SkyShoot.Game.ScreenManager;
@@ -14,7 +15,7 @@ using AMob = SkyShoot.Contracts.Mobs.AMob;
 
 namespace SkyShoot.Game.Client.Game
 {
-    public class GameController:Contracts.Service.ISkyShootCallback
+    public class GameController : ISkyShootCallback
     {
 
         public GameModel GameModel { get; private set; }
@@ -28,7 +29,9 @@ namespace SkyShoot.Game.Client.Game
         public GameController()
         {
 
-            var service = new MainService.SkyShootServiceClient();
+            var channelFactory = new DuplexChannelFactory<ISkyShootService>(this, "SkyShootEndpoint");
+
+            ISkyShootService service = channelFactory.CreateChannel();
 
             Guid? login = service.Login("test", "test");
             if(login.HasValue)
