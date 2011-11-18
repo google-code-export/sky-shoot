@@ -45,9 +45,10 @@ namespace SkyShoot.Service.Session
             _spiderFactory= new SpiderFactory(_gameLevel);
         }
 
-        public event SomebodyMovesHadler SomebodyMoves;
+        public event SomebodyMovesHadler SomebodyMoves; // Это опечатка в слове Hadler? мб Handler?
         public event SomebodyShootsHandler SomebodyShoots;
         public event StartGameHandler StartGame;
+        public event SomebodyDiesHandler SomebodyDies;
 
         private void SomebodyMoved(AMob sender, Vector2 direction)
         {
@@ -69,7 +70,28 @@ namespace SkyShoot.Service.Session
             }
         }
 
-        //фунция для спавна мобов
+        public void SomebodyDied(AMob sender)
+        {
+            if (SomebodyDies != null)
+            {
+                SomebodyDies(sender);
+            }
+        }
+
+        public void MobDead(Mob mob)
+        {
+            SomebodyDied(mob);
+            mob.MeMoved -= SomebodyMoved;
+            mobs.Remove(mob);
+        }
+
+        public void PlayerDead(MainSkyShootService player)
+        {
+            player.GameOver();
+            SomebodyDied(player);
+            players.Remove(player);
+        }
+        
         public void SpawnMob()
         {
             if (_intervalToSpawn == 0)
@@ -93,7 +115,7 @@ namespace SkyShoot.Service.Session
 
             foreach(Mob mob in mobs)
             {
-                mob.Think(_timerCounter, players); // да, да у нас моб думает
+                mob.Think(_timerCounter, players);
                 mob.Coordinates = ComputeMovement(mob);
             }
 

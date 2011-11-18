@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Service;
+using SkyShoot.Service.Weapon.Bullets;
 
 namespace SkyShoot.Contracts.Mobs
 {
@@ -20,7 +21,7 @@ namespace SkyShoot.Contracts.Mobs
         {
             IsPlayer = false;
             Id = new Guid();
-            HealthAmount = (int)_health;
+            HealthAmount = (float)_health;
             _health *= 1.001; // увеличение здоровья каждого следующего на 0.1%
             Speed = _speed;
             Radius = _radius;
@@ -59,7 +60,7 @@ namespace SkyShoot.Contracts.Mobs
 
         public virtual void Think(long counter, List<MainSkyShootService> players)
         {
-            if (counter % 6 == 0)// раз в 6 тиков(0.1 секунды)
+            if (counter % 6 == 0)
             {
                 if (!players.Contains(targetPlayer) || targetPlayer == null)
                 {
@@ -67,6 +68,11 @@ namespace SkyShoot.Contracts.Mobs
                 }
                 Move();
             }
+        }
+
+        public void DemageTaken(ABullet bullet)
+        {
+            HealthAmount -= bullet.Damage;
         }
     }
 }

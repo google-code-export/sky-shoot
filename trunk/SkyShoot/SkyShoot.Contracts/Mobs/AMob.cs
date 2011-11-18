@@ -25,7 +25,7 @@ namespace SkyShoot.Contracts.Mobs
         [DataMember] public Vector2 Coordinates;
 
         [DataMember]
-        public int HealthAmount { get; set; }
+        public float HealthAmount { get; set; }
 
 		[DataMember]
 		public float Radius { get; set; } // размер моба
