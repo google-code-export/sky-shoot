@@ -1,9 +1,13 @@
 ﻿using System;
 
 using System.Net;
+
 using System.Diagnostics;
+
 using System.ServiceModel;
+
 using System.ServiceModel.Description;
+
 using Microsoft.WindowsAzure.ServiceRuntime;
 
 namespace SkyShoot.Service
@@ -47,10 +51,8 @@ namespace SkyShoot.Service
                 _serviceHost.Description.Behaviors.Add(metadataBehavior);
             }
 
-            _serviceHost.AddServiceEndpoint(typeof(Contracts.Service.ISkyShootService), new NetTcpBinding(),
+            _serviceHost.AddServiceEndpoint(typeof(Contracts.Service.ISkyShootService), new NetTcpBinding(SecurityMode.None),
                                    "SkyShootService");
-            _serviceHost.AddServiceEndpoint(typeof(IMetadataExchange), MetadataExchangeBindings.CreateMexTcpBinding(),
-                                   "mex");
 
             try
             {
