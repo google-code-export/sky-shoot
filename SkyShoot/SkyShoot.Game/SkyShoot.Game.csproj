@@ -146,6 +146,7 @@
     <Compile Include="Screens\MenuEntry.cs" />
     <Compile Include="Screens\MenuScreen.cs" />
     <Compile Include="Screens\MessageBox.cs" />
+    <Compile Include="Screens\MultiplayerScreen.cs" />
     <Compile Include="SkyShootGame.cs" />
   </ItemGroup>
   <ItemGroup>
