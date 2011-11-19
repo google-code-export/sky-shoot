@@ -144,18 +144,21 @@ namespace SkyShoot.Service.Session
                     
                     if (hitedMob.HealthAmount <= 0)
                     {
+						mobs.Remove(hitedMob);
                         //@TODO Отправить событие смерти моба
                     }
+					projectile.Timer = 0;
                 }
                 
             }
 			projectiles.RemoveAll(x => (x.Timer <= 0));
-			_timerCounter++;
+			
 			if (_timerCounter % 60 == 0 )
 				foreach (MainSkyShootService player in players)
 				{
 					player.SynchroFrame(mobs.ToArray());
 				}
+			_timerCounter++;
 
         }
 
@@ -207,9 +210,7 @@ namespace SkyShoot.Service.Session
         {
             foreach (Mob mob in mobs)
             {
-                var x = mob.Coordinates.X - player.Coordinates.X;
-                var y = mob.Coordinates.Y - player.Coordinates.Y;
-                if (Math.Sqrt(x * x - y * y) <= mob.Radius + player.Radius)
+                if ((mob.Coordinates+player.Coordinates).Length()<= mob.Radius + player.Radius)
                 {
                     player.HealthAmount -= mob.Damage;
                     if (player.HealthAmount <= 0)
@@ -232,6 +233,11 @@ namespace SkyShoot.Service.Session
 
 				this.SomebodyShoots += new SomebodyShootsHandler(player.MobShot);
 				player.MeShot += new ClientShootsHandler(SomebodyShot);
+				
+				player.Coordinates = new Vector2(0,0);
+				player.Speed = 100;
+				player.Weapon = new Weapon.Pistol(new Guid());
+				player.RunVector = new Vector2(0, 0);
 			}
 
             _gameTimer = new Timer(FPS);
@@ -261,7 +267,7 @@ namespace SkyShoot.Service.Session
 
         private void TimerElapsedListener(object sender,EventArgs e)
         {
-            update();
+			update();
         }
 
         private Vector2 ComputeMovement(AMob mob)
