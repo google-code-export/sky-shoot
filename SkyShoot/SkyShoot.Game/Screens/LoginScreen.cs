@@ -41,7 +41,7 @@ namespace SkyShoot.Game.Screens
             _loginBox = new InputControl
             {
                 Bounds = new UniRectangle(new UniScalar(0.5f, -100f), new UniScalar(0.4f, -30), 200, 30),
-                Text = ""
+                Text = Settings.Default.login 
             };
             _mainScreen.Desktop.Children.Add(_loginBox);
 
@@ -49,7 +49,7 @@ namespace SkyShoot.Game.Screens
             _passwordBox = new InputControl
             {
                 Bounds = new UniRectangle(new UniScalar(0.5f, -100f), new UniScalar(0.4f, 30), 200, 30),
-                Text = ""
+                Text = Settings.Default.password
             };
             _mainScreen.Desktop.Children.Add(_passwordBox);
 
@@ -99,6 +99,9 @@ namespace SkyShoot.Game.Screens
             else if (_passwordBox.Text.Length < 3) ScreenManager.AddScreen(new MessageBox("Password is too short!\nPress Enter to continue"));
             else
             {
+                Settings.Default.login = _loginBox.Text;
+                Settings.Default.password = _passwordBox.Text;
+                Settings.Default.Save();
                 // todo login
                // foreach (GameScreen screen in ScreenManager.GetScreens()) screen.ExitScreen();
                 ScreenManager.AddScreen(new MultiplayerScreen());
