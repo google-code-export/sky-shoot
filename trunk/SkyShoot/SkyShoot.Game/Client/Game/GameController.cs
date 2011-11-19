@@ -30,7 +30,7 @@ namespace SkyShoot.Game.Client.Game
         {
 
             var channelFactory = new DuplexChannelFactory<ISkyShootService>(this, "SkyShootEndpoint");
-
+           
             ISkyShootService service = channelFactory.CreateChannel();
 
             Guid? login = service.Login("test", "test");
