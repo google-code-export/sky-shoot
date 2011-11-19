@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Service;
 using SkyShoot.Service.Weapon.Bullets;
+using SkyShoot.Contracts.Weapon.Projectiles;
 
 namespace SkyShoot.Contracts.Mobs
 {
@@ -17,11 +18,14 @@ namespace SkyShoot.Contracts.Mobs
 
         public MainSkyShootService targetPlayer { get; set; }
 
+        public int Damage { get; set; }
+
         public Mob()
         {
             IsPlayer = false;
             Id = new Guid();
             HealthAmount = (float)_health;
+            Damage = 10;
             _health *= 1.001; // увеличение здоровья каждого следующего на 0.1%
             Speed = _speed;
             Radius = _radius;
@@ -44,7 +48,7 @@ namespace SkyShoot.Contracts.Mobs
             }
         }
 
-        public event SomebodyMovesHadler MeMoved;
+        public event SomebodyMovesHandler MeMoved;
 
         public virtual void Move() 
         {
@@ -70,7 +74,7 @@ namespace SkyShoot.Contracts.Mobs
             }
         }
 
-        public void DemageTaken(ABullet bullet)
+        public void DemageTaken(AProjectile bullet)
         {
             HealthAmount -= bullet.Damage;
         }
