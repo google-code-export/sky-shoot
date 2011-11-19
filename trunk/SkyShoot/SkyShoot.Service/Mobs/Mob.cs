@@ -18,7 +18,7 @@ namespace SkyShoot.Contracts.Mobs
 
         public MainSkyShootService targetPlayer { get; set; }
 
-        public int Damage { get; set; }
+        public float Damage { get; set; }
 
         public Mob()
         {
