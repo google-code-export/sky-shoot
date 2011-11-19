@@ -36,30 +36,6 @@ namespace SkyShoot.Service.Session
             GameSession session = _gameSessions.Find(curGame => curGame.LocalGameDescription.GameID == game.GameID);
 			return session.AddPlayer(player);
 
-
-            /*try
-            {
-                if(!session.LocalGameDescription.Players.Contains(player.Name)){
-                    session.LocalGameDescription.Players.Add(player.Name);
-                    session.players.Add(player);
-
-                    //Т.к. наша игра сама решает, когда начать игру, то запускаем игру.
-                    if (session.players.Count == session.LocalGameDescription.MaximumPlayersAllowed)
-                    {
-                        if (!StartGame(session.LocalGameDescription))
-                        {
-                            return false;
-                        }
-                    }
-
-                    return true;
-                }
-                return false;
-            }
-            catch (Exception)
-            {
-                return false;
-            }*/
         }
         
         //Создаем новую игру
@@ -70,12 +46,7 @@ namespace SkyShoot.Service.Session
             _gameSessions.Add(gameSession);
 
 			gameSession.AddPlayer(client);
-            //Т.к. наша игра сама решает, когда начать игру, то запускаем игру.
-            /*if (maxPlayers == 1)
-            {
-                StartGame(gameSession.LocalGameDescription);
-            }*/
-
+            
             return gameSession.LocalGameDescription;
         }
 
@@ -109,7 +80,7 @@ namespace SkyShoot.Service.Session
             {
                 var game = _gameSessions.Find(gameSession => gameSession.LocalGameDescription.Players.Contains(playerName));
                 game.LocalGameDescription.Players.Remove(playerName);
-                game.players.RemoveAll(x => x.Name == playerName);
+                game.PlayerLeave(game.players.Find(x => x.Name == playerName));
                 if (game.players.Count == 0) _gameSessions.Remove(game);
                 return true;
             }

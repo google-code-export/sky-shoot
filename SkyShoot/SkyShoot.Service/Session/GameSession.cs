@@ -45,10 +45,11 @@ namespace SkyShoot.Service.Session
             _spiderFactory= new SpiderFactory(_gameLevel);
         }
 
-        public event SomebodyMovesHandler SomebodyMoves; // Это опечатка в слове Hadler? мб Handler?
+        public event SomebodyMovesHandler SomebodyMoves; 
         public event SomebodyShootsHandler SomebodyShoots;
         public event StartGameHandler StartGame;
         public event SomebodyDiesHandler SomebodyDies;
+		public event SomebodyHitHandler SomebodyHit;
 
         private void SomebodyMoved(AMob sender, Vector2 direction)
         {
@@ -89,9 +90,22 @@ namespace SkyShoot.Service.Session
         {
             player.GameOver();
             SomebodyDied(player);
-            players.Remove(player);
+			PlayerLeave(player);
         }
-        
+
+		public void SomebodyHitted(AMob mob, AProjectile projectile)
+		{
+			SomebodyHit(mob, projectile);
+		}
+
+		public void PlayerLeave(MainSkyShootService player)
+		{
+			this.SomebodyHit -= player.Hit;
+			//здесь вся отписка от событий для player
+
+			players.Remove(player);
+		}
+
         public void SpawnMob()
         {
             if (_intervalToSpawn == 0)
@@ -144,8 +158,7 @@ namespace SkyShoot.Service.Session
                     
                     if (hitedMob.HealthAmount <= 0)
                     {
-						mobs.Remove(hitedMob);
-                        //@TODO Отправить событие смерти моба
+						MobDead(hitedMob);
                     }
 					projectile.Timer = 0;
                 }
@@ -210,7 +223,7 @@ namespace SkyShoot.Service.Session
         {
             foreach (Mob mob in mobs)
             {
-                if ((mob.Coordinates+player.Coordinates).Length()<= mob.Radius + player.Radius)
+                if ((mob.Coordinates - player.Coordinates).Length() <= mob.Radius + player.Radius)
                 {
                     player.HealthAmount -= mob.Damage;
                     if (player.HealthAmount <= 0)
@@ -233,7 +246,9 @@ namespace SkyShoot.Service.Session
 
 				this.SomebodyShoots += new SomebodyShootsHandler(player.MobShot);
 				player.MeShot += new ClientShootsHandler(SomebodyShot);
-				
+
+				this.SomebodyHit += player.Hit;
+
 				player.Coordinates = new Vector2(0,0);
 				player.Speed = 100;
 				player.Weapon = new Weapon.Pistol(new Guid());
