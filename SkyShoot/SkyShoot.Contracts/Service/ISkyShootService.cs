@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework;
 
 namespace SkyShoot.Contracts.Service
 {
-    public delegate void SomebodyMovesHadler(AMob sender, Vector2 direction);
+    public delegate void SomebodyMovesHandler(AMob sender, Vector2 direction);
     public delegate void ClientShootsHandler(AMob sender, Vector2 direction);
     public delegate void SomebodyShootsHandler(AMob sender, Weapon.Projectiles.AProjectile[] projectiles);
 	public delegate void StartGameHandler(AMob[] mobs,GameLevel arena);

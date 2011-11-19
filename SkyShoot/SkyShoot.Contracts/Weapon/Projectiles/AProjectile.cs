@@ -40,5 +40,8 @@ namespace SkyShoot.Contracts.Weapon.Projectiles
 
         [DataMember]
         public int Timer { get; set; }
+
+        [DataMember]
+        public float Damage { get; set; }
     }
 }

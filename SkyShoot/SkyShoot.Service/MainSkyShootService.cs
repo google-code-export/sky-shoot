@@ -93,7 +93,7 @@ namespace SkyShoot.Service
 			return _sessionManager.JoinGame(game, this);
 		}
 
-		public event SomebodyMovesHadler MeMoved;
+		public event SomebodyMovesHandler MeMoved;
 		public event ClientShootsHandler MeShot;
 
 		public void Move(Vector2 direction) // приходит снаружи от клиента

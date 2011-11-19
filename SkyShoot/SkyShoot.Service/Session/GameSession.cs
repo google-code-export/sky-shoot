@@ -45,7 +45,7 @@ namespace SkyShoot.Service.Session
             _spiderFactory= new SpiderFactory(_gameLevel);
         }
 
-        public event SomebodyMovesHadler SomebodyMoves; // Это опечатка в слове Hadler? мб Handler?
+        public event SomebodyMovesHandler SomebodyMoves; // Это опечатка в слове Hadler? мб Handler?
         public event SomebodyShootsHandler SomebodyShoots;
         public event StartGameHandler StartGame;
         public event SomebodyDiesHandler SomebodyDies;
@@ -100,7 +100,7 @@ namespace SkyShoot.Service.Session
                 
                 var mob = _spiderFactory.CreateMob();
                 mobs.Add(mob);
-                mob.MeMoved += new SomebodyMovesHadler(SomebodyMoved);
+                mob.MeMoved += new SomebodyMovesHandler(SomebodyMoved);
             }
             else
             {
@@ -119,15 +119,34 @@ namespace SkyShoot.Service.Session
                 mob.Coordinates = ComputeMovement(mob);
             }
 
-            foreach(AMob player in players)
+            foreach (MainSkyShootService player in players)
+            {
                 player.Coordinates = ComputeMovement(player);
 
-            //@TODO collision detection;
-            
+                //Проверка на касание игрока и моба
+                hitTestTouch(player);
+            }
+
             foreach (AProjectile projectile in projectiles)
             {
-                projectile.Coordinates += projectile.Direction*projectile.Speed;
-                projectile.Timer--;
+                var newCord = projectile.Coordinates + projectile.Direction * projectile.Speed;
+                
+                //Проверка на касание пули и моба
+                var hitedMob = hitTestProjectile(projectile, newCord);
+                if (hitedMob == null)
+                {
+                    projectile.Coordinates = newCord;
+                    projectile.Timer--;
+                }
+                else
+                {
+                    hitedMob.DemageTaken(projectile);
+                    
+                    if (hitedMob.HealthAmount <= 0)
+                    {
+                        //@TODO Отправить событие смерти моба
+                    }
+                }
                 
             }
 			projectiles.RemoveAll(x => (x.Timer <= 0));
@@ -140,6 +159,67 @@ namespace SkyShoot.Service.Session
 
         }
 
+        private Mob hitTestProjectile(AProjectile projectile, Vector2 newCord)
+        {
+            var prX = newCord.X - projectile.Coordinates.X;
+            var prY = newCord.Y - projectile.Coordinates.Y;
+
+            Mob hitedTarget = null;
+            var minDist = double.MaxValue;
+         
+            foreach(Mob mob in mobs)
+            {
+                var mX = mob.Coordinates.X - projectile.Coordinates.X;
+                var mY = mob.Coordinates.Y - projectile.Coordinates.Y;
+                var mR = mob.Radius;
+                var mDist = Math.Sqrt(mX * mX + mY * mY);
+
+                if (mDist <= mR && mDist < minDist)
+                {
+                    hitedTarget = mob;
+                    minDist = mDist;
+                    continue;
+                }
+
+                if (prX == 0 && prY == 0)
+                {
+                    continue;
+                }
+
+                var h = (prX * mY - prY * mX) / Math.Sqrt(prX * prX * + prY * prY);
+
+                //@TODO Проверка углов. Над ней еще надо будет подумать.
+                var cos1 = mX * prX + mY * prY;
+                var cos2 = -1 * (prX * (mX - prX) + prY * (mY - prY));
+
+                if (h <= mR && Math.Sign(cos1) == Math.Sign(cos2) && mDist < minDist)
+                {
+                    hitedTarget = mob;
+                    minDist = mDist;
+                }
+
+            }
+
+            return hitedTarget;
+        }
+
+        private void hitTestTouch(MainSkyShootService player)
+        {
+            foreach (Mob mob in mobs)
+            {
+                var x = mob.Coordinates.X - player.Coordinates.X;
+                var y = mob.Coordinates.Y - player.Coordinates.Y;
+                if (Math.Sqrt(x * x - y * y) <= mob.Radius + player.Radius)
+                {
+                    player.HealthAmount -= mob.Damage;
+                    if (player.HealthAmount <= 0)
+                    {
+                        PlayerDead(player);
+                    }
+                }
+            }
+        }
+
         public bool Start()
         {
 			if (IsStarted) return false;
@@ -147,8 +227,8 @@ namespace SkyShoot.Service.Session
 
 			foreach (MainSkyShootService player in players)
 			{
-				this.SomebodyMoves += new SomebodyMovesHadler(player.MobMoved);
-				player.MeMoved += new SomebodyMovesHadler(SomebodyMoved);
+				this.SomebodyMoves += new SomebodyMovesHandler(player.MobMoved);
+				player.MeMoved += new SomebodyMovesHandler(SomebodyMoved);
 
 				this.SomebodyShoots += new SomebodyShootsHandler(player.MobShot);
 				player.MeShot += new ClientShootsHandler(SomebodyShot);

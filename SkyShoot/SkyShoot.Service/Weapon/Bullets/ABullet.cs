@@ -20,7 +20,6 @@ namespace SkyShoot.Service.Weapon.Bullets
         }
 
         public float Velocity { get; private set; }
-        public float Damage { get; private set; }
 
         public enum EnumBulletType
         {
