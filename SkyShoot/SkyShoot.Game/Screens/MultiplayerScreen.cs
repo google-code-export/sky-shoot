@@ -100,13 +100,13 @@ namespace SkyShoot.Game.Screens
         private void JoinGameButtonPressed(object sender, EventArgs args)
         {
             ExitScreen();
+            ScreenManager.AddScreen(new GameplayScreen());
         }
 
         private void CreateGameButtonPressed(object sender, EventArgs args)
         {
-            ExitScreen();
+            foreach (GameScreen screen in ScreenManager.GetScreens()) screen.ExitScreen();
             ScreenManager.AddScreen(new LoadingScreen(true, new GameplayScreen()));
-            
         }
 
         public override void Draw(GameTime gameTime)

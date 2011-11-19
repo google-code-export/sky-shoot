@@ -1,18 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-//using System.ServiceModel.Web;
-using System.Text;
 
-using SkyShoot.Contracts.Service;
+using System.ServiceModel;
+
+using System.Collections.Generic;
+
 using Microsoft.Xna.Framework;
-using SkyShoot.Service.Session;
+
 using SkyShoot.Contracts.Mobs;
-using SkyShoot.Service.Weapon;
+using SkyShoot.Contracts.Service;
+using SkyShoot.Contracts.Session;
+
 using SkyShoot.Contracts.Weapon.Projectiles;
 
+using SkyShoot.Service.Weapon;
 
 namespace SkyShoot.Service
 {
@@ -25,7 +25,7 @@ namespace SkyShoot.Service
 
 		public static AMob[] Mobs(AMob[] ms)
 		{
-			AMob[] rs = new AMob[ms.Length];
+			var rs = new AMob[ms.Length];
 			for (int i = 0; i < ms.Length; i++)
 			{
 				rs[i] = new AMob(ms[i]);
@@ -44,11 +44,11 @@ namespace SkyShoot.Service
 		public AWeapon Weapon { get; set; }
 
 		//private Account.AccountManager _accountManager = new Account.AccountManager();
-		private Session.SessionManager _sessionManager = Session.SessionManager.Instance;
+		private readonly Session.SessionManager _sessionManager = Session.SessionManager.Instance;
 
-		private static List<MainSkyShootService> _clientsList = new List<MainSkyShootService>();
+		private static readonly List<MainSkyShootService> ClientsList = new List<MainSkyShootService>();
 
-		public MainSkyShootService() : base(new Microsoft.Xna.Framework.Vector2(0, 0), new Guid()) { }
+		public MainSkyShootService() : base(new Vector2(0, 0), new Guid()) { }
 
 		public bool Register(string username, string password)
 		{
@@ -63,32 +63,31 @@ namespace SkyShoot.Service
 
 			if (result)
 			{
-				this.Name = username;
-				this._callback = OperationContext.Current.GetCallbackChannel<ISkyShootCallback>();
-				this.IsPlayer = true;
+				Name = username;
+				_callback = OperationContext.Current.GetCallbackChannel<ISkyShootCallback>();
+				IsPlayer = true;
 
-				_clientsList.Add(this);
+				ClientsList.Add(this);
 			}
 			else
 			{
 				return null;
 			}
 
-			return this.Id;
+			return Id;
 		}
 
-		public Contracts.Session.GameDescription[] GetGameList()
+		public GameDescription[] GetGameList()
 		{
 			return _sessionManager.GetGameList();
 		}
 
-		public bool CreateGame(Contracts.Session.GameMode mode, int maxPlayers)
+		public GameDescription CreateGame(GameMode mode, int maxPlayers)
 		{
-
-			return (_sessionManager.CreateGame(mode, maxPlayers, this, Contracts.Session.TileSet.Grass) != null);
+		    return _sessionManager.CreateGame(mode, maxPlayers, this, TileSet.Grass);
 		}
 
-		public bool JoinGame(Contracts.Session.GameDescription game)
+		public bool JoinGame(GameDescription game)
 		{
 			return _sessionManager.JoinGame(game, this);
 		}
@@ -124,58 +123,58 @@ namespace SkyShoot.Service
 
 		public void LeaveGame()
 		{
-			bool result = _sessionManager.LeaveGame(this.Name);
+			bool result = _sessionManager.LeaveGame(Name);
 			if (!result)
 			{ /* что-то сделать, например, добавить сообщение в лог */
 				return;
 			}
 
-			_clientsList.Remove(this);
+			ClientsList.Remove(this);
 		}
 
-		public void GameStart(Contracts.Mobs.AMob[] mobs, Contracts.Session.GameLevel arena)
+		public void GameStart(AMob[] mobs, GameLevel arena)
 		{
-			Contracts.Mobs.AMob[] Mobs = new Contracts.Mobs.AMob[mobs.Length];
+			var mobsCopy = new AMob[mobs.Length];
 			for (int i = 0; i < mobs.Length; i++)
-				Mobs[i] = new AMob(mobs[i]);
+				mobsCopy[i] = new AMob(mobs[i]);
 
-			_callback.GameStart(Mobs, arena);
+			_callback.GameStart(mobsCopy, arena);
 		}
 
-		public void SpawnMob(Contracts.Mobs.AMob mob)
+		public void SpawnMob(AMob mob)
 		{
-			AMob Mob = new AMob(mob);
-			_callback.SpawnMob(Mob);
+			var mobCopy = new AMob(mob);
+			_callback.SpawnMob(mobCopy);
 		}
 
-		public void Hit(Contracts.Mobs.AMob mob, Contracts.Weapon.Projectiles.AProjectile projectile)
+		public void Hit(AMob mob, AProjectile projectile)
 		{
-			AMob Mob = new AMob(mob);
-			_callback.Hit(Mob, projectile);
+			var mobCopy = new AMob(mob);
+			_callback.Hit(mobCopy, projectile);
 		}
 
-		public void MobDead(Contracts.Mobs.AMob mob)
+		public void MobDead(AMob mob)
 		{
-			AMob Mob = new AMob(mob);
-			_callback.MobDead(Mob);
+			var mobCopy = new AMob(mob);
+			_callback.MobDead(mobCopy);
 		}
 
-		public void MobMoved(Contracts.Mobs.AMob mob, Vector2 direction)
-		{
-			if (mob == this)
-				return;
-
-			AMob Mob = new AMob(mob);
-			_callback.MobMoved(Mob, direction);
-		}
-
-		public void MobShot(Contracts.Mobs.AMob mob, SkyShoot.Contracts.Weapon.Projectiles.AProjectile[] projectiles)
+		public void MobMoved(AMob mob, Vector2 direction)
 		{
 			if (mob == this)
 				return;
 
-			AMob Mob = new AMob(mob);
-			_callback.MobShot(Mob, projectiles);
+			var mobCopy = new AMob(mob);
+			_callback.MobMoved(mobCopy, direction);
+		}
+
+		public void MobShot(AMob mob, AProjectile[] projectiles)
+		{
+			if (mob == this)
+				return;
+
+			var mobCopy = new AMob(mob);
+			_callback.MobShot(mobCopy, projectiles);
 		}
 
 		public void BonusDropped(Contracts.Bonuses.AObtainableDamageModifier bonus)
@@ -198,19 +197,19 @@ namespace SkyShoot.Service
 			_callback.GameOver();
 		}
 
-		public void PlayerLeft(Contracts.Mobs.AMob mob)
+		public void PlayerLeft(AMob mob)
 		{
-			AMob Mob = new AMob(mob);
-			_callback.PlayerLeft(Mob);
+			var mobCopy = new AMob(mob);
+			_callback.PlayerLeft(mobCopy);
 		}
 
-		public void SynchroFrame(Contracts.Mobs.AMob[] mobs)
+		public void SynchroFrame(AMob[] mobs)
 		{
-			Contracts.Mobs.AMob[] Mobs = new Contracts.Mobs.AMob[mobs.Length];
+			var mobsCopy = new AMob[mobs.Length];
 			for (int i = 0; i < mobs.Length; i++)
-				Mobs[i] = new AMob(mobs[i]);
+				mobsCopy[i] = new AMob(mobs[i]);
 
-			_callback.SynchroFrame(Mobs);
+			_callback.SynchroFrame(mobsCopy);
 		}
 	}
 }
