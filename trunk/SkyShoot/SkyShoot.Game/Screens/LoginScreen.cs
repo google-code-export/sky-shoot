@@ -9,6 +9,7 @@ using Nuclex.UserInterface.Controls.Desktop;
 using Microsoft.Xna.Framework;
 
 using Microsoft.Xna.Framework.Graphics;
+using SkyShoot.Game.Client.Game;
 
 
 namespace SkyShoot.Game.Screens
@@ -102,8 +103,9 @@ namespace SkyShoot.Game.Screens
                 Settings.Default.login = _loginBox.Text;
                 Settings.Default.password = _passwordBox.Text;
                 Settings.Default.Save();
-                // todo login
-               // foreach (GameScreen screen in ScreenManager.GetScreens()) screen.ExitScreen();
+
+                GameController.Instance.Login(_loginBox.Text, _passwordBox.Text);
+
                 ScreenManager.AddScreen(new MultiplayerScreen());
             }
         }
