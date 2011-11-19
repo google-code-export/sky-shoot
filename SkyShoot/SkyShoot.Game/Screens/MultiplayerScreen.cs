@@ -1,27 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework.Graphics;
+
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
+
+using Microsoft.Xna.Framework.Graphics;
+
 using Nuclex.UserInterface;
+
 using Nuclex.UserInterface.Controls;
+
 using Nuclex.UserInterface.Controls.Desktop;
+using SkyShoot.Contracts.Session;
+using SkyShoot.Game.Client.Game;
 using SkyShoot.Game.ScreenManager;
-using Microsoft.Xna.Framework.Input;
 
 namespace SkyShoot.Game.Screens
 {
-    internal class MultiplayerScreen : ScreenManager.GameScreen
+    internal class MultiplayerScreen : GameScreen
     {
-        private GuiManager gui;
-        private ButtonControl backButton;
-        private ButtonControl createGameButton;
-        private ButtonControl joinGameButton;
-        private ListControl mapList;
-        private Screen mainScreen;
-        private LabelControl mapLabel;
+        private GuiManager _gui;
+        private ButtonControl _backButton;
+        private ButtonControl _createGameButton;
+        private ButtonControl _joinGameButton;
+        private ListControl _mapList;
+        private Screen _mainScreen;
+        private LabelControl _mapLabel;
 
         public MultiplayerScreen()
         {
@@ -31,63 +33,66 @@ namespace SkyShoot.Game.Screens
         public override void LoadContent()
         {
             base.LoadContent();
-            gui = ScreenManager.Gui;
+            _gui = ScreenManager.Gui;
             Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
-            mainScreen = new Screen(viewport.Width, viewport.Height);
-            gui.Screen = mainScreen;
+            _mainScreen = new Screen(viewport.Width, viewport.Height);
+            _gui.Screen = _mainScreen;
 
-            mainScreen.Desktop.Bounds = new UniRectangle(
+            _mainScreen.Desktop.Bounds = new UniRectangle(
                 new UniScalar(0.1f, 0.0f), new UniScalar(0.1f, 0.0f),
                 new UniScalar(0.8f, 0.0f), new UniScalar(0.8f, 0.0f)
                 );
 
             // CreateGame Button
-            createGameButton = new ButtonControl();
-            createGameButton.Text = "Create Game";
-            createGameButton.Bounds = new UniRectangle(
-                new UniScalar(0.5f, -350f), new UniScalar(0.4f, -160f), 120, 32
-                );
-            createGameButton.Pressed += CreateGameButtonPressed;
-            mainScreen.Desktop.Children.Add(createGameButton);
+            _createGameButton = new ButtonControl
+            {
+                Text = "Create Game",
+                Bounds = new UniRectangle(new UniScalar(0.5f, -350f), new UniScalar(0.4f, -160f), 120, 32)
+            };
+            _createGameButton.Pressed += CreateGameButtonPressed;
+            _mainScreen.Desktop.Children.Add(_createGameButton);
 
             // Back Button
-            backButton = new ButtonControl();
-            backButton.Text = "Back";
-            backButton.Bounds = new UniRectangle(
-                new UniScalar(0.5f, -350f), new UniScalar(0.4f, -80f), 120, 32
-                );
-            backButton.Pressed += BackButtonPressed;
-            mainScreen.Desktop.Children.Add(backButton);
+            _backButton = new ButtonControl
+            {
+                Text = "Back",
+                Bounds = new UniRectangle(new UniScalar(0.5f, -350f), new UniScalar(0.4f, -80f), 120, 32)
+            };
+            _backButton.Pressed += BackButtonPressed;
+            _mainScreen.Desktop.Children.Add(_backButton);
 
             // JoinGame Button
-            joinGameButton = new ButtonControl();
-            joinGameButton.Text = "Join Game";
-            joinGameButton.Bounds = new UniRectangle(
-                new UniScalar(0.5f, -350f), new UniScalar(0.4f, -120f), 120, 32
-                );
-            joinGameButton.Pressed += JoinGameButtonPressed;
-            mainScreen.Desktop.Children.Add(joinGameButton);
+            _joinGameButton = new ButtonControl
+            {
+                Text = "Join Game",
+                Bounds = new UniRectangle(new UniScalar(0.5f, -350f), new UniScalar(0.4f, -120f), 120, 32)
+            };
+            _joinGameButton.Pressed += JoinGameButtonPressed;
+            _mainScreen.Desktop.Children.Add(_joinGameButton);
 
             //Label of maps
-            mapLabel = new LabelControl();
-            mapLabel.Bounds = new UniRectangle(300.0f, -30.0f, 200.0f, 24.0f);
-            mapLabel.Text = "Maps";
-            mainScreen.Desktop.Children.Add(mapLabel);
+            _mapLabel = new LabelControl
+            {
+                Bounds = new UniRectangle(300.0f, -30.0f, 200.0f, 24.0f), Text = "Maps"
+            };
+            _mainScreen.Desktop.Children.Add(_mapLabel);
 
             //Map List
-            mapList = new ListControl();
-            mapList.Bounds = new UniRectangle(300f, -10f, 200f, 300f);
-            mapList.Slider.Bounds.Location.X.Offset -= 1.0f;
-            mapList.Slider.Bounds.Location.Y.Offset += 1.0f;
-            mapList.Slider.Bounds.Size.Y.Offset -= 2.0f;
+            _mapList = new ListControl
+            {
+                Bounds = new UniRectangle(300f, -10f, 200f, 300f)
+            };
+            _mapList.Slider.Bounds.Location.X.Offset -= 1.0f;
+            _mapList.Slider.Bounds.Location.Y.Offset += 1.0f;
+            _mapList.Slider.Bounds.Size.Y.Offset -= 2.0f;
             for (int i = 0; i < 20; i++)
             {
-                mapList.Items.Add("Map " + (i + 1) );
+                _mapList.Items.Add("Map " + (i + 1) );
             }
-            mapList.Items.Add("Map 100500");
-            mapList.SelectionMode = ListSelectionMode.Single;
-            mapList.SelectedItems.Add(4);
-            mainScreen.Desktop.Children.Add(mapList);
+            _mapList.Items.Add("Map 100500");
+            _mapList.SelectionMode = ListSelectionMode.Single;
+            _mapList.SelectedItems.Add(4);
+            _mainScreen.Desktop.Children.Add(_mapList);
 
         }
 
@@ -99,20 +104,30 @@ namespace SkyShoot.Game.Screens
 
         private void JoinGameButtonPressed(object sender, EventArgs args)
         {
+            //todo setActive
             ExitScreen();
             ScreenManager.AddScreen(new GameplayScreen());
+
+            //todo temporary
+            GameController.Instance.JoinGame(GameController.Instance.GetGameList()[0]);
+
         }
 
         private void CreateGameButtonPressed(object sender, EventArgs args)
         {
+            //todo setActive
             foreach (GameScreen screen in ScreenManager.GetScreens()) screen.ExitScreen();
-            ScreenManager.AddScreen(new LoadingScreen(true, new GameplayScreen()));
+
+            //todo field for maxPlayers
+            GameController.Instance.CreateGame(GameMode.Deathmatch, 2);
+
+            //todo refresh button
         }
 
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
-            gui.Draw(gameTime);
+            _gui.Draw(gameTime);
         }
 
     }
