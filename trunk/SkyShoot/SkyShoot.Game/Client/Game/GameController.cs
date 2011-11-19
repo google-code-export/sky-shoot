@@ -1,9 +1,12 @@
 using System;
+
 using System.ServiceModel;
+
 using Microsoft.Xna.Framework;
 
 using SkyShoot.Contracts.Bonuses;
 using SkyShoot.Contracts.Service;
+
 using SkyShoot.Contracts.Weapon.Projectiles;
 
 using SkyShoot.Game.ScreenManager;
@@ -15,8 +18,17 @@ using AMob = SkyShoot.Contracts.Mobs.AMob;
 
 namespace SkyShoot.Game.Client.Game
 {
-    public class GameController : ISkyShootCallback
+    public sealed class GameController : ISkyShootCallback
     {
+        private static readonly GameController LocalInstance = new GameController();
+
+        public static GameController Instance
+        {
+            get
+            {
+                return LocalInstance;
+            }
+        }
 
         public GameModel GameModel { get; private set; }
 
@@ -45,8 +57,8 @@ namespace SkyShoot.Game.Client.Game
             }
 
             //todo temporary!
-            _mobs[0] = _testMob;
-            GameStart(_mobs, new Contracts.Session.GameLevel(Contracts.Session.TileSet.Sand));
+            //_mobs[0] = _testMob;
+            //GameStart(_mobs, new Contracts.Session.GameLevel(Contracts.Session.TileSet.Sand));
         }
 
         //
