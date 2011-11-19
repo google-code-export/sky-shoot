@@ -1,57 +1,75 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+
 using Microsoft.Xna.Framework.Content;
-using Nuclex.UserInterface;
+using Microsoft.Xna.Framework.Graphics;
+
 using Nuclex.Input;
+using Nuclex.UserInterface;
+
 
 namespace SkyShoot.Game.ScreenManager
 {
     public class ScreenManager : DrawableGameComponent
     {
-        GuiManager gui;
-        InputManager inputManager;
+        GuiManager _gui;
+        InputManager _inputManager;
 
-        public GuiManager Gui { get { return gui; } }
+        public GuiManager Gui { get { return _gui; } }
 
-        List<GameScreen> screens = new List<GameScreen>();
-        List<GameScreen> screensToUpdate = new List<GameScreen>();
-        InputState input = new InputState();
+        readonly List<GameScreen> _screens = new List<GameScreen>();
+        readonly List<GameScreen> _screensToUpdate = new List<GameScreen>();
+        readonly InputState _input = new InputState();
 
-        SpriteBatch spriteBatch;
-        SpriteFont font;
+        SpriteBatch _spriteBatch;
+        SpriteFont _font;
 
-        public SpriteBatch SpriteBatch { get { return spriteBatch; } }
-        public SpriteFont Font { get { return font; } }
+        public SpriteBatch SpriteBatch { get { return _spriteBatch; } }
+        public SpriteFont Font { get { return _font; } }
 
-        public ScreenManager(Microsoft.Xna.Framework.Game game)
+        private static ScreenManager _instance;
+
+        public static void Init(Microsoft.Xna.Framework.Game game)
+        {
+            if(_instance == null)
+                _instance = new ScreenManager(game);
+            else
+            {
+                throw new Exception("Already initialized");
+            }
+        }
+
+        private ScreenManager(Microsoft.Xna.Framework.Game game)
             : base(game)
         {
 
         }
 
+        public static ScreenManager Instance
+        {
+            get { return _instance; }
+        }
+
         protected override void LoadContent()
         {
             ContentManager content = Game.Content;
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-            font = content.Load<SpriteFont>("menufont");
-            foreach (GameScreen screen in screens)
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
+            _font = content.Load<SpriteFont>("menufont");
+            foreach (GameScreen screen in _screens)
             {
                 screen.LoadContent(); 
             }
 
-            gui = new GuiManager(Game.Services);
-            gui.Visible = false;
-            inputManager = new InputManager(Game.Services, Game.Window.Handle);
-            Game.Components.Add(gui);
-            Game.Components.Add(inputManager);
+            _gui = new GuiManager(Game.Services) { Visible = false };
+            _inputManager = new InputManager(Game.Services, Game.Window.Handle);
+            Game.Components.Add(_gui);
+            Game.Components.Add(_inputManager);
         }
         protected override void UnloadContent()
         {
-            foreach (GameScreen screen in screens)
+            foreach (GameScreen screen in _screens)
             {
                 screen.UnloadContent();
             }
@@ -59,19 +77,19 @@ namespace SkyShoot.Game.ScreenManager
 
         public override void Update(GameTime gameTime)
         {
-            input.Update();
+            _input.Update();
 
-            screensToUpdate.Clear();
-            foreach (GameScreen screen in screens)
-                screensToUpdate.Add(screen);
+            _screensToUpdate.Clear();
+            foreach (GameScreen screen in _screens)
+                _screensToUpdate.Add(screen);
 
             bool otherScreenHasFocus = !Game.IsActive;
             bool coveredByOtherScreen = false;
 
-            while (screensToUpdate.Count > 0)
+            while (_screensToUpdate.Count > 0)
             {
-                GameScreen screen = screensToUpdate[screensToUpdate.Count - 1];
-                screensToUpdate.RemoveAt(screensToUpdate.Count - 1);
+                GameScreen screen = _screensToUpdate[_screensToUpdate.Count - 1];
+                _screensToUpdate.RemoveAt(_screensToUpdate.Count - 1);
 
                 screen.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
 
@@ -80,7 +98,7 @@ namespace SkyShoot.Game.ScreenManager
                 {
                     if (!otherScreenHasFocus)
                     {
-                        screen.HandleInput(input);
+                        screen.HandleInput(_input);
 
                         otherScreenHasFocus = true;
                     }
@@ -93,7 +111,7 @@ namespace SkyShoot.Game.ScreenManager
 
         public override void Draw(GameTime gameTime)
         {
-            foreach (GameScreen screen in screens)
+            foreach (GameScreen screen in _screens)
             {
                 if (screen.ScreenState == ScreenState.Hidden)
                     continue;
@@ -107,19 +125,19 @@ namespace SkyShoot.Game.ScreenManager
             screen.ScreenManager = this;
             screen.IsExiting = false;
             screen.LoadContent();
-            screens.Add(screen);
+            _screens.Add(screen);
         }
 
         public void RemoveScreen(GameScreen screen)
         {
             screen.UnloadContent();
-            screens.Remove(screen);
-            screensToUpdate.Remove(screen);
+            _screens.Remove(screen);
+            _screensToUpdate.Remove(screen);
         }
 
         public GameScreen[] GetScreens()
         {
-            return screens.ToArray();
+            return _screens.ToArray();
         }
 
     }

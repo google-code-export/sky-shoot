@@ -5,12 +5,11 @@ namespace SkyShoot.Game
 {
     public class SkyShootGame : Microsoft.Xna.Framework.Game
     {
-        private GraphicsDeviceManager _graphics;
         private ScreenManager.ScreenManager _screenManager;
 
         public SkyShootGame()
         {
-            _graphics = new GraphicsDeviceManager(this);
+            new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
@@ -19,7 +18,8 @@ namespace SkyShoot.Game
         {
             Textures.GraphicsDevice = GraphicsDevice;
 
-            _screenManager = new ScreenManager.ScreenManager(this);
+            ScreenManager.ScreenManager.Init(this);
+            _screenManager = ScreenManager.ScreenManager.Instance;
             Components.Add(_screenManager);
             _screenManager.AddScreen(new Screens.BackgroundScreen(Color.LightSeaGreen));
             _screenManager.AddScreen(new Screens.MainMenuScreen());
@@ -35,11 +35,6 @@ namespace SkyShoot.Game
         protected override void UnloadContent()
         {
 
-        }
-
-        protected override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)

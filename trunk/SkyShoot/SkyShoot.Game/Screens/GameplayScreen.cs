@@ -14,7 +14,6 @@ namespace SkyShoot.Game.Screens
 
         public GameplayScreen()
         {
-
         }
 
         public override void LoadContent()
@@ -22,21 +21,21 @@ namespace SkyShoot.Game.Screens
             if (_content == null)
                 _content = new ContentManager(ScreenManager.Game.Services, "Content");
 
-            //load landscapes
+            // load landscapes
             Textures.SandLandscape     = _content.Load<Texture2D>("Textures/Landscapes/SandLandscape");
             Textures.GrassLandscape    = _content.Load<Texture2D>("Textures/Landscapes/GrassLandscape");
             Textures.SnowLandscape     = _content.Load<Texture2D>("Textures/Landscapes/SnowLandscape");
             Textures.DesertLandscape   = _content.Load<Texture2D>("Textures/Landscapes/DesertLandscape");
             Textures.VolcanicLandscape = _content.Load<Texture2D>("Textures/Landscapes/VolcanicLandscape");
 
-            //load stones
+            // load stones
             for (int i = 1; i <= Textures.StonesAmount; i++)
                 Textures.Stones[i - 1] = _content.Load<Texture2D>("Textures/Landscapes/Stone" + i);
 
-            //load player
+            // load player
             Textures.PlayerTexture = _content.Load<Texture2D>("Textures/Mobs/Man");
 
-            //load mobs
+            // load mobs
             for (int i = 1; i <= Textures.MobsAmount; i++)
                 Textures.MobTextures[i - 1] = _content.Load<Texture2D>("Textures/Mobs/Spider" + i);
 

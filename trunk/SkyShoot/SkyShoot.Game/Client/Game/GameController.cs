@@ -8,13 +8,11 @@ using SkyShoot.Contracts.Bonuses;
 using SkyShoot.Contracts.Perks;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Session;
+
 using SkyShoot.Contracts.Weapon.Projectiles;
 
 using SkyShoot.Game.ScreenManager;
-
-using SkyShoot.Game.Client.View;
-using SkyShoot.Game.Client.Players;
-
+using SkyShoot.Game.Screens;
 using AMob = SkyShoot.Contracts.Mobs.AMob;
 
 namespace SkyShoot.Game.Client.Game
@@ -25,38 +23,23 @@ namespace SkyShoot.Game.Client.Game
 
         public static Guid MyId { get; private set; }
 
-        private readonly ISkyShootService _service;
+        private ISkyShootService _service;
 
         public static GameController Instance
         {
-            get
-            {
-                return LocalInstance;
-            }
+            get { return LocalInstance; }
         }
 
         public GameModel GameModel { get; private set; }
-        
-        //todo temporary!
-        private readonly AMob _testMob = new Player(Vector2.Zero, MyId, Textures.PlayerTexture);
-        private readonly AMob[] _mobs = new AMob[1]; 
 
-        public GameController()
-        {
-
-            var channelFactory = new DuplexChannelFactory<ISkyShootService>(this, "SkyShootEndpoint");
-           
-            _service = channelFactory.CreateChannel();
-
-            //todo temporary!
-            //_mobs[0] = _testMob;
-            //GameStart(_mobs, new Contracts.Session.GameLevel(Contracts.Session.TileSet.Sand));
-        }
+        private GameController() {}
 
 #region ServerInput
 
         public void GameStart(AMob[] mobs, Contracts.Session.GameLevel arena)
         {
+            ScreenManager.ScreenManager.Instance.AddScreen(new GameplayScreen());
+
             GameModel = new GameModel(GameFactory.CreateClientGameLevel(arena));
             foreach (AMob mob in mobs)
             {
@@ -88,7 +71,7 @@ namespace SkyShoot.Game.Client.Game
 
         public void MobMoved(AMob mob, Vector2 direction)
         {
-            throw new System.NotImplementedException();
+            //throw new System.NotImplementedException();
         }
 
         public void BonusDropped(AObtainableDamageModifier bonus)
@@ -149,7 +132,11 @@ namespace SkyShoot.Game.Client.Game
 
         public Guid? Login(string username, string password)
         {
-            Guid? login = _service.Login("test", "test");
+            var channelFactory = new DuplexChannelFactory<ISkyShootService>(this, "SkyShootEndpoint");
+
+            _service = channelFactory.CreateChannel();
+
+            Guid? login = _service.Login(username, password);
             if (login.HasValue)
             {
                 MyId = login.Value;
@@ -159,22 +146,25 @@ namespace SkyShoot.Game.Client.Game
                 //todo popup
                 Console.WriteLine("Connection failed");
             }
+
+            Console.WriteLine(login);
+
             return login;
         }
 
         public GameDescription[] GetGameList()
         {
-            throw new NotImplementedException();
+            return _service.GetGameList();
         }
 
         public GameDescription CreateGame(GameMode mode, int maxPlayers)
         {
-            throw new NotImplementedException();
+            return _service.CreateGame(mode, maxPlayers);
         }
 
         public bool JoinGame(GameDescription game)
         {
-            throw new NotImplementedException();
+            return _service.JoinGame(game);
         }
 
         public void Move(Vector2 direction)

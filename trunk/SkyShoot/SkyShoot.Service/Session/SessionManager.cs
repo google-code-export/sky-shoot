@@ -1,39 +1,38 @@
 ﻿using System;
-using System.Collections.Generic;
+
 using System.Linq;
-using System.Web;
+
+using System.Collections.Generic;
+
 using SkyShoot.Contracts.Session;
 
 namespace SkyShoot.Service.Session
 {
-    public class SessionManager
+    public sealed class SessionManager
     {
-        private static SessionManager _instance = null;
+        private static readonly SessionManager LocalInstance = new SessionManager();
 
         public static SessionManager Instance
         {
-            get
-            {
-                return _instance??(_instance = new SessionManager());
-            }
+            get { return LocalInstance; }
         }
 
         //Содержит текущие игры
-        private List<GameSession> _gameSessions;
+        private readonly List<GameSession> _gameSessions;
 
         //Уникальный идентификатор, который присваивается каждой игре при её создании
-        private int _gameID;
+        private readonly int _gameId;
 
         private SessionManager()
         {
             _gameSessions = new List<GameSession>();
-            _gameID = 1;
+            _gameId = 1;
         }
 
         //Добавляем игрока в текущую игру.
         public bool JoinGame(GameDescription game, MainSkyShootService player)
         {
-            GameSession session = _gameSessions.Find(curGame => curGame.LocalGameDescription.GameID == game.GameID);
+            GameSession session = _gameSessions.Find(curGame => curGame.LocalGameDescription.GameId == game.GameId);
 			return session.AddPlayer(player);
 
         }
@@ -42,7 +41,7 @@ namespace SkyShoot.Service.Session
         public GameDescription CreateGame(GameMode mode, int maxPlayers, MainSkyShootService client, TileSet tileSet)
         {
 
-            GameSession gameSession = new GameSession(tileSet, maxPlayers, mode, _gameID);
+            var gameSession = new GameSession(tileSet, maxPlayers, mode, _gameId);
             _gameSessions.Add(gameSession);
 
 			gameSession.AddPlayer(client);
@@ -52,7 +51,7 @@ namespace SkyShoot.Service.Session
 
         public bool StartGame(GameDescription game)
         {
-            GameSession session = _gameSessions.Find(curGame => curGame.LocalGameDescription.GameID == game.GameID);
+            GameSession session = _gameSessions.Find(curGame => curGame.LocalGameDescription.GameId == game.GameId);
 
             //Вернет false если игра уже началась.
             return session.Start();
@@ -62,15 +61,8 @@ namespace SkyShoot.Service.Session
         public GameDescription[] GetGameList()
         {
             var gameSessions = _gameSessions.ToArray();
-            var gameDescriptions = new List<GameDescription>();
 
-            for (int i = 0; i < gameSessions.Length; i++)
-            {
-                if (gameSessions[i].IsStarted) continue;
-                gameDescriptions.Add(gameSessions[i].LocalGameDescription);
-            }
-
-            return gameDescriptions.ToArray();
+            return (from t in gameSessions where !t.IsStarted select t.LocalGameDescription).ToArray();
         }
 
         //Ищем игру, в которой находится игрок и удаляем его оттуда.
@@ -80,8 +72,8 @@ namespace SkyShoot.Service.Session
             {
                 var game = _gameSessions.Find(gameSession => gameSession.LocalGameDescription.Players.Contains(playerName));
                 game.LocalGameDescription.Players.Remove(playerName);
-                game.PlayerLeave(game.players.Find(x => x.Name == playerName));
-                if (game.players.Count == 0) _gameSessions.Remove(game);
+                game.PlayerLeave(game.Players.Find(x => x.Name == playerName));
+                if (game.Players.Count == 0) _gameSessions.Remove(game);
                 return true;
             }
             catch (Exception)
