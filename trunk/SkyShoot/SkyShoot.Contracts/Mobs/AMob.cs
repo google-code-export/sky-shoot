@@ -33,8 +33,8 @@ namespace SkyShoot.Contracts.Mobs
 		[DataMember]
 		public float Speed { get; set; } //скорость: пикселы в миллисекунду
 
-        [DataMember] 
-        public AObtainableDamageModifier.AObtainableDamageModifiers State;
+        [DataMember]
+        public AObtainableDamageModifier.AObtainableDamageModifiers State { get; set; }
 
         public AMob(Vector2 coordinates, Guid id)
         {
