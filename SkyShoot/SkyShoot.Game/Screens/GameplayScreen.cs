@@ -12,12 +12,9 @@ namespace SkyShoot.Game.Screens
     {
         private ContentManager _content;
 
-        private GameController _gameController;
-
         public GameplayScreen()
         {
-            //todo uncomment this!
-            //_gameController = new GameController();
+
         }
 
         public override void LoadContent()
@@ -43,9 +40,6 @@ namespace SkyShoot.Game.Screens
             for (int i = 1; i <= Textures.MobsAmount; i++)
                 Textures.MobTextures[i - 1] = _content.Load<Texture2D>("Textures/Mobs/Spider" + i);
 
-            //todo temporary!
-            _gameController = new GameController();
-
             ScreenManager.Game.ResetElapsedTime();
         }
 
@@ -57,14 +51,14 @@ namespace SkyShoot.Game.Screens
 
         public override void HandleInput(InputState input)
         {            
-            _gameController.HandleInput(input);
+            GameController.Instance.HandleInput(input);
         }
 
         public override void Update(GameTime gameTime, bool otherHasFocus, bool coveredByOtherScreen)
         {
             base.Update(gameTime, otherHasFocus, coveredByOtherScreen);
 
-            _gameController.GameModel.Update(gameTime);
+            GameController.Instance.GameModel.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
@@ -73,7 +67,7 @@ namespace SkyShoot.Game.Screens
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
             graphicsDevice.Clear(Color.SkyBlue);
 
-            _gameController.GameModel.Draw(spriteBatch);
+            GameController.Instance.GameModel.Draw(spriteBatch);
         }
     }
 }

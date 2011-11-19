@@ -5,8 +5,9 @@ using System.ServiceModel;
 using Microsoft.Xna.Framework;
 
 using SkyShoot.Contracts.Bonuses;
+using SkyShoot.Contracts.Perks;
 using SkyShoot.Contracts.Service;
-
+using SkyShoot.Contracts.Session;
 using SkyShoot.Contracts.Weapon.Projectiles;
 
 using SkyShoot.Game.ScreenManager;
@@ -18,9 +19,13 @@ using AMob = SkyShoot.Contracts.Mobs.AMob;
 
 namespace SkyShoot.Game.Client.Game
 {
-    public sealed class GameController : ISkyShootCallback
+    public sealed class GameController : ISkyShootCallback, ISkyShootService
     {
         private static readonly GameController LocalInstance = new GameController();
+
+        public static Guid MyId { get; private set; }
+
+        private readonly ISkyShootService _service;
 
         public static GameController Instance
         {
@@ -31,8 +36,6 @@ namespace SkyShoot.Game.Client.Game
         }
 
         public GameModel GameModel { get; private set; }
-
-        public static Guid MyId { get; private set; }
         
         //todo temporary!
         private readonly AMob _testMob = new Player(Vector2.Zero, MyId, Textures.PlayerTexture);
@@ -43,27 +46,15 @@ namespace SkyShoot.Game.Client.Game
 
             var channelFactory = new DuplexChannelFactory<ISkyShootService>(this, "SkyShootEndpoint");
            
-            ISkyShootService service = channelFactory.CreateChannel();
-
-            Guid? login = service.Login("test", "test");
-            if(login.HasValue)
-            {
-                MyId = login.Value;
-            }
-            else
-            {
-                //todo popup
-                Console.WriteLine("Connection failed");
-            }
+            _service = channelFactory.CreateChannel();
 
             //todo temporary!
             //_mobs[0] = _testMob;
             //GameStart(_mobs, new Contracts.Session.GameLevel(Contracts.Session.TileSet.Sand));
         }
 
-        //
-        //<-- server input -->
-        //
+#region ServerInput
+
         public void GameStart(AMob[] mobs, Contracts.Session.GameLevel arena)
         {
             GameModel = new GameModel(GameFactory.CreateClientGameLevel(arena));
@@ -130,9 +121,10 @@ namespace SkyShoot.Game.Client.Game
             throw new System.NotImplementedException();
         }
 
-        //
-        //<-- client input -->
-        //
+#endregion
+
+#region ClientInput
+
         public void HandleInput(InputState inputState)
         {
             GameModel.GetMob(MyId).RunVector = inputState.RunVector;
@@ -145,11 +137,70 @@ namespace SkyShoot.Game.Client.Game
                 aMob.ShootVector.Normalize();
         }
 
-
-
         public void MobShot(AMob mob, AProjectile[] projectiles)
         {
             throw new NotImplementedException();
         }
+
+        public bool Register(string username, string password)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Guid? Login(string username, string password)
+        {
+            Guid? login = _service.Login("test", "test");
+            if (login.HasValue)
+            {
+                MyId = login.Value;
+            }
+            else
+            {
+                //todo popup
+                Console.WriteLine("Connection failed");
+            }
+            return login;
+        }
+
+        public GameDescription[] GetGameList()
+        {
+            throw new NotImplementedException();
+        }
+
+        public GameDescription CreateGame(GameMode mode, int maxPlayers)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool JoinGame(GameDescription game)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Move(Vector2 direction)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Shoot(Vector2 direction)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TakeBonus(AObtainableDamageModifier bonus)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TakePerk(Perk perk)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void LeaveGame()
+        {
+            throw new NotImplementedException();
+        }
+#endregion
     }
 }
