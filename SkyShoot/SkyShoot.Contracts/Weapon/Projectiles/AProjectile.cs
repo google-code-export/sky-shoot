@@ -54,11 +54,6 @@ namespace SkyShoot.Contracts.Weapon.Projectiles
         [DataMember]
         public EnumBulletType Type { get; protected set; }
 
-        protected AProjectile()
-        {
-            Owner = null;
-        }
-
         protected AProjectile(AProjectile projectile)
         {
             Owner = projectile.Owner;
