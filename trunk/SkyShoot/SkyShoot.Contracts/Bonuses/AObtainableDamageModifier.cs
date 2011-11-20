@@ -29,7 +29,7 @@ namespace SkyShoot.Contracts.Bonuses
 
         public AMob Owner { get; set; }
 
-        public AObtainableDamageModifiers Type;
+        public AObtainableDamageModifiers Type { get; set; }
 
         protected AObtainableDamageModifier(Guid id)
         {

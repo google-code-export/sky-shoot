@@ -16,7 +16,7 @@ namespace SkyShoot.Contracts.Service
         void GameStart(AMob[] mobs, GameLevel arena);
 
         [OperationContract(IsOneWay = true)]
-        void MobShot(AMob mob, AProjectile[] projectiles); // лучше передавать массив AProjectile[] projectiles
+        void MobShot(AMob mob, AProjectile[] projectiles);
 
         [OperationContract(IsOneWay = true)]
         void SpawnMob(AMob mob);

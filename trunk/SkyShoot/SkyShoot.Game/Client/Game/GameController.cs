@@ -4,15 +4,16 @@ using System.ServiceModel;
 
 using Microsoft.Xna.Framework;
 
-using SkyShoot.Contracts.Bonuses;
 using SkyShoot.Contracts.Perks;
+using SkyShoot.Contracts.Bonuses;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Session;
 
 using SkyShoot.Contracts.Weapon.Projectiles;
 
-using SkyShoot.Game.ScreenManager;
 using SkyShoot.Game.Screens;
+using SkyShoot.Game.ScreenManager;
+
 using AMob = SkyShoot.Contracts.Mobs.AMob;
 
 namespace SkyShoot.Game.Client.Game
@@ -55,13 +56,13 @@ namespace SkyShoot.Game.Client.Game
 
         public void SpawnMob(AMob mob)
         {
-            throw new System.NotImplementedException();
+            var clientMob = GameFactory.CreateClientMob(mob);
+            GameModel.AddMob(clientMob);
         }
 
         public void Hit(AMob mob, AProjectile projectile)
         {
-            //todo
-            GameModel.GetMob(mob.Id).HealthAmount -= 10;
+            GameModel.GetMob(mob.Id).HealthAmount -= projectile.Damage;
         }
 
         public void MobDead(AMob mob)
@@ -71,7 +72,7 @@ namespace SkyShoot.Game.Client.Game
 
         public void MobMoved(AMob mob, Vector2 direction)
         {
-            //throw new System.NotImplementedException();
+            GameModel.GetMob(mob.Id).RunVector = direction;
         }
 
         public void BonusDropped(AObtainableDamageModifier bonus)
@@ -81,7 +82,8 @@ namespace SkyShoot.Game.Client.Game
 
         public void BonusExpired(AObtainableDamageModifier bonus)
         {
-            throw new System.NotImplementedException();
+            var player = GameModel.GetMob(MyId);
+            player.State &= ~bonus.Type;
         }
 
         public void BonusDisappeared(AObtainableDamageModifier bonus)
@@ -96,12 +98,30 @@ namespace SkyShoot.Game.Client.Game
 
         public void PlayerLeft(AMob mob)
         {
-            throw new System.NotImplementedException();
+            //todo popup windows
+            var clientMob = GameFactory.CreateClientMob(mob);
+            GameModel.RemoveMob(clientMob.Id);
         }
 
-        public void SynchroFrame(AMob[] mob)
+        public void MobShot(AMob mob, AProjectile[] projectiles)
         {
-            //throw new System.NotImplementedException();
+            throw new NotImplementedException();
+        }
+
+        public void SynchroFrame(AMob[] mobs)
+        {
+            foreach (var mob in mobs)
+            {
+                //todo Exception if not found
+                var clientMob = GameModel.GetMob(mob.Id);
+
+                clientMob.Coordinates = mob.Coordinates;
+                clientMob.HealthAmount = mob.HealthAmount;
+                clientMob.RunVector = mob.RunVector;
+                clientMob.ShootVector = mob.ShootVector;
+                clientMob.Speed = mob.Speed;
+                clientMob.State = mob.State;
+            }
         }
 
 #endregion
@@ -111,6 +131,9 @@ namespace SkyShoot.Game.Client.Game
         public void HandleInput(InputState inputState)
         {
             GameModel.GetMob(MyId).RunVector = inputState.RunVector;
+
+            Move(inputState.RunVector);
+
             var mouseState = inputState.CurrentMouseState;
             var mouseCoordinates = new Vector2(mouseState.X, mouseState.Y);
 
@@ -120,14 +143,10 @@ namespace SkyShoot.Game.Client.Game
                 aMob.ShootVector.Normalize();
         }
 
-        public void MobShot(AMob mob, AProjectile[] projectiles)
-        {
-            throw new NotImplementedException();
-        }
-
         public bool Register(string username, string password)
         {
-            throw new NotImplementedException();
+            //todo
+            return _service.Register(username, password);
         }
 
         public Guid? Login(string username, string password)
@@ -169,28 +188,29 @@ namespace SkyShoot.Game.Client.Game
 
         public void Move(Vector2 direction)
         {
-            throw new NotImplementedException();
+            _service.Move(direction);
         }
 
         public void Shoot(Vector2 direction)
         {
-            throw new NotImplementedException();
+            _service.Shoot(direction);
         }
 
         public void TakeBonus(AObtainableDamageModifier bonus)
         {
-            throw new NotImplementedException();
+            _service.TakeBonus(bonus);
         }
 
         public void TakePerk(Perk perk)
         {
-            throw new NotImplementedException();
+            _service.TakePerk(perk);
         }
 
         public void LeaveGame()
         {
-            throw new NotImplementedException();
+            _service.LeaveGame();
         }
+
 #endregion
     }
 }
