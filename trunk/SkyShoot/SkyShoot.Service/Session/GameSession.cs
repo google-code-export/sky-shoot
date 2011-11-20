@@ -156,7 +156,7 @@ namespace SkyShoot.Service.Session
                 if (hitedMob == null)
                 {
                     projectile.Coordinates = newCord;
-                    projectile.Timer--;
+                    projectile.LifeTime--;
                 }
                 else
                 {
@@ -166,11 +166,11 @@ namespace SkyShoot.Service.Session
                     {
 						MobDead(hitedMob);
                     }
-					projectile.Timer = 0;
+					projectile.LifeTime = 0;
                 }
                 
             }
-			projectiles.RemoveAll(x => (x.Timer <= 0));
+			projectiles.RemoveAll(x => (x.LifeTime <= 0));
 			
 			if (_timerCounter % 60 == 0 )
 				foreach (MainSkyShootService player in players)
