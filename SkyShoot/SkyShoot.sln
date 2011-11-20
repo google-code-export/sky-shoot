@@ -19,8 +19,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyShoot.Service", "SkyShoo
 		{27DFF06E-1942-47CE-8BF4-02F7CB108F6A} = {27DFF06E-1942-47CE-8BF4-02F7CB108F6A}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyShoot.WinformsClient", "skyshoot.WinformsClient\SkyShoot.WinformsClient.csproj", "{900A544B-8717-4454-B563-23B4CE41CE81}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
