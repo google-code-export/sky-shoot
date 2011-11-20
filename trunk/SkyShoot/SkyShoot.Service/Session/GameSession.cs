@@ -159,8 +159,6 @@ namespace SkyShoot.Service.Session
                     if (hitedMob.HealthAmount <= 0)
                     {
 						MobDead(hitedMob);
-                        MobDead(hitedMob);
-                        //@TODO Отправить событие смерти моба
                     }
 					projectile.Timer = 0;
                 }
