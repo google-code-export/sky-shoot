@@ -94,6 +94,8 @@ namespace SkyShoot.Service
 
 		public event SomebodyMovesHandler MeMoved;
 		public event ClientShootsHandler MeShot;
+        public event SomebodySpawnsHandler MobSpawned;
+        public event SomebodyDiesHandler MobDied;
 
 		public void Move(Vector2 direction) // приходит снаружи от клиента
 		{

@@ -12,9 +12,8 @@ namespace SkyShoot.Contracts.Mobs
 {
     public class Mob : AMob
     {
-        private const float _speed = 100; // заменить
-        private const float _radius = 100; // заменить
-        private static Double _health = 100; // заменить начальное здоровье
+        private static Double _health = 100; //change to real value 
+
 
         public MainSkyShootService targetPlayer { get; set; }
 
@@ -27,8 +26,6 @@ namespace SkyShoot.Contracts.Mobs
             HealthAmount = (float)_health;
             Damage = 10;
             _health *= 1.001; // увеличение здоровья каждого следующего на 0.1%
-            Speed = _speed;
-            Radius = _radius;
         }
 
         public void FindTarget(List<MainSkyShootService> targetPlayers) 

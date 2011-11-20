@@ -50,6 +50,7 @@ namespace SkyShoot.Service.Session
         public event StartGameHandler StartGame;
         public event SomebodyDiesHandler SomebodyDies;
 		public event SomebodyHitHandler SomebodyHit;
+        public event SomebodySpawnsHandler SomebodySpawns;
 
         private void SomebodyMoved(AMob sender, Vector2 direction)
         {
@@ -79,18 +80,19 @@ namespace SkyShoot.Service.Session
             }
         }
 
+        public void SomebodySpawned(AMob sender) 
+        {
+            if (SomebodySpawns != null) 
+            {
+                SomebodySpawns(sender);
+            }
+        }
+
         public void MobDead(Mob mob)
         {
             SomebodyDied(mob);
             mob.MeMoved -= SomebodyMoved;
             mobs.Remove(mob);
-        }
-
-        public void PlayerDead(MainSkyShootService player)
-        {
-            player.GameOver();
-            SomebodyDied(player);
-			PlayerLeave(player);
         }
 
 		public void SomebodyHitted(AMob mob, AProjectile projectile)
@@ -101,8 +103,12 @@ namespace SkyShoot.Service.Session
 		public void PlayerLeave(MainSkyShootService player)
 		{
 			this.SomebodyHit -= player.Hit;
-			//здесь вся отписка от событий для player
-
+            player.GameOver();
+            SomebodyDied(player);
+            player.MeMoved -= SomebodyMoved;
+            player.MeShot -= SomebodyShot;
+            player.MobSpawned -= SomebodySpawned;
+            player.MobDied -= SomebodyDied;
 			players.Remove(player);
 		}
 
@@ -228,11 +234,11 @@ namespace SkyShoot.Service.Session
                     player.HealthAmount -= mob.Damage;
                     if (player.HealthAmount <= 0)
                     {
-                        PlayerDead(player);
+                        PlayerLeave(player);
                     }
                 }
             }
-        }
+        } 
 
         public void Start()
         {
@@ -246,6 +252,10 @@ namespace SkyShoot.Service.Session
 				this.SomebodyShoots += new SomebodyShootsHandler(player.MobShot);
 				player.MeShot += new ClientShootsHandler(SomebodyShot);
 
+                this.SomebodySpawns += new SomebodySpawnsHandler(player.SpawnMob);
+
+                this.SomebodyDies += new SomebodyDiesHandler(player.MobDead);
+                
 				this.SomebodyHit += player.Hit;
 
 				player.Coordinates = new Vector2(0,0);

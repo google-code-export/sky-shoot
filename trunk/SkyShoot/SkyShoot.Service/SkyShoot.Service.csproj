@@ -78,6 +78,7 @@
     <Compile Include="MainSkyShootService.cs" />
     <Compile Include="Mobs\IMobFactory.cs" />
     <Compile Include="Mobs\Mob.cs" />
+    <Compile Include="Mobs\Spider.cs" />
     <Compile Include="Mobs\SpiderFactory.cs" />
     <Compile Include="Session\GameSession.cs" />
     <Compile Include="Session\SessionManager.cs" />
