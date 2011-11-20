@@ -43,21 +43,12 @@ namespace SkyShoot.Service.Session
 
             var gameSession = new GameSession(tileSet, maxPlayers, mode, _gameId);
             _gameSessions.Add(gameSession);
-
 			gameSession.AddPlayer(client);
             
             return gameSession.LocalGameDescription;
         }
 
-        public bool StartGame(GameDescription game)
-        {
-            GameSession session = _gameSessions.Find(curGame => curGame.LocalGameDescription.GameId == game.GameId);
-
-            //Вернет false если игра уже началась.
-            return session.Start();
-        }
-
-        //Возвращает список игр.
+       //Возвращает список игр.
         public GameDescription[] GetGameList()
         {
             var gameSessions = _gameSessions.ToArray();
@@ -72,8 +63,8 @@ namespace SkyShoot.Service.Session
             {
                 var game = _gameSessions.Find(gameSession => gameSession.LocalGameDescription.Players.Contains(playerName));
                 game.LocalGameDescription.Players.Remove(playerName);
-                game.PlayerLeave(game.Players.Find(x => x.Name == playerName));
-                if (game.Players.Count == 0) _gameSessions.Remove(game);
+                game.PlayerLeave(game.players.Find(x => x.Name == playerName));
+                if (game.players.Count == 0) _gameSessions.Remove(game);
                 return true;
             }
             catch (Exception)
