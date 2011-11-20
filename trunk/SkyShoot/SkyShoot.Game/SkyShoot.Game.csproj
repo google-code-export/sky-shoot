@@ -131,8 +131,7 @@
     <Compile Include="Client\View\Camera2D.cs" />
     <Compile Include="Client\View\IDrawable.cs" />
     <Compile Include="Client\View\Textures.cs" />
-    <Compile Include="Client\Weapon\AProjectile.cs" />
-    <Compile Include="Client\Weapon\Bullets\ABullet.cs" />
+    <Compile Include="Client\Weapon\Projectile.cs" />
     <Compile Include="Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
