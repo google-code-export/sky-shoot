@@ -25,6 +25,7 @@ namespace SkyShoot.Game.Screens
         private ListControl _mapList;
         private Screen _mainScreen;
         private LabelControl _mapLabel;
+        private GameDescription[] tempGameList;
 
         public MultiplayerScreen()
         {
@@ -87,9 +88,13 @@ namespace SkyShoot.Game.Screens
             _mapList.Slider.Bounds.Location.X.Offset -= 1.0f;
             _mapList.Slider.Bounds.Location.Y.Offset += 1.0f;
             _mapList.Slider.Bounds.Size.Y.Offset -= 2.0f;
-            for (int i = 0; i < GameController.Instance.GetGameList().Length; i++)
+            //
+            // запрос списка игр с сервера и его вывод
+            //
+            tempGameList = GameController.Instance.GetGameList();
+            for (int i = 0; i < tempGameList.Length; i++)
             {
-                _mapList.Items.Add(GameController.Instance.GetGameList()[i].ToString());
+                _mapList.Items.Add(tempGameList[i].ToString());
             }
             _mapList.SelectionMode = ListSelectionMode.Single;
             _mapList.SelectedItems.Add(4);
@@ -140,9 +145,10 @@ namespace SkyShoot.Game.Screens
         private void RefreshPressed(object sender, EventArgs args)
         {
             _mapList.Items.Clear();
-            for (int i = 0; i < GameController.Instance.GetGameList().Length; i++)
+            tempGameList = GameController.Instance.GetGameList();
+            for (int i = 0; i < tempGameList.Length; i++)
             {
-                _mapList.Items.Add(GameController.Instance.GetGameList()[i].ToString());
+                _mapList.Items.Add(tempGameList[i].ToString());
             }
         }
 
