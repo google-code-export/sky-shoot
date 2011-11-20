@@ -2,8 +2,8 @@
 
 using System.Net;
 
+using System.Threading;
 using System.Diagnostics;
-
 using System.ServiceModel;
 
 using System.ServiceModel.Description;
@@ -21,10 +21,16 @@ namespace SkyShoot.Service
 
         public override void Run()
         {
+            Trace.WriteLine("SkyShootWorkerRole entry point called", "Information");
+
             StartWcfService();
+
+            Trace.WriteLine("SkyShootService is running!", "Information");
+
             while (true)
             {
-                
+                Thread.Sleep(10000);
+                Trace.WriteLine("Working...", "Information");
             }
         }
 
