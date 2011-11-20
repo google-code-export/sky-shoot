@@ -26,6 +26,11 @@ namespace SkyShoot.Game.Screens
         private LabelControl _maxPlaersLabel;
         private LabelControl _tileLabel;
         private LabelControl _gameModeLabel;
+        private LabelControl _maxPlayers;
+        private LabelControl _tile;
+        private LabelControl _gameMode;
+        private ButtonControl _backButton;
+        private ButtonControl _createButton;
 
         public CreateGameScreen()
         {
@@ -114,6 +119,75 @@ namespace SkyShoot.Game.Screens
             _gameModList.SelectedItems.Add(4);
             _mainScreen.Desktop.Children.Add(_gameModList);
 
+            // выбор игрока
+
+            // кол-во игроков
+            _maxPlayersList.SelectedItems[0] = 0;
+            _maxPlayers = new LabelControl
+            {
+                Bounds = new UniRectangle(500f, 50f, 150f, 24f),
+                Text = _maxPlayersList.Items[_maxPlayersList.SelectedItems[0]] + ""
+            };
+            _mainScreen.Desktop.Children.Add(_maxPlayers);
+
+            // карта
+            _tileList.SelectedItems[0] = 0;
+            _tile = new LabelControl
+            {
+                Bounds = new UniRectangle(500f, 80f, 150f, 24f),
+                Text = _tileList.Items[_tileList.SelectedItems[0]] + ""
+            };
+            _mainScreen.Desktop.Children.Add(_tile);
+
+            // мод
+            _gameModList.SelectedItems[0] = 0;
+            _gameMode = new LabelControl
+            {
+                Bounds = new UniRectangle(500f, 110f, 150f, 24f),
+                Text = _gameModList.Items[_gameModList.SelectedItems[0]] + ""
+            };
+            _mainScreen.Desktop.Children.Add(_gameMode);
+
+            // Create Button
+            _createButton = new ButtonControl
+            {
+                Text = "Create",
+                Bounds = new UniRectangle(new UniScalar(0.5f, 178f), new UniScalar(0.4f, -15f), 110, 32)
+            };
+            _createButton.Pressed += CreateButtonPressed;
+            _mainScreen.Desktop.Children.Add(_createButton);
+            
+            // Back Button
+            _backButton = new ButtonControl
+            {
+                Text = "Back",
+                Bounds = new UniRectangle(new UniScalar(0.5f, -380f), new UniScalar(0.4f, 170f), 120, 32)
+            };
+            _backButton.Pressed += BackButtonPressed;
+            _mainScreen.Desktop.Children.Add(_backButton);
+        }
+
+        public override void Update(GameTime gameTime, bool otherHasFocus, bool coveredByOtherScreen)
+        {
+            base.Update(gameTime, otherHasFocus, coveredByOtherScreen);
+
+            _maxPlayers.Text = _maxPlayersList.Items[_maxPlayersList.SelectedItems[0]];
+            _tile.Text = _tileList.Items[_tileList.SelectedItems[0]];
+            _gameMode.Text = _gameModList.Items[_gameModList.SelectedItems[0]];
+
+        }
+
+        private void BackButtonPressed(object sender, EventArgs args)
+        {
+            ExitScreen();
+            ScreenManager.AddScreen(new MultiplayerScreen());
+        }
+
+        private void CreateButtonPressed(object sender, EventArgs args)
+        {
+            if (_gameMode.Text == "Coop") GameController.Instance.CreateGame(GameMode.Coop, Convert.ToInt32(_maxPlayers.Text));
+            if (_gameMode.Text == "Deathmatch") GameController.Instance.CreateGame(GameMode.Coop, Convert.ToInt32(_maxPlayers.Text));
+            if (_gameMode.Text == "Campaign") GameController.Instance.CreateGame(GameMode.Coop, Convert.ToInt32(_maxPlayers.Text));
         }
 
         public override void Draw(GameTime gameTime)
