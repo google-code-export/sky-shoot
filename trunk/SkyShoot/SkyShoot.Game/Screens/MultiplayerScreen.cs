@@ -135,9 +135,6 @@ namespace SkyShoot.Game.Screens
 
             ExitScreen();
 
-            //todo field for maxPlayers
-            //GameController.Instance.CreateGame(GameMode.Deathmatch, 2);
-
             ScreenManager.AddScreen(new CreateGameScreen());
 
         }
