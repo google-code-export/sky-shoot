@@ -25,6 +25,11 @@ namespace SkyShoot.Contracts.Session
         [DataMember]
         public GameMode GameType { get; set; }
 
+				public override string ToString()
+				{
+					return "[" + Players.Count + "/" + MaximumPlayersAllowed + ";" + GameType + "]";
+				}
+
         public GameDescription(List<string> players, int maxPlayersAllowed, GameMode gameType, int gameId)
         {
             GameId = gameId;
