@@ -2,12 +2,17 @@
 
 using SkyShoot.Contracts.Mobs;
 using Microsoft.Xna.Framework;
+using SkyShoot.Contracts.Weapon.Projectiles;
 
 namespace SkyShoot.Service.Weapon.Bullets
 {
-    public class ShotgunBullet : ABullet
+    public class ShotgunBullet : AProjectile
     {
+        private const float VELOCITY = 10;
+        private const float DAMAGE = 2;
+        private const EnumBulletType TYPE = EnumBulletType.Bullet;
+
         public ShotgunBullet(AMob owner, Guid id, Vector2 direction)
-            : base(owner, id, direction, 10, 2, EnumBulletType.Bullet) { }
+            : base(owner, id, direction, VELOCITY, DAMAGE, TYPE) { }
     }
 }
