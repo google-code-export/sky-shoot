@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using SkyShoot.Contracts.Session;
+using SkyShoot.Service.Mobs;
 
 namespace SkyShoot.Contracts.Mobs
 {
@@ -57,9 +58,8 @@ namespace SkyShoot.Contracts.Mobs
 
             }
 
-            var spider = new Mob();
+            var spider = new Spider();
             spider.Coordinates = new Vector2((float) x, (float ) y);
-
             return spider;
         }
     }
