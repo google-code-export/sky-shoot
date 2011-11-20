@@ -21,21 +21,23 @@ namespace SkyShoot.Service
 
         public override void Run()
         {
-            Trace.WriteLine("SkyShootWorkerRole entry point called", "Information");
+            Trace.WriteLine("SkyShootWorkerRole entry point called");
 
             StartWcfService();
 
-            Trace.WriteLine("SkyShootService is running!", "Information");
+            Trace.WriteLine("SkyShootService is running!");
 
             while (true)
             {
                 Thread.Sleep(10000);
-                Trace.WriteLine("Working...", "Information");
+                Trace.WriteLine("Working...");
             }
         }
 
         public override bool OnStart()
         {
+            Trace.Listeners.Add(new SkyShoot.Service.Logger.TableTraceListener());
+            
             // Set the maximum number of concurrent connections 
             ServicePointManager.DefaultConnectionLimit = ConnectionLimit;
 
@@ -63,16 +65,16 @@ namespace SkyShoot.Service
             try
             {
                 _serviceHost.Open();
-                Trace.TraceInformation("WCF service host started successfully.");
+                Trace.WriteLine("WCF service host started successfully.");
             }
             catch (TimeoutException timeoutException)
             {
-                Trace.TraceError("The service operation timed out. {0}",
+                Trace.Fail("The service operation timed out. {0} " +
                                  timeoutException.Message);
             }
             catch (CommunicationException communicationException)
             {
-                Trace.TraceError("Could not start WCF service host. {0}",
+                Trace.Fail("Could not start WCF service host. {0} " +
                                  communicationException.Message);
             }
 

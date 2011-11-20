@@ -4,6 +4,8 @@ using System.ServiceModel;
 
 using System.Collections.Generic;
 
+using System.Diagnostics;
+
 using Microsoft.Xna.Framework;
 
 using SkyShoot.Contracts.Mobs;
@@ -51,11 +53,19 @@ namespace SkyShoot.Service
 	    public MainSkyShootService() : base(new Vector2(0, 0), Guid.NewGuid()) {}
 
 		public bool Register(string username, string password)
-		{
-			//bool result = _accountManager.Register(username, password);
-			//return result;
-		    return true;
-		}
+        {
+            /*bool result = _accountManager.Register(username, password);
+            if(result)
+            {
+                Trace.WriteLine(username + "has registered");
+            }
+            else
+            {
+                Trace.WriteLine(username + "is not registered. The name of the employing or other errors");
+            }
+            return result; */
+            return true;
+        }
 
 		public Guid? Login(string username, string password)
 		{
@@ -84,12 +94,38 @@ namespace SkyShoot.Service
 
 		public GameDescription CreateGame(GameMode mode, int maxPlayers)
 		{
-		    return _sessionManager.CreateGame(mode, maxPlayers, this, TileSet.Grass);
+            try
+            {
+                var gameDescription = _sessionManager.CreateGame(mode, maxPlayers, this, TileSet.Grass);
+                return gameDescription;
+            }
+            catch (Exception e)
+            {
+                Trace.Fail(this.Name + " unable to create game. " + e.Message);
+                return null;
+            }
 		}
 
 		public bool JoinGame(GameDescription game)
 		{
-			return _sessionManager.JoinGame(game, this);
+            try
+            {
+                bool result = _sessionManager.JoinGame(game, this);
+                if (result)
+                {
+                    Trace.WriteLine(this.Name + "has joined the game ID=" + game.GameId);
+                }
+                else
+                {
+                    Trace.WriteLine(this.Name + "has not joined the game ID=" + game.GameId);
+                }
+                return result;
+            }
+            catch(Exception e)
+            {
+                Trace.Fail(this.Name + "has not joined the game." + e.Message);
+                return false;
+            }
 		}
 
 		public event SomebodyMovesHandler MeMoved;
@@ -127,7 +163,8 @@ namespace SkyShoot.Service
 		{
 			bool result = _sessionManager.LeaveGame(Name);
 			if (!result)
-			{ /* что-то сделать, например, добавить сообщение в лог */
+			{
+                Trace.WriteLine(Name + "left the game");
 				return;
 			}
 
