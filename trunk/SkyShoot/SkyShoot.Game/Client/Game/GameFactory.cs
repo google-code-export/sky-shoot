@@ -32,7 +32,7 @@ namespace SkyShoot.Game.Client.Game
 
         public static Projectile CreateClientProjectile(Contracts.Weapon.Projectiles.AProjectile projectile)
         {
-            throw new NotImplementedException();
+            return new Projectile(projectile);
         }
 
     }
