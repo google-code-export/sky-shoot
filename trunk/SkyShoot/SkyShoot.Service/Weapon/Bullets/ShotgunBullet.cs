@@ -14,6 +14,12 @@ namespace SkyShoot.Service.Weapon.Bullets
         private const EnumBulletType TYPE = EnumBulletType.Bullet;
 
         public ShotgunBullet(AMob owner, Guid id, Vector2 direction)
-            : base(owner, id, direction, SPEED, DAMAGE, LIFE_TIME, TYPE) { }
+            : base(owner, id, direction) 
+        {
+            Speed = SPEED;
+            Damage = DAMAGE;
+            LifeTime = LIFE_TIME;
+            Type = TYPE;
+        }
     }
 }
