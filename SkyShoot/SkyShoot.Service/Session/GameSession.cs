@@ -234,10 +234,9 @@ namespace SkyShoot.Service.Session
             }
         }
 
-        public bool Start()
+        public void Start()
         {
-			if (IsStarted) return false;
-            IsStarted = true;
+			
 
 			foreach (MainSkyShootService player in players)
 			{
@@ -255,13 +254,6 @@ namespace SkyShoot.Service.Session
 				player.RunVector = new Vector2(0, 0);
 			}
 
-            _gameTimer = new Timer(FPS);
-            _gameTimer.AutoReset = true;
-            _gameTimer.Elapsed += new ElapsedEventHandler(TimerElapsedListener);
-			_gameTimer.Start();
-            _timerCounter = 0;
-
-            return true;
         }
 
 		public bool AddPlayer(MainSkyShootService player)
@@ -275,13 +267,19 @@ namespace SkyShoot.Service.Session
 			if (players.Count >= LocalGameDescription.MaximumPlayersAllowed)
 			{
 				StartGame(mobs.ToArray(), _gameLevel);
-				Start();
+				_gameTimer = new Timer(FPS);
+				_gameTimer.AutoReset = true;
+				_gameTimer.Elapsed += new ElapsedEventHandler(TimerElapsedListener);
+				_gameTimer.Start();
+				_timerCounter = 0;
 			}
 			return true;
 		}
 
         private void TimerElapsedListener(object sender,EventArgs e)
         {
+			if (!IsStarted) Start(); 
+			IsStarted = true;
 			update();
         }
 
