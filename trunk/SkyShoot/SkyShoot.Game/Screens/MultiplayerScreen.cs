@@ -21,6 +21,7 @@ namespace SkyShoot.Game.Screens
         private ButtonControl _backButton;
         private ButtonControl _createGameButton;
         private ButtonControl _joinGameButton;
+        private ButtonControl _refreshButton;
         private ListControl _mapList;
         private Screen _mainScreen;
         private LabelControl _mapLabel;
@@ -73,11 +74,12 @@ namespace SkyShoot.Game.Screens
             //Label of maps
             _mapLabel = new LabelControl
             {
-                Bounds = new UniRectangle(300.0f, -30.0f, 200.0f, 24.0f), Text = "Maps"
+                Bounds = new UniRectangle(300.0f, -30.0f, 200.0f, 24.0f), 
+                Text = "Games"
             };
             _mainScreen.Desktop.Children.Add(_mapLabel);
 
-            //Map List
+            //Games List
             _mapList = new ListControl
             {
                 Bounds = new UniRectangle(300f, -10f, 200f, 300f)
@@ -85,14 +87,23 @@ namespace SkyShoot.Game.Screens
             _mapList.Slider.Bounds.Location.X.Offset -= 1.0f;
             _mapList.Slider.Bounds.Location.Y.Offset += 1.0f;
             _mapList.Slider.Bounds.Size.Y.Offset -= 2.0f;
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < GameController.Instance.GetGameList().Length; i++)
             {
-                _mapList.Items.Add("Map " + (i + 1) );
+                _mapList.Items.Add(GameController.Instance.GetGameList()[i].ToString());
             }
-            _mapList.Items.Add("Map 100500");
             _mapList.SelectionMode = ListSelectionMode.Single;
             _mapList.SelectedItems.Add(4);
             _mainScreen.Desktop.Children.Add(_mapList);
+            
+
+            // Refresh Button
+            _refreshButton = new ButtonControl
+            {
+                Text = "Refresh",
+                Bounds = new UniRectangle(new UniScalar(0.5f, -20f), new UniScalar(0.4f, 140f), 120, 32)
+            };
+            _refreshButton.Pressed += RefreshPressed;
+            _mainScreen.Desktop.Children.Add(_refreshButton);
 
         }
 
@@ -115,12 +126,24 @@ namespace SkyShoot.Game.Screens
         private void CreateGameButtonPressed(object sender, EventArgs args)
         {
             //todo setActive
-            foreach (GameScreen screen in ScreenManager.GetScreens()) screen.ExitScreen();
+            //foreach (GameScreen screen in ScreenManager.GetScreens()) screen.ExitScreen();
+
+            ExitScreen();
 
             //todo field for maxPlayers
-            GameController.Instance.CreateGame(GameMode.Deathmatch, 2);
+            //GameController.Instance.CreateGame(GameMode.Deathmatch, 2);
 
-            //todo refresh button
+            ScreenManager.AddScreen(new CreateGameScreen());
+
+        }
+
+        private void RefreshPressed(object sender, EventArgs args)
+        {
+            _mapList.Items.Clear();
+            for (int i = 0; i < GameController.Instance.GetGameList().Length; i++)
+            {
+                _mapList.Items.Add(GameController.Instance.GetGameList()[i].ToString());
+            }
         }
 
         public override void Draw(GameTime gameTime)

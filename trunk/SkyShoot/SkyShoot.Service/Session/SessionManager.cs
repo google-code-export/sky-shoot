@@ -41,7 +41,7 @@ namespace SkyShoot.Service.Session
         public GameDescription CreateGame(GameMode mode, int maxPlayers, MainSkyShootService client, TileSet tileSet)
         {
 
-            var gameSession = new GameSession(tileSet, maxPlayers, mode, _gameId);
+            var gameSession = new GameSession(tileSet, maxPlayers, mode, _gameId, tileSet);
             _gameSessions.Add(gameSession);
 			gameSession.AddPlayer(client);
             

@@ -25,17 +25,21 @@ namespace SkyShoot.Contracts.Session
         [DataMember]
         public GameMode GameType { get; set; }
 
-				public override string ToString()
-				{
-					return "[" + Players.Count + "/" + MaximumPlayersAllowed + ";" + GameType + "]";
-				}
+        [DataMember]
+        public TileSet UsedTileSet { get; set; }
 
-        public GameDescription(List<string> players, int maxPlayersAllowed, GameMode gameType, int gameId)
+		public override string ToString()
+		{
+			return "[" + UsedTileSet + ";" + GameType + ";" + Players.Count + "/" + MaximumPlayersAllowed + "]";
+		}
+
+        public GameDescription(List<string> players, int maxPlayersAllowed, GameMode gameType, int gameId, TileSet usedTileSet)
         {
             GameId = gameId;
             Players = players;
             MaximumPlayersAllowed = maxPlayersAllowed;
             GameType = gameType;
+            UsedTileSet = usedTileSet;
         }
 
         public GameDescription()
