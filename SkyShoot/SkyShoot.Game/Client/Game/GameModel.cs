@@ -65,13 +65,20 @@ namespace SkyShoot.Game.Client.Game
 
         public void Update(GameTime gameTime)
         {
-            //Update Mobs
+            // update mobs
             foreach (var aMob in Mobs)
             {
                 aMob.Value.Update(gameTime);
             }
 
-            //todo update projectiles
+            // update projectiles
+            foreach (var projectile in Projectiles)
+            {
+                if(projectile.Value.IsActive)
+                    projectile.Value.Update(gameTime);
+                else
+                    RemoveProjectile(projectile.Value.Id);
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)

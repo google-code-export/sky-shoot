@@ -63,6 +63,7 @@ namespace SkyShoot.Game.Client.Game
         public void Hit(AMob mob, AProjectile projectile)
         {
             GameModel.GetMob(mob.Id).HealthAmount -= projectile.Damage;
+            GameModel.RemoveProjectile(projectile.Id);
         }
 
         public void MobDead(AMob mob)
@@ -98,14 +99,17 @@ namespace SkyShoot.Game.Client.Game
 
         public void PlayerLeft(AMob mob)
         {
-            //todo popup windows
+            //todo popup window
             var clientMob = GameFactory.CreateClientMob(mob);
             GameModel.RemoveMob(clientMob.Id);
         }
 
         public void MobShot(AMob mob, AProjectile[] projectiles)
         {
-            throw new NotImplementedException();
+            foreach (var aProjectile in projectiles)
+            {
+                GameModel.AddProjectile(GameFactory.CreateClientProjectile(aProjectile));
+            }
         }
 
         public void SynchroFrame(AMob[] mobs)
