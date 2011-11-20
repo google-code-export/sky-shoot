@@ -11,13 +11,14 @@ namespace SkyShoot.Contracts.Weapon.Projectiles
     [DataContract]
     public abstract class AProjectile
     {
-        protected AProjectile(AMob owner, Guid id, Vector2 direction,float velocity, float damage, EnumBulletType type)
+        protected AProjectile(AMob owner, Guid id, Vector2 direction,float speed, float damage, int lifeTime, EnumBulletType type)
         {
             Owner = owner;
             Id = id;
             Direction = direction;
-            Velocity = velocity;
+            Speed = speed;
             Damage = damage;
+            LifeTime = lifeTime;
             Type = type;
         }
 
@@ -43,13 +44,10 @@ namespace SkyShoot.Contracts.Weapon.Projectiles
         public float Speed { get; set; }
 
         [DataMember]
-        public int Timer { get; set; }
+        public int LifeTime { get; set; }
 
         [DataMember]
         public float Damage { get; set; }
-
-        [DataMember]
-        public float Velocity { get; private set; }
 
         public enum EnumBulletType
         {
