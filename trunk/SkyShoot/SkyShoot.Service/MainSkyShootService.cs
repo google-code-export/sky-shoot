@@ -34,7 +34,7 @@ namespace SkyShoot.Service
 		}
 	}
 
-	[ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple,
+	[ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant,
 			InstanceContextMode = InstanceContextMode.PerSession)]
 	public class MainSkyShootService : AMob, ISkyShootService, ISkyShootCallback
 	{
