@@ -1,7 +1,5 @@
 ﻿using System;
-
-using System.Timers;
-
+using System.Threading;
 using System.Collections.Generic;
 
 using Microsoft.Xna.Framework;
@@ -11,6 +9,7 @@ using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Session;
 
 using SkyShoot.Contracts.Weapon.Projectiles;
+using Timer = System.Timers.Timer;
 
 namespace SkyShoot.Service.Session
 {
@@ -278,14 +277,21 @@ namespace SkyShoot.Service.Session
 			Players.Add(player);
 			LocalGameDescription.Players.Add(player.Name);
 			StartGame += player.GameStart;
+            //todo temporary solution
 			if (Players.Count >= LocalGameDescription.MaximumPlayersAllowed)
 			{
-                //todo Players + Mobs;
-				StartGame(Players.ToArray(), _gameLevel);
-				Start();
+                Thread newThread = new Thread(Send);
+                newThread.Start();
 			}
 			return true;
 		}
+
+        private void Send()
+        {                
+            //todo Players + Mobs;
+            StartGame(Players.ToArray(), _gameLevel);
+            Start();            
+        }
 
         private void TimerElapsedListener(object sender,EventArgs e)
         {

@@ -101,7 +101,7 @@ namespace SkyShoot.Game.Client.Game
 
         public void SynchroFrame(AMob[] mob)
         {
-            throw new System.NotImplementedException();
+            //throw new System.NotImplementedException();
         }
 
 #endregion
