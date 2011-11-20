@@ -26,11 +26,8 @@ namespace SkyShoot.Contracts.Session
             
         }
 
-		
-
         [DataMember]
-        public TileSet UsedTileSet
-        { get; set; }
+        public TileSet UsedTileSet { get; set; }
 
     }
 }

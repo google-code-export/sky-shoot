@@ -32,7 +32,7 @@ namespace SkyShoot.Service.Session
         private long _timerCounter;
         private long _intervalToSpawn = 0;
 
-		public GameSession(TileSet tileSet, int maxPlayersAllowed, GameMode gameType, int gameID)
+        public GameSession(TileSet tileSet, int maxPlayersAllowed, GameMode gameType, int gameID, TileSet usedTileSet)
         {
             IsStarted = false;
 			_gameLevel = new GameLevel(tileSet);
@@ -45,7 +45,7 @@ namespace SkyShoot.Service.Session
 			players = new List<MainSkyShootService>();
 			projectiles = new List<AProjectile>();
 
-			LocalGameDescription = new GameDescription(playerNames, maxPlayersAllowed, gameType, gameID);
+            LocalGameDescription = new GameDescription(playerNames, maxPlayersAllowed, gameType, gameID, usedTileSet);
             _spiderFactory= new SpiderFactory(_gameLevel);
         }
 
