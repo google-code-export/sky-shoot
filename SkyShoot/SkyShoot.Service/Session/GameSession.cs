@@ -41,6 +41,10 @@ namespace SkyShoot.Service.Session
 
             var playerNames = new List<string>();
 
+			mobs = new List<Mob>();
+			players = new List<MainSkyShootService>();
+			projectiles = new List<AProjectile>();
+
 			LocalGameDescription = new GameDescription(playerNames, maxPlayersAllowed, gameType, gameID);
             _spiderFactory= new SpiderFactory(_gameLevel);
         }
@@ -171,12 +175,16 @@ namespace SkyShoot.Service.Session
                 
             }
 			projectiles.RemoveAll(x => (x.LifeTime <= 0));
-			
-			if (_timerCounter % 60 == 0 )
+
+			if (_timerCounter % 60 == 0)
+			{
+				var allObjects = new List<AMob>(mobs);
+				allObjects.AddRange(players);
 				foreach (MainSkyShootService player in players)
 				{
-					player.SynchroFrame(mobs.ToArray());
+					player.SynchroFrame(allObjects.ToArray());
 				}
+			}
 			_timerCounter++;
 
         }
@@ -242,8 +250,6 @@ namespace SkyShoot.Service.Session
 
         public void Start()
         {
-			
-
 			foreach (MainSkyShootService player in players)
 			{
 				this.SomebodyMoves += new SomebodyMovesHandler(player.MobMoved);
@@ -264,6 +270,7 @@ namespace SkyShoot.Service.Session
 				player.RunVector = new Vector2(0, 0);
 			}
 
+			StartGame(players.ToArray(), _gameLevel);
         }
 
 		public bool AddPlayer(MainSkyShootService player)
@@ -271,12 +278,14 @@ namespace SkyShoot.Service.Session
 			if (players.Count >= LocalGameDescription.MaximumPlayersAllowed)
 				return false;
 
+			if (IsStarted) return false;
+
 			players.Add(player);
 			LocalGameDescription.Players.Add(player.Name);
 			StartGame += new StartGameHandler(player.GameStart);
 			if (players.Count >= LocalGameDescription.MaximumPlayersAllowed)
 			{
-				StartGame(mobs.ToArray(), _gameLevel);
+				
 				_gameTimer = new Timer(FPS);
 				_gameTimer.AutoReset = true;
 				_gameTimer.Elapsed += new ElapsedEventHandler(TimerElapsedListener);
