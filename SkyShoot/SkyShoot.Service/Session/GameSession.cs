@@ -124,6 +124,7 @@ namespace SkyShoot.Service.Session
                 
                 var mob = _spiderFactory.CreateMob();
                 mobs.Add(mob);
+                SomebodySpawned(mob);
                 mob.MeMoved += new SomebodyMovesHandler(SomebodyMoved);
             }
             else
