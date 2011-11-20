@@ -9,7 +9,13 @@ namespace SkyShoot.Game.Client.Weapon
 {
     public class Projectile : Contracts.Weapon.Projectiles.AProjectile, IDrawable
     {
-        public Projectile(AMob owner, Guid id) : base(owner, id)
+        private const float SPEED = 10;
+        private const float DAMAGE = 2;
+        private const int LIFE_TIME = 120;
+        private const EnumBulletType TYPE = EnumBulletType.Bullet;
+
+        public Projectile(AMob owner, Guid id, Microsoft.Xna.Framework.Vector2 direction) 
+            : base(owner, id, direction, SPEED, DAMAGE, LIFE_TIME, TYPE)
         {
         }
 
