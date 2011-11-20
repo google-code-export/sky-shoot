@@ -19,7 +19,7 @@ namespace SkyShoot.Game.Client.Game
 
         public IDictionary<Guid, AMob> Mobs { get; private set;  }
 
-        public IDictionary<Guid, AProjectile> Projectiles { get; private set; }
+        public IDictionary<Guid, Projectile> Projectiles { get; private set; }
 
         public Camera2D Camera2D { get; private set; }
 
@@ -30,7 +30,7 @@ namespace SkyShoot.Game.Client.Game
             Camera2D = new Camera2D(GameLevel.Width, GameLevel.Height);
 
             Mobs = new ConcurrentDictionary<Guid, AMob>();
-            Projectiles = new ConcurrentDictionary<Guid, AProjectile>();
+            Projectiles = new ConcurrentDictionary<Guid, Projectile>();
         }
 
         public void AddMob(AMob mob)
@@ -38,7 +38,7 @@ namespace SkyShoot.Game.Client.Game
             Mobs.Add(mob.Id, mob);
         }
 
-        public void AddProjectile(AProjectile projectile)
+        public void AddProjectile(Projectile projectile)
         {
             Projectiles.Add(projectile.Id, projectile);
         }
@@ -48,7 +48,7 @@ namespace SkyShoot.Game.Client.Game
             return Mobs[id];
         }
 
-        public AProjectile GetProjectile(Guid id)
+        public Projectile GetProjectile(Guid id)
         {
             return Projectiles[id];
         }
