@@ -14,6 +14,7 @@ namespace SkyShoot.Game.Screens
 
         public GameplayScreen()
         {
+
         }
 
         public override void LoadContent()

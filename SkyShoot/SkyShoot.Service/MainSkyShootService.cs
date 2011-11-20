@@ -48,7 +48,7 @@ namespace SkyShoot.Service
 
 		private static readonly List<MainSkyShootService> ClientsList = new List<MainSkyShootService>();
 
-		public MainSkyShootService() : base(new Vector2(0, 0), new Guid()) { }
+	    public MainSkyShootService() : base(new Vector2(0, 0), Guid.NewGuid()) {}
 
 		public bool Register(string username, string password)
 		{

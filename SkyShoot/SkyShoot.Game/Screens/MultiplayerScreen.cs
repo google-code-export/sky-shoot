@@ -106,7 +106,6 @@ namespace SkyShoot.Game.Screens
         {
             //todo setActive
             ExitScreen();
-            ScreenManager.AddScreen(new GameplayScreen());
 
             //todo temporary
             GameController.Instance.JoinGame(GameController.Instance.GetGameList()[0]);
