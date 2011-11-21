@@ -288,10 +288,6 @@ namespace SkyShoot.Service.Session
 				player.RunVector = new Vector2(0, 0);
 			}
 
-            // Событие отправляется только один раз. При условии, что собрались все игроки
-            // и игра еще не начлась. Проблем не обнаружено. Issue 10.
-            StartGame(Players.ToArray(), _gameLevel);
-
             _gameTimer.Start();
         }
 
@@ -313,6 +309,12 @@ namespace SkyShoot.Service.Session
 
         private void TimerElapsedListener(object sender,EventArgs e)
         {
+            // Событие отправляется только один раз. При условии, что собрались все игроки
+            // и игра еще не начлась. Проблем не обнаружено. Issue 10.
+            if (_timerCounter == 0)
+            {
+                StartGame(Players.ToArray(), _gameLevel);
+            }
 			update();
         }
 
