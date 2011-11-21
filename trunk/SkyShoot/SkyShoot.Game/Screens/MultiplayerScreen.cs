@@ -22,7 +22,7 @@ namespace SkyShoot.Game.Screens
         private ButtonControl _createGameButton;
         private ButtonControl _joinGameButton;
         private ButtonControl _refreshButton;
-        private ListControl _mapList;
+        private ListControl _gameList;
         private Screen _mainScreen;
         private LabelControl _mapLabel;
         private GameDescription[] tempGameList;
@@ -81,24 +81,24 @@ namespace SkyShoot.Game.Screens
             _mainScreen.Desktop.Children.Add(_mapLabel);
 
             //Games List
-            _mapList = new ListControl
+            _gameList = new ListControl
             {
                 Bounds = new UniRectangle(300f, -10f, 200f, 300f)
             };
-            _mapList.Slider.Bounds.Location.X.Offset -= 1.0f;
-            _mapList.Slider.Bounds.Location.Y.Offset += 1.0f;
-            _mapList.Slider.Bounds.Size.Y.Offset -= 2.0f;
+            _gameList.Slider.Bounds.Location.X.Offset -= 1.0f;
+            _gameList.Slider.Bounds.Location.Y.Offset += 1.0f;
+            _gameList.Slider.Bounds.Size.Y.Offset -= 2.0f;
             //
             // запрос списка игр с сервера и его вывод
             //
             tempGameList = GameController.Instance.GetGameList();
             for (int i = 0; i < tempGameList.Length; i++)
             {
-                _mapList.Items.Add(tempGameList[i].ToString());
+                _gameList.Items.Add(tempGameList[i].ToString());
             }
-            _mapList.SelectionMode = ListSelectionMode.Single;
-            _mapList.SelectedItems.Add(4);
-            _mainScreen.Desktop.Children.Add(_mapList);
+            _gameList.SelectionMode = ListSelectionMode.Single;
+            _gameList.SelectedItems.Add(4);
+            _mainScreen.Desktop.Children.Add(_gameList);
             
 
             // Refresh Button
@@ -122,9 +122,14 @@ namespace SkyShoot.Game.Screens
         {
             //todo setActive
             ExitScreen();
+            ScreenManager.AddScreen(new WaitScreen(GameController.Instance.GetGameList()[_gameList.SelectedItems[0]].UsedTileSet + "",
+                                                   GameController.Instance.GetGameList()[_gameList.SelectedItems[0]].GameType + "",
+                                                   GameController.Instance.GetGameList()[_gameList.SelectedItems[0]].MaximumPlayersAllowed + ""
+                                                   )
+                                                   );
 
             //todo temporary
-            GameController.Instance.JoinGame(GameController.Instance.GetGameList()[0]);
+            GameController.Instance.JoinGame(GameController.Instance.GetGameList()[_gameList.SelectedItems[0]]);
 
         }
 
@@ -141,11 +146,11 @@ namespace SkyShoot.Game.Screens
 
         private void RefreshPressed(object sender, EventArgs args)
         {
-            _mapList.Items.Clear();
+            _gameList.Items.Clear();
             tempGameList = GameController.Instance.GetGameList();
             for (int i = 0; i < tempGameList.Length; i++)
             {
-                _mapList.Items.Add(tempGameList[i].ToString());
+                _gameList.Items.Add(tempGameList[i].ToString());
             }
         }
 
