@@ -133,6 +133,7 @@
     <Compile Include="Client\View\Textures.cs" />
     <Compile Include="Client\Weapon\Projectile.cs" />
     <Compile Include="Screens\CreateGameScreen.cs" />
+    <Compile Include="Screens\NewAccountScreen.cs" />
     <Compile Include="Screens\WaitScreen.cs" />
     <Compile Include="Settings.Designer.cs">
       <AutoGen>True</AutoGen>
