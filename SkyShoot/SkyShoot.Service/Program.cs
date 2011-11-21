@@ -12,13 +12,13 @@ namespace SkyShoot.ServProgram
 		static void Main(string[] args)
 		{
 			var host = new ServiceHost(typeof(SkyShoot.Service.MainSkyShootService),
-		new Uri("net.tcp://localhost:8002"));
+				new Uri("net.tcp://localhost:777"));
 
 			host.AddServiceEndpoint(typeof(SkyShoot.Contracts.Service.ISkyShootService),
 															new NetTcpBinding(SecurityMode.None), "SkyShootService");
 
 			var metadataBehavior =
-					host.Description.Behaviors.Find<ServiceMetadataBehavior>();
+					host.Description.Behaviors.Find<ServiceMetadataBehavior>(); 
 			if (metadataBehavior == null)
 			{
 				metadataBehavior = new ServiceMetadataBehavior();
