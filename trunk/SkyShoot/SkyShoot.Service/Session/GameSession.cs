@@ -24,7 +24,7 @@ namespace SkyShoot.Service.Session
 
         public GameDescription LocalGameDescription { get; private set; }
 
-        public bool IsStarted {get; set; }
+        public bool IsStarted { get; set; }
 
         private Timer _gameTimer;
         private GameLevel _gameLevel;
@@ -36,8 +36,6 @@ namespace SkyShoot.Service.Session
         {
             IsStarted = false;
 			_gameLevel = new GameLevel(tileSet);
-
-            Players = new List<MainSkyShootService>();
 
             var playerNames = new List<string>();
 
@@ -55,7 +53,8 @@ namespace SkyShoot.Service.Session
         public event SomebodyDiesHandler SomebodyDies;
 		public event SomebodyHitHandler SomebodyHit;
         public event SomebodySpawnsHandler SomebodySpawns;
-
+		public event NewPlayerConnectedHandler NewPlayerConnected;
+		
         private void SomebodyMoved(AMob sender, Vector2 direction)
         {
             sender.RunVector = direction;
@@ -109,20 +108,88 @@ namespace SkyShoot.Service.Session
 
 		public void PlayerLeave(MainSkyShootService player)
 		{
+			LocalGameDescription.Players.Remove(player.Name);
 			this.SomebodyHit -= player.Hit;
 			this.SomebodyMoves -= player.MobMoved;
 			this.SomebodyShoots -= player.MobShot;
 			this.SomebodySpawns -= player.SpawnMob;
 			this.SomebodyDies -= player.MobDead;
+			this.NewPlayerConnected -= player.NewPlayerConnected;
+			this.StartGame -= player.GameStart;
 			
             player.GameOver();
             SomebodyDied(player);
             player.MeMoved -= SomebodyMoved;
             player.MeShot -= SomebodyShot;
+            //player.MobSpawned -= SomebodySpawned;
+            //player.MobDied -= SomebodyDied;
+			
 			Players.Remove(player);
 		}
 
-        public void SpawnMob()
+        public void Start()
+        {
+            
+
+			foreach (MainSkyShootService player in Players)
+			{
+				this.SomebodyMoves += new SomebodyMovesHandler(player.MobMoved);
+				player.MeMoved += new SomebodyMovesHandler(SomebodyMoved);
+
+				this.SomebodyShoots += new SomebodyShootsHandler(player.MobShot);
+				player.MeShot += new ClientShootsHandler(SomebodyShot);
+
+                this.SomebodySpawns += new SomebodySpawnsHandler(player.SpawnMob);
+
+                this.SomebodyDies += new SomebodyDiesHandler(player.MobDead);
+                
+				this.SomebodyHit += player.Hit;
+
+				player.Coordinates = new Vector2(50,50);
+                player.Speed = PLAYER_SPEED;
+				player.Weapon = new Weapon.Pistol(new Guid());
+				player.RunVector = new Vector2(0, 0);
+
+			}
+			_timerCounter = 0;
+			_gameTimer = new Timer(FPS);
+			_gameTimer.AutoReset = true;
+			_gameTimer.Elapsed += new ElapsedEventHandler(TimerElapsedListener);
+			_gameTimer.Start();
+			IsStarted = true;
+			
+        }
+
+		public bool AddPlayer(MainSkyShootService player)
+		{
+			if (Players.Count >= LocalGameDescription.MaximumPlayersAllowed || IsStarted)
+				return false;
+
+			Players.Add(player);
+			LocalGameDescription.Players.Add(player.Name);
+			NewPlayerConnected(player);
+			StartGame += player.GameStart;
+			NewPlayerConnected += player.NewPlayerConnected;
+
+			if (Players.Count >= LocalGameDescription.MaximumPlayersAllowed)
+			{
+                Start();
+			}
+			return true;
+		}
+
+		private void TimerElapsedListener(object sender, EventArgs e)
+		{
+			// Событие отправляется только один раз. При условии, что собрались все игроки
+			// и игра еще не начлась. Проблем не обнаружено. Issue 10.
+			if (!IsStarted)
+			{
+				StartGame(Players.ToArray());
+			}
+			update();
+		}
+	#region local functions
+		 public void SpawnMob()
         {
             if (_intervalToSpawn == 0)
             {
@@ -260,64 +327,6 @@ namespace SkyShoot.Service.Session
             }
         } 
 
-        public void Start()
-        {
-            _gameTimer = new Timer(FPS);
-            _gameTimer.AutoReset = true;
-            _gameTimer.Elapsed += new ElapsedEventHandler(TimerElapsedListener);
-            IsStarted = true;
-            _timerCounter = 0;
-
-			foreach (MainSkyShootService player in Players)
-			{
-				this.SomebodyMoves += new SomebodyMovesHandler(player.MobMoved);
-				player.MeMoved += new SomebodyMovesHandler(SomebodyMoved);
-
-				this.SomebodyShoots += new SomebodyShootsHandler(player.MobShot);
-				player.MeShot += new ClientShootsHandler(SomebodyShot);
-
-                this.SomebodySpawns += new SomebodySpawnsHandler(player.SpawnMob);
-
-                this.SomebodyDies += new SomebodyDiesHandler(player.MobDead);
-                
-				this.SomebodyHit += player.Hit;
-
-				player.Coordinates = new Vector2(0,0);
-                player.Speed = PLAYER_SPEED;
-				player.Weapon = new Weapon.Pistol(new Guid());
-				player.RunVector = new Vector2(0, 0);
-			}
-
-            _gameTimer.Start();
-        }
-
-		public bool AddPlayer(MainSkyShootService player)
-		{
-			if (Players.Count >= LocalGameDescription.MaximumPlayersAllowed || IsStarted)
-				return false;
-
-			Players.Add(player);
-			LocalGameDescription.Players.Add(player.Name);
-			StartGame += new StartGameHandler(player.GameStart);
-
-			if (Players.Count == LocalGameDescription.MaximumPlayersAllowed)
-			{
-                Start();
-			}
-			return true;
-		}
-
-        private void TimerElapsedListener(object sender,EventArgs e)
-        {
-            // Событие отправляется только один раз. При условии, что собрались все игроки
-            // и игра еще не начлась. Проблем не обнаружено. Issue 10.
-            if (_timerCounter == 0)
-            {
-                StartGame(Players.ToArray(), _gameLevel);
-            }
-			update();
-        }
-
         private Vector2 ComputeMovement(AMob mob)
 		{
 			var realHeight=_gameLevel.levelHeight-mob.Radius;
@@ -335,5 +344,6 @@ namespace SkyShoot.Service.Session
 
 			return newCoord;
 		}
-    }
+	#endregion
+	}
 }
