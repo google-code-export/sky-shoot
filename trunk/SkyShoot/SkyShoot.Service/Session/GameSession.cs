@@ -184,7 +184,7 @@ namespace SkyShoot.Service.Session
 			// и игра еще не начлась. Проблем не обнаружено. Issue 10.
 			if (!IsStarted)
 			{
-				StartGame(Players.ToArray());
+				StartGame(Players.ToArray(), _gameLevel);
 			}
 			update();
 		}

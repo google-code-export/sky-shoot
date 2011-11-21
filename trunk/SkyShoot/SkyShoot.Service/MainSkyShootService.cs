@@ -188,13 +188,13 @@ namespace SkyShoot.Service
 			ClientsList.Remove(this);
 		}
 
-		public void GameStart(AMob[] mobs)
+		public void GameStart(AMob[] mobs,GameLevel arena)
 		{
             var mobsCopy = TypeConverter.Mobs(mobs);
 
             try
             {
-                _callback.GameStart(mobsCopy);
+                _callback.GameStart(mobsCopy, arena);
             }
             catch (Exception e) { this.Disconnect(); }
 		}
