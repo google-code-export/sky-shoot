@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
 using Microsoft.Xna.Framework.Graphics;
@@ -23,12 +23,14 @@ namespace SkyShoot.Game.Screens
         private LabelControl _playersLabel;
         private ListControl _playersList;
         private ButtonControl _leaveButton;
+        private ButtonControl _refreshButton;
         private LabelControl _tileLabel;
         private LabelControl _gameModeLabel;
         private LabelControl _maxPlayersLabel;
         private string Tile;
         private string GameMode;
         private string MaxPlayers;
+        private List<string> tmpPlayersList;
 
         public WaitScreen(string tile, string gameMod, string maxPlayers)
         {
@@ -61,7 +63,15 @@ namespace SkyShoot.Game.Screens
             {
                 Bounds = new UniRectangle(-60f, -4f, 200f, 300f)
             };
-            // todo список игроков
+            //
+            // todo вывод списка текущей игры, а не просто первой
+            //
+            
+            tmpPlayersList = GameController.Instance.GetGameList()[0].Players;
+            for (int i = 0; i < tmpPlayersList.Count; i++)
+            {
+                _playersList.Items.Add(tmpPlayersList[i] + "");    
+            }   
             _playersList.Slider.Bounds.Location.X.Offset -= 1.0f;
             _playersList.Slider.Bounds.Location.Y.Offset += 1.0f;
             _playersList.Slider.Bounds.Size.Y.Offset -= 2.0f;
@@ -77,6 +87,15 @@ namespace SkyShoot.Game.Screens
             };
             _leaveButton.Pressed += LeaveButtonPressed;
             _mainScreen.Desktop.Children.Add(_leaveButton);
+
+            // Reresh Button
+            _refreshButton = new ButtonControl
+            {
+                Text = "Refresh",
+                Bounds = new UniRectangle(new UniScalar(0.5f, -378f), new UniScalar(0.4f, 120f), 120, 32)
+            };
+            _refreshButton.Pressed += RefreshButtonPressed;
+            _mainScreen.Desktop.Children.Add(_refreshButton);
 
             // информация о игре
             // Tile label
@@ -131,6 +150,16 @@ namespace SkyShoot.Game.Screens
             GameController.Instance.LeaveGame();
             ExitScreen();
             ScreenManager.AddScreen(new MultiplayerScreen());
+        }
+
+        private void RefreshButtonPressed(object sender, EventArgs args)
+        {
+            _playersList.Items.Clear();
+            tmpPlayersList = GameController.Instance.GetGameList()[0].Players;
+            for (int i = 0; i < tmpPlayersList.Count; i++)
+            {
+                _playersList.Items.Add(tmpPlayersList[i] + "");
+            }
         }
 
         public override void Draw(GameTime gameTime)
