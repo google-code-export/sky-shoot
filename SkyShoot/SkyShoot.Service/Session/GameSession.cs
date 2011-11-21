@@ -14,8 +14,7 @@ namespace SkyShoot.Service.Session
 	
     public class GameSession
     {
-		 //Хотя на сервере ни о каких кадрах речи не идет, всё же думаю, 
-        //что это имя очень точно отражает суть константы.
+        const float PLAYER_SPEED = 0.5f;
         const int FPS = 1000/60;
 
 		public List<MainSkyShootService> players{get; set;}
@@ -266,7 +265,7 @@ namespace SkyShoot.Service.Session
 				this.SomebodyHit += player.Hit;
 
 				player.Coordinates = new Vector2(0,0);
-				player.Speed = 100;
+                player.Speed = PLAYER_SPEED;
 				player.Weapon = new Weapon.Pistol(new Guid());
 				player.RunVector = new Vector2(0, 0);
 			}
