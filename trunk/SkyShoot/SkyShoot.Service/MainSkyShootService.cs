@@ -202,6 +202,7 @@ namespace SkyShoot.Service
 		public void SpawnMob(AMob mob)
 		{
             var mobCopy = TypeConverter.Mob(mob);
+			Trace.WriteLine("callback.SpawnMob(mID: " + mob.Id + ")");
 
             try
             {
