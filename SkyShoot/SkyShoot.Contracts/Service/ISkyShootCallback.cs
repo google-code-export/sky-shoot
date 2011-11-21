@@ -13,7 +13,7 @@ namespace SkyShoot.Contracts.Service
     public interface ISkyShootCallback
     {
         [OperationContract(IsOneWay = true)]
-        void GameStart(AMob[] mobs);
+        void GameStart(AMob[] mobs,GameLevel arena);
 
         [OperationContract(IsOneWay = true)]
         void MobShot(AMob mob, AProjectile[] projectiles);
