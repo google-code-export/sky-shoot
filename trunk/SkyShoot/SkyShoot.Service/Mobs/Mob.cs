@@ -22,7 +22,7 @@ namespace SkyShoot.Contracts.Mobs
         public Mob()
         {
             IsPlayer = false;
-            Id = new Guid();
+            Id = Guid.NewGuid();
             HealthAmount = (float)_health;
             Damage = 10;
             _health *= 1.001; // увеличение здоровья каждого следующего на 0.1%
