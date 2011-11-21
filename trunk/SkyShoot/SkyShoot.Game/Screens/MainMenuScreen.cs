@@ -6,80 +6,78 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using SkyShoot.Game.ScreenManager;
+using Nuclex.UserInterface;
+using Nuclex.UserInterface.Controls.Desktop;
 
 namespace SkyShoot.Game.Screens
 {
-    class MainMenuScreen : MenuScreen
+    class MainMenuScreen : ScreenManager.GameScreen
     {
-        ContentManager content;
-
-        public MainMenuScreen()
-            : base("SkyShoot")
-        {
-
-            MenuEntry multiplayerMenuEntry = new MenuEntry("Multiplayer");
-            MenuEntry playGameMenuEntry = new MenuEntry("Start");
-            MenuEntry optionsMenuEntry = new MenuEntry("Options");
-            MenuEntry exitMenuEntry = new MenuEntry("Exit");
-
-            multiplayerMenuEntry.Selected += MultiplayerMenuEntrySelected;
-            playGameMenuEntry.Selected += PlayGameMenuEntrySelected;
-            optionsMenuEntry.Selected += OptionsMenuEntrySelected;
-            exitMenuEntry.Selected += ExitMenuEntrySelected;
-
-            MenuEntries.Add(multiplayerMenuEntry);
-            MenuEntries.Add(playGameMenuEntry);
-            MenuEntries.Add(optionsMenuEntry);
-            MenuEntries.Add(exitMenuEntry);
-        }
+        private GuiManager _gui;
+        private Screen _mainScreen;
 
         public override void LoadContent()
         {
             base.LoadContent();
+            _gui = ScreenManager.Gui;
+            Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
+            _mainScreen = new Screen(viewport.Width, viewport.Height);
+            _mainScreen.Desktop.Bounds = new UniRectangle(
+              new UniScalar(0.1f, 0.0f), new UniScalar(0.1f, 0.0f),
+              new UniScalar(0.8f, 0.0f), new UniScalar(0.8f, 0.0f)
+            );
+
+            ButtonControl _playGameButton = new ButtonControl()
+            {
+                Text = "Play",
+                Bounds = new UniRectangle(new UniScalar(0.30f,0),new UniScalar(0.2f,0),new UniScalar(0.4f,0), new UniScalar(0.1f,0)),
+            };
+            _mainScreen.Desktop.Children.Add(_playGameButton);
+
+            ButtonControl _optionsButton = new ButtonControl()
+            {
+                Text = "Options",
+                Bounds = new UniRectangle(new UniScalar(0.30f,0),new UniScalar(0.35f,0),new UniScalar(0.4f,0), new UniScalar(0.1f,0)),
+            };
+            _mainScreen.Desktop.Children.Add(_optionsButton);
+
+            ButtonControl _exitButton = new ButtonControl()
+            {
+                Text = "Exit",
+                Bounds = new UniRectangle(new UniScalar(0.30f,0),new UniScalar(0.5f,0),new UniScalar(0.4f,0), new UniScalar(0.1f,0)),
+            };
+            _mainScreen.Desktop.Children.Add(_exitButton);
+
+            
+
+            _playGameButton.Pressed += PlayGameButtonPressed;
+            _optionsButton.Pressed += OptionsButtonPressed;
+            _exitButton.Pressed += ExitMenuButtonPressed;
 
         }
         
-        public override void UnloadContent()
-        {
-            base.UnloadContent();
-            if (content != null)
-                content.Unload();
-        }
-
-        void PlayGameMenuEntrySelected(object sender, EventArgs e)
+        void PlayGameButtonPressed(object sender, EventArgs e)
         {
             ScreenManager.AddScreen(new LoginScreen()); 
         }
 
 
-        void OptionsMenuEntrySelected(object sender, EventArgs e)
+        void OptionsButtonPressed(object sender, EventArgs e)
         {
             //ScreenManager.AddScreen(new OptionsMenuScreen());
         }
 
-        void ExitMenuEntrySelected(object sender, EventArgs e)
+        void ExitMenuButtonPressed(object sender, EventArgs e)
         {
             ScreenManager.Game.Exit();
         }
 
-        void MultiplayerMenuEntrySelected(object sender, EventArgs e)
-        {
-            ScreenManager.AddScreen(new LoginScreen());
-        }
 
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
-            GraphicsDevice graphics = ScreenManager.GraphicsDevice;
-            SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
-            SpriteFont font = ScreenManager.Font;
-            float transitionOffset = (float)Math.Pow(TransitionPosition, 2);            
-        }
-
-        protected override void OnCancel()
-        {
-            base.OnCancel();
-            ScreenManager.Game.Exit();
+            _gui.Screen = _mainScreen;
+            _gui.Draw(gameTime);
         }
     }
 }
