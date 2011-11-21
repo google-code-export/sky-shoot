@@ -34,6 +34,21 @@ namespace SkyShoot.Service
 			}
 			return rs;
 		}
+
+        public static AProjectile Projectile(AProjectile p)
+        {
+            return new AProjectile(p);
+        }
+
+        public static AProjectile[] Projectiles(AProjectile[] ps)
+        {
+            var rs = new AProjectile[ps.Length];
+            for (int i = 0; i < ps.Length; i++)
+            {
+                rs[i] = new AProjectile(ps[i]);
+            }
+            return rs;
+        }
 	}
 
 	[ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant,
@@ -51,6 +66,8 @@ namespace SkyShoot.Service
 		private static readonly List<MainSkyShootService> ClientsList = new List<MainSkyShootService>();
 
 	    public MainSkyShootService() : base(new Vector2(0, 0), Guid.NewGuid()) {}
+
+        public void Disconnect() { }
 
 		public bool Register(string username, string password)
         {
@@ -173,29 +190,47 @@ namespace SkyShoot.Service
 
 		public void GameStart(AMob[] mobs, GameLevel arena)
 		{
-			var mobsCopy = new AMob[mobs.Length];
-			for (int i = 0; i < mobs.Length; i++)
-				mobsCopy[i] = new AMob(mobs[i]);
+            var mobsCopy = TypeConverter.Mobs(mobs);
 
-			_callback.GameStart(mobsCopy, arena);
+            try
+            {
+                _callback.GameStart(mobsCopy, arena);
+            }
+            catch (Exception e) { this.Disconnect(); }
 		}
 
 		public void SpawnMob(AMob mob)
 		{
-			var mobCopy = new AMob(mob);
-			_callback.SpawnMob(mobCopy);
+            var mobCopy = TypeConverter.Mob(mob);
+
+            try
+            {
+                _callback.SpawnMob(mobCopy);
+            }
+            catch (Exception e) { this.Disconnect(); }
 		}
 
 		public void Hit(AMob mob, AProjectile projectile)
 		{
-			var mobCopy = new AMob(mob);
-			_callback.Hit(mobCopy, projectile);
+            var mobCopy = TypeConverter.Mob(mob);
+            var projCopy = TypeConverter.Projectile(projectile);
+
+            try
+            {
+                _callback.Hit(mobCopy, projCopy);
+            }
+            catch (Exception e) { this.Disconnect(); }
 		}
 
 		public void MobDead(AMob mob)
 		{
-			var mobCopy = new AMob(mob);
-			_callback.MobDead(mobCopy);
+            var mobCopy = TypeConverter.Mob(mob);
+
+            try
+            {
+                _callback.MobDead(mobCopy);
+            }
+            catch (Exception e) { this.Disconnect(); }
 		}
 
 		public void MobMoved(AMob mob, Vector2 direction)
@@ -203,8 +238,13 @@ namespace SkyShoot.Service
 			if (mob == this)
 				return;
 
-			var mobCopy = new AMob(mob);
-			_callback.MobMoved(mobCopy, direction);
+            var mobCopy = TypeConverter.Mob(mob);
+
+            try
+            {
+                _callback.MobMoved(mobCopy, direction);
+            }
+            catch (Exception e) { this.Disconnect(); }
 		}
 
 		public void MobShot(AMob mob, AProjectile[] projectiles)
@@ -212,43 +252,72 @@ namespace SkyShoot.Service
 			if (mob == this)
 				return;
 
-			var mobCopy = new AMob(mob);
-			_callback.MobShot(mobCopy, projectiles);
+            var mobCopy = TypeConverter.Mob(mob);
+            var projsCopy = TypeConverter.Projectiles(projectiles);
+
+            try
+            {
+                _callback.MobShot(mobCopy, projsCopy);
+            }
+            catch (Exception e) { this.Disconnect(); }
 		}
 
 		public void BonusDropped(Contracts.Bonuses.AObtainableDamageModifier bonus)
 		{
-			_callback.BonusDropped(bonus);
+            try
+            {
+                _callback.BonusDropped(bonus);
+            }
+            catch (Exception e) { this.Disconnect(); }
 		}
 
 		public void BonusExpired(Contracts.Bonuses.AObtainableDamageModifier bonus)
 		{
-			_callback.BonusExpired(bonus);
+            try
+            {
+                _callback.BonusExpired(bonus);
+            }
+            catch (Exception e) { this.Disconnect(); }
 		}
 
 		public void BonusDisappeared(Contracts.Bonuses.AObtainableDamageModifier bonus)
 		{
-			_callback.BonusDisappeared(bonus);
+            try
+            {
+                _callback.BonusDisappeared(bonus);
+            }
+            catch (Exception e) { this.Disconnect(); }
 		}
 
 		public void GameOver()
 		{
-			_callback.GameOver();
+            try
+            {
+                _callback.GameOver();
+            }
+            catch (Exception e) { this.Disconnect(); }
 		}
 
 		public void PlayerLeft(AMob mob)
 		{
-			var mobCopy = new AMob(mob);
-			_callback.PlayerLeft(mobCopy);
+            var mobCopy = TypeConverter.Mob(mob);
+
+            try
+            {
+                _callback.PlayerLeft(mobCopy);
+            }
+            catch (Exception e) { this.Disconnect(); }
 		}
 
 		public void SynchroFrame(AMob[] mobs)
 		{
-			var mobsCopy = new AMob[mobs.Length];
-			for (int i = 0; i < mobs.Length; i++)
-				mobsCopy[i] = new AMob(mobs[i]);
+            var mobsCopy = TypeConverter.Mobs(mobs);
 
-			_callback.SynchroFrame(mobsCopy);
+            try
+            {
+                _callback.SynchroFrame(mobsCopy);
+            }
+            catch (Exception e) { this.Disconnect(); }
 		}
 	}
 }
