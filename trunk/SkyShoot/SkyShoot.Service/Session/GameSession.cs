@@ -17,9 +17,10 @@ namespace SkyShoot.Service.Session
         const float PLAYER_SPEED = 0.5f;
         const int FPS = 1000/60;
 
-		public List<MainSkyShootService> players{get; set;}
-        public List<Mob> mobs{get; set;}
-        public List<AProjectile> projectiles { get; set; }
+		public List<MainSkyShootService> Players{get; set;}
+
+        private List<Mob> _mobs{get; set;}
+        private List<AProjectile> _projectiles { get; set; }
 
         public GameDescription LocalGameDescription { get; private set; }
 
@@ -36,13 +37,13 @@ namespace SkyShoot.Service.Session
             IsStarted = false;
 			_gameLevel = new GameLevel(tileSet);
 
-            players = new List<MainSkyShootService>();
+            Players = new List<MainSkyShootService>();
 
             var playerNames = new List<string>();
 
-			mobs = new List<Mob>();
-			players = new List<MainSkyShootService>();
-			projectiles = new List<AProjectile>();
+			_mobs = new List<Mob>();
+			Players = new List<MainSkyShootService>();
+			_projectiles = new List<AProjectile>();
 
             LocalGameDescription = new GameDescription(playerNames, maxPlayersAllowed, gameType, gameID, tileSet);
             _spiderFactory= new SpiderFactory(_gameLevel);
@@ -73,7 +74,7 @@ namespace SkyShoot.Service.Session
 				{
 					var a = (sender as MainSkyShootService).Weapon.CreateBullets(sender, direction);
 					SomebodyShoots(sender, a);
-					projectiles.AddRange(a);
+					_projectiles.AddRange(a);
 				}
             }
         }
@@ -98,7 +99,7 @@ namespace SkyShoot.Service.Session
         {
             SomebodyDied(mob);
             mob.MeMoved -= SomebodyMoved;
-            mobs.Remove(mob);
+            _mobs.Remove(mob);
         }
 
 		public void SomebodyHitted(AMob mob, AProjectile projectile)
@@ -118,9 +119,7 @@ namespace SkyShoot.Service.Session
             SomebodyDied(player);
             player.MeMoved -= SomebodyMoved;
             player.MeShot -= SomebodyShot;
-            player.MobSpawned -= SomebodySpawned;
-            player.MobDied -= SomebodyDied;
-			players.Remove(player);
+			Players.Remove(player);
 		}
 
         public void SpawnMob()
@@ -135,7 +134,7 @@ namespace SkyShoot.Service.Session
                  * issue 10
                  */
                 Console.WriteLine("MobID: " + mob.Id);
-                mobs.Add(mob);
+                _mobs.Add(mob);
                 SomebodySpawned(mob);
                 mob.MeMoved += new SomebodyMovesHandler(SomebodyMoved);
             }
@@ -150,13 +149,13 @@ namespace SkyShoot.Service.Session
         {
             SpawnMob();
 
-            foreach(Mob mob in mobs)
+            foreach(Mob mob in _mobs)
             {
-                mob.Think(_timerCounter, players);
+                mob.Think(_timerCounter, Players);
                 mob.Coordinates = ComputeMovement(mob);
             }
 
-            foreach (MainSkyShootService player in players)
+            foreach (MainSkyShootService player in Players)
             {
                 player.Coordinates = ComputeMovement(player);
 
@@ -164,7 +163,7 @@ namespace SkyShoot.Service.Session
                 hitTestTouch(player);
             }
 
-            foreach (AProjectile projectile in projectiles)
+            foreach (AProjectile projectile in _projectiles)
             {
                 var newCord = projectile.Coordinates + projectile.Direction * projectile.Speed;
                 
@@ -187,13 +186,13 @@ namespace SkyShoot.Service.Session
                 }
                 
             }
-			projectiles.RemoveAll(x => (x.LifeTime <= 0));
+			_projectiles.RemoveAll(x => (x.LifeTime <= 0));
 
 			if (_timerCounter % 60 == 0)
 			{
-				var allObjects = new List<AMob>(mobs);
-				allObjects.AddRange(players);
-				foreach (MainSkyShootService player in players)
+				var allObjects = new List<AMob>(_mobs);
+				allObjects.AddRange(Players);
+				foreach (MainSkyShootService player in Players)
 				{
 					player.SynchroFrame(allObjects.ToArray());
 				}
@@ -210,7 +209,7 @@ namespace SkyShoot.Service.Session
             Mob hitedTarget = null;
             var minDist = double.MaxValue;
          
-            foreach(Mob mob in mobs)
+            foreach(Mob mob in _mobs)
             {
                 var mX = mob.Coordinates.X - projectile.Coordinates.X;
                 var mY = mob.Coordinates.Y - projectile.Coordinates.Y;
@@ -248,7 +247,7 @@ namespace SkyShoot.Service.Session
 
         private void hitTestTouch(MainSkyShootService player)
         {
-            foreach (Mob mob in mobs)
+            foreach (Mob mob in _mobs)
             {
                 if ((mob.Coordinates - player.Coordinates).Length() <= mob.Radius + player.Radius)
                 {
@@ -269,7 +268,7 @@ namespace SkyShoot.Service.Session
             IsStarted = true;
             _timerCounter = 0;
 
-			foreach (MainSkyShootService player in players)
+			foreach (MainSkyShootService player in Players)
 			{
 				this.SomebodyMoves += new SomebodyMovesHandler(player.MobMoved);
 				player.MeMoved += new SomebodyMovesHandler(SomebodyMoved);
@@ -291,21 +290,21 @@ namespace SkyShoot.Service.Session
 
             // Событие отправляется только один раз. При условии, что собрались все игроки
             // и игра еще не начлась. Проблем не обнаружено. Issue 10.
-            StartGame(players.ToArray(), _gameLevel);
+            StartGame(Players.ToArray(), _gameLevel);
 
             _gameTimer.Start();
         }
 
 		public bool AddPlayer(MainSkyShootService player)
 		{
-			if (players.Count >= LocalGameDescription.MaximumPlayersAllowed || IsStarted)
+			if (Players.Count >= LocalGameDescription.MaximumPlayersAllowed || IsStarted)
 				return false;
 
-			players.Add(player);
+			Players.Add(player);
 			LocalGameDescription.Players.Add(player.Name);
 			StartGame += new StartGameHandler(player.GameStart);
 
-			if (players.Count == LocalGameDescription.MaximumPlayersAllowed)
+			if (Players.Count == LocalGameDescription.MaximumPlayersAllowed)
 			{
                 Start();
 			}
