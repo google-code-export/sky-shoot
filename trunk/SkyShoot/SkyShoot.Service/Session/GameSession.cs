@@ -69,9 +69,12 @@ namespace SkyShoot.Service.Session
             sender.ShootVector = direction;
             if (SomebodyShoots != null)
             {
-                if ((sender as MainSkyShootService).Weapon != null)
-                    SomebodyShoots(sender, 
-                        (sender as MainSkyShootService).Weapon.CreateBullets(sender, direction));
+				if ((sender as MainSkyShootService).Weapon != null)
+				{
+					var a = (sender as MainSkyShootService).Weapon.CreateBullets(sender, direction);
+					SomebodyShoots(sender, a);
+					projectiles.AddRange(a);
+				}
             }
         }
 
@@ -106,6 +109,11 @@ namespace SkyShoot.Service.Session
 		public void PlayerLeave(MainSkyShootService player)
 		{
 			this.SomebodyHit -= player.Hit;
+			this.SomebodyMoves -= player.MobMoved;
+			this.SomebodyShoots -= player.MobShot;
+			this.SomebodySpawns -= player.SpawnMob;
+			this.SomebodyDies -= player.MobDead;
+			
             player.GameOver();
             SomebodyDied(player);
             player.MeMoved -= SomebodyMoved;
