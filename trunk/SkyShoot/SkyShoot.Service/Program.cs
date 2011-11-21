@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.ServiceModel;
 using System.ServiceModel.Description;
+using System.Diagnostics;
 
 namespace SkyShoot.ServProgram
 {
@@ -11,6 +12,7 @@ namespace SkyShoot.ServProgram
 	{
 		static void Main(string[] args)
 		{
+			Trace.Listeners.Add(new SkyShoot.Service.Logger.TableTraceListener());
 			var host = new ServiceHost(typeof(SkyShoot.Service.MainSkyShootService),
 				new Uri("net.tcp://localhost:777"));
 
