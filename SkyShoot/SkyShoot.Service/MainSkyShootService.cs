@@ -67,7 +67,7 @@ namespace SkyShoot.Service
 
 	    public MainSkyShootService() : base(new Vector2(0, 0), Guid.NewGuid()) {}
 
-        public void Disconnect() { }
+		public void Disconnect() { _sessionManager.LeaveGame(this.Name); }
 
 		public bool Register(string username, string password)
         {
@@ -109,11 +109,11 @@ namespace SkyShoot.Service
 			return _sessionManager.GetGameList();
 		}
 
-		public GameDescription CreateGame(GameMode mode, int maxPlayers)
+		public GameDescription CreateGame(GameMode mode, int maxPlayers, TileSet tileSet)
 		{
             try
             {
-                var gameDescription = _sessionManager.CreateGame(mode, maxPlayers, this, TileSet.Grass);
+                var gameDescription = _sessionManager.CreateGame(mode, maxPlayers, this, tileSet);
                 return gameDescription;
             }
             catch (Exception e)
@@ -147,8 +147,8 @@ namespace SkyShoot.Service
 
 		public event SomebodyMovesHandler MeMoved;
 		public event ClientShootsHandler MeShot;
-        public event SomebodySpawnsHandler MobSpawned;
-        public event SomebodyDiesHandler MobDied;
+        //public event SomebodySpawnsHandler MobSpawned;
+        //public event SomebodyDiesHandler MobDied;
 
 		public void Move(Vector2 direction) // приходит снаружи от клиента
 		{
@@ -188,13 +188,13 @@ namespace SkyShoot.Service
 			ClientsList.Remove(this);
 		}
 
-		public void GameStart(AMob[] mobs, GameLevel arena)
+		public void GameStart(AMob[] mobs)
 		{
             var mobsCopy = TypeConverter.Mobs(mobs);
 
             try
             {
-                _callback.GameStart(mobsCopy, arena);
+                _callback.GameStart(mobsCopy);
             }
             catch (Exception e) { this.Disconnect(); }
 		}
@@ -318,6 +318,17 @@ namespace SkyShoot.Service
                 _callback.SynchroFrame(mobsCopy);
             }
             catch (Exception e) { this.Disconnect(); }
+		}
+
+		public void NewPlayerConnected(AMob player)
+		{
+			var mobCopy = TypeConverter.Mob(player);
+			try
+			{
+				_callback.NewPlayerConnected(mobCopy);
+			}
+			catch(Exception){ this.Disconnect(); }
+
 		}
 	}
 }
