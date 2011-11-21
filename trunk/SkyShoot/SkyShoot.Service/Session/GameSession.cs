@@ -200,7 +200,8 @@ namespace SkyShoot.Service.Session
                  * Все желающие могут убедиться, что сервер посылает разные ID мобов.
                  * issue 10
                  */
-                Console.WriteLine("MobID: " + mob.Id);
+                System.Diagnostics.Trace.WriteLine("MobID: " + mob.Id);
+                
                 _mobs.Add(mob);
                 SomebodySpawned(mob);
                 mob.MeMoved += new SomebodyMovesHandler(SomebodyMoved);
