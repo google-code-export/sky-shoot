@@ -130,6 +130,11 @@ namespace SkyShoot.Service.Session
                 _intervalToSpawn = (long) Math.Exp(4.8 - _timerCounter/40000)+3;
                 
                 var mob = _spiderFactory.CreateMob();
+                /* 
+                 * Все желающие могут убедиться, что сервер посылает разные ID мобов.
+                 * issue 10
+                 */
+                Console.WriteLine("MobID: " + mob.Id);
                 mobs.Add(mob);
                 SomebodySpawned(mob);
                 mob.MeMoved += new SomebodyMovesHandler(SomebodyMoved);
@@ -258,6 +263,12 @@ namespace SkyShoot.Service.Session
 
         public void Start()
         {
+            _gameTimer = new Timer(FPS);
+            _gameTimer.AutoReset = true;
+            _gameTimer.Elapsed += new ElapsedEventHandler(TimerElapsedListener);
+            IsStarted = true;
+            _timerCounter = 0;
+
 			foreach (MainSkyShootService player in players)
 			{
 				this.SomebodyMoves += new SomebodyMovesHandler(player.MobMoved);
@@ -278,35 +289,31 @@ namespace SkyShoot.Service.Session
 				player.RunVector = new Vector2(0, 0);
 			}
 
-			StartGame(players.ToArray(), _gameLevel);
+            // Событие отправляется только один раз. При условии, что собрались все игроки
+            // и игра еще не начлась. Проблем не обнаружено. Issue 10.
+            StartGame(players.ToArray(), _gameLevel);
+
+            _gameTimer.Start();
         }
 
 		public bool AddPlayer(MainSkyShootService player)
 		{
-			if (players.Count >= LocalGameDescription.MaximumPlayersAllowed)
+			if (players.Count >= LocalGameDescription.MaximumPlayersAllowed || IsStarted)
 				return false;
-
-			if (IsStarted) return false;
 
 			players.Add(player);
 			LocalGameDescription.Players.Add(player.Name);
 			StartGame += new StartGameHandler(player.GameStart);
-			if (players.Count >= LocalGameDescription.MaximumPlayersAllowed)
+
+			if (players.Count == LocalGameDescription.MaximumPlayersAllowed)
 			{
-				
-				_gameTimer = new Timer(FPS);
-				_gameTimer.AutoReset = true;
-				_gameTimer.Elapsed += new ElapsedEventHandler(TimerElapsedListener);
-				_gameTimer.Start();
-				_timerCounter = 0;
+                Start();
 			}
 			return true;
 		}
 
         private void TimerElapsedListener(object sender,EventArgs e)
         {
-			if (!IsStarted) Start(); 
-			IsStarted = true;
 			update();
         }
 
