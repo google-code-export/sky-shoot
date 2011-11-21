@@ -31,12 +31,14 @@ namespace SkyShoot.Game.Screens
         private string GameMode;
         private string MaxPlayers;
         private List<string> tmpPlayersList;
+        private int GameId;
 
-        public WaitScreen(string tile, string gameMod, string maxPlayers)
+        public WaitScreen(string tile, string gameMod, string maxPlayers, int gameId)
         {
             this.Tile = tile;
             this.GameMode = gameMod;
             this.MaxPlayers = maxPlayers;
+            this.GameId = gameId;
         }
 
         public override void LoadContent()
@@ -64,10 +66,10 @@ namespace SkyShoot.Game.Screens
                 Bounds = new UniRectangle(-60f, -4f, 200f, 300f)
             };
             //
-            // todo вывод списка текущей игры, а не просто первой
+            // todo проверить, правильно ли работает список
             //
             
-            tmpPlayersList = GameController.Instance.GetGameList()[0].Players;
+            tmpPlayersList = GameController.Instance.GetGameList()[GameId].Players;
             for (int i = 0; i < tmpPlayersList.Count; i++)
             {
                 _playersList.Items.Add(tmpPlayersList[i] + "");    
@@ -83,7 +85,7 @@ namespace SkyShoot.Game.Screens
             _leaveButton = new ButtonControl
             {
                 Text = "Leave",
-                Bounds = new UniRectangle(new UniScalar(0.5f, -378f), new UniScalar(0.4f, 180f), 120, 32)
+                Bounds = new UniRectangle(new UniScalar(0.5f, -378f), new UniScalar(0.4f, 190f), 120, 32)
             };
             _leaveButton.Pressed += LeaveButtonPressed;
             _mainScreen.Desktop.Children.Add(_leaveButton);
@@ -92,7 +94,7 @@ namespace SkyShoot.Game.Screens
             _refreshButton = new ButtonControl
             {
                 Text = "Refresh",
-                Bounds = new UniRectangle(new UniScalar(0.5f, -378f), new UniScalar(0.4f, 120f), 120, 32)
+                Bounds = new UniRectangle(new UniScalar(0.5f, -378f), new UniScalar(0.4f, 150f), 120, 32)
             };
             _refreshButton.Pressed += RefreshButtonPressed;
             _mainScreen.Desktop.Children.Add(_refreshButton);
@@ -155,7 +157,7 @@ namespace SkyShoot.Game.Screens
         private void RefreshButtonPressed(object sender, EventArgs args)
         {
             _playersList.Items.Clear();
-            tmpPlayersList = GameController.Instance.GetGameList()[0].Players;
+            tmpPlayersList = GameController.Instance.GetGameList()[GameId].Players;
             for (int i = 0; i < tmpPlayersList.Count; i++)
             {
                 _playersList.Items.Add(tmpPlayersList[i] + "");

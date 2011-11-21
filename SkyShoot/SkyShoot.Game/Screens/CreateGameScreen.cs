@@ -189,7 +189,7 @@ namespace SkyShoot.Game.Screens
             if (_gameMode.Text == "Deathmatch") GameController.Instance.CreateGame(GameMode.Coop, Convert.ToInt32(_maxPlayers.Text));
             if (_gameMode.Text == "Campaign") GameController.Instance.CreateGame(GameMode.Coop, Convert.ToInt32(_maxPlayers.Text));
             ExitScreen();
-            ScreenManager.AddScreen(new WaitScreen(_tile.Text, _gameMode.Text, _maxPlayers.Text));
+            ScreenManager.AddScreen(new WaitScreen(_tile.Text, _gameMode.Text, _maxPlayers.Text, GameController.Instance.GetGameList().Length));
         }
 
         public override void Draw(GameTime gameTime)

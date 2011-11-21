@@ -29,7 +29,7 @@ namespace SkyShoot.Game.Screens
 
             ButtonControl _playGameButton = new ButtonControl()
             {
-                Text = "Play",
+                Text = "Multiplayer",
                 Bounds = new UniRectangle(new UniScalar(0.30f,0),new UniScalar(0.2f,0),new UniScalar(0.4f,0), new UniScalar(0.1f,0)),
             };
             _mainScreen.Desktop.Children.Add(_playGameButton);
