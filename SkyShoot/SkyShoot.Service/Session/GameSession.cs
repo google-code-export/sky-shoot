@@ -103,7 +103,7 @@ namespace SkyShoot.Service.Session
 
 		public void SomebodyHitted(AMob mob, AProjectile projectile)
 		{
-			SomebodyHit(mob, projectile);
+			if(SomebodyHit != null)	SomebodyHit(mob, projectile);
 		}
 
 		public void PlayerLeave(MainSkyShootService player)
@@ -156,7 +156,6 @@ namespace SkyShoot.Service.Session
 			_gameTimer.AutoReset = true;
 			_gameTimer.Elapsed += new ElapsedEventHandler(TimerElapsedListener);
 			_gameTimer.Start();
-			IsStarted = true;
 			
         }
 
@@ -167,7 +166,7 @@ namespace SkyShoot.Service.Session
 
 			Players.Add(player);
 			LocalGameDescription.Players.Add(player.Name);
-			NewPlayerConnected(player);
+			if( NewPlayerConnected != null)	NewPlayerConnected(player);
 			StartGame += player.GameStart;
 			NewPlayerConnected += player.NewPlayerConnected;
 
@@ -182,9 +181,10 @@ namespace SkyShoot.Service.Session
 		{
 			// Событие отправляется только один раз. При условии, что собрались все игроки
 			// и игра еще не начлась. Проблем не обнаружено. Issue 10.
-			if (!IsStarted)
+			if (!IsStarted && StartGame != null)
 			{
 				StartGame(Players.ToArray(), _gameLevel);
+				IsStarted = true;
 			}
 			update();
 		}
