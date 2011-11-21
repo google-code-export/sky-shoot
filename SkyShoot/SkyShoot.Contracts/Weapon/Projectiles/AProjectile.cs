@@ -9,7 +9,7 @@ using SkyShoot.Contracts.Mobs;
 namespace SkyShoot.Contracts.Weapon.Projectiles
 {
     [DataContract]
-    public abstract class AProjectile
+    public class AProjectile
     {
         protected AProjectile(AMob owner, Guid id, Vector2 direction)
         {
@@ -21,6 +21,18 @@ namespace SkyShoot.Contracts.Weapon.Projectiles
         public AProjectile()
         {
             Owner = null;
+        }
+
+        public AProjectile(AProjectile other)
+        {
+            this.Coordinates = other.Coordinates;
+            this.Damage = other.Damage;
+            this.Direction = other.Direction;
+            this.Id = other.Id;
+            this.LifeTime = other.LifeTime;
+            this.Owner = other.Owner;
+            this.Speed = other.Speed;
+            this.Type = other.Type;
         }
 
         [DataMember]
@@ -54,15 +66,15 @@ namespace SkyShoot.Contracts.Weapon.Projectiles
         [DataMember]
         public EnumBulletType Type { get; protected set; }
 
-        protected AProjectile(AProjectile projectile)
-        {
-            Owner = projectile.Owner;
-            Id = projectile.Id;
-            Direction = projectile.Direction;
-            Speed = projectile.Speed;
-            Damage = projectile.Damage;
-            LifeTime = projectile.LifeTime;
-            Type = projectile.Type;
-        }
+        //protected AProjectile(AProjectile projectile)
+        //{
+        //    Owner = projectile.Owner;
+        //    Id = projectile.Id;
+        //    Direction = projectile.Direction;
+        //    Speed = projectile.Speed;
+        //    Damage = projectile.Damage;
+        //    LifeTime = projectile.LifeTime;
+        //    Type = projectile.Type;
+        //}
     }
 }
