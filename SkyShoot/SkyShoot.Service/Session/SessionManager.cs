@@ -63,8 +63,8 @@ namespace SkyShoot.Service.Session
             {
                 var game = _gameSessions.Find(gameSession => gameSession.LocalGameDescription.Players.Contains(playerName));
                 game.LocalGameDescription.Players.Remove(playerName);
-                game.PlayerLeave(game.players.Find(x => x.Name == playerName));
-                if (game.players.Count == 0) _gameSessions.Remove(game);
+                game.PlayerLeave(game.Players.Find(x => x.Name == playerName));
+                if (game.Players.Count == 0) _gameSessions.Remove(game);
                 return true;
             }
             catch (Exception)
