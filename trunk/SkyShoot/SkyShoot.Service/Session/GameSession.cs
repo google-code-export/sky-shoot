@@ -8,16 +8,13 @@ using Microsoft.Xna.Framework;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Weapon.Projectiles;
 using System.Timers;
+using SkyShoot.Contracts;
 
 namespace SkyShoot.Service.Session
 {
 	
     public class GameSession
     {
-        const float PLAYER_SPEED = 0.5f;
-        const float PLAYER_RADIUS = 15f;
-        const int FPS = 1000/60;
-
 		public List<MainSkyShootService> Players{get; set;}
 
         private List<Mob> _mobs{get; set;}
@@ -25,13 +22,13 @@ namespace SkyShoot.Service.Session
 
         public GameDescription LocalGameDescription { get; private set; }
 
-        public bool IsStarted { get; set; }
-
-        private Timer _gameTimer;
+        public bool IsStarted { get; set; }		
         private GameLevel _gameLevel;
         private SpiderFactory _spiderFactory;
         private long _timerCounter;
         private long _intervalToSpawn = 0;
+
+		private Timer _gameTimer;
 
         public GameSession(TileSet tileSet, int maxPlayersAllowed, GameMode gameType, int gameID)
         {
@@ -128,35 +125,43 @@ namespace SkyShoot.Service.Session
 			Players.Remove(player);
 		}
 
+		public void Stop()
+		{
+			_gameTimer.Enabled = false;
+			_gameTimer.AutoReset = false;
+			_gameTimer.Elapsed -= TimerElapsedListener;
+			IsStarted = false;
+		}
+
         public void Start()
         {
             
 
 			foreach (MainSkyShootService player in Players)
 			{
-				this.SomebodyMoves += new SomebodyMovesHandler(player.MobMoved);
-				player.MeMoved += new SomebodyMovesHandler(SomebodyMoved);
+				this.SomebodyMoves += player.MobMoved;
+				player.MeMoved += SomebodyMoved;
 
-				this.SomebodyShoots += new SomebodyShootsHandler(player.MobShot);
-				player.MeShot += new ClientShootsHandler(SomebodyShot);
+				this.SomebodyShoots += player.MobShot;
+				player.MeShot += SomebodyShot;
 
-                this.SomebodySpawns += new SomebodySpawnsHandler(player.SpawnMob);
+                this.SomebodySpawns += player.SpawnMob;
 
-                this.SomebodyDies += new SomebodyDiesHandler(player.MobDead);
+                this.SomebodyDies += player.MobDead;
                 
 				this.SomebodyHit += player.Hit;
 
 				player.Coordinates = new Vector2(50,50);
-                player.Speed = PLAYER_SPEED;
-                player.Radius = PLAYER_RADIUS;
+                player.Speed = Constants.PLAYER_SPEED;
+                player.Radius = Constants.PLAYER_RADIUS;
 				player.Weapon = new Weapon.Pistol(new Guid());
 				player.RunVector = new Vector2(0, 0);
 
 			}
 			_timerCounter = 0;
-			_gameTimer = new Timer(FPS);
+			_gameTimer = new Timer(Constants.FPS);
 			_gameTimer.AutoReset = true;
-			_gameTimer.Elapsed += new ElapsedEventHandler(TimerElapsedListener);
+			_gameTimer.Elapsed += TimerElapsedListener;
 			_gameTimer.Start();
 			
         }
@@ -181,21 +186,20 @@ namespace SkyShoot.Service.Session
 
 		private void TimerElapsedListener(object sender, EventArgs e)
 		{
-			// Событие отправляется только один раз. При условии, что собрались все игроки
-			// и игра еще не начлась. Проблем не обнаружено. Issue 10.
 			if (!IsStarted && StartGame != null)
 			{
 				StartGame(Players.ToArray(), _gameLevel);
 				IsStarted = true;
 			}
 			update();
+			
 		}
 	#region local functions
 		private void SpawnMob()
         {
             if (_intervalToSpawn == 0)
             {
-                _intervalToSpawn = (long) Math.Exp(4.8 - _timerCounter/40000)+3;
+				_intervalToSpawn = 5;//(long) Math.Exp(4.8 - _timerCounter/40000)+3;
                 
                 var mob = _spiderFactory.CreateMob();
                 /* 
@@ -221,7 +225,7 @@ namespace SkyShoot.Service.Session
 
             foreach(Mob mob in _mobs)
             {
-                mob.Think(_timerCounter, Players);
+                //mob.Think(_timerCounter, Players);
                 mob.Coordinates = ComputeMovement(mob);
             }
 
@@ -334,7 +338,8 @@ namespace SkyShoot.Service.Session
 		{
 			var realHeight=_gameLevel.levelHeight-mob.Radius;
 			var realWidth=_gameLevel.levelWidth-mob.Radius;
-			var newCoord = new Vector2(mob.Coordinates.X + mob.Speed * FPS * mob.RunVector.X, mob.Coordinates.Y + mob.Speed * FPS * mob.RunVector.Y);
+			var newCoord = new Vector2(mob.Coordinates.X + mob.Speed * Constants.FPS * mob.RunVector.X,
+				mob.Coordinates.Y + mob.Speed * Constants.FPS * mob.RunVector.Y);
 			if(Math.Abs(mob.Coordinates.X) <= realWidth)
 				newCoord.X=Math.Min(Math.Abs(newCoord.X), realWidth) * Math.Sign(newCoord.X);
 			else
