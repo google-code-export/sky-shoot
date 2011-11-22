@@ -106,6 +106,7 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml">
       <Private>False</Private>
     </Reference>
@@ -134,6 +135,7 @@
     <Compile Include="Client\Weapon\Projectile.cs" />
     <Compile Include="Screens\CreateGameScreen.cs" />
     <Compile Include="Screens\NewAccountScreen.cs" />
+    <Compile Include="Screens\OptionsMenuScreen.cs" />
     <Compile Include="Screens\WaitScreen.cs" />
     <Compile Include="Settings.Designer.cs">
       <AutoGen>True</AutoGen>
