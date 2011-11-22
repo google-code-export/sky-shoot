@@ -199,12 +199,8 @@ namespace SkyShoot.Service.Session
         {
             if (_intervalToSpawn == 0)
             {
-<<<<<<< .mine
               //  _intervalToSpawn = (long) Math.Exp(4.8 - _timerCounter/40000)+3;
-                _intervalToSpawn = (long) (FPS * 10);
-=======
-				_intervalToSpawn = (long) Math.Exp(4.8 - _timerCounter/40000)+3;
->>>>>>> .r211
+                _intervalToSpawn = (long) (Constants.FPS * 10);
                 
                 var mob = _spiderFactory.CreateMob();
                 /* 
