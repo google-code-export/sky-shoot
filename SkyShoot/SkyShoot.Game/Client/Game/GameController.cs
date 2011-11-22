@@ -180,9 +180,9 @@ namespace SkyShoot.Game.Client.Game
             return _service.GetGameList();
         }
 
-        public GameDescription CreateGame(GameMode mode, int maxPlayers)
+        public GameDescription CreateGame(GameMode mode, int maxPlayers, TileSet tileSet = TileSet.Grass)
         {
-            return _service.CreateGame(mode, maxPlayers);
+            return _service.CreateGame(mode, maxPlayers, tileSet);
         }
 
         public bool JoinGame(GameDescription game)
@@ -216,5 +216,11 @@ namespace SkyShoot.Game.Client.Game
         }
 
 #endregion
+
+
+        public void NewPlayerConnected(AMob player)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -15,6 +15,7 @@ namespace SkyShoot.Service.Session
     public class GameSession
     {
         const float PLAYER_SPEED = 0.5f;
+        const float PLAYER_RADIUS = 15f;
         const int FPS = 1000/60;
 
 		public List<MainSkyShootService> Players{get; set;}
@@ -147,6 +148,7 @@ namespace SkyShoot.Service.Session
 
 				player.Coordinates = new Vector2(50,50);
                 player.Speed = PLAYER_SPEED;
+                player.Radius = PLAYER_RADIUS;
 				player.Weapon = new Weapon.Pistol(new Guid());
 				player.RunVector = new Vector2(0, 0);
 
@@ -201,7 +203,7 @@ namespace SkyShoot.Service.Session
                  * issue 10
                  */
                 System.Diagnostics.Trace.WriteLine("MobID: " + mob.Id);
-                
+
                 _mobs.Add(mob);
                 SomebodySpawned(mob);
                 mob.MeMoved += new SomebodyMovesHandler(SomebodyMoved);
