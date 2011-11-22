@@ -66,13 +66,18 @@ namespace SkyShoot.Game.Screens
                 Bounds = new UniRectangle(-60f, -4f, 200f, 300f)
             };
             //
-            // todo проверить, правильно ли работает список
+            // список игроков
             //
-            
-            tmpPlayersList = GameController.Instance.GetGameList()[GameId].Players;
+            for (int i = 0; i < GameController.Instance.GetGameList().Length; i++)
+            {
+                if (GameId == GameController.Instance.GetGameList()[i].GameId)
+                {
+                    tmpPlayersList = GameController.Instance.GetGameList()[i].Players;
+                }     
+            }
             for (int i = 0; i < tmpPlayersList.Count; i++)
             {
-                _playersList.Items.Add(tmpPlayersList[i] + "");    
+                _playersList.Items.Add(tmpPlayersList[i]);    
             }   
             _playersList.Slider.Bounds.Location.X.Offset -= 1.0f;
             _playersList.Slider.Bounds.Location.Y.Offset += 1.0f;
@@ -157,11 +162,17 @@ namespace SkyShoot.Game.Screens
         private void RefreshButtonPressed(object sender, EventArgs args)
         {
             _playersList.Items.Clear();
-            tmpPlayersList = GameController.Instance.GetGameList()[GameId].Players;
+            for (int i = 0; i < GameController.Instance.GetGameList().Length; i++)
+            {
+                if (this.GameId == GameController.Instance.GetGameList()[i].GameId)
+                {
+                    tmpPlayersList = GameController.Instance.GetGameList()[i].Players;
+                }
+            }
             for (int i = 0; i < tmpPlayersList.Count; i++)
             {
-                _playersList.Items.Add(tmpPlayersList[i] + "");
-            }
+                _playersList.Items.Add(tmpPlayersList[i]);
+            } 
         }
 
         public override void Draw(GameTime gameTime)

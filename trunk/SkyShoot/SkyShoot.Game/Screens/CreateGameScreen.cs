@@ -31,6 +31,7 @@ namespace SkyShoot.Game.Screens
         private LabelControl _gameMode;
         private ButtonControl _backButton;
         private ButtonControl _createButton;
+        private int gameId;
 
         public CreateGameScreen()
         {
@@ -185,11 +186,23 @@ namespace SkyShoot.Game.Screens
 
         private void CreateButtonPressed(object sender, EventArgs args)
         {
-            if (_gameMode.Text == "Coop") GameController.Instance.CreateGame(GameMode.Coop, Convert.ToInt32(_maxPlayers.Text));
-            if (_gameMode.Text == "Deathmatch") GameController.Instance.CreateGame(GameMode.Coop, Convert.ToInt32(_maxPlayers.Text));
-            if (_gameMode.Text == "Campaign") GameController.Instance.CreateGame(GameMode.Coop, Convert.ToInt32(_maxPlayers.Text));
+            if (_gameMode.Text == "Coop")
+            {
+                GameController.Instance.CreateGame(GameMode.Coop, Convert.ToInt32(_maxPlayers.Text));
+                gameId = GameController.Instance.CreateGame(GameMode.Coop, Convert.ToInt32(_maxPlayers.Text)).GameId;
+            }
+            if (_gameMode.Text == "Deathmatch")
+            {
+                GameController.Instance.CreateGame(GameMode.Coop, Convert.ToInt32(_maxPlayers.Text));
+                gameId = GameController.Instance.CreateGame(GameMode.Coop, Convert.ToInt32(_maxPlayers.Text)).GameId;
+            }
+            if (_gameMode.Text == "Campaign")
+            {
+                GameController.Instance.CreateGame(GameMode.Coop, Convert.ToInt32(_maxPlayers.Text));
+                gameId = GameController.Instance.CreateGame(GameMode.Coop, Convert.ToInt32(_maxPlayers.Text)).GameId;
+            }
             ExitScreen();
-            ScreenManager.AddScreen(new WaitScreen(_tile.Text, _gameMode.Text, _maxPlayers.Text, GameController.Instance.GetGameList().Length));
+            ScreenManager.AddScreen(new WaitScreen(_tile.Text, _gameMode.Text, _maxPlayers.Text, gameId));
         }
 
         public override void Draw(GameTime gameTime)
