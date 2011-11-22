@@ -68,7 +68,12 @@ namespace SkyShoot.Service.Session
 				{
 					player.PlayerLeft(leavingPlayer);
 				}
-                if (game.Players.Count == 0) _gameSessions.Remove(game);
+				if (game.Players.Count == 0)
+				{
+					game.Stop();
+					_gameSessions.Remove(game);
+					
+				}
                 return true;
             }
             catch (Exception)
