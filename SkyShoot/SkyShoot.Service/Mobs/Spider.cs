@@ -8,10 +8,16 @@ namespace SkyShoot.Service.Mobs
 {
     class Spider : Mob
     {
+        const float SPEED = 0.7f;
+        //Как сказали, так и сделал :)
+        const int RADIUS_MIN = 15;
+        const int RADIUS_MAX = 20;
+
         public Spider() 
         {
-            Radius = 100; // change to real value
-            Speed = 100; // change to real value
+            Random rand = new Random();
+            Radius = rand.Next(RADIUS_MIN, RADIUS_MAX);
+            Speed = SPEED; 
         }
     }
 }

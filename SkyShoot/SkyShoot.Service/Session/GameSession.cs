@@ -189,7 +189,7 @@ namespace SkyShoot.Service.Session
 			update();
 		}
 	#region local functions
-		 public void SpawnMob()
+		private void SpawnMob()
         {
             if (_intervalToSpawn == 0)
             {
