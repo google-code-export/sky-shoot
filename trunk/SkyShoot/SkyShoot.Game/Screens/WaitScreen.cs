@@ -68,8 +68,16 @@ namespace SkyShoot.Game.Screens
             //
             // todo проверить, правильно ли работает список
             //
-            
-            tmpPlayersList = GameController.Instance.GetGameList()[GameId].Players;
+
+            foreach (GameDescription gd in GameController.Instance.GetGameList())
+            {
+                if (gd.GameId == GameId)
+                {
+                    tmpPlayersList = gd.Players;
+                    break;
+                }
+            }
+
             for (int i = 0; i < tmpPlayersList.Count; i++)
             {
                 _playersList.Items.Add(tmpPlayersList[i] + "");    
