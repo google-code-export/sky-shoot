@@ -199,7 +199,7 @@ namespace SkyShoot.Service.Session
         {
             if (_intervalToSpawn == 0)
             {
-				_intervalToSpawn = 5;//(long) Math.Exp(4.8 - _timerCounter/40000)+3;
+				_intervalToSpawn = (long) Math.Exp(4.8 - _timerCounter/40000)+3;
                 
                 var mob = _spiderFactory.CreateMob();
                 /* 
@@ -225,7 +225,7 @@ namespace SkyShoot.Service.Session
 
             foreach(Mob mob in _mobs)
             {
-                //mob.Think(_timerCounter, Players);
+                mob.Think(_timerCounter, Players);
                 mob.Coordinates = ComputeMovement(mob);
             }
 
