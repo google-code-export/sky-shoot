@@ -14,5 +14,9 @@
     <Endpoints>
       <InputEndpoint name="SkyShootEndpoint" protocol="tcp" port="777" />
     </Endpoints>
+    <ConfigurationSettings>
+      <Setting name="DataConnectionString" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+    </ConfigurationSettings>
   </WorkerRole>
 </ServiceDefinition>
