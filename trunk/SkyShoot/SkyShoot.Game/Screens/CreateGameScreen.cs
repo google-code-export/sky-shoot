@@ -186,23 +186,37 @@ namespace SkyShoot.Game.Screens
 
         private void CreateButtonPressed(object sender, EventArgs args)
         {
-            if (_gameMode.Text == "Coop")
+            GameMode m;
+            TileSet ts;
+            GameDescription _gameDescription;
+            switch (_gameMode.Text)
             {
-                GameController.Instance.CreateGame(GameMode.Coop, Convert.ToInt32(_maxPlayers.Text));
-                gameId = GameController.Instance.CreateGame(GameMode.Coop, Convert.ToInt32(_maxPlayers.Text)).GameId;
+                case "Coop":
+                    m = GameMode.Coop;
+                    break;
+                case "Deathmatch":
+                    m = GameMode.Deathmatch;
+                    break;
+                case "Campaign":
+                    m = GameMode.Campaign;
+                    break;
+                default:
+                    m = GameMode.Coop;
+                    break;
             }
-            if (_gameMode.Text == "Deathmatch")
+            switch (_tile.Text)
             {
-                GameController.Instance.CreateGame(GameMode.Coop, Convert.ToInt32(_maxPlayers.Text));
-                gameId = GameController.Instance.CreateGame(GameMode.Coop, Convert.ToInt32(_maxPlayers.Text)).GameId;
+                case "Grass":
+                    ts = TileSet.Grass;
+                    break;
+                default:
+                    ts = TileSet.Grass;
+                    break;
             }
-            if (_gameMode.Text == "Campaign")
-            {
-                GameController.Instance.CreateGame(GameMode.Coop, Convert.ToInt32(_maxPlayers.Text));
-                gameId = GameController.Instance.CreateGame(GameMode.Coop, Convert.ToInt32(_maxPlayers.Text)).GameId;
-            }
+            _gameDescription = GameController.Instance.CreateGame(m, Convert.ToInt32(_maxPlayers.Text));
+
             ExitScreen();
-            ScreenManager.AddScreen(new WaitScreen(_tile.Text, _gameMode.Text, _maxPlayers.Text, gameId));
+            ScreenManager.AddScreen(new WaitScreen(_tile.Text, _gameMode.Text, _maxPlayers.Text, _gameDescription.GameId));
         }
 
         public override void Draw(GameTime gameTime)
