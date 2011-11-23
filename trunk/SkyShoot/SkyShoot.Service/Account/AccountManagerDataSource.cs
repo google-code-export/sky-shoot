@@ -64,7 +64,7 @@ namespace SkyShoot.Service.Account
             var entry = results.FirstOrDefault<AccountManagerEntry>();
             if (entry != null)
             {
-                if (HashHelper.verifyMd5Hash((password + entry.Salt), entry.HashPassword ))
+                if (HashHelper.verifyMd5Hash((password + entry.Salt), entry.HashPassword))
                 {
                     return true; // Пароль верный
                 }
@@ -91,7 +91,9 @@ namespace SkyShoot.Service.Account
             {
                 if (HashHelper.verifyMd5Hash((old_password + entry.Salt), entry.HashPassword))
                 {
-                    entry.HashPassword = HashHelper.GetMd5Hash( new_password + entry.Salt );
+                    string salt = HashHelper.GetRandomString();
+                    entry.Salt = salt;
+                    entry.HashPassword = HashHelper.GetMd5Hash(new_password + salt);
                     this.context.UpdateObject(entry);
                     this.context.SaveChanges();
                     return true; // Замена пароля прошла успешно
@@ -121,7 +123,7 @@ namespace SkyShoot.Service.Account
                 this.context.DeleteObject(entry);
                 this.context.SaveChanges();
                 return true; // Удалили аккаунт!
-                
+
             }
             else
             {
