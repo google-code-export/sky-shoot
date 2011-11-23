@@ -209,11 +209,23 @@ namespace SkyShoot.Game.Screens
                 case "Grass":
                     ts = TileSet.Grass;
                     break;
+                case "Snow":
+                    ts = TileSet.Snow;
+                    break;
+                case "Desert":
+                    ts = TileSet.Desert;
+                    break;
+                case "Sand":
+                    ts = TileSet.Sand;
+                    break;
+                case "Volcanic":
+                    ts = TileSet.Volcanic;
+                    break;
                 default:
                     ts = TileSet.Grass;
                     break;
             }
-            _gameDescription = GameController.Instance.CreateGame(m, Convert.ToInt32(_maxPlayers.Text));
+            _gameDescription = GameController.Instance.CreateGame(m, Convert.ToInt32(_maxPlayers.Text), ts);
 
             ExitScreen();
             ScreenManager.AddScreen(new WaitScreen(_tile.Text, _gameMode.Text, _maxPlayers.Text, _gameDescription.GameId));
