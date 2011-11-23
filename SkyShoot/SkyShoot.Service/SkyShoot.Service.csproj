@@ -65,10 +65,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Account\AccountInfo.cs" />
     <Compile Include="Account\AccountManager.cs" />
+    <Compile Include="Account\AccountManagerDataContext.cs" />
+    <Compile Include="Account\AccountManagerDataSource.cs" />
+    <Compile Include="Account\AccountManagerEntry.cs" />
     <Compile Include="Account\HashHelper.cs" />
-    <Compile Include="Account\TableHelper.cs" />
     <Compile Include="Bonus\ABonus.cs" />
     <Compile Include="Bonus\DoubleDamage.cs" />
     <Compile Include="Bonus\Shield.cs" />
