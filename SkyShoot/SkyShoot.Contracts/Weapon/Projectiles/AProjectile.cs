@@ -18,7 +18,7 @@ namespace SkyShoot.Contracts.Weapon.Projectiles
             Direction = direction;
         }
 
-        public AProjectile()
+        protected AProjectile()
         {
             Owner = null;
         }

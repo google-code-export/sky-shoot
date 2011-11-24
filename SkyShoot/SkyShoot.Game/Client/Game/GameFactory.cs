@@ -12,12 +12,10 @@ namespace SkyShoot.Game.Client.Game
     class GameFactory
     {
 
-        public static AMob CreateClientMob(Contracts.Mobs.AMob mob)
+        public static Mob CreateClientMob(Contracts.Mobs.AMob mob)
         {
-            if (mob.IsPlayer)
-                return new Player(mob.Coordinates, mob.Id, Textures.PlayerTexture);
             //todo mob type
-            return new Mob(mob.Coordinates, mob.Id, Textures.MobTextures[0]);
+            return new Mob(mob, mob.IsPlayer ? Textures.PlayerTexture : Textures.MobTextures[0]);
         }
 
         public static GameLevel CreateClientGameLevel(Contracts.Session.GameLevel gameLevel)

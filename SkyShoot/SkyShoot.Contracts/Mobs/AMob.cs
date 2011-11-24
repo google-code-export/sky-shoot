@@ -1,7 +1,9 @@
 ﻿using System;
+
 using System.Runtime.Serialization;
 
 using Microsoft.Xna.Framework;
+
 using SkyShoot.Contracts.Bonuses;
 
 namespace SkyShoot.Contracts.Mobs
@@ -45,15 +47,15 @@ namespace SkyShoot.Contracts.Mobs
 
         public AMob(AMob other)
         {
-            this.Coordinates = other.Coordinates;
-            this.Id = other.Id;
-            this.HealthAmount = other.HealthAmount;
-            this.IsPlayer = other.IsPlayer;
-            this.Radius = other.Radius;
-            this.RunVector = other.RunVector;
-            this.ShootVector = other.ShootVector;
-            this.Speed = other.Speed;
-            this.State = other.State;
+            Coordinates = other.Coordinates;
+            Id = other.Id;
+            HealthAmount = other.HealthAmount;
+            IsPlayer = other.IsPlayer;
+            Radius = other.Radius;
+            RunVector = other.RunVector;
+            ShootVector = other.ShootVector;
+            Speed = other.Speed;
+            State = other.State;
         }
 
         public AMob()

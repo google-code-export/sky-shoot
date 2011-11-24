@@ -126,9 +126,7 @@
     <Compile Include="Client\Game\GameFactory.cs" />
     <Compile Include="Client\Game\GameLevel.cs" />
     <Compile Include="Client\Game\GameModel.cs" />
-    <Compile Include="Client\Players\AMob.cs" />
     <Compile Include="Client\Players\Mob.cs" />
-    <Compile Include="Client\Players\Player.cs" />
     <Compile Include="Client\View\Camera2D.cs" />
     <Compile Include="Client\View\IDrawable.cs" />
     <Compile Include="Client\View\Textures.cs" />
