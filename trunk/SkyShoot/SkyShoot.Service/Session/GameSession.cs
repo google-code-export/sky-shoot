@@ -28,6 +28,9 @@ namespace SkyShoot.Service.Session
         private long _timerCounter;
         private long _intervalToSpawn = 0;
 
+        private float _lastUpdate;
+        private float _updateTime;
+
 		private Timer _gameTimer;
 
         public GameSession(TileSet tileSet, int maxPlayersAllowed, GameMode gameType, int gameID)
@@ -135,8 +138,6 @@ namespace SkyShoot.Service.Session
 
         public void Start()
         {
-            
-
 			foreach (MainSkyShootService player in Players)
 			{
 				this.SomebodyMoves += player.MobMoved;
@@ -163,7 +164,9 @@ namespace SkyShoot.Service.Session
 			_gameTimer.AutoReset = true;
 			_gameTimer.Elapsed += TimerElapsedListener;
 			_gameTimer.Start();
-			
+
+            _lastUpdate = DateTime.Now.Millisecond;
+            _updateTime = 0;
         }
 
 		public bool AddPlayer(MainSkyShootService player)
@@ -207,7 +210,7 @@ namespace SkyShoot.Service.Session
                  * Все желающие могут убедиться, что сервер посылает разные ID мобов.
                  * issue 10
                  */
-                System.Diagnostics.Trace.WriteLine("MobID: " + mob.Id);
+             //   System.Diagnostics.Trace.WriteLine("MobID: " + mob.Id);
 
                 _mobs.Add(mob);
                 SomebodySpawned(mob);
@@ -223,6 +226,11 @@ namespace SkyShoot.Service.Session
         private void update() 
         {
             SpawnMob();
+
+            var now = DateTime.Now.Millisecond;
+            _updateTime = (_lastUpdate <= now)?now - _lastUpdate:1000 - _lastUpdate + now;
+
+            System.Diagnostics.Trace.WriteLine("updateTime: " + _updateTime);
 
             foreach(Mob mob in _mobs)
             {
@@ -240,7 +248,7 @@ namespace SkyShoot.Service.Session
 
             foreach (AProjectile projectile in _projectiles)
             {
-                var newCord = projectile.Coordinates + projectile.Direction * projectile.Speed;
+                var newCord = projectile.Coordinates + projectile.Direction * projectile.Speed*_updateTime;
                 
                 //Проверка на касание пули и моба
                 var hitedMob = hitTestProjectile(projectile, newCord);
@@ -274,6 +282,7 @@ namespace SkyShoot.Service.Session
 			}
 			_timerCounter++;
 
+            _lastUpdate = DateTime.Now.Millisecond;
         }
 
         private Mob hitTestProjectile(AProjectile projectile, Vector2 newCord)
@@ -339,8 +348,8 @@ namespace SkyShoot.Service.Session
 		{
 			var realHeight=_gameLevel.levelHeight-mob.Radius;
 			var realWidth=_gameLevel.levelWidth-mob.Radius;
-			var newCoord = new Vector2(mob.Coordinates.X + mob.Speed * Constants.FPS * mob.RunVector.X,
-				mob.Coordinates.Y + mob.Speed * Constants.FPS * mob.RunVector.Y);
+			var newCoord = new Vector2(mob.Coordinates.X + mob.Speed * _updateTime * Constants.FPS * mob.RunVector.X,
+				mob.Coordinates.Y + mob.Speed * _updateTime * Constants.FPS * mob.RunVector.Y);
 			if(Math.Abs(mob.Coordinates.X) <= realWidth)
 				newCoord.X=Math.Min(Math.Abs(newCoord.X), realWidth) * Math.Sign(newCoord.X);
 			else
