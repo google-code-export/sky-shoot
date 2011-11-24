@@ -1,5 +1,3 @@
-using System;
-
 namespace SkyShoot.Game
 {
 #if WINDOWS || XBOX
@@ -7,7 +5,7 @@ namespace SkyShoot.Game
     {
         static void Main(string[] args)
         {
-            using (SkyShootGame game = new SkyShootGame())
+            using (var game = new SkyShootGame())
             {
                 game.Run();
             }
