@@ -348,8 +348,8 @@ namespace SkyShoot.Service.Session
 		{
 			var realHeight=_gameLevel.levelHeight-mob.Radius;
 			var realWidth=_gameLevel.levelWidth-mob.Radius;
-			var newCoord = new Vector2(mob.Coordinates.X + mob.Speed * _updateTime * Constants.FPS * mob.RunVector.X,
-				mob.Coordinates.Y + mob.Speed * _updateTime * Constants.FPS * mob.RunVector.Y);
+			var newCoord = new Vector2(mob.Coordinates.X + mob.Speed * _updateTime * mob.RunVector.X,
+				mob.Coordinates.Y + mob.Speed * _updateTime * mob.RunVector.Y);
 			if(Math.Abs(mob.Coordinates.X) <= realWidth)
 				newCoord.X=Math.Min(Math.Abs(newCoord.X), realWidth) * Math.Sign(newCoord.X);
 			else
