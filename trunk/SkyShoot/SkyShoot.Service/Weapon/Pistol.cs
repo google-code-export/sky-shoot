@@ -13,7 +13,7 @@ namespace SkyShoot.Service.Weapon
 
         public override AProjectile[] CreateBullets(AMob owner, Vector2 direction)
         {
-            PistolBullet[] bullets = new PistolBullet[] { new PistolBullet(owner, new Guid(), direction) };
+            PistolBullet[] bullets = new PistolBullet[] { new PistolBullet(owner, Guid.NewGuid(), direction) };
             return bullets;
         }
     }
