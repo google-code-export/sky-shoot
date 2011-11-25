@@ -47,18 +47,18 @@ namespace SkyShoot.Contracts.Mobs
 
         public event SomebodyMovesHandler MeMoved;
 
-        public virtual void Move() 
-        {
-            RunVector =new Vector2(targetPlayer.Coordinates.X - Coordinates.X, targetPlayer.Coordinates.Y - Coordinates.Y);
-            RunVector /= RunVector.Length();
-            ShootVector = RunVector;
+				public virtual void Move()
+				{
+					RunVector = new Vector2(targetPlayer.Coordinates.X - Coordinates.X, targetPlayer.Coordinates.Y - Coordinates.Y);
+					RunVector.Normalize();
+					ShootVector = RunVector;
 
-            if (MeMoved != null)
-            {
-                System.Diagnostics.Trace.WriteLine("Mob run vector" + RunVector);
-                MeMoved(this, RunVector);
-            }
-        }
+					if (MeMoved != null)
+					{
+						System.Diagnostics.Trace.WriteLine("Mob run vector" + RunVector);
+						MeMoved(this, RunVector);
+					}
+				}
 
         public virtual void Think(long counter, List<MainSkyShootService> players)
         {
