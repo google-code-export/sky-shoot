@@ -48,6 +48,11 @@ namespace SkyShoot.Contracts.Mobs
 
 		public AMob(AMob other)
 		{
+			Copy(other);
+		}
+
+		public void Copy(AMob other)
+		{
 			Coordinates = other.Coordinates;
 			Id = other.Id;
 			HealthAmount = other.HealthAmount;
