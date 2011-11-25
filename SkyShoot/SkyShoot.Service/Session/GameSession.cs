@@ -207,8 +207,7 @@ namespace SkyShoot.Service.Session
         {
             if (_intervalToSpawn == 0)
             {
-              //  _intervalToSpawn = (long) Math.Exp(4.8 - _timerCounter/40000)+3;
-                _intervalToSpawn = 10;
+                _intervalToSpawn = (long) Math.Exp(4.8 - _timerCounter/40000)+3;
                 
                 var mob = _spiderFactory.CreateMob();
                 /* 
@@ -237,13 +236,19 @@ namespace SkyShoot.Service.Session
             var now = DateTime.Now.Millisecond;
             _updateDelay = (_lastUpdate <= now)?now - _lastUpdate:1000 - _lastUpdate + now;
 
+            
+
             System.Diagnostics.Trace.WriteLine("updateTime: " + _updateDelay);
 
             foreach(Mob mob in _mobs)
             {
-                mob.Think(_timerCounter, Players);
+                mob.Think(Players);
                 mob.Coordinates = ComputeMovement(mob);
+                System.Diagnostics.Trace.WriteLine("Mob cord: " + mob.Coordinates); 
+
             }
+
+            _lastUpdate = DateTime.Now.Millisecond;
 
             foreach (MainSkyShootService player in Players)
             {
@@ -289,7 +294,6 @@ namespace SkyShoot.Service.Session
 			}
 			_timerCounter++;
 
-            _lastUpdate = DateTime.Now.Millisecond;
             _updated = false;
         }
 
@@ -367,7 +371,7 @@ namespace SkyShoot.Service.Session
 				newCoord.Y = Math.Min(Math.Abs(newCoord.Y), realHeight) * Math.Sign(newCoord.Y);
 			else
 				newCoord.Y = Math.Min(Math.Abs(newCoord.Y), realHeight + _gameLevel.LEVELBORDER) * Math.Sign(newCoord.Y);
-
+            
 			return newCoord;
 		}
 	#endregion
