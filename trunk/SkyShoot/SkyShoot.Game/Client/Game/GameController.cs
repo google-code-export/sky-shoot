@@ -4,6 +4,8 @@ using System.ServiceModel;
 
 using Microsoft.Xna.Framework;
 
+using Microsoft.Xna.Framework.Input;
+
 using SkyShoot.Contracts.Perks;
 using SkyShoot.Contracts.Bonuses;
 using SkyShoot.Contracts.Service;
@@ -47,11 +49,6 @@ namespace SkyShoot.Game.Client.Game
                 var clientMob = GameFactory.CreateClientMob(mob);
                 GameModel.AddMob(clientMob);
             }
-        }
-
-        public void Shoot(AProjectile projectile)
-        {
-            GameModel.AddProjectile(GameFactory.CreateClientProjectile(projectile));
         }
 
         public void SpawnMob(AMob mob)
@@ -149,6 +146,9 @@ namespace SkyShoot.Game.Client.Game
                 Move(currentRunVector);
                 GameModel.GetMob(MyId).RunVector = currentRunVector;
             }
+
+            if (inputState.KeyPressed(Keys.Space))
+                Shoot(currentRunVector);
 
             var mouseState = inputState.CurrentMouseState;
             var mouseCoordinates = new Vector2(mouseState.X, mouseState.Y);
