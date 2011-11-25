@@ -19,9 +19,12 @@ namespace SkyShoot.Contracts.Mobs
 
         public float Damage { get; set; }
 
+        private int _counter;
+
         public Mob()
         {
             IsPlayer = false;
+            _counter = 0;
             Id = Guid.NewGuid();
             HealthAmount = (float)_health;
             Damage = 10;
@@ -60,9 +63,9 @@ namespace SkyShoot.Contracts.Mobs
 					}
 				}
 
-        public virtual void Think(long counter, List<MainSkyShootService> players)
+        public virtual void Think(List<MainSkyShootService> players)
         {
-            if (counter % 20 == 0)
+            if (_counter % 20 == 0)
             {
                 if (!players.Contains(targetPlayer) || targetPlayer == null)
                 {
@@ -70,6 +73,7 @@ namespace SkyShoot.Contracts.Mobs
                 }
                 Move();
             }
+            _counter++;
         }
 
         public void DemageTaken(AProjectile bullet)
