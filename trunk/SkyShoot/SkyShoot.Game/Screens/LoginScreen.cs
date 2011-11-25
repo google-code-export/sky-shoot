@@ -114,9 +114,11 @@ namespace SkyShoot.Game.Screens
                 Settings.Default.password = _passwordBox.Text;
                 Settings.Default.Save();
 
-                GameController.Instance.Login(_loginBox.Text, _passwordBox.Text);
 
-                ScreenManager.AddScreen(new MultiplayerScreen());
+                if (GameController.Instance.Login(_loginBox.Text, _passwordBox.Text).HasValue)
+                {
+                    ScreenManager.AddScreen(new MultiplayerScreen());
+                }
             }
         }
 
