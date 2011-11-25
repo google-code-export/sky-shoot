@@ -23,29 +23,33 @@ namespace SkyShoot.Contracts.Weapon.Projectiles
             Owner = null;
         }
 
-        public AProjectile(AProjectile other)
-        {
-            this.Coordinates = other.Coordinates;
-            this.Damage = other.Damage;
-            this.Direction = other.Direction;
-            this.Id = other.Id;
-            this.LifeTime = other.LifeTime;
-            this.Owner = other.Owner;
-            this.Speed = other.Speed;
-            this.Type = other.Type;
-        }
+				public void Copy(AProjectile other)
+				{
+					this.Coordinates = other.Coordinates;
+					this.Damage = other.Damage;
+					this.Direction = other.Direction;
+					this.Id = other.Id;
+					this.LifeTime = other.LifeTime;
+					this.Owner = other.Owner;
+					this.Speed = other.Speed;
+					this.Type = other.Type;
+				}
+
+				public AProjectile(AProjectile other)
+				{
+					Copy(other);
+				}
 
         [DataMember]
         public Guid Id { get; set; }
 
-        [DataMember]
         public AMob Owner { get; set; }
 
         [DataMember]
-        public Vector2 Coordinates { get; set; } // вероятно, set должен быть public-методом
+        public Vector2 Coordinates;// { get; set; } // вероятно, set должен быть public-методом
 
         [DataMember]
-        public Vector2 Direction { get; set; }
+        public Vector2 Direction;// { get; set; }
 
         [DataMember]
         public float Speed { get; set; }
@@ -64,17 +68,6 @@ namespace SkyShoot.Contracts.Weapon.Projectiles
         }
 
         [DataMember]
-        public EnumBulletType Type { get; protected set; }
-
-        //protected AProjectile(AProjectile projectile)
-        //{
-        //    Owner = projectile.Owner;
-        //    Id = projectile.Id;
-        //    Direction = projectile.Direction;
-        //    Speed = projectile.Speed;
-        //    Damage = projectile.Damage;
-        //    LifeTime = projectile.LifeTime;
-        //    Type = projectile.Type;
-        //}
+        public EnumBulletType Type { get; set; }
     }
 }
