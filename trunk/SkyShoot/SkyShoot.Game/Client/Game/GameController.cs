@@ -41,6 +41,7 @@ namespace SkyShoot.Game.Client.Game
 
         public void GameStart(AMob[] mobs, Contracts.Session.GameLevel arena)
         {
+            foreach (GameScreen screen in ScreenManager.ScreenManager.Instance.GetScreens()) screen.ExitScreen();
             ScreenManager.ScreenManager.Instance.AddScreen(new GameplayScreen());
 
             GameModel = new GameModel(GameFactory.CreateClientGameLevel(arena));
@@ -96,6 +97,7 @@ namespace SkyShoot.Game.Client.Game
 
         public void PlayerLeft(AMob mob)
         {
+            ScreenManager.ScreenManager.Instance.ChangePlayerList = true;
             //todo popup window
             var clientMob = GameFactory.CreateClientMob(mob);
             GameModel.RemoveMob(clientMob.Id);
