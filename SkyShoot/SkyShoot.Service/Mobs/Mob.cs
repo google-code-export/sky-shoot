@@ -50,18 +50,19 @@ namespace SkyShoot.Contracts.Mobs
         public virtual void Move() 
         {
             RunVector =new Vector2(targetPlayer.Coordinates.X - Coordinates.X, targetPlayer.Coordinates.Y - Coordinates.Y);
-            RunVector.Normalize();
+            RunVector /= RunVector.Length();
             ShootVector = RunVector;
 
             if (MeMoved != null)
             {
+                System.Diagnostics.Trace.WriteLine("Mob run vector" + RunVector);
                 MeMoved(this, RunVector);
             }
         }
 
         public virtual void Think(long counter, List<MainSkyShootService> players)
         {
-            if (counter % 6 == 0)
+            if (counter % 20 == 0)
             {
                 if (!players.Contains(targetPlayer) || targetPlayer == null)
                 {

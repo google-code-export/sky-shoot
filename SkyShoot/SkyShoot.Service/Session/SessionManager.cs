@@ -40,7 +40,6 @@ namespace SkyShoot.Service.Session
         //Создаем новую игру
         public GameDescription CreateGame(GameMode mode, int maxPlayers, MainSkyShootService client, TileSet tileSet)
         {
-
             var gameSession = new GameSession(tileSet, maxPlayers, mode, _gameId);
             _gameSessions.Add(gameSession);
 			gameSession.AddPlayer(client);
@@ -53,7 +52,7 @@ namespace SkyShoot.Service.Session
         {
             var gameSessions = _gameSessions.ToArray();
 
-            return (from t in gameSessions where !t.IsStarted select t.LocalGameDescription).ToArray();
+            return (from t in gameSessions /* where !t.IsStarted*/ select t.LocalGameDescription).ToArray();
         }
 
         //Ищем игру, в которой находится игрок и удаляем его оттуда.

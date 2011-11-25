@@ -29,9 +29,10 @@ namespace SkyShoot.Service.Session
         private long _intervalToSpawn = 0;
 
         private float _lastUpdate;
-        private float _updateTime;
+        private float _updateDelay;
 
 		private Timer _gameTimer;
+        private bool _updated;
 
         public GameSession(TileSet tileSet, int maxPlayersAllowed, GameMode gameType, int gameID)
         {
@@ -166,7 +167,7 @@ namespace SkyShoot.Service.Session
 			_gameTimer.Start();
 
             _lastUpdate = DateTime.Now.Millisecond;
-            _updateTime = 0;
+            _updateDelay = 0;
         }
 
 		public bool AddPlayer(MainSkyShootService player)
@@ -176,11 +177,13 @@ namespace SkyShoot.Service.Session
 
 			Players.Add(player);
 			LocalGameDescription.Players.Add(player.Name);
+
 			if( NewPlayerConnected != null)	NewPlayerConnected(player);
+
 			StartGame += player.GameStart;
 			NewPlayerConnected += player.NewPlayerConnected;
 
-			if (Players.Count >= LocalGameDescription.MaximumPlayersAllowed)
+			if (Players.Count == LocalGameDescription.MaximumPlayersAllowed)
 			{
                 Start();
 			}
@@ -190,9 +193,11 @@ namespace SkyShoot.Service.Session
 		private void TimerElapsedListener(object sender, EventArgs e)
 		{
 			if (!IsStarted && StartGame != null)
-			{
+            {
+                IsStarted = true;
+                _updated = false;
+                System.Diagnostics.Trace.WriteLine("Players: " + Players[0]);
 				StartGame(Players.ToArray(), _gameLevel);
-				IsStarted = true;
 			}
 			update();
 			
@@ -203,14 +208,14 @@ namespace SkyShoot.Service.Session
             if (_intervalToSpawn == 0)
             {
               //  _intervalToSpawn = (long) Math.Exp(4.8 - _timerCounter/40000)+3;
-                _intervalToSpawn = (long) (Constants.FPS * 10);
+                _intervalToSpawn = 10;
                 
                 var mob = _spiderFactory.CreateMob();
                 /* 
                  * Все желающие могут убедиться, что сервер посылает разные ID мобов.
                  * issue 10
                  */
-             //   System.Diagnostics.Trace.WriteLine("MobID: " + mob.Id);
+                System.Diagnostics.Trace.WriteLine("MobID: " + mob.Id);
 
                 _mobs.Add(mob);
                 SomebodySpawned(mob);
@@ -225,12 +230,14 @@ namespace SkyShoot.Service.Session
         // здесь будут производится обработка всех действий
         private void update() 
         {
+            if (_updated) return;
+            _updated = true;
             SpawnMob();
 
             var now = DateTime.Now.Millisecond;
-            _updateTime = (_lastUpdate <= now)?now - _lastUpdate:1000 - _lastUpdate + now;
+            _updateDelay = (_lastUpdate <= now)?now - _lastUpdate:1000 - _lastUpdate + now;
 
-            System.Diagnostics.Trace.WriteLine("updateTime: " + _updateTime);
+            System.Diagnostics.Trace.WriteLine("updateTime: " + _updateDelay);
 
             foreach(Mob mob in _mobs)
             {
@@ -248,7 +255,7 @@ namespace SkyShoot.Service.Session
 
             foreach (AProjectile projectile in _projectiles)
             {
-                var newCord = projectile.Coordinates + projectile.Direction * projectile.Speed*_updateTime;
+                var newCord = projectile.Coordinates + projectile.Direction * projectile.Speed*_updateDelay;
                 
                 //Проверка на касание пули и моба
                 var hitedMob = hitTestProjectile(projectile, newCord);
@@ -283,6 +290,7 @@ namespace SkyShoot.Service.Session
 			_timerCounter++;
 
             _lastUpdate = DateTime.Now.Millisecond;
+            _updated = false;
         }
 
         private Mob hitTestProjectile(AProjectile projectile, Vector2 newCord)
@@ -348,8 +356,8 @@ namespace SkyShoot.Service.Session
 		{
 			var realHeight=_gameLevel.levelHeight-mob.Radius;
 			var realWidth=_gameLevel.levelWidth-mob.Radius;
-			var newCoord = new Vector2(mob.Coordinates.X + mob.Speed * _updateTime * mob.RunVector.X,
-				mob.Coordinates.Y + mob.Speed * _updateTime * mob.RunVector.Y);
+			var newCoord = new Vector2(mob.Coordinates.X + mob.Speed * _updateDelay * mob.RunVector.X,
+				mob.Coordinates.Y + mob.Speed * _updateDelay * mob.RunVector.Y);
 			if(Math.Abs(mob.Coordinates.X) <= realWidth)
 				newCoord.X=Math.Min(Math.Abs(newCoord.X), realWidth) * Math.Sign(newCoord.X);
 			else
