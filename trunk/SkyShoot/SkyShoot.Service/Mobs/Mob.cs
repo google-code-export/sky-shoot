@@ -53,7 +53,7 @@ namespace SkyShoot.Contracts.Mobs
 				public virtual void Move()
 				{
 					RunVector = new Vector2(targetPlayer.Coordinates.X - Coordinates.X, targetPlayer.Coordinates.Y - Coordinates.Y);
-					RunVector.Normalize();
+                    RunVector = Vector2.Normalize(RunVector);
 					ShootVector = RunVector;
 
 					if (MeMoved != null)
