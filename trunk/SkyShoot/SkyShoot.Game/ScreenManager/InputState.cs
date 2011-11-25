@@ -16,7 +16,7 @@ namespace SkyShoot.Game.ScreenManager
         private GamePadState _currentGamePadState;
 
 
-        public KeyboardState LastKeyState { get { return _lastKeyState; } }
+        public KeyboardState LastKeyboardState { get { return _lastKeyState; } }
         private KeyboardState _lastKeyState;
 
         public MouseState LastMouseState { get { return _lastMouseState; } }
@@ -49,44 +49,38 @@ namespace SkyShoot.Game.ScreenManager
             _currentMouseState = Mouse.GetState();
         }
 
-        public Vector2 RunVectorA
+        public Vector2 RunVectorA(KeyboardState keyboardState)
         {
-            get
+            Vector2 runVector = Vector2.Zero;
+            if (_currentGamePadState.IsConnected)
+                runVector = _currentGamePadState.ThumbSticks.Left;
+            else
             {
-                Vector2 runVector = Vector2.Zero;
-                if (_currentGamePadState.IsConnected)
-                    runVector = _currentGamePadState.ThumbSticks.Left;
-                else
-                {
-                    if (_currentKeyboardState.IsKeyDown(Keys.Up)) runVector -= Vector2.UnitY;
-                    if (_currentKeyboardState.IsKeyDown(Keys.Down)) runVector += Vector2.UnitY;
-                    if (_currentKeyboardState.IsKeyDown(Keys.Left)) runVector -= Vector2.UnitX;
-                    if (_currentKeyboardState.IsKeyDown(Keys.Right)) runVector += Vector2.UnitX;
-                }
-                if (runVector.Length() > 0)
-                    runVector.Normalize();
-                return runVector;
+                if (keyboardState.IsKeyDown(Keys.Up)) runVector -= Vector2.UnitY;
+                if (keyboardState.IsKeyDown(Keys.Down)) runVector += Vector2.UnitY;
+                if (keyboardState.IsKeyDown(Keys.Left)) runVector -= Vector2.UnitX;
+                if (keyboardState.IsKeyDown(Keys.Right)) runVector += Vector2.UnitX;
             }
+            if (runVector.Length() > 0)
+                runVector.Normalize();
+            return runVector;
         }
 
-        public Vector2 RunVectorK
+        public Vector2 RunVector(KeyboardState keyboardState)
         {
-            get
+            Vector2 runVector = Vector2.Zero;
+            if (_currentGamePadState.IsConnected)
+                runVector = _currentGamePadState.ThumbSticks.Left;
+            else
             {
-                Vector2 runVector = Vector2.Zero;
-                if (_currentGamePadState.IsConnected)
-                    runVector = _currentGamePadState.ThumbSticks.Left;
-                else
-                {
-                    if (_currentKeyboardState.IsKeyDown(Keys.W)) runVector -= Vector2.UnitY;
-                    if (_currentKeyboardState.IsKeyDown(Keys.S)) runVector += Vector2.UnitY;
-                    if (_currentKeyboardState.IsKeyDown(Keys.A)) runVector -= Vector2.UnitX;
-                    if (_currentKeyboardState.IsKeyDown(Keys.D)) runVector += Vector2.UnitX;
-                }
-                if (runVector.Length() > 0)
-                    runVector.Normalize();
-                return runVector;
+                if (keyboardState.IsKeyDown(Keys.W)) runVector -= Vector2.UnitY;
+                if (keyboardState.IsKeyDown(Keys.S)) runVector += Vector2.UnitY;
+                if (keyboardState.IsKeyDown(Keys.A)) runVector -= Vector2.UnitX;
+                if (keyboardState.IsKeyDown(Keys.D)) runVector += Vector2.UnitX;
             }
+            if (runVector.Length() > 0)
+                runVector.Normalize();
+            return runVector;
         }
 
         public bool KeyPressed(Keys key)
