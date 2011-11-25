@@ -161,8 +161,18 @@ namespace SkyShoot.Game.Client.Game
 
         public bool Register(string username, string password)
         {
-            //todo
-            return _service.Register(username, password);
+            var channelFactory = new DuplexChannelFactory<ISkyShootService>(this, "SkyShootEndpoint");
+
+            _service = channelFactory.CreateChannel();
+
+            try
+            {
+                return _service.Register(username, password);
+            }
+            catch (EndpointNotFoundException)
+            {
+                return false;
+            }
         }
 
         public Guid? Login(string username, string password)
@@ -171,7 +181,15 @@ namespace SkyShoot.Game.Client.Game
 
             _service = channelFactory.CreateChannel();
 
-            Guid? login = _service.Login(username, password);
+            Guid? login = null;
+            try
+            {
+                login = _service.Login(username, password);
+            }
+            catch (EndpointNotFoundException)
+            {
+                
+            }
             if (login.HasValue)
             {
                 MyId = login.Value;
