@@ -83,13 +83,13 @@ namespace SkyShoot.Game.ScreenManager
             return runVector;
         }
 
-        public bool KeyPressed(Keys key)
+        public bool IsNewKeyPressed(Keys key)
         {
             return (_currentKeyboardState.IsKeyDown(key) &&
                     _lastKeyState.IsKeyUp(key));
         }
 
-        public bool ButtonPressed(Buttons button)
+        public bool IsNewButtonPressed(Buttons button)
         {
             return (_currentGamePadState.IsButtonDown(button) &&
                     _lastGamePadState.IsButtonDown(button));
@@ -97,31 +97,31 @@ namespace SkyShoot.Game.ScreenManager
 
         public bool IsMenuSelect()
         {
-            return KeyPressed(Keys.Space) ||
-                   KeyPressed(Keys.Enter) ||
-                   ButtonPressed(Buttons.A) ||
-                   ButtonPressed(Buttons.Start);
+            return IsNewKeyPressed(Keys.Space) ||
+                   IsNewKeyPressed(Keys.Enter) ||
+                   IsNewButtonPressed(Buttons.A) ||
+                   IsNewButtonPressed(Buttons.Start);
         }
 
         public bool IsMenuCancel()
         {
-            return KeyPressed(Keys.Escape) ||
-                   ButtonPressed(Buttons.B) ||
-                   ButtonPressed(Buttons.Back);
+            return IsNewKeyPressed(Keys.Escape) ||
+                   IsNewButtonPressed(Buttons.B) ||
+                   IsNewButtonPressed(Buttons.Back);
         }
 
         public bool IsMenuUp()
         {
-            return KeyPressed(Keys.Up) ||
-                   ButtonPressed(Buttons.DPadUp) ||
-                   ButtonPressed(Buttons.LeftThumbstickUp);
+            return IsNewKeyPressed(Keys.Up) ||
+                   IsNewButtonPressed(Buttons.DPadUp) ||
+                   IsNewButtonPressed(Buttons.LeftThumbstickUp);
         }
 
         public bool IsMenuDown()
         {
-            return KeyPressed(Keys.Down) ||
-                   ButtonPressed(Buttons.DPadDown) ||
-                   ButtonPressed(Buttons.LeftThumbstickDown);
+            return IsNewKeyPressed(Keys.Down) ||
+                   IsNewButtonPressed(Buttons.DPadDown) ||
+                   IsNewButtonPressed(Buttons.LeftThumbstickDown);
         }
     }
 }

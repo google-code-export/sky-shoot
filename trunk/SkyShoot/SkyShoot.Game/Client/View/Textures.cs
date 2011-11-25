@@ -25,24 +25,48 @@ namespace SkyShoot.Game.Client.View
         public static Texture2D PlayerTexture;
         public static Texture2D[] MobTextures = new Texture2D[MobsAmount];
 
-        //add small texture into big texture at Vector2D position
+        public static Texture2D ProjectileTexture
+        {
+            get { return Create(30, 3, Color.Red); }
+        }
+
+        // create a colored rectangle
+        public static Texture2D Create(int width, int height, Color color)
+        {
+            // create the rectangle texture without colors
+            var texture = new Texture2D(GraphicsDevice, height, width);
+
+            // create a color array for the pixels
+            var colors = new Color[width * height];
+            for (int i = 0; i < colors.Length; i++)
+            {
+                colors[i] = new Color(color.ToVector3());
+            }
+
+            // set the color data for the texture
+            texture.SetData(colors);
+
+            return texture;
+        }
+
+        // add small texture into big texture at Vector2D position
         public static void Merge(Texture2D big, Texture2D small, Vector2 position)
         {
-            //get pixels from big texture
+            // get pixels from big texture
             var bigData = new Color[big.Width * big.Height];
             big.GetData(bigData);
 
-            //get pixels from small texture
+            // get pixels from small texture
             var smallData = new Color[small.Width * small.Height];
             small.GetData(smallData);
 
-            //replace transparent pixels
+            // replace transparent pixels
             for (int i = 0; i < small.Height; i++)
                 for (int j = 0; j < small.Width; j++)
                     if (smallData[i * small.Width + j] == Color.Transparent)
                         smallData[i * small.Width + j] = bigData[((int)position.Y + i) * big.Width + ((int)position.X + j)];
 
-            //set the new data
+            // set the new data
             big.SetData(
                 0,
                 new Rectangle((int)position.X, (int)position.Y, small.Width, small.Height),

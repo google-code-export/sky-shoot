@@ -32,8 +32,8 @@ namespace SkyShoot.Game.Client.Weapon
                 case EnumBulletType.Rocket:
                     break;
             }
-            //todo color
-            Texture = new Texture2D(Textures.GraphicsDevice, 10, 2);
+
+            Texture = Textures.ProjectileTexture;
 
             IsActive = true;
         }
@@ -51,12 +51,12 @@ namespace SkyShoot.Game.Client.Weapon
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            float rotation = (float)Math.Atan2(Direction.Y, Direction.X) - MathHelper.PiOver2;
+            var rotation = (float)Math.Atan2(Direction.Y, Direction.X) + MathHelper.PiOver2;
 
             spriteBatch.Draw(Texture,
                 Coordinates,
                 null,
-                Color.Red,
+                Color.White,
                 rotation,
                 new Vector2(Texture.Width / 2f, Texture.Height / 2f),
                 1,

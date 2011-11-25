@@ -21,7 +21,7 @@ namespace SkyShoot.Game.Client.Players
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            float rotation = (float)Math.Atan2(ShootVector.Y, ShootVector.X) - MathHelper.PiOver2;
+            var rotation = (float)Math.Atan2(ShootVector.Y, ShootVector.X) + MathHelper.PiOver2;
 
             spriteBatch.Draw(Texture,
                 Coordinates,
