@@ -127,7 +127,7 @@ namespace SkyShoot.Game.Client.Game
 
         public void NewPlayerConnected(AMob player)
         {
-            // todo 
+            ScreenManager.ScreenManager.Instance.ChangePlayerList = true;
         }
 
 #endregion

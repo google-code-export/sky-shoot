@@ -30,7 +30,7 @@ namespace SkyShoot.Contracts.Session
 
 		public override string ToString()
 		{
-			return "[" + UsedTileSet + ";" + GameType + ";" + Players.Count + "/" + MaximumPlayersAllowed + "]";
+			return "[ " + UsedTileSet + " ; " + GameType + " ; " + Players.Count + "/" + MaximumPlayersAllowed + " ]";
 		}
 
         public GameDescription(List<string> players, int maxPlayersAllowed, GameMode gameType, int gameId, TileSet usedTileSet)

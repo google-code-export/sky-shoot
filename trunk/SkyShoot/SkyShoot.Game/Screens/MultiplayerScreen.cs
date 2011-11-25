@@ -83,7 +83,7 @@ namespace SkyShoot.Game.Screens
             //Games List
             _gameList = new ListControl
             {
-                Bounds = new UniRectangle(300f, -10f, 200f, 300f)
+                Bounds = new UniRectangle(300f, -10f, 225f, 300f)
             };
             _gameList.Slider.Bounds.Location.X.Offset -= 1.0f;
             _gameList.Slider.Bounds.Location.Y.Offset += 1.0f;
@@ -122,6 +122,7 @@ namespace SkyShoot.Game.Screens
         {
             //todo setActive
             ExitScreen();
+            ScreenManager.ChangePlayerList = true;
             ScreenManager.AddScreen(new WaitScreen(GameController.Instance.GetGameList()[_gameList.SelectedItems[0]].UsedTileSet + "",
                                                    GameController.Instance.GetGameList()[_gameList.SelectedItems[0]].GameType + "",
                                                    GameController.Instance.GetGameList()[_gameList.SelectedItems[0]].MaximumPlayersAllowed + "",

@@ -17,14 +17,11 @@ namespace SkyShoot.Game.Screens
 {
     internal class WaitScreen : GameScreen
     {
-
         private GuiManager _gui;
         private Screen _mainScreen;
         private LabelControl _playersLabel;
         private ListControl _playersList;
         private ButtonControl _leaveButton;
-        private ButtonControl _refreshButton;
-        private LabelControl _tileLabel;
         private LabelControl _gameModeLabel;
         private LabelControl _maxPlayersLabel;
         private string Tile;
@@ -61,23 +58,25 @@ namespace SkyShoot.Game.Screens
             };
             _mainScreen.Desktop.Children.Add(_playersLabel);
 
+            //
+            // список игроков
+            //
             _playersList = new ListControl
             {
                 Bounds = new UniRectangle(-60f, -4f, 200f, 300f)
             };
-            //
-            // список игроков
-            //
-            for (int i = 0; i < GameController.Instance.GetGameList().Length; i++)
+            GameDescription[] tmpGameDescriptionList;
+            tmpGameDescriptionList = GameController.Instance.GetGameList();
+            for (int i = 0; i < tmpGameDescriptionList.Length; i++)
             {
-                if (GameId == GameController.Instance.GetGameList()[i].GameId)
+                if (this.GameId == tmpGameDescriptionList[i].GameId)
                 {
-                    tmpPlayersList = GameController.Instance.GetGameList()[i].Players;
-                }     
+                    tmpPlayersList = tmpGameDescriptionList[i].Players;
+                }
             }
             for (int i = 0; i < tmpPlayersList.Count; i++)
             {
-                _playersList.Items.Add(tmpPlayersList[i]);    
+                _playersList.Items.Add(tmpPlayersList[i]);
             }   
             _playersList.Slider.Bounds.Location.X.Offset -= 1.0f;
             _playersList.Slider.Bounds.Location.Y.Offset += 1.0f;
@@ -94,16 +93,7 @@ namespace SkyShoot.Game.Screens
             };
             _leaveButton.Pressed += LeaveButtonPressed;
             _mainScreen.Desktop.Children.Add(_leaveButton);
-
-            // Reresh Button
-            _refreshButton = new ButtonControl
-            {
-                Text = "Refresh",
-                Bounds = new UniRectangle(new UniScalar(0.5f, -378f), new UniScalar(0.4f, 150f), 120, 32)
-            };
-            _refreshButton.Pressed += RefreshButtonPressed;
-            _mainScreen.Desktop.Children.Add(_refreshButton);
-
+            
             // информация о игре
             // Tile label
             _maxPlayersLabel = new LabelControl
@@ -159,20 +149,34 @@ namespace SkyShoot.Game.Screens
             ScreenManager.AddScreen(new MultiplayerScreen());
         }
 
-        private void RefreshButtonPressed(object sender, EventArgs args)
+        public void Refresh()
         {
             _playersList.Items.Clear();
-            for (int i = 0; i < GameController.Instance.GetGameList().Length; i++)
+            GameDescription[] tmpGameDescriptionList;
+            tmpGameDescriptionList = GameController.Instance.GetGameList();
+            for (int i = 0; i < tmpGameDescriptionList.Length; i++)
             {
-                if (this.GameId == GameController.Instance.GetGameList()[i].GameId)
+                if (this.GameId == tmpGameDescriptionList[i].GameId)
                 {
-                    tmpPlayersList = GameController.Instance.GetGameList()[i].Players;
+                    tmpPlayersList = tmpGameDescriptionList[i].Players;
                 }
             }
             for (int i = 0; i < tmpPlayersList.Count; i++)
             {
                 _playersList.Items.Add(tmpPlayersList[i]);
-            } 
+            }     
+        }
+
+        public override void Update(GameTime gameTime, bool otherHasFocus, bool coveredByOtherScreen)
+        {
+            base.Update(gameTime, otherHasFocus, coveredByOtherScreen);
+            
+            if (ScreenManager.ChangePlayerList)
+            {
+                this.Refresh();
+                ScreenManager.ChangePlayerList = false;
+            }
+
         }
 
         public override void Draw(GameTime gameTime)
