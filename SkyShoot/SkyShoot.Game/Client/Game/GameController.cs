@@ -149,16 +149,16 @@ namespace SkyShoot.Game.Client.Game
                 GameModel.GetMob(MyId).RunVector = currentRunVector;
             }
 
-            if (inputState.KeyPressed(Keys.Space))
-                Shoot(currentRunVector);
-
             var mouseState = inputState.CurrentMouseState;
             var mouseCoordinates = new Vector2(mouseState.X, mouseState.Y);
 
             var aMob = GameModel.GetMob(MyId);
-            aMob.ShootVector = GameModel.Camera2D.ConvertToLocal(aMob.Coordinates) - mouseCoordinates;
+            aMob.ShootVector = mouseCoordinates - GameModel.Camera2D.ConvertToLocal(aMob.Coordinates);
             if(aMob.ShootVector.Length() > 0)
                 aMob.ShootVector.Normalize();
+
+            if (inputState.CurrentMouseState.LeftButton == ButtonState.Pressed)
+                Shoot(aMob.ShootVector);
         }
 
         public bool Register(string username, string password)
