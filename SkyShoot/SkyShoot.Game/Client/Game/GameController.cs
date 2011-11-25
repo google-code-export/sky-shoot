@@ -139,16 +139,15 @@ namespace SkyShoot.Game.Client.Game
 
         public void HandleInput(InputState inputState)
         {
-            int a = Screens.OptionsMenuScreen.i;
-            if (a == 0)
+            // current RunVector
+            Vector2 currentRunVector = inputState.RunVector(inputState.CurrentKeyboardState);
+            // previous RunVector
+            Vector2 previousRunVector = inputState.RunVector(inputState.LastKeyboardState);
+
+            if (!currentRunVector.Equals(previousRunVector))
             {
-                GameModel.GetMob(MyId).RunVector = inputState.RunVectorA;
-                Move(inputState.RunVectorA);
-            }
-            else
-            {
-                GameModel.GetMob(MyId).RunVector = inputState.RunVectorK;
-                Move(inputState.RunVectorK);
+                Move(currentRunVector);
+                GameModel.GetMob(MyId).RunVector = currentRunVector;
             }
 
             var mouseState = inputState.CurrentMouseState;
