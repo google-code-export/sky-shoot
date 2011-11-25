@@ -250,9 +250,6 @@ namespace SkyShoot.Service
 
 		public void MobShot(AMob mob, AProjectile[] projectiles)
 		{
-			if (mob == this)
-				return;
-
             var mobCopy = TypeConverter.Mob(mob);
             var projsCopy = TypeConverter.Projectiles(projectiles);
 
