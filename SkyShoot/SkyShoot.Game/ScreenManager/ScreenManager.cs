@@ -19,6 +19,8 @@ namespace SkyShoot.Game.ScreenManager
 
         public GuiManager Gui { get { return _gui; } }
 
+        public bool ChangePlayerList { get; set; }
+
         readonly List<GameScreen> _screens = new List<GameScreen>();
         readonly List<GameScreen> _screensToUpdate = new List<GameScreen>();
         readonly InputState _input = new InputState();
