@@ -76,7 +76,7 @@ namespace SkyShoot.Contracts.Mobs
             _counter++;
         }
 
-        public void DemageTaken(AProjectile bullet)
+        public void DamageTaken(AProjectile bullet)
         {
             HealthAmount -= bullet.Damage;
         }

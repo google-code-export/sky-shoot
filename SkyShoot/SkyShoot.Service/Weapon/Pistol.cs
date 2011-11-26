@@ -9,7 +9,10 @@ namespace SkyShoot.Service.Weapon
 {
     public class Pistol : AWeapon
     {
-        public Pistol(Guid id) : base(id) { }
+		public Pistol(Guid id) : base(id) { this.Type = AObtainableDamageModifiers.Pistol; }
+
+		public Pistol(Guid id, AMob owner) : base(id, owner) { this.Type = AObtainableDamageModifiers.Pistol; }
+
 
         public override AProjectile[] CreateBullets(AMob owner, Vector2 direction)
         {

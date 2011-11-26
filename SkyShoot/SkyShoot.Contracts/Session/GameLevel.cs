@@ -14,7 +14,7 @@ namespace SkyShoot.Contracts.Session
 		//public const int MOVEMENTTIME = 100; //in milliseconds
 		public float levelHeight = 1000; 
 		public float levelWidth = 1000;
-		public float LEVELBORDER = 50;
+		public float LEVELBORDER = Constants.LEVELBORDER;
 		
         public GameLevel(TileSet usedTileSet)
         {

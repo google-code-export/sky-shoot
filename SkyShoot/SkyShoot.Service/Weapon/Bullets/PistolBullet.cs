@@ -8,7 +8,7 @@ namespace SkyShoot.Service.Weapon.Bullets
 {
     public class PistolBullet : AProjectile
     {
-        private const float SPEED = 10;
+        private const float SPEED = 0.1f;
         private const float DAMAGE = 2;
         private const int LIFE_TIME = 120;
         private const EnumBulletType TYPE = EnumBulletType.Bullet;

@@ -13,7 +13,7 @@ namespace SkyShoot.Service.Mobs
         const int RADIUS_MIN = 15;
         const int RADIUS_MAX = 20;
 
-        public Spider() 
+        public Spider(): base()
         {
             Random rand = new Random();
             Radius = rand.Next(RADIUS_MIN, RADIUS_MAX);

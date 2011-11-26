@@ -9,7 +9,9 @@ namespace SkyShoot.Service.Weapon
 {
     public class Shotgun : AWeapon
     {
-        public Shotgun(Guid id) : base(id) { }
+        public Shotgun(Guid id) : base(id){	this.Type = AObtainableDamageModifiers.Shotgun;	}
+
+		public Shotgun(Guid id, AMob owner) : base(id, owner) {	this.Type = AObtainableDamageModifiers.Shotgun;	}
 
         public override AProjectile[] CreateBullets(AMob owner, Vector2 direction)
         {
