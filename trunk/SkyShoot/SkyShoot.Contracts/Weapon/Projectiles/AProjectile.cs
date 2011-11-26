@@ -16,6 +16,7 @@ namespace SkyShoot.Contracts.Weapon.Projectiles
             Owner = owner;
             Id = id;
             Direction = direction;
+			Coordinates = owner.Coordinates;
         }
 
         protected AProjectile()

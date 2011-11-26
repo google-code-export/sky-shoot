@@ -9,7 +9,12 @@ namespace SkyShoot.Service.Weapon
 {
     public abstract class AWeapon : AObtainableDamageModifier
     {
-        protected AWeapon(Guid id) : base(id) { }
+		protected AWeapon(Guid id) : base(id) { Owner = null; }
+
+        protected AWeapon(Guid id, AMob owner) : base(id) 
+		{
+			this.Owner = owner;
+		}
 
         public abstract AProjectile[] CreateBullets(AMob owner, Vector2 direction); 
     }

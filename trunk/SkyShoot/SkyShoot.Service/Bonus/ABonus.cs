@@ -9,9 +9,10 @@ namespace SkyShoot.Service.Bonus
 {
     public abstract class ABonus : AObtainableDamageModifier
     {
-        protected ABonus(Guid id, float inDamage, float outDamage, int milliseconds, DateTime startTime)
+        protected ABonus(Guid id, float inDamage, float outDamage, int milliseconds, DateTime startTime,AObtainableDamageModifiers type)
             : base(id)
         {
+			Type = type;
             this.InDamage = inDamage;
             this.OutDamage = outDamage;
 
