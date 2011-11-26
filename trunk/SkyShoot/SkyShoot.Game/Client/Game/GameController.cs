@@ -22,9 +22,11 @@ namespace SkyShoot.Game.Client.Game
 {
     public sealed class GameController : ISkyShootCallback, ISkyShootService
     {
-        private static readonly GameController LocalInstance = new GameController();
-
         public static Guid MyId { get; private set; }
+
+        public bool IsGameStarted { get; private set; }
+
+        private static readonly GameController LocalInstance = new GameController();
 
         private ISkyShootService _service;
 
@@ -41,7 +43,7 @@ namespace SkyShoot.Game.Client.Game
 
         public void GameStart(AMob[] mobs, Contracts.Session.GameLevel arena)
         {
-            //todo setActive
+            // todo setActive
             foreach (GameScreen screen in ScreenManager.ScreenManager.Instance.GetScreens()) screen.ExitScreen();
             ScreenManager.ScreenManager.Instance.AddScreen(new GameplayScreen());
 
@@ -52,6 +54,9 @@ namespace SkyShoot.Game.Client.Game
                 var clientMob = GameFactory.CreateClientMob(mob);
                 GameModel.AddMob(clientMob);
             }
+
+            // GameModel initialized, set boolean flag  
+            IsGameStarted = true;
         }
 
         public void SpawnMob(AMob mob)
@@ -107,6 +112,11 @@ namespace SkyShoot.Game.Client.Game
 
         public void MobShot(AMob mob, AProjectile[] projectiles)
         {
+            // update ShootVector
+            var clientMob = GameModel.GetMob(mob.Id);
+            clientMob.ShootVector = projectiles[projectiles.Length - 1].Direction;
+
+            // add projectiles
             foreach (var aProjectile in projectiles)
             {
                 GameModel.AddProjectile(GameFactory.CreateClientProjectile(aProjectile));
@@ -115,10 +125,14 @@ namespace SkyShoot.Game.Client.Game
 
         public void SynchroFrame(AMob[] mobs)
         {
+            if (!IsGameStarted)
+                return;
+
             foreach (var mob in mobs)
             {
-                //todo Exception if not found
                 var clientMob = GameModel.GetMob(mob.Id);
+                if(clientMob == null)
+                    continue;
 
                 clientMob.Coordinates = mob.Coordinates;
                 clientMob.HealthAmount = mob.HealthAmount;
@@ -137,6 +151,9 @@ namespace SkyShoot.Game.Client.Game
 #endregion
 
 #region ClientInput
+
+        private DateTime _dateTime;
+        private const int Rate = 1000/10;
 
         public void HandleInput(InputState inputState)
         {
@@ -160,7 +177,13 @@ namespace SkyShoot.Game.Client.Game
                 aMob.ShootVector.Normalize();
 
             if (inputState.CurrentMouseState.LeftButton == ButtonState.Pressed)
-                Shoot(aMob.ShootVector);
+            {
+                if ((DateTime.Now - _dateTime).Milliseconds > Rate)
+                {
+                    _dateTime = DateTime.Now;
+                    Shoot(aMob.ShootVector);
+                }
+            }
         }
 
         public bool Register(string username, string password)
