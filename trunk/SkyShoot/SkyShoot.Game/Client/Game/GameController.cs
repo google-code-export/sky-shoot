@@ -41,10 +41,12 @@ namespace SkyShoot.Game.Client.Game
 
         public void GameStart(AMob[] mobs, Contracts.Session.GameLevel arena)
         {
+            //todo setActive
             foreach (GameScreen screen in ScreenManager.ScreenManager.Instance.GetScreens()) screen.ExitScreen();
             ScreenManager.ScreenManager.Instance.AddScreen(new GameplayScreen());
 
             GameModel = new GameModel(GameFactory.CreateClientGameLevel(arena));
+            
             foreach (AMob mob in mobs)
             {
                 var clientMob = GameFactory.CreateClientMob(mob);
