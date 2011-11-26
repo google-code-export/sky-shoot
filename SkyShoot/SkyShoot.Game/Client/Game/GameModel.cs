@@ -1,7 +1,8 @@
 using System;
 
+using System.Diagnostics;
+
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 
 using Microsoft.Xna.Framework;
 
@@ -17,9 +18,9 @@ namespace SkyShoot.Game.Client.Game
     {
         public GameLevel GameLevel { get; private set; }
 
-        public IDictionary<Guid, Mob> Mobs { get; private set;  }
+        public ConcurrentDictionary<Guid, Mob> Mobs { get; private set;  }
 
-        public IDictionary<Guid, Projectile> Projectiles { get; private set; }
+        public ConcurrentDictionary<Guid, Projectile> Projectiles { get; private set; }
 
         public Camera2D Camera2D { get; private set; }
 
@@ -35,32 +36,46 @@ namespace SkyShoot.Game.Client.Game
 
         public void AddMob(Mob mob)
         {
-            Mobs.Add(mob.Id, mob);
+            if(!Mobs.TryAdd(mob.Id, mob))
+                Trace.WriteLine("Mob already exists", "GameModel/AddMob");
         }
 
         public void AddProjectile(Projectile projectile)
         {
-            Projectiles.Add(projectile.Id, projectile);
+            if (!Projectiles.TryAdd(projectile.Id, projectile))
+                Trace.WriteLine("Projectile already exists", "GameModel/AddProjectile");
         }
 
         public Mob GetMob(Guid id)
         {
-            return Mobs[id];
+            Mob mob;
+            if (Mobs.TryGetValue(id, out mob))
+                return mob;
+            Trace.WriteLine("Mob with such ID does not exist", "GameModel/GetMob");
+            return null;
         }
 
         public Projectile GetProjectile(Guid id)
         {
-            return Projectiles[id];
+            Projectile projectile;
+            if (Projectiles.TryGetValue(id, out projectile))
+                return projectile;
+            Trace.WriteLine("Projectile with such ID does not exist", "GameModel/GetProjectile");
+            return null;
         }
 
         public void RemoveMob(Guid id)
         {
-            Mobs.Remove(id);
+            Mob mob;
+            if(!Mobs.TryRemove(id, out mob))
+                Trace.WriteLine("Mob with such ID does not exist", "GameModel/RemoveMob");
         }
 
         public void RemoveProjectile(Guid id)
         {
-            Projectiles.Remove(id);
+            Projectile projectile;
+            if (!Projectiles.TryRemove(id, out projectile))
+                Trace.WriteLine("Projectile with such ID does not exist", "GameModel/RemoveProjectile");
         }
 
         public void Update(GameTime gameTime)
