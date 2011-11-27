@@ -30,6 +30,7 @@ namespace SkyShoot.Game.Screens
         private ButtonControl backButton;
 
         public static int i = 0;
+        public static short curs = 4;
         public static int f = 0;
 
         public OptionsMenuScreen()
@@ -60,6 +61,7 @@ namespace SkyShoot.Game.Screens
             fullscreenButton = new OptionControl();
             fullscreenButton.Bounds = new UniRectangle(new UniScalar(0.5f, 30), new UniScalar(0.3f, -70), 100, 30);
             optionsScreen.Desktop.Children.Add(fullscreenButton);
+            //fullscreenButton.Selected = Settings.Default.FullScreenSelected;
             fullscreenButton.Selected = false;
             fullscreenButton.Changed += FullScreenSelected;
 
@@ -115,34 +117,45 @@ namespace SkyShoot.Game.Screens
 
         }
 
-        void ArrowButtonPressed(object sender, EventArgs e)
+        private void ArrowButtonPressed(object sender, EventArgs e)
         {
-
+            curs = 1;
+            Settings.Default.Cursor = curs;
+            Settings.Default.Save();
         }
 
-        void PlusButtonPressed(object sender, EventArgs e)
+        private void PlusButtonPressed(object sender, EventArgs e)
         {
-
+            curs = 2;
+            Settings.Default.Cursor = curs;
+            Settings.Default.Save();
         }
 
-        void CrossButtonPressed(object sender, EventArgs e)
+        private void CrossButtonPressed(object sender, EventArgs e)
         {
-
+            curs = 3;
+            Settings.Default.Cursor = curs;
+            Settings.Default.Save();
         }
 
-        void TargetButtonPressed(object sender, EventArgs e)
+        private void TargetButtonPressed(object sender, EventArgs e)
         {
-
+            curs = 4;
+            Settings.Default.Cursor = curs;
+            Settings.Default.Save();
         }
 
         void ASDWButtonPressed(object sender, EventArgs e)
         {
-            i = 1;
+            Settings.Default.KeyboardLayout = 0;
+            Settings.Default.Save();
+
         }
 
         void ArrowsButtonPressed(object sender, EventArgs e)
         {
-            i = 0;
+            Settings.Default.KeyboardLayout = 1;
+            Settings.Default.Save();
         }
 
         void BackButtonPressed(object sender, EventArgs e)
@@ -152,7 +165,10 @@ namespace SkyShoot.Game.Screens
 
         void FullScreenSelected(object sender, EventArgs e)
         {
-            f = 1 - f;
+            if (fullscreenButton.Selected == false)
+                Settings.Default.FullScreen = 0;
+            else Settings.Default.FullScreen = 1;
+            Settings.Default.Save();
         }
 
         public override void Draw(GameTime gameTime)

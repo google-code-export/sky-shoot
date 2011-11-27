@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace SkyShoot.Game.Client.View
 {
@@ -17,6 +18,12 @@ namespace SkyShoot.Game.Client.View
         public static Texture2D SnowLandscape;
         public static Texture2D DesertLandscape;
         public static Texture2D VolcanicLandscape;
+
+        //cursor textures
+        public static Texture2D Arrow;
+        public static Texture2D Plus;
+        public static Texture2D Cross;
+        public static Texture2D Target;
 
         //stone textures
         public static Texture2D[] Stones = new Texture2D[StonesAmount];
@@ -76,5 +83,32 @@ namespace SkyShoot.Game.Client.View
             
         }
 
+        public static Texture2D ActiveCursor
+        {
+            get
+            {
+                switch (Settings.Default.Cursor)
+                {
+                    case 1: return Arrow;
+                    case 2: return Plus;
+                    case 3: return Cross;
+                    case 4: return Target;
+                    default: return Arrow;
+                }
+            }
+        }
+
+        public static Vector2 GetCursorPosition(float x, float y)
+        {
+            switch (Settings.Default.Cursor)
+            {
+                case 1: return new Vector2(x - 11f, y - 2.5f);
+                case 2: return new Vector2(x - 23f, y - 23f);
+                case 3: return new Vector2(x - 23f, y - 23f);
+                case 4: return new Vector2(x - 24f, y - 23f);
+                default: return new Vector2(x - 11f, y - 2.5f);
+            }
+        }
     }
 }
+
