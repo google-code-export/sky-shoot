@@ -49,34 +49,33 @@ namespace SkyShoot.Game.ScreenManager
             _currentMouseState = Mouse.GetState();
         }
 
-        public Vector2 RunVectorA(KeyboardState keyboardState)
-        {
-            Vector2 runVector = Vector2.Zero;
-            if (_currentGamePadState.IsConnected)
-                runVector = _currentGamePadState.ThumbSticks.Left;
-            else
-            {
-                if (keyboardState.IsKeyDown(Keys.Up)) runVector -= Vector2.UnitY;
-                if (keyboardState.IsKeyDown(Keys.Down)) runVector += Vector2.UnitY;
-                if (keyboardState.IsKeyDown(Keys.Left)) runVector -= Vector2.UnitX;
-                if (keyboardState.IsKeyDown(Keys.Right)) runVector += Vector2.UnitX;
-            }
-            if (runVector.Length() > 0)
-                runVector.Normalize();
-            return runVector;
-        }
-
         public Vector2 RunVector(KeyboardState keyboardState)
         {
+            short keyblay = Settings.Default.KeyboardLayout;
             Vector2 runVector = Vector2.Zero;
             if (_currentGamePadState.IsConnected)
                 runVector = _currentGamePadState.ThumbSticks.Left;
             else
             {
-                if (keyboardState.IsKeyDown(Keys.W)) runVector -= Vector2.UnitY;
-                if (keyboardState.IsKeyDown(Keys.S)) runVector += Vector2.UnitY;
-                if (keyboardState.IsKeyDown(Keys.A)) runVector -= Vector2.UnitX;
-                if (keyboardState.IsKeyDown(Keys.D)) runVector += Vector2.UnitX;
+                switch (keyblay)
+                {
+                    case 0:
+                        {
+                            if (keyboardState.IsKeyDown(Keys.W)) runVector -= Vector2.UnitY;
+                            if (keyboardState.IsKeyDown(Keys.S)) runVector += Vector2.UnitY;
+                            if (keyboardState.IsKeyDown(Keys.A)) runVector -= Vector2.UnitX;
+                            if (keyboardState.IsKeyDown(Keys.D)) runVector += Vector2.UnitX;
+                        }
+                        break;
+                    case 1:
+                        {
+                            if (keyboardState.IsKeyDown(Keys.Up)) runVector -= Vector2.UnitY;
+                            if (keyboardState.IsKeyDown(Keys.Down)) runVector += Vector2.UnitY;
+                            if (keyboardState.IsKeyDown(Keys.Left)) runVector -= Vector2.UnitX;
+                            if (keyboardState.IsKeyDown(Keys.Right)) runVector += Vector2.UnitX;
+                        }
+                        break;
+                }
             }
             if (runVector.Length() > 0)
                 runVector.Normalize();

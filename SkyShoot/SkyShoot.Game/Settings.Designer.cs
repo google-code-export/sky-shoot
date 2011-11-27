@@ -46,5 +46,53 @@ namespace SkyShoot.Game {
                 this["password"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public short Cursor {
+            get {
+                return ((short)(this["Cursor"]));
+            }
+            set {
+                this["Cursor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public short FullScreen {
+            get {
+                return ((short)(this["FullScreen"]));
+            }
+            set {
+                this["FullScreen"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public short KeyboardLayout {
+            get {
+                return ((short)(this["KeyboardLayout"]));
+            }
+            set {
+                this["KeyboardLayout"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool FullScreenSelected {
+            get {
+                return ((bool)(this["FullScreenSelected"]));
+            }
+            set {
+                this["FullScreenSelected"] = value;
+            }
+        }
     }
 }
