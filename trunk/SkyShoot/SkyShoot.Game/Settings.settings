@@ -11,9 +11,6 @@
     <Setting Name="Cursor" Type="System.Int16" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="FullScreen" Type="System.Int16" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
     <Setting Name="KeyboardLayout" Type="System.Int16" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>

@@ -62,18 +62,6 @@ namespace SkyShoot.Game {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public short FullScreen {
-            get {
-                return ((short)(this["FullScreen"]));
-            }
-            set {
-                this["FullScreen"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public short KeyboardLayout {
             get {
                 return ((short)(this["KeyboardLayout"]));
