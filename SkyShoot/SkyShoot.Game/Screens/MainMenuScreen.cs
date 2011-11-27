@@ -64,7 +64,7 @@ namespace SkyShoot.Game.Screens
 
         void OptionsButtonPressed(object sender, EventArgs e)
         {
-            //ScreenManager.AddScreen(new OptionsMenuScreen());
+            ScreenManager.AddScreen(new OptionsMenuScreen());
         }
 
         void ExitMenuButtonPressed(object sender, EventArgs e)
