@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using System.Windows.Forms;
 using Microsoft.Xna.Framework.Input;
 using SkyShoot.Game.ScreenManager;
+using SkyShoot.Game.Client.View;
 
 namespace SkyShoot.Game.Screens
 {
@@ -20,18 +21,19 @@ namespace SkyShoot.Game.Screens
         private LabelControl fullscreenLabel;
         private OptionControl fullscreenButton;
         private LabelControl keyboardLabel;
-        private ButtonControl asdwButton;
-        private ButtonControl arrowsButton;
+        private LabelControl asdwLabel;
+        private ChoiceControl asdwButton;
+        private LabelControl arrowsLabel;
+        private ChoiceControl arrowsButton;
         private LabelControl cursorLabel;
         private ButtonControl arrowButton;
         private ButtonControl plusButton;
         private ButtonControl crossButton;
         private ButtonControl targetButton;
         private ButtonControl backButton;
+        //private ContentManager _content;
 
-        public static int i = 0;
-        public static short curs = 4;
-        public static int f = 0;
+        public static short curs = 1;
 
         public OptionsMenuScreen()
         {
@@ -61,60 +63,76 @@ namespace SkyShoot.Game.Screens
             fullscreenButton = new OptionControl();
             fullscreenButton.Bounds = new UniRectangle(new UniScalar(0.5f, 30), new UniScalar(0.3f, -70), 100, 30);
             optionsScreen.Desktop.Children.Add(fullscreenButton);
-            //fullscreenButton.Selected = Settings.Default.FullScreenSelected;
-            fullscreenButton.Selected = false;
+            fullscreenButton.Selected = Settings.Default.FullScreenSelected;
             fullscreenButton.Changed += FullScreenSelected;
 
             keyboardLabel = new LabelControl("Keyboard:");
             keyboardLabel.Bounds = new UniRectangle(new UniScalar(0.5f, -150), new UniScalar(0.5f, -70), 50, 30);
             optionsScreen.Desktop.Children.Add(keyboardLabel);
 
-            asdwButton = new ButtonControl();
-            asdwButton.Text = "A, S, D, W";
-            asdwButton.Bounds = new UniRectangle(new UniScalar(0.5f, -70), new UniScalar(0.5f, -70), 100, 30);
-            asdwButton.Pressed += ASDWButtonPressed;
+            asdwLabel = new LabelControl();
+            asdwLabel.Text = "A, S, D, W";
+            asdwLabel.Bounds = new UniRectangle(new UniScalar(0.5f, -70), new UniScalar(0.5f, -70), 100, 30);
+            optionsScreen.Desktop.Children.Add(asdwLabel);
+
+            asdwButton = new ChoiceControl();
+            asdwButton.Bounds = new UniRectangle(new UniScalar(0.5f, 30), new UniScalar(0.5f, -70), 100, 30);
+            if (Settings.Default.KeyboardLayout == 0) asdwButton.Selected = true;
+            asdwButton.Changed += ASDWButtonPressed;
             optionsScreen.Desktop.Children.Add(asdwButton);
 
-            arrowsButton = new ButtonControl();
-            arrowsButton.Text = "Arrows";
-            arrowsButton.Bounds = new UniRectangle(new UniScalar(0.5f, 40), new UniScalar(0.5f, -70), 100, 30);
-            arrowsButton.Pressed += ArrowsButtonPressed;
+            arrowsLabel = new LabelControl();
+            arrowsLabel.Text = "Arrows";
+            arrowsLabel.Bounds = new UniRectangle(new UniScalar(0.5f, -60), new UniScalar(0.6f, -70), 100, 30);
+            optionsScreen.Desktop.Children.Add(arrowsLabel);
+
+            arrowsButton = new ChoiceControl();
+            arrowsButton.Bounds = new UniRectangle(new UniScalar(0.5f, 30), new UniScalar(0.6f, -70), 100, 30);
+            arrowsButton.Changed += ArrowsButtonPressed;
+            if (Settings.Default.KeyboardLayout == 1) arrowsButton.Selected = true;
             optionsScreen.Desktop.Children.Add(arrowsButton);
 
             cursorLabel = new LabelControl("Cursor:");
-            cursorLabel.Bounds = new UniRectangle(new UniScalar(0.5f, -220), new UniScalar(0.7f, -70), 70, 30);
+            cursorLabel.Bounds = new UniRectangle(new UniScalar(0.5f, -220), new UniScalar(0.8f, -70), 70, 30);
             optionsScreen.Desktop.Children.Add(cursorLabel);
 
             arrowButton = new ButtonControl();
             arrowButton.Text = "Arrow";
-            arrowButton.Bounds = new UniRectangle(new UniScalar(0.5f, -140), new UniScalar(0.7f, -70), 70, 30);
-            arrowsButton.Pressed += ArrowButtonPressed;
+            arrowButton.Bounds = new UniRectangle(new UniScalar(0.5f, -140), new UniScalar(0.8f, -70), 70, 30);
+            arrowButton.Pressed += ArrowButtonPressed;
             optionsScreen.Desktop.Children.Add(arrowButton);
 
             plusButton = new ButtonControl();
             plusButton.Text = "Plus";
-            plusButton.Bounds = new UniRectangle(new UniScalar(0.5f, -50), new UniScalar(0.7f, -70), 70, 30);
-            arrowsButton.Pressed += PlusButtonPressed;
+            plusButton.Bounds = new UniRectangle(new UniScalar(0.5f, -50), new UniScalar(0.8f, -70), 70, 30);
+            plusButton.Pressed += PlusButtonPressed;
             optionsScreen.Desktop.Children.Add(plusButton);
 
             crossButton = new ButtonControl();
             crossButton.Text = "Cross";
-            crossButton.Bounds = new UniRectangle(new UniScalar(0.5f, 40), new UniScalar(0.7f, -70), 70, 30);
-            arrowsButton.Pressed += CrossButtonPressed;
+            crossButton.Bounds = new UniRectangle(new UniScalar(0.5f, 40), new UniScalar(0.8f, -70), 70, 30);
+            crossButton.Pressed += CrossButtonPressed;
             optionsScreen.Desktop.Children.Add(crossButton);
 
             targetButton = new ButtonControl();
             targetButton.Text = "Target";
-            targetButton.Bounds = new UniRectangle(new UniScalar(0.5f, 130), new UniScalar(0.7f, -70), 70, 30);
-            arrowsButton.Pressed += TargetButtonPressed;
+            targetButton.Bounds = new UniRectangle(new UniScalar(0.5f, 130), new UniScalar(0.8f, -70), 70, 30);
+            targetButton.Pressed += TargetButtonPressed;
             optionsScreen.Desktop.Children.Add(targetButton);
 
             backButton = new ButtonControl();
             backButton.Text = "Back";
-            backButton.Bounds = new UniRectangle(new UniScalar(0.5f, -50), new UniScalar(0.9f, -70), 100, 30);
+            backButton.Bounds = new UniRectangle(new UniScalar(0.5f, -50), new UniScalar(1.0f, -70), 100, 30);
             backButton.Pressed += BackButtonPressed;
             optionsScreen.Desktop.Children.Add(backButton);
 
+            //if (_content == null)
+            //    _content = new ContentManager(ScreenManager.Game.Services, "Content");
+
+            //Textures.Arrow = _content.Load<Texture2D>("Textures/Cursors/Arrow");
+            //Textures.Plus = _content.Load<Texture2D>("Textures/Cursors/Plus");
+            //Textures.Cross = _content.Load<Texture2D>("Textures/Cursors/Cross");
+            //Textures.Target = _content.Load<Texture2D>("Textures/Cursors/Target");
         }
 
         private void ArrowButtonPressed(object sender, EventArgs e)
@@ -166,8 +184,8 @@ namespace SkyShoot.Game.Screens
         void FullScreenSelected(object sender, EventArgs e)
         {
             if (fullscreenButton.Selected == false)
-                Settings.Default.FullScreen = 0;
-            else Settings.Default.FullScreen = 1;
+                Settings.Default.FullScreenSelected = false;
+            else Settings.Default.FullScreenSelected = true;
             Settings.Default.Save();
         }
 

@@ -18,16 +18,16 @@ namespace SkyShoot.Game
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";          
-            short fscreen = Settings.Default.FullScreen;
+            bool fscreen = Settings.Default.FullScreenSelected;
             switch (fscreen)
             {
-                case 0:
+                case false:
                     {
                         _graphics.PreferredBackBufferWidth = 800;
                         _graphics.PreferredBackBufferHeight = 600;
                     }
                     break;
-                case 1: _graphics.IsFullScreen = true;
+                case true: _graphics.IsFullScreen = true;
                     break;
             }
             IsMouseVisible = false;
