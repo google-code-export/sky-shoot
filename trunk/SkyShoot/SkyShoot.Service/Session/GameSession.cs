@@ -162,6 +162,7 @@ namespace SkyShoot.Service.Session
                 player.Radius = Constants.PLAYER_RADIUS;
 				player.Weapon = new Weapon.Pistol(new Guid());
 				player.RunVector = new Vector2(0, 0);
+				player.HealthAmount = 100;
 
 			}
 			_timerCounter = 0;
@@ -170,6 +171,8 @@ namespace SkyShoot.Service.Session
 			_gameTimer.Elapsed += TimerElapsedListener;
 			_gameTimer.Start();
 
+			_updated = false;
+               
             _lastUpdate = DateTime.Now.Millisecond;
             _updateDelay = 0;
         }
@@ -196,14 +199,15 @@ namespace SkyShoot.Service.Session
 
 		private void TimerElapsedListener(object sender, EventArgs e)
 		{
+			if (_updated) return;
+			_updated = true;
 			if (!IsStarted && StartGame != null)
             {
                 IsStarted = true;
-                _updated = false;
-                System.Diagnostics.Trace.WriteLine("Players: " + Players[0]);
-				StartGame(Players.ToArray(), _gameLevel);
+                StartGame(Players.ToArray(), _gameLevel);
 			}
-			update();
+			else update();
+			_updated = false;
 			
 		}
 	#region local functions
@@ -229,8 +233,7 @@ namespace SkyShoot.Service.Session
         // здесь будут производится обработка всех действий
         private void update() 
         {
-            if (_updated) return;
-            _updated = true;
+            
             SpawnMob();
 
             var now = DateTime.Now.Millisecond;
@@ -298,8 +301,6 @@ namespace SkyShoot.Service.Session
 				}
 			}
 			_timerCounter++;
-
-            _updated = false;
         }
 
         private Mob hitTestProjectile(AProjectile projectile, Vector2 newCord)

@@ -214,7 +214,7 @@ namespace SkyShoot.Service
 		public void Hit(AMob mob, AProjectile projectile)
 		{
             var mobCopy = TypeConverter.Mob(mob);
-            var projCopy = TypeConverter.Projectile(projectile);
+            var projCopy = projectile==null ? null : TypeConverter.Projectile(projectile);
 
             try
             {
