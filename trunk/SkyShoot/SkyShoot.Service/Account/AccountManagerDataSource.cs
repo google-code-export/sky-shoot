@@ -37,11 +37,15 @@ namespace SkyShoot.Service.Account
 
         public bool AddAccountManagerEntry(AccountManagerEntry newItem)
         {
-            var results = from g in this.context.AccountManagerEntry
-                          where g.Account == newItem.Account
-                          select g;
+            //var results = from g in this.context.AccountManagerEntry
+            //              where g.Account == newItem.Account
+            //              select g;
+			//var entry = results.FirstOrDefault<AccountManagerEntry>();
 
-            var entry = results.FirstOrDefault<AccountManagerEntry>();
+			var results = (from g in this.context.AccountManagerEntry
+						   select g).ToList();
+
+			var entry = results.Where(g=> g.Account == newItem.Account).FirstOrDefault<AccountManagerEntry>();
 
             if (entry != null)
             {
@@ -57,11 +61,11 @@ namespace SkyShoot.Service.Account
 
         public bool CheckAccountManagerEntry(string user_name, string password)
         {
-            var results = from g in this.context.AccountManagerEntry
-                          where g.Account == user_name
-                          select g;
+			var results = (from g in this.context.AccountManagerEntry
+						   select g).ToList();
 
-            var entry = results.FirstOrDefault<AccountManagerEntry>();
+			var entry = results.Where(g => g.Account == user_name).FirstOrDefault<AccountManagerEntry>();
+
             if (entry != null)
             {
                 if (HashHelper.verifyMd5Hash((password + entry.Salt), entry.HashPassword))
@@ -82,11 +86,11 @@ namespace SkyShoot.Service.Account
 
         public bool CreateAccountPassword(string user_name, string old_password, string new_password)
         {
-            var results = from g in this.context.AccountManagerEntry
-                          where g.Account == user_name
-                          select g;
+			var results = (from g in this.context.AccountManagerEntry
+						   select g).ToList();
 
-            var entry = results.FirstOrDefault<AccountManagerEntry>();
+			var entry = results.Where(g => g.Account == user_name).FirstOrDefault<AccountManagerEntry>();
+
             if (entry != null)
             {
                 if (HashHelper.verifyMd5Hash((old_password + entry.Salt), entry.HashPassword))
@@ -112,11 +116,10 @@ namespace SkyShoot.Service.Account
 
         public bool DeleteAccountManagerEntry(string user_name)
         {
-            var results = from g in this.context.AccountManagerEntry
-                          where g.Account == user_name
-                          select g;
+			var results = (from g in this.context.AccountManagerEntry
+						   select g).ToList();
 
-            var entry = results.FirstOrDefault<AccountManagerEntry>();
+			var entry = results.Where(g => g.Account == user_name).FirstOrDefault<AccountManagerEntry>();
 
             if (entry != null)
             {
