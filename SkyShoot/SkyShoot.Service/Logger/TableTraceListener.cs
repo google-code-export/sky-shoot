@@ -3,7 +3,7 @@
 using System.Data.Services.Client;
 
 using Microsoft.WindowsAzure;
-
+using Microsoft.WindowsAzure.ServiceRuntime;
 using Microsoft.WindowsAzure.StorageClient;
 
 namespace SkyShoot.Service.Logger
@@ -15,6 +15,10 @@ namespace SkyShoot.Service.Logger
 
         public TableTraceListener()
         {
+            Microsoft.WindowsAzure.CloudStorageAccount.SetConfigurationSettingPublisher((configName, configSetter) =>
+            {
+                configSetter(RoleEnvironment.GetConfigurationSettingValue(configName));
+            });
             account = CloudStorageAccount.FromConfigurationSetting("DataConnectionString");
             context = new DataServiceContext(account.TableEndpoint.ToString(), account.Credentials);
 
