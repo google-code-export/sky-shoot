@@ -70,6 +70,7 @@
     <Compile Include="Account\AccountManagerDataSource.cs" />
     <Compile Include="Account\AccountManagerEntry.cs" />
     <Compile Include="Account\HashHelper.cs" />
+    <Compile Include="Account\TestPattern.cs" />
     <Compile Include="Bonus\ABonus.cs" />
     <Compile Include="Bonus\DoubleDamage.cs" />
     <Compile Include="Bonus\Shield.cs" />

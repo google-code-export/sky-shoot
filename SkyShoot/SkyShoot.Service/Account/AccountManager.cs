@@ -13,22 +13,36 @@ namespace SkyShoot.Service.Account
 
         public bool Register(string user_name, string password)
         {
-            Microsoft.WindowsAzure.CloudStorageAccount.SetConfigurationSettingPublisher((configName, configSetter) =>
-            {
-                configSetter(RoleEnvironment.GetConfigurationSettingValue(configName));
-            });
+			if (TestPattern.TestAccountName(user_name))
+			{
+				if (TestPattern.TestPassword(password))
+				{
+					Microsoft.WindowsAzure.CloudStorageAccount.SetConfigurationSettingPublisher((configName, configSetter) =>
+					{
+						configSetter(RoleEnvironment.GetConfigurationSettingValue(configName));
+					});
 
-            string salt = HashHelper.GetRandomString();
-            AccountManagerEntry entry = new AccountManagerEntry()
-            {
-                Account = user_name,
-                HashPassword = HashHelper.GetMd5Hash(password + salt),
-                Salt = salt,
-                Email = "sky@shoot",
-                Info = "--"
-            };
-            AccountManagerDataSource ds = new AccountManagerDataSource();
-            return ds.AddAccountManagerEntry(entry);
+					string salt = HashHelper.GetRandomString();
+					AccountManagerEntry entry = new AccountManagerEntry()
+					{
+						Account = user_name.ToLower(),
+						HashPassword = HashHelper.GetMd5Hash(password + salt),
+						Salt = salt,
+						Email = "sky@shoot",
+						Info = "--"
+					};
+					AccountManagerDataSource ds = new AccountManagerDataSource();
+					return ds.AddAccountManagerEntry(entry);
+				}
+				else
+				{
+					return false;
+				}
+			}
+			else
+			{
+				return false;
+			}
         }
 
         public bool Login(string user_name, string password)
@@ -40,22 +54,29 @@ namespace SkyShoot.Service.Account
 
             AccountManagerDataSource ds = new AccountManagerDataSource();
 
-            return ds.CheckAccountManagerEntry(user_name, password);
+            return ds.CheckAccountManagerEntry(user_name.ToLower(), password);
         }
 
         public bool CreatePassword(string user_name, string old_password, string new_password)
         {
-            Microsoft.WindowsAzure.CloudStorageAccount.SetConfigurationSettingPublisher((configName, configSetter) =>
-            {
-                configSetter(RoleEnvironment.GetConfigurationSettingValue(configName));
-            });
+			if (TestPattern.TestPassword(new_password))
+			{
+				Microsoft.WindowsAzure.CloudStorageAccount.SetConfigurationSettingPublisher((configName, configSetter) =>
+				{
+					configSetter(RoleEnvironment.GetConfigurationSettingValue(configName));
+				});
 
-            AccountManagerDataSource ds = new AccountManagerDataSource();
+				AccountManagerDataSource ds = new AccountManagerDataSource();
 
-            return ds.CreateAccountPassword(user_name, old_password, new_password);
+				return ds.CreateAccountPassword(user_name.ToLower(), old_password, new_password);
+			}
+			else
+			{
+				return false;
+			}
         }
 
-        public bool DeleteAccount(string username)
+        public bool DeleteAccount(string user_name)
         {
             Microsoft.WindowsAzure.CloudStorageAccount.SetConfigurationSettingPublisher((configName, configSetter) =>
             {
@@ -64,7 +85,7 @@ namespace SkyShoot.Service.Account
 
             AccountManagerDataSource ds = new AccountManagerDataSource();
 
-            return ds.DeleteAccountManagerEntry(username);
+            return ds.DeleteAccountManagerEntry(user_name.ToLower());
         }
 
     }
