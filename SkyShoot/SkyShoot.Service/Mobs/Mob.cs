@@ -71,7 +71,6 @@ namespace SkyShoot.Contracts.Mobs
                 {
                     FindTarget(players);
                 }
-                Move();
             }
             _counter++;
         }

@@ -291,7 +291,7 @@ namespace SkyShoot.Service.Session
 			
 			_projectiles.RemoveAll(x => (x==null) || (x.LifeTime <= 0));
 
-			if (_timerCounter % 60 == 0)
+			if (_timerCounter % 10 == 0)
 			{
 				var allObjects = new List<AMob>(_mobs);
 				allObjects.AddRange(Players);
