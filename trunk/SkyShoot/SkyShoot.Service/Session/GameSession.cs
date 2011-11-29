@@ -29,11 +29,11 @@ namespace SkyShoot.Service.Session
         private long _timerCounter;
         private long _intervalToSpawn = 0;
 
-        private float _lastUpdate;
-        private float _updateDelay;
+        private long _lastUpdate;
+        private long _updateDelay;
 
 		private Timer _gameTimer;
-        private bool _updated;
+        private object _updating;
 
         public GameSession(TileSet tileSet, int maxPlayersAllowed, GameMode gameType, int gameID)
         {
@@ -122,28 +122,38 @@ namespace SkyShoot.Service.Session
 			this.SomebodyDies -= player.MobDead;
 			this.StartGame -= player.GameStart;
 			
-            player.GameOver();
-            SomebodyDied(player);
             player.MeMoved -= SomebodyMoved;
             player.MeShot -= SomebodyShot;
             //player.MobSpawned -= SomebodySpawned;
             //player.MobDied -= SomebodyDied;
-			
+
 			Players.Remove(player);
+			
 		}
 
+		public void PlayerDead(MainSkyShootService player)
+		{
+
+			player.GameOver();
+			SomebodyDied(player);            
+			player.Disconnect();//временно
+		}
 		public void Stop()
 		{
-			_gameTimer.Enabled = false;
-			_gameTimer.AutoReset = false;
-			_gameTimer.Elapsed -= TimerElapsedListener;
+			if (_gameTimer != null)
+			{
+				_gameTimer.Enabled = false;
+				_gameTimer.AutoReset = false;
+				_gameTimer.Elapsed -= TimerElapsedListener;
+			}
 			IsStarted = false;
 		}
 
         public void Start()
         {
-			foreach (MainSkyShootService player in Players)
-			{
+			for(int i = 0; i < Players.Count; i++)
+            {
+				var player = Players[i];
 				this.SomebodyMoves += player.MobMoved;
 				player.MeMoved += SomebodyMoved;
 
@@ -156,24 +166,32 @@ namespace SkyShoot.Service.Session
                 
 				this.SomebodyHit += player.Hit;
 
-				player.Coordinates = new Vector2(50,50);
-                player.Speed = Constants.PLAYER_SPEED;
+				player.Coordinates = new Vector2(500,500);
+                player.Speed = Constants.PLAYER_DEFAULT_SPEED;
                 player.Radius = Constants.PLAYER_RADIUS;
-				player.Weapon = new Weapon.Pistol(new Guid());
+				player.Weapon = new Weapon.Pistol(new Guid(),player);
 				player.RunVector = new Vector2(0, 0);
 				player.HealthAmount = 100;
 
 			}
+			System.Threading.Thread.Sleep(1000);
+			if (!IsStarted && StartGame != null)
+			{
+				IsStarted = true;
+				StartGame(Players.ToArray(), _gameLevel);
+			
+			}
 			_timerCounter = 0;
+			_updating = false;
+
+			_lastUpdate = DateTime.Now.Ticks/10000;
+			_updateDelay = 0;
 			_gameTimer = new Timer(Constants.FPS);
 			_gameTimer.AutoReset = true;
 			_gameTimer.Elapsed += TimerElapsedListener;
 			_gameTimer.Start();
-
-			_updated = false;
-               
-            _lastUpdate = DateTime.Now.Millisecond;
-            _updateDelay = 0;
+			Trace.WriteLine("Game Started");
+			
         }
 
 		public bool AddPlayer(MainSkyShootService player)
@@ -190,24 +208,21 @@ namespace SkyShoot.Service.Session
 
 			if (Players.Count == LocalGameDescription.MaximumPlayersAllowed)
 			{
-                Start();
+				Trace.WriteLine("player added"+player.Name);
+				var startThread = new System.Threading.Thread(new System.Threading.ThreadStart(Start));
+				startThread.Start();
+				
+                
 			}
 			return true;
 		}
 
 		private void TimerElapsedListener(object sender, EventArgs e)
-		{
-			if (_updated) return;
-			_updated = true;
-			if (!IsStarted && StartGame != null)
-            {
-                IsStarted = true;
-                StartGame(Players.ToArray(), _gameLevel);
-			}
-			else update();
-			_updated = false;
-			
+		{			
+			update();
+					
 		}
+
 	#region local functions
 		private void SpawnMob()
         {
@@ -216,7 +231,7 @@ namespace SkyShoot.Service.Session
 				_intervalToSpawn = (long) Math.Exp(4.8 - _timerCounter/40000)+3;
                 
                 var mob = _spiderFactory.CreateMob();
-                System.Diagnostics.Trace.WriteLine("MobID: " + mob.Id);
+                System.Diagnostics.Trace.WriteLine("mob spawned" + mob.Id);
 
                 _mobs.Add(mob);
                 SomebodySpawned(mob);
@@ -231,27 +246,25 @@ namespace SkyShoot.Service.Session
         // здесь будут производится обработка всех действий
         private void update() 
         {
-            
+			if (!System.Threading.Monitor.TryEnter(_updating)) return;
+
+			Trace.WriteLine("update begin "+ _timerCounter);
             SpawnMob();
-
-            var now = DateTime.Now.Millisecond;
-            _updateDelay = (_lastUpdate <= now)?now - _lastUpdate:1000 - _lastUpdate + now;
+			 var now = DateTime.Now.Ticks/10000;
+			_updateDelay = now - _lastUpdate;
+			_lastUpdate = DateTime.Now.Ticks/10000;            
 
             
-
-            System.Diagnostics.Trace.WriteLine("updateTime: " + _updateDelay);
 			for (int i = 0; i < _mobs.Count; i++)
 			{
 				var mob = _mobs[i];
                 mob.Think(Players);
                 mob.Coordinates = ComputeMovement(mob);
-                System.Diagnostics.Trace.WriteLine("Mob cord: " + mob.Coordinates); 
+                //System.Diagnostics.Trace.WriteLine("Mob cord: " + mob.Coordinates); 
 
             }
 
-            _lastUpdate = DateTime.Now.Millisecond;
-
-            for(int i = 0; i < Players.Count; i++)
+			for(int i = 0; i < Players.Count; i++)
             {
 				var player = Players[i];
                 player.Coordinates = ComputeMovement(player);
@@ -286,20 +299,24 @@ namespace SkyShoot.Service.Session
 				}
 
 			}
-			
-			
+
 			_projectiles.RemoveAll(x => (x==null) || (x.LifeDistance <= 0));
 
 			if (_timerCounter % 10 == 0)
 			{
 				var allObjects = new List<AMob>(_mobs);
 				allObjects.AddRange(Players);
-				foreach (MainSkyShootService player in Players)
+				for (int i = 0; i < Players.Count; i++)
 				{
-					player.SynchroFrame(allObjects.ToArray());
+					Players[i].SynchroFrame(allObjects.ToArray());
 				}
+				Trace.WriteLine("SynchroFrame");
 			}
+			Trace.WriteLine(System.DateTime.Now.Ticks/10000 - now);
+			Trace.WriteLine("update end " + _timerCounter);
 			_timerCounter++;
+			//_updated = false;
+			System.Threading.Monitor.Exit(_updating);
         }
 
         private Mob hitTestProjectile(AProjectile projectile, Vector2 newCord)
@@ -359,7 +376,7 @@ namespace SkyShoot.Service.Session
 
 					if (player.HealthAmount <= 0)
 					{
-						PlayerLeave(player);
+						PlayerDead(player);
 					}
 				}
 			}
@@ -369,8 +386,8 @@ namespace SkyShoot.Service.Session
 		{
 			var realHeight=_gameLevel.levelHeight-mob.Radius;
 			var realWidth=_gameLevel.levelWidth-mob.Radius;
-			var newCoord = mob.RunVector*mob.Speed*_updateDelay + mob.Coordinates;
-
+			var newCoord = mob.RunVector*mob.Speed*_updateDelay + mob.Coordinates - Constants.LEVEL_CENTER;
+			
 			if(Math.Abs(mob.Coordinates.X) <= realWidth)
 				newCoord.X=Math.Min(Math.Abs(newCoord.X), realWidth) * Math.Sign(newCoord.X);
 			else
@@ -381,7 +398,7 @@ namespace SkyShoot.Service.Session
 			else
 				newCoord.Y = Math.Min(Math.Abs(newCoord.Y), realHeight + _gameLevel.LEVELBORDER) * Math.Sign(newCoord.Y);
             
-			return newCoord;
+			return newCoord + Constants.LEVEL_CENTER;
 		}
 	#endregion
 	}

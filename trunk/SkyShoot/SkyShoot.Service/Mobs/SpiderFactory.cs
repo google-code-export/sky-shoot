@@ -59,7 +59,7 @@ namespace SkyShoot.Contracts.Mobs
             }
 
             var spider = new Spider();
-            spider.Coordinates = new Vector2((float) x, (float ) y);
+            spider.Coordinates = new Vector2((float) x, (float ) y) + Constants.LEVEL_CENTER;
             return spider;
         }
     }

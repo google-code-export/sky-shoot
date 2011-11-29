@@ -63,9 +63,9 @@ namespace SkyShoot.Service.Session
                 var game = _gameSessions.Find(gameSession => gameSession.LocalGameDescription.Players.Contains(playerName));
 				var leavingPlayer = game.Players.Find(x => x.Name == playerName);
                 game.PlayerLeave(leavingPlayer);
-				foreach (var player in game.Players)
+				for(int i = 0; i < game.Players.Count; i++)
 				{
-					player.PlayerLeft(leavingPlayer);
+					game.Players[i].PlayerLeft(leavingPlayer);
 				}
 				if (game.Players.Count == 0)
 				{
