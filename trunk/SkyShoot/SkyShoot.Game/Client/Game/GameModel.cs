@@ -98,8 +98,17 @@ namespace SkyShoot.Game.Client.Game
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            Vector2 myPosition;
 
-            Vector2 myPosition = GetMob(GameController.MyId).Coordinates;
+            try
+            {
+                myPosition = GetMob(GameController.MyId).Coordinates;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return;
+            }
 
             Camera2D.Position = myPosition;
 

@@ -41,11 +41,18 @@ namespace SkyShoot.Game.Client.Weapon
         public void Update(GameTime gameTime)
         {
             int milliseconds = gameTime.ElapsedGameTime.Milliseconds;
-            Coordinates += Direction * Speed * milliseconds;
+
+            Vector2 movement = Direction * Speed * milliseconds; 
+            
+            Coordinates += movement;
+
+            LifeDistance -= movement.Length();
 
             if (Coordinates.X < 0 || Coordinates.X >= GameLevel.Width)
                 IsActive = false;
             if (Coordinates.Y < 0 || Coordinates.Y >= GameLevel.Height)
+                IsActive = false;
+            if (LifeDistance <= 0f)
                 IsActive = false;
         } 
 
