@@ -233,6 +233,9 @@ namespace SkyShoot.Game.Screens
             }
             _gameDescription = GameController.Instance.CreateGame(m, Convert.ToInt32(_maxPlayers.Text), ts);
 
+            if(_gameDescription == null)
+                return;
+
             ExitScreen();
             ScreenManager.AddScreen(new WaitScreen(_tile.Text, _gameMode.Text, _maxPlayers.Text, _gameDescription.GameId));
         }
