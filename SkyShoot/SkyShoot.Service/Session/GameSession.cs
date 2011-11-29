@@ -252,7 +252,7 @@ namespace SkyShoot.Service.Session
             SpawnMob();
 			 var now = DateTime.Now.Ticks/10000;
 			_updateDelay = now - _lastUpdate;
-			_lastUpdate = DateTime.Now.Ticks/10000;            
+			_lastUpdate = now;     
 
             
 			for (int i = 0; i < _mobs.Count; i++)
@@ -384,21 +384,16 @@ namespace SkyShoot.Service.Session
 
         private Vector2 ComputeMovement(AMob mob)
 		{
-			var realHeight=_gameLevel.levelHeight-mob.Radius;
-			var realWidth=_gameLevel.levelWidth-mob.Radius;
-			var newCoord = mob.RunVector*mob.Speed*_updateDelay + mob.Coordinates - Constants.LEVEL_CENTER;
 			
-			if(Math.Abs(mob.Coordinates.X) <= realWidth)
-				newCoord.X=Math.Min(Math.Abs(newCoord.X), realWidth) * Math.Sign(newCoord.X);
-			else
-				newCoord.X=Math.Min(Math.Abs(newCoord.X), realWidth + _gameLevel.LEVELBORDER) * Math.Sign(newCoord.X);
-				
-			if (Math.Abs(mob.Coordinates.Y) <= realHeight)
-				newCoord.Y = Math.Min(Math.Abs(newCoord.Y), realHeight) * Math.Sign(newCoord.Y);
-			else
-				newCoord.Y = Math.Min(Math.Abs(newCoord.Y), realHeight + _gameLevel.LEVELBORDER) * Math.Sign(newCoord.Y);
+			var newCoord = mob.RunVector*mob.Speed*_updateDelay + mob.Coordinates ;
+
+			if (mob.IsPlayer)
+			{
+				newCoord.X = MathHelper.Clamp(newCoord.X, 0, _gameLevel.levelHeight);
+				newCoord.Y = MathHelper.Clamp(newCoord.Y, 0, _gameLevel.levelWidth);
+			}
             
-			return newCoord + Constants.LEVEL_CENTER;
+			return newCoord;
 		}
 	#endregion
 	}
