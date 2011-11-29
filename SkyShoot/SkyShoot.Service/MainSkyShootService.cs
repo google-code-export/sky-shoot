@@ -317,13 +317,13 @@ namespace SkyShoot.Service
             }
             catch (Exception e) { this.Disconnect(); }
 		}
-
-		public void NewPlayerConnected(AMob player)
+		
+		// передает массив игроков данной игры
+		public void PlayerListChanged(String[] names)
 		{
-			var mobCopy = TypeConverter.Mob(player);
 			try
 			{
-				_callback.NewPlayerConnected(mobCopy);
+				_callback.PlayerListChanged(names);
 			}
 			catch(Exception){ this.Disconnect(); }
 

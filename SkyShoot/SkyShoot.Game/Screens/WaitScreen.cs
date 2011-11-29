@@ -65,9 +65,10 @@ namespace SkyShoot.Game.Screens
             {
                 Bounds = new UniRectangle(-60f, -4f, 200f, 300f)
             };
+            // вывод списка игрков
             GameDescription[] tmpGameDescriptionList;
             tmpGameDescriptionList = GameController.Instance.GetGameList();
-            for (int i = 0; i < tmpGameDescriptionList.Length; i++)
+            for (int i = 0; tmpGameDescriptionList != null && i < tmpGameDescriptionList.Length; i++)
             {
                 if (this.GameId == tmpGameDescriptionList[i].GameId)
                 {
@@ -149,34 +150,13 @@ namespace SkyShoot.Game.Screens
             ScreenManager.AddScreen(new MultiplayerScreen());
         }
 
-        public void Refresh()
+        public void ChangePlayerList(String[] names)
         {
             _playersList.Items.Clear();
-            GameDescription[] tmpGameDescriptionList;
-            tmpGameDescriptionList = GameController.Instance.GetGameList();
-            for (int i = 0; i < tmpGameDescriptionList.Length; i++)
-            {
-                if (this.GameId == tmpGameDescriptionList[i].GameId)
-                {
-                    tmpPlayersList = tmpGameDescriptionList[i].Players;
-                }
-            }
-            for (int i = 0; i < tmpPlayersList.Count; i++)
-            {
-                _playersList.Items.Add(tmpPlayersList[i]);
-            }     
-        }
-
-        public override void Update(GameTime gameTime, bool otherHasFocus, bool coveredByOtherScreen)
-        {
-            base.Update(gameTime, otherHasFocus, coveredByOtherScreen);
-            
-            if (ScreenManager.ChangePlayerList)
-            {
-                this.Refresh();
-                ScreenManager.ChangePlayerList = false;
-            }
-
+        	for (int i = 0; i < names.Length; i++)
+        	{
+        		_playersList.Items.Add(names[i]);	
+        	}
         }
 
         public override void Draw(GameTime gameTime)

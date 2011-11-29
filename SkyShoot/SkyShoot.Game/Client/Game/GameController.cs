@@ -104,7 +104,18 @@ namespace SkyShoot.Game.Client.Game
 
         public void PlayerLeft(AMob mob)
         {
-            ScreenManager.ScreenManager.Instance.ChangePlayerList = true;
+        	for (int i = 0; i < ScreenManager.ScreenManager.Instance.GetScreens().Length; i++)
+        	{
+        		if (ScreenManager.ScreenManager.Instance.GetScreens()[i] is WaitScreen)
+        		{
+        			if (ScreenManager.ScreenManager.Instance.GetScreens()[i].IsActive)
+        			{
+        				WaitScreen screen;
+        				screen = (WaitScreen) ScreenManager.ScreenManager.Instance.GetScreens()[i];
+						//screen.RemovePlayer(mob.IsPlayer);
+        			}
+        		}	
+        	}
             //todo popup window
             var clientMob = GameFactory.CreateClientMob(mob);
             GameModel.RemoveMob(clientMob.Id);
@@ -143,9 +154,20 @@ namespace SkyShoot.Game.Client.Game
             }
         }
 
-        public void NewPlayerConnected(AMob player)
+		public void PlayerListChanged(String[] names)
         {
-            ScreenManager.ScreenManager.Instance.ChangePlayerList = true;
+			for (int i = 0; i < ScreenManager.ScreenManager.Instance.GetScreens().Length; i++)
+			{
+				if (ScreenManager.ScreenManager.Instance.GetScreens()[i] is WaitScreen)
+				{
+					if (ScreenManager.ScreenManager.Instance.GetScreens()[i].IsActive)
+					{
+						WaitScreen screen;
+						screen = (WaitScreen) ScreenManager.ScreenManager.Instance.GetScreens()[i];
+						screen.ChangePlayerList(names);
+					}
+				}
+			}			
         }
 
 #endregion

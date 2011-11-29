@@ -122,7 +122,6 @@ namespace SkyShoot.Game.Screens
         {
             //todo setActive
             ExitScreen();
-            ScreenManager.ChangePlayerList = true;
             ScreenManager.AddScreen(new WaitScreen(GameController.Instance.GetGameList()[_gameList.SelectedItems[0]].UsedTileSet + "",
                                                    GameController.Instance.GetGameList()[_gameList.SelectedItems[0]].GameType + "",
                                                    GameController.Instance.GetGameList()[_gameList.SelectedItems[0]].MaximumPlayersAllowed + "",

@@ -120,7 +120,6 @@ namespace SkyShoot.Service.Session
 			this.SomebodyShoots -= player.MobShot;
 			this.SomebodySpawns -= player.SpawnMob;
 			this.SomebodyDies -= player.MobDead;
-			this.NewPlayerConnected -= player.NewPlayerConnected;
 			this.StartGame -= player.GameStart;
 			
             player.GameOver();
@@ -188,7 +187,6 @@ namespace SkyShoot.Service.Session
 			if( NewPlayerConnected != null)	NewPlayerConnected(player);
 
 			StartGame += player.GameStart;
-			NewPlayerConnected += player.NewPlayerConnected;
 
 			if (Players.Count == LocalGameDescription.MaximumPlayersAllowed)
 			{
