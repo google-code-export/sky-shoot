@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 using Nuclex.UserInterface;
@@ -29,6 +29,9 @@ namespace SkyShoot.Game.Screens
         private string MaxPlayers;
         private List<string> tmpPlayersList;
         private int GameId;
+		private static Texture2D _texture;
+		private ContentManager _content;
+		private SpriteBatch spriteBatch;
 
         public WaitScreen(string tile, string gameMod, string maxPlayers, int gameId)
         {
@@ -45,6 +48,10 @@ namespace SkyShoot.Game.Screens
             Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
             _mainScreen = new Screen(viewport.Width, viewport.Height);
             _gui.Screen = _mainScreen;
+			if (_content == null)
+				_content = new ContentManager(ScreenManager.Game.Services, "Content");
+
+			_texture = _content.Load<Texture2D>("Textures/screens/screen_02_fix");
 
             _mainScreen.Desktop.Bounds = new UniRectangle(
                 new UniScalar(0.1f, 0.0f), new UniScalar(0.1f, 0.0f),
@@ -161,6 +168,10 @@ namespace SkyShoot.Game.Screens
 
         public override void Draw(GameTime gameTime)
         {
+			spriteBatch = ScreenManager.SpriteBatch;
+			spriteBatch.Begin();
+			spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
+			spriteBatch.End();
             base.Draw(gameTime);
             _gui.Draw(gameTime);
         }
