@@ -39,8 +39,11 @@ namespace SkyShoot.Game.Client.Players
             int milliseconds = gameTime.ElapsedGameTime.Milliseconds;
             Coordinates += RunVector * Speed * milliseconds;
 
-            Coordinates.X = MathHelper.Clamp(Coordinates.X, 0, GameLevel.Width);
-            Coordinates.Y = MathHelper.Clamp(Coordinates.Y, 0, GameLevel.Height);
+            if (IsPlayer)
+            {
+                Coordinates.X = MathHelper.Clamp(Coordinates.X, 0, GameLevel.Width);
+                Coordinates.Y = MathHelper.Clamp(Coordinates.Y, 0, GameLevel.Height);
+            }
         }
 
     }

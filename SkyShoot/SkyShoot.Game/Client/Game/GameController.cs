@@ -71,8 +71,16 @@ namespace SkyShoot.Game.Client.Game
 
         public void Hit(AMob mob, AProjectile projectile)
         {
-            GameModel.GetMob(mob.Id).HealthAmount -= projectile.Damage;
-            GameModel.RemoveProjectile(projectile.Id);
+            if (projectile != null)
+            {
+                GameModel.GetMob(mob.Id).HealthAmount -= projectile.Damage;
+                GameModel.RemoveProjectile(projectile.Id);
+            }
+            else
+            {
+                //todo
+                //GameModel.GetMob(MyId).HealthAmount -= mob.Damage;
+            }
         }
 
         public void MobDead(AMob mob)
@@ -103,7 +111,11 @@ namespace SkyShoot.Game.Client.Game
 
         public void GameOver()
         {
-            throw new System.NotImplementedException();
+            //todo setActive
+            // close all screens
+            foreach (GameScreen screen in ScreenManager.ScreenManager.Instance.GetScreens()) screen.ExitScreen();
+            // back to multiplayer screen
+            ScreenManager.ScreenManager.Instance.AddScreen(new MainMenuScreen());
         }
 
         public void PlayerLeft(AMob mob)
@@ -181,6 +193,11 @@ namespace SkyShoot.Game.Client.Game
 
         public void HandleInput(InputState inputState)
         {
+            var player = GameModel.GetMob(MyId);
+
+            if (player == null)
+                return;
+
             // current RunVector
             Vector2 currentRunVector = inputState.RunVector(inputState.CurrentKeyboardState);
             // previous RunVector
@@ -189,23 +206,22 @@ namespace SkyShoot.Game.Client.Game
             if (!currentRunVector.Equals(previousRunVector))
             {
                 Move(currentRunVector);
-                GameModel.GetMob(MyId).RunVector = currentRunVector;
+                player.RunVector = currentRunVector;
             }
 
             var mouseState = inputState.CurrentMouseState;
             var mouseCoordinates = new Vector2(mouseState.X, mouseState.Y);
 
-            var aMob = GameModel.GetMob(MyId);
-            aMob.ShootVector = mouseCoordinates - GameModel.Camera2D.ConvertToLocal(aMob.Coordinates);
-            if(aMob.ShootVector.Length() > 0)
-                aMob.ShootVector.Normalize();
+            player.ShootVector = mouseCoordinates - GameModel.Camera2D.ConvertToLocal(player.Coordinates);
+            if(player.ShootVector.Length() > 0)
+                player.ShootVector.Normalize();
 
             if (inputState.CurrentMouseState.LeftButton == ButtonState.Pressed)
             {
                 if ((DateTime.Now - _dateTime).Milliseconds > Rate)
                 {
                     _dateTime = DateTime.Now;
-                    Shoot(aMob.ShootVector);
+                    Shoot(player.ShootVector);
                 }
             }
         }
