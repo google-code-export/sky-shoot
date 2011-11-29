@@ -101,6 +101,7 @@ namespace SkyShoot.Game.Screens
         private void BackButtonPressed(object sender, EventArgs args)
         {
             ExitScreen();
+			ScreenManager.AddScreen(new MainMenuScreen());
         }
 
         private void LoginButtonPressed(object sender, EventArgs args)

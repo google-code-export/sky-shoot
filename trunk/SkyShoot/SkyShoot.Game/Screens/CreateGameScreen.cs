@@ -31,7 +31,6 @@ namespace SkyShoot.Game.Screens
         private LabelControl _gameMode;
         private ButtonControl _backButton;
         private ButtonControl _createButton;
-        private int gameId;
 
         public CreateGameScreen()
         {

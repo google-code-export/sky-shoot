@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using SkyShoot.Game.Client.View;
 using SkyShoot.Game.ScreenManager;
 using Nuclex.UserInterface;
 using Nuclex.UserInterface.Controls.Desktop;
@@ -15,6 +16,9 @@ namespace SkyShoot.Game.Screens
     {
         private GuiManager _gui;
         private Screen _mainScreen;
+		private static Texture2D _texture;
+		private ContentManager _content;
+    	private SpriteBatch spriteBatch;
 
         public override void LoadContent()
         {
@@ -22,6 +26,13 @@ namespace SkyShoot.Game.Screens
             _gui = ScreenManager.Gui;
             Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
             _mainScreen = new Screen(viewport.Width, viewport.Height);
+			_gui.Screen = _mainScreen;
+
+			if (_content == null)
+				_content = new ContentManager(ScreenManager.Game.Services, "Content");
+
+			_texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");
+
             _mainScreen.Desktop.Bounds = new UniRectangle(
               new UniScalar(0.1f, 0.0f), new UniScalar(0.1f, 0.0f),
               new UniScalar(0.8f, 0.0f), new UniScalar(0.8f, 0.0f)
@@ -48,8 +59,6 @@ namespace SkyShoot.Game.Screens
             };
             _mainScreen.Desktop.Children.Add(_exitButton);
 
-            
-
             _playGameButton.Pressed += PlayGameButtonPressed;
             _optionsButton.Pressed += OptionsButtonPressed;
             _exitButton.Pressed += ExitMenuButtonPressed;
@@ -58,12 +67,14 @@ namespace SkyShoot.Game.Screens
         
         void PlayGameButtonPressed(object sender, EventArgs e)
         {
+			ExitScreen();
             ScreenManager.AddScreen(new LoginScreen()); 
         }
 
 
         void OptionsButtonPressed(object sender, EventArgs e)
         {
+			ExitScreen();
             ScreenManager.AddScreen(new OptionsMenuScreen());
         }
 
@@ -72,12 +83,19 @@ namespace SkyShoot.Game.Screens
             ScreenManager.Game.Exit();
         }
 
+		public override void Update(GameTime gameTime, bool otherHasFocus, bool coveredByOtherScreen)
+		{
+			base.Update(gameTime, otherHasFocus, coveredByOtherScreen);
+		}
 
         public override void Draw(GameTime gameTime)
-        {
-            base.Draw(gameTime);
-            _gui.Screen = _mainScreen;
-            _gui.Draw(gameTime);
+		{
+			spriteBatch = ScreenManager.SpriteBatch;
+			spriteBatch.Begin();
+			spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
+			spriteBatch.End();
+			_gui.Draw(gameTime);
+			base.Draw(gameTime);
         }
     }
 }

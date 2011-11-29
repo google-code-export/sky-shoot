@@ -203,6 +203,7 @@ namespace SkyShoot.Game.Screens
         void BackButtonPressed(object sender, EventArgs e)
         {
             ExitScreen();
+			ScreenManager.AddScreen(new MainMenuScreen());
         }
 
 		void FullScreenSelected(object sender, EventArgs e)
