@@ -44,7 +44,7 @@ namespace SkyShoot.Contracts.Session
 
         public GameDescription()
         {
-           
+
         }
     }
 }

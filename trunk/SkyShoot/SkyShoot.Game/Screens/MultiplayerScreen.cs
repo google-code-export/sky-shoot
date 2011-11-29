@@ -1,6 +1,9 @@
 ﻿using System;
 
+using System.Diagnostics;
+
 using Microsoft.Xna.Framework;
+
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -9,9 +12,13 @@ using Nuclex.UserInterface;
 using Nuclex.UserInterface.Controls;
 
 using Nuclex.UserInterface.Controls.Desktop;
+
 using SkyShoot.Contracts.Session;
-using SkyShoot.Game.Client.Game;
+
 using SkyShoot.Game.ScreenManager;
+
+using SkyShoot.Game.Client.Game;
+
 
 namespace SkyShoot.Game.Screens
 {
@@ -25,15 +32,10 @@ namespace SkyShoot.Game.Screens
         private ListControl _gameList;
         private Screen _mainScreen;
         private LabelControl _mapLabel;
-        private GameDescription[] tempGameList;
+        private GameDescription[] _tempGameList;
 		private static Texture2D _texture;
 		private ContentManager _content;
-		private SpriteBatch spriteBatch;
-
-        public MultiplayerScreen()
-        {
-
-        }
+		private SpriteBatch _spriteBatch;
 
         public override void LoadContent()
         {
@@ -103,10 +105,14 @@ namespace SkyShoot.Game.Screens
             //
             // запрос списка игр с сервера и его вывод
             //
-            tempGameList = GameController.Instance.GetGameList();
-            for (int i = 0; i < tempGameList.Length; i++)
+            _tempGameList = GameController.Instance.GetGameList();
+
+            if(_tempGameList == null)
+                return;
+
+            foreach (GameDescription gameDescription in _tempGameList)
             {
-                _gameList.Items.Add(tempGameList[i].ToString());
+                _gameList.Items.Add(gameDescription.ToString());
             }
             _gameList.SelectionMode = ListSelectionMode.Single;
             _gameList.SelectedItems.Add(4);
@@ -119,7 +125,7 @@ namespace SkyShoot.Game.Screens
                 Text = "Refresh",
                 Bounds = new UniRectangle(new UniScalar(0.5f, -20f), new UniScalar(0.4f, 140f), 120, 32)
             };
-            _refreshButton.Pressed += RefreshPressed;
+            _refreshButton.Pressed += RefreshButtonPressed;
             _mainScreen.Desktop.Children.Add(_refreshButton);
 
         }
@@ -134,15 +140,23 @@ namespace SkyShoot.Game.Screens
         {
             //todo setActive
             ExitScreen();
-            ScreenManager.AddScreen(new WaitScreen(GameController.Instance.GetGameList()[_gameList.SelectedItems[0]].UsedTileSet + "",
-                                                   GameController.Instance.GetGameList()[_gameList.SelectedItems[0]].GameType + "",
-                                                   GameController.Instance.GetGameList()[_gameList.SelectedItems[0]].MaximumPlayersAllowed + "",
-                                                   GameController.Instance.GetGameList()[_gameList.SelectedItems[0]].GameId
-                                                   )
-                                                   );
 
-            //todo temporary
-            GameController.Instance.JoinGame(GameController.Instance.GetGameList()[_gameList.SelectedItems[0]]);
+            _tempGameList = GameController.Instance.GetGameList();
+
+            if (_tempGameList == null)
+                return;
+
+            ScreenManager.AddScreen(new WaitScreen(
+                _tempGameList[_gameList.SelectedItems[0]].UsedTileSet + "",
+                _tempGameList[_gameList.SelectedItems[0]].GameType + "",
+                _tempGameList[_gameList.SelectedItems[0]].MaximumPlayersAllowed + "",
+                _tempGameList[_gameList.SelectedItems[0]].GameId));
+
+            if(!GameController.Instance.JoinGame(_tempGameList[_gameList.SelectedItems[0]]))
+            {
+                //todo popup
+                Trace.WriteLine("Join game failed");
+            }
 
         }
 
@@ -157,22 +171,26 @@ namespace SkyShoot.Game.Screens
 
         }
 
-        private void RefreshPressed(object sender, EventArgs args)
+        private void RefreshButtonPressed(object sender, EventArgs args)
         {
             _gameList.Items.Clear();
-            tempGameList = GameController.Instance.GetGameList();
-            for (int i = 0; i < tempGameList.Length; i++)
+            _tempGameList = GameController.Instance.GetGameList();
+
+            if (_tempGameList == null)
+                return;
+
+            foreach (GameDescription gameDescription in _tempGameList)
             {
-                _gameList.Items.Add(tempGameList[i].ToString());
+                _gameList.Items.Add(gameDescription.ToString());
             }
         }
 
         public override void Draw(GameTime gameTime)
         {
-			spriteBatch = ScreenManager.SpriteBatch;
-			spriteBatch.Begin();
-			spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
-			spriteBatch.End();
+			_spriteBatch = ScreenManager.SpriteBatch;
+			_spriteBatch.Begin();
+			_spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
+			_spriteBatch.End();
             base.Draw(gameTime);
             _gui.Draw(gameTime);
         }

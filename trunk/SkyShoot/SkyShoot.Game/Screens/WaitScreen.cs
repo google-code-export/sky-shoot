@@ -1,6 +1,9 @@
 ﻿using System;
+
 using System.Collections.Generic;
+
 using Microsoft.Xna.Framework;
+
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -9,9 +12,12 @@ using Nuclex.UserInterface;
 using Nuclex.UserInterface.Controls;
 
 using Nuclex.UserInterface.Controls.Desktop;
+
 using SkyShoot.Contracts.Session;
-using SkyShoot.Game.Client.Game;
+
 using SkyShoot.Game.ScreenManager;
+
+using SkyShoot.Game.Client.Game;
 
 namespace SkyShoot.Game.Screens
 {
@@ -24,21 +30,21 @@ namespace SkyShoot.Game.Screens
         private ButtonControl _leaveButton;
         private LabelControl _gameModeLabel;
         private LabelControl _maxPlayersLabel;
-        private string Tile;
-        private string GameMode;
-        private string MaxPlayers;
-        private List<string> tmpPlayersList;
-        private int GameId;
+        private readonly string _tile;
+        private readonly string _gameMode;
+        private readonly string _maxPlayers;
+        private List<string> _tmpPlayersList;
+        private readonly int _gameId;
 		private static Texture2D _texture;
 		private ContentManager _content;
-		private SpriteBatch spriteBatch;
+		private SpriteBatch _spriteBatch;
 
         public WaitScreen(string tile, string gameMod, string maxPlayers, int gameId)
         {
-            this.Tile = tile;
-            this.GameMode = gameMod;
-            this.MaxPlayers = maxPlayers;
-            this.GameId = gameId;
+            _tile = tile;
+            _gameMode = gameMod;
+            _maxPlayers = maxPlayers;
+            _gameId = gameId;
         }
 
         public override void LoadContent()
@@ -72,20 +78,24 @@ namespace SkyShoot.Game.Screens
             {
                 Bounds = new UniRectangle(-60f, -4f, 200f, 300f)
             };
+
             // вывод списка игрков
-            GameDescription[] tmpGameDescriptionList;
-            tmpGameDescriptionList = GameController.Instance.GetGameList();
-            for (int i = 0; tmpGameDescriptionList != null && i < tmpGameDescriptionList.Length; i++)
+            GameDescription[] tmpGameDescriptionList = GameController.Instance.GetGameList();
+
+            if(tmpGameDescriptionList == null)
+                return;
+
+            foreach (GameDescription gameDescription in tmpGameDescriptionList)
             {
-                if (this.GameId == tmpGameDescriptionList[i].GameId)
+                if (_gameId == gameDescription.GameId)
                 {
-                    tmpPlayersList = tmpGameDescriptionList[i].Players;
+                    _tmpPlayersList = gameDescription.Players;
                 }
             }
-            for (int i = 0; i < tmpPlayersList.Count; i++)
+            foreach (string player in _tmpPlayersList)
             {
-                _playersList.Items.Add(tmpPlayersList[i]);
-            }   
+                _playersList.Items.Add(player);
+            }
             _playersList.Slider.Bounds.Location.X.Offset -= 1.0f;
             _playersList.Slider.Bounds.Location.Y.Offset += 1.0f;
             _playersList.Slider.Bounds.Size.Y.Offset -= 2.0f;
@@ -114,7 +124,7 @@ namespace SkyShoot.Game.Screens
             _maxPlayersLabel = new LabelControl
             {
                 Bounds = new UniRectangle(320f, 200f, 100f, 24f),
-                Text = Tile
+                Text = _tile
             };
             _mainScreen.Desktop.Children.Add(_maxPlayersLabel);
 
@@ -129,7 +139,7 @@ namespace SkyShoot.Game.Screens
             _gameModeLabel = new LabelControl
             {
                 Bounds = new UniRectangle(320f, 234f, 100f, 24f),
-                Text = GameMode
+                Text = _gameMode
             };
             _mainScreen.Desktop.Children.Add(_gameModeLabel);
 
@@ -144,7 +154,7 @@ namespace SkyShoot.Game.Screens
             _maxPlayersLabel = new LabelControl
             {
                 Bounds = new UniRectangle(320f, 268f, 100f, 24f),
-                Text = MaxPlayers
+                Text = _maxPlayers
             };
             _mainScreen.Desktop.Children.Add(_maxPlayersLabel);
             
@@ -160,18 +170,18 @@ namespace SkyShoot.Game.Screens
         public void ChangePlayerList(String[] names)
         {
             _playersList.Items.Clear();
-        	for (int i = 0; i < names.Length; i++)
-        	{
-        		_playersList.Items.Add(names[i]);	
-        	}
+            foreach (string playerName in names)
+            {
+                _playersList.Items.Add(playerName);
+            }
         }
 
         public override void Draw(GameTime gameTime)
         {
-			spriteBatch = ScreenManager.SpriteBatch;
-			spriteBatch.Begin();
-			spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
-			spriteBatch.End();
+			_spriteBatch = ScreenManager.SpriteBatch;
+			_spriteBatch.Begin();
+			_spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
+			_spriteBatch.End();
             base.Draw(gameTime);
             _gui.Draw(gameTime);
         }

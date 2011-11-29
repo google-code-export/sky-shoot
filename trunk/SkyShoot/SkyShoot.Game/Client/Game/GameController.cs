@@ -1,5 +1,6 @@
 using System;
 
+using System.Diagnostics;
 using System.ServiceModel;
 
 using Microsoft.Xna.Framework;
@@ -37,7 +38,10 @@ namespace SkyShoot.Game.Client.Game
 
         public GameModel GameModel { get; private set; }
 
-        private GameController() {}
+        private GameController()
+        {
+            InitConnection();
+        }
 
 #region ServerInput
 
@@ -110,9 +114,8 @@ namespace SkyShoot.Game.Client.Game
         		{
         			if (ScreenManager.ScreenManager.Instance.GetScreens()[i].IsActive)
         			{
-        				WaitScreen screen;
-        				screen = (WaitScreen) ScreenManager.ScreenManager.Instance.GetScreens()[i];
-						//screen.RemovePlayer(mob.IsPlayer);
+        			    var waitScreen = (WaitScreen)ScreenManager.ScreenManager.Instance.GetScreens()[i];
+        			    //screen.RemovePlayer(mob.IsPlayer);
         			}
         		}	
         	}
@@ -162,9 +165,8 @@ namespace SkyShoot.Game.Client.Game
 				{
 					if (ScreenManager.ScreenManager.Instance.GetScreens()[i].IsActive)
 					{
-						WaitScreen screen;
-						screen = (WaitScreen) ScreenManager.ScreenManager.Instance.GetScreens()[i];
-						screen.ChangePlayerList(names);
+					    WaitScreen screen = (WaitScreen) ScreenManager.ScreenManager.Instance.GetScreens()[i];
+					    screen.ChangePlayerList(names);
 					}
 				}
 			}			
@@ -208,36 +210,45 @@ namespace SkyShoot.Game.Client.Game
             }
         }
 
-        public bool Register(string username, string password)
+        private void InitConnection()
         {
             var channelFactory = new DuplexChannelFactory<ISkyShootService>(this, "SkyShootEndpoint");
+            _service = channelFactory.CreateChannel();            
+        }
 
-            _service = channelFactory.CreateChannel();
+        private void FatalError(Exception e)
+        {
+            Trace.WriteLine(e);
 
+            // close all screens
+            foreach (GameScreen screen in ScreenManager.ScreenManager.Instance.GetScreens()) screen.ExitScreen();
+            // back to multiplayer screen
+            ScreenManager.ScreenManager.Instance.AddScreen(new GameplayScreen());
+        }
+
+        public bool Register(string username, string password)
+        {
             try
             {
                 return _service.Register(username, password);
             }
-            catch (EndpointNotFoundException)
+            catch (Exception e)
             {
+                FatalError(e);
                 return false;
             }
         }
 
         public Guid? Login(string username, string password)
         {
-            var channelFactory = new DuplexChannelFactory<ISkyShootService>(this, "SkyShootEndpoint");
-
-            _service = channelFactory.CreateChannel();
-
             Guid? login = null;
             try
             {
                 login = _service.Login(username, password);
             }
-            catch (EndpointNotFoundException)
+            catch (Exception e)
             {
-                
+                FatalError(e);
             }
             if (login.HasValue)
             {
@@ -249,49 +260,108 @@ namespace SkyShoot.Game.Client.Game
                 Console.WriteLine("Connection failed");
             }
 
-            Console.WriteLine(login);
+            //Console.WriteLine(login);
 
             return login;
         }
 
         public GameDescription[] GetGameList()
         {
-            return _service.GetGameList();
+            try
+            {
+                return _service.GetGameList();
+            }
+            catch (Exception e)
+            {
+                FatalError(e);
+                return null;
+            }
         }
 
         public GameDescription CreateGame(GameMode mode, int maxPlayers, TileSet tile)
         {
-            return _service.CreateGame(mode, maxPlayers, tile);
+            try
+            {
+                return _service.CreateGame(mode, maxPlayers, tile);
+            }
+            catch (Exception e)
+            {
+                FatalError(e);
+                return null;
+            }
         }
 
         public bool JoinGame(GameDescription game)
         {
-            return _service.JoinGame(game);
+            try
+            {
+                return _service.JoinGame(game);
+            }
+            catch (Exception e)
+            {
+                FatalError(e);
+                return false;
+            }
         }
 
         public void Move(Vector2 direction)
         {
-            _service.Move(direction);
+            try
+            {
+                _service.Move(direction);
+            }
+            catch (Exception e)
+            {
+                FatalError(e);
+            }
         }
 
         public void Shoot(Vector2 direction)
         {
-            _service.Shoot(direction);
+            try
+            {
+                _service.Shoot(direction);
+            }
+            catch (Exception e)
+            {
+                FatalError(e);
+            }
         }
 
         public void TakeBonus(AObtainableDamageModifier bonus)
         {
-            _service.TakeBonus(bonus);
+            try
+            {
+                _service.TakeBonus(bonus);
+            }
+            catch (Exception e)
+            {
+                FatalError(e);
+            }
         }
 
         public void TakePerk(Perk perk)
         {
-            _service.TakePerk(perk);
+            try
+            {
+                _service.TakePerk(perk);
+            }
+            catch (Exception e)
+            {
+                FatalError(e);
+            }
         }
 
         public void LeaveGame()
         {
-            _service.LeaveGame();
+            try
+            {
+                _service.LeaveGame();
+            }
+            catch (Exception e)
+            {
+                FatalError(e);
+            }
         }
 
 #endregion

@@ -1,5 +1,5 @@
 ﻿using System;
-using Microsoft.Xna.Framework.Content;
+
 using Nuclex.UserInterface;
 
 using Nuclex.UserInterface.Controls;
@@ -8,7 +8,9 @@ using Nuclex.UserInterface.Controls.Desktop;
 
 using Microsoft.Xna.Framework;
 
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+
 using SkyShoot.Game.Client.Game;
 
 
@@ -27,7 +29,7 @@ namespace SkyShoot.Game.Screens
         private Screen _mainScreen;
 		private static Texture2D _texture;
 		private ContentManager _content;
-		private SpriteBatch spriteBatch;
+		private SpriteBatch _spriteBatch;
 
         public override void LoadContent()
         {
@@ -138,10 +140,10 @@ namespace SkyShoot.Game.Screens
 
         public override void Draw(GameTime gameTime)
         {
-			spriteBatch = ScreenManager.SpriteBatch;
-			spriteBatch.Begin();
-			spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
-			spriteBatch.End();
+			_spriteBatch = ScreenManager.SpriteBatch;
+			_spriteBatch.Begin();
+			_spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
+			_spriteBatch.End();
             base.Draw(gameTime);
             _gui.Draw(gameTime);
         }
