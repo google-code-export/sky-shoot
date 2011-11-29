@@ -34,6 +34,8 @@ namespace SkyShoot.Game.Screens
 		private ChoiceControl targetButton;
         private ButtonControl backButton;
         private ContentManager _content;
+		private static Texture2D _texture;
+		private SpriteBatch spriteBatch;
 
         public static short curs = 1;
 
@@ -48,6 +50,10 @@ namespace SkyShoot.Game.Screens
             Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
             optionsScreen = new Nuclex.UserInterface.Screen(viewport.Width, viewport.Height);
             gui.Screen = optionsScreen;
+			if (_content == null)
+				_content = new ContentManager(ScreenManager.Game.Services, "Content");
+
+			_texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");
 
             optionsScreen.Desktop.Bounds = new UniRectangle(
                 new UniScalar(0.1f, 0.0f), new UniScalar(0.1f, 0.0f),
@@ -216,10 +222,13 @@ namespace SkyShoot.Game.Screens
 
         public override void Draw(GameTime gameTime)
         {
+			spriteBatch = ScreenManager.SpriteBatch;
+			spriteBatch.Begin();
+			spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
+			spriteBatch.End();
             base.Draw(gameTime);
             gui.Draw(gameTime);
 			GraphicsDevice graphicsDevice = ScreenManager.GraphicsDevice;
-			SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
 			spriteBatch.Begin(SpriteSortMode.Texture, BlendState.AlphaBlend);
 			Vector2 pos1 = new Vector2(250f, 370f);
 			Vector2 pos2 = new Vector2(340f, 370f);

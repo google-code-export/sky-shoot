@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net.Mime;
 using Microsoft.Xna.Framework;
-
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 using Nuclex.UserInterface;
@@ -31,6 +31,9 @@ namespace SkyShoot.Game.Screens
         private LabelControl _gameMode;
         private ButtonControl _backButton;
         private ButtonControl _createButton;
+		private static Texture2D _texture;
+		private ContentManager _content;
+		private SpriteBatch spriteBatch;
 
         public CreateGameScreen()
         {
@@ -44,6 +47,10 @@ namespace SkyShoot.Game.Screens
             Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
             _mainScreen = new Screen(viewport.Width, viewport.Height);
             _gui.Screen = _mainScreen;
+			if (_content == null)
+				_content = new ContentManager(ScreenManager.Game.Services, "Content");
+
+			_texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");
 
             _mainScreen.Desktop.Bounds = new UniRectangle(
                 new UniScalar(0.1f, 0.0f), new UniScalar(0.1f, 0.0f),
@@ -232,6 +239,10 @@ namespace SkyShoot.Game.Screens
 
         public override void Draw(GameTime gameTime)
         {
+			spriteBatch = ScreenManager.SpriteBatch;
+			spriteBatch.Begin();
+			spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
+			spriteBatch.End();
             base.Draw(gameTime);
             _gui.Draw(gameTime);
         }
