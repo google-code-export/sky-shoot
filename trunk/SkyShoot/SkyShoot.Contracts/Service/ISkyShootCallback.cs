@@ -1,4 +1,5 @@
-﻿using System.ServiceModel;
+﻿using System;
+using System.ServiceModel;
 
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Session;
@@ -49,7 +50,7 @@ namespace SkyShoot.Contracts.Service
         void SynchroFrame(AMob[] mobs);
 
 		[OperationContract(IsOneWay = true)]
-		void NewPlayerConnected(AMob player);
+		void PlayerListChanged(String[] names);
 
     }
 }

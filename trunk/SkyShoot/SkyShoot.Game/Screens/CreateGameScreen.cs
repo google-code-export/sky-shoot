@@ -186,7 +186,6 @@ namespace SkyShoot.Game.Screens
 
         private void CreateButtonPressed(object sender, EventArgs args)
         {
-            ScreenManager.ChangePlayerList = true;
             GameMode m;
             TileSet ts;
             GameDescription _gameDescription;
