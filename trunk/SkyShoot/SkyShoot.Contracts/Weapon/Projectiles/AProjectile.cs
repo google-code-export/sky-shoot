@@ -8,67 +8,69 @@ using SkyShoot.Contracts.Mobs;
 
 namespace SkyShoot.Contracts.Weapon.Projectiles
 {
-    [DataContract]
-    public class AProjectile
-    {
-        protected AProjectile(AMob owner, Guid id, Vector2 direction)
-        {
-            Owner = owner;
-            Id = id;
-            Direction = direction;
+	[DataContract]
+	public class AProjectile
+	{
+		protected AProjectile(AMob owner, Guid id, Vector2 direction)
+		{
+			Owner = owner;
+			Id = id;
+			Direction = direction;
 			Coordinates = owner.Coordinates;
-        }
+		}
 
-        protected AProjectile()
-        {
-            Owner = null;
-        }
+		protected AProjectile()
+		{
+			Owner = null;
+		}
 
-				public void Copy(AProjectile other)
-				{
-					this.Coordinates = other.Coordinates;
-					this.Damage = other.Damage;
-					this.Direction = other.Direction;
-					this.Id = other.Id;
-					this.LifeTime = other.LifeTime;
-					this.Owner = other.Owner;
-					this.Speed = other.Speed;
-					this.Type = other.Type;
-				}
+		public void Copy(AProjectile other)
+		{
+			this.Coordinates = other.Coordinates;
+			this.Damage = other.Damage;
+			this.Direction = other.Direction;
+			this.Id = other.Id;
+			this.LifeDistance = other.LifeDistance;
+			this.Owner = other.Owner;
+			this.Speed = other.Speed;
+			this.Type = other.Type;
+		}
 
-				public AProjectile(AProjectile other)
-				{
-					Copy(other);
-				}
+		public AProjectile(AProjectile other)
+		{
+			Copy(other);
+		}
 
-        [DataMember]
-        public Guid Id { get; set; }
+		[DataMember]
+		public Guid Id { get; set; }
 
-        public AMob Owner { get; set; }
+		public AMob Owner { get; set; }
 
-        [DataMember]
-        public Vector2 Coordinates;// { get; set; } // вероятно, set должен быть public-методом
+		[DataMember]
+		public Vector2 Coordinates;// { get; set; } // вероятно, set должен быть public-методом
 
-        [DataMember]
-        public Vector2 Direction;// { get; set; }
+		[DataMember]
+		public Vector2 Direction;// { get; set; }
 
-        [DataMember]
-        public float Speed { get; set; }
+		[DataMember]
+		public float Speed { get; set; }
 
-        [DataMember]
-        public int LifeTime { get; set; }
+		[DataMember]
+		public float LifeDistance { get; set; }
 
-        [DataMember]
-        public float Damage { get; set; }
+		[DataMember]
+		public float Damage { get; set; }
 
-        public enum EnumBulletType
-        {
-            Bullet,
-            Rocket,
-            Flame,
-        }
+		public Vector2 OldCoordinates;
 
-        [DataMember]
-        public EnumBulletType Type { get; set; }
-    }
+		public enum EnumBulletType
+		{
+			Bullet,
+			Rocket,
+			Flame,
+		}
+
+		[DataMember]
+		public EnumBulletType Type { get; set; }
+	}
 }

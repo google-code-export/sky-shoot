@@ -10,7 +10,7 @@ namespace SkyShoot.Service.Weapon.Bullets
     {
         private const float SPEED = 10;
         private const float DAMAGE = 2;
-        private const int LIFE_TIME = 120;
+        private const float LIFE_DISTANCE= 3000;
         private const EnumBulletType TYPE = EnumBulletType.Bullet;
 
         public ShotgunBullet(AMob owner, Guid id, Vector2 direction)
@@ -18,7 +18,7 @@ namespace SkyShoot.Service.Weapon.Bullets
         {
             Speed = SPEED;
             Damage = DAMAGE;
-            LifeTime = LIFE_TIME;
+			LifeDistance = LIFE_DISTANCE;
             Type = TYPE;
         }
     }

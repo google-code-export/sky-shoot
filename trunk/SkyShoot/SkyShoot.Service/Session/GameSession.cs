@@ -270,8 +270,9 @@ namespace SkyShoot.Service.Session
 				var hitedMob = hitTestProjectile(projectile, newCord);
 				if (hitedMob == null)
 				{
+					projectile.OldCoordinates = projectile.Coordinates;
 					projectile.Coordinates = newCord;
-					projectile.LifeTime--;
+					projectile.LifeDistance -= Vector2.Distance(projectile.Coordinates, projectile.OldCoordinates);
 				}
 				else
 				{
@@ -281,13 +282,13 @@ namespace SkyShoot.Service.Session
 					{
 						MobDead(hitedMob);
 					}
-					projectile.LifeTime = -1;
+					projectile.LifeDistance = -1;
 				}
 
 			}
 			
 			
-			_projectiles.RemoveAll(x => (x==null) || (x.LifeTime <= 0));
+			_projectiles.RemoveAll(x => (x==null) || (x.LifeDistance <= 0));
 
 			if (_timerCounter % 10 == 0)
 			{
