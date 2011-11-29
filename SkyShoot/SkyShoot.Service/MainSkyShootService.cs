@@ -55,6 +55,8 @@ namespace SkyShoot.Service
 			InstanceContextMode = InstanceContextMode.PerSession)]
 	public class MainSkyShootService : AMob, ISkyShootService, ISkyShootCallback
 	{
+		public static int globalID = 0;
+		public int localID;
 		private ISkyShootCallback _callback;
 		public string Name;
 
@@ -65,7 +67,7 @@ namespace SkyShoot.Service
 
 		private static readonly List<MainSkyShootService> ClientsList = new List<MainSkyShootService>();
 
-	    public MainSkyShootService() : base(new Vector2(0, 0), Guid.NewGuid()) {}
+		public MainSkyShootService() : base(new Vector2(0, 0), Guid.NewGuid()) { localID = globalID; globalID++; }
 
 		public void Disconnect() { _sessionManager.LeaveGame(this.Name); }
 
@@ -191,18 +193,19 @@ namespace SkyShoot.Service
 		public void GameStart(AMob[] mobs,GameLevel arena)
 		{
             var mobsCopy = TypeConverter.Mobs(mobs);
-
+			
             try
             {
                 _callback.GameStart(mobsCopy, arena);
             }
             catch (Exception e) { this.Disconnect(); }
+			Trace.WriteLine("callback: GameStarted");
 		}
 
 		public void SpawnMob(AMob mob)
 		{
             var mobCopy = TypeConverter.Mob(mob);
-			Trace.WriteLine("callback.SpawnMob(mID: " + mob.Id + ")");
+			//Trace.WriteLine("callback.SpawnMob(mID: " + mob.Id + ")");
 
             try
             {

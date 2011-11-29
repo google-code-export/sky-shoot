@@ -36,14 +36,14 @@ namespace SkyShoot.Contracts.Mobs
 			float distance = 1000000;
 			float temp;
 
-			foreach (MainSkyShootService player in targetPlayers)
+			for (int i = 0; i < targetPlayers.Count;i++ )
 			{
-				temp = Vector2.Distance(Coordinates, player.Coordinates);
+				temp = Vector2.Distance(Coordinates, targetPlayers[i].Coordinates);
 
 				if (distance > temp)
 				{
 					distance = temp;
-					targetPlayer = player;
+					targetPlayer = targetPlayers[i];
 				}
 			}
 		}
@@ -67,7 +67,7 @@ namespace SkyShoot.Contracts.Mobs
 
 		public virtual void Think(List<MainSkyShootService> players)
 		{
-			if (_counter % 20 == 0)
+			if (_counter % 10 == 0)
 			{
 				if (!players.Contains(targetPlayer) || targetPlayer == null)
 				{
