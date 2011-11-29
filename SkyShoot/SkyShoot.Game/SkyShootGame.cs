@@ -43,7 +43,6 @@ namespace SkyShoot.Game
 
             base.Initialize();
 
-            _screenManager.AddScreen(new Screens.BackgroundScreen(Color.LightSeaGreen));
             _screenManager.AddScreen(new Screens.MainMenuScreen());
         }
 
