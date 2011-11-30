@@ -14,7 +14,7 @@ using SkyShoot.Contracts.Session;
 
 using SkyShoot.Contracts.Weapon.Projectiles;
 
-using SkyShoot.Service.Weapon;
+using SkyShoot.Contracts.Weapon;
 
 namespace SkyShoot.Service
 {
@@ -59,8 +59,6 @@ namespace SkyShoot.Service
 		public int localID;
 		private ISkyShootCallback _callback;
 		public string Name;
-
-		public AWeapon Weapon { get; set; }
 
 		//private Account.AccountManager _accountManager = new Account.AccountManager();
 		private readonly Session.SessionManager _sessionManager = Session.SessionManager.Instance;

@@ -98,9 +98,9 @@
     <Compile Include="PropertiesProg\AssemblyInfo.cs" />
     <Compile Include="Session\GameSession.cs" />
     <Compile Include="Session\SessionManager.cs" />
-    <Compile Include="Weapon\AWeapon.cs" />
     <Compile Include="Weapon\Bullets\PistolBullet.cs" />
     <Compile Include="Weapon\Bullets\ShotgunBullet.cs" />
+    <Compile Include="Weapon\Claw.cs" />
     <Compile Include="Weapon\Pistol.cs" />
     <Compile Include="Weapon\Shotgun.cs" />
   </ItemGroup>

@@ -14,7 +14,6 @@ namespace SkyShoot.Contracts.Mobs
 	{
 		private static Double _health = 100; //change to real value 
 
-
 		public MainSkyShootService targetPlayer { get; set; }
 
 		public float Damage { get; set; }
