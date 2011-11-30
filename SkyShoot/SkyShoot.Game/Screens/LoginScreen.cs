@@ -1,13 +1,10 @@
 ﻿using System;
 
 using Nuclex.UserInterface;
-
 using Nuclex.UserInterface.Controls;
-
 using Nuclex.UserInterface.Controls.Desktop;
 
 using Microsoft.Xna.Framework;
-
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -20,9 +17,9 @@ namespace SkyShoot.Game.Screens
     {
         private GuiManager _gui;
         private LabelControl _loginLabel;
-        private InputControl _loginBox;
+        private Controls.InputControl _loginBox;
         private LabelControl _passwordLabel;
-        private InputControl _passwordBox;
+        private Controls.InputControl _passwordBox;
         private ButtonControl _backButton;
         private ButtonControl _loginButton;
         private ButtonControl _newAccountButton;
@@ -49,7 +46,7 @@ namespace SkyShoot.Game.Screens
             );
 
             // Login Input
-            _loginBox = new InputControl
+            _loginBox = new Controls.InputControl
             {
                 Bounds = new UniRectangle(new UniScalar(0.5f, -100f), new UniScalar(0.4f, -30), 200, 30),
                 Text = Settings.Default.login 
@@ -57,7 +54,7 @@ namespace SkyShoot.Game.Screens
             _mainScreen.Desktop.Children.Add(_loginBox);
 
             // Password Input
-            _passwordBox = new InputControl
+            _passwordBox = new Controls.InputControl
             {
                 Bounds = new UniRectangle(new UniScalar(0.5f, -100f), new UniScalar(0.4f, 30), 200, 30),
                 Text = Settings.Default.password
@@ -115,7 +112,7 @@ namespace SkyShoot.Game.Screens
 
         private void LoginButtonPressed(object sender, EventArgs args)
         {
-
+            _mainScreen.FocusedControl = null;
             if(_loginBox.Text.Length < 3) ScreenManager.AddScreen(new MessageBox("Username is too short!\nPress Enter to continue"));
             else if (_passwordBox.Text.Length < 3) ScreenManager.AddScreen(new MessageBox("Password is too short!\nPress Enter to continue"));
             else
@@ -134,8 +131,25 @@ namespace SkyShoot.Game.Screens
 
         private void NewAccountButtonPressed(object sender, EventArgs args)
         {
-            ScreenManager.AddScreen(new NewAccountScreen());
-            //ExitScreen();
+            _mainScreen.FocusedControl = null;
+            if (_loginBox.Text.Length < 3) ScreenManager.AddScreen(new MessageBox("Username is too short!\nPress Enter to continue"));
+            else if (_passwordBox.Text.Length < 3) ScreenManager.AddScreen(new MessageBox("Password is too short!\nPress Enter to continue"));
+            else
+            {
+                Settings.Default.login = _loginBox.Text;
+                Settings.Default.password = _passwordBox.Text;
+                Settings.Default.Save();
+
+                if (GameController.Instance.Register(_loginBox.Text, _passwordBox.Text))
+                {
+                    if (GameController.Instance.Login(_loginBox.Text, _passwordBox.Text).HasValue)
+                    {
+                        ScreenManager.AddScreen(new MultiplayerScreen());
+                        ExitScreen();
+                    }
+                }
+                else ScreenManager.AddScreen(new MessageBox("Registration failed"));
+            }
         }
 
         public override void Draw(GameTime gameTime)
@@ -147,6 +161,5 @@ namespace SkyShoot.Game.Screens
             base.Draw(gameTime);
             _gui.Draw(gameTime);
         }
-
     }
 }
