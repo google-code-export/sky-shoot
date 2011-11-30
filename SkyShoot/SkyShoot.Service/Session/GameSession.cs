@@ -128,6 +128,7 @@ namespace SkyShoot.Service.Session
             //player.MobDied -= SomebodyDied;
 
 			Players.Remove(player);
+            Trace.WriteLine(player.Name + "leaved game");
 			
 		}
 
@@ -169,7 +170,7 @@ namespace SkyShoot.Service.Session
 				player.Coordinates = new Vector2(500,500);
                 player.Speed = Constants.PLAYER_DEFAULT_SPEED;
                 player.Radius = Constants.PLAYER_RADIUS;
-				player.Weapon = new Weapon.Pistol(new Guid(),player);
+                player.Weapon = new Weapon.Pistol(Guid.NewGuid(), player);
 				player.RunVector = new Vector2(0, 0);
 				player.HealthAmount = 100;
 
@@ -376,7 +377,7 @@ namespace SkyShoot.Service.Session
 
 					if (player.HealthAmount <= 0)
 					{
-						PlayerDead(player);
+                        PlayerDead(player);
 					}
 				}
 			}
