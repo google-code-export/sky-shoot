@@ -113,42 +113,67 @@ namespace SkyShoot.Game.Screens
         private void LoginButtonPressed(object sender, EventArgs args)
         {
             _mainScreen.FocusedControl = null;
-            if(_loginBox.Text.Length < 3) ScreenManager.AddScreen(new MessageBox("Username is too short!\nPress Enter to continue"));
-            else if (_passwordBox.Text.Length < 3) ScreenManager.AddScreen(new MessageBox("Password is too short!\nPress Enter to continue"));
-            else
-            {
-                Settings.Default.login = _loginBox.Text;
-                Settings.Default.password = _passwordBox.Text;
-                Settings.Default.Save();
+			if (_loginBox.Text.Length < 3)
+			{
+				Settings.Default.Message = 0;
+				Settings.Default.Save();
+				ScreenManager.AddScreen(new MessageBox());
+			}
+			else if (_passwordBox.Text.Length < 3)
+			{
+				Settings.Default.Message = 1;
+				Settings.Default.Save();
+				ScreenManager.AddScreen(new MessageBox());
+			}
+			else
+			{
+				Settings.Default.login = _loginBox.Text;
+				Settings.Default.password = _passwordBox.Text;
+				Settings.Default.Save();
 
 
-                if (GameController.Instance.Login(_loginBox.Text, _passwordBox.Text).HasValue)
-                {
-                    ScreenManager.AddScreen(new MultiplayerScreen());
-                }
-            }
+				if (GameController.Instance.Login(_loginBox.Text, _passwordBox.Text).HasValue)
+				{
+					ScreenManager.AddScreen(new MultiplayerScreen());
+				}
+			}
         }
 
         private void NewAccountButtonPressed(object sender, EventArgs args)
         {
             _mainScreen.FocusedControl = null;
-            if (_loginBox.Text.Length < 3) ScreenManager.AddScreen(new MessageBox("Username is too short!\nPress Enter to continue"));
-            else if (_passwordBox.Text.Length < 3) ScreenManager.AddScreen(new MessageBox("Password is too short!\nPress Enter to continue"));
+			if (_loginBox.Text.Length < 3)
+			{
+				Settings.Default.Message = 0;
+				Settings.Default.Save();
+				ScreenManager.AddScreen(new MessageBox());
+			}
+			else if (_passwordBox.Text.Length < 3)
+			{
+				Settings.Default.Message = 1;
+				Settings.Default.Save();
+				ScreenManager.AddScreen(new MessageBox());
+			}
             else
             {
                 Settings.Default.login = _loginBox.Text;
                 Settings.Default.password = _passwordBox.Text;
                 Settings.Default.Save();
 
-                if (GameController.Instance.Register(_loginBox.Text, _passwordBox.Text))
-                {
-                    if (GameController.Instance.Login(_loginBox.Text, _passwordBox.Text).HasValue)
-                    {
-                        ScreenManager.AddScreen(new MultiplayerScreen());
-                        ExitScreen();
-                    }
-                }
-                else ScreenManager.AddScreen(new MessageBox("Registration failed"));
+				if (GameController.Instance.Register(_loginBox.Text, _passwordBox.Text))
+				{
+					if (GameController.Instance.Login(_loginBox.Text, _passwordBox.Text).HasValue)
+					{
+						ScreenManager.AddScreen(new MultiplayerScreen());
+						ExitScreen();
+					}
+				}
+				else
+				{
+					Settings.Default.Message = 2;
+					Settings.Default.Save();
+					ScreenManager.AddScreen(new MessageBox());
+				}
             }
         }
 
