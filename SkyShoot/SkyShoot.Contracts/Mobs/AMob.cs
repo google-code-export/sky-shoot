@@ -6,6 +6,8 @@ using Microsoft.Xna.Framework;
 
 using SkyShoot.Contracts.Bonuses;
 
+using SkyShoot.Contracts.Weapon;
+
 namespace SkyShoot.Contracts.Mobs
 {
 	[DataContract]
@@ -35,6 +37,8 @@ namespace SkyShoot.Contracts.Mobs
 
 		[DataMember]
 		public float Speed { get; set; } //скорость: пикселы в миллисекунду
+
+		public AWeapon Weapon { get; set; }
 
 		[DataMember]
 		public AObtainableDamageModifier.AObtainableDamageModifiers State { get; set; }

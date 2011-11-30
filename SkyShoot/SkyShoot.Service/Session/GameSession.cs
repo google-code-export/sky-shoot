@@ -372,8 +372,11 @@ namespace SkyShoot.Service.Session
 				var mob = _mobs[i];
 				if ((mob.Coordinates - player.Coordinates).Length() <= mob.Radius + player.Radius)
 				{
-					player.HealthAmount -= mob.Damage;
-					SomebodyHitted(player, null);
+					if (mob.Weapon.Reload(System.DateTime.Now.Ticks / 10000))
+					{
+						player.HealthAmount -= mob.Damage;
+						SomebodyHitted(player, null);
+					}
 
 					if (player.HealthAmount <= 0)
 					{

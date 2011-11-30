@@ -4,6 +4,7 @@ using SkyShoot.Contracts.Weapon.Projectiles;
 using SkyShoot.Service.Weapon.Bullets;
 using SkyShoot.Contracts.Mobs;
 using Microsoft.Xna.Framework;
+using SkyShoot.Contracts.Weapon;
 
 namespace SkyShoot.Service.Weapon
 {
