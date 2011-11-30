@@ -14,25 +14,21 @@ namespace SkyShoot.Game.Client.Game
 {
     public class GameLevel : IDrawable
     {
-
         public const int StonesNumber = 50;
+
+        public static int Width { get; private set; }
+
+        public static int Height { get; private set; }
 
         private static Texture2D _texture;
 
-        public static int Width
+        public GameLevel(Contracts.Session.GameLevel gameLevel)
         {
-            get { return _texture.Width; }
-        }
+            Width = (int) gameLevel.levelWidth;
+            Height = (int) gameLevel.levelHeight;
 
-        public static int Height
-        {
-            get { return _texture.Height; }
-        }
-
-        public GameLevel(TileSet tileSet)
-        {
             //todo using const arrays
-            switch (tileSet)
+            switch (gameLevel.UsedTileSet)
             {
                 case TileSet.Grass:
                     _texture = Textures.GrassLandscape; break;
@@ -64,7 +60,7 @@ namespace SkyShoot.Game.Client.Game
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
+            spriteBatch.Draw(_texture, Vector2.Zero, new Rectangle(0, 0, Width, Height), Color.White);
         }
 
     }

@@ -20,7 +20,7 @@ namespace SkyShoot.Game.Client.Game
 
         public static GameLevel CreateClientGameLevel(Contracts.Session.GameLevel gameLevel)
         {
-            return new GameLevel(gameLevel.UsedTileSet);
+            return new GameLevel(gameLevel);
         }
  
         public static ABonus CreateClientBonus(AObtainableDamageModifier bonus)

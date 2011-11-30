@@ -72,15 +72,8 @@ namespace SkyShoot.Game.Client.Game
         public void Hit(AMob mob, AProjectile projectile)
         {
             if (projectile != null)
-            {
-                GameModel.GetMob(mob.Id).HealthAmount -= projectile.Damage;
                 GameModel.RemoveProjectile(projectile.Id);
-            }
-            else
-            {
-                //todo
-                //GameModel.GetMob(MyId).HealthAmount -= mob.Damage;
-            }
+            GameModel.GetMob(mob.Id).HealthAmount = mob.HealthAmount;
         }
 
         public void MobDead(AMob mob)
