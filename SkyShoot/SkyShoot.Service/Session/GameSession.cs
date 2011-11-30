@@ -347,7 +347,7 @@ namespace SkyShoot.Service.Session
                     continue;
                 }
 
-                var h = (prX * mY - prY * mX) / Math.Sqrt(prX * prX * + prY * prY);
+                var h = Math.Abs(prX * mY - prY * mX) / Math.Sqrt(prX * prX * + prY * prY);
 
                 //@TODO Проверка углов. Над ней еще надо будет подумать.
                 var cos1 = mX * prX + mY * prY;
