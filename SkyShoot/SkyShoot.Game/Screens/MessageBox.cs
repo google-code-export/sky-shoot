@@ -4,16 +4,21 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
 
 namespace SkyShoot.Game.Screens
 {
     class MessageBox:ScreenManager.GameScreen
     {
-        private string message;
+        //private string message;
+		private static string text1 = "Username is too short!\nPress Enter to continue";
+		private static string text2 = "Password is too short!\nPress Enter to continue";
+		private static string text3 = "Registration failed";
         private Texture2D texture;
-        public MessageBox(string text)
+		private ContentManager _content;
+        public MessageBox()
         {
-            message = text;
+            //message = text;
             TransitionOnTime = TimeSpan.FromSeconds(0.2);
             TransitionOffTime = TimeSpan.FromSeconds(0.2);
             IsPopup = true;
@@ -21,15 +26,31 @@ namespace SkyShoot.Game.Screens
         public override void LoadContent()
         {
             base.LoadContent();
-            texture = new Texture2D(ScreenManager.Game.GraphicsDevice, 1, 1);
+			if (_content == null)
+				_content = new ContentManager(ScreenManager.Game.Services, "Content");
+			texture = _content.Load<Texture2D>("Textures/screens/screen_02");
             Color[] colors = new Color[1];
             colors[0] = Color.LightSeaGreen;
-            texture.SetData<Color>(colors);
+            //texture.SetData<Color>(colors);
         }
         public override void HandleInput(ScreenManager.InputState input)
         {
             if (input.IsMenuSelect()||input.IsMenuCancel()) ExitScreen(); 
         }
+
+		public static String message
+		{
+			get
+			{
+				switch (Settings.Default.Message)
+				{
+					case 0: return text1;
+					case 1: return text2;
+					case 3: return text3;
+					default: return text1;
+				}
+			}
+		}
 
         public override void Draw(GameTime gameTime)
         {

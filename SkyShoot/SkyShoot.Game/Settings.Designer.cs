@@ -82,5 +82,29 @@ namespace SkyShoot.Game {
                 this["FullScreenSelected"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public short ActiveScreen {
+            get {
+                return ((short)(this["ActiveScreen"]));
+            }
+            set {
+                this["ActiveScreen"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public short Message {
+            get {
+                return ((short)(this["Message"]));
+            }
+            set {
+                this["Message"] = value;
+            }
+        }
     }
 }
