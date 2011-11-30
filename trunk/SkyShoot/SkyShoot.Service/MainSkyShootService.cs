@@ -69,7 +69,7 @@ namespace SkyShoot.Service
 
 		public MainSkyShootService() : base(new Vector2(0, 0), Guid.NewGuid()) { localID = globalID; globalID++; }
 
-		public void Disconnect() { _sessionManager.LeaveGame(this.Name); }
+		public void Disconnect() { _sessionManager.LeaveGame(this); }
 
 		public bool Register(string username, string password)
         {
@@ -180,7 +180,7 @@ namespace SkyShoot.Service
 
 		public void LeaveGame()
 		{
-			bool result = _sessionManager.LeaveGame(Name);
+			bool result = _sessionManager.LeaveGame(this);
 			if (!result)
 			{
                 Trace.WriteLine(Name + "left the game");
@@ -295,6 +295,7 @@ namespace SkyShoot.Service
             try
             {
                 _callback.GameOver();
+                Trace.WriteLine(localID + ": GameOver");
             }
             catch (Exception e) { this.Disconnect(); }
 		}

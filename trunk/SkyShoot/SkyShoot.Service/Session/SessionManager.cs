@@ -56,12 +56,12 @@ namespace SkyShoot.Service.Session
         }
 
         //Ищем игру, в которой находится игрок и удаляем его оттуда.
-        public bool LeaveGame(string playerName)
+        public bool LeaveGame(MainSkyShootService player)
         {
             try
             {
-                var game = _gameSessions.Find(gameSession => gameSession.LocalGameDescription.Players.Contains(playerName));
-				var leavingPlayer = game.Players.Find(x => x.Name == playerName);
+                var game = _gameSessions.Find(gameSession => gameSession.LocalGameDescription.Players.Contains(player.Name));
+                var leavingPlayer = player;
                 game.PlayerLeave(leavingPlayer);
 				for(int i = 0; i < game.Players.Count; i++)
 				{
