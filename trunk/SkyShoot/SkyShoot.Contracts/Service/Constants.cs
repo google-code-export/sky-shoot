@@ -19,6 +19,6 @@ namespace SkyShoot.Contracts
 		public const int FPS = 1000 / 60;
 		public const float SPIDER_SPEED = 0.035f;
 		public const float LEVELBORDER = 50;
-		public static Vector2 LEVEL_CENTER = new Vector2(1000, 1000);
+		//public static Vector2 LEVEL_CENTER = new Vector2(1000, 1000);
 	}
 }

@@ -19,7 +19,7 @@ namespace SkyShoot.Contracts.Mobs
         {
             _width = gameLevel.levelWidth;
             _height =  gameLevel.levelHeight;
-            _border = gameLevel.LEVELBORDER;
+            _border = Constants.LEVELBORDER;
         }
 
         private Random _random = new Random();
@@ -32,34 +32,34 @@ namespace SkyShoot.Contracts.Mobs
             // присваивание случайных координат созданному мобу
             if (_random.Next(2) == 0) //длина
             {
-                x = _random.Next((int) (-_width - _border), (int) (_width + _border));
+                x = _random.Next( 0, (int) (_width + _border * 2));
 
                 if (_random.Next(2) == 0) // верх
                 {
-                    y = _random.Next((int) _height, (int) (_height + _border));
+                    y = _random.Next( 0, (int) _border);
                 }
                 else //низ
                 {
-                    y = _random.Next((int)(-_height - _border), (int) -_height);
+                    y = _random.Next((int) (_height + _border), (int) (_height + _border * 2));
                 }
             }
             else // высота
             {
-                y = _random.Next((int) (-_height - _border), (int)(_height + _border));
+                y = _random.Next( 0, (int) (_height + _border *2));
 
                 if (_random.Next(2) == 0) // левая
                 {
-                    x = _random.Next((int) (-_width - _border), (int) -_width);
+                    x = _random.Next( 0, (int) _border);
                 }
                 else // правая
                 {
-                    x = _random.Next((int) _width, (int) (_width + _border));
+                    x = _random.Next((int) (_width + _border), (int) (_width + _border*2));
                 }
 
             }
 
             var spider = new Spider();
-            spider.Coordinates = new Vector2((float) x, (float ) y) + Constants.LEVEL_CENTER;
+            spider.Coordinates = new Vector2((float) x, (float) y);
             return spider;
         }
     }

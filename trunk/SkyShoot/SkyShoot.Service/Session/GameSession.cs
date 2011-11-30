@@ -16,9 +16,9 @@ namespace SkyShoot.Service.Session
 	
     public class GameSession
     {
-		public List<MainSkyShootService> Players{get; set;}
+		public List<MainSkyShootService> Players { get; set; }
 
-        private List<Mob> _mobs{get; set;}
+        private List<Mob> _mobs { get; set; }
         private List<AProjectile> _projectiles { get; set; }
 
         public GameDescription LocalGameDescription { get; private set; }
