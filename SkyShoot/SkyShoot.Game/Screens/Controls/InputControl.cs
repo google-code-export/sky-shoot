@@ -9,7 +9,7 @@ namespace SkyShoot.Game.Screens.Controls
     {
         protected override void OnCharacterEntered(char character)
         {
-            if (Char.IsLetter(character) || Char.IsDigit(character))
+            if (Char.IsLetter(character) || Char.IsDigit(character) || (character == '_'))
             {
                 Text += character;
                 CaretPosition += 1;
