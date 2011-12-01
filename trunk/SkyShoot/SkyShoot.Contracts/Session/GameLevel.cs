@@ -12,7 +12,9 @@ namespace SkyShoot.Contracts.Session
     public class GameLevel
     {
 		//public const int MOVEMENTTIME = 100; //in milliseconds
+		[DataMember]
 		public float levelHeight; 
+		[DataMember]
 		public float levelWidth;
 		public float LEVELBORDER;
 		
