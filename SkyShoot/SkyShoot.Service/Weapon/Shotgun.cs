@@ -8,26 +8,39 @@ using SkyShoot.Contracts.Weapon;
 
 namespace SkyShoot.Service.Weapon
 {
-    public class Shotgun : AWeapon
-    {
-        public Shotgun(Guid id) : base(id){	this.Type = AObtainableDamageModifiers.Shotgun;	}
+	public class Shotgun : AWeapon
+	{
+		private Random _rand;
 
-		public Shotgun(Guid id, AMob owner) : base(id, owner) {	this.Type = AObtainableDamageModifiers.Shotgun;	}
+		private void Init()
+		{
+			_rand = new Random();
+			Type = AObtainableDamageModifiers.Shotgun;
+		}
 
-        public override AProjectile[] CreateBullets(AMob owner, Vector2 direction)
-        {
-            ShotgunBullet[] bullets = new ShotgunBullet[8];
+		public Shotgun(Guid id) : base(id)
+		{
+			Init();
+		}
 
-            double directionAngle = Math.Sign(direction.Y) * Math.Atan(direction.Y/direction.X);
-            double currentAngle;
-            for (int i = 0; i < 8; i++)
-            {
-                currentAngle = directionAngle - Math.PI/6 + (new Random()).NextDouble()*Math.PI/3;
-                Vector2 currentDirection = new Vector2((float)Math.Cos(currentAngle), (float)Math.Sin(currentAngle));
-                bullets[i] = new ShotgunBullet(owner, Guid.NewGuid(), currentDirection);
-            }
+		public Shotgun(Guid id, AMob owner) : base(id, owner)
+		{
+			Init();
+		}
 
-            return bullets;
-        }
-    }
+		public override AProjectile[] CreateBullets(AMob owner, Vector2 direction)
+		{
+			ShotgunBullet[] bullets = new ShotgunBullet[8];
+
+			for (int i = 0; i < 8; i++)
+			{
+				bullets[i] = new ShotgunBullet(owner, Guid.NewGuid(),
+				                               Vector2.Transform(direction,
+				                                                 Matrix.CreateRotationZ(
+				                                                 	(float) (-Math.PI/6f + _rand.NextDouble()*Math.PI/3f))));
+			}
+
+			return bullets;
+		}
+	}
 }
