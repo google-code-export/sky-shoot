@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using SkyShoot.Contracts.Session;
 using SkyShoot.Service.Mobs;
-using SkyShoot.ServProgram.Weapon;
+using SkyShoot.Service.Weapon;
 
 namespace SkyShoot.Contracts.Mobs
 {

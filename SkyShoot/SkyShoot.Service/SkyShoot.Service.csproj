@@ -86,6 +86,7 @@
     <Compile Include="Session\SessionManager.cs" />
     <Compile Include="Weapon\Bullets\PistolBullet.cs" />
     <Compile Include="Weapon\Bullets\ShotgunBullet.cs" />
+    <Compile Include="Weapon\Claw.cs" />
     <Compile Include="Weapon\Pistol.cs" />
     <Compile Include="Weapon\Shotgun.cs" />
     <Compile Include="WorkerRole.cs" />
