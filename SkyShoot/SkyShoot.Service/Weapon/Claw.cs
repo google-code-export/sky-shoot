@@ -5,7 +5,7 @@ using System.Text;
 using SkyShoot.Contracts.Weapon;
 using SkyShoot.Contracts;
 
-namespace SkyShoot.ServProgram.Weapon
+namespace SkyShoot.Service.Weapon
 {
 	class Claw:AWeapon
 	{
