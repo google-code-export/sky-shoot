@@ -25,7 +25,7 @@ namespace SkyShoot.Game.Screens
             base.LoadContent();
 			if (_content == null)
 				_content = new ContentManager(ScreenManager.Game.Services, "Content");
-			texture = _content.Load<Texture2D>("Textures/screens/screen_02");
+			texture = _content.Load<Texture2D>("Textures/screens/message_box");
             Color[] colors = new Color[1];
             colors[0] = Color.LightSeaGreen;
             //texture.SetData<Color>(colors);
