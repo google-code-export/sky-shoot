@@ -376,6 +376,7 @@ namespace SkyShoot.Service.Session
 					{
 						player.HealthAmount -= mob.Damage;
 						SomebodyHitted(player, null);
+						mob.Stop();
 					}
 
 					if (player.HealthAmount <= 0)

@@ -63,15 +63,30 @@ namespace SkyShoot.Contracts.Mobs
 
 		public virtual void Think(List<MainSkyShootService> players)
 		{
-			if (_counter % 10 == 0)
+			if (wait == 0)
 			{
-				if (!players.Contains(targetPlayer) || targetPlayer == null)
+				if (_counter % 10 == 0)
 				{
-					FindTarget(players);
+					if (!players.Contains(targetPlayer) || targetPlayer == null)
+					{
+						FindTarget(players);
+					}
+					Move();
 				}
-				Move();
+				_counter++;
 			}
-			_counter++;
+			else
+			{
+				wait--;
+			}
+		}
+
+		private int wait;
+
+		public void Stop()
+		{
+			RunVector = new Vector2(0, 0);
+			wait = 30;
 		}
 
 		public void DamageTaken(AProjectile bullet)
