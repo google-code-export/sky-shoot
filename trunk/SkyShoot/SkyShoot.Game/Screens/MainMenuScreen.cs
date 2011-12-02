@@ -52,23 +52,23 @@ namespace SkyShoot.Game.Screens
             };
             _mainScreen.Desktop.Children.Add(_optionsButton);
 
-            ButtonControl _exitButton = new ButtonControl()
+            ButtonControl _logoffButton = new ButtonControl()
             {
-                Text = "Exit",
+                Text = "Logoff",
                 Bounds = new UniRectangle(new UniScalar(0.30f,0),new UniScalar(0.5f,0),new UniScalar(0.4f,0), new UniScalar(0.1f,0)),
             };
-            _mainScreen.Desktop.Children.Add(_exitButton);
+            _mainScreen.Desktop.Children.Add(_logoffButton);
 
             _playGameButton.Pressed += PlayGameButtonPressed;
             _optionsButton.Pressed += OptionsButtonPressed;
-            _exitButton.Pressed += ExitMenuButtonPressed;
+            _logoffButton.Pressed += LogoffMenuButtonPressed;
 
         }
         
         void PlayGameButtonPressed(object sender, EventArgs e)
         {
 			ExitScreen();
-            ScreenManager.AddScreen(new LoginScreen()); 
+            ScreenManager.AddScreen(new MultiplayerScreen()); 
         }
 
 
@@ -78,9 +78,10 @@ namespace SkyShoot.Game.Screens
             ScreenManager.AddScreen(new OptionsMenuScreen());
         }
 
-        void ExitMenuButtonPressed(object sender, EventArgs e)
+        void LogoffMenuButtonPressed(object sender, EventArgs e)
         {
-            ScreenManager.Game.Exit();
+            ExitScreen();
+            ScreenManager.AddScreen(new LoginScreen());
         }
 
 		public override void Update(GameTime gameTime, bool otherHasFocus, bool coveredByOtherScreen)

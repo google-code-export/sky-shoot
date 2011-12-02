@@ -43,7 +43,7 @@ namespace SkyShoot.Game
 
             base.Initialize();
 
-            _screenManager.AddScreen(new Screens.MainMenuScreen());
+            _screenManager.AddScreen(new Screens.LoginScreen());
         }
 
         protected override void LoadContent()
