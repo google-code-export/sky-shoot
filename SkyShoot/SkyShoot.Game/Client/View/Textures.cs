@@ -32,6 +32,11 @@ namespace SkyShoot.Game.Client.View
         public static Texture2D PlayerTexture;
         public static Texture2D[] MobTextures = new Texture2D[MobsAmount];
 
+		public static Texture2D HealthRect (int width, int heigth, Color c)
+		{
+			return Create(width, heigth < 1 ? 1: heigth, c);
+		}
+
         public static Texture2D ProjectileTexture
         {
             get { return Create(30, 3, Color.Red); }

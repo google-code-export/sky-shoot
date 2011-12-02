@@ -14,7 +14,7 @@ namespace SkyShoot.Contracts.Mobs
         private float _width;
         private float _height;
         private float _border;
-		private double _health; 
+		private float _health; 
 
 
         public SpiderFactory(GameLevel gameLevel)
@@ -62,7 +62,7 @@ namespace SkyShoot.Contracts.Mobs
             }
 
             var spider = new Spider((float)_health);
-			_health *= 1.001;
+			_health *= 1.001f;
             spider.Coordinates = new Vector2((float) x, (float) y);
 			spider.Weapon = new Claw(Guid.NewGuid(),spider);
             return spider;

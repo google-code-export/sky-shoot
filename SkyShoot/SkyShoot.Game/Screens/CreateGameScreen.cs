@@ -37,7 +37,7 @@ namespace SkyShoot.Game.Screens
 
         public CreateGameScreen()
         {
-            
+
         }
 
         public override void LoadContent()
@@ -71,7 +71,7 @@ namespace SkyShoot.Game.Screens
             };
             for (int i = 1; i < 11; i++)
             {
-                _maxPlayersList.Items.Add(i + "");    
+                _maxPlayersList.Items.Add(i + "");
             }
             _maxPlayersList.Slider.Bounds.Location.X.Offset -= 1.0f;
             _maxPlayersList.Slider.Bounds.Location.Y.Offset += 1.0f;
@@ -163,7 +163,7 @@ namespace SkyShoot.Game.Screens
             };
             _createButton.Pressed += CreateButtonPressed;
             _mainScreen.Desktop.Children.Add(_createButton);
-            
+
             // Back Button
             _backButton = new ButtonControl
             {
@@ -237,7 +237,7 @@ namespace SkyShoot.Game.Screens
                 return;
 
             ExitScreen();
-            ScreenManager.AddScreen(new WaitScreen(_tile.Text, _gameMode.Text, _maxPlayers.Text, _gameDescription.GameId));
+            ScreenManager.AddScreen(new WaitScreen(_tile.Text, _gameMode.Text, _maxPlayers.Text, GameController.Instance.GetGameList().Length));
         }
 
         public override void Draw(GameTime gameTime)
@@ -250,7 +250,7 @@ namespace SkyShoot.Game.Screens
             _gui.Draw(gameTime);
         }
 
-        
+
 
     }
 }

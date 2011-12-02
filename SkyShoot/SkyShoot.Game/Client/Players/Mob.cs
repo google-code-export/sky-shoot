@@ -6,6 +6,8 @@ using Microsoft.Xna.Framework.Graphics;
 
 using SkyShoot.Game.Client.Game;
 
+using SkyShoot.Game.Client.View;
+
 using IDrawable = SkyShoot.Game.Client.View.IDrawable;
 
 namespace SkyShoot.Game.Client.Players
@@ -14,14 +16,31 @@ namespace SkyShoot.Game.Client.Players
     {
         public Texture2D Texture { get; set; }
 
+		public Texture2D healthRect { get; private set; }
+
+		public Vector2 healthPosition;
+
+		Color c;
+
         public Mob(Contracts.Mobs.AMob other, Texture2D texture) : base(other)
         {
-            Texture = texture;
+            Texture = texture;			
         }
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
             var rotation = (float)Math.Atan2(ShootVector.Y, ShootVector.X) + MathHelper.PiOver2;
+
+			if (HealthAmount >= 0.6f * MaxHealthAmount) c = Color.Lime;
+			else if (HealthAmount >= 0.3f * MaxHealthAmount) c = Color.Yellow;
+			else c = Color.Red;
+
+			healthPosition.X = Coordinates.X - 28;
+			healthPosition.Y = Coordinates.Y - 45;
+
+			healthRect = SkyShoot.Game.Client.View.Textures.HealthRect(5, (int) (0.5f*HealthAmount), c);
+
+			spriteBatch.Draw(healthRect, healthPosition, null, Color.White);
 
             spriteBatch.Draw(Texture,
                 Coordinates,
@@ -32,6 +51,7 @@ namespace SkyShoot.Game.Client.Players
                 1,
                 SpriteEffects.None,
                 0);
+
         } 
 
         public virtual void Update(GameTime gameTime)

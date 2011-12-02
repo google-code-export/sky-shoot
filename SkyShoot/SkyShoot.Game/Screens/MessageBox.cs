@@ -11,9 +11,6 @@ namespace SkyShoot.Game.Screens
     class MessageBox:ScreenManager.GameScreen
     {
         //private string message;
-		private static string text1 = "Username is too short!\nPress Enter to continue";
-		private static string text2 = "Password is too short!\nPress Enter to continue";
-		private static string text3 = "Registration failed";
         private Texture2D texture;
 		private ContentManager _content;
         public MessageBox()
@@ -38,19 +35,7 @@ namespace SkyShoot.Game.Screens
             if (input.IsMenuSelect()||input.IsMenuCancel()) ExitScreen(); 
         }
 
-		public static String message
-		{
-			get
-			{
-				switch (Settings.Default.Message)
-				{
-					case 0: return text1;
-					case 1: return text2;
-					case 3: return text3;
-					default: return text1;
-				}
-			}
-		}
+		public static String Message { get; set; }
 
         public override void Draw(GameTime gameTime)
         {
@@ -59,7 +44,7 @@ namespace SkyShoot.Game.Screens
 
             Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
             Vector2 viewportSize = new Vector2(viewport.Width, viewport.Height);
-            Vector2 textSize = font.MeasureString(message);
+            Vector2 textSize = font.MeasureString(Message);
             Vector2 textPosition = (viewportSize - textSize) / 2;
 
 
@@ -80,7 +65,7 @@ namespace SkyShoot.Game.Screens
 
             spriteBatch.Draw(texture, backgroundRectangle, color);
 
-            spriteBatch.DrawString(font, message, textPosition, color);
+            spriteBatch.DrawString(font, Message, textPosition, color);
 
             spriteBatch.End();
         }

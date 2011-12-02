@@ -43,6 +43,9 @@ namespace SkyShoot.Contracts.Mobs
 		[DataMember]
 		public AObtainableDamageModifier.AObtainableDamageModifiers State { get; set; }
 
+		[DataMember]
+		public float MaxHealthAmount { get; set; }
+
 		public AMob(Vector2 coordinates, Guid id)
 		{
 			RunVector = ShootVector = new Vector2(0, 1);
@@ -66,6 +69,7 @@ namespace SkyShoot.Contracts.Mobs
 			ShootVector = other.ShootVector;
 			Speed = other.Speed;
 			State = other.State;
+			MaxHealthAmount = other.MaxHealthAmount;
 		}
 
 		public AMob()
