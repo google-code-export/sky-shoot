@@ -145,7 +145,7 @@ namespace SkyShoot.Game.Screens
 
             _tempGameList = GameController.Instance.GetGameList();
 
-            if (_tempGameList.Length == 0)
+            if (_tempGameList == null)
                 return;
 
 			if ( _gameList.SelectedItems.Count != 0 )
