@@ -23,7 +23,7 @@ namespace SkyShoot.Contracts.Mobs
 			IsPlayer = false;
 			_counter = 0;
 			Id = Guid.NewGuid();
-			HealthAmount = healthAmount;
+			MaxHealthAmount = HealthAmount = healthAmount;
 			Damage = 10;
 		}
 
