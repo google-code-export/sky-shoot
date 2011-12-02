@@ -20,7 +20,7 @@ namespace SkyShoot.Game.Screens
         private Controls.InputControl _loginBox;
         private LabelControl _passwordLabel;
         private Controls.InputControl _passwordBox;
-        private ButtonControl _backButton;
+        private ButtonControl _exitButton;
         private ButtonControl _loginButton;
         private ButtonControl _newAccountButton;
         private Screen _mainScreen;
@@ -85,13 +85,13 @@ namespace SkyShoot.Game.Screens
             _mainScreen.Desktop.Children.Add(_loginButton);
 
             // Back Button
-            _backButton = new ButtonControl
+            _exitButton = new ButtonControl
             {
-                Text = "Back",
+                Text = "Exit",
                 Bounds = new UniRectangle(new UniScalar(0.5f, -210f), new UniScalar(0.4f, 70), 100, 32)
             };
-            _backButton.Pressed += BackButtonPressed;
-            _mainScreen.Desktop.Children.Add(_backButton);
+            _exitButton.Pressed += ExitButtonPressed;
+            _mainScreen.Desktop.Children.Add(_exitButton);
 
             // New Account Button
             _newAccountButton = new ButtonControl
@@ -104,10 +104,9 @@ namespace SkyShoot.Game.Screens
 
         }
 
-        private void BackButtonPressed(object sender, EventArgs args)
+        private void ExitButtonPressed(object sender, EventArgs args)
         {
-            ExitScreen();
-			ScreenManager.AddScreen(new MainMenuScreen());
+            ScreenManager.Game.Exit();
         }
 
         private void LoginButtonPressed(object sender, EventArgs args)
@@ -134,7 +133,8 @@ namespace SkyShoot.Game.Screens
 
 				if (GameController.Instance.Login(_loginBox.Text, _passwordBox.Text).HasValue)
 				{
-					ScreenManager.AddScreen(new MultiplayerScreen());
+                    ExitScreen();
+					ScreenManager.AddScreen(new MainMenuScreen());
 				}
 			}
         }
@@ -164,8 +164,8 @@ namespace SkyShoot.Game.Screens
 				{
 					if (GameController.Instance.Login(_loginBox.Text, _passwordBox.Text).HasValue)
 					{
-						ScreenManager.AddScreen(new MultiplayerScreen());
-						ExitScreen();
+                        ExitScreen();
+						ScreenManager.AddScreen(new MainMenuScreen());
 					}
 				}
 				else
