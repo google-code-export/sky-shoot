@@ -12,22 +12,19 @@ namespace SkyShoot.Contracts.Mobs
 {
 	public class Mob : AMob
 	{
-		private static Double _health = 100; //change to real value 
-
 		public MainSkyShootService targetPlayer { get; set; }
 
 		public float Damage { get; set; }
 
 		private int _counter;
 
-		public Mob()
+		public Mob(float healthAmount)
 		{
 			IsPlayer = false;
 			_counter = 0;
 			Id = Guid.NewGuid();
-			HealthAmount = (float)_health;
+			HealthAmount = healthAmount;
 			Damage = 10;
-			_health *= 1.001; // увеличение здоровья каждого следующего на 0.1%
 		}
 
 		public void FindTarget(List<MainSkyShootService> targetPlayers)

@@ -14,6 +14,7 @@ namespace SkyShoot.Contracts.Mobs
         private float _width;
         private float _height;
         private float _border;
+		private double _health; 
 
 
         public SpiderFactory(GameLevel gameLevel)
@@ -21,6 +22,7 @@ namespace SkyShoot.Contracts.Mobs
             _width = gameLevel.levelWidth;
             _height =  gameLevel.levelHeight;
             _border = Constants.LEVELBORDER;
+			_health = 100; //change to real value
         }
 
         private Random _random = new Random();
@@ -59,7 +61,8 @@ namespace SkyShoot.Contracts.Mobs
 
             }
 
-            var spider = new Spider();
+            var spider = new Spider((float)_health);
+			_health *= 1.001;
             spider.Coordinates = new Vector2((float) x, (float) y);
 			spider.Weapon = new Claw(Guid.NewGuid(),spider);
             return spider;
