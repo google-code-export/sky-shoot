@@ -14,7 +14,7 @@ using System.Diagnostics;
 namespace SkyShoot.Service.Session
 {
 	
-    public class GameSession
+    public class GameSession: AMob
     {
 		public List<MainSkyShootService> Players { get; set; }
 
@@ -34,6 +34,8 @@ namespace SkyShoot.Service.Session
 
 		private Timer _gameTimer;
         private object _updating;
+
+		private static float _health = 100;
 
         public GameSession(TileSet tileSet, int maxPlayersAllowed, GameMode gameType, int gameID)
         {
@@ -172,7 +174,7 @@ namespace SkyShoot.Service.Session
                 player.Radius = Constants.PLAYER_RADIUS;
                 player.Weapon = new Weapon.Pistol(Guid.NewGuid(), player);
 				player.RunVector = new Vector2(0, 0);
-				player.HealthAmount = 100;
+				player.MaxHealthAmount = player.HealthAmount = 100f;
 
 			}
 			System.Threading.Thread.Sleep(1000);
@@ -225,7 +227,7 @@ namespace SkyShoot.Service.Session
 		}
 
 	#region local functions
-		private void SpawnMob()
+		 public void SpawnMob()
         {
             if (_intervalToSpawn == 0)
             {
@@ -233,7 +235,7 @@ namespace SkyShoot.Service.Session
                 
                 var mob = _spiderFactory.CreateMob();
                 System.Diagnostics.Trace.WriteLine("mob spawned" + mob.Id);
-
+                
                 _mobs.Add(mob);
                 SomebodySpawned(mob);
                 mob.MeMoved += new SomebodyMovesHandler(SomebodyMoved);

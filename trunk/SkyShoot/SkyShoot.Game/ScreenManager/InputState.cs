@@ -51,13 +51,12 @@ namespace SkyShoot.Game.ScreenManager
 
         public Vector2 RunVector(KeyboardState keyboardState)
         {
-            short keyblay = Settings.Default.KeyboardLayout;
             Vector2 runVector = Vector2.Zero;
             if (_currentGamePadState.IsConnected)
                 runVector = _currentGamePadState.ThumbSticks.Left;
             else
             {
-                switch (keyblay)
+                switch (Settings.Default.KeyboardLayout)
                 {
                     case 0:
                         {

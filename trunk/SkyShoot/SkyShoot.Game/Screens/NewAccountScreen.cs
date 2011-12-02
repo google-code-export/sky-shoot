@@ -108,14 +108,12 @@ namespace SkyShoot.Game.Screens
         {
 			if (_loginBox.Text.Length < 3)
 			{
-				Settings.Default.Message = 0;
-				Settings.Default.Save();
+				MessageBox.Message = "Username is too short!\nPress Enter to continue";
 				ScreenManager.AddScreen(new MessageBox());
 			}
 			else if (_passwordBox.Text.Length < 3)
 			{
-				Settings.Default.Message = 1;
-				Settings.Default.Save();
+				MessageBox.Message = "Password is too short!\nPress Enter to continue";
 				ScreenManager.AddScreen(new MessageBox());
 			}
 			else
