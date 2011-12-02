@@ -14,7 +14,7 @@ using System.Diagnostics;
 namespace SkyShoot.Service.Session
 {
 	
-    public class GameSession: AMob
+    public class GameSession
     {
 		public List<MainSkyShootService> Players { get; set; }
 
@@ -34,8 +34,6 @@ namespace SkyShoot.Service.Session
 
 		private Timer _gameTimer;
         private object _updating;
-
-		private static float _health = 100;
 
         public GameSession(TileSet tileSet, int maxPlayersAllowed, GameMode gameType, int gameID)
         {
