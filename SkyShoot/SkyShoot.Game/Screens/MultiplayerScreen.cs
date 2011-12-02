@@ -128,6 +128,8 @@ namespace SkyShoot.Game.Screens
             _refreshButton.Pressed += RefreshButtonPressed;
             _mainScreen.Desktop.Children.Add(_refreshButton);
 
+        	_gameList.SelectedItems[0] = 0;
+
         }
 
         private void BackButtonPressed(object sender, EventArgs args)
@@ -143,14 +145,20 @@ namespace SkyShoot.Game.Screens
 
             _tempGameList = GameController.Instance.GetGameList();
 
-            if (_tempGameList == null)
+            if (_tempGameList.Length == 0)
                 return;
 
-            ScreenManager.AddScreen(new WaitScreen(
-                _tempGameList[_gameList.SelectedItems[0]].UsedTileSet + "",
-                _tempGameList[_gameList.SelectedItems[0]].GameType + "",
-                _tempGameList[_gameList.SelectedItems[0]].MaximumPlayersAllowed + "",
-                _tempGameList[_gameList.SelectedItems[0]].GameId));
+			if ( _gameList.SelectedItems.Count != 0 )
+			{
+				ScreenManager.AddScreen(new WaitScreen(
+					_tempGameList[_gameList.SelectedItems[0]].UsedTileSet + "",
+					_tempGameList[_gameList.SelectedItems[0]].GameType + "",
+					_tempGameList[_gameList.SelectedItems[0]].MaximumPlayersAllowed + "",
+					_tempGameList[_gameList.SelectedItems[0]].GameId));	
+			}
+
+			
+			
 
             if(!GameController.Instance.JoinGame(_tempGameList[_gameList.SelectedItems[0]]))
             {
