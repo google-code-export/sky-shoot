@@ -147,22 +147,22 @@ namespace SkyShoot.Game.Screens
 
 			if (_gameList.Items.Count != 0)
 			{
-				//todo setActive
-				ExitScreen();
-
-				ScreenManager.AddScreen(new WaitScreen(
-				                        	_tempGameList[_gameList.SelectedItems[0]].UsedTileSet + "",
-				                        	_tempGameList[_gameList.SelectedItems[0]].GameType + "",
-				                        	_tempGameList[_gameList.SelectedItems[0]].MaximumPlayersAllowed + "",
-				                        	_tempGameList[_gameList.SelectedItems[0]].GameId));
-
-
 				if (!GameController.Instance.JoinGame(_tempGameList[_gameList.SelectedItems[0]]))
 				{
 					//todo popup
 					Trace.WriteLine("Join game failed");
 				}
+				else
+				{
+					//todo setActive
+					ExitScreen();
 
+					ScreenManager.AddScreen(new WaitScreen(
+												_tempGameList[_gameList.SelectedItems[0]].UsedTileSet + "",
+												_tempGameList[_gameList.SelectedItems[0]].GameType + "",
+												_tempGameList[_gameList.SelectedItems[0]].MaximumPlayersAllowed + "",
+												_tempGameList[_gameList.SelectedItems[0]].GameId));	
+				}
 			}
 
         }
