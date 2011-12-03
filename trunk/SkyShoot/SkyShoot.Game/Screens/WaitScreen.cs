@@ -25,19 +25,17 @@ namespace SkyShoot.Game.Screens
     {
         private GuiManager _gui;
         private Screen _mainScreen;
-        private LabelControl _playersLabel;
         private ListControl _playersList;
         private ButtonControl _leaveButton;
-        private LabelControl _gameModeLabel;
-        private LabelControl _maxPlayersLabel;
         private readonly string _tile;
         private readonly string _gameMode;
         private readonly string _maxPlayers;
         private List<string> _tmpPlayersList;
         private readonly int _gameId;
 		private static Texture2D _texture;
-		private ContentManager _content;
+		private ContentManager content;
 		private SpriteBatch _spriteBatch;
+		private SpriteFont spriteFont;
 
         public WaitScreen(string tile, string gameMod, string maxPlayers, int gameId)
         {
@@ -54,23 +52,17 @@ namespace SkyShoot.Game.Screens
             Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
             _mainScreen = new Screen(viewport.Width, viewport.Height);
             _gui.Screen = _mainScreen;
-			if (_content == null)
-				_content = new ContentManager(ScreenManager.Game.Services, "Content");
+			if (content == null)
+				content = new ContentManager(ScreenManager.Game.Services, "Content");
 
-			_texture = _content.Load<Texture2D>("Textures/screens/screen_02_fix");
+			_texture = content.Load<Texture2D>("Textures/screens/screen_02_fix");
+
+        	spriteFont = content.Load<SpriteFont>("Times New Roman");
 
             _mainScreen.Desktop.Bounds = new UniRectangle(
                 new UniScalar(0.1f, 0.0f), new UniScalar(0.1f, 0.0f),
                 new UniScalar(0.8f, 0.0f), new UniScalar(0.8f, 0.0f)
                 );
-
-            _playersLabel = new LabelControl
-            {
-                Bounds = new UniRectangle(-60f, -34f, 100f, 24f),
-                Text = "Players"
-            };
-            _mainScreen.Desktop.Children.Add(_playersLabel);
-
             //
             // список игроков
             //
@@ -112,52 +104,6 @@ namespace SkyShoot.Game.Screens
             _leaveButton.Pressed += LeaveButtonPressed;
             _mainScreen.Desktop.Children.Add(_leaveButton);
             
-            // информация о игре
-            // Tile label
-            _maxPlayersLabel = new LabelControl
-            {
-                Bounds = new UniRectangle(200f, 200f, 100f, 24f),
-                Text = "Map :"
-            };
-            _mainScreen.Desktop.Children.Add(_maxPlayersLabel);
-
-            _maxPlayersLabel = new LabelControl
-            {
-                Bounds = new UniRectangle(320f, 200f, 100f, 24f),
-                Text = _tile
-            };
-            _mainScreen.Desktop.Children.Add(_maxPlayersLabel);
-
-            // GameMode label
-            _gameModeLabel = new LabelControl
-            {
-                Bounds = new UniRectangle(200f, 234f, 100f, 24f),
-                Text = "Game Mode :"
-            };
-            _mainScreen.Desktop.Children.Add(_gameModeLabel);
-
-            _gameModeLabel = new LabelControl
-            {
-                Bounds = new UniRectangle(320f, 234f, 100f, 24f),
-                Text = _gameMode
-            };
-            _mainScreen.Desktop.Children.Add(_gameModeLabel);
-
-            // Max Players label
-            _maxPlayersLabel = new LabelControl
-            {
-                Bounds = new UniRectangle(200f, 268f, 100f, 24f),
-                Text = "Max Players :"
-            };
-            _mainScreen.Desktop.Children.Add(_maxPlayersLabel);
-
-            _maxPlayersLabel = new LabelControl
-            {
-                Bounds = new UniRectangle(320f, 268f, 100f, 24f),
-                Text = _maxPlayers
-            };
-            _mainScreen.Desktop.Children.Add(_maxPlayersLabel);
-            
         }
 
         private void LeaveButtonPressed(object sender, EventArgs args)
@@ -181,6 +127,20 @@ namespace SkyShoot.Game.Screens
 			_spriteBatch = ScreenManager.SpriteBatch;
 			_spriteBatch.Begin();
 			_spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
+			_spriteBatch.DrawString(spriteFont, "Players", new Vector2(20f, 25f), Color.Red, 0, 
+									new Vector2(0f, 0f), 0.8f, SpriteEffects.None, 1f);
+			_spriteBatch.DrawString(spriteFont, "Map: ", new Vector2(280f, 260f), Color.Red, 0,
+									new Vector2(0f, 0f), 0.8f, SpriteEffects.None, 1f);
+			_spriteBatch.DrawString(spriteFont, _tile, new Vector2(400f, 260f), Color.Red, 0,
+									new Vector2(0f, 0f), 0.8f, SpriteEffects.None, 1f);
+			_spriteBatch.DrawString(spriteFont, "Game Mode:", new Vector2(280f, 290f), Color.Red, 0,
+									new Vector2(0f, 0f), 0.8f, SpriteEffects.None, 1f);
+			_spriteBatch.DrawString(spriteFont, _gameMode, new Vector2(400f, 290f), Color.Red, 0, 
+									new Vector2(0f, 0f), 0.8f, SpriteEffects.None, 1f);
+			_spriteBatch.DrawString(spriteFont, "Max Players:", new Vector2(280f, 320f), Color.Red, 0,
+									new Vector2(0f, 0f), 0.8f, SpriteEffects.None, 1f);
+			_spriteBatch.DrawString(spriteFont, _maxPlayers, new Vector2(400f, 320f), Color.Red, 0,
+									new Vector2(0f, 0f), 0.8f, SpriteEffects.None, 1f);
 			_spriteBatch.End();
             base.Draw(gameTime);
             _gui.Draw(gameTime);
