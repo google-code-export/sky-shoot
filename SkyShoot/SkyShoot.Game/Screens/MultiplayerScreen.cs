@@ -140,31 +140,30 @@ namespace SkyShoot.Game.Screens
 
         private void JoinGameButtonPressed(object sender, EventArgs args)
         {
-            //todo setActive
-            ExitScreen();
-
             _tempGameList = GameController.Instance.GetGameList();
 
             if (_tempGameList == null)
                 return;
 
-			if ( _gameList.SelectedItems.Count != 0 )
+			if (_gameList.Items.Count != 0)
 			{
+				//todo setActive
+				ExitScreen();
+
 				ScreenManager.AddScreen(new WaitScreen(
-					_tempGameList[_gameList.SelectedItems[0]].UsedTileSet + "",
-					_tempGameList[_gameList.SelectedItems[0]].GameType + "",
-					_tempGameList[_gameList.SelectedItems[0]].MaximumPlayersAllowed + "",
-					_tempGameList[_gameList.SelectedItems[0]].GameId));	
+				                        	_tempGameList[_gameList.SelectedItems[0]].UsedTileSet + "",
+				                        	_tempGameList[_gameList.SelectedItems[0]].GameType + "",
+				                        	_tempGameList[_gameList.SelectedItems[0]].MaximumPlayersAllowed + "",
+				                        	_tempGameList[_gameList.SelectedItems[0]].GameId));
+
+
+				if (!GameController.Instance.JoinGame(_tempGameList[_gameList.SelectedItems[0]]))
+				{
+					//todo popup
+					Trace.WriteLine("Join game failed");
+				}
+
 			}
-
-			
-			
-
-            if(!GameController.Instance.JoinGame(_tempGameList[_gameList.SelectedItems[0]]))
-            {
-                //todo popup
-                Trace.WriteLine("Join game failed");
-            }
 
         }
 
