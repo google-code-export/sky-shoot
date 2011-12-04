@@ -114,13 +114,11 @@ namespace SkyShoot.Game.Screens
             _mainScreen.FocusedControl = null;
 			if (_loginBox.Text.Length < 3)
 			{
-				MessageBox.Message = "Username is too short!\nPress Enter to continue";
-				ScreenManager.AddScreen(new MessageBox());
+				ScreenManager.AddScreen(new MessageBox("Username is too short!\nPress Enter to continue"));
 			}
 			else if (_passwordBox.Text.Length < 3)
 			{
-				MessageBox.Message = "Password is too short!\nPress Enter to continue";
-				ScreenManager.AddScreen(new MessageBox());
+				ScreenManager.AddScreen(new MessageBox("Password is too short!\nPress Enter to continue"));
 			}
 			else
 			{
@@ -142,13 +140,11 @@ namespace SkyShoot.Game.Screens
             _mainScreen.FocusedControl = null;
 			if (_loginBox.Text.Length < 3)
 			{
-				MessageBox.Message = "Username is too short!\nPress Enter to continue";
-				ScreenManager.AddScreen(new MessageBox());
+				ScreenManager.AddScreen(new MessageBox("Username is too short!\nPress Enter to continue"));
 			}
 			else if (_passwordBox.Text.Length < 3)
 			{
-				MessageBox.Message = "Password is too short!\nPress Enter to continue";
-				ScreenManager.AddScreen(new MessageBox());
+				ScreenManager.AddScreen(new MessageBox("Password is too short!\nPress Enter to continue"));
 			}
             else
             {
@@ -166,8 +162,7 @@ namespace SkyShoot.Game.Screens
 				}
 				else
 				{
-					MessageBox.Message = "Registration failed";
-					ScreenManager.AddScreen(new MessageBox());
+					ScreenManager.AddScreen(new MessageBox("Registration failed"));
 				}
             }
         }

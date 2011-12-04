@@ -233,7 +233,9 @@ namespace SkyShoot.Game.Client.Game
             // close all screens
             foreach (GameScreen screen in ScreenManager.ScreenManager.Instance.GetScreens()) screen.ExitScreen();
             // back to multiplayer screen
-            ScreenManager.ScreenManager.Instance.AddScreen(new GameplayScreen());
+            ScreenManager.ScreenManager.Instance.AddScreen(new LoginScreen());
+
+            ScreenManager.ScreenManager.Instance.AddScreen(new MessageBox("Connection error!"));
         }
 
         public bool Register(string username, string password)

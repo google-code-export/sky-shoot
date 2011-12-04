@@ -1,21 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace SkyShoot.Game.Screens
 {
     class MessageBox:ScreenManager.GameScreen
     {
-        //private string message;
-        private Texture2D texture;
+        private readonly string _message;
+        private Texture2D _texture;
 		private ContentManager _content;
-        public MessageBox()
+
+        public MessageBox(string message)
         {
-            //message = text;
+            _message = message;
             TransitionOnTime = TimeSpan.FromSeconds(0.2);
             TransitionOffTime = TimeSpan.FromSeconds(0.2);
             IsPopup = true;
@@ -25,17 +25,12 @@ namespace SkyShoot.Game.Screens
             base.LoadContent();
 			if (_content == null)
 				_content = new ContentManager(ScreenManager.Game.Services, "Content");
-			texture = _content.Load<Texture2D>("Textures/screens/message_box");
-            Color[] colors = new Color[1];
-            colors[0] = Color.LightSeaGreen;
-            //texture.SetData<Color>(colors);
+			_texture = _content.Load<Texture2D>("Textures/screens/message_box");
         }
         public override void HandleInput(ScreenManager.InputState input)
         {
             if (input.IsMenuSelect()||input.IsMenuCancel()) ExitScreen(); 
         }
-
-		public static String Message { get; set; }
 
         public override void Draw(GameTime gameTime)
         {
@@ -43,15 +38,15 @@ namespace SkyShoot.Game.Screens
             SpriteFont font = ScreenManager.Font;
 
             Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
-            Vector2 viewportSize = new Vector2(viewport.Width, viewport.Height);
-            Vector2 textSize = font.MeasureString(Message);
+            var viewportSize = new Vector2(viewport.Width, viewport.Height);
+            Vector2 textSize = font.MeasureString(_message);
             Vector2 textPosition = (viewportSize - textSize) / 2;
 
 
             const int hPad = 32;
             const int vPad = 16;
 
-            Rectangle backgroundRectangle = new Rectangle((int)textPosition.X - hPad,
+            var backgroundRectangle = new Rectangle((int)textPosition.X - hPad,
                                                           (int)textPosition.Y - vPad,
                                                           (int)textSize.X + hPad * 2,
                                                           (int)textSize.Y + vPad * 2);
@@ -59,13 +54,13 @@ namespace SkyShoot.Game.Screens
 
             spriteBatch.Begin();
 
-            spriteBatch.Draw(texture,
+            spriteBatch.Draw(_texture,
                  new Rectangle(0, 0, viewport.Width, viewport.Height),
                  Color.Black * TransitionAlpha * 0.66f);
 
-            spriteBatch.Draw(texture, backgroundRectangle, color);
+            spriteBatch.Draw(_texture, backgroundRectangle, color);
 
-            spriteBatch.DrawString(font, Message, textPosition, color);
+            spriteBatch.DrawString(font, _message, textPosition, color);
 
             spriteBatch.End();
         }
