@@ -8,24 +8,23 @@ using Microsoft.Xna.Framework.Graphics;
 
 using Nuclex.Input;
 using Nuclex.UserInterface;
-using SkyShoot.Game.Screens;
-
 
 namespace SkyShoot.Game.ScreenManager
 {
 	public class ScreenManager : DrawableGameComponent
 	{
-		GuiManager _gui;
-		InputManager _inputManager;
+		private GuiManager _gui;
+		private InputManager _inputManager;
+
+	    private InputState _inputState;
 
 		public GuiManager Gui { get { return _gui; } }
 
-		readonly List<GameScreen> _screens = new List<GameScreen>();
-		readonly List<GameScreen> _screensToUpdate = new List<GameScreen>();
-		readonly InputState _input = new InputState();
+		private readonly List<GameScreen> _screens = new List<GameScreen>();
+		private readonly List<GameScreen> _screensToUpdate = new List<GameScreen>();
 
-		SpriteBatch _spriteBatch;
-		SpriteFont _font;
+		private SpriteBatch _spriteBatch;
+		private SpriteFont _font;
 
 		public SpriteBatch SpriteBatch { get { return _spriteBatch; } }
 		public SpriteFont Font { get { return _font; } }
@@ -34,47 +33,46 @@ namespace SkyShoot.Game.ScreenManager
 
 		public bool IsActive { get; set; }
 
-		private ScreenEnum _activeScreen;
+		/*private ScreenEnum _activeScreen;
 
-		//public ScreenEnum ActiveScreen
-		//{
-		//    get { return _activeScreen; }
-		//    set
-		//    { 
-		//        _activeScreen = value;
-		//        foreach (GameScreen screen in _screens)
-		//        {
-		//            screen.IsActive = false;
-		//        }
-		//        switch(_activeScreen)
-		//        {
-		//            case LoginScreen:
-		//                LoginScreen.IsActive = true;
-		//            case MessageScreen:
-		//                MessageBox.IsActive = true;
-		//            case MainMenuScreen:
-		//                MainMenuScreen.IsActive = true;
-		//            case OptionsMenuScreen:
-		//                OptionsMenuScreen.IsActive = true;
-		//            case NewAccountScreen:
-		//                NewAccountScreen.IsActive = true;
-		//            case MultiplayerScreen:
-		//                MultiplayerScreen.IsActive = true;
-		//            case CreateGameScreen:
-		//                CreateGameScreen.IsActive = true;
-		//            case WaitScreen:
-		//                WaitScreen.IsActive = true;
-		//            case LoadingScreen:
-		//                LoadingScreen.IsActive = true;
-		//            case GameplayScreen:
-		//                GameplayScreen.IsActive = true;
-		//        }
-		//        }
-		//}
-
+		public ScreenEnum ActiveScreen
+		{
+		    get { return _activeScreen; }
+		    set
+		    { 
+		        _activeScreen = value;
+		        foreach (GameScreen screen in _screens)
+		        {
+		            screen.IsActive = false;
+		        }
+		        switch(_activeScreen)
+		        {
+		            case LoginScreen:
+		                LoginScreen.IsActive = true;
+		            case MessageScreen:
+		                MessageBox.IsActive = true;
+		            case MainMenuScreen:
+		                MainMenuScreen.IsActive = true;
+		            case OptionsMenuScreen:
+		                OptionsMenuScreen.IsActive = true;
+		            case NewAccountScreen:
+		                NewAccountScreen.IsActive = true;
+		            case MultiplayerScreen:
+		                MultiplayerScreen.IsActive = true;
+		            case CreateGameScreen:
+		                CreateGameScreen.IsActive = true;
+		            case WaitScreen:
+		                WaitScreen.IsActive = true;
+		            case LoadingScreen:
+		                LoadingScreen.IsActive = true;
+		            case GameplayScreen:
+		                GameplayScreen.IsActive = true;
+		        }
+		        }
+		}
 
 		enum ScreenEnum { LoginScreen, MessageScreen, MainMenuScreen, OptionsMenuScreen, NewAccountScreen, MultiplayerScreen, CreateGameScreen, WaitScreen, LoadingScreen, GameplayScreen }
-
+        */
 		public static void Init(Microsoft.Xna.Framework.Game game)
 		{
 			if (_instance == null)
@@ -88,7 +86,12 @@ namespace SkyShoot.Game.ScreenManager
 		private ScreenManager(Microsoft.Xna.Framework.Game game)
 			: base(game)
 		{
+            _gui = new GuiManager(Game.Services) { Visible = false };
+            _inputManager = new InputManager(Game.Services, Game.Window.Handle);
+            Game.Components.Add(_gui);
+            Game.Components.Add(_inputManager);
 
+            _inputState = new InputState(_inputManager);
 		}
 
 		public static ScreenManager Instance
@@ -106,10 +109,6 @@ namespace SkyShoot.Game.ScreenManager
 				screen.LoadContent();
 			}
 
-			_gui = new GuiManager(Game.Services) { Visible = false };
-			_inputManager = new InputManager(Game.Services, Game.Window.Handle);
-			Game.Components.Add(_gui);
-			Game.Components.Add(_inputManager);
 			//_screens.Add(new LoginScreen());
 			//_screens.Add(new MessageBox());
 			//_screens.Add(new MainMenuScreen());
@@ -129,7 +128,7 @@ namespace SkyShoot.Game.ScreenManager
 
 		public override void Update(GameTime gameTime)
 		{
-			_input.Update();
+			_inputState.Update();
 
 			_screensToUpdate.Clear();
 			foreach (GameScreen screen in _screens)
@@ -150,7 +149,7 @@ namespace SkyShoot.Game.ScreenManager
 				{
 					if (!otherScreenHasFocus)
 					{
-						screen.HandleInput(_input);
+						screen.HandleInput(_inputState);
 
 						otherScreenHasFocus = true;
 					}

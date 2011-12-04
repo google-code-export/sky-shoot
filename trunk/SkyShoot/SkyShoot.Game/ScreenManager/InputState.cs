@@ -2,6 +2,8 @@
 
 using Microsoft.Xna.Framework.Input;
 
+using Nuclex.Input;
+
 namespace SkyShoot.Game.ScreenManager
 {
     public class InputState
@@ -25,17 +27,18 @@ namespace SkyShoot.Game.ScreenManager
         public GamePadState LastGamePadState { get { return _lastGamePadState; } }
         private GamePadState _lastGamePadState;
 
+        private readonly InputManager _inputManager;
 
-
-        public InputState()
+        public InputState(InputManager inputManager)
         {
-            _currentKeyboardState = Keyboard.GetState();
-            _currentGamePadState = GamePad.GetState(PlayerIndex.One);
-            _currentMouseState = Mouse.GetState();
+            _inputManager = inputManager;
+
+            _currentKeyboardState = _inputManager.GetKeyboard().GetState();
+            _currentGamePadState = _inputManager.GetGamePad(PlayerIndex.One).GetState();
+            _currentMouseState = _inputManager.GetMouse().GetState();
 
             _lastKeyState = new KeyboardState();
-            _lastGamePadState = new GamePadState(); 
-
+            _lastGamePadState = new GamePadState();
         }
 
         public void Update()
@@ -44,9 +47,9 @@ namespace SkyShoot.Game.ScreenManager
             _lastGamePadState = _currentGamePadState;
             _lastMouseState = _currentMouseState;
 
-            _currentKeyboardState = Keyboard.GetState();
-            _currentGamePadState = GamePad.GetState(PlayerIndex.One);
-            _currentMouseState = Mouse.GetState();
+            _currentKeyboardState = _inputManager.GetKeyboard().GetState();
+            _currentGamePadState = _inputManager.GetGamePad(PlayerIndex.One).GetState();
+            _currentMouseState = _inputManager.GetMouse().GetState();
         }
 
         public Vector2 RunVector(KeyboardState keyboardState)
