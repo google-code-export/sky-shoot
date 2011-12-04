@@ -9,26 +9,35 @@ namespace SkyShoot.Game.Client.View
         public const int StonesAmount = 4;
         public const int MobsAmount = 2;
 
-        //current graphic device
+        public const int PlayerAnimationFrameCount = 2;
+        public const int SpiderAnimationFrameCount = 9;
+
+        // current graphic device
         public static GraphicsDevice GraphicsDevice;
 
-        //Landscape textures
+        // Landscape textures
         public static Texture2D SandLandscape;
         public static Texture2D GrassLandscape;
         public static Texture2D SnowLandscape;
         public static Texture2D DesertLandscape;
         public static Texture2D VolcanicLandscape;
 
-        //cursor textures
+        // cursor textures
         public static Texture2D Arrow;
         public static Texture2D Plus;
         public static Texture2D Cross;
         public static Texture2D Target;
 
-        //stone textures
+        // stone textures
         public static Texture2D[] Stones = new Texture2D[StonesAmount];
 
-        //mob textures
+        // player animation textures
+        public static Animation2D PlayerAnimation = new Animation2D();
+
+        // mob animation textures
+        public static Animation2D SpiderAnimation = new Animation2D();
+
+        // mob textures
         public static Texture2D PlayerTexture;
         public static Texture2D[] MobTextures = new Texture2D[MobsAmount];
 

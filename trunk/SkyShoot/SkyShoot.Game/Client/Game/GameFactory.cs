@@ -15,7 +15,7 @@ namespace SkyShoot.Game.Client.Game
         public static Mob CreateClientMob(Contracts.Mobs.AMob mob)
         {
             //todo mob type
-            return new Mob(mob, mob.IsPlayer ? Textures.PlayerTexture : Textures.MobTextures[0]);
+            return new Mob(mob, mob.IsPlayer ? Textures.PlayerAnimation : Textures.SpiderAnimation);
         }
 
         public static GameLevel CreateClientGameLevel(Contracts.Session.GameLevel gameLevel)

@@ -1,6 +1,7 @@
 using System;
 
 using System.Diagnostics;
+
 using System.ServiceModel;
 
 using Microsoft.Xna.Framework;

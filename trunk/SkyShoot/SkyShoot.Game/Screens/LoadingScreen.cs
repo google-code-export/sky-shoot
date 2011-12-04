@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
 using SkyShoot.Game.ScreenManager;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -10,14 +9,14 @@ namespace SkyShoot.Game.Screens
 {
     class LoadingScreen:GameScreen
     {
-        GameScreen[] screensToLoad;
-        bool showLoadingMessage;
-        bool otherScreensAreGone;
+        readonly GameScreen[] _screensToLoad;
+        readonly bool _showLoadingMessage;
+        bool _otherScreensAreGone;
 
         public LoadingScreen(bool showLoadingMessage, params GameScreen[] screensToLoad)
         {
-            this.screensToLoad = screensToLoad;
-            this.showLoadingMessage = showLoadingMessage;
+            _screensToLoad = screensToLoad;
+            _showLoadingMessage = showLoadingMessage;
 
             TransitionOnTime = TimeSpan.FromSeconds(0.5);
             TransitionOffTime = TimeSpan.FromSeconds(0.5);
@@ -28,11 +27,11 @@ namespace SkyShoot.Game.Screens
         {
             base.Update(gameTime, otherHasFocus, coveredByOtherScreen);
 
-            if (otherScreensAreGone)
+            if (_otherScreensAreGone)
             {
                 ScreenManager.RemoveScreen(this);
 
-                foreach (GameScreen screen in screensToLoad)
+                foreach (GameScreen screen in _screensToLoad)
                 {
                     if (screen != null)
                     {
@@ -48,10 +47,10 @@ namespace SkyShoot.Game.Screens
             if ((ScreenState == ScreenState.Active) &&
                 (ScreenManager.GetScreens().Length == 1))
             {
-                otherScreensAreGone = true;
+                _otherScreensAreGone = true;
             }
 
-            if (showLoadingMessage)
+            if (_showLoadingMessage)
             {
 
                 SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
@@ -60,7 +59,7 @@ namespace SkyShoot.Game.Screens
                 const string message = "Loading...";
 
                 Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
-                Vector2 viewportSize = new Vector2(viewport.Width, viewport.Height);
+                var viewportSize = new Vector2(viewport.Width, viewport.Height);
                 Vector2 textSize = font.MeasureString(message);
                 Vector2 textPosition = (viewportSize - textSize) / 2;
 
