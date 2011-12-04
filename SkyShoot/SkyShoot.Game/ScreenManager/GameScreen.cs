@@ -1,88 +1,79 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
 using Microsoft.Xna.Framework;
 
 namespace SkyShoot.Game.ScreenManager
 {
     public abstract class GameScreen
     {
-        public bool IsPopup
-        {
-            get { return isPopup; }
-            protected set { isPopup = value; }
-        }
-
-        bool isPopup = false;
+        public bool IsPopup { get; protected set; }
 
         public TimeSpan TransitionOnTime
         {
-            get { return transitionOnTime; }
-            protected set { transitionOnTime = value; }
+            get { return _transitionOnTime; }
+            protected set { _transitionOnTime = value; }
         }
 
-        TimeSpan transitionOnTime = TimeSpan.Zero;
+        private TimeSpan _transitionOnTime = TimeSpan.Zero;
 
         public TimeSpan TransitionOffTime
         {
-            get { return transitionOffTime; }
-            protected set { transitionOffTime = value; }
+            get { return _transitionOffTime; }
+            protected set { _transitionOffTime = value; }
         }
 
-        TimeSpan transitionOffTime = TimeSpan.Zero;
+        private TimeSpan _transitionOffTime = TimeSpan.Zero;
 
         /// <summary>
         /// Текущее состояние перехода. 0 - Экран активен, 1 - неактивен.
         /// </summary>
         public float TransitionPosition
         {
-            get { return transitionPosition; }
-            protected set { transitionPosition = value; }
+            get { return _transitionPosition; }
+            protected set { _transitionPosition = value; }
         }
 
-        float transitionPosition = 1;
+        private float _transitionPosition = 1;
 
         public float TransitionAlpha
         {
-            get { return 1f - transitionPosition; }
+            get { return 1f - _transitionPosition; }
         }
 
         public ScreenState ScreenState
         {
-            get { return screenState; }
-            protected set { screenState = value; }
+            get { return _screenState; }
+            protected set { _screenState = value; }
         }
 
-        ScreenState screenState = ScreenState.TransitionOn;
+        private ScreenState _screenState = ScreenState.TransitionOn;
 
         public bool IsExiting
         {
-            get { return isExiting; }
-            protected internal set { isExiting = value; }
+            get { return _isExiting; }
+            protected internal set { _isExiting = value; }
         }
 
-        bool isExiting = false;
+        private bool _isExiting;
 
-        public bool otherScreenHasFocus;
+        public bool OtherScreenHasFocus;
 
         public bool IsActive
         {
             get
             {
-                return !otherScreenHasFocus &&
-                        (screenState == ScreenState.Active ||
-                         screenState == ScreenState.TransitionOn);
+                return !OtherScreenHasFocus &&
+                        (_screenState == ScreenState.Active ||
+                         _screenState == ScreenState.TransitionOn);
             }
         }
 
-        public ScreenManager ScreenManager
-        {
-            get { return screenManager; }
-            internal set { screenManager = value; }
-        }
+        public ScreenManager ScreenManager { get; internal set; }
 
-        ScreenManager screenManager;
+        protected GameScreen()
+        {
+            IsPopup = false;
+        }
 
         public virtual void LoadContent() { }
 
@@ -91,37 +82,23 @@ namespace SkyShoot.Game.ScreenManager
         public virtual void Update(GameTime gameTime, bool otherHasFocus,
                                                       bool coveredByOtherScreen)
         {
-            this.otherScreenHasFocus = otherHasFocus;
+            OtherScreenHasFocus = otherHasFocus;
 
-            if (isExiting)
+            if (_isExiting)
             {
-                screenState = ScreenState.TransitionOff;
-                if (!UpdateTransition(gameTime, transitionOffTime, 1))
+                _screenState = ScreenState.TransitionOff;
+                if (!UpdateTransition(gameTime, _transitionOffTime, 1))
                 {
                     ScreenManager.RemoveScreen(this);
                 }
             }
             else if (coveredByOtherScreen)
             {
-                if (UpdateTransition(gameTime, transitionOffTime, 1))
-                {             
-                    screenState = ScreenState.TransitionOff;
-                }
-                else
-                {                
-                    screenState = ScreenState.Hidden;
-                }
+                _screenState = UpdateTransition(gameTime, _transitionOffTime, 1) ? ScreenState.TransitionOff : ScreenState.Hidden;
             }
             else
             {
-                if (UpdateTransition(gameTime, transitionOnTime, -1))
-                {
-                    screenState = ScreenState.TransitionOn;
-                }
-                else
-                {
-                    screenState = ScreenState.Active;
-                }
+                _screenState = UpdateTransition(gameTime, _transitionOnTime, -1) ? ScreenState.TransitionOn : ScreenState.Active;
             }
         }
 
@@ -133,12 +110,12 @@ namespace SkyShoot.Game.ScreenManager
             else
                 transitionDelta = (float)(gameTime.ElapsedGameTime.TotalMilliseconds /
                                           time.TotalMilliseconds);
-            transitionPosition += transitionDelta * direction;
+            _transitionPosition += transitionDelta * direction;
 
-            if (((direction < 0) && (transitionPosition <= 0)) ||
-                ((direction > 0) && (transitionPosition >= 1)))
+            if (((direction < 0) && (_transitionPosition <= 0)) ||
+                ((direction > 0) && (_transitionPosition >= 1)))
             {
-                transitionPosition = MathHelper.Clamp(transitionPosition, 0, 1);
+                _transitionPosition = MathHelper.Clamp(_transitionPosition, 0, 1);
                 return false;
             }
             
@@ -157,7 +134,7 @@ namespace SkyShoot.Game.ScreenManager
             }
             else
             {
-                isExiting = true;
+                _isExiting = true;
             }
         }
     }
