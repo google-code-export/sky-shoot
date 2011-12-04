@@ -63,10 +63,13 @@ namespace SkyShoot.Service.Session
                 var game = _gameSessions.Find(gameSession => gameSession.LocalGameDescription.Players.Contains(player.Name));
                 var leavingPlayer = player;
                 game.PlayerLeave(leavingPlayer);
+				var names = new String[game.Players.Count];
 				for(int i = 0; i < game.Players.Count; i++)
 				{
 					game.Players[i].PlayerLeft(leavingPlayer);
+					names[i] =game.Players[i].Name;
 				}
+				PlayerListChanged(names);
 				if (game.Players.Count == 0)
 				{
 					game.Stop();
@@ -80,5 +83,7 @@ namespace SkyShoot.Service.Session
                 return false;
             }
         }
+
+		public void PlayerListChanged(String[] names) {}
     }
 }
