@@ -57,6 +57,9 @@ namespace SkyShoot.Game.Screens
 
         public override void UnloadContent()
         {
+            Textures.PlayerAnimation.Clear();
+            Textures.SpiderAnimation.Clear();
+
             if (_content != null)
                 _content.Unload();
         }

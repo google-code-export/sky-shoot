@@ -85,5 +85,10 @@ namespace SkyShoot.Game.Client.View
             _animationTextures.Add(texture);
         }
 
+        public void Clear()
+        {
+            _animationTextures.Clear();
+        }
+
     }
 }

@@ -1,7 +1,10 @@
 using Microsoft.Xna.Framework;
-using SkyShoot.Game.Client.View;
-using Microsoft.Xna.Framework.Graphics;
+
 using Microsoft.Xna.Framework.Input;
+
+using Microsoft.Xna.Framework.Graphics;
+
+using SkyShoot.Game.Client.View;
 
 namespace SkyShoot.Game
 {
@@ -53,11 +56,7 @@ namespace SkyShoot.Game
 
         protected override void UnloadContent()
         {
-        }
 
-        protected override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
