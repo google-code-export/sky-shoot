@@ -115,6 +115,7 @@ namespace SkyShoot.Service.Session
 		public void PlayerLeave(MainSkyShootService player)
 		{
 			LocalGameDescription.Players.Remove(player.Name);
+			UpdatePlayersList();
 			this.SomebodyHit -= player.Hit;
 			this.SomebodyMoves -= player.MobMoved;
 			this.SomebodyShoots -= player.MobShot;
@@ -202,6 +203,7 @@ namespace SkyShoot.Service.Session
 
 			Players.Add(player);
 			LocalGameDescription.Players.Add(player.Name);
+			UpdatePlayersList();
 
 			if( NewPlayerConnected != null)	NewPlayerConnected(player);
 
@@ -319,6 +321,19 @@ namespace SkyShoot.Service.Session
 			//_updated = false;
 			System.Threading.Monitor.Exit(_updating);
         }
+
+		public void UpdatePlayersList()
+		{
+			var names = new String[Players.Count];
+			for (int i = 0; i < Players.Count; i++)
+			{
+				names[i] = Players[i].Name;
+			}
+			for (int i = 0; i < Players.Count; i++)
+			{
+				Players[i].PlayerListChanged(names);
+			}
+		}
 
         private Mob hitTestProjectile(AProjectile projectile, Vector2 newCord)
         {
