@@ -9,8 +9,6 @@ using Microsoft.Xna.Framework.Graphics;
 
 using Nuclex.UserInterface;
 
-using Nuclex.UserInterface.Controls;
-
 using Nuclex.UserInterface.Controls.Desktop;
 
 using SkyShoot.Contracts.Session;
@@ -33,9 +31,9 @@ namespace SkyShoot.Game.Screens
         private List<string> _tmpPlayersList;
         private readonly int _gameId;
 		private static Texture2D _texture;
-		private ContentManager content;
+		private ContentManager _content;
 		private SpriteBatch _spriteBatch;
-		private SpriteFont spriteFont;
+		private SpriteFont _spriteFont;
 
         public WaitScreen(string tile, string gameMod, string maxPlayers, int gameId)
         {
@@ -52,12 +50,12 @@ namespace SkyShoot.Game.Screens
             Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
             _mainScreen = new Screen(viewport.Width, viewport.Height);
             _gui.Screen = _mainScreen;
-			if (content == null)
-				content = new ContentManager(ScreenManager.Game.Services, "Content");
+			if (_content == null)
+				_content = new ContentManager(ScreenManager.Game.Services, "Content");
 
-			_texture = content.Load<Texture2D>("Textures/screens/screen_02_fix");
+			_texture = _content.Load<Texture2D>("Textures/screens/screen_02_fix");
 
-        	spriteFont = content.Load<SpriteFont>("Times New Roman");
+        	_spriteFont = _content.Load<SpriteFont>("Times New Roman");
 
             _mainScreen.Desktop.Bounds = new UniRectangle(
                 new UniScalar(0.1f, 0.0f), new UniScalar(0.1f, 0.0f),
@@ -127,19 +125,19 @@ namespace SkyShoot.Game.Screens
 			_spriteBatch = ScreenManager.SpriteBatch;
 			_spriteBatch.Begin();
 			_spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
-			_spriteBatch.DrawString(spriteFont, "Players", new Vector2(20f, 25f), Color.Red, 0, 
+			_spriteBatch.DrawString(_spriteFont, "Players", new Vector2(20f, 25f), Color.Red, 0, 
 									new Vector2(0f, 0f), 0.8f, SpriteEffects.None, 1f);
-			_spriteBatch.DrawString(spriteFont, "Map: ", new Vector2(280f, 260f), Color.Red, 0,
+			_spriteBatch.DrawString(_spriteFont, "Map: ", new Vector2(280f, 260f), Color.Red, 0,
 									new Vector2(0f, 0f), 0.8f, SpriteEffects.None, 1f);
-			_spriteBatch.DrawString(spriteFont, _tile, new Vector2(400f, 260f), Color.Red, 0,
+			_spriteBatch.DrawString(_spriteFont, _tile, new Vector2(400f, 260f), Color.Red, 0,
 									new Vector2(0f, 0f), 0.8f, SpriteEffects.None, 1f);
-			_spriteBatch.DrawString(spriteFont, "Game Mode:", new Vector2(280f, 290f), Color.Red, 0,
+			_spriteBatch.DrawString(_spriteFont, "Game Mode:", new Vector2(280f, 290f), Color.Red, 0,
 									new Vector2(0f, 0f), 0.8f, SpriteEffects.None, 1f);
-			_spriteBatch.DrawString(spriteFont, _gameMode, new Vector2(400f, 290f), Color.Red, 0, 
+			_spriteBatch.DrawString(_spriteFont, _gameMode, new Vector2(400f, 290f), Color.Red, 0, 
 									new Vector2(0f, 0f), 0.8f, SpriteEffects.None, 1f);
-			_spriteBatch.DrawString(spriteFont, "Max Players:", new Vector2(280f, 320f), Color.Red, 0,
+			_spriteBatch.DrawString(_spriteFont, "Max Players:", new Vector2(280f, 320f), Color.Red, 0,
 									new Vector2(0f, 0f), 0.8f, SpriteEffects.None, 1f);
-			_spriteBatch.DrawString(spriteFont, _maxPlayers, new Vector2(400f, 320f), Color.Red, 0,
+			_spriteBatch.DrawString(_spriteFont, _maxPlayers, new Vector2(400f, 320f), Color.Red, 0,
 									new Vector2(0f, 0f), 0.8f, SpriteEffects.None, 1f);
 			_spriteBatch.End();
             base.Draw(gameTime);

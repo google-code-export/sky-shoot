@@ -114,20 +114,22 @@ namespace SkyShoot.Game.Client.Game
 
         public void PlayerLeft(AMob mob)
         {
-        	for (int i = 0; i < ScreenManager.ScreenManager.Instance.GetScreens().Length; i++)
+            //TODO! issue 26? 
+
+        	/*for (int i = 0; i < ScreenManager.ScreenManager.Instance.GetScreens().Length; i++)
         	{
         		if (ScreenManager.ScreenManager.Instance.GetScreens()[i] is WaitScreen)
         		{
         			if (ScreenManager.ScreenManager.Instance.GetScreens()[i].IsActive)
         			{
         			    var waitScreen = (WaitScreen)ScreenManager.ScreenManager.Instance.GetScreens()[i];
-        			    //screen.RemovePlayer(mob.IsPlayer);
+        			    waitScreen.RemovePlayer(mob.IsPlayer);
         			}
         		}	
-        	}
-            //todo popup window
-            var clientMob = GameFactory.CreateClientMob(mob);
-            GameModel.RemoveMob(clientMob.Id);
+        	}*/
+
+            if(IsGameStarted)
+                GameModel.RemoveMob(mob.Id);
         }
 
         public void MobShot(AMob mob, AProjectile[] projectiles)
@@ -165,6 +167,7 @@ namespace SkyShoot.Game.Client.Game
 
 		public void PlayerListChanged(String[] names)
         {
+            //TODO! issue 26?
 			for (int i = 0; i < ScreenManager.ScreenManager.Instance.GetScreens().Length; i++)
 			{
 				if (ScreenManager.ScreenManager.Instance.GetScreens()[i] is WaitScreen)
@@ -268,11 +271,8 @@ namespace SkyShoot.Game.Client.Game
             }
             else
             {
-                //todo popup
-                Console.WriteLine("Connection failed");
+                ScreenManager.ScreenManager.Instance.AddScreen(new MessageBox("Connection failed"));
             }
-
-            //Console.WriteLine(login);
 
             return login;
         }
