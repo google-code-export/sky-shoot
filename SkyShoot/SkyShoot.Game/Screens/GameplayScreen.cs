@@ -2,8 +2,10 @@
 
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+
 using SkyShoot.Game.Client.Game;
 using SkyShoot.Game.Client.View;
+
 using SkyShoot.Game.ScreenManager;
 
 namespace SkyShoot.Game.Screens
@@ -39,6 +41,16 @@ namespace SkyShoot.Game.Screens
             // load mobs
             for (int i = 1; i <= Textures.MobsAmount; i++)
                 Textures.MobTextures[i - 1] = _content.Load<Texture2D>("Textures/Mobs/Spider" + i);
+
+            // load mob animation
+            for (int i = 1; i <= Textures.SpiderAnimationFrameCount; i++)
+                Textures.SpiderAnimation.AddFrame(
+                    _content.Load<Texture2D>("Textures/Mobs/spider_animation(uncomplete)/spider_" + i.ToString("D2")));
+
+            // load player animation
+            for (int i = 1; i <= Textures.PlayerAnimationFrameCount; i++)
+                Textures.PlayerAnimation.AddFrame(
+                    _content.Load<Texture2D>("Textures/Mobs/man_animation(new man)/run/run_" + i.ToString("D2")));
 
             ScreenManager.Game.ResetElapsedTime();
         }

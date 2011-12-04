@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 using SkyShoot.Game.Client.Game;
-
 using SkyShoot.Game.Client.View;
 
 using IDrawable = SkyShoot.Game.Client.View.IDrawable;
@@ -14,40 +13,47 @@ namespace SkyShoot.Game.Client.Players
 {
     public class Mob : Contracts.Mobs.AMob, IDrawable
     {
-        public Texture2D Texture { get; set; }
+        public Animation2D Animation { get; set; }
 
-		public Texture2D healthRect { get; private set; }
+		public Texture2D HealthTexture { get; private set; }
 
-		public Vector2 healthPosition;
+		public Vector2 HealthPosition;
 
-		Color c;
+		private Color _color;
 
-        public Mob(Contracts.Mobs.AMob other, Texture2D texture) : base(other)
+        private const int FrameTime = 500;
+        private const bool Looping = true;
+
+        public Mob(Contracts.Mobs.AMob other, Animation2D animation) : base(other)
         {
-            Texture = texture;			
+            Animation = animation;
+            Animation.Initialize(FrameTime, Looping);
         }
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
             var rotation = (float)Math.Atan2(ShootVector.Y, ShootVector.X) + MathHelper.PiOver2;
 
-			if (HealthAmount >= 0.6f * MaxHealthAmount) c = Color.Lime;
-			else if (HealthAmount >= 0.3f * MaxHealthAmount) c = Color.Yellow;
-			else c = Color.Red;
+			if (HealthAmount >= 0.6f * MaxHealthAmount) 
+                _color = Color.Lime;
+			else if (HealthAmount >= 0.3f * MaxHealthAmount) 
+                _color = Color.Yellow;
+			else
+                _color = Color.Red;
 
-			healthPosition.X = Coordinates.X - 28;
-			healthPosition.Y = Coordinates.Y - 45;
+			HealthPosition.X = Coordinates.X - 28;
+			HealthPosition.Y = Coordinates.Y - 45;
 
-			healthRect = SkyShoot.Game.Client.View.Textures.HealthRect(5, (int) (0.5f*HealthAmount), c);
+			HealthTexture = Textures.HealthRect(5, (int) (0.5f*HealthAmount), _color);
 
-			spriteBatch.Draw(healthRect, healthPosition, null, Color.White);
+			spriteBatch.Draw(HealthTexture, HealthPosition, null, Color.White);
 
-            spriteBatch.Draw(Texture,
+            spriteBatch.Draw(Animation.CurrentTexture,
                 Coordinates,
                 null,
                 Color.White,
                 rotation,
-                new Vector2(Texture.Width / 2f, Texture.Height / 2f),
+                new Vector2(Animation.CurrentTexture.Width / 2f, Animation.CurrentTexture.Height / 2f),
                 1,
                 SpriteEffects.None,
                 0);
@@ -56,6 +62,10 @@ namespace SkyShoot.Game.Client.Players
 
         public virtual void Update(GameTime gameTime)
         {
+            
+            if(!RunVector.Equals(Vector2.Zero))
+                Animation.Update(gameTime);
+
             int milliseconds = gameTime.ElapsedGameTime.Milliseconds;
             Coordinates += RunVector * Speed * milliseconds;
 
