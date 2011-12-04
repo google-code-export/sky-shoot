@@ -115,7 +115,7 @@ namespace SkyShoot.Service.Session
 		public void PlayerLeave(MainSkyShootService player)
 		{
 			LocalGameDescription.Players.Remove(player.Name);
-			UpdatePlayersList();
+			
 			this.SomebodyHit -= player.Hit;
 			this.SomebodyMoves -= player.MobMoved;
 			this.SomebodyShoots -= player.MobShot;
@@ -129,6 +129,10 @@ namespace SkyShoot.Service.Session
             //player.MobDied -= SomebodyDied;
 
 			Players.Remove(player);
+			if (!IsStarted)
+			{ 
+				UpdatePlayersList(player);
+			}
             Trace.WriteLine(player.Name + "leaved game");
 			
 		}
@@ -203,9 +207,10 @@ namespace SkyShoot.Service.Session
 
 			Players.Add(player);
 			LocalGameDescription.Players.Add(player.Name);
-			UpdatePlayersList();
+			var names = new String[Players.Count];
+			UpdatePlayersList(player);
 
-			if( NewPlayerConnected != null)	NewPlayerConnected(player);
+			if (NewPlayerConnected != null) NewPlayerConnected(player);
 
 			StartGame += player.GameStart;
 
@@ -322,7 +327,7 @@ namespace SkyShoot.Service.Session
 			System.Threading.Monitor.Exit(_updating);
         }
 
-		public void UpdatePlayersList()
+		public void UpdatePlayersList(MainSkyShootService player)
 		{
 			var names = new String[Players.Count];
 			for (int i = 0; i < Players.Count; i++)
@@ -331,7 +336,10 @@ namespace SkyShoot.Service.Session
 			}
 			for (int i = 0; i < Players.Count; i++)
 			{
-				Players[i].PlayerListChanged(names);
+				if (Players[i] != player)
+				{
+					Players[i].PlayerListChanged(names);
+				}
 			}
 		}
 
