@@ -2,17 +2,14 @@ using Microsoft.Xna.Framework;
 using SkyShoot.Game.Client.View;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
-using SkyShoot.Game.ScreenManager;
-using SkyShoot.Game.Client.Game;
 
 namespace SkyShoot.Game
 {
     public class SkyShootGame : Microsoft.Xna.Framework.Game
     {
         private ScreenManager.ScreenManager _screenManager;
-        SpriteBatch spriteBatch;
-        GraphicsDeviceManager _graphics;
+        private SpriteBatch _spriteBatch;
+        private readonly GraphicsDeviceManager _graphics;
 
         public SkyShootGame()
         {
@@ -36,7 +33,7 @@ namespace SkyShoot.Game
         protected override void Initialize()
         {
             Textures.GraphicsDevice = GraphicsDevice;
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
             ScreenManager.ScreenManager.Init(this);
             _screenManager = ScreenManager.ScreenManager.Instance;
             Components.Add(_screenManager);
@@ -67,9 +64,9 @@ namespace SkyShoot.Game
         {
             GraphicsDevice.Clear(Color.Black);
             base.Draw(gameTime);
-            spriteBatch.Begin(SpriteSortMode.Texture, BlendState.AlphaBlend);
-            spriteBatch.Draw(Textures.ActiveCursor, Textures.GetCursorPosition(Mouse.GetState().X, Mouse.GetState().Y), Color.White);
-            spriteBatch.End();           
+            _spriteBatch.Begin(SpriteSortMode.Texture, BlendState.AlphaBlend);
+            _spriteBatch.Draw(Textures.ActiveCursor, Textures.GetCursorPosition(Mouse.GetState().X, Mouse.GetState().Y), Color.White);
+            _spriteBatch.End();           
         }
     }
 }
