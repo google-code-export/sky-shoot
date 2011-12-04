@@ -1,4 +1,5 @@
 ﻿using System;
+
 using System.Collections.Generic;
 
 using Microsoft.Xna.Framework;
@@ -7,16 +8,17 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 using Nuclex.Input;
+
 using Nuclex.UserInterface;
 
 namespace SkyShoot.Game.ScreenManager
 {
 	public class ScreenManager : DrawableGameComponent
 	{
-		private GuiManager _gui;
-		private InputManager _inputManager;
+		private readonly GuiManager _gui;
+		private readonly InputManager _inputManager;
 
-	    private InputState _inputState;
+	    private readonly InputState _inputState;
 
 		public GuiManager Gui { get { return _gui; } }
 
