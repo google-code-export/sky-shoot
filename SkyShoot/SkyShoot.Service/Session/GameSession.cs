@@ -74,12 +74,14 @@ namespace SkyShoot.Service.Session
             {
 				if ((sender as MainSkyShootService).Weapon != null)
 				{
-					var a = (sender as MainSkyShootService).Weapon.CreateBullets(sender, direction);
-					_projectiles.AddRange(a);
-					//Trace.WriteLine("projectile added", "GameSession");
-			
-					SomebodyShoots(sender, a);
-					
+                    if ((sender as MainSkyShootService).Weapon.Reload(System.DateTime.Now.Ticks / 10000))
+                    {
+                        var a = (sender as MainSkyShootService).Weapon.CreateBullets(sender, direction);
+                        _projectiles.AddRange(a);
+                        //Trace.WriteLine("projectile added", "GameSession");
+
+                        SomebodyShoots(sender, a);
+                    }
 				}
             }
         }
