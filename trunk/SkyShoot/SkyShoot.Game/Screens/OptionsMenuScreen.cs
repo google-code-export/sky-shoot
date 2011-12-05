@@ -46,12 +46,12 @@ namespace SkyShoot.Game.Screens
         public override void LoadContent()
         {
             base.LoadContent();
-            gui = ScreenManager.Gui;
-            Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
+			gui = ScreenManager.ScreenManager.Instance.Gui;
+			Viewport viewport = ScreenManager.ScreenManager.Instance.GraphicsDevice.Viewport;
             optionsScreen = new Nuclex.UserInterface.Screen(viewport.Width, viewport.Height);
             gui.Screen = optionsScreen;
 			if (_content == null)
-				_content = new ContentManager(ScreenManager.Game.Services, "Content");
+				_content = new ContentManager(ScreenManager.ScreenManager.Instance.Game.Services, "Content");
 
 			_texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");
 
@@ -150,7 +150,7 @@ namespace SkyShoot.Game.Screens
             optionsScreen.Desktop.Children.Add(backButton);
 
 			if (_content == null)
-				_content = new ContentManager(ScreenManager.Game.Services, "Content");
+				_content = new ContentManager(ScreenManager.ScreenManager.Instance.Game.Services, "Content");
 
 			Textures.Arrow = _content.Load<Texture2D>("Textures/Cursors/Arrow");
 			Textures.Plus = _content.Load<Texture2D>("Textures/Cursors/Plus");
@@ -208,8 +208,8 @@ namespace SkyShoot.Game.Screens
 
         void BackButtonPressed(object sender, EventArgs e)
         {
-            ExitScreen();
-			ScreenManager.AddScreen(new MainMenuScreen());
+            //ExitScreen();
+			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MainMenuScreen;
         }
 
 		void FullScreenSelected(object sender, EventArgs e)
@@ -222,13 +222,13 @@ namespace SkyShoot.Game.Screens
 
         public override void Draw(GameTime gameTime)
         {
-			spriteBatch = ScreenManager.SpriteBatch;
+			spriteBatch = ScreenManager.ScreenManager.Instance.SpriteBatch;
 			spriteBatch.Begin();
 			spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
 			spriteBatch.End();
             base.Draw(gameTime);
             gui.Draw(gameTime);
-			GraphicsDevice graphicsDevice = ScreenManager.GraphicsDevice;
+			GraphicsDevice graphicsDevice = ScreenManager.ScreenManager.Instance.GraphicsDevice;
 			spriteBatch.Begin(SpriteSortMode.Texture, BlendState.AlphaBlend);
 			Vector2 pos1 = new Vector2(250f, 370f);
 			Vector2 pos2 = new Vector2(340f, 370f);

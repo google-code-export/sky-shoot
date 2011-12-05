@@ -44,13 +44,13 @@ namespace SkyShoot.Game.Client.Game
             InitConnection();
         }
 
-#region ServerInput
+        #region ServerInput
 
         public void GameStart(AMob[] mobs, Contracts.Session.GameLevel arena)
         {
             // todo setActive
-            foreach (GameScreen screen in ScreenManager.ScreenManager.Instance.GetScreens()) screen.ExitScreen();
-            ScreenManager.ScreenManager.Instance.AddScreen(new GameplayScreen());
+            //foreach (GameScreen screen in ScreenManager.ScreenManager.Instance.GetScreens()) screen.ExitScreen();
+			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.GameplayScreen;
 
             GameModel = new GameModel(GameFactory.CreateClientGameLevel(arena));
             
@@ -107,9 +107,9 @@ namespace SkyShoot.Game.Client.Game
         {
             //todo setActive
             // close all screens
-            foreach (GameScreen screen in ScreenManager.ScreenManager.Instance.GetScreens()) screen.ExitScreen();
+            //foreach (GameScreen screen in ScreenManager.ScreenManager.Instance.GetScreens()) screen.ExitScreen();
             // back to multiplayer screen
-            ScreenManager.ScreenManager.Instance.AddScreen(new MainMenuScreen());
+			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MainMenuScreen;
         }
 
         public void PlayerLeft(AMob mob)
@@ -152,9 +152,18 @@ namespace SkyShoot.Game.Client.Game
 
             foreach (var mob in mobs)
             {
-                var clientMob = GameModel.GetMob(mob.Id);
+                AMob clientMob;
+                try
+                {
+                    clientMob = GameModel.GetMob(mob.Id);
+                }
+                catch
+                {
+                    continue;
+                }
                 if(clientMob == null)
                     continue;
+
 
                 clientMob.Coordinates = mob.Coordinates;
                 clientMob.HealthAmount = mob.HealthAmount;
@@ -182,9 +191,7 @@ namespace SkyShoot.Game.Client.Game
 			}			
         }
 
-#endregion
-
-#region ClientInput
+        #region ClientInput
 
         private DateTime _dateTime;
         private const int Rate = 1000/10;
@@ -235,11 +242,12 @@ namespace SkyShoot.Game.Client.Game
             Trace.WriteLine(e);
 
             // close all screens
-            foreach (GameScreen screen in ScreenManager.ScreenManager.Instance.GetScreens()) screen.ExitScreen();
+            //foreach (GameScreen screen in ScreenManager.ScreenManager.Instance.GetScreens()) screen.ExitScreen();
             // back to multiplayer screen
-            ScreenManager.ScreenManager.Instance.AddScreen(new LoginScreen());
+			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.LoginScreen;
 
-            ScreenManager.ScreenManager.Instance.AddScreen(new MessageBox("Connection error!"));
+			MessageBox.Message = "Connection error!";
+			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MessageScreen;
         }
 
         public bool Register(string username, string password)
@@ -272,7 +280,8 @@ namespace SkyShoot.Game.Client.Game
             }
             else
             {
-                ScreenManager.ScreenManager.Instance.AddScreen(new MessageBox("Connection failed"));
+				MessageBox.Message = "Connection error!";
+				ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MessageScreen;
             }
 
             return login;
@@ -377,6 +386,17 @@ namespace SkyShoot.Game.Client.Game
             }
         }
 
-#endregion
+        #endregion
+
+        #region ISkyShootCallback Members
+
+
+        //public void NewPlayerConnected(AMob player)
+        //{
+        //    // throw new NotImplementedException();
+        //}
+
+        #endregion
     }
 }
+        # endregion

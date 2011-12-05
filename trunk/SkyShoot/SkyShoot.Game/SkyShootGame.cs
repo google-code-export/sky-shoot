@@ -41,7 +41,7 @@ namespace SkyShoot.Game
 
             base.Initialize();
 
-            _screenManager.AddScreen(new Screens.LoginScreen());
+			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.LoginScreen;
         }
 
         protected override void LoadContent()

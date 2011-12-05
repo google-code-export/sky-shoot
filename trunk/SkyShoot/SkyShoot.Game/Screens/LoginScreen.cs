@@ -31,12 +31,12 @@ namespace SkyShoot.Game.Screens
         public override void LoadContent()
         {
             base.LoadContent();
-            _gui = ScreenManager.Gui;
-            Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
+			_gui = ScreenManager.ScreenManager.Instance.Gui;
+			Viewport viewport = ScreenManager.ScreenManager.Instance.GraphicsDevice.Viewport;
             _mainScreen = new Screen(viewport.Width, viewport.Height);
             _gui.Screen = _mainScreen;
 			if (_content == null)
-				_content = new ContentManager(ScreenManager.Game.Services, "Content");
+				_content = new ContentManager(ScreenManager.ScreenManager.Instance.Game.Services, "Content");
 
 			_texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");
 
@@ -106,19 +106,21 @@ namespace SkyShoot.Game.Screens
 
         private void ExitButtonPressed(object sender, EventArgs args)
         {
-            ScreenManager.Game.Exit();
+			ScreenManager.ScreenManager.Instance.Game.Exit();
         }
 
         private void LoginButtonPressed(object sender, EventArgs args)
         {
-            _mainScreen.FocusedControl = null;
+			_mainScreen.FocusedControl = null;
 			if (_loginBox.Text.Length < 3)
 			{
-				ScreenManager.AddScreen(new MessageBox("Username is too short!\nPress Enter to continue"));
+				MessageBox.Message = "Username is too short!\nPress Enter to continue";
+				ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MessageScreen;
 			}
 			else if (_passwordBox.Text.Length < 3)
 			{
-				ScreenManager.AddScreen(new MessageBox("Password is too short!\nPress Enter to continue"));
+				MessageBox.Message = "Password is too short!\nPress Enter to continue";
+				ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MessageScreen;
 			}
 			else
 			{
@@ -129,8 +131,8 @@ namespace SkyShoot.Game.Screens
 
 				if (GameController.Instance.Login(_loginBox.Text, _passwordBox.Text).HasValue)
 				{
-                    ExitScreen();
-					ScreenManager.AddScreen(new MainMenuScreen());
+                    //ExitScreen();
+					ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MainMenuScreen;
 				}
 			}
         }
@@ -140,11 +142,13 @@ namespace SkyShoot.Game.Screens
             _mainScreen.FocusedControl = null;
 			if (_loginBox.Text.Length < 3)
 			{
-				ScreenManager.AddScreen(new MessageBox("Username is too short!\nPress Enter to continue"));
+				MessageBox.Message = "Username is too short!\nPress Enter to continue";
+				ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MessageScreen;
 			}
 			else if (_passwordBox.Text.Length < 3)
 			{
-				ScreenManager.AddScreen(new MessageBox("Password is too short!\nPress Enter to continue"));
+				MessageBox.Message = "Password is too short!\nPress Enter to continue";
+				ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MessageScreen;
 			}
             else
             {
@@ -156,20 +160,21 @@ namespace SkyShoot.Game.Screens
 				{
 					if (GameController.Instance.Login(_loginBox.Text, _passwordBox.Text).HasValue)
 					{
-                        ExitScreen();
-						ScreenManager.AddScreen(new MainMenuScreen());
+                        //ExitScreen();
+						ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MainMenuScreen;
 					}
 				}
 				else
 				{
-					ScreenManager.AddScreen(new MessageBox("Registration failed"));
+					MessageBox.Message = "Registration failed";
+					ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MessageScreen;
 				}
             }
         }
 
         public override void Draw(GameTime gameTime)
         {
-			_spriteBatch = ScreenManager.SpriteBatch;
+			_spriteBatch = ScreenManager.ScreenManager.Instance.SpriteBatch;
 			_spriteBatch.Begin();
 			_spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
 			_spriteBatch.End();

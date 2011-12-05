@@ -23,13 +23,13 @@ namespace SkyShoot.Game.Screens
         public override void LoadContent()
         {
             base.LoadContent();
-            _gui = ScreenManager.Gui;
-            Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
+			_gui = ScreenManager.ScreenManager.Instance.Gui;
+			Viewport viewport = ScreenManager.ScreenManager.Instance.GraphicsDevice.Viewport;
             _mainScreen = new Screen(viewport.Width, viewport.Height);
 			_gui.Screen = _mainScreen;
 
 			if (_content == null)
-				_content = new ContentManager(ScreenManager.Game.Services, "Content");
+				_content = new ContentManager(ScreenManager.ScreenManager.Instance.Game.Services, "Content");
 
 			_texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");
 
@@ -67,21 +67,21 @@ namespace SkyShoot.Game.Screens
         
         void PlayGameButtonPressed(object sender, EventArgs e)
         {
-			ExitScreen();
-            ScreenManager.AddScreen(new MultiplayerScreen()); 
+			//ExitScreen();
+			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MultiplayerScreen;
         }
 
 
         void OptionsButtonPressed(object sender, EventArgs e)
         {
-			ExitScreen();
-            ScreenManager.AddScreen(new OptionsMenuScreen());
+			//ExitScreen();
+			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.OptionsScreen;
         }
 
         void LogoffMenuButtonPressed(object sender, EventArgs e)
         {
-            ExitScreen();
-            ScreenManager.AddScreen(new LoginScreen());
+            //ExitScreen();
+			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.LoginScreen;
         }
 
 		public override void Update(GameTime gameTime, bool otherHasFocus, bool coveredByOtherScreen)
@@ -91,7 +91,7 @@ namespace SkyShoot.Game.Screens
 
         public override void Draw(GameTime gameTime)
 		{
-			spriteBatch = ScreenManager.SpriteBatch;
+			spriteBatch = ScreenManager.ScreenManager.Instance.SpriteBatch;
 			spriteBatch.Begin();
 			spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
 			spriteBatch.End();
