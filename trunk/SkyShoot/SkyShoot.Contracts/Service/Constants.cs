@@ -18,6 +18,8 @@ namespace SkyShoot.Contracts
         public const float SHOTGUN_BULLET_LIFE_DISTANCE = 3000;
 
 		public const int CLAW_ATTACK_SPEED = 1000; // В миллисекундах.		public const float PLAYER_DEFAULT_HEALTH = 100;
+        public const int PISTOL_ATTACK_SPEED = 500;
+        public const int SHOTGUN_ATTACK_SPEED = 500;
 		public const float PLAYER_DEFAULT_SPEED = 0.025f;
 		public const float PLAYER_RADIUS = 15f;
 		public const int FPS = 1000 / 60;

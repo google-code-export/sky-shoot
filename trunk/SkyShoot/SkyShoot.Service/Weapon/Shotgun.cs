@@ -16,6 +16,7 @@ namespace SkyShoot.Service.Weapon
 		{
 			_rand = new Random();
 			Type = AObtainableDamageModifiers.Shotgun;
+            _reloadSpeed = SkyShoot.Contracts.Constants.SHOTGUN_ATTACK_SPEED;
 		}
 
 		public Shotgun(Guid id) : base(id)
