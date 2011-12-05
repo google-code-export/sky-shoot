@@ -43,12 +43,12 @@ namespace SkyShoot.Game.Screens
         public override void LoadContent()
         {
             base.LoadContent();
-            _gui = ScreenManager.Gui;
-            Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
+			_gui = ScreenManager.ScreenManager.Instance.Gui;
+			Viewport viewport = ScreenManager.ScreenManager.Instance.GraphicsDevice.Viewport;
             _mainScreen = new Screen(viewport.Width, viewport.Height);
             _gui.Screen = _mainScreen;
 			if (_content == null)
-				_content = new ContentManager(ScreenManager.Game.Services, "Content");
+				_content = new ContentManager(ScreenManager.ScreenManager.Instance.Game.Services, "Content");
 
 			_texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");
 
@@ -178,6 +178,8 @@ namespace SkyShoot.Game.Screens
         {
             base.Update(gameTime, otherHasFocus, coveredByOtherScreen);
 
+			if (_maxPlayersList == null) return;
+
             _maxPlayers.Text = _maxPlayersList.Items[_maxPlayersList.SelectedItems[0]];
             _tile.Text = _tileList.Items[_tileList.SelectedItems[0]];
             _gameMode.Text = _gameModList.Items[_gameModList.SelectedItems[0]];
@@ -186,8 +188,8 @@ namespace SkyShoot.Game.Screens
 
         private void BackButtonPressed(object sender, EventArgs args)
         {
-            ExitScreen();
-            ScreenManager.AddScreen(new MultiplayerScreen());
+            //ExitScreen();
+			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MultiplayerScreen;
         }
 
         private void CreateButtonPressed(object sender, EventArgs args)
@@ -236,13 +238,19 @@ namespace SkyShoot.Game.Screens
             if(_gameDescription == null)
                 return;
 
-            ExitScreen();
-            ScreenManager.AddScreen(new WaitScreen(_tile.Text, _gameMode.Text, _maxPlayers.Text, GameController.Instance.GetGameList().Length));
+            //ExitScreen();
+
+			WaitScreen.Tile = _tile.Text;
+			WaitScreen.GameMod = _gameMode.Text;
+			WaitScreen.MaxPlayers = _maxPlayers.Text;
+			WaitScreen.GameId = GameController.Instance.GetGameList().Length;
+
+			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.WaitScreen;
         }
 
         public override void Draw(GameTime gameTime)
         {
-			spriteBatch = ScreenManager.SpriteBatch;
+			spriteBatch = ScreenManager.ScreenManager.Instance.SpriteBatch;
 			spriteBatch.Begin();
 			spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
 			spriteBatch.End();

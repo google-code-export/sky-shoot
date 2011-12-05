@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Nuclex.Input;
 
 using Nuclex.UserInterface;
+using SkyShoot.Game.Screens;
 
 namespace SkyShoot.Game.ScreenManager
 {
@@ -33,48 +34,90 @@ namespace SkyShoot.Game.ScreenManager
 
 		private static ScreenManager _instance;
 
-		public bool IsActive { get; set; }
+		public enum ScreenEnum 
+		{ 
+			LoginScreen, 
+			MessageScreen, 
+			MainMenuScreen, 
+			OptionsScreen, 
+			NewAccountScreen, 
+			MultiplayerScreen, 
+			CreateGameScreen, 
+			WaitScreen, 
+			LoadingScreen, 
+			GameplayScreen
+		}
 
-		/*private ScreenEnum _activeScreen;
+		LoginScreen _loginScreen;
+		MessageBox _messageScreen;
+		MainMenuScreen _mainMenuScreen;
+		OptionsMenuScreen _optionsScreen;
+		NewAccountScreen _newAccountScreen;
+		MultiplayerScreen _multiplayerScreen;
+		CreateGameScreen _createGameScreen;
+		WaitScreen _waitScreen;
+		LoadingScreen _loadingScreen;
+		GameplayScreen _gameplayScreen;
+
+		private ScreenEnum _activeScreen;
 
 		public ScreenEnum ActiveScreen
 		{
-		    get { return _activeScreen; }
-		    set
-		    { 
-		        _activeScreen = value;
-		        foreach (GameScreen screen in _screens)
-		        {
-		            screen.IsActive = false;
-		        }
-		        switch(_activeScreen)
-		        {
-		            case LoginScreen:
-		                LoginScreen.IsActive = true;
-		            case MessageScreen:
-		                MessageBox.IsActive = true;
-		            case MainMenuScreen:
-		                MainMenuScreen.IsActive = true;
-		            case OptionsMenuScreen:
-		                OptionsMenuScreen.IsActive = true;
-		            case NewAccountScreen:
-		                NewAccountScreen.IsActive = true;
-		            case MultiplayerScreen:
-		                MultiplayerScreen.IsActive = true;
-		            case CreateGameScreen:
-		                CreateGameScreen.IsActive = true;
-		            case WaitScreen:
-		                WaitScreen.IsActive = true;
-		            case LoadingScreen:
-		                LoadingScreen.IsActive = true;
-		            case GameplayScreen:
-		                GameplayScreen.IsActive = true;
-		        }
-		        }
+			get { return _activeScreen; }
+			set
+			{
+				_activeScreen = value;
+				foreach (GameScreen screen in _screens)
+				{
+					if (screen == null) return;
+					screen.IsActive = false;
+				}
+				switch (_activeScreen)
+				{
+					case ScreenEnum.LoginScreen:
+						_loginScreen.IsActive = true;
+						_loginScreen.LoadContent();
+						break;
+					case ScreenEnum.MessageScreen:
+						_messageScreen.IsActive = true;
+						_messageScreen.LoadContent();
+						break;
+					case ScreenEnum.MainMenuScreen:
+						_mainMenuScreen.IsActive = true;
+						_mainMenuScreen.LoadContent();
+						break;
+					case ScreenEnum.OptionsScreen:
+						_optionsScreen.IsActive = true;
+						_optionsScreen.LoadContent();
+						break;
+					case ScreenEnum.NewAccountScreen:
+						_newAccountScreen.IsActive = true;
+						_newAccountScreen.LoadContent();
+						break;
+					case ScreenEnum.MultiplayerScreen:
+						_multiplayerScreen.IsActive = true;
+						_multiplayerScreen.LoadContent();
+						break;
+					case ScreenEnum.CreateGameScreen:
+						_createGameScreen.IsActive = true;
+						_createGameScreen.LoadContent();
+						break;
+					case ScreenEnum.WaitScreen:
+						_waitScreen.IsActive = true;
+						_waitScreen.LoadContent();
+						break;
+					case ScreenEnum.LoadingScreen:
+						_loadingScreen.IsActive = true;
+						_loadingScreen.LoadContent();
+						break;
+					case ScreenEnum.GameplayScreen:
+						_gameplayScreen.IsActive = true;
+						_gameplayScreen.LoadContent();
+						break;
+				}
+			}
 		}
 
-		enum ScreenEnum { LoginScreen, MessageScreen, MainMenuScreen, OptionsMenuScreen, NewAccountScreen, MultiplayerScreen, CreateGameScreen, WaitScreen, LoadingScreen, GameplayScreen }
-        */
 		public static void Init(Microsoft.Xna.Framework.Game game)
 		{
 			if (_instance == null)
@@ -106,18 +149,30 @@ namespace SkyShoot.Game.ScreenManager
 			ContentManager content = Game.Content;
 			_spriteBatch = new SpriteBatch(GraphicsDevice);
 			_font = content.Load<SpriteFont>("menufont");
+
+			_loginScreen = new LoginScreen();
+			_screens.Add(_loginScreen);
+			_messageScreen = new MessageBox();
+			_screens.Add(_messageScreen);
+			_mainMenuScreen = new MainMenuScreen();
+			_screens.Add(_mainMenuScreen);
+			_optionsScreen = new OptionsMenuScreen();
+			_screens.Add(_optionsScreen);
+			_newAccountScreen = new NewAccountScreen();
+			_screens.Add(_newAccountScreen);
+			_multiplayerScreen = new MultiplayerScreen();
+			_screens.Add(_multiplayerScreen);
+			_createGameScreen = new CreateGameScreen();
+			_screens.Add(_createGameScreen);
+			_waitScreen = new WaitScreen();
+			_screens.Add(_waitScreen);
+			_gameplayScreen = new GameplayScreen();
+			_screens.Add(_gameplayScreen);
+
 			foreach (GameScreen screen in _screens)
 			{
 				screen.LoadContent();
 			}
-
-			//_screens.Add(new LoginScreen());
-			//_screens.Add(new MessageBox());
-			//_screens.Add(new MainMenuScreen());
-			//_screens.Add(new NewAccountScreen());
-			//_screens.Add(new MultiplayerScreen());
-			//_screens.Add(new CreateGameScreen());
-			//_screens.Add(new WaitScreen(WaitScreen._tile.Text, _gameMode.Text, _maxPlayers.Text, GameController.Instance.GetGameList().Length));
 		}
 
 		protected override void UnloadContent()
@@ -146,8 +201,7 @@ namespace SkyShoot.Game.ScreenManager
 
 				screen.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
 
-				if (screen.ScreenState == ScreenState.TransitionOn ||
-					screen.ScreenState == ScreenState.Active)
+				if (screen.IsActive == true)
 				{
 					if (!otherScreenHasFocus)
 					{
@@ -166,26 +220,11 @@ namespace SkyShoot.Game.ScreenManager
 		{
 			foreach (GameScreen screen in _screens)
 			{
-				if (screen.ScreenState == ScreenState.Hidden)
+				if (screen.IsActive == false)
 					continue;
 
 				screen.Draw(gameTime);
 			}
-		}
-
-		public void AddScreen(GameScreen screen)
-		{
-			screen.ScreenManager = this;
-			screen.IsExiting = false;
-			screen.LoadContent();
-			_screens.Add(screen);
-		}
-
-		public void RemoveScreen(GameScreen screen)
-		{
-			screen.UnloadContent();
-			_screens.Remove(screen);
-			_screensToUpdate.Remove(screen);
 		}
 
 		public GameScreen[] GetScreens()

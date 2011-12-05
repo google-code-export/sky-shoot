@@ -44,7 +44,7 @@ namespace SkyShoot.Game.Client.Players
 			HealthPosition.X = Coordinates.X - 28;
 			HealthPosition.Y = Coordinates.Y - 45;
 
-			HealthTexture = Textures.HealthRect(5, (int) (0.5f*HealthAmount), _color);
+			HealthTexture = Textures.HealthRect(5, (int) (50f*HealthAmount/MaxHealthAmount), _color);
 
 			spriteBatch.Draw(HealthTexture, HealthPosition, null, Color.White);
 

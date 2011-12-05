@@ -17,7 +17,7 @@ namespace SkyShoot.Game.Screens
         public override void LoadContent()
         {
             if (_content == null)
-                _content = new ContentManager(ScreenManager.Game.Services, "Content");
+				_content = new ContentManager(ScreenManager.ScreenManager.Instance.Game.Services, "Content");
 
             // load landscapes
             Textures.SandLandscape     = _content.Load<Texture2D>("Textures/Landscapes/SandLandscape");
@@ -47,7 +47,7 @@ namespace SkyShoot.Game.Screens
                 Textures.PlayerAnimation.AddFrame(
                     _content.Load<Texture2D>("Textures/Mobs/man_animation(new man)/run/run_" + i.ToString("D2")));
 
-            ScreenManager.Game.ResetElapsedTime();
+			ScreenManager.ScreenManager.Instance.Game.ResetElapsedTime();
         }
 
         public override void UnloadContent()
@@ -68,13 +68,15 @@ namespace SkyShoot.Game.Screens
         {
             base.Update(gameTime, otherHasFocus, coveredByOtherScreen);
 
+			if (GameController.Instance.GameModel == null) return;
+
             GameController.Instance.GameModel.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
         {
-            GraphicsDevice graphicsDevice = ScreenManager.GraphicsDevice;
-            SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
+			GraphicsDevice graphicsDevice = ScreenManager.ScreenManager.Instance.GraphicsDevice;
+			SpriteBatch spriteBatch = ScreenManager.ScreenManager.Instance.SpriteBatch;
             graphicsDevice.Clear(Color.SkyBlue);
 
             GameController.Instance.GameModel.Draw(spriteBatch);

@@ -25,27 +25,12 @@ namespace SkyShoot.Game.Screens
         public override void Update(GameTime gameTime, bool otherHasFocus,
                                                bool coveredByOtherScreen)
         {
-            base.Update(gameTime, otherHasFocus, coveredByOtherScreen);
-
-            if (_otherScreensAreGone)
-            {
-                ScreenManager.RemoveScreen(this);
-
-                foreach (GameScreen screen in _screensToLoad)
-                {
-                    if (screen != null)
-                    {
-                        ScreenManager.AddScreen(screen);
-                    }
-                }
-
-                ScreenManager.Game.ResetElapsedTime();
-            }
         }
+
         public override void Draw(GameTime gameTime)
         {
             if ((ScreenState == ScreenState.Active) &&
-                (ScreenManager.GetScreens().Length == 1))
+                (ScreenManager.ScreenManager.Instance.GetScreens().Length == 1))
             {
                 _otherScreensAreGone = true;
             }
@@ -53,12 +38,12 @@ namespace SkyShoot.Game.Screens
             if (_showLoadingMessage)
             {
 
-                SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
-                SpriteFont font = ScreenManager.Font;
+                SpriteBatch spriteBatch = ScreenManager.ScreenManager.Instance.SpriteBatch;
+                SpriteFont font = ScreenManager.ScreenManager.Instance.Font;
 
                 const string message = "Loading...";
 
-                Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
+                Viewport viewport = ScreenManager.ScreenManager.Instance.GraphicsDevice.Viewport;
                 var viewportSize = new Vector2(viewport.Width, viewport.Height);
                 Vector2 textSize = font.MeasureString(message);
                 Vector2 textPosition = (viewportSize - textSize) / 2;
@@ -66,7 +51,7 @@ namespace SkyShoot.Game.Screens
                 Color color = Color.White * TransitionAlpha;
 
                 spriteBatch.Begin();
-                spriteBatch.DrawString(font, message, textPosition, color);
+                spriteBatch.DrawString(font, message, textPosition, Color.White);
                 spriteBatch.End();
             }
         }

@@ -40,12 +40,12 @@ namespace SkyShoot.Game.Screens
         public override void LoadContent()
         {
             base.LoadContent();
-            _gui = ScreenManager.Gui;
-            Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
+			_gui = ScreenManager.ScreenManager.Instance.Gui;
+			Viewport viewport = ScreenManager.ScreenManager.Instance.GraphicsDevice.Viewport;
             _mainScreen = new Screen(viewport.Width, viewport.Height);
             _gui.Screen = _mainScreen;
 			if (_content == null)
-				_content = new ContentManager(ScreenManager.Game.Services, "Content");
+				_content = new ContentManager(ScreenManager.ScreenManager.Instance.Game.Services, "Content");
 
 			_texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");
 
@@ -134,8 +134,8 @@ namespace SkyShoot.Game.Screens
 
         private void BackButtonPressed(object sender, EventArgs args)
         {
-            ExitScreen();
-            ScreenManager.AddScreen(new MainMenuScreen());
+            //ExitScreen();
+			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MainMenuScreen;
         }
 
         private void JoinGameButtonPressed(object sender, EventArgs args)
@@ -155,13 +155,14 @@ namespace SkyShoot.Game.Screens
 				else
 				{
 					//todo setActive
-					ExitScreen();
+					//ExitScreen();
 
-					ScreenManager.AddScreen(new WaitScreen(
-												_tempGameList[_gameList.SelectedItems[0]].UsedTileSet + "",
-												_tempGameList[_gameList.SelectedItems[0]].GameType + "",
-												_tempGameList[_gameList.SelectedItems[0]].MaximumPlayersAllowed + "",
-												_tempGameList[_gameList.SelectedItems[0]].GameId));	
+					WaitScreen.Tile = _tempGameList[_gameList.SelectedItems[0]].UsedTileSet + "";
+					WaitScreen.GameMod = _tempGameList[_gameList.SelectedItems[0]].GameType + "";
+					WaitScreen.MaxPlayers = _tempGameList[_gameList.SelectedItems[0]].MaximumPlayersAllowed + "";
+					WaitScreen.GameId = _tempGameList[_gameList.SelectedItems[0]].GameId;
+
+					ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.WaitScreen;	
 				}
 			}
 
@@ -172,9 +173,9 @@ namespace SkyShoot.Game.Screens
             //todo setActive
             //foreach (GameScreen screen in ScreenManager.GetScreens()) screen.ExitScreen();
 
-            ExitScreen();
+            //ExitScreen();
 
-            ScreenManager.AddScreen(new CreateGameScreen());
+			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.CreateGameScreen;
 
         }
 
@@ -194,7 +195,7 @@ namespace SkyShoot.Game.Screens
 
         public override void Draw(GameTime gameTime)
         {
-			_spriteBatch = ScreenManager.SpriteBatch;
+			_spriteBatch = ScreenManager.ScreenManager.Instance.SpriteBatch;
 			_spriteBatch.Begin();
 			_spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
 			_spriteBatch.End();
