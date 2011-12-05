@@ -172,11 +172,12 @@ namespace SkyShoot.Game.Client.Game
 			{
 				if (ScreenManager.ScreenManager.Instance.GetScreens()[i] is WaitScreen)
 				{
-					if (ScreenManager.ScreenManager.Instance.GetScreens()[i].IsActive)
-					{
+                    //todo!
+					//if (ScreenManager.ScreenManager.Instance.GetScreens()[i].IsActive)
+					//{
 					    WaitScreen screen = (WaitScreen) ScreenManager.ScreenManager.Instance.GetScreens()[i];
 					    screen.ChangePlayerList(names);
-					}
+					//}
 				}
 			}			
         }

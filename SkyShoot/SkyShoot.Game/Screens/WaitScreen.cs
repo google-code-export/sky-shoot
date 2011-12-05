@@ -41,6 +41,8 @@ namespace SkyShoot.Game.Screens
             _gameMode = gameMod;
             _maxPlayers = maxPlayers;
             _gameId = gameId;
+
+            ScreenState = ScreenState.Active;
         }
 
         public override void LoadContent()
