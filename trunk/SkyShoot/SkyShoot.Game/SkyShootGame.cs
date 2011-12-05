@@ -1,7 +1,5 @@
 using Microsoft.Xna.Framework;
 
-using Microsoft.Xna.Framework.Input;
-
 using Microsoft.Xna.Framework.Graphics;
 
 using SkyShoot.Game.Client.View;
@@ -64,7 +62,9 @@ namespace SkyShoot.Game
             GraphicsDevice.Clear(Color.Black);
             base.Draw(gameTime);
             _spriteBatch.Begin(SpriteSortMode.Texture, BlendState.AlphaBlend);
-            _spriteBatch.Draw(Textures.ActiveCursor, Textures.GetCursorPosition(Mouse.GetState().X, Mouse.GetState().Y), Color.White);
+            float x, y;
+            ScreenManager.ScreenManager.Instance.GetMouseState(out x, out y);
+            _spriteBatch.Draw(Textures.ActiveCursor, Textures.GetCursorPosition(x, y), Color.White);
             _spriteBatch.End();           
         }
     }

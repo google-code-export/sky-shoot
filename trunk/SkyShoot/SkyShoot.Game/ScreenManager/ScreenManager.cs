@@ -193,5 +193,11 @@ namespace SkyShoot.Game.ScreenManager
 			return _screens.ToArray();
 		}
 
+        public void GetMouseState(out float x, out float y)
+        {
+            x = _inputState.CurrentMouseState.X;
+            y = _inputState.CurrentMouseState.Y;
+        }
+
 	}
 }
