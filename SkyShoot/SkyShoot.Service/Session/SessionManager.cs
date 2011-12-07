@@ -21,7 +21,7 @@ namespace SkyShoot.Service.Session
         private readonly List<GameSession> _gameSessions;
 
         //Уникальный идентификатор, который присваивается каждой игре при её создании
-        private readonly int _gameId;
+        private int _gameId;
 
         private SessionManager()
         {
@@ -43,6 +43,7 @@ namespace SkyShoot.Service.Session
         {
             var gameSession = new GameSession(tileSet, maxPlayers, mode, _gameId);
             _gameSessions.Add(gameSession);
+			_gameId++;
 			gameSession.AddPlayer(client);
             
             return gameSession.LocalGameDescription;
@@ -53,7 +54,7 @@ namespace SkyShoot.Service.Session
         {
             var gameSessions = _gameSessions.ToArray();
 
-            return (from t in gameSessions /* where !t.IsStarted*/ select t.LocalGameDescription).ToArray();
+            return (from t in gameSessions where !t.IsStarted select t.LocalGameDescription).ToArray();
         }
 
         //Ищем игру, в которой находится игрок и удаляем его оттуда.
