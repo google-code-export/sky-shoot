@@ -114,12 +114,12 @@ namespace SkyShoot.Game.Screens
 			_mainScreen.FocusedControl = null;
 			if (_loginBox.Text.Length < 3)
 			{
-				MessageBox.Message = "Username is too short!\nPress Enter to continue";
+				MessageBox.Message = "Username is too short!\nPress Ok to continue";
 				ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MessageScreen;
 			}
 			else if (_passwordBox.Text.Length < 3)
 			{
-				MessageBox.Message = "Password is too short!\nPress Enter to continue";
+				MessageBox.Message = "Password is too short!\nPress Ok to continue";
 				ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MessageScreen;
 			}
 			else
@@ -131,7 +131,6 @@ namespace SkyShoot.Game.Screens
 
 				if (GameController.Instance.Login(_loginBox.Text, _passwordBox.Text).HasValue)
 				{
-                    //ExitScreen();
 					ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MainMenuScreen;
 				}
 			}
@@ -142,12 +141,12 @@ namespace SkyShoot.Game.Screens
             _mainScreen.FocusedControl = null;
 			if (_loginBox.Text.Length < 3)
 			{
-				MessageBox.Message = "Username is too short!\nPress Enter to continue";
+				MessageBox.Message = "Username is too short!\nPress Ok to continue";
 				ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MessageScreen;
 			}
 			else if (_passwordBox.Text.Length < 3)
 			{
-				MessageBox.Message = "Password is too short!\nPress Enter to continue";
+				MessageBox.Message = "Password is too short!\nPress Ok to continue";
 				ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MessageScreen;
 			}
             else
@@ -160,7 +159,6 @@ namespace SkyShoot.Game.Screens
 				{
 					if (GameController.Instance.Login(_loginBox.Text, _passwordBox.Text).HasValue)
 					{
-                        //ExitScreen();
 						ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MainMenuScreen;
 					}
 				}

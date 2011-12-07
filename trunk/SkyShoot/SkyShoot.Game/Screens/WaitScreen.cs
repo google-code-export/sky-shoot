@@ -25,25 +25,11 @@ namespace SkyShoot.Game.Screens
         private Screen _mainScreen;
         private ListControl _playersList;
         private ButtonControl _leaveButton;
-        private readonly string _tile;
-        private readonly string _gameMode;
-        private readonly string _maxPlayers;
         private List<string> _tmpPlayersList;
-        private readonly int _gameId;
 		private static Texture2D _texture;
 		private ContentManager _content;
 		private SpriteBatch _spriteBatch;
 		private SpriteFont _spriteFont;
-
-        public WaitScreen()
-        {
-			//_tile = tile;
-			//_gameMode = gameMod;
-			//_maxPlayers = maxPlayers;
-			//_gameId = gameId;
-
-            ScreenState = ScreenState.Active;
-        }
 
 		public static String Tile { get; set; }
 
@@ -87,7 +73,7 @@ namespace SkyShoot.Game.Screens
 
             foreach (GameDescription gameDescription in tmpGameDescriptionList)
             {
-                if (_gameId == gameDescription.GameId)
+                if (GameId == gameDescription.GameId)
                 {
                     _tmpPlayersList = gameDescription.Players;
                 }
@@ -121,7 +107,6 @@ namespace SkyShoot.Game.Screens
         private void LeaveButtonPressed(object sender, EventArgs args)
         {  
             GameController.Instance.LeaveGame();
-            //ExitScreen();
 			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MultiplayerScreen;
         }
 
