@@ -64,9 +64,9 @@ namespace SkyShoot.Game.Screens
             GameController.Instance.HandleInput(input);
         }
 
-        public override void Update(GameTime gameTime, bool otherHasFocus, bool coveredByOtherScreen)
+        public override void Update(GameTime gameTime)
         {
-            base.Update(gameTime, otherHasFocus, coveredByOtherScreen);
+            base.Update(gameTime);
 
 			if (GameController.Instance.GameModel == null) return;
 

@@ -134,7 +134,6 @@ namespace SkyShoot.Game.Screens
 
         private void BackButtonPressed(object sender, EventArgs args)
         {
-            //ExitScreen();
 			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MainMenuScreen;
         }
 
@@ -149,14 +148,10 @@ namespace SkyShoot.Game.Screens
 			{
 				if (!GameController.Instance.JoinGame(_tempGameList[_gameList.SelectedItems[0]]))
 				{
-					//todo popup
 					Trace.WriteLine("Join game failed");
 				}
 				else
 				{
-					//todo setActive
-					//ExitScreen();
-
 					WaitScreen.Tile = _tempGameList[_gameList.SelectedItems[0]].UsedTileSet + "";
 					WaitScreen.GameMod = _tempGameList[_gameList.SelectedItems[0]].GameType + "";
 					WaitScreen.MaxPlayers = _tempGameList[_gameList.SelectedItems[0]].MaximumPlayersAllowed + "";
@@ -170,13 +165,7 @@ namespace SkyShoot.Game.Screens
 
         private void CreateGameButtonPressed(object sender, EventArgs args)
         {
-            //todo setActive
-            //foreach (GameScreen screen in ScreenManager.GetScreens()) screen.ExitScreen();
-
-            //ExitScreen();
-
 			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.CreateGameScreen;
-
         }
 
         private void RefreshButtonPressed(object sender, EventArgs args)

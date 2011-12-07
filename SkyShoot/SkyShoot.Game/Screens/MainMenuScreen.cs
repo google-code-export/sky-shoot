@@ -1,31 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using SkyShoot.Game.Client.View;
-using SkyShoot.Game.ScreenManager;
 using Nuclex.UserInterface;
 using Nuclex.UserInterface.Controls.Desktop;
 
 namespace SkyShoot.Game.Screens
 {
-    class MainMenuScreen : ScreenManager.GameScreen
-    {
-        private GuiManager _gui;
-        private Screen _mainScreen;
+	class MainMenuScreen : ScreenManager.GameScreen
+	{
+		private GuiManager _gui;
+		private Screen _mainScreen;
 		private static Texture2D _texture;
 		private ContentManager _content;
-    	private SpriteBatch spriteBatch;
+		private SpriteBatch _spriteBatch;
 
-        public override void LoadContent()
-        {
-            base.LoadContent();
+		public override void LoadContent()
+		{
+			base.LoadContent();
 			_gui = ScreenManager.ScreenManager.Instance.Gui;
 			Viewport viewport = ScreenManager.ScreenManager.Instance.GraphicsDevice.Viewport;
-            _mainScreen = new Screen(viewport.Width, viewport.Height);
+			_mainScreen = new Screen(viewport.Width, viewport.Height);
 			_gui.Screen = _mainScreen;
 
 			if (_content == null)
@@ -33,70 +28,62 @@ namespace SkyShoot.Game.Screens
 
 			_texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");
 
-            _mainScreen.Desktop.Bounds = new UniRectangle(
-              new UniScalar(0.1f, 0.0f), new UniScalar(0.1f, 0.0f),
-              new UniScalar(0.8f, 0.0f), new UniScalar(0.8f, 0.0f)
-            );
+			_mainScreen.Desktop.Bounds = new UniRectangle(
+			  new UniScalar(0.1f, 0.0f), new UniScalar(0.1f, 0.0f),
+			  new UniScalar(0.8f, 0.0f), new UniScalar(0.8f, 0.0f)
+			);
 
-            ButtonControl _playGameButton = new ButtonControl()
-            {
-                Text = "Multiplayer",
-                Bounds = new UniRectangle(new UniScalar(0.30f,0),new UniScalar(0.2f,0),new UniScalar(0.4f,0), new UniScalar(0.1f,0)),
-            };
-            _mainScreen.Desktop.Children.Add(_playGameButton);
+			var playGameButton = new ButtonControl
+			{
+				Text = "Multiplayer",
+				Bounds = new UniRectangle(new UniScalar(0.30f, 0), new UniScalar(0.2f, 0), new UniScalar(0.4f, 0), new UniScalar(0.1f, 0)),
+			};
+			_mainScreen.Desktop.Children.Add(playGameButton);
 
-            ButtonControl _optionsButton = new ButtonControl()
-            {
-                Text = "Options",
-                Bounds = new UniRectangle(new UniScalar(0.30f,0),new UniScalar(0.35f,0),new UniScalar(0.4f,0), new UniScalar(0.1f,0)),
-            };
-            _mainScreen.Desktop.Children.Add(_optionsButton);
+			var optionsButton = new ButtonControl
+			{
+				Text = "Options",
+				Bounds = new UniRectangle(new UniScalar(0.30f, 0), new UniScalar(0.35f, 0), new UniScalar(0.4f, 0), new UniScalar(0.1f, 0)),
+			};
+			_mainScreen.Desktop.Children.Add(optionsButton);
 
-            ButtonControl _logoffButton = new ButtonControl()
-            {
-                Text = "Logoff",
-                Bounds = new UniRectangle(new UniScalar(0.30f,0),new UniScalar(0.5f,0),new UniScalar(0.4f,0), new UniScalar(0.1f,0)),
-            };
-            _mainScreen.Desktop.Children.Add(_logoffButton);
+			var logoffButton = new ButtonControl
+								{
+									Text = "Logoff",
+									Bounds = new UniRectangle(new UniScalar(0.30f, 0), new UniScalar(0.5f, 0), new UniScalar(0.4f, 0), new UniScalar(0.1f, 0)),
+								};
+			_mainScreen.Desktop.Children.Add(logoffButton);
 
-            _playGameButton.Pressed += PlayGameButtonPressed;
-            _optionsButton.Pressed += OptionsButtonPressed;
-            _logoffButton.Pressed += LogoffMenuButtonPressed;
+			playGameButton.Pressed += PlayGameButtonPressed;
+			optionsButton.Pressed += OptionsButtonPressed;
+			logoffButton.Pressed += LogoffMenuButtonPressed;
 
-        }
-        
-        void PlayGameButtonPressed(object sender, EventArgs e)
-        {
-			//ExitScreen();
-			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MultiplayerScreen;
-        }
-
-
-        void OptionsButtonPressed(object sender, EventArgs e)
-        {
-			//ExitScreen();
-			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.OptionsScreen;
-        }
-
-        void LogoffMenuButtonPressed(object sender, EventArgs e)
-        {
-            //ExitScreen();
-			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.LoginScreen;
-        }
-
-		public override void Update(GameTime gameTime, bool otherHasFocus, bool coveredByOtherScreen)
-		{
-			base.Update(gameTime, otherHasFocus, coveredByOtherScreen);
 		}
 
-        public override void Draw(GameTime gameTime)
+		void PlayGameButtonPressed(object sender, EventArgs e)
 		{
-			spriteBatch = ScreenManager.ScreenManager.Instance.SpriteBatch;
-			spriteBatch.Begin();
-			spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
-			spriteBatch.End();
+			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MultiplayerScreen;
+		}
+
+
+		void OptionsButtonPressed(object sender, EventArgs e)
+		{
+			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.OptionsScreen;
+		}
+
+		void LogoffMenuButtonPressed(object sender, EventArgs e)
+		{
+			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.LoginScreen;
+		}
+
+		public override void Draw(GameTime gameTime)
+		{
+			_spriteBatch = ScreenManager.ScreenManager.Instance.SpriteBatch;
+			_spriteBatch.Begin();
+			_spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
+			_spriteBatch.End();
 			_gui.Draw(gameTime);
 			base.Draw(gameTime);
-        }
-    }
+		}
+	}
 }

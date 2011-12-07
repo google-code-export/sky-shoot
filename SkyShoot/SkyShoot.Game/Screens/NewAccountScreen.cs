@@ -101,19 +101,18 @@ namespace SkyShoot.Game.Screens
 
         private void BackButtonPressed(object sender, EventArgs args)
         {
-            //ExitScreen();
         }
 
         private void OkButtonPressed(object sender, EventArgs args)
         {
 			if (_loginBox.Text.Length < 3)
 			{
-				MessageBox.Message = "Username is too short!\nPress Enter to continue";
+				MessageBox.Message = "Username is too short!\nPress Ok to continue";
 				ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MessageScreen;
 			}
 			else if (_passwordBox.Text.Length < 3)
 			{
-				MessageBox.Message = "Password is too short!\nPress Enter to continue";
+				MessageBox.Message = "Password is too short!\nPress Ok to continue";
 				ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MessageScreen;
 			}
 			else
@@ -127,7 +126,6 @@ namespace SkyShoot.Game.Screens
 					if (GameController.Instance.Login(_loginBox.Text, _passwordBox.Text).HasValue)
 					{
 						ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MultiplayerScreen;
-						//ExitScreen();
 					}
 				}
 			}

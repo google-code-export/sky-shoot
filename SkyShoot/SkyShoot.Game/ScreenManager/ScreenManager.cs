@@ -24,7 +24,6 @@ namespace SkyShoot.Game.ScreenManager
 		public GuiManager Gui { get { return _gui; } }
 
 		private readonly List<GameScreen> _screens = new List<GameScreen>();
-		private readonly List<GameScreen> _screensToUpdate = new List<GameScreen>();
 
 		private SpriteBatch _spriteBatch;
 		private SpriteFont _font;
@@ -166,6 +165,8 @@ namespace SkyShoot.Game.ScreenManager
 			_screens.Add(_createGameScreen);
 			_waitScreen = new WaitScreen();
 			_screens.Add(_waitScreen);
+			_loadingScreen = new LoadingScreen();
+			_screens.Add(_loadingScreen);
 			_gameplayScreen = new GameplayScreen();
 			_screens.Add(_gameplayScreen);
 
@@ -187,34 +188,16 @@ namespace SkyShoot.Game.ScreenManager
 		{
 			_inputState.Update();
 
-			_screensToUpdate.Clear();
 			foreach (GameScreen screen in _screens)
-				_screensToUpdate.Add(screen);
-
-			bool otherScreenHasFocus = !Game.IsActive;
-			bool coveredByOtherScreen = false;
-
-			while (_screensToUpdate.Count > 0)
 			{
-				GameScreen screen = _screensToUpdate[_screensToUpdate.Count - 1];
-				_screensToUpdate.RemoveAt(_screensToUpdate.Count - 1);
+			if (screen.IsActive)
+			{
 
-				screen.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
-
-				if (screen.IsActive == true)
-				{
-					if (!otherScreenHasFocus)
-					{
-						screen.HandleInput(_inputState);
-
-						otherScreenHasFocus = true;
-					}
-
-					if (!screen.IsPopup)
-						coveredByOtherScreen = true;
-				}
+				screen.HandleInput(_inputState);
+				screen.Update(gameTime);
 			}
 		}
+	}
 
 		public override void Draw(GameTime gameTime)
 		{

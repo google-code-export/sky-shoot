@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Net.Mime;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -33,14 +32,9 @@ namespace SkyShoot.Game.Screens
         private ButtonControl _createButton;
 		private static Texture2D _texture;
 		private ContentManager _content;
-		private SpriteBatch spriteBatch;
+		private SpriteBatch _spriteBatch;
 
-        public CreateGameScreen()
-        {
-
-        }
-
-        public override void LoadContent()
+    	public override void LoadContent()
         {
             base.LoadContent();
 			_gui = ScreenManager.ScreenManager.Instance.Gui;
@@ -174,21 +168,19 @@ namespace SkyShoot.Game.Screens
             _mainScreen.Desktop.Children.Add(_backButton);
         }
 
-        public override void Update(GameTime gameTime, bool otherHasFocus, bool coveredByOtherScreen)
+        public override void Update(GameTime gameTime)
         {
-            base.Update(gameTime, otherHasFocus, coveredByOtherScreen);
+            base.Update(gameTime);
 
 			if (_maxPlayersList == null) return;
 
             _maxPlayers.Text = _maxPlayersList.Items[_maxPlayersList.SelectedItems[0]];
             _tile.Text = _tileList.Items[_tileList.SelectedItems[0]];
             _gameMode.Text = _gameModList.Items[_gameModList.SelectedItems[0]];
-
         }
 
         private void BackButtonPressed(object sender, EventArgs args)
         {
-            //ExitScreen();
 			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MultiplayerScreen;
         }
 
@@ -196,8 +188,7 @@ namespace SkyShoot.Game.Screens
         {
             GameMode m;
             TileSet ts;
-            GameDescription _gameDescription;
-            switch (_gameMode.Text)
+        	switch (_gameMode.Text)
             {
                 case "Coop":
                     m = GameMode.Coop;
@@ -233,13 +224,10 @@ namespace SkyShoot.Game.Screens
                     ts = TileSet.Grass;
                     break;
             }
-            _gameDescription = GameController.Instance.CreateGame(m, Convert.ToInt32(_maxPlayers.Text), ts);
+            GameDescription gameDescription = GameController.Instance.CreateGame(m, Convert.ToInt32(_maxPlayers.Text), ts);
 
-            if(_gameDescription == null)
+            if(gameDescription == null)
                 return;
-
-            //ExitScreen();
-
 			WaitScreen.Tile = _tile.Text;
 			WaitScreen.GameMod = _gameMode.Text;
 			WaitScreen.MaxPlayers = _maxPlayers.Text;
@@ -250,10 +238,10 @@ namespace SkyShoot.Game.Screens
 
         public override void Draw(GameTime gameTime)
         {
-			spriteBatch = ScreenManager.ScreenManager.Instance.SpriteBatch;
-			spriteBatch.Begin();
-			spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
-			spriteBatch.End();
+			_spriteBatch = ScreenManager.ScreenManager.Instance.SpriteBatch;
+			_spriteBatch.Begin();
+			_spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
+			_spriteBatch.End();
             base.Draw(gameTime);
             _gui.Draw(gameTime);
         }

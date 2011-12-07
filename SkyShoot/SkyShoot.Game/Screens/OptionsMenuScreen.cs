@@ -5,149 +5,133 @@ using Microsoft.Xna.Framework.Graphics;
 using Nuclex.UserInterface.Controls.Desktop;
 using Nuclex.UserInterface.Controls;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
-using System.Windows.Forms;
-using Microsoft.Xna.Framework.Input;
-using SkyShoot.Game.ScreenManager;
 using SkyShoot.Game.Client.View;
-using System.Drawing.Drawing2D;
 
 namespace SkyShoot.Game.Screens
 {
-    class OptionsMenuScreen : ScreenManager.GameScreen
-    {
-        private GuiManager gui;
-        private Nuclex.UserInterface.Screen optionsScreen;
-        private LabelControl titleLabel;
-        private LabelControl fullscreenLabel;
-        private OptionControl fullscreenButton;
-		private LabelControl keyboardLabel;
-        private Nuclex.UserInterface.Controls.Desktop.ListControl keyboardList;
-        //private LabelControl asdwLabel;
-        //private ChoiceControl asdwButton;
-        //private LabelControl arrowsLabel;
-        //private ChoiceControl arrowsButton;
-        private LabelControl cursorLabel;
-        private ChoiceControl arrowButton;
-		private ChoiceControl plusButton;
-		private ChoiceControl crossButton;
-		private ChoiceControl targetButton;
-        private ButtonControl backButton;
-        private ContentManager _content;
+	class OptionsMenuScreen : ScreenManager.GameScreen
+	{
+		private GuiManager _gui;
+		private Screen _optionsScreen;
+		private LabelControl _titleLabel;
+		private LabelControl _fullscreenLabel;
+		private OptionControl _fullscreenButton;
+		private LabelControl _keyboardLabel;
+		private ListControl _keyboardList;
+		private LabelControl _cursorLabel;
+		private ChoiceControl _arrowButton;
+		private ChoiceControl _plusButton;
+		private ChoiceControl _crossButton;
+		private ChoiceControl _targetButton;
+		private ButtonControl _backButton;
+		private ContentManager _content;
 		private static Texture2D _texture;
-		private SpriteBatch spriteBatch;
+		private SpriteBatch _spriteBatch;
 
-        public static short curs = 1;
+		public static short Curs = 1;
 
-        public OptionsMenuScreen()
-        {
-        }
-
-        public override void LoadContent()
-        {
-            base.LoadContent();
-			gui = ScreenManager.ScreenManager.Instance.Gui;
+		public override void LoadContent()
+		{
+			base.LoadContent();
+			_gui = ScreenManager.ScreenManager.Instance.Gui;
 			Viewport viewport = ScreenManager.ScreenManager.Instance.GraphicsDevice.Viewport;
-            optionsScreen = new Nuclex.UserInterface.Screen(viewport.Width, viewport.Height);
-            gui.Screen = optionsScreen;
+			_optionsScreen = new Screen(viewport.Width, viewport.Height);
+			_gui.Screen = _optionsScreen;
 			if (_content == null)
 				_content = new ContentManager(ScreenManager.ScreenManager.Instance.Game.Services, "Content");
 
 			_texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");
 
-            optionsScreen.Desktop.Bounds = new UniRectangle(
-                new UniScalar(0.1f, 0.0f), new UniScalar(0.1f, 0.0f),
-                new UniScalar(0.8f, 0.0f), new UniScalar(0.8f, 0.0f)
-            );
+			_optionsScreen.Desktop.Bounds = new UniRectangle(
+				new UniScalar(0.1f, 0.0f), new UniScalar(0.1f, 0.0f),
+				new UniScalar(0.8f, 0.0f), new UniScalar(0.8f, 0.0f)
+			);
 
-            titleLabel = new LabelControl("Options");
-            titleLabel.Bounds = new UniRectangle(new UniScalar(0.5f, -32), new UniScalar(0.1f, -70), 100, 30);
-            optionsScreen.Desktop.Children.Add(titleLabel);
+			_titleLabel = new LabelControl("Options")
+			{
+				Bounds = new UniRectangle(new UniScalar(0.5f, -32), new UniScalar(0.1f, -70), 100, 30)
+			};
+			_optionsScreen.Desktop.Children.Add(_titleLabel);
 
-            fullscreenLabel = new LabelControl("FullScreen: ");
-            fullscreenLabel.Bounds = new UniRectangle(new UniScalar(0.5f, -50), new UniScalar(0.3f, -70), 80, 30);
-            optionsScreen.Desktop.Children.Add(fullscreenLabel);
+			_fullscreenLabel = new LabelControl("FullScreen: ")
+			{
+				Bounds = new UniRectangle(new UniScalar(0.5f, -50), new UniScalar(0.3f, -70), 80, 30)
+			};
+			_optionsScreen.Desktop.Children.Add(_fullscreenLabel);
 
-            fullscreenButton = new OptionControl();
-            fullscreenButton.Bounds = new UniRectangle(new UniScalar(0.5f, 30), new UniScalar(0.3f, -70), 100, 30);
-            optionsScreen.Desktop.Children.Add(fullscreenButton);
-            fullscreenButton.Selected = Settings.Default.FullScreenSelected;
-            fullscreenButton.Changed += FullScreenSelected;
+			_fullscreenButton = new OptionControl
+			{
+				Bounds = new UniRectangle(new UniScalar(0.5f, 30), new UniScalar(0.3f, -70), 100, 30)
+			};
+			_optionsScreen.Desktop.Children.Add(_fullscreenButton);
+			_fullscreenButton.Selected = Settings.Default.FullScreenSelected;
+			_fullscreenButton.Changed += FullScreenSelected;
 
-            keyboardLabel = new LabelControl("Keyboard:");
-            keyboardLabel.Bounds = new UniRectangle(new UniScalar(0.5f, -150), new UniScalar(0.5f, -70), 50, 30);
-            optionsScreen.Desktop.Children.Add(keyboardLabel);
+			_keyboardLabel = new LabelControl("Keyboard:")
+			{
+				Bounds = new UniRectangle(new UniScalar(0.5f, -150), new UniScalar(0.5f, -70), 50, 30)
+			};
+			_optionsScreen.Desktop.Children.Add(_keyboardLabel);
 
-			keyboardList = new Nuclex.UserInterface.Controls.Desktop.ListControl
+			_keyboardList = new ListControl
 			{
 				Bounds = new UniRectangle(260f, 175f, 150f, 50f)
 			};
-			keyboardList.Items.Add("A, S, D, W");
-			keyboardList.Items.Add("Arrows");
-			keyboardList.Slider.Bounds.Location.X.Offset -= 1.0f;
-			keyboardList.Slider.Bounds.Location.Y.Offset += 1.0f;
-			keyboardList.Slider.Bounds.Size.Y.Offset -= 2.0f;
-			keyboardList.SelectionMode = ListSelectionMode.Single;
-			if (Settings.Default.KeyboardLayout == 0) keyboardList.SelectedItems.Add(0);
-			else keyboardList.SelectedItems.Add(1);
-			keyboardList.SelectionChanged += keyboardChoice;
-			optionsScreen.Desktop.Children.Add(keyboardList);
+			_keyboardList.Items.Add("A, S, D, W");
+			_keyboardList.Items.Add("Arrows");
+			_keyboardList.Slider.Bounds.Location.X.Offset -= 1.0f;
+			_keyboardList.Slider.Bounds.Location.Y.Offset += 1.0f;
+			_keyboardList.Slider.Bounds.Size.Y.Offset -= 2.0f;
+			_keyboardList.SelectionMode = ListSelectionMode.Single;
+			_keyboardList.SelectedItems.Add(Settings.Default.KeyboardLayout == 0 ? 0 : 1);
+			_keyboardList.SelectionChanged += KeyboardChoice;
+			_optionsScreen.Desktop.Children.Add(_keyboardList);
 
-			//asdwLabel = new LabelControl();
-			//asdwLabel.Text = "A, S, D, W";
-			//asdwLabel.Bounds = new UniRectangle(new UniScalar(0.5f, -70), new UniScalar(0.5f, -70), 100, 30);
-			//optionsScreen.Desktop.Children.Add(asdwLabel);
+			_cursorLabel = new LabelControl("Cursor:")
+			{
+				Bounds = new UniRectangle(new UniScalar(0.5f, -220), new UniScalar(0.8f, -70), 70, 30)
+			};
+			_optionsScreen.Desktop.Children.Add(_cursorLabel);
 
-			//asdwButton = new ChoiceControl();
-			//asdwButton.Bounds = new UniRectangle(new UniScalar(0.5f, 30), new UniScalar(0.5f, -70), 100, 30);
-			//if (Settings.Default.KeyboardLayout == 0) asdwButton.Selected = true;
-			//asdwButton.Changed += ASDWButtonPressed;
-			//optionsScreen.Desktop.Children.Add(asdwButton);
+			_arrowButton = new ChoiceControl
+			{
+				Bounds = new UniRectangle(new UniScalar(0.5f, -140), new UniScalar(0.9f, -70), 70, 30)
+			};
+			_arrowButton.Changed += ArrowButtonPressed;
+			if (Settings.Default.Cursor == 1) _arrowButton.Selected = true;
+			_optionsScreen.Desktop.Children.Add(_arrowButton);
 
-			//arrowsLabel = new LabelControl();
-			//arrowsLabel.Text = "Arrows";
-			//arrowsLabel.Bounds = new UniRectangle(new UniScalar(0.5f, -60), new UniScalar(0.6f, -70), 100, 30);
-			//optionsScreen.Desktop.Children.Add(arrowsLabel);
+			_plusButton = new ChoiceControl
+			{
+				Bounds = new UniRectangle(new UniScalar(0.5f, -50), new UniScalar(0.9f, -70), 70, 30)
+			};
+			_plusButton.Changed += PlusButtonPressed;
+			if (Settings.Default.Cursor == 2) _plusButton.Selected = true;
+			_optionsScreen.Desktop.Children.Add(_plusButton);
 
-			//arrowsButton = new ChoiceControl();
-			//arrowsButton.Bounds = new UniRectangle(new UniScalar(0.5f, 30), new UniScalar(0.6f, -70), 100, 30);
-			//arrowsButton.Changed += ArrowsButtonPressed;
-			//if (Settings.Default.KeyboardLayout == 1) arrowsButton.Selected = true;
-			//optionsScreen.Desktop.Children.Add(arrowsButton);
+			_crossButton = new ChoiceControl
+			{
+				Bounds = new UniRectangle(new UniScalar(0.5f, 40), new UniScalar(0.9f, -70), 70, 30)
+			};
+			_crossButton.Changed += CrossButtonPressed;
+			if (Settings.Default.Cursor == 3) _plusButton.Selected = true;
+			_optionsScreen.Desktop.Children.Add(_crossButton);
 
-            cursorLabel = new LabelControl("Cursor:");
-            cursorLabel.Bounds = new UniRectangle(new UniScalar(0.5f, -220), new UniScalar(0.8f, -70), 70, 30);
-            optionsScreen.Desktop.Children.Add(cursorLabel);
+			_targetButton = new ChoiceControl
+			{
+				Bounds = new UniRectangle(new UniScalar(0.5f, 130), new UniScalar(0.9f, -70), 70, 30)
+			};
+			_targetButton.Changed += TargetButtonPressed;
+			if (Settings.Default.Cursor == 4) _targetButton.Selected = true;
+			_optionsScreen.Desktop.Children.Add(_targetButton);
 
-			arrowButton = new ChoiceControl();
-            arrowButton.Bounds = new UniRectangle(new UniScalar(0.5f, -140), new UniScalar(0.9f, -70), 70, 30);
-            arrowButton.Changed += ArrowButtonPressed;
-			if (Settings.Default.Cursor == 1) arrowButton.Selected = true;
-            optionsScreen.Desktop.Children.Add(arrowButton);
-
-			plusButton = new ChoiceControl();
-            plusButton.Bounds = new UniRectangle(new UniScalar(0.5f, -50), new UniScalar(0.9f, -70), 70, 30);
-			plusButton.Changed += PlusButtonPressed;
-			if (Settings.Default.Cursor == 2) plusButton.Selected = true;
-            optionsScreen.Desktop.Children.Add(plusButton);
-
-			crossButton = new ChoiceControl();
-            crossButton.Bounds = new UniRectangle(new UniScalar(0.5f, 40), new UniScalar(0.9f, -70), 70, 30);
-			crossButton.Changed += CrossButtonPressed;
-			if (Settings.Default.Cursor == 3) plusButton.Selected = true;
-            optionsScreen.Desktop.Children.Add(crossButton);
-
-			targetButton = new ChoiceControl();
-            targetButton.Bounds = new UniRectangle(new UniScalar(0.5f, 130), new UniScalar(0.9f, -70), 70, 30);
-			targetButton.Changed += TargetButtonPressed;
-			if (Settings.Default.Cursor == 4) targetButton.Selected = true;
-            optionsScreen.Desktop.Children.Add(targetButton);
-
-            backButton = new ButtonControl();
-            backButton.Text = "Back";
-            backButton.Bounds = new UniRectangle(new UniScalar(0.5f, -50), new UniScalar(1.1f, -70), 100, 30);
-            backButton.Pressed += BackButtonPressed;
-            optionsScreen.Desktop.Children.Add(backButton);
+			_backButton = new ButtonControl
+			{
+			    Text = "Back",
+			    Bounds = new UniRectangle(new UniScalar(0.5f, -50), new UniScalar(1.1f, -70), 100, 30)
+			};
+			_backButton.Pressed += BackButtonPressed;
+			_optionsScreen.Desktop.Children.Add(_backButton);
 
 			if (_content == null)
 				_content = new ContentManager(ScreenManager.ScreenManager.Instance.Game.Services, "Content");
@@ -156,90 +140,72 @@ namespace SkyShoot.Game.Screens
 			Textures.Plus = _content.Load<Texture2D>("Textures/Cursors/Plus");
 			Textures.Cross = _content.Load<Texture2D>("Textures/Cursors/Cross");
 			Textures.Target = _content.Load<Texture2D>("Textures/Cursors/Target");
-        }
+		}
 
-        private void ArrowButtonPressed(object sender, EventArgs e)
-        {
-            curs = 1;
-            Settings.Default.Cursor = curs;
-            Settings.Default.Save();
-        }
-
-        private void PlusButtonPressed(object sender, EventArgs e)
-        {
-            curs = 2;
-            Settings.Default.Cursor = curs;
-            Settings.Default.Save();
-        }
-
-        private void CrossButtonPressed(object sender, EventArgs e)
-        {
-            curs = 3;
-            Settings.Default.Cursor = curs;
-            Settings.Default.Save();
-        }
-
-        private void TargetButtonPressed(object sender, EventArgs e)
-        {
-            curs = 4;
-            Settings.Default.Cursor = curs;
-            Settings.Default.Save();
-        }
-
-		//void ASDWButtonPressed(object sender, EventArgs e)
-		//{
-		//    Settings.Default.KeyboardLayout = 0;
-		//    Settings.Default.Save();
-
-		//}
-
-		//void ArrowsButtonPressed(object sender, EventArgs e)
-		//{
-		//    Settings.Default.KeyboardLayout = 1;
-		//    Settings.Default.Save();
-		//}
-
-		void keyboardChoice(object sender, EventArgs e)
+		private void ArrowButtonPressed(object sender, EventArgs e)
 		{
-			if (keyboardList.SelectedItems[0] == 0) Settings.Default.KeyboardLayout = 0;
-			else Settings.Default.KeyboardLayout = 1;
+			Curs = 1;
+			Settings.Default.Cursor = Curs;
 			Settings.Default.Save();
 		}
 
-        void BackButtonPressed(object sender, EventArgs e)
-        {
-            //ExitScreen();
+		private void PlusButtonPressed(object sender, EventArgs e)
+		{
+			Curs = 2;
+			Settings.Default.Cursor = Curs;
+			Settings.Default.Save();
+		}
+
+		private void CrossButtonPressed(object sender, EventArgs e)
+		{
+			Curs = 3;
+			Settings.Default.Cursor = Curs;
+			Settings.Default.Save();
+		}
+
+		private void TargetButtonPressed(object sender, EventArgs e)
+		{
+			Curs = 4;
+			Settings.Default.Cursor = Curs;
+			Settings.Default.Save();
+		}
+
+		void KeyboardChoice(object sender, EventArgs e)
+		{
+			Settings.Default.KeyboardLayout = (short) (_keyboardList.SelectedItems[0] == 0 ? 0 : 1);
+			Settings.Default.Save();
+		}
+
+		void BackButtonPressed(object sender, EventArgs e)
+		{
 			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MainMenuScreen;
-        }
+		}
 
 		void FullScreenSelected(object sender, EventArgs e)
 		{
-			if (fullscreenButton.Selected == false)
-				Settings.Default.FullScreenSelected = false;
-			else Settings.Default.FullScreenSelected = true;
+			Settings.Default.FullScreenSelected = _fullscreenButton.Selected;
 			Settings.Default.Save();
 		}
 
-        public override void Draw(GameTime gameTime)
-        {
-			spriteBatch = ScreenManager.ScreenManager.Instance.SpriteBatch;
-			spriteBatch.Begin();
-			spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
-			spriteBatch.End();
-            base.Draw(gameTime);
-            gui.Draw(gameTime);
-			GraphicsDevice graphicsDevice = ScreenManager.ScreenManager.Instance.GraphicsDevice;
-			spriteBatch.Begin(SpriteSortMode.Texture, BlendState.AlphaBlend);
-			Vector2 pos1 = new Vector2(250f, 370f);
-			Vector2 pos2 = new Vector2(340f, 370f);
-			Vector2 pos3 = new Vector2(430f, 370f);
-			Vector2 pos4 = new Vector2(520f, 370f);
-			spriteBatch.Draw(Textures.Arrow, pos1, Color.White);
-			spriteBatch.Draw(Textures.Plus, pos2, Color.White);
-			spriteBatch.Draw(Textures.Cross, pos3, Color.White);
-			spriteBatch.Draw(Textures.Target, pos4, Color.White);
-			spriteBatch.End(); 
-        }
+		public override void Draw(GameTime gameTime)
+		{
+			_spriteBatch = ScreenManager.ScreenManager.Instance.SpriteBatch;
+			_spriteBatch.Begin();
+			_spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
+			_spriteBatch.End();
+			base.Draw(gameTime);
+			_gui.Draw(gameTime);
+			_spriteBatch.Begin(SpriteSortMode.Texture, BlendState.AlphaBlend);
+			var pos1 = new Vector2(250f, 370f);
+			var pos2 = new Vector2(340f, 370f);
+			var pos3 = new Vector2(430f, 370f);
+			var pos4 = new Vector2(520f, 370f);
+			_spriteBatch.Draw(Textures.Arrow, pos1, Color.White);
+			_spriteBatch.Draw(Textures.Plus, pos2, Color.White);
+			_spriteBatch.Draw(Textures.Cross, pos3, Color.White);
+			_spriteBatch.Draw(Textures.Target, pos4, Color.White);
+			_spriteBatch.End();
+		}
 
-    }
+	}
 }
