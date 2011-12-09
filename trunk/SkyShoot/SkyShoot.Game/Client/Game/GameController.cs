@@ -18,6 +18,8 @@ using SkyShoot.Contracts.Weapon.Projectiles;
 using SkyShoot.Game.Screens;
 using SkyShoot.Game.ScreenManager;
 
+using SkyShoot.Game.Client.View;
+
 using AMob = SkyShoot.Contracts.Mobs.AMob;
 
 namespace SkyShoot.Game.Client.Game
@@ -48,8 +50,6 @@ namespace SkyShoot.Game.Client.Game
 
         public void GameStart(AMob[] mobs, Contracts.Session.GameLevel arena)
         {
-            // todo setActive
-            //foreach (GameScreen screen in ScreenManager.ScreenManager.Instance.GetScreens()) screen.ExitScreen();
 			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.GameplayScreen;
 
             GameModel = new GameModel(GameFactory.CreateClientGameLevel(arena));
@@ -80,6 +80,7 @@ namespace SkyShoot.Game.Client.Game
         public void MobDead(AMob mob)
         {
             GameModel.RemoveMob(mob.Id);
+            GameModel.GameLevel.AddTexture(mob.IsPlayer ? Textures.DeadPlayerTexture : Textures.DeadSpiderTexture, mob.Coordinates);
         }
 
         public void MobMoved(AMob mob, Vector2 direction)
@@ -105,10 +106,6 @@ namespace SkyShoot.Game.Client.Game
 
         public void GameOver()
         {
-            //todo setActive
-            // close all screens
-            //foreach (GameScreen screen in ScreenManager.ScreenManager.Instance.GetScreens()) screen.ExitScreen();
-            // back to multiplayer screen
 			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MainMenuScreen;
         }
 
@@ -184,7 +181,7 @@ namespace SkyShoot.Game.Client.Game
                     //todo!
 					//if (ScreenManager.ScreenManager.Instance.GetScreens()[i].IsActive)
 					//{
-					    WaitScreen screen = (WaitScreen) ScreenManager.ScreenManager.Instance.GetScreens()[i];
+					    var screen = (WaitScreen) ScreenManager.ScreenManager.Instance.GetScreens()[i];
 					    screen.ChangePlayerList(names);
 					//}
 				}

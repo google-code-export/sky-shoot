@@ -37,6 +37,15 @@ namespace SkyShoot.Game.Screens
             for (int i = 1; i <= Textures.MobsAmount; i++)
                 Textures.MobTextures[i - 1] = _content.Load<Texture2D>("Textures/Mobs/Spider" + i);
 
+            // load dead player
+            Textures.DeadPlayerTexture =
+                _content.Load<Texture2D>("Textures/Mobs/man_animation(new man)/death_animation/death_animation_06");
+
+            // load dead spider
+            Textures.DeadSpiderTexture =
+                _content.Load<Texture2D>(
+                    "Textures/Mobs/mob_animation(v.2)/paukan_death_animation/paukan_death_animation_03");
+
             // load mob animation
             for (int i = 1; i <= Textures.SpiderAnimationFrameCount; i++)
                 Textures.SpiderAnimation.AddFrame(

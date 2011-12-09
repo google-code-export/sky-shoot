@@ -19,13 +19,18 @@ namespace SkyShoot.Game.Client.Players
 
 		public Vector2 HealthPosition;
 
-		private Color _color;
+        private int _healthTextureWidth;
+        private readonly int _healthTextureHeight;
+
+        private Color _healthTextureColor;
 
         private const int FrameTime = 500;
         private const bool Looping = true;
 
         public Mob(Contracts.Mobs.AMob other, Animation2D animation) : base(other)
         {
+            _healthTextureHeight = 5;
+
             Animation = animation;
             Animation.Initialize(FrameTime, Looping);
         }
@@ -35,18 +40,22 @@ namespace SkyShoot.Game.Client.Players
             var rotation = (float)Math.Atan2(ShootVector.Y, ShootVector.X) + MathHelper.PiOver2;
 
 			if (HealthAmount >= 0.6f * MaxHealthAmount) 
-                _color = Color.Lime;
+                _healthTextureColor = Color.Lime;
 			else if (HealthAmount >= 0.3f * MaxHealthAmount) 
-                _color = Color.Yellow;
+                _healthTextureColor = Color.Yellow;
 			else
-                _color = Color.Red;
+                _healthTextureColor = Color.Red;
 
 			HealthPosition.X = Coordinates.X - 28;
 			HealthPosition.Y = Coordinates.Y - 45;
 
-			HealthTexture = Textures.HealthRect(5, (int) (50f*HealthAmount/MaxHealthAmount), _color);
+            _healthTextureWidth = (int) (50f*HealthAmount/MaxHealthAmount);
 
-			spriteBatch.Draw(HealthTexture, HealthPosition, null, Color.White);
+            if (_healthTextureWidth > 0)
+            {
+                HealthTexture = Textures.HealthRect(_healthTextureWidth, _healthTextureHeight, _healthTextureColor);
+                spriteBatch.Draw(HealthTexture, HealthPosition, null, Color.White);
+            }
 
             spriteBatch.Draw(Animation.CurrentTexture,
                 Coordinates,

@@ -37,6 +37,12 @@ namespace SkyShoot.Game.Client.View
         // mob animation textures
         public static Animation2D SpiderAnimation = new Animation2D();
 
+        // Dead player texture
+        public static Texture2D DeadPlayerTexture;
+
+        // Dead spider texture
+        public static Texture2D DeadSpiderTexture;
+
         // mob textures
         public static Texture2D PlayerTexture;
         public static Texture2D[] MobTextures = new Texture2D[MobsAmount];
@@ -48,14 +54,14 @@ namespace SkyShoot.Game.Client.View
 
         public static Texture2D ProjectileTexture
         {
-            get { return Create(30, 3, Color.Red); }
+            get { return Create(3, 30, Color.Red); }
         }
 
         // create a colored rectangle
         public static Texture2D Create(int width, int height, Color color)
         {
             // create the rectangle texture without colors
-            var texture = new Texture2D(GraphicsDevice, height, width);
+            var texture = new Texture2D(GraphicsDevice, width, height);
 
             // create a color array for the pixels
             var colors = new Color[width * height];
@@ -68,6 +74,20 @@ namespace SkyShoot.Game.Client.View
             texture.SetData(colors);
 
             return texture;
+        }
+
+        // copy a texture
+        public static Texture2D Clone(Texture2D texture)
+        {
+            // get pixels from texture
+            var textureData = new Color[texture.Width*texture.Height];
+            texture.GetData(textureData);
+
+            // create clone texture
+            var clone = new Texture2D(GraphicsDevice, texture.Width, texture.Height);
+            clone.SetData(textureData);
+
+            return clone;
         }
 
         // add small texture into big texture at Vector2D position
