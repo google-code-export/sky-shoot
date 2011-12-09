@@ -27,19 +27,18 @@ namespace SkyShoot.Game.Client.Game
             Width = (int) gameLevel.levelWidth;
             Height = (int) gameLevel.levelHeight;
 
-            //todo using const arrays
             switch (gameLevel.UsedTileSet)
             {
                 case TileSet.Grass:
-                    _texture = Textures.GrassLandscape; break;
+                    _texture = Textures.Clone(Textures.GrassLandscape); break;
                 case TileSet.Desert:
-                    _texture = Textures.DesertLandscape; break;
+                    _texture = Textures.Clone(Textures.DesertLandscape); break;
                 case TileSet.Sand:
-                    _texture = Textures.SandLandscape; break;
+                    _texture = Textures.Clone(Textures.SandLandscape); break;
                 case TileSet.Snow:
-                    _texture = Textures.SnowLandscape; break;
+                    _texture = Textures.Clone(Textures.SnowLandscape); break;
                 case TileSet.Volcanic:
-                    _texture = Textures.VolcanicLandscape; break;
+                    _texture = Textures.Clone(Textures.VolcanicLandscape); break;
             }
 
             var random = new Random();
