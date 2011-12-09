@@ -1,3 +1,7 @@
+using System;
+
+using System.Diagnostics;
+
 using Microsoft.Xna.Framework;
 
 using Microsoft.Xna.Framework.Graphics;
@@ -55,6 +59,18 @@ namespace SkyShoot.Game
         protected override void UnloadContent()
         {
 
+        }
+
+        protected override void Update(GameTime gameTime)
+        {
+            try
+            {
+                base.Update(gameTime);
+            }
+            catch(Exception e)
+            {
+                Trace.WriteLine(e);
+            }
         }
 
         protected override void Draw(GameTime gameTime)
