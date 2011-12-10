@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.ServiceModel;
 using System.ServiceModel.Description;
 using System.Diagnostics;
+using SkyShoot.Service.Logger;
+using SkyShoot.Service;
+using SkyShoot.Contracts.Service;
 
 namespace SkyShoot.ServProgram
 {
@@ -12,19 +12,20 @@ namespace SkyShoot.ServProgram
 	{
 		static void Main(string[] args)
 		{
-			Trace.Listeners.Add(new SkyShoot.Service.Logger.TableTraceListener());
-			var host = new ServiceHost(typeof(SkyShoot.Service.MainSkyShootService),
+			Trace.Listeners.Add(new TableTraceListener());
+			Trace.WriteLine(args);
+
+			var host = new ServiceHost(typeof(MainSkyShootService),
 				new Uri("net.tcp://localhost:777"));
 
-			host.AddServiceEndpoint(typeof(SkyShoot.Contracts.Service.ISkyShootService),
+			host.AddServiceEndpoint(typeof(ISkyShootService),
 															new NetTcpBinding(SecurityMode.None), "SkyShootService");
 
 			var metadataBehavior =
 					host.Description.Behaviors.Find<ServiceMetadataBehavior>(); 
 			if (metadataBehavior == null)
 			{
-				metadataBehavior = new ServiceMetadataBehavior();
-				metadataBehavior.HttpGetEnabled = false;
+				metadataBehavior = new ServiceMetadataBehavior {HttpGetEnabled = false};
 				host.Description.Behaviors.Add(metadataBehavior);
 			}
 

@@ -48,6 +48,8 @@ namespace SkyShoot.Contracts.Mobs
 
 		public virtual void Move()
 		{
+			if(targetPlayer == null)
+				return;
 			RunVector = new Vector2(targetPlayer.Coordinates.X - Coordinates.X, targetPlayer.Coordinates.Y - Coordinates.Y);
 			RunVector = Vector2.Normalize(RunVector);
 			ShootVector = RunVector;
