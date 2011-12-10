@@ -10,7 +10,7 @@ namespace SkyShoot.Contracts
 		public const float PISTOL_BULLET_SPEED = 0.1f;
 		public const float PISTOL_DAMAGE = 10;
 		public const float PISTOL_BULLET_LIFE_DISTANCE = 3000;
-		public const int PISTOL_ATTACK_SPEED = 500;
+		public const int PISTOL_ATTACK_RATE = 400;
 
 		#endregion
 
@@ -19,11 +19,11 @@ namespace SkyShoot.Contracts
 		public const float SHOTGUN_BULLET_SPEED = 0.2f;
 		public const float SHOTGUN_BULLET_DAMAGE = 2;
 		public const float SHOTGUN_BULLET_LIFE_DISTANCE = 70;
-		public const int SHOTGUN_ATTACK_SPEED = 500;
+		public const int SHOTGUN_ATTACK_RATE = 500;
 
 		#endregion
 
-		public const int CLAW_ATTACK_SPEED = 1000; // В миллисекундах.		public const float PLAYER_DEFAULT_HEALTH = 100;
+		public const int CLAW_ATTACK_RATE = 1000; // В миллисекундах.		public const float PLAYER_DEFAULT_HEALTH = 100;
 
 		#endregion
 
