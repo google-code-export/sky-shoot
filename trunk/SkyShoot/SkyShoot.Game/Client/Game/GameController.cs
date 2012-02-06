@@ -190,7 +190,7 @@ namespace SkyShoot.Game.Client.Game
         #region ClientInput
 
         private DateTime _dateTime;
-        private const int Rate = 1000/10;
+        private const int Rate = 1000 / 10;
 
         public void HandleInput(InputState inputState)
         {
@@ -200,9 +200,11 @@ namespace SkyShoot.Game.Client.Game
                 return;
 
             // current RunVector
-            Vector2 currentRunVector = inputState.RunVector(inputState.CurrentKeyboardState);
+            Vector2 currentRunVector = inputState.RunVector(inputState.CurrentKeyboardState,
+                                                            inputState.CurrentGamePadState);
             // previous RunVector
-            Vector2 previousRunVector = inputState.RunVector(inputState.LastKeyboardState);
+            Vector2 previousRunVector = inputState.RunVector(inputState.LastKeyboardState,
+                                                             inputState.LastGamePadState);
 
             if (!currentRunVector.Equals(previousRunVector))
             {
