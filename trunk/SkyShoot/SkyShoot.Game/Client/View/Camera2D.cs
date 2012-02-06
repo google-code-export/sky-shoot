@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-
 using Microsoft.Xna.Framework.Graphics;
 
 namespace SkyShoot.Game.Client.View
@@ -19,14 +18,18 @@ namespace SkyShoot.Game.Client.View
         public float Zoom
         {
             get { return _zoom; }
-            set { _zoom = value; if (_zoom < 0.1f) _zoom = 0.1f; } // Negative zoom will flip image
+            set
+            {
+                _zoom = value;
+                if (_zoom < 0.1f) _zoom = 0.1f;
+            } // Negative zoom will flip image
         }
 
         public Camera2D(int width, int height)
         {
             _zoom = 1.0f;
             _rotation = 0.0f;
-         
+
             Position = Vector2.Zero;
 
             _width = width;
@@ -49,7 +52,7 @@ namespace SkyShoot.Game.Client.View
             //check x axis
             float transformX = Position.X - viewWidthOver2;
             transformX = MathHelper.Clamp(transformX, 0, _width - 2 * viewWidthOver2);
-           
+
             //check y axis
             float transformY = Position.Y - viewHeightOver2;
             transformY = MathHelper.Clamp(transformY, 0, _height - 2 * viewHeightOver2);
@@ -63,9 +66,8 @@ namespace SkyShoot.Game.Client.View
 
         public Vector2 ConvertToLocal(Vector2 coordinates)
         {
-            return new Vector2(_transform.Translation.X + coordinates.X, 
-                _transform.Translation.Y + coordinates.Y);
+            return new Vector2(_transform.Translation.X + coordinates.X,
+                               _transform.Translation.Y + coordinates.Y);
         }
-
     }
 }

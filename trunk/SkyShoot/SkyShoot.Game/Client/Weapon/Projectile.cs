@@ -19,13 +19,13 @@ namespace SkyShoot.Game.Client.Weapon
 
         public Boolean IsActive { get; private set; }
 
-        public Projectile(AProjectile projectile) : 
+        public Projectile(AProjectile projectile) :
             base(projectile)
         {
-            //todo
+            // todo
             switch (Type)
             {
-                case EnumBulletType.Bullet: 
+                case EnumBulletType.Bullet:
                     break;
                 case EnumBulletType.Flame:
                     break;
@@ -42,8 +42,8 @@ namespace SkyShoot.Game.Client.Weapon
         {
             int milliseconds = gameTime.ElapsedGameTime.Milliseconds;
 
-            Vector2 movement = Direction * Speed * milliseconds; 
-            
+            Vector2 movement = Direction * Speed * milliseconds;
+
             Coordinates += movement;
 
             LifeDistance -= movement.Length();
@@ -54,21 +54,21 @@ namespace SkyShoot.Game.Client.Weapon
                 IsActive = false;
             if (LifeDistance <= 0f)
                 IsActive = false;
-        } 
+        }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            var rotation = (float)Math.Atan2(Direction.Y, Direction.X) + MathHelper.PiOver2;
+            var rotation = (float) Math.Atan2(Direction.Y, Direction.X) + MathHelper.PiOver2;
 
             spriteBatch.Draw(Texture,
-                Coordinates,
-                null,
-                Color.White,
-                rotation,
-                new Vector2(Texture.Width / 2f, Texture.Height / 2f),
-                1,
-                SpriteEffects.None,
-                0);
+                             Coordinates,
+                             null,
+                             Color.White,
+                             rotation,
+                             new Vector2(Texture.Width / 2f, Texture.Height / 2f),
+                             1,
+                             SpriteEffects.None,
+                             0);
         }
     }
 }

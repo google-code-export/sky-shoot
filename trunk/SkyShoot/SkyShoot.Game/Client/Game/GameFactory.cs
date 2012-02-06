@@ -2,19 +2,18 @@ using System;
 
 using SkyShoot.Contracts.Bonuses;
 
-using SkyShoot.Game.Client.Bonuses;
-using SkyShoot.Game.Client.Players;
 using SkyShoot.Game.Client.View;
 using SkyShoot.Game.Client.Weapon;
+using SkyShoot.Game.Client.Bonuses;
+using SkyShoot.Game.Client.Players;
 
 namespace SkyShoot.Game.Client.Game
 {
-    class GameFactory
+    internal class GameFactory
     {
-
         public static Mob CreateClientMob(Contracts.Mobs.AMob mob)
         {
-            //todo mob type
+            // todo mob type
             return new Mob(mob, mob.IsPlayer ? Textures.PlayerAnimation : Textures.SpiderAnimation);
         }
 
@@ -22,7 +21,7 @@ namespace SkyShoot.Game.Client.Game
         {
             return new GameLevel(gameLevel);
         }
- 
+
         public static ABonus CreateClientBonus(AObtainableDamageModifier bonus)
         {
             throw new NotImplementedException();
@@ -32,6 +31,5 @@ namespace SkyShoot.Game.Client.Game
         {
             return new Projectile(projectile);
         }
-
     }
 }

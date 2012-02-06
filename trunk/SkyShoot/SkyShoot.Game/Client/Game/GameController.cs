@@ -1,11 +1,9 @@
 using System;
 
 using System.Diagnostics;
-
 using System.ServiceModel;
 
 using Microsoft.Xna.Framework;
-
 using Microsoft.Xna.Framework.Input;
 
 using SkyShoot.Contracts.Perks;
@@ -50,10 +48,10 @@ namespace SkyShoot.Game.Client.Game
 
         public void GameStart(AMob[] mobs, Contracts.Session.GameLevel arena)
         {
-			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.GameplayScreen;
+            ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.GameplayScreen;
 
             GameModel = new GameModel(GameFactory.CreateClientGameLevel(arena));
-            
+
             foreach (AMob mob in mobs)
             {
                 var clientMob = GameFactory.CreateClientMob(mob);
@@ -80,7 +78,8 @@ namespace SkyShoot.Game.Client.Game
         public void MobDead(AMob mob)
         {
             GameModel.RemoveMob(mob.Id);
-            GameModel.GameLevel.AddTexture(mob.IsPlayer ? Textures.DeadPlayerTexture : Textures.DeadSpiderTexture, mob.Coordinates);
+            GameModel.GameLevel.AddTexture(mob.IsPlayer ? Textures.DeadPlayerTexture : Textures.DeadSpiderTexture,
+                                           mob.Coordinates);
         }
 
         public void MobMoved(AMob mob, Vector2 direction)
@@ -90,7 +89,7 @@ namespace SkyShoot.Game.Client.Game
 
         public void BonusDropped(AObtainableDamageModifier bonus)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void BonusExpired(AObtainableDamageModifier bonus)
@@ -101,31 +100,31 @@ namespace SkyShoot.Game.Client.Game
 
         public void BonusDisappeared(AObtainableDamageModifier bonus)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void GameOver()
         {
-			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MainMenuScreen;
+            ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MainMenuScreen;
         }
 
         public void PlayerLeft(AMob mob)
         {
             //TODO! issue 26? 
 
-        	/*for (int i = 0; i < ScreenManager.ScreenManager.Instance.GetScreens().Length; i++)
-        	{
-        		if (ScreenManager.ScreenManager.Instance.GetScreens()[i] is WaitScreen)
-        		{
-        			if (ScreenManager.ScreenManager.Instance.GetScreens()[i].IsActive)
-        			{
-        			    var waitScreen = (WaitScreen)ScreenManager.ScreenManager.Instance.GetScreens()[i];
-        			    waitScreen.RemovePlayer(mob.IsPlayer);
-        			}
-        		}	
-        	}*/
+            /*for (int i = 0; i < ScreenManager.ScreenManager.Instance.GetScreens().Length; i++)
+            {
+                if (ScreenManager.ScreenManager.Instance.GetScreens()[i] is WaitScreen)
+                {
+                    if (ScreenManager.ScreenManager.Instance.GetScreens()[i].IsActive)
+                    {
+                        var waitScreen = (WaitScreen)ScreenManager.ScreenManager.Instance.GetScreens()[i];
+                        waitScreen.RemovePlayer(mob.IsPlayer);
+                    }
+                }	
+            }*/
 
-            if(IsGameStarted)
+            if (IsGameStarted)
                 GameModel.RemoveMob(mob.Id);
         }
 
@@ -158,7 +157,7 @@ namespace SkyShoot.Game.Client.Game
                 {
                     continue;
                 }
-                if(clientMob == null)
+                if (clientMob == null)
                     continue;
 
 
@@ -171,21 +170,21 @@ namespace SkyShoot.Game.Client.Game
             }
         }
 
-		public void PlayerListChanged(String[] names)
+        public void PlayerListChanged(String[] names)
         {
             //TODO! issue 26?
-			for (int i = 0; i < ScreenManager.ScreenManager.Instance.GetScreens().Length; i++)
-			{
-				if (ScreenManager.ScreenManager.Instance.GetScreens()[i] is WaitScreen)
-				{
+            for (int i = 0; i < ScreenManager.ScreenManager.Instance.GetScreens().Length; i++)
+            {
+                if (ScreenManager.ScreenManager.Instance.GetScreens()[i] is WaitScreen)
+                {
                     //todo!
-					//if (ScreenManager.ScreenManager.Instance.GetScreens()[i].IsActive)
-					//{
-					    var screen = (WaitScreen) ScreenManager.ScreenManager.Instance.GetScreens()[i];
-					    screen.ChangePlayerList(names);
-					//}
-				}
-			}			
+                    //if (ScreenManager.ScreenManager.Instance.GetScreens()[i].IsActive)
+                    //{
+                    var screen = (WaitScreen) ScreenManager.ScreenManager.Instance.GetScreens()[i];
+                    screen.ChangePlayerList(names);
+                    //}
+                }
+            }
         }
 
         #region ClientInput
@@ -215,7 +214,7 @@ namespace SkyShoot.Game.Client.Game
             var mouseCoordinates = new Vector2(mouseState.X, mouseState.Y);
 
             player.ShootVector = mouseCoordinates - GameModel.Camera2D.ConvertToLocal(player.Coordinates);
-            if(player.ShootVector.Length() > 0)
+            if (player.ShootVector.Length() > 0)
                 player.ShootVector.Normalize();
 
             if (inputState.CurrentMouseState.LeftButton == ButtonState.Pressed)
@@ -231,7 +230,7 @@ namespace SkyShoot.Game.Client.Game
         private void InitConnection()
         {
             var channelFactory = new DuplexChannelFactory<ISkyShootService>(this, "SkyShootEndpoint");
-            _service = channelFactory.CreateChannel();            
+            _service = channelFactory.CreateChannel();
         }
 
         private void FatalError(Exception e)
@@ -239,12 +238,12 @@ namespace SkyShoot.Game.Client.Game
             Trace.WriteLine(e);
 
             // close all screens
-            //foreach (GameScreen screen in ScreenManager.ScreenManager.Instance.GetScreens()) screen.ExitScreen();
+            // foreach (GameScreen screen in ScreenManager.ScreenManager.Instance.GetScreens()) screen.ExitScreen();
             // back to multiplayer screen
-			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.LoginScreen;
+            ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.LoginScreen;
 
-			MessageBox.Message = "Connection error!";
-			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MessageScreen;
+            MessageBox.Message = "Connection error!";
+            ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MessageScreen;
         }
 
         public bool Register(string username, string password)
@@ -277,8 +276,8 @@ namespace SkyShoot.Game.Client.Game
             }
             else
             {
-				MessageBox.Message = "Connection error!";
-				ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MessageScreen;
+                MessageBox.Message = "Connection error!";
+                ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MessageScreen;
             }
 
             return login;
@@ -385,15 +384,6 @@ namespace SkyShoot.Game.Client.Game
 
         #endregion
 
-        #region ISkyShootCallback Members
-
-
-        //public void NewPlayerConnected(AMob player)
-        //{
-        //    // throw new NotImplementedException();
-        //}
-
         #endregion
     }
 }
-        # endregion

@@ -30,26 +30,31 @@ namespace SkyShoot.Game.Client.Game
             switch (gameLevel.UsedTileSet)
             {
                 case TileSet.Grass:
-                    _texture = Textures.Clone(Textures.GrassLandscape); break;
+                    _texture = Textures.Clone(Textures.GrassLandscape);
+                    break;
                 case TileSet.Desert:
-                    _texture = Textures.Clone(Textures.DesertLandscape); break;
+                    _texture = Textures.Clone(Textures.DesertLandscape);
+                    break;
                 case TileSet.Sand:
-                    _texture = Textures.Clone(Textures.SandLandscape); break;
+                    _texture = Textures.Clone(Textures.SandLandscape);
+                    break;
                 case TileSet.Snow:
-                    _texture = Textures.Clone(Textures.SnowLandscape); break;
+                    _texture = Textures.Clone(Textures.SnowLandscape);
+                    break;
                 case TileSet.Volcanic:
-                    _texture = Textures.Clone(Textures.VolcanicLandscape); break;
+                    _texture = Textures.Clone(Textures.VolcanicLandscape);
+                    break;
             }
 
             var random = new Random();
 
-            for (int i = 0; i < StonesNumber; i++) {
+            for (int i = 0; i < StonesNumber; i++)
+            {
                 int stone = random.Next(3);
                 var randomPosition = new Vector2(random.Next(Width - Textures.Stones[stone].Width),
-                    random.Next(Height - Textures.Stones[stone].Height));
+                                                 random.Next(Height - Textures.Stones[stone].Height));
                 Textures.Merge(_texture, Textures.Stones[stone], randomPosition);
             }
-
         }
 
         public void AddTexture(Texture2D texture, Vector2 position)
@@ -61,6 +66,5 @@ namespace SkyShoot.Game.Client.Game
         {
             spriteBatch.Draw(_texture, Vector2.Zero, new Rectangle(0, 0, Width, Height), Color.White);
         }
-
     }
 }

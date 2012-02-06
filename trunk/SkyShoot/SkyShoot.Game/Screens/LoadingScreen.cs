@@ -5,13 +5,13 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace SkyShoot.Game.Screens
 {
-    class LoadingScreen:GameScreen
+    internal class LoadingScreen : GameScreen
     {
+        public static bool ShowLoadingMessage { get; set; }
 
-		public static bool ShowLoadingMessage { get; set; }
-
-    	public override void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
+
         }
 
         public override void Draw(GameTime gameTime)
@@ -30,6 +30,5 @@ namespace SkyShoot.Game.Screens
                 spriteBatch.End();
             }
         }
-
     }
 }

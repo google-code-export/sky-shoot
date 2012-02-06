@@ -1,16 +1,13 @@
 using System;
-
 using System.Diagnostics;
-
 using System.Collections.Concurrent;
 
 using Microsoft.Xna.Framework;
-
 using Microsoft.Xna.Framework.Graphics;
 
-using SkyShoot.Game.Client.Players;
 using SkyShoot.Game.Client.View;
 using SkyShoot.Game.Client.Weapon;
+using SkyShoot.Game.Client.Players;
 
 namespace SkyShoot.Game.Client.Game
 {
@@ -18,7 +15,7 @@ namespace SkyShoot.Game.Client.Game
     {
         public GameLevel GameLevel { get; private set; }
 
-        public ConcurrentDictionary<Guid, Mob> Mobs { get; private set;  }
+        public ConcurrentDictionary<Guid, Mob> Mobs { get; private set; }
 
         public ConcurrentDictionary<Guid, Projectile> Projectiles { get; private set; }
 
@@ -36,7 +33,7 @@ namespace SkyShoot.Game.Client.Game
 
         public void AddMob(Mob mob)
         {
-            if(!Mobs.TryAdd(mob.Id, mob))
+            if (!Mobs.TryAdd(mob.Id, mob))
                 Trace.WriteLine("Mob already exists", "GameModel/AddMob");
         }
 
@@ -67,7 +64,7 @@ namespace SkyShoot.Game.Client.Game
         public void RemoveMob(Guid id)
         {
             Mob mob;
-            if(!Mobs.TryRemove(id, out mob))
+            if (!Mobs.TryRemove(id, out mob))
                 Trace.WriteLine("Mob with such ID does not exist", "GameModel/RemoveMob");
         }
 
@@ -89,7 +86,7 @@ namespace SkyShoot.Game.Client.Game
             // update projectiles
             foreach (var projectile in Projectiles)
             {
-                if(projectile.Value.IsActive)
+                if (projectile.Value.IsActive)
                     projectile.Value.Update(gameTime);
                 else
                     RemoveProjectile(projectile.Value.Id);
@@ -112,13 +109,13 @@ namespace SkyShoot.Game.Client.Game
 
             Camera2D.Position = myPosition;
 
-            spriteBatch.Begin(SpriteSortMode.Immediate, 
-                BlendState.AlphaBlend,
-                null,
-                null,
-                null,
-                null,
-                Camera2D.GetTransformation(Textures.GraphicsDevice));
+            spriteBatch.Begin(SpriteSortMode.Immediate,
+                              BlendState.AlphaBlend,
+                              null,
+                              null,
+                              null,
+                              null,
+                              Camera2D.GetTransformation(Textures.GraphicsDevice));
 
             // draw background
             GameLevel.Draw(spriteBatch);
@@ -136,9 +133,6 @@ namespace SkyShoot.Game.Client.Game
             }
 
             spriteBatch.End();
-
         }
-
     }
-
 }
