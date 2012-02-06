@@ -57,7 +57,8 @@ namespace SkyShoot.Game.ScreenManager
             _inputManager = inputManager;
 
             _currentKeyboardState = _inputManager.GetKeyboard().GetState();
-            _currentGamePadState = _inputManager.GetGamePad(PlayerIndex.One).GetState();
+            // todo windows | XBOX
+            _currentGamePadState = _inputManager.GetGamePad(ExtendedPlayerIndex.Five).GetState();
             _currentMouseState = _inputManager.GetMouse().GetState();
 
             _lastKeyState = new KeyboardState();
@@ -71,15 +72,18 @@ namespace SkyShoot.Game.ScreenManager
             _lastMouseState = _currentMouseState;
 
             _currentKeyboardState = _inputManager.GetKeyboard().GetState();
-            _currentGamePadState = _inputManager.GetGamePad(PlayerIndex.One).GetState();
+            _currentGamePadState = _inputManager.GetGamePad(ExtendedPlayerIndex.Five).GetState();
             _currentMouseState = _inputManager.GetMouse().GetState();
         }
 
-        public Vector2 RunVector(KeyboardState keyboardState)
+        public Vector2 RunVector(KeyboardState keyboardState, GamePadState gamePadState)
         {
             Vector2 runVector = Vector2.Zero;
-            if (_currentGamePadState.IsConnected)
-                runVector = _currentGamePadState.ThumbSticks.Left;
+            if (gamePadState.IsConnected)
+            {   
+                runVector = gamePadState.ThumbSticks.Left;
+                runVector.Y = -runVector.Y;
+            }
             else
             {
                 switch (Settings.Default.KeyboardLayout)
