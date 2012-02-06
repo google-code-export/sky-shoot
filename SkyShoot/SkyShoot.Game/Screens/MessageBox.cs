@@ -5,18 +5,25 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-using Nuclex.UserInterface.Controls.Desktop;
 using Nuclex.UserInterface;
+
+using Nuclex.UserInterface.Controls.Desktop;
+
+using SkyShoot.Game.ScreenManager;
 
 namespace SkyShoot.Game.Screens
 {
-	class MessageBox : ScreenManager.GameScreen
+	internal class MessageBox : GameScreen
 	{
 		private GuiManager _gui;
+
 		private Texture2D _texture;
-		private ContentManager _content;
-		private ButtonControl _okButton;
-		private Screen _messageScreen;
+		
+        private ContentManager _content;
+		
+        private ButtonControl _okButton;
+		
+        private Screen _messageScreen;
 
 		public ScreenManager.ScreenManager.ScreenEnum Next { get; set; }
 
@@ -52,6 +59,7 @@ namespace SkyShoot.Game.Screens
 		{
 			ScreenManager.ScreenManager.Instance.ActiveScreen = Next;
 		}
+
 		public override void Draw(GameTime gameTime)
 		{
 			SpriteBatch spriteBatch = ScreenManager.ScreenManager.Instance.SpriteBatch;

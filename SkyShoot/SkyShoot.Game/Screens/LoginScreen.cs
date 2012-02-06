@@ -8,25 +8,32 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
+using SkyShoot.Game.ScreenManager;
 using SkyShoot.Game.Client.Game;
-
 
 namespace SkyShoot.Game.Screens
 {
-    class LoginScreen:ScreenManager.GameScreen
+    internal class LoginScreen : GameScreen
     {
         private GuiManager _gui;
+
         private LabelControl _loginLabel;
-        private Controls.InputControl _loginBox;
         private LabelControl _passwordLabel;
+        
+        private Controls.InputControl _loginBox;
         private Controls.InputControl _passwordBox;
+        
         private ButtonControl _exitButton;
         private ButtonControl _loginButton;
         private ButtonControl _newAccountButton;
+
         private Screen _mainScreen;
-		private static Texture2D _texture;
-		private ContentManager _content;
-		private SpriteBatch _spriteBatch;
+		
+        private static Texture2D _texture;
+		
+        private ContentManager _content;
+		
+        private SpriteBatch _spriteBatch;
 
         public override void LoadContent()
         {
@@ -127,7 +134,6 @@ namespace SkyShoot.Game.Screens
 				Settings.Default.login = _loginBox.Text;
 				Settings.Default.password = _passwordBox.Text;
 				Settings.Default.Save();
-
 
 				if (GameController.Instance.Login(_loginBox.Text, _passwordBox.Text).HasValue)
 				{

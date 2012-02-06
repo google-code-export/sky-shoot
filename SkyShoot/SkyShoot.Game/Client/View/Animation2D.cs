@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 
 using Microsoft.Xna.Framework;
-
 using Microsoft.Xna.Framework.Graphics;
 
 namespace SkyShoot.Game.Client.View
@@ -57,7 +56,7 @@ namespace SkyShoot.Game.Client.View
                 return;
 
             // Update the elapsed time
-            _elapsedTime += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
+            _elapsedTime += (int) gameTime.ElapsedGameTime.TotalMilliseconds;
 
             // If the elapsed time is larger than the frame time
             // we need to switch frames
@@ -89,6 +88,5 @@ namespace SkyShoot.Game.Client.View
         {
             _animationTextures.Clear();
         }
-
     }
 }

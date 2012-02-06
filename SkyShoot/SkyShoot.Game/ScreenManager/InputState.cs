@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-
 using Microsoft.Xna.Framework.Input;
 
 using Nuclex.Input;
@@ -8,23 +7,47 @@ namespace SkyShoot.Game.ScreenManager
 {
     public class InputState
     {
-        public KeyboardState CurrentKeyboardState { get { return _currentKeyboardState; } }
+        public KeyboardState CurrentKeyboardState
+        {
+            get { return _currentKeyboardState; }
+        }
+
         private KeyboardState _currentKeyboardState;
 
-        public MouseState CurrentMouseState { get { return _currentMouseState; } }
+        public MouseState CurrentMouseState
+        {
+            get { return _currentMouseState; }
+        }
+
         private MouseState _currentMouseState;
 
-        public GamePadState CurrentGamePadState { get { return _currentGamePadState; } }
+        public GamePadState CurrentGamePadState
+        {
+            get { return _currentGamePadState; }
+        }
+
         private GamePadState _currentGamePadState;
 
 
-        public KeyboardState LastKeyboardState { get { return _lastKeyState; } }
+        public KeyboardState LastKeyboardState
+        {
+            get { return _lastKeyState; }
+        }
+
         private KeyboardState _lastKeyState;
 
-        public MouseState LastMouseState { get { return _lastMouseState; } }
+        public MouseState LastMouseState
+        {
+            get { return _lastMouseState; }
+        }
+
         private MouseState _lastMouseState;
 
-        public GamePadState LastGamePadState { get { return _lastGamePadState; } }
+        public GamePadState LastGamePadState
+        {
+            get { return _lastGamePadState; }
+        }
+
         private GamePadState _lastGamePadState;
 
         private readonly InputManager _inputManager;

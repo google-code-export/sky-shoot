@@ -10,20 +10,20 @@ using SkyShoot.Game.ScreenManager;
 
 namespace SkyShoot.Game.Screens
 {
-    class GameplayScreen : GameScreen
+    internal class GameplayScreen : GameScreen
     {
         private ContentManager _content;
 
         public override void LoadContent()
         {
             if (_content == null)
-				_content = new ContentManager(ScreenManager.ScreenManager.Instance.Game.Services, "Content");
+                _content = new ContentManager(ScreenManager.ScreenManager.Instance.Game.Services, "Content");
 
             // load landscapes
-            Textures.SandLandscape     = _content.Load<Texture2D>("Textures/Landscapes/SandLandscape");
-            Textures.GrassLandscape    = _content.Load<Texture2D>("Textures/Landscapes/GrassLandscape");
-            Textures.SnowLandscape     = _content.Load<Texture2D>("Textures/Landscapes/SnowLandscape");
-            Textures.DesertLandscape   = _content.Load<Texture2D>("Textures/Landscapes/DesertLandscape");
+            Textures.SandLandscape = _content.Load<Texture2D>("Textures/Landscapes/SandLandscape");
+            Textures.GrassLandscape = _content.Load<Texture2D>("Textures/Landscapes/GrassLandscape");
+            Textures.SnowLandscape = _content.Load<Texture2D>("Textures/Landscapes/SnowLandscape");
+            Textures.DesertLandscape = _content.Load<Texture2D>("Textures/Landscapes/DesertLandscape");
             Textures.VolcanicLandscape = _content.Load<Texture2D>("Textures/Landscapes/VolcanicLandscape");
 
             // load stones
@@ -56,7 +56,7 @@ namespace SkyShoot.Game.Screens
                 Textures.PlayerAnimation.AddFrame(
                     _content.Load<Texture2D>("Textures/Mobs/man_animation(new man)/run/run_" + i.ToString("D2")));
 
-			ScreenManager.ScreenManager.Instance.Game.ResetElapsedTime();
+            ScreenManager.ScreenManager.Instance.Game.ResetElapsedTime();
         }
 
         public override void UnloadContent()
@@ -69,7 +69,7 @@ namespace SkyShoot.Game.Screens
         }
 
         public override void HandleInput(InputState input)
-        {            
+        {
             GameController.Instance.HandleInput(input);
         }
 
@@ -77,15 +77,16 @@ namespace SkyShoot.Game.Screens
         {
             base.Update(gameTime);
 
-			if (GameController.Instance.GameModel == null) return;
+            if (GameController.Instance.GameModel == null)
+                return;
 
             GameController.Instance.GameModel.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
         {
-			GraphicsDevice graphicsDevice = ScreenManager.ScreenManager.Instance.GraphicsDevice;
-			SpriteBatch spriteBatch = ScreenManager.ScreenManager.Instance.SpriteBatch;
+            GraphicsDevice graphicsDevice = ScreenManager.ScreenManager.Instance.GraphicsDevice;
+            SpriteBatch spriteBatch = ScreenManager.ScreenManager.Instance.SpriteBatch;
             graphicsDevice.Clear(Color.SkyBlue);
 
             GameController.Instance.GameModel.Draw(spriteBatch);

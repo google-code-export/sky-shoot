@@ -2,7 +2,7 @@
 
 namespace SkyShoot.Game.Screens.Controls
 {
-    class InputControl:Nuclex.UserInterface.Controls.Desktop.InputControl
+    internal class InputControl : Nuclex.UserInterface.Controls.Desktop.InputControl
     {
         protected override void OnCharacterEntered(char character)
         {
