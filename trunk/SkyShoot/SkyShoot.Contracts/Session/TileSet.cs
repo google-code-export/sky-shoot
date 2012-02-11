@@ -2,18 +2,18 @@
 
 namespace SkyShoot.Contracts.Session
 {
-    [DataContract]
-    public enum TileSet
-    {
-        [EnumMember]
-        Snow,
-        [EnumMember]
-        Desert,
-        [EnumMember]
-        Grass,
-        [EnumMember]
-        Sand,
-        [EnumMember]
-        Volcanic
-    }
+	[DataContract]
+	public enum TileSet
+	{
+		[EnumMember]
+		Snow,
+		[EnumMember]
+		Desert,
+		[EnumMember]
+		Grass,
+		[EnumMember]
+		Sand,
+		[EnumMember]
+		Volcanic
+	}
 }

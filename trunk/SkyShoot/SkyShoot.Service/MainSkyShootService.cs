@@ -35,20 +35,20 @@ namespace SkyShoot.Service
 			return rs;
 		}
 
-        public static AProjectile Projectile(AProjectile p)
-        {
-            return new AProjectile(p);
-        }
+		public static AProjectile Projectile(AProjectile p)
+		{
+			return new AProjectile(p);
+		}
 
-        public static AProjectile[] Projectiles(AProjectile[] ps)
-        {
-            var rs = new AProjectile[ps.Length];
-            for (int i = 0; i < ps.Length; i++)
-            {
-                rs[i] = new AProjectile(ps[i]);
-            }
-            return rs;
-        }
+		public static AProjectile[] Projectiles(AProjectile[] ps)
+		{
+			var rs = new AProjectile[ps.Length];
+			for (int i = 0; i < ps.Length; i++)
+			{
+				rs[i] = new AProjectile(ps[i]);
+			}
+			return rs;
+		}
 	}
 
 	[ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant,
@@ -70,23 +70,23 @@ namespace SkyShoot.Service
 		public void Disconnect() { _sessionManager.LeaveGame(this); }
 
 		public bool Register(string username, string password)
-        {
-            /*bool result = _accountManager.Register(username, password);
-            if(result)
-            {
-                Trace.WriteLine(username + "has registered");
-            }
-            else
-            {
-                Trace.WriteLine(username + "is not registered. The name of the employing or other errors");
-            }
-            return result; */
-            return true;
-        }
+		{
+			/*bool result = _accountManager.Register(username, password);
+			if(result)
+			{
+				Trace.WriteLine(username + "has registered");
+			}
+			else
+			{
+				Trace.WriteLine(username + "is not registered. The name of the employing or other errors");
+			}
+			return result; */
+			return true;
+		}
 
 		public Guid? Login(string username, string password)
 		{
-            bool result = true;//_accountManager.Login(username, password);
+			bool result = true;//_accountManager.Login(username, password);
 
 			if (result)
 			{
@@ -111,44 +111,44 @@ namespace SkyShoot.Service
 
 		public GameDescription CreateGame(GameMode mode, int maxPlayers, TileSet tileSet)
 		{
-            try
-            {
-                var gameDescription = _sessionManager.CreateGame(mode, maxPlayers, this, tileSet);
-                return gameDescription;
-            }
-            catch (Exception e)
-            {
-                Trace.Fail(this.Name + " unable to create game. " + e.Message);
-                return null;
-            }
+			try
+			{
+				var gameDescription = _sessionManager.CreateGame(mode, maxPlayers, this, tileSet);
+				return gameDescription;
+			}
+			catch (Exception e)
+			{
+				Trace.Fail(this.Name + " unable to create game. " + e.Message);
+				return null;
+			}
 		}
 
 		public bool JoinGame(GameDescription game)
 		{
-            try
-            {
-                bool result = _sessionManager.JoinGame(game, this);
-                if (result)
-                {
-                    Trace.WriteLine(this.Name + "has joined the game ID=" + game.GameId);
-                }
-                else
-                {
-                    Trace.WriteLine(this.Name + "has not joined the game ID=" + game.GameId);
-                }
-                return result;
-            }
-            catch(Exception e)
-            {
-                Trace.Fail(this.Name + "has not joined the game." + e.Message);
-                return false;
-            }
+			try
+			{
+				bool result = _sessionManager.JoinGame(game, this);
+				if (result)
+				{
+					Trace.WriteLine(this.Name + "has joined the game ID=" + game.GameId);
+				}
+				else
+				{
+					Trace.WriteLine(this.Name + "has not joined the game ID=" + game.GameId);
+				}
+				return result;
+			}
+			catch(Exception e)
+			{
+				Trace.Fail(this.Name + "has not joined the game." + e.Message);
+				return false;
+			}
 		}
 
 		public event SomebodyMovesHandler MeMoved;
 		public event ClientShootsHandler MeShot;
-        //public event SomebodySpawnsHandler MobSpawned;
-        //public event SomebodyDiesHandler MobDied;
+		//public event SomebodySpawnsHandler MobSpawned;
+		//public event SomebodyDiesHandler MobDied;
 
 		public void Move(Vector2 direction) // приходит снаружи от клиента
 		{
@@ -181,7 +181,7 @@ namespace SkyShoot.Service
 			bool result = _sessionManager.LeaveGame(this);
 			if (!result)
 			{
-                Trace.WriteLine(Name + "left the game");
+				Trace.WriteLine(Name + "left the game");
 				return;
 			}
 
@@ -190,49 +190,49 @@ namespace SkyShoot.Service
 
 		public void GameStart(AMob[] mobs,GameLevel arena)
 		{
-            var mobsCopy = TypeConverter.Mobs(mobs);
+			var mobsCopy = TypeConverter.Mobs(mobs);
 			
-            try
-            {
-                _callback.GameStart(mobsCopy, arena);
-            }
-            catch (Exception e) { this.Disconnect(); }
+			try
+			{
+				_callback.GameStart(mobsCopy, arena);
+			}
+			catch (Exception) { this.Disconnect(); }
 			Trace.WriteLine("callback: GameStarted");
 		}
 
 		public void SpawnMob(AMob mob)
 		{
-            var mobCopy = TypeConverter.Mob(mob);
+			var mobCopy = TypeConverter.Mob(mob);
 			//Trace.WriteLine("callback.SpawnMob(mID: " + mob.Id + ")");
 
-            try
-            {
-                _callback.SpawnMob(mobCopy);
-            }
-            catch (Exception e) { this.Disconnect(); }
+			try
+			{
+				_callback.SpawnMob(mobCopy);
+			}
+			catch (Exception ) { this.Disconnect(); }
 		}
 
 		public void Hit(AMob mob, AProjectile projectile)
 		{
-            var mobCopy = TypeConverter.Mob(mob);
-            var projCopy = projectile==null ? null : TypeConverter.Projectile(projectile);
+			var mobCopy = TypeConverter.Mob(mob);
+			var projCopy = projectile==null ? null : TypeConverter.Projectile(projectile);
 
-            try
-            {
-                _callback.Hit(mobCopy, projCopy);
-            }
-            catch (Exception e) { this.Disconnect(); }
+			try
+			{
+				_callback.Hit(mobCopy, projCopy);
+			}
+			catch (Exception ) { this.Disconnect(); }
 		}
 
 		public void MobDead(AMob mob)
 		{
-            var mobCopy = TypeConverter.Mob(mob);
+			var mobCopy = TypeConverter.Mob(mob);
 
-            try
-            {
-                _callback.MobDead(mobCopy);
-            }
-            catch (Exception e) { this.Disconnect(); }
+			try
+			{
+				_callback.MobDead(mobCopy);
+			}
+			catch (Exception ) { this.Disconnect(); }
 		}
 
 		public void MobMoved(AMob mob, Vector2 direction)
@@ -240,84 +240,84 @@ namespace SkyShoot.Service
 			if (mob == this)
 				return;
 
-            var mobCopy = TypeConverter.Mob(mob);
+			var mobCopy = TypeConverter.Mob(mob);
 
-            try
-            {
-                _callback.MobMoved(mobCopy, direction);
-            }
-            catch (Exception e) { this.Disconnect(); }
+			try
+			{
+				_callback.MobMoved(mobCopy, direction);
+			}
+			catch (Exception ) { this.Disconnect(); }
 		}
 
 		public void MobShot(AMob mob, AProjectile[] projectiles)
 		{
-            var mobCopy = TypeConverter.Mob(mob);
-            var projsCopy = TypeConverter.Projectiles(projectiles);
+			var mobCopy = TypeConverter.Mob(mob);
+			var projsCopy = TypeConverter.Projectiles(projectiles);
 
-            try
-            {
-                _callback.MobShot(mobCopy, projsCopy);
-            }
-            catch (Exception e) { this.Disconnect(); }
+			try
+			{
+				_callback.MobShot(mobCopy, projsCopy);
+			}
+			catch (Exception)  { this.Disconnect(); }
 		}
 
 		public void BonusDropped(Contracts.Bonuses.AObtainableDamageModifier bonus)
 		{
-            try
-            {
-                _callback.BonusDropped(bonus);
-            }
-            catch (Exception e) { this.Disconnect(); }
+			try
+			{
+				_callback.BonusDropped(bonus);
+			}
+			catch (Exception ) { this.Disconnect(); }
 		}
 
 		public void BonusExpired(Contracts.Bonuses.AObtainableDamageModifier bonus)
 		{
-            try
-            {
-                _callback.BonusExpired(bonus);
-            }
-            catch (Exception e) { this.Disconnect(); }
+			try
+			{
+				_callback.BonusExpired(bonus);
+			}
+			catch (Exception ) { this.Disconnect(); }
 		}
 
 		public void BonusDisappeared(Contracts.Bonuses.AObtainableDamageModifier bonus)
 		{
-            try
-            {
-                _callback.BonusDisappeared(bonus);
-            }
-            catch (Exception e) { this.Disconnect(); }
+			try
+			{
+				_callback.BonusDisappeared(bonus);
+			}
+			catch (Exception ) { this.Disconnect(); }
 		}
 
 		public void GameOver()
 		{
-            try
-            {
-                _callback.GameOver();
-                Trace.WriteLine(localID + ": GameOver");
-            }
-            catch (Exception e) { this.Disconnect(); }
+			try
+			{
+				_callback.GameOver();
+				Trace.WriteLine(localID + ": GameOver");
+			}
+			catch (Exception ) { this.Disconnect(); }
 		}
 
 		public void PlayerLeft(AMob mob)
 		{
-            var mobCopy = TypeConverter.Mob(mob);
+			var mobCopy = TypeConverter.Mob(mob);
 
-            try
-            {
-                _callback.PlayerLeft(mobCopy);
-            }
-            catch (Exception e) { this.Disconnect(); }
+			try
+			{
+				_callback.PlayerLeft(mobCopy);
+			}
+			catch (Exception ) { this.Disconnect(); }
 		}
 
 		public void SynchroFrame(AMob[] mobs)
 		{
-            var mobsCopy = TypeConverter.Mobs(mobs);
+			var mobsCopy = TypeConverter.Mobs(mobs);
 
-            try
-            {
-                _callback.SynchroFrame(mobsCopy);
-            }
-            catch (Exception e) { this.Disconnect(); }
+			try
+			{
+				_callback.SynchroFrame(mobsCopy);
+			}
+			catch (Exception ) { this.Disconnect(); }
 		}
 		
 		// передает массив игроков данной игры

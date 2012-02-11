@@ -8,16 +8,16 @@ using System.Runtime.Serialization;
 
 namespace SkyShoot.Contracts.Weapon
 {
-    public abstract class AWeapon : AObtainableDamageModifier
-    {
+	public abstract class AWeapon : AObtainableDamageModifier
+	{
 		protected AWeapon(Guid id) : base(id) { Owner = null; }
 
-        protected AWeapon(Guid id, AMob owner) : base(id) 
+		protected AWeapon(Guid id, AMob owner) : base(id) 
 		{
 			this.Owner = owner;
 		}
 
-        public abstract AProjectile[] CreateBullets(AMob owner, Vector2 direction);
+		public abstract AProjectile[] CreateBullets(AMob owner, Vector2 direction);
 
 		protected int _reloadSpeed;
 
@@ -34,5 +34,5 @@ namespace SkyShoot.Contracts.Weapon
 			return false;
 
 		}
-    }
+	}
 }

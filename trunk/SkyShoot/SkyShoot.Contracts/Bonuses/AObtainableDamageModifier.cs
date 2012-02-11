@@ -7,39 +7,39 @@ using SkyShoot.Contracts.Mobs;
 
 namespace SkyShoot.Contracts.Bonuses
 {
-    [DataContract]
-    public abstract class AObtainableDamageModifier
-    {
+	[DataContract]
+	public abstract class AObtainableDamageModifier
+	{
 
-        [Flags]
-        public enum AObtainableDamageModifiers
-        {
-            [EnumMember]
-            DoubleDamage,
-            [EnumMember]
-            Shield,
-            [EnumMember]
-            Pistol,
-            [EnumMember]
-            Shotgun
-        }
+		[Flags]
+		public enum AObtainableDamageModifiers
+		{
+			[EnumMember]
+			DoubleDamage,
+			[EnumMember]
+			Shield,
+			[EnumMember]
+			Pistol,
+			[EnumMember]
+			Shotgun
+		}
 
-        [DataMember]
-        public Guid Id { get; set; }
+		[DataMember]
+		public Guid Id { get; set; }
 
-        public AMob Owner { get; set; }
+		public AMob Owner { get; set; }
 
-        public AObtainableDamageModifiers Type { get; set; }
+		public AObtainableDamageModifiers Type { get; set; }
 
-        protected AObtainableDamageModifier(Guid id)
-        {
-            Id = id;
-        }
+		protected AObtainableDamageModifier(Guid id)
+		{
+			Id = id;
+		}
 
-        public AObtainableDamageModifier()
-        {      
-        }
+		public AObtainableDamageModifier()
+		{	  
+		}
 
-        // расширить
-    }
+		// расширить
+	}
 }
