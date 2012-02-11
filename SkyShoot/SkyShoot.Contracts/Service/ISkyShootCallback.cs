@@ -11,46 +11,46 @@ using Microsoft.Xna.Framework;
 
 namespace SkyShoot.Contracts.Service
 {
-    public interface ISkyShootCallback
-    {
-        [OperationContract(IsOneWay = true)]
-        void GameStart(AMob[] mobs,GameLevel arena);
+	public interface ISkyShootCallback
+	{
+		[OperationContract(IsOneWay = true)]
+		void GameStart(AMob[] mobs,GameLevel arena);
 
-        [OperationContract(IsOneWay = true)]
-        void MobShot(AMob mob, AProjectile[] projectiles);
+		[OperationContract(IsOneWay = true)]
+		void MobShot(AMob mob, AProjectile[] projectiles);
 
-        [OperationContract(IsOneWay = true)]
-        void SpawnMob(AMob mob);
+		[OperationContract(IsOneWay = true)]
+		void SpawnMob(AMob mob);
 
-        [OperationContract(IsOneWay = true)]
-        void Hit(AMob mob, AProjectile projectile);
+		[OperationContract(IsOneWay = true)]
+		void Hit(AMob mob, AProjectile projectile);
 
-        [OperationContract(IsOneWay = true)]
-        void MobMoved(AMob mob, Vector2 direction);
+		[OperationContract(IsOneWay = true)]
+		void MobMoved(AMob mob, Vector2 direction);
 
-        [OperationContract(IsOneWay = true)]
-        void MobDead(AMob mob);
+		[OperationContract(IsOneWay = true)]
+		void MobDead(AMob mob);
 
-        [OperationContract(IsOneWay = true)]
-        void BonusDropped(AObtainableDamageModifier bonus);
+		[OperationContract(IsOneWay = true)]
+		void BonusDropped(AObtainableDamageModifier bonus);
 
-        [OperationContract(IsOneWay = true)]
-        void BonusExpired(AObtainableDamageModifier bonus);
+		[OperationContract(IsOneWay = true)]
+		void BonusExpired(AObtainableDamageModifier bonus);
 
-        [OperationContract(IsOneWay = true)]
-        void BonusDisappeared(AObtainableDamageModifier bonus);
+		[OperationContract(IsOneWay = true)]
+		void BonusDisappeared(AObtainableDamageModifier bonus);
 
-        [OperationContract(IsOneWay = true)]
-        void GameOver();
+		[OperationContract(IsOneWay = true)]
+		void GameOver();
 
-        [OperationContract(IsOneWay = true)]
-        void PlayerLeft(AMob mob);
+		[OperationContract(IsOneWay = true)]
+		void PlayerLeft(AMob mob);
 
-        [OperationContract(IsOneWay = true)]
-        void SynchroFrame(AMob[] mobs);
+		[OperationContract(IsOneWay = true)]
+		void SynchroFrame(AMob[] mobs);
 
 		[OperationContract(IsOneWay = true)]
 		void PlayerListChanged(String[] names);
 
-    }
+	}
 }

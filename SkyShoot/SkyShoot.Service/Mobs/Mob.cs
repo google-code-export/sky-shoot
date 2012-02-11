@@ -44,7 +44,7 @@ namespace SkyShoot.Contracts.Mobs
 			}
 		}
 
-		public event SomebodyMovesHandler MeMoved;
+		//public event SomebodyMovesHandler MeMoved;
 
 		public virtual void Move()
 		{

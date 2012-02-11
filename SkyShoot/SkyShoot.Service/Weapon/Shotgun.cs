@@ -16,7 +16,7 @@ namespace SkyShoot.Service.Weapon
 		{
 			_rand = new Random();
 			Type = AObtainableDamageModifiers.Shotgun;
-            _reloadSpeed = SkyShoot.Contracts.Constants.SHOTGUN_ATTACK_RATE;
+			_reloadSpeed = SkyShoot.Contracts.Constants.SHOTGUN_ATTACK_RATE;
 		}
 
 		public Shotgun(Guid id) : base(id)
@@ -36,9 +36,9 @@ namespace SkyShoot.Service.Weapon
 			for (int i = 0; i < 8; i++)
 			{
 				bullets[i] = new ShotgunBullet(owner, Guid.NewGuid(),
-				                               Vector2.Transform(direction,
-				                                                 Matrix.CreateRotationZ(
-				                                                 	(float) (-Math.PI/6f + _rand.NextDouble()*Math.PI/3f))));
+											   Vector2.Transform(direction,
+																 Matrix.CreateRotationZ(
+																 	(float) (-Math.PI/6f + _rand.NextDouble()*Math.PI/3f))));
 			}
 
 			return bullets;

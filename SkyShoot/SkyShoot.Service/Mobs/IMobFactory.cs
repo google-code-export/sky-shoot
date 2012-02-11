@@ -5,8 +5,8 @@ using System.Text;
 
 namespace SkyShoot.Contracts.Mobs
 {
-    public interface IMobFactory
-    {
-        Mob CreateMob();
-    }
+	public interface IMobFactory
+	{
+		Mob CreateMob();
+	}
 }
