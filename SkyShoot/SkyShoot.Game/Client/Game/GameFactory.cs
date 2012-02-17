@@ -9,27 +9,27 @@ using SkyShoot.Game.Client.Players;
 
 namespace SkyShoot.Game.Client.Game
 {
-    internal class GameFactory
-    {
-        public static Mob CreateClientMob(Contracts.Mobs.AMob mob)
-        {
-            // todo mob type
-            return new Mob(mob, mob.IsPlayer ? Textures.PlayerAnimation : Textures.SpiderAnimation);
-        }
+	internal class GameFactory
+	{
+		public static Mob CreateClientMob(Contracts.Mobs.AMob mob)
+		{
+			// todo mob type
+			return new Mob(mob, mob.IsPlayer ? Textures.PlayerAnimation : Textures.SpiderAnimation);
+		}
 
-        public static GameLevel CreateClientGameLevel(Contracts.Session.GameLevel gameLevel)
-        {
-            return new GameLevel(gameLevel);
-        }
+		public static GameLevel CreateClientGameLevel(Contracts.Session.GameLevel gameLevel)
+		{
+			return new GameLevel(gameLevel);
+		}
 
-        public static ABonus CreateClientBonus(AObtainableDamageModifier bonus)
-        {
-            throw new NotImplementedException();
-        }
+		public static ABonus CreateClientBonus(AObtainableDamageModifier bonus)
+		{
+			throw new NotImplementedException();
+		}
 
-        public static Projectile CreateClientProjectile(Contracts.Weapon.Projectiles.AProjectile projectile)
-        {
-            return new Projectile(projectile);
-        }
-    }
+		public static Projectile CreateClientProjectile(Contracts.Weapon.Projectiles.AProjectile projectile)
+		{
+			return new Projectile(projectile);
+		}
+	}
 }
