@@ -18,7 +18,7 @@ namespace SkyShoot.ServProgram
 			var host = new ServiceHost(typeof(MainSkyShootService),
 				new Uri("net.tcp://localhost:777"));
 
-			host.AddServiceEndpoint(typeof(ISkyShootService),
+			host.AddServiceEndpoint(typeof(ISkyShootGameService),
 															new NetTcpBinding(SecurityMode.None), "SkyShootService");
 
 			var metadataBehavior =

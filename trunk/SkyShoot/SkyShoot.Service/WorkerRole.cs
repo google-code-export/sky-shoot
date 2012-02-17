@@ -59,7 +59,7 @@ namespace SkyShoot.Service
 				_serviceHost.Description.Behaviors.Add(metadataBehavior);
 			}
 
-			_serviceHost.AddServiceEndpoint(typeof(Contracts.Service.ISkyShootService), new NetTcpBinding(SecurityMode.None),
+			_serviceHost.AddServiceEndpoint(typeof(Contracts.Service.ISkyShootGameService), new NetTcpBinding(SecurityMode.None),
 								   "SkyShootService");
 
 			try
