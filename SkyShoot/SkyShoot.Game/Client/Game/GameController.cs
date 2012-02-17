@@ -22,7 +22,7 @@ using AMob = SkyShoot.Contracts.Mobs.AMob;
 
 namespace SkyShoot.Game.Client.Game
 {
-    public sealed class GameController : ISkyShootCallback, ISkyShootService
+    public sealed class GameController : ISkyShootGameCallback, ISkyShootGameService
     {
         public static Guid MyId { get; private set; }
 
@@ -30,7 +30,8 @@ namespace SkyShoot.Game.Client.Game
 
         private static readonly GameController LocalInstance = new GameController();
 
-        private ISkyShootService _service;
+        private ISkyShootGameService _gameService;
+		private ISkyShootAdministratorService _adminService;
 
         public static GameController Instance
         {
@@ -231,8 +232,8 @@ namespace SkyShoot.Game.Client.Game
 
         private void InitConnection()
         {
-            var channelFactory = new DuplexChannelFactory<ISkyShootService>(this, "SkyShootEndpoint");
-            _service = channelFactory.CreateChannel();
+            var channelFactory = new DuplexChannelFactory<ISkyShootGameService>(this, "SkyShootEndpoint");
+            _gameService = channelFactory.CreateChannel();
         }
 
         private void FatalError(Exception e)
@@ -252,7 +253,7 @@ namespace SkyShoot.Game.Client.Game
         {
             try
             {
-                return _service.Register(username, password);
+                return _adminService.Register(username, password);
             }
             catch (Exception e)
             {
@@ -266,7 +267,7 @@ namespace SkyShoot.Game.Client.Game
             Guid? login = null;
             try
             {
-                login = _service.Login(username, password);
+                login = _adminService.Login(username, password);
             }
             catch (Exception e)
             {
@@ -289,7 +290,7 @@ namespace SkyShoot.Game.Client.Game
         {
             try
             {
-                return _service.GetGameList();
+                return _adminService.GetGameList();
             }
             catch (Exception e)
             {
@@ -302,7 +303,7 @@ namespace SkyShoot.Game.Client.Game
         {
             try
             {
-                return _service.CreateGame(mode, maxPlayers, tile);
+                return _adminService.CreateGame(mode, maxPlayers, tile);
             }
             catch (Exception e)
             {
@@ -315,7 +316,7 @@ namespace SkyShoot.Game.Client.Game
         {
             try
             {
-                return _service.JoinGame(game);
+                return _adminService.JoinGame(game);
             }
             catch (Exception e)
             {
@@ -328,7 +329,7 @@ namespace SkyShoot.Game.Client.Game
         {
             try
             {
-                _service.Move(direction);
+                _gameService.Move(direction);
             }
             catch (Exception e)
             {
@@ -340,7 +341,7 @@ namespace SkyShoot.Game.Client.Game
         {
             try
             {
-                _service.Shoot(direction);
+                _gameService.Shoot(direction);
             }
             catch (Exception e)
             {
@@ -352,7 +353,7 @@ namespace SkyShoot.Game.Client.Game
         {
             try
             {
-                _service.TakeBonus(bonus);
+                _gameService.TakeBonus(bonus);
             }
             catch (Exception e)
             {
@@ -364,7 +365,7 @@ namespace SkyShoot.Game.Client.Game
         {
             try
             {
-                _service.TakePerk(perk);
+                _gameService.TakePerk(perk);
             }
             catch (Exception e)
             {
@@ -376,7 +377,7 @@ namespace SkyShoot.Game.Client.Game
         {
             try
             {
-                _service.LeaveGame();
+                _adminService.LeaveGame();
             }
             catch (Exception e)
             {
