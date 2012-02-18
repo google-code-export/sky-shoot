@@ -19,7 +19,7 @@ namespace SkyShoot.Contracts.Weapon.Projectiles
 			Coordinates = owner.Coordinates;
 		}
 
-		protected AProjectile()
+		public AProjectile()
 		{
 			Owner = null;
 		}

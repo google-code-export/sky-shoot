@@ -10,6 +10,7 @@ using SkyShoot.Contracts.Weapon.Projectiles;
 using System.Timers;
 using SkyShoot.Contracts;
 using System.Diagnostics;
+using SkyShoot.ServProgram.Session;
 
 namespace SkyShoot.Service.Session
 {
@@ -19,7 +20,7 @@ namespace SkyShoot.Service.Session
 		public List<MainSkyShootService> Players { get; set; }
 
 		private List<Mob> _mobs { get; set; }
-		private ObjectBuffer<AProjectile> _projectiles { get; set; }
+		private ObjectPool<AProjectile> _projectiles { get; set; }
 
 		public GameDescription LocalGameDescription { get; private set; }
 
@@ -44,7 +45,7 @@ namespace SkyShoot.Service.Session
 
 			_mobs = new List<Mob>();
 			Players = new List<MainSkyShootService>();
-			_projectiles = new ObjectBuffer<AProjectile>(1000);
+			_projectiles = new ObjectPool<AProjectile>();
 
 			LocalGameDescription = new GameDescription(playerNames, maxPlayersAllowed, gameType, gameID, tileSet);
 			_spiderFactory= new SpiderFactory(_gameLevel);
@@ -77,7 +78,8 @@ namespace SkyShoot.Service.Session
 					if ((sender as MainSkyShootService).Weapon.Reload(System.DateTime.Now.Ticks / 10000))
 					{
 						var a = (sender as MainSkyShootService).Weapon.CreateBullets(sender, direction);
-						_projectiles.AddRange(a);
+						foreach (var b in a) 
+							_projectiles.getInActive().Copy(b);
 						//Trace.WriteLine("projectile added", "GameSession");
 
 						SomebodyShoots(sender, a);
@@ -282,12 +284,18 @@ namespace SkyShoot.Service.Session
 				//Проверка на касание игрока и моба
 				hitTestTouch(player);
 			}
-			
-			for(int i = 0; i < _projectiles.Count; i++)
+			Trace.WriteLine("" + _projectiles.size);
+			for (var pr = _projectiles.FirstActive; pr != null; pr = _projectiles.Next(pr) )
 			{
-				if (_projectiles[i] == null) continue;
-				if (_projectiles[i].LifeDistance <= 0) continue;
-				var projectile = _projectiles[i];
+				
+				if (pr == null || pr.Item == null) continue;
+				var projectile = pr.Item;
+				if (projectile.LifeDistance <= 0)
+				{
+					pr.isActive = false;
+					continue;
+				}
+				//var projectile = _projectiles[i];
 				var newCord = projectile.Coordinates + projectile.Direction * projectile.Speed * _updateDelay;
 
 				//Проверка на касание пули и моба

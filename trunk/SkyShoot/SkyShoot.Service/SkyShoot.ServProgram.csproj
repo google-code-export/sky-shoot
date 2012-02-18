@@ -97,6 +97,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="PropertiesProg\AssemblyInfo.cs" />
     <Compile Include="Session\GameSession.cs" />
+    <Compile Include="Session\ObjectPool.cs" />
     <Compile Include="Session\SessionManager.cs" />
     <Compile Include="Weapon\Bullets\PistolBullet.cs" />
     <Compile Include="Weapon\Bullets\ShotgunBullet.cs" />
