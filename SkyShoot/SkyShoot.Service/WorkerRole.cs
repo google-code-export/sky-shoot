@@ -18,6 +18,7 @@ namespace SkyShoot.Service
 		private const int ConnectionLimit = 10;  
 
 		private ServiceHost _serviceHost;
+		private ServiceHost _gameHost;
 
 		public override void Run()
 		{
@@ -46,21 +47,21 @@ namespace SkyShoot.Service
 
 		private void StartWcfService()
 		{
-			RoleInstanceEndpoint externalEndPoint =
+			RoleInstanceEndpoint firstExternalEndPoint =
 				RoleEnvironment.CurrentRoleInstance.InstanceEndpoints["SkyShootEndpoint"];
 			_serviceHost = new ServiceHost(typeof(MainSkyShootService),
-								  new Uri(String.Format("net.tcp://{0}/", externalEndPoint.IPEndpoint)));
+								  new Uri(String.Format("net.tcp://{0}/", firstExternalEndPoint.IPEndpoint)));
 			
-			var metadataBehavior =
+			var firstMetadataBehavior =
 				_serviceHost.Description.Behaviors.Find<ServiceMetadataBehavior>();
-			if (metadataBehavior == null)
+			if (firstMetadataBehavior == null)
 			{
-				metadataBehavior = new ServiceMetadataBehavior();
-				_serviceHost.Description.Behaviors.Add(metadataBehavior);
+				firstMetadataBehavior = new ServiceMetadataBehavior();
+				_serviceHost.Description.Behaviors.Add(firstMetadataBehavior);
 			}
 
-			_serviceHost.AddServiceEndpoint(typeof(Contracts.Service.ISkyShootGameService), new NetTcpBinding(SecurityMode.None),
-								   "SkyShootService");
+			_serviceHost.AddServiceEndpoint(typeof(Contracts.Service.ISkyShootAdministratorService), new NetTcpBinding(SecurityMode.None),
+								   "SkyShootAdministratorService");
 
 			try
 			{
@@ -78,6 +79,37 @@ namespace SkyShoot.Service
 								 communicationException.Message);
 			}
 
+			RoleInstanceEndpoint secondExternalEndPoint =
+				RoleEnvironment.CurrentRoleInstance.InstanceEndpoints["SkyShootEndpoint"];
+			_gameHost = new ServiceHost(typeof(MainSkyShootService),
+								  new Uri(String.Format("net.tcp://{0}/", secondExternalEndPoint.IPEndpoint)));
+			
+			var secondMetadataBehavior =
+				_serviceHost.Description.Behaviors.Find<ServiceMetadataBehavior>();
+			if (secondMetadataBehavior == null)
+			{
+				secondMetadataBehavior = new ServiceMetadataBehavior();
+				_serviceHost.Description.Behaviors.Add(firstMetadataBehavior);
+			}
+
+			_gameHost.AddServiceEndpoint(typeof(Contracts.Service.ISkyShootGameService), new NetTcpBinding(SecurityMode.None),
+								   "SkyShootGameService");
+
+			try
+			{
+				_gameHost.Open();
+				Trace.WriteLine("WCF service host started successfully.");
+			}
+			catch (TimeoutException timeoutException)
+			{
+				Trace.Fail("The service operation timed out. {0} " +
+								 timeoutException.Message);
+			}
+			catch (CommunicationException communicationException)
+			{
+				Trace.Fail("Could not start WCF service host. {0} " +
+								 communicationException.Message);
+			}
 		}
 	}
 }
