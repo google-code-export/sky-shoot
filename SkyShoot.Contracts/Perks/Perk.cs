@@ -1,0 +1,41 @@
+using System;
+using System.Runtime.Serialization;
+using SkyShoot.Contracts.Mobs;
+
+namespace SkyShoot.Contracts.Perks
+{
+    [DataContract]
+    public abstract class Perk
+    {
+        
+        [Flags]
+        public enum Perks
+        {
+            [EnumMember]
+            HighSpeed,
+            [EnumMember]
+            FireCough,
+            [EnumMember]
+            Regeneration
+        }
+
+        [DataMember]
+        public Guid Id { get; set; }
+
+        public AMob Owner { get; set; }
+     
+
+
+        protected Perk(Guid id)
+        {
+            Id = id;    
+        }
+
+        public Perk()
+        {
+            
+        }
+
+    }
+   
+}
