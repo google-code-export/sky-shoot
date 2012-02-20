@@ -12,9 +12,8 @@ using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Session;
 
 using SkyShoot.Contracts.Weapon.Projectiles;
-
+using SkyShoot.Game.Controls;
 using SkyShoot.Game.Screens;
-using SkyShoot.Game.ScreenManager;
 
 using SkyShoot.Game.Client.View;
 
@@ -49,7 +48,7 @@ namespace SkyShoot.Game.Client.Game
 
 		public void GameStart(AMob[] mobs, Contracts.Session.GameLevel arena)
 		{
-			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.GameplayScreen;
+			ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenEnum.GameplayScreen;
 
 			GameModel = new GameModel(GameFactory.CreateClientGameLevel(arena));
 
@@ -106,7 +105,7 @@ namespace SkyShoot.Game.Client.Game
 
 		public void GameOver()
 		{
-			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MainMenuScreen;
+			ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenEnum.MainMenuScreen;
 		}
 
 		public void PlayerLeft(AMob mob)
@@ -174,14 +173,14 @@ namespace SkyShoot.Game.Client.Game
 		public void PlayerListChanged(String[] names)
 		{
 			//TODO! issue 26?
-			for (int i = 0; i < ScreenManager.ScreenManager.Instance.GetScreens().Length; i++)
+			for (int i = 0; i < ScreenManager.Instance.GetScreens().Length; i++)
 			{
-				if (ScreenManager.ScreenManager.Instance.GetScreens()[i] is WaitScreen)
+				if (ScreenManager.Instance.GetScreens()[i] is WaitScreen)
 				{
 					//todo!
 					//if (ScreenManager.ScreenManager.Instance.GetScreens()[i].IsActive)
 					//{
-					var screen = (WaitScreen) ScreenManager.ScreenManager.Instance.GetScreens()[i];
+					var screen = (WaitScreen) ScreenManager.Instance.GetScreens()[i];
 					screen.ChangePlayerList(names);
 					//}
 				}
@@ -244,10 +243,10 @@ namespace SkyShoot.Game.Client.Game
 			// close all screens
 			// foreach (GameScreen screen in ScreenManager.ScreenManager.Instance.GetScreens()) screen.ExitScreen();
 			// back to multiplayer screen
-			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.LoginScreen;
+			ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenEnum.LoginScreen;
 
 			MessageBox.Message = "Connection error!";
-			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MessageScreen;
+			ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenEnum.MessageScreen;
 		}
 
 		public bool Register(string username, string password)
@@ -281,7 +280,7 @@ namespace SkyShoot.Game.Client.Game
 			else
 			{
 				MessageBox.Message = "Connection error!";
-				ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MessageScreen;
+				ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenEnum.MessageScreen;
 			}
 
 			return login;

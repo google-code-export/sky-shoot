@@ -1,4 +1,4 @@
-﻿using SkyShoot.Game.ScreenManager;
+﻿using SkyShoot.Game.Controls;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,6 +9,11 @@ namespace SkyShoot.Game.Screens
 	{
 		public static bool ShowLoadingMessage { get; set; }
 
+		public override bool IsMenuScreen
+		{
+			get { return false; }
+		}
+
 		public override void Update(GameTime gameTime)
 		{
 
@@ -18,10 +23,10 @@ namespace SkyShoot.Game.Screens
 		{
 			if (ShowLoadingMessage)
 			{
-				SpriteBatch spriteBatch = ScreenManager.ScreenManager.Instance.SpriteBatch;
-				SpriteFont font = ScreenManager.ScreenManager.Instance.Font;
+				SpriteBatch spriteBatch = ScreenManager.Instance.SpriteBatch;
+				SpriteFont font = ScreenManager.Instance.Font;
 				const string message = "Loading...";
-				Viewport viewport = ScreenManager.ScreenManager.Instance.GraphicsDevice.Viewport;
+				Viewport viewport = ScreenManager.Instance.GraphicsDevice.Viewport;
 				var viewportSize = new Vector2(viewport.Width, viewport.Height);
 				Vector2 textSize = font.MeasureString(message);
 				Vector2 textPosition = (viewportSize - textSize) / 2;

@@ -134,6 +134,8 @@
     <Compile Include="Client\View\IDrawable.cs" />
     <Compile Include="Client\View\Textures.cs" />
     <Compile Include="Client\Weapon\Projectile.cs" />
+    <Compile Include="Controls\Gamepad.cs" />
+    <Compile Include="Controls\IController.cs" />
     <Compile Include="Screens\Controls\InputControl.cs" />
     <Compile Include="Screens\CreateGameScreen.cs" />
     <Compile Include="Screens\NewAccountScreen.cs" />
@@ -146,9 +148,9 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="ScreenManager\GameScreen.cs" />
-    <Compile Include="ScreenManager\InputState.cs" />
-    <Compile Include="ScreenManager\ScreenManager.cs" />
+    <Compile Include="Controls\GameScreen.cs" />
+    <Compile Include="Controls\InputState.cs" />
+    <Compile Include="Controls\ScreenManager.cs" />
     <Compile Include="Screens\GameplayScreen.cs" />
     <Compile Include="Screens\LoadingScreen.cs" />
     <Compile Include="Screens\LoginScreen.cs" />

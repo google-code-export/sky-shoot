@@ -1,20 +1,19 @@
 ﻿using System;
 
 using Microsoft.Xna.Framework;
-
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 using Nuclex.UserInterface;
 using Nuclex.UserInterface.Controls.Desktop;
 
+using SkyShoot.Game.Controls;
+
 namespace SkyShoot.Game.Screens
 {
-	internal class MainMenuScreen : ScreenManager.GameScreen
+	internal class MainMenuScreen : GameScreen
 	{
 		private GuiManager _gui;
-
-		private Screen _mainScreen;
 
 		private static Texture2D _texture;
 
@@ -22,20 +21,26 @@ namespace SkyShoot.Game.Screens
 
 		private SpriteBatch _spriteBatch;
 
+		public override bool IsMenuScreen
+		{
+			get { return true; }
+		}
+
 		public override void LoadContent()
 		{
 			base.LoadContent();
-			_gui = ScreenManager.ScreenManager.Instance.Gui;
-			Viewport viewport = ScreenManager.ScreenManager.Instance.GraphicsDevice.Viewport;
-			_mainScreen = new Screen(viewport.Width, viewport.Height);
-			_gui.Screen = _mainScreen;
+			_gui = ScreenManager.Instance.Gui;
+			_gui.Screen = this;
 
+			Height = ScreenManager.Instance.Height;
+			Width = ScreenManager.Instance.Width;
+			
 			if (_content == null)
-				_content = new ContentManager(ScreenManager.ScreenManager.Instance.Game.Services, "Content");
+				_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 
 			_texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");
 
-			_mainScreen.Desktop.Bounds = new UniRectangle(
+			Desktop.Bounds = new UniRectangle(
 				new UniScalar(0.1f, 0.0f), new UniScalar(0.1f, 0.0f),
 				new UniScalar(0.8f, 0.0f), new UniScalar(0.8f, 0.0f)
 				);
@@ -47,7 +52,7 @@ namespace SkyShoot.Game.Screens
 			                     			new UniRectangle(new UniScalar(0.30f, 0), new UniScalar(0.2f, 0),
 			                     			                 new UniScalar(0.4f, 0), new UniScalar(0.1f, 0)),
 			                     	};
-			_mainScreen.Desktop.Children.Add(playGameButton);
+			Desktop.Children.Add(playGameButton);		
 
 			var optionsButton = new ButtonControl
 			                    	{
@@ -56,7 +61,7 @@ namespace SkyShoot.Game.Screens
 			                    			new UniRectangle(new UniScalar(0.30f, 0), new UniScalar(0.35f, 0),
 			                    			                 new UniScalar(0.4f, 0), new UniScalar(0.1f, 0)),
 			                    	};
-			_mainScreen.Desktop.Children.Add(optionsButton);
+			Desktop.Children.Add(optionsButton);
 
 			var logoffButton = new ButtonControl
 			                   	{
@@ -65,7 +70,7 @@ namespace SkyShoot.Game.Screens
 			                   			new UniRectangle(new UniScalar(0.30f, 0), new UniScalar(0.5f, 0),
 			                   			                 new UniScalar(0.4f, 0), new UniScalar(0.1f, 0)),
 			                   	};
-			_mainScreen.Desktop.Children.Add(logoffButton);
+			Desktop.Children.Add(logoffButton);
 
 			playGameButton.Pressed += PlayGameButtonPressed;
 			optionsButton.Pressed += OptionsButtonPressed;
@@ -74,22 +79,22 @@ namespace SkyShoot.Game.Screens
 
 		private void PlayGameButtonPressed(object sender, EventArgs e)
 		{
-			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MultiplayerScreen;
+			ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenEnum.MultiplayerScreen;
 		}
 
 		private void OptionsButtonPressed(object sender, EventArgs e)
 		{
-			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.OptionsScreen;
+			ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenEnum.OptionsScreen;
 		}
 
 		private void LogoffMenuButtonPressed(object sender, EventArgs e)
 		{
-			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.LoginScreen;
+			ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenEnum.LoginScreen;
 		}
 
 		public override void Draw(GameTime gameTime)
 		{
-			_spriteBatch = ScreenManager.ScreenManager.Instance.SpriteBatch;
+			_spriteBatch = ScreenManager.Instance.SpriteBatch;
 			_spriteBatch.Begin();
 			_spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
 			_spriteBatch.End();

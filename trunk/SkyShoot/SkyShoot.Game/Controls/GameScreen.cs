@@ -1,12 +1,16 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace SkyShoot.Game.ScreenManager
+using Nuclex.UserInterface;
+
+namespace SkyShoot.Game.Controls
 {
-	public abstract class GameScreen
+	public abstract class GameScreen : Screen
 	{
 		public bool OtherScreenHasFocus;
 
 		public bool IsActive { get; set; }
+
+		public abstract bool IsMenuScreen { get; }
 
 		public virtual void LoadContent()
 		{

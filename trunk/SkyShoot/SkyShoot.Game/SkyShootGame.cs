@@ -7,12 +7,13 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 using SkyShoot.Game.Client.View;
+using SkyShoot.Game.Controls;
 
 namespace SkyShoot.Game
 {
 	public class SkyShootGame : Microsoft.Xna.Framework.Game
 	{
-		private ScreenManager.ScreenManager _screenManager;
+		private ScreenManager _screenManager;
 		private SpriteBatch _spriteBatch;
 		private readonly GraphicsDeviceManager _graphics;
 
@@ -40,13 +41,13 @@ namespace SkyShoot.Game
 		{
 			Textures.GraphicsDevice = GraphicsDevice;
 			_spriteBatch = new SpriteBatch(GraphicsDevice);
-			ScreenManager.ScreenManager.Init(this);
-			_screenManager = ScreenManager.ScreenManager.Instance;
+			ScreenManager.Init(this);
+			_screenManager = ScreenManager.Instance;
 			Components.Add(_screenManager);
 
 			base.Initialize();
 
-			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.LoginScreen;
+			ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenEnum.LoginScreen;
 		}
 
 		protected override void LoadContent()
@@ -80,7 +81,7 @@ namespace SkyShoot.Game
 			base.Draw(gameTime);
 			_spriteBatch.Begin(SpriteSortMode.Texture, BlendState.AlphaBlend);
 			float x, y;
-			ScreenManager.ScreenManager.Instance.GetMouseState(out x, out y);
+			ScreenManager.Instance.GetMouseState(out x, out y);
 			_spriteBatch.Draw(Textures.ActiveCursor, Textures.GetCursorPosition(x, y), Color.White);
 			_spriteBatch.End();
 		}

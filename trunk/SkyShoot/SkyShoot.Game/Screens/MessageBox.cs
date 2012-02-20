@@ -8,8 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Nuclex.UserInterface;
 
 using Nuclex.UserInterface.Controls.Desktop;
-
-using SkyShoot.Game.ScreenManager;
+using SkyShoot.Game.Controls;
 
 namespace SkyShoot.Game.Screens
 {
@@ -23,25 +22,30 @@ namespace SkyShoot.Game.Screens
 
 		private ButtonControl _okButton;
 
-		private Screen _messageScreen;
-
-		public ScreenManager.ScreenManager.ScreenEnum Next { get; set; }
+		public ScreenManager.ScreenEnum Next { get; set; }
 
 		public static String Message { get; set; }
+
+		public override bool IsMenuScreen
+		{
+			get { return false; }
+		}
 
 		public override void LoadContent()
 		{
 			base.LoadContent();
-			_gui = ScreenManager.ScreenManager.Instance.Gui;
-			Viewport viewport = ScreenManager.ScreenManager.Instance.GraphicsDevice.Viewport;
-			_messageScreen = new Screen(viewport.Width, viewport.Height);
-			_gui.Screen = _messageScreen;
+			_gui = ScreenManager.Instance.Gui;
+			_gui.Screen = this;
+
+			Height = ScreenManager.Instance.Height;
+			Width = ScreenManager.Instance.Width;
+
 			if (_content == null)
-				_content = new ContentManager(ScreenManager.ScreenManager.Instance.Game.Services, "Content");
+				_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 
 			_texture = _content.Load<Texture2D>("Textures/screens/message_box");
 
-			_messageScreen.Desktop.Bounds = new UniRectangle(
+			Desktop.Bounds = new UniRectangle(
 				new UniScalar(0.1f, 0.0f), new UniScalar(0.1f, 0.0f),
 				new UniScalar(0.8f, 0.0f), new UniScalar(0.8f, 0.0f)
 				);
@@ -52,19 +56,19 @@ namespace SkyShoot.Game.Screens
 			            		Bounds = new UniRectangle(new UniScalar(0.5f, -50), new UniScalar(0.8f, -70), 100, 30)
 			            	};
 			_okButton.Pressed += OkButtonPressed;
-			_messageScreen.Desktop.Children.Add(_okButton);
+			Desktop.Children.Add(_okButton);
 		}
 
 		public void OkButtonPressed(object sender, EventArgs e)
 		{
-			ScreenManager.ScreenManager.Instance.ActiveScreen = Next;
+			ScreenManager.Instance.ActiveScreen = Next;
 		}
 
 		public override void Draw(GameTime gameTime)
 		{
-			SpriteBatch spriteBatch = ScreenManager.ScreenManager.Instance.SpriteBatch;
-			SpriteFont font = ScreenManager.ScreenManager.Instance.Font;
-			Viewport viewport = ScreenManager.ScreenManager.Instance.GraphicsDevice.Viewport;
+			SpriteBatch spriteBatch = ScreenManager.Instance.SpriteBatch;
+			SpriteFont font = ScreenManager.Instance.Font;
+			Viewport viewport = ScreenManager.Instance.GraphicsDevice.Viewport;
 			var viewportSize = new Vector2(viewport.Width, viewport.Height);
 			Vector2 textSize = font.MeasureString(Message);
 			Vector2 textPosition = (viewportSize - textSize) / 2;

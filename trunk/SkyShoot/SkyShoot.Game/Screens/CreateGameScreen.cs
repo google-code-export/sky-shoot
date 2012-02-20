@@ -10,8 +10,7 @@ using Nuclex.UserInterface.Controls;
 using Nuclex.UserInterface.Controls.Desktop;
 
 using SkyShoot.Contracts.Session;
-
-using SkyShoot.Game.ScreenManager;
+using SkyShoot.Game.Controls;
 
 using SkyShoot.Game.Client.Game;
 
@@ -20,8 +19,6 @@ namespace SkyShoot.Game.Screens
 	internal class CreateGameScreen : GameScreen
 	{
 		private GuiManager _gui;
-
-		private Screen _mainScreen;
 
 		private ListControl _maxPlayersList;
 		private ListControl _tileList;
@@ -43,24 +40,28 @@ namespace SkyShoot.Game.Screens
 
 		private SpriteBatch _spriteBatch;
 
+		public override bool IsMenuScreen
+		{
+			get { return true; }
+		}
+
 		public override void LoadContent()
 		{
 			base.LoadContent();
-			_gui = ScreenManager.ScreenManager.Instance.Gui;
-			Viewport viewport = ScreenManager.ScreenManager.Instance.GraphicsDevice.Viewport;
-			_mainScreen = new Screen(viewport.Width, viewport.Height)
-			              	{
-			              		Desktop =
-			              			{
-			              				Bounds = new UniRectangle(
-			              					new UniScalar(0.1f, 0.0f), new UniScalar(0.1f, 0.0f),
-			              					new UniScalar(0.8f, 0.0f), new UniScalar(0.8f, 0.0f)
-			              					)
-			              			}
-			              	};
-			_gui.Screen = _mainScreen;
+			_gui = ScreenManager.Instance.Gui;
+			_gui.Screen = this;
+			
+			Height = ScreenManager.Instance.Height;
+			Width = ScreenManager.Instance.Width;
+
+			Desktop.Bounds = new UniRectangle(
+				new UniScalar(0.1f, 0.0f), new UniScalar(0.1f, 0.0f),
+				new UniScalar(0.8f, 0.0f), new UniScalar(0.8f, 0.0f)
+				);
+
+
 			if (_content == null)
-				_content = new ContentManager(ScreenManager.ScreenManager.Instance.Game.Services, "Content");
+				_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 
 			_texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");
 
@@ -71,7 +72,7 @@ namespace SkyShoot.Game.Screens
 			                  		Bounds = new UniRectangle(-60f, -34f, 100f, 24f),
 			                  		Text = "Max Players"
 			                  	};
-			_mainScreen.Desktop.Children.Add(_maxPlaersLabel);
+			Desktop.Children.Add(_maxPlaersLabel);
 
 			_maxPlayersList = new ListControl
 			                  	{
@@ -86,7 +87,7 @@ namespace SkyShoot.Game.Screens
 			_maxPlayersList.Slider.Bounds.Size.Y.Offset -= 2.0f;
 			_maxPlayersList.SelectionMode = ListSelectionMode.Single;
 			_maxPlayersList.SelectedItems.Add(4);
-			_mainScreen.Desktop.Children.Add(_maxPlayersList);
+			Desktop.Children.Add(_maxPlayersList);
 
 			// выбор карты
 			_tileLabel = new LabelControl
@@ -94,7 +95,7 @@ namespace SkyShoot.Game.Screens
 			             		Bounds = new UniRectangle(60f, -34f, 150f, 24f),
 			             		Text = "Map"
 			             	};
-			_mainScreen.Desktop.Children.Add(_tileLabel);
+			Desktop.Children.Add(_tileLabel);
 
 			_tileList = new ListControl
 			            	{
@@ -110,7 +111,7 @@ namespace SkyShoot.Game.Screens
 			_tileList.Slider.Bounds.Size.Y.Offset -= 2.0f;
 			_tileList.SelectionMode = ListSelectionMode.Single;
 			_tileList.SelectedItems.Add(4);
-			_mainScreen.Desktop.Children.Add(_tileList);
+			Desktop.Children.Add(_tileList);
 
 			// выбор режима игры
 			_gameModeLabel = new LabelControl
@@ -118,7 +119,7 @@ namespace SkyShoot.Game.Screens
 			                 		Bounds = new UniRectangle(230f, -34f, 150f, 24f),
 			                 		Text = "Mode"
 			                 	};
-			_mainScreen.Desktop.Children.Add(_gameModeLabel);
+			Desktop.Children.Add(_gameModeLabel);
 
 			_gameModList = new ListControl
 			               	{
@@ -132,7 +133,7 @@ namespace SkyShoot.Game.Screens
 			_gameModList.Slider.Bounds.Size.Y.Offset -= 2.0f;
 			_gameModList.SelectionMode = ListSelectionMode.Single;
 			_gameModList.SelectedItems.Add(4);
-			_mainScreen.Desktop.Children.Add(_gameModList);
+			Desktop.Children.Add(_gameModList);
 
 			// кол-во игроков
 			_maxPlayersList.SelectedItems[0] = 0;
@@ -141,7 +142,7 @@ namespace SkyShoot.Game.Screens
 			              		Bounds = new UniRectangle(500f, 50f, 150f, 24f),
 			              		Text = _maxPlayersList.Items[_maxPlayersList.SelectedItems[0]] + ""
 			              	};
-			_mainScreen.Desktop.Children.Add(_maxPlayers);
+			Desktop.Children.Add(_maxPlayers);
 
 			// карта
 			_tileList.SelectedItems[0] = 0;
@@ -150,7 +151,7 @@ namespace SkyShoot.Game.Screens
 			        		Bounds = new UniRectangle(500f, 80f, 150f, 24f),
 			        		Text = _tileList.Items[_tileList.SelectedItems[0]] + ""
 			        	};
-			_mainScreen.Desktop.Children.Add(_tile);
+			Desktop.Children.Add(_tile);
 
 			// мод
 			_gameModList.SelectedItems[0] = 0;
@@ -159,7 +160,7 @@ namespace SkyShoot.Game.Screens
 			            		Bounds = new UniRectangle(500f, 110f, 150f, 24f),
 			            		Text = _gameModList.Items[_gameModList.SelectedItems[0]] + ""
 			            	};
-			_mainScreen.Desktop.Children.Add(_gameMode);
+			Desktop.Children.Add(_gameMode);
 
 			// Create Button
 			_createButton = new ButtonControl
@@ -169,7 +170,7 @@ namespace SkyShoot.Game.Screens
 			                			new UniRectangle(new UniScalar(0.5f, 178f), new UniScalar(0.4f, -15f), 110, 32)
 			                	};
 			_createButton.Pressed += CreateButtonPressed;
-			_mainScreen.Desktop.Children.Add(_createButton);
+			Desktop.Children.Add(_createButton);
 
 			// Back Button
 			_backButton = new ButtonControl
@@ -179,7 +180,7 @@ namespace SkyShoot.Game.Screens
 			              			new UniRectangle(new UniScalar(0.5f, -380f), new UniScalar(0.4f, 170f), 120, 32)
 			              	};
 			_backButton.Pressed += BackButtonPressed;
-			_mainScreen.Desktop.Children.Add(_backButton);
+			Desktop.Children.Add(_backButton);
 		}
 
 		public override void Update(GameTime gameTime)
@@ -195,7 +196,7 @@ namespace SkyShoot.Game.Screens
 
 		private void BackButtonPressed(object sender, EventArgs args)
 		{
-			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MultiplayerScreen;
+			ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenEnum.MultiplayerScreen;
 		}
 
 		private void CreateButtonPressed(object sender, EventArgs args)
@@ -247,12 +248,12 @@ namespace SkyShoot.Game.Screens
 			WaitScreen.MaxPlayers = _maxPlayers.Text;
 			WaitScreen.GameId = GameController.Instance.GetGameList().Length;
 
-			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.WaitScreen;
+			ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenEnum.WaitScreen;
 		}
 
 		public override void Draw(GameTime gameTime)
 		{
-			_spriteBatch = ScreenManager.ScreenManager.Instance.SpriteBatch;
+			_spriteBatch = ScreenManager.Instance.SpriteBatch;
 			_spriteBatch.Begin();
 			_spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
 			_spriteBatch.End();
