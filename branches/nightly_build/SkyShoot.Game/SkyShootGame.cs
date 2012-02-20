@@ -63,14 +63,7 @@ namespace SkyShoot.Game
 
         protected override void Update(GameTime gameTime)
         {
-            try
-            {
-                base.Update(gameTime);
-            }
-            catch(Exception e)
-            {
-                Trace.WriteLine(e);
-            }
+			base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
