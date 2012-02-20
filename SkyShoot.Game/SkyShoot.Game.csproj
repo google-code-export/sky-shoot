@@ -98,7 +98,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Nuclex\Nuclex.Input.dll</HintPath>
     </Reference>
-    <Reference Include="Nuclex.UserInterface">
+    <Reference Include="Nuclex.UserInterface, Version=4.0.0.0, Culture=neutral, PublicKeyToken=96bb577564343f16, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>Nuclex\Nuclex.UserInterface.dll</HintPath>
     </Reference>
     <Reference Include="System">
