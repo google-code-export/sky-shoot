@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Input;
 
 using Nuclex.Input;
 
-namespace SkyShoot.Game.ScreenManager
+namespace SkyShoot.Game.Controls
 {
 	public class InputState
 	{

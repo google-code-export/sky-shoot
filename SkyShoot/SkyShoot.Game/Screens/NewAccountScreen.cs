@@ -11,9 +11,8 @@ using Nuclex.UserInterface.Controls;
 
 using Nuclex.UserInterface.Controls.Desktop;
 
-using SkyShoot.Game.ScreenManager;
-
 using SkyShoot.Game.Client.Game;
+using SkyShoot.Game.Controls;
 
 namespace SkyShoot.Game.Screens
 {
@@ -30,27 +29,32 @@ namespace SkyShoot.Game.Screens
 		private ButtonControl _backButton;
 		private ButtonControl _okButton;
 
-		private Screen _mainScreen;
-
 		private static Texture2D _texture;
 
 		private ContentManager _content;
 
 		private SpriteBatch _spriteBatch;
 
+		public override bool IsMenuScreen
+		{
+			get { return true; }
+		}
+
 		public override void LoadContent()
 		{
 			base.LoadContent();
-			_gui = ScreenManager.ScreenManager.Instance.Gui;
-			Viewport viewport = ScreenManager.ScreenManager.Instance.GraphicsDevice.Viewport;
-			_mainScreen = new Screen(viewport.Width, viewport.Height);
-			_gui.Screen = _mainScreen;
+			_gui = ScreenManager.Instance.Gui;
+			_gui.Screen = this;
+
+			Height = ScreenManager.Instance.Height;
+			Width = ScreenManager.Instance.Width;
+
 			if (_content == null)
-				_content = new ContentManager(ScreenManager.ScreenManager.Instance.Game.Services, "Content");
+				_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 
 			_texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");
 
-			_mainScreen.Desktop.Bounds = new UniRectangle(
+			Desktop.Bounds = new UniRectangle(
 				new UniScalar(0.1f, 0.0f), new UniScalar(0.1f, 0.0f),
 				new UniScalar(0.8f, 0.0f), new UniScalar(0.8f, 0.0f)
 				);
@@ -61,7 +65,7 @@ namespace SkyShoot.Game.Screens
 			            		Bounds = new UniRectangle(new UniScalar(0.5f, -100f), new UniScalar(0.4f, -30), 200, 30),
 			            		Text = ""
 			            	};
-			_mainScreen.Desktop.Children.Add(_loginBox);
+			Desktop.Children.Add(_loginBox);
 
 			// Password Input
 			_passwordBox = new InputControl
@@ -70,14 +74,14 @@ namespace SkyShoot.Game.Screens
 			               			new UniRectangle(new UniScalar(0.5f, -100f), new UniScalar(0.4f, 30), 200, 30),
 			               		Text = ""
 			               	};
-			_mainScreen.Desktop.Children.Add(_passwordBox);
+			Desktop.Children.Add(_passwordBox);
 
 			// Login Label
 			_loginLabel = new LabelControl("Username")
 			              	{
 			              		Bounds = new UniRectangle(new UniScalar(0.5f, -32), new UniScalar(0.4f, -70), 100, 30)
 			              	};
-			_mainScreen.Desktop.Children.Add(_loginLabel);
+			Desktop.Children.Add(_loginLabel);
 
 			// Password Label
 			_passwordLabel = new LabelControl("Password")
@@ -85,7 +89,7 @@ namespace SkyShoot.Game.Screens
 			                 		Bounds =
 			                 			new UniRectangle(new UniScalar(0.5f, -32), new UniScalar(0.4f, 0), 100, 30)
 			                 	};
-			_mainScreen.Desktop.Children.Add(_passwordLabel);
+			Desktop.Children.Add(_passwordLabel);
 
 			// Back Button
 			_backButton = new ButtonControl
@@ -95,7 +99,7 @@ namespace SkyShoot.Game.Screens
 			              			new UniRectangle(new UniScalar(0.5f, -210f), new UniScalar(0.4f, 70), 100, 32)
 			              	};
 			_backButton.Pressed += BackButtonPressed;
-			_mainScreen.Desktop.Children.Add(_backButton);
+			Desktop.Children.Add(_backButton);
 
 			// Login Button
 			_okButton = new ButtonControl
@@ -104,7 +108,7 @@ namespace SkyShoot.Game.Screens
 			            		Bounds = new UniRectangle(new UniScalar(0.5f, 110), new UniScalar(0.4f, 70), 100, 32)
 			            	};
 			_okButton.Pressed += OkButtonPressed;
-			_mainScreen.Desktop.Children.Add(_okButton);
+			Desktop.Children.Add(_okButton);
 
 		}
 
@@ -118,12 +122,12 @@ namespace SkyShoot.Game.Screens
 			if (_loginBox.Text.Length < 3)
 			{
 				MessageBox.Message = "Username is too short!\nPress Ok to continue";
-				ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MessageScreen;
+				ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenEnum.MessageScreen;
 			}
 			else if (_passwordBox.Text.Length < 3)
 			{
 				MessageBox.Message = "Password is too short!\nPress Ok to continue";
-				ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MessageScreen;
+				ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenEnum.MessageScreen;
 			}
 			else
 			{
@@ -135,8 +139,8 @@ namespace SkyShoot.Game.Screens
 				{
 					if (GameController.Instance.Login(_loginBox.Text, _passwordBox.Text).HasValue)
 					{
-						ScreenManager.ScreenManager.Instance.ActiveScreen =
-							ScreenManager.ScreenManager.ScreenEnum.MultiplayerScreen;
+						ScreenManager.Instance.ActiveScreen =
+							ScreenManager.ScreenEnum.MultiplayerScreen;
 					}
 				}
 			}
@@ -144,7 +148,7 @@ namespace SkyShoot.Game.Screens
 
 		public override void Draw(GameTime gameTime)
 		{
-			_spriteBatch = ScreenManager.ScreenManager.Instance.SpriteBatch;
+			_spriteBatch = ScreenManager.Instance.SpriteBatch;
 			_spriteBatch.Begin();
 			_spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
 			_spriteBatch.End();

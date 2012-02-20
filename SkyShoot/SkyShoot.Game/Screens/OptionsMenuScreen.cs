@@ -12,14 +12,13 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 using SkyShoot.Game.Client.View;
+using SkyShoot.Game.Controls;
 
 namespace SkyShoot.Game.Screens
 {
-	internal class OptionsMenuScreen : ScreenManager.GameScreen
+	internal class OptionsMenuScreen : GameScreen
 	{
 		private GuiManager _gui;
-
-		private Screen _optionsScreen;
 
 		private ListControl _keyboardList;
 
@@ -45,19 +44,26 @@ namespace SkyShoot.Game.Screens
 
 		public static short Curs = 1;
 
+		public override bool IsMenuScreen
+		{
+			get { return true; }
+		}
+
 		public override void LoadContent()
 		{
 			base.LoadContent();
-			_gui = ScreenManager.ScreenManager.Instance.Gui;
-			Viewport viewport = ScreenManager.ScreenManager.Instance.GraphicsDevice.Viewport;
-			_optionsScreen = new Screen(viewport.Width, viewport.Height);
-			_gui.Screen = _optionsScreen;
+			_gui = ScreenManager.Instance.Gui;
+			_gui.Screen = this;
+
+			Height = ScreenManager.Instance.Height;
+			Width = ScreenManager.Instance.Width;
+			
 			if (_content == null)
-				_content = new ContentManager(ScreenManager.ScreenManager.Instance.Game.Services, "Content");
+				_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 
 			_texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");
 
-			_optionsScreen.Desktop.Bounds = new UniRectangle(
+			Desktop.Bounds = new UniRectangle(
 				new UniScalar(0.1f, 0.0f), new UniScalar(0.1f, 0.0f),
 				new UniScalar(0.8f, 0.0f), new UniScalar(0.8f, 0.0f)
 				);
@@ -66,21 +72,21 @@ namespace SkyShoot.Game.Screens
 			              	{
 			              		Bounds = new UniRectangle(new UniScalar(0.5f, -32), new UniScalar(0.1f, -70), 100, 30)
 			              	};
-			_optionsScreen.Desktop.Children.Add(_titleLabel);
+			Desktop.Children.Add(_titleLabel);
 
 			_fullscreenLabel = new LabelControl("FullScreen: ")
 			                   	{
 			                   		Bounds =
 			                   			new UniRectangle(new UniScalar(0.5f, -50), new UniScalar(0.3f, -70), 80, 30)
 			                   	};
-			_optionsScreen.Desktop.Children.Add(_fullscreenLabel);
+			Desktop.Children.Add(_fullscreenLabel);
 
 			_fullscreenButton = new OptionControl
 			                    	{
 			                    		Bounds =
 			                    			new UniRectangle(new UniScalar(0.5f, 30), new UniScalar(0.3f, -70), 100, 30)
 			                    	};
-			_optionsScreen.Desktop.Children.Add(_fullscreenButton);
+			Desktop.Children.Add(_fullscreenButton);
 			_fullscreenButton.Selected = Settings.Default.FullScreenSelected;
 			_fullscreenButton.Changed += FullScreenSelected;
 
@@ -89,7 +95,7 @@ namespace SkyShoot.Game.Screens
 			                 		Bounds =
 			                 			new UniRectangle(new UniScalar(0.5f, -150), new UniScalar(0.5f, -70), 50, 30)
 			                 	};
-			_optionsScreen.Desktop.Children.Add(_keyboardLabel);
+			Desktop.Children.Add(_keyboardLabel);
 
 			_keyboardList = new ListControl
 			                	{
@@ -103,14 +109,14 @@ namespace SkyShoot.Game.Screens
 			_keyboardList.SelectionMode = ListSelectionMode.Single;
 			_keyboardList.SelectedItems.Add(Settings.Default.KeyboardLayout == 0 ? 0 : 1);
 			_keyboardList.SelectionChanged += KeyboardChoice;
-			_optionsScreen.Desktop.Children.Add(_keyboardList);
+			Desktop.Children.Add(_keyboardList);
 
 			_cursorLabel = new LabelControl("Cursor:")
 			               	{
 			               		Bounds =
 			               			new UniRectangle(new UniScalar(0.5f, -220), new UniScalar(0.8f, -70), 70, 30)
 			               	};
-			_optionsScreen.Desktop.Children.Add(_cursorLabel);
+			Desktop.Children.Add(_cursorLabel);
 
 			_arrowButton = new ChoiceControl
 			               	{
@@ -119,7 +125,7 @@ namespace SkyShoot.Game.Screens
 			               	};
 			_arrowButton.Changed += ArrowButtonPressed;
 			if (Settings.Default.Cursor == 1) _arrowButton.Selected = true;
-			_optionsScreen.Desktop.Children.Add(_arrowButton);
+			Desktop.Children.Add(_arrowButton);
 
 			_plusButton = new ChoiceControl
 			              	{
@@ -127,7 +133,7 @@ namespace SkyShoot.Game.Screens
 			              	};
 			_plusButton.Changed += PlusButtonPressed;
 			if (Settings.Default.Cursor == 2) _plusButton.Selected = true;
-			_optionsScreen.Desktop.Children.Add(_plusButton);
+			Desktop.Children.Add(_plusButton);
 
 			_crossButton = new ChoiceControl
 			               	{
@@ -135,7 +141,7 @@ namespace SkyShoot.Game.Screens
 			               	};
 			_crossButton.Changed += CrossButtonPressed;
 			if (Settings.Default.Cursor == 3) _plusButton.Selected = true;
-			_optionsScreen.Desktop.Children.Add(_crossButton);
+			Desktop.Children.Add(_crossButton);
 
 			_targetButton = new ChoiceControl
 			                	{
@@ -144,7 +150,7 @@ namespace SkyShoot.Game.Screens
 			                	};
 			_targetButton.Changed += TargetButtonPressed;
 			if (Settings.Default.Cursor == 4) _targetButton.Selected = true;
-			_optionsScreen.Desktop.Children.Add(_targetButton);
+			Desktop.Children.Add(_targetButton);
 
 			_backButton = new ButtonControl
 			              	{
@@ -152,10 +158,10 @@ namespace SkyShoot.Game.Screens
 			              		Bounds = new UniRectangle(new UniScalar(0.5f, -50), new UniScalar(1.1f, -70), 100, 30)
 			              	};
 			_backButton.Pressed += BackButtonPressed;
-			_optionsScreen.Desktop.Children.Add(_backButton);
+			Desktop.Children.Add(_backButton);
 
 			if (_content == null)
-				_content = new ContentManager(ScreenManager.ScreenManager.Instance.Game.Services, "Content");
+				_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 
 			Textures.Arrow = _content.Load<Texture2D>("Textures/Cursors/Arrow");
 			Textures.Plus = _content.Load<Texture2D>("Textures/Cursors/Plus");
@@ -199,7 +205,7 @@ namespace SkyShoot.Game.Screens
 
 		private void BackButtonPressed(object sender, EventArgs e)
 		{
-			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MainMenuScreen;
+			ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenEnum.MainMenuScreen;
 		}
 
 		private void FullScreenSelected(object sender, EventArgs e)
@@ -210,7 +216,7 @@ namespace SkyShoot.Game.Screens
 
 		public override void Draw(GameTime gameTime)
 		{
-			_spriteBatch = ScreenManager.ScreenManager.Instance.SpriteBatch;
+			_spriteBatch = ScreenManager.Instance.SpriteBatch;
 			_spriteBatch.Begin();
 			_spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
 			_spriteBatch.End();

@@ -8,10 +8,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 using Nuclex.Input;
 using Nuclex.UserInterface;
-
 using SkyShoot.Game.Screens;
 
-namespace SkyShoot.Game.ScreenManager
+namespace SkyShoot.Game.Controls
 {
 	public class ScreenManager : DrawableGameComponent
 	{
@@ -38,6 +37,13 @@ namespace SkyShoot.Game.ScreenManager
 		public SpriteFont Font
 		{
 			get { return _font; }
+		}
+
+		public int Height { get { return GraphicsDevice.Viewport.Height; } }
+
+		public int Width
+		{
+			get { return GraphicsDevice.Viewport.Width; }
 		}
 
 		private static ScreenManager _instance;

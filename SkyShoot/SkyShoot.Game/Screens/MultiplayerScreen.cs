@@ -2,7 +2,6 @@
 using System.Diagnostics;
 
 using Microsoft.Xna.Framework;
-
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -11,8 +10,7 @@ using Nuclex.UserInterface.Controls;
 using Nuclex.UserInterface.Controls.Desktop;
 
 using SkyShoot.Contracts.Session;
-
-using SkyShoot.Game.ScreenManager;
+using SkyShoot.Game.Controls;
 
 using SkyShoot.Game.Client.Game;
 
@@ -31,8 +29,6 @@ namespace SkyShoot.Game.Screens
 
 		private ListControl _gameList;
 
-		private Screen _mainScreen;
-
 		private GameDescription[] _tempGameList;
 
 		private static Texture2D _texture;
@@ -41,24 +37,31 @@ namespace SkyShoot.Game.Screens
 
 		private SpriteBatch _spriteBatch;
 
+		public override bool IsMenuScreen
+		{
+			get { return false; }
+		}
+
 		public override void LoadContent()
 		{
 			base.LoadContent();
-			_gui = ScreenManager.ScreenManager.Instance.Gui;
-			Viewport viewport = ScreenManager.ScreenManager.Instance.GraphicsDevice.Viewport;
-			_mainScreen = new Screen(viewport.Width, viewport.Height);
-			_gui.Screen = _mainScreen;
+			_gui = ScreenManager.Instance.Gui;
+			_gui.Screen = this;
+
+			Height = ScreenManager.Instance.Height;
+			Width = ScreenManager.Instance.Width;
+
 			if (_content == null)
-				_content = new ContentManager(ScreenManager.ScreenManager.Instance.Game.Services, "Content");
+				_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 
 			_texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");
 
-			_mainScreen.Desktop.Bounds = new UniRectangle(
+			Desktop.Bounds = new UniRectangle(
 				new UniScalar(0.1f, 0.0f), new UniScalar(0.1f, 0.0f),
 				new UniScalar(0.8f, 0.0f), new UniScalar(0.8f, 0.0f)
 				);
 
-			_mainScreen.Desktop.Bounds = new UniRectangle(
+			Desktop.Bounds = new UniRectangle(
 				new UniScalar(0.1f, 0.0f), new UniScalar(0.1f, 0.0f),
 				new UniScalar(0.8f, 0.0f), new UniScalar(0.8f, 0.0f)
 				);
@@ -72,7 +75,7 @@ namespace SkyShoot.Game.Screens
 			                    			                 32)
 			                    	};
 			_createGameButton.Pressed += CreateGameButtonPressed;
-			_mainScreen.Desktop.Children.Add(_createGameButton);
+			Desktop.Children.Add(_createGameButton);
 
 			// Back Button
 			_backButton = new ButtonControl
@@ -82,7 +85,7 @@ namespace SkyShoot.Game.Screens
 			              			new UniRectangle(new UniScalar(0.5f, -350f), new UniScalar(0.4f, -80f), 120, 32)
 			              	};
 			_backButton.Pressed += BackButtonPressed;
-			_mainScreen.Desktop.Children.Add(_backButton);
+			Desktop.Children.Add(_backButton);
 
 			// JoinGame Button
 			_joinGameButton = new ButtonControl
@@ -93,7 +96,7 @@ namespace SkyShoot.Game.Screens
 			                  			                 32)
 			                  	};
 			_joinGameButton.Pressed += JoinGameButtonPressed;
-			_mainScreen.Desktop.Children.Add(_joinGameButton);
+			Desktop.Children.Add(_joinGameButton);
 
 			// Label of maps
 			_mapLabel = new LabelControl
@@ -101,7 +104,7 @@ namespace SkyShoot.Game.Screens
 			            		Bounds = new UniRectangle(300.0f, -30.0f, 200.0f, 24.0f),
 			            		Text = "Games"
 			            	};
-			_mainScreen.Desktop.Children.Add(_mapLabel);
+			Desktop.Children.Add(_mapLabel);
 
 			// Games List
 			_gameList = new ListControl
@@ -126,7 +129,7 @@ namespace SkyShoot.Game.Screens
 			}
 			_gameList.SelectionMode = ListSelectionMode.Single;
 			_gameList.SelectedItems.Add(4);
-			_mainScreen.Desktop.Children.Add(_gameList);
+			Desktop.Children.Add(_gameList);
 
 
 			// Refresh Button
@@ -137,14 +140,14 @@ namespace SkyShoot.Game.Screens
 			                 			new UniRectangle(new UniScalar(0.5f, -20f), new UniScalar(0.4f, 140f), 120, 32)
 			                 	};
 			_refreshButton.Pressed += RefreshButtonPressed;
-			_mainScreen.Desktop.Children.Add(_refreshButton);
+			Desktop.Children.Add(_refreshButton);
 
 			_gameList.SelectedItems[0] = 0;
 		}
 
 		private void BackButtonPressed(object sender, EventArgs args)
 		{
-			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.MainMenuScreen;
+			ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenEnum.MainMenuScreen;
 		}
 
 		private void JoinGameButtonPressed(object sender, EventArgs args)
@@ -167,15 +170,15 @@ namespace SkyShoot.Game.Screens
 					WaitScreen.MaxPlayers = _tempGameList[_gameList.SelectedItems[0]].MaximumPlayersAllowed + "";
 					WaitScreen.GameId = _tempGameList[_gameList.SelectedItems[0]].GameId;
 
-					ScreenManager.ScreenManager.Instance.ActiveScreen =
-						ScreenManager.ScreenManager.ScreenEnum.WaitScreen;
+					ScreenManager.Instance.ActiveScreen =
+						ScreenManager.ScreenEnum.WaitScreen;
 				}
 			}
 		}
 
 		private void CreateGameButtonPressed(object sender, EventArgs args)
 		{
-			ScreenManager.ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenManager.ScreenEnum.CreateGameScreen;
+			ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenEnum.CreateGameScreen;
 		}
 
 		private void RefreshButtonPressed(object sender, EventArgs args)
@@ -194,7 +197,7 @@ namespace SkyShoot.Game.Screens
 
 		public override void Draw(GameTime gameTime)
 		{
-			_spriteBatch = ScreenManager.ScreenManager.Instance.SpriteBatch;
+			_spriteBatch = ScreenManager.Instance.SpriteBatch;
 			_spriteBatch.Begin();
 			_spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
 			_spriteBatch.End();
