@@ -1,10 +1,13 @@
 ﻿using System;
 
 using Microsoft.Xna.Framework;
+
 using Microsoft.Xna.Framework.Content;
+
 using Microsoft.Xna.Framework.Graphics;
 
 using Nuclex.UserInterface;
+
 using Nuclex.UserInterface.Controls.Desktop;
 
 using SkyShoot.Game.Controls;
@@ -21,9 +24,9 @@ namespace SkyShoot.Game.Screens
 
 		private SpriteBatch _spriteBatch;
 
-		private ButtonControl _playGameButton;
-		private ButtonControl _optionsButton;
-		private ButtonControl _logoffButton;
+		private readonly ButtonControl _playGameButton;
+		private readonly ButtonControl _optionsButton;
+		private readonly ButtonControl _logoffButton;
 
 		public override bool IsMenuScreen
 		{
@@ -81,9 +84,13 @@ namespace SkyShoot.Game.Screens
 			Desktop.Children.Add(_optionsButton);
 			Desktop.Children.Add(_logoffButton);
 
-			_playGameButton.Pressed += PlayGameButtonPressed;
-			_optionsButton.Pressed += OptionsButtonPressed;
-			_logoffButton.Pressed += LogoffMenuButtonPressed;
+			ScreenManager.Instance.Controller.RegisterListener(_playGameButton, PlayGameButtonPressed);
+			ScreenManager.Instance.Controller.RegisterListener(_optionsButton, OptionsButtonPressed);
+			ScreenManager.Instance.Controller.RegisterListener(_logoffButton, LogoffMenuButtonPressed);
+
+			//_playGameButton.Pressed += PlayGameButtonPressed;
+			//_optionsButton.Pressed += OptionsButtonPressed;
+			//_logoffButton.Pressed += LogoffMenuButtonPressed;
 		}
 
 		public override void UnloadContent()
@@ -91,6 +98,10 @@ namespace SkyShoot.Game.Screens
 			Desktop.Children.Remove(_playGameButton);
 			Desktop.Children.Remove(_optionsButton);
 			Desktop.Children.Remove(_logoffButton);
+
+			_playGameButton.Pressed -= PlayGameButtonPressed;
+			_optionsButton.Pressed -= OptionsButtonPressed;
+			_logoffButton.Pressed -= LogoffMenuButtonPressed;
 		}
 
 		private void PlayGameButtonPressed(object sender, EventArgs e)

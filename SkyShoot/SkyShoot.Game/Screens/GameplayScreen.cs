@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 using SkyShoot.Game.Client.Game;
 using SkyShoot.Game.Client.View;
+
 using SkyShoot.Game.Controls;
 
 namespace SkyShoot.Game.Screens

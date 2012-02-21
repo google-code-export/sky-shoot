@@ -51,5 +51,11 @@ namespace SkyShoot.Game.Controls
 			}
 			return runVector;
 		}
+
+		public bool IsNewButtonPressed(Buttons button)
+		{
+			return (_currentGamePadState.IsButtonDown(button) &&
+					_lastGamePadState.IsButtonDown(button));
+		}
 	}
 }

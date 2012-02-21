@@ -1,7 +1,10 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 using Nuclex.Input;
+using Nuclex.UserInterface.Controls;
+using Nuclex.UserInterface.Controls.Desktop;
 
 namespace SkyShoot.Game.Controls
 {
@@ -27,13 +30,13 @@ namespace SkyShoot.Game.Controls
 			_currentKeyboardState = InputManager.GetKeyboard().GetState();
 			_currentMouseState = InputManager.GetMouse().GetState();
 
-			if(IsNewKeyPressed(Keys.S))
+			if(IsNewKeyPressed(Keys.Down) || IsNewKeyPressed(Keys.Tab))
 			{
 				Index++;
 				Index %= Length;
 				FocusChanged();
 			}
-			if (IsNewKeyPressed(Keys.W))
+			if (IsNewKeyPressed(Keys.Up))
 			{
 				Index--;
 				if (Index == -1)
@@ -74,6 +77,12 @@ namespace SkyShoot.Game.Controls
 		public override ButtonState ShootButton
 		{
 			get { return _currentMouseState.LeftButton; }
+		}
+
+		public override void RegisterListener(Control control, EventHandler buttonPressed)
+		{
+			base.RegisterListener(control, buttonPressed);
+			(control as ButtonControl).Pressed += buttonPressed;
 		}
 
 		private Vector2 GetRunVector(KeyboardState keyboardState)

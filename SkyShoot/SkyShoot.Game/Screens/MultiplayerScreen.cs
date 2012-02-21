@@ -1,15 +1,20 @@
 ﻿using System;
+
 using System.Diagnostics;
 
 using Microsoft.Xna.Framework;
+
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 using Nuclex.UserInterface;
+
 using Nuclex.UserInterface.Controls;
+
 using Nuclex.UserInterface.Controls.Desktop;
 
 using SkyShoot.Contracts.Session;
+
 using SkyShoot.Game.Controls;
 
 using SkyShoot.Game.Client.Game;
@@ -152,7 +157,12 @@ namespace SkyShoot.Game.Screens
 			Desktop.Children.Remove(_joinGameButton);
 			Desktop.Children.Remove(_mapLabel);
 			Desktop.Children.Remove(_gameList);
-			Desktop.Children.Remove(_refreshButton);			
+			Desktop.Children.Remove(_refreshButton);
+
+			_backButton.Pressed -= BackButtonPressed;
+			_joinGameButton.Pressed -= JoinGameButtonPressed;
+			_createGameButton.Pressed -= CreateGameButtonPressed;
+			_refreshButton.Pressed -= RefreshButtonPressed;
 		}
 
 		private void BackButtonPressed(object sender, EventArgs args)

@@ -1,6 +1,7 @@
 ﻿using SkyShoot.Game.Controls;
 
 using Microsoft.Xna.Framework;
+
 using Microsoft.Xna.Framework.Graphics;
 
 namespace SkyShoot.Game.Screens
@@ -30,6 +31,7 @@ namespace SkyShoot.Game.Screens
 				var viewportSize = new Vector2(viewport.Width, viewport.Height);
 				Vector2 textSize = font.MeasureString(message);
 				Vector2 textPosition = (viewportSize - textSize) / 2;
+
 				spriteBatch.Begin();
 				spriteBatch.DrawString(font, message, textPosition, Color.White);
 				spriteBatch.End();
