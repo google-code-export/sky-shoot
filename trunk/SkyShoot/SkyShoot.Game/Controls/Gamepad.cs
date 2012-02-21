@@ -23,7 +23,27 @@ namespace SkyShoot.Game.Controls
 			// todo wrong, 10%
 			_lastGamePadState = _currentGamePadState;
 
-			_currentGamePadState = InputManager.GetGamePad(ExtendedPlayerIndex.Five).GetState();			
+			_currentGamePadState = InputManager.GetGamePad(ExtendedPlayerIndex.Five).GetState();
+
+			if (IsNewButtonPressed(Buttons.DPadDown))
+			{
+				Index++;
+				Index %= Length;
+				FocusChanged();
+			}
+			if (IsNewButtonPressed(Buttons.DPadUp))
+			{
+				Index--;
+				if (Index == -1)
+					Index = Length - 1;
+				FocusChanged();
+			}
+
+			if (IsNewButtonPressed(Buttons.X))
+			{
+				Console.WriteLine("Pressed");
+				NotifyListeners(Index);
+			}
 		}
 
 		public override Vector2? RunVector
