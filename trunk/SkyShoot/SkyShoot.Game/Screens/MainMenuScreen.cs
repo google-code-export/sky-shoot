@@ -21,60 +21,76 @@ namespace SkyShoot.Game.Screens
 
 		private SpriteBatch _spriteBatch;
 
+		private ButtonControl _playGameButton;
+		private ButtonControl _optionsButton;
+		private ButtonControl _logoffButton;
+
 		public override bool IsMenuScreen
 		{
 			get { return true; }
 		}
 
-		public override void LoadContent()
+		public MainMenuScreen()
 		{
-			base.LoadContent();
-			_gui = ScreenManager.Instance.Gui;
-			_gui.Screen = this;
+			Desktop.Bounds = new UniRectangle(
+				new UniScalar(0.1f, 0.0f), new UniScalar(0.1f, 0.0f),
+				new UniScalar(0.8f, 0.0f), new UniScalar(0.8f, 0.0f)
+			);
 
 			Height = ScreenManager.Instance.Height;
 			Width = ScreenManager.Instance.Width;
-			
+
+			_playGameButton = new ButtonControl
+			{
+				Text = "Multiplayer",
+				Bounds =
+					new UniRectangle(new UniScalar(0.30f, 0), new UniScalar(0.2f, 0),
+									 new UniScalar(0.4f, 0), new UniScalar(0.1f, 0)),
+			};
+
+			_optionsButton = new ButtonControl
+			{
+				Text = "Options",
+				Bounds =
+					new UniRectangle(new UniScalar(0.30f, 0), new UniScalar(0.35f, 0),
+									 new UniScalar(0.4f, 0), new UniScalar(0.1f, 0)),
+			};
+
+			_logoffButton = new ButtonControl
+			{
+				Text = "Logoff",
+				Bounds =
+					new UniRectangle(new UniScalar(0.30f, 0), new UniScalar(0.5f, 0),
+									 new UniScalar(0.4f, 0), new UniScalar(0.1f, 0)),
+			};
+		}
+
+		public override void LoadContent()
+		{
+			base.LoadContent();
+
+			_gui = ScreenManager.Instance.Gui;
+			_gui.Screen = this;
+
 			if (_content == null)
 				_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 
 			_texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");
 
-			Desktop.Bounds = new UniRectangle(
-				new UniScalar(0.1f, 0.0f), new UniScalar(0.1f, 0.0f),
-				new UniScalar(0.8f, 0.0f), new UniScalar(0.8f, 0.0f)
-				);
+			Desktop.Children.Add(_playGameButton);		
+			Desktop.Children.Add(_optionsButton);
+			Desktop.Children.Add(_logoffButton);
 
-			var playGameButton = new ButtonControl
-			                     	{
-			                     		Text = "Multiplayer",
-			                     		Bounds =
-			                     			new UniRectangle(new UniScalar(0.30f, 0), new UniScalar(0.2f, 0),
-			                     			                 new UniScalar(0.4f, 0), new UniScalar(0.1f, 0)),
-			                     	};
-			Desktop.Children.Add(playGameButton);		
+			_playGameButton.Pressed += PlayGameButtonPressed;
+			_optionsButton.Pressed += OptionsButtonPressed;
+			_logoffButton.Pressed += LogoffMenuButtonPressed;
+		}
 
-			var optionsButton = new ButtonControl
-			                    	{
-			                    		Text = "Options",
-			                    		Bounds =
-			                    			new UniRectangle(new UniScalar(0.30f, 0), new UniScalar(0.35f, 0),
-			                    			                 new UniScalar(0.4f, 0), new UniScalar(0.1f, 0)),
-			                    	};
-			Desktop.Children.Add(optionsButton);
-
-			var logoffButton = new ButtonControl
-			                   	{
-			                   		Text = "Logoff",
-			                   		Bounds =
-			                   			new UniRectangle(new UniScalar(0.30f, 0), new UniScalar(0.5f, 0),
-			                   			                 new UniScalar(0.4f, 0), new UniScalar(0.1f, 0)),
-			                   	};
-			Desktop.Children.Add(logoffButton);
-
-			playGameButton.Pressed += PlayGameButtonPressed;
-			optionsButton.Pressed += OptionsButtonPressed;
-			logoffButton.Pressed += LogoffMenuButtonPressed;
+		public override void UnloadContent()
+		{
+			Desktop.Children.Remove(_playGameButton);
+			Desktop.Children.Remove(_optionsButton);
+			Desktop.Children.Remove(_logoffButton);
 		}
 
 		private void PlayGameButtonPressed(object sender, EventArgs e)
@@ -95,9 +111,11 @@ namespace SkyShoot.Game.Screens
 		public override void Draw(GameTime gameTime)
 		{
 			_spriteBatch = ScreenManager.Instance.SpriteBatch;
+			
 			_spriteBatch.Begin();
 			_spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
 			_spriteBatch.End();
+
 			_gui.Draw(gameTime);
 			base.Draw(gameTime);
 		}

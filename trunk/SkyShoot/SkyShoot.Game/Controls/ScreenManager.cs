@@ -48,6 +48,7 @@ namespace SkyShoot.Game.Controls
 
 		private static ScreenManager _instance;
 
+		// todo change
 		public enum ScreenEnum
 		{
 			LoginScreen,
@@ -169,6 +170,7 @@ namespace SkyShoot.Game.Controls
 			get { return _instance; }
 		}
 
+		// todo rewrite!
 		protected override void LoadContent()
 		{
 			ContentManager content = Game.Content;
@@ -195,11 +197,6 @@ namespace SkyShoot.Game.Controls
 			_screens.Add(_loadingScreen);
 			_gameplayScreen = new GameplayScreen();
 			_screens.Add(_gameplayScreen);
-
-			foreach (GameScreen screen in _screens)
-			{
-				screen.LoadContent();
-			}
 		}
 
 		protected override void UnloadContent()

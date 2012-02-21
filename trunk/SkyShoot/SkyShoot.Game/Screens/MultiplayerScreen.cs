@@ -20,14 +20,14 @@ namespace SkyShoot.Game.Screens
 	{
 		private GuiManager _gui;
 
-		private LabelControl _mapLabel;
+		private readonly LabelControl _mapLabel;
 
-		private ButtonControl _backButton;
-		private ButtonControl _createGameButton;
-		private ButtonControl _joinGameButton;
-		private ButtonControl _refreshButton;
+		private readonly ButtonControl _backButton;
+		private readonly ButtonControl _createGameButton;
+		private readonly ButtonControl _joinGameButton;
+		private readonly ButtonControl _refreshButton;
 
-		private ListControl _gameList;
+		private readonly ListControl _gameList;
 
 		private GameDescription[] _tempGameList;
 
@@ -42,75 +42,76 @@ namespace SkyShoot.Game.Screens
 			get { return false; }
 		}
 
-		public override void LoadContent()
+		public MultiplayerScreen()
 		{
-			base.LoadContent();
-			_gui = ScreenManager.Instance.Gui;
-			_gui.Screen = this;
+			Desktop.Bounds = new UniRectangle(
+				new UniScalar(0.1f, 0.0f), new UniScalar(0.1f, 0.0f),
+				new UniScalar(0.8f, 0.0f), new UniScalar(0.8f, 0.0f)
+			);
 
 			Height = ScreenManager.Instance.Height;
 			Width = ScreenManager.Instance.Width;
+
+			// CreateGame Button
+			_createGameButton = new ButtonControl
+			{
+				Text = "Create Game",
+				Bounds =
+					new UniRectangle(new UniScalar(0.5f, -350f), new UniScalar(0.4f, -160f), 120,
+									 32)
+			};
+
+			// Back Button
+			_backButton = new ButtonControl
+			{
+				Text = "Back",
+				Bounds =
+					new UniRectangle(new UniScalar(0.5f, -350f), new UniScalar(0.4f, -80f), 120, 32)
+			};
+
+			// JoinGame Button
+			_joinGameButton = new ButtonControl
+			{
+				Text = "Join Game",
+				Bounds =
+					new UniRectangle(new UniScalar(0.5f, -350f), new UniScalar(0.4f, -120f), 120,
+									 32)
+			};
+
+			// Label of maps
+			_mapLabel = new LabelControl
+			{
+				Bounds = new UniRectangle(300.0f, -30.0f, 200.0f, 24.0f),
+				Text = "Games"
+			};
+
+			// Games List
+			_gameList = new ListControl
+			{
+				Bounds = new UniRectangle(300f, -10f, 225f, 300f)
+			};
+
+			// Refresh Button
+			_refreshButton = new ButtonControl
+			{
+				Text = "Refresh",
+				Bounds =
+					new UniRectangle(new UniScalar(0.5f, -20f), new UniScalar(0.4f, 140f), 120, 32)
+			};
+		}
+
+		public override void LoadContent()
+		{
+			base.LoadContent();
+
+			_gui = ScreenManager.Instance.Gui;
+			_gui.Screen = this;
 
 			if (_content == null)
 				_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 
 			_texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");
-
-			Desktop.Bounds = new UniRectangle(
-				new UniScalar(0.1f, 0.0f), new UniScalar(0.1f, 0.0f),
-				new UniScalar(0.8f, 0.0f), new UniScalar(0.8f, 0.0f)
-				);
-
-			Desktop.Bounds = new UniRectangle(
-				new UniScalar(0.1f, 0.0f), new UniScalar(0.1f, 0.0f),
-				new UniScalar(0.8f, 0.0f), new UniScalar(0.8f, 0.0f)
-				);
-
-			// CreateGame Button
-			_createGameButton = new ButtonControl
-			                    	{
-			                    		Text = "Create Game",
-			                    		Bounds =
-			                    			new UniRectangle(new UniScalar(0.5f, -350f), new UniScalar(0.4f, -160f), 120,
-			                    			                 32)
-			                    	};
-			_createGameButton.Pressed += CreateGameButtonPressed;
-			Desktop.Children.Add(_createGameButton);
-
-			// Back Button
-			_backButton = new ButtonControl
-			              	{
-			              		Text = "Back",
-			              		Bounds =
-			              			new UniRectangle(new UniScalar(0.5f, -350f), new UniScalar(0.4f, -80f), 120, 32)
-			              	};
-			_backButton.Pressed += BackButtonPressed;
-			Desktop.Children.Add(_backButton);
-
-			// JoinGame Button
-			_joinGameButton = new ButtonControl
-			                  	{
-			                  		Text = "Join Game",
-			                  		Bounds =
-			                  			new UniRectangle(new UniScalar(0.5f, -350f), new UniScalar(0.4f, -120f), 120,
-			                  			                 32)
-			                  	};
-			_joinGameButton.Pressed += JoinGameButtonPressed;
-			Desktop.Children.Add(_joinGameButton);
-
-			// Label of maps
-			_mapLabel = new LabelControl
-			            	{
-			            		Bounds = new UniRectangle(300.0f, -30.0f, 200.0f, 24.0f),
-			            		Text = "Games"
-			            	};
-			Desktop.Children.Add(_mapLabel);
-
-			// Games List
-			_gameList = new ListControl
-			            	{
-			            		Bounds = new UniRectangle(300f, -10f, 225f, 300f)
-			            	};
+			
 			_gameList.Slider.Bounds.Location.X.Offset -= 1.0f;
 			_gameList.Slider.Bounds.Location.Y.Offset += 1.0f;
 			_gameList.Slider.Bounds.Size.Y.Offset -= 2.0f;
@@ -129,20 +130,29 @@ namespace SkyShoot.Game.Screens
 			}
 			_gameList.SelectionMode = ListSelectionMode.Single;
 			_gameList.SelectedItems.Add(4);
+			_gameList.SelectedItems[0] = 0;
+
+			Desktop.Children.Add(_createGameButton);
+			Desktop.Children.Add(_backButton);
+			Desktop.Children.Add(_joinGameButton);
+			Desktop.Children.Add(_mapLabel);
 			Desktop.Children.Add(_gameList);
-
-
-			// Refresh Button
-			_refreshButton = new ButtonControl
-			                 	{
-			                 		Text = "Refresh",
-			                 		Bounds =
-			                 			new UniRectangle(new UniScalar(0.5f, -20f), new UniScalar(0.4f, 140f), 120, 32)
-			                 	};
-			_refreshButton.Pressed += RefreshButtonPressed;
 			Desktop.Children.Add(_refreshButton);
 
-			_gameList.SelectedItems[0] = 0;
+			_backButton.Pressed += BackButtonPressed;
+			_joinGameButton.Pressed += JoinGameButtonPressed;
+			_createGameButton.Pressed += CreateGameButtonPressed;
+			_refreshButton.Pressed += RefreshButtonPressed;
+		}
+
+		public override void UnloadContent()
+		{
+			Desktop.Children.Remove(_createGameButton);
+			Desktop.Children.Remove(_backButton);
+			Desktop.Children.Remove(_joinGameButton);
+			Desktop.Children.Remove(_mapLabel);
+			Desktop.Children.Remove(_gameList);
+			Desktop.Children.Remove(_refreshButton);			
 		}
 
 		private void BackButtonPressed(object sender, EventArgs args)
@@ -198,9 +208,11 @@ namespace SkyShoot.Game.Screens
 		public override void Draw(GameTime gameTime)
 		{
 			_spriteBatch = ScreenManager.Instance.SpriteBatch;
+
 			_spriteBatch.Begin();
 			_spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
 			_spriteBatch.End();
+			
 			base.Draw(gameTime);
 			_gui.Draw(gameTime);
 		}
