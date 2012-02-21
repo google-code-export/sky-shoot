@@ -72,9 +72,9 @@ namespace SkyShoot.Game.Screens
 				_content.Unload();
 		}
 
-		public override void HandleInput(InputState input)
+		public override void HandleInput(Controller controller)
 		{
-			GameController.Instance.HandleInput(input);
+			GameController.Instance.HandleInput(controller);
 		}
 
 		public override void Update(GameTime gameTime)

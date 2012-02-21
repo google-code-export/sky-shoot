@@ -1,6 +1,6 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+
 using Nuclex.Input;
 
 namespace SkyShoot.Game.Controls
@@ -28,14 +28,33 @@ namespace SkyShoot.Game.Controls
 			_currentMouseState = InputManager.GetMouse().GetState();
 		}
 
-		public override Vector2 RunVector
+		private Vector2 _oldRunVector;
+
+		public override Vector2? RunVector
 		{
-			get { throw new NotImplementedException(); }
+			get 
+			{
+				Vector2 currentRunVector = GetRunVector(_currentKeyboardState);
+				if(!currentRunVector.Equals(_oldRunVector))
+				{
+					_oldRunVector = currentRunVector;
+					return currentRunVector;
+				}
+				return null;
+			}
 		}
 
 		public override Vector2 SightPosition
 		{
-			get { throw new NotImplementedException(); }
+			get
+			{
+				return new Vector2(_currentMouseState.X, _currentMouseState.Y);
+			}
+		}
+
+		public override ButtonState ShootButton
+		{
+			get { return _currentMouseState.LeftButton; }
 		}
 
 		private Vector2 GetRunVector(KeyboardState keyboardState)

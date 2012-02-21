@@ -193,7 +193,7 @@ namespace SkyShoot.Game.Client.Game
 		private DateTime _dateTime;
 		private const int Rate = 1000 / 10;
 
-		public void HandleInput(InputState inputState)
+		public void HandleInput(Controller controller)
 		{
 			var player = GameModel.GetMob(MyId);
 
@@ -201,26 +201,21 @@ namespace SkyShoot.Game.Client.Game
 				return;
 
 			// current RunVector
-			Vector2 currentRunVector = inputState.RunVector(inputState.CurrentKeyboardState,
-			                                                inputState.CurrentGamePadState);
-			// previous RunVector
-			Vector2 previousRunVector = inputState.RunVector(inputState.LastKeyboardState,
-			                                                 inputState.LastGamePadState);
+			Vector2? currentRunVector = controller.RunVector;
 
-			if (!currentRunVector.Equals(previousRunVector))
+			if (currentRunVector.HasValue)
 			{
-				Move(currentRunVector);
-				player.RunVector = currentRunVector;
+				Move(currentRunVector.Value);
+				player.RunVector = currentRunVector.Value;
 			}
 
-			var mouseState = inputState.CurrentMouseState;
-			var mouseCoordinates = new Vector2(mouseState.X, mouseState.Y);
-
+			Vector2 mouseCoordinates = controller.SightPosition;
+			
 			player.ShootVector = mouseCoordinates - GameModel.Camera2D.ConvertToLocal(player.Coordinates);
 			if (player.ShootVector.Length() > 0)
 				player.ShootVector.Normalize();
 
-			if (inputState.CurrentMouseState.LeftButton == ButtonState.Pressed)
+			if (controller.ShootButton == ButtonState.Pressed)
 			{
 				if ((DateTime.Now - _dateTime).Milliseconds > Rate)
 				{

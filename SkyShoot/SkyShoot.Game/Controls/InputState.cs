@@ -7,8 +7,6 @@ namespace SkyShoot.Game.Controls
 {
 	public class InputState
 	{
-
-
 		private readonly InputManager _inputManager;
 
 		public InputState(InputManager inputManager)

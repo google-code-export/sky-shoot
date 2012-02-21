@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-
+using Microsoft.Xna.Framework.Input;
 using Nuclex.Input;
 using Nuclex.UserInterface.Controls;
 
@@ -19,9 +19,11 @@ namespace SkyShoot.Game.Controls
 
 		public abstract void Update();
 
-		public abstract Vector2 RunVector { get; }
+		public abstract Vector2? RunVector { get; }
 
 		public abstract Vector2 SightPosition { get; }
+
+		public abstract ButtonState ShootButton { get; }
 
 		public void RegisterListener(Control control, ButtonPressed buttonPressed)
 		{

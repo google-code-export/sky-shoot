@@ -27,7 +27,7 @@ namespace SkyShoot.Game.Controls
 
 		}
 
-		public virtual void HandleInput(InputState input)
+		public virtual void HandleInput(Controller controller)
 		{
 
 		}
