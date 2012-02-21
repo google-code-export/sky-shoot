@@ -80,9 +80,8 @@ namespace SkyShoot.Game
 			GraphicsDevice.Clear(Color.Black);
 			base.Draw(gameTime);
 			_spriteBatch.Begin(SpriteSortMode.Texture, BlendState.AlphaBlend);
-			float x, y;
-			ScreenManager.Instance.GetMouseState(out x, out y);
-			_spriteBatch.Draw(Textures.ActiveCursor, Textures.GetCursorPosition(x, y), Color.White);
+			Vector2 mousePosition = ScreenManager.Instance.GetMousePosition();
+			_spriteBatch.Draw(Textures.ActiveCursor, Textures.GetCursorPosition(mousePosition.X, mousePosition.Y), Color.White);
 			_spriteBatch.End();
 		}
 	}

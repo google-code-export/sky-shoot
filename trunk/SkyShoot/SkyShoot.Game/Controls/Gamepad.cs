@@ -1,8 +1,9 @@
 ﻿using System;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+
 using Nuclex.Input;
-using Nuclex.UserInterface.Controls;
 
 namespace SkyShoot.Game.Controls
 {
@@ -25,12 +26,17 @@ namespace SkyShoot.Game.Controls
 			_currentGamePadState = InputManager.GetGamePad(ExtendedPlayerIndex.Five).GetState();			
 		}
 
-		public override Vector2 RunVector
+		public override Vector2? RunVector
 		{
 			get { throw new NotImplementedException(); }
 		}
 
 		public override Vector2 SightPosition
+		{
+			get { throw new NotImplementedException(); }
+		}
+
+		public override ButtonState ShootButton
 		{
 			get { throw new NotImplementedException(); }
 		}

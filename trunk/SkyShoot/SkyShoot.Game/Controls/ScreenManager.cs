@@ -17,8 +17,6 @@ namespace SkyShoot.Game.Controls
 		private readonly GuiManager _gui;
 		private readonly InputManager _inputManager;
 
-		private readonly InputState _inputState;
-
 		private readonly Controller _controller;
 
 		public GuiManager Gui
@@ -212,7 +210,7 @@ namespace SkyShoot.Game.Controls
 			{
 				if (screen.IsActive)
 				{
-					screen.HandleInput(_inputState);
+					screen.HandleInput(_controller);
 					screen.Update(gameTime);
 				}
 			}
@@ -234,10 +232,9 @@ namespace SkyShoot.Game.Controls
 			return _screens.ToArray();
 		}
 
-		public void GetMouseState(out float x, out float y)
+		public Vector2 GetMousePosition()
 		{
-			x = _inputState.CurrentMouseState.X;
-			y = _inputState.CurrentMouseState.Y;
+			return _controller.SightPosition;
 		}
 	}
 }
