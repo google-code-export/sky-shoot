@@ -83,6 +83,7 @@
     <Compile Include="Mobs\Spider.cs" />
     <Compile Include="Mobs\SpiderFactory.cs" />
     <Compile Include="Session\GameSession.cs" />
+    <Compile Include="Session\ObjectPool.cs" />
     <Compile Include="Session\SessionManager.cs" />
     <Compile Include="Weapon\Bullets\PistolBullet.cs" />
     <Compile Include="Weapon\Bullets\ShotgunBullet.cs" />
