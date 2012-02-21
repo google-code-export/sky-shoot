@@ -46,14 +46,35 @@ namespace SkyShoot.Game.Screens
 			get { return false; }
 		}
 
-		public override void LoadContent()
+		public WaitScreen()
 		{
-			base.LoadContent();
-			_gui = ScreenManager.Instance.Gui;
-			_gui.Screen = this;
+			_playersList = new ListControl
+			{
+				Bounds = new UniRectangle(-60f, -4f, 200f, 300f)
+			};
+
+			_leaveButton = new ButtonControl
+			{
+				Text = "Leave",
+				Bounds =
+					new UniRectangle(new UniScalar(0.5f, -378f), new UniScalar(0.4f, 190f), 120, 32)
+			};
+
+			Desktop.Bounds = new UniRectangle(
+				new UniScalar(0.1f, 0.0f), new UniScalar(0.1f, 0.0f),
+				new UniScalar(0.8f, 0.0f), new UniScalar(0.8f, 0.0f)
+			);
 
 			Height = ScreenManager.Instance.Height;
 			Width = ScreenManager.Instance.Width;
+		}
+
+		public override void LoadContent()
+		{
+			base.LoadContent();
+
+			_gui = ScreenManager.Instance.Gui;
+			_gui.Screen = this;
 			
 			if (_content == null)
 				_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
@@ -61,16 +82,6 @@ namespace SkyShoot.Game.Screens
 			_texture = _content.Load<Texture2D>("Textures/screens/screen_02_fix");
 
 			_spriteFont = _content.Load<SpriteFont>("Times New Roman");
-
-			Desktop.Bounds = new UniRectangle(
-				new UniScalar(0.1f, 0.0f), new UniScalar(0.1f, 0.0f),
-				new UniScalar(0.8f, 0.0f), new UniScalar(0.8f, 0.0f)
-				);
-
-			_playersList = new ListControl
-			               	{
-			               		Bounds = new UniRectangle(-60f, -4f, 200f, 300f)
-			               	};
 
 			// todo rename variable
 			// вывод списка игрков
@@ -99,17 +110,11 @@ namespace SkyShoot.Game.Screens
 			_playersList.Slider.Bounds.Size.Y.Offset -= 2.0f;
 			_playersList.SelectionMode = ListSelectionMode.Single;
 			_playersList.SelectedItems.Add(4);
+			
+			Desktop.Children.Add(_leaveButton);
 			Desktop.Children.Add(_playersList);
 
-			_leaveButton = new ButtonControl
-			               	{
-			               		Text = "Leave",
-			               		Bounds =
-			               			new UniRectangle(new UniScalar(0.5f, -378f), new UniScalar(0.4f, 190f), 120, 32)
-			               	};
 			_leaveButton.Pressed += LeaveButtonPressed;
-			Desktop.Children.Add(_leaveButton);
-
 		}
 
 		private void LeaveButtonPressed(object sender, EventArgs args)
@@ -130,6 +135,7 @@ namespace SkyShoot.Game.Screens
 		public override void Draw(GameTime gameTime)
 		{
 			_spriteBatch = ScreenManager.Instance.SpriteBatch;
+
 			_spriteBatch.Begin();
 			_spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
 			_spriteBatch.DrawString(_spriteFont, "Players", new Vector2(20f, 25f), Color.Red, 0,
@@ -147,6 +153,7 @@ namespace SkyShoot.Game.Screens
 			_spriteBatch.DrawString(_spriteFont, MaxPlayers, new Vector2(400f, 320f), Color.Red, 0,
 			                        new Vector2(0f, 0f), 0.8f, SpriteEffects.None, 1f);
 			_spriteBatch.End();
+			
 			base.Draw(gameTime);
 			_gui.Draw(gameTime);
 		}
