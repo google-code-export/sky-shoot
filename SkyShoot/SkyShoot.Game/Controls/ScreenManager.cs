@@ -1,7 +1,7 @@
 ﻿using System;
 
 using System.Collections.Generic;
-
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -75,6 +75,7 @@ namespace SkyShoot.Game.Controls
 
 		private ScreenEnum _activeScreen;
 
+		// todo rewrite!
 		public ScreenEnum ActiveScreen
 		{
 			get { return _activeScreen; }
@@ -132,6 +133,15 @@ namespace SkyShoot.Game.Controls
 			}
 		}
 
+		// todo temporary
+		public GameScreen CurrentScreen
+		{
+			get
+			{
+				return _screens.FirstOrDefault(gameScreen => gameScreen.IsActive);
+			}
+		}
+
 		public static void Init(Microsoft.Xna.Framework.Game game)
 		{
 			if (_instance == null)
@@ -149,10 +159,9 @@ namespace SkyShoot.Game.Controls
 			_inputManager = new InputManager(Game.Services, Game.Window.Handle);
 			Game.Components.Add(_gui);
 			Game.Components.Add(_inputManager);
-
-			//_inputState = new InputState(_inputManager);
 			
-			_controller = new Gamepad(_inputManager);
+			_controller = new KeyboardAndMouse(_inputManager);
+			//_controller = new Gamepad(_inputManager);
 		}
 
 		public static ScreenManager Instance

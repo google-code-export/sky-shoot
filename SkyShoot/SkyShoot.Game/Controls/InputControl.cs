@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace SkyShoot.Game.Screens.Controls
+namespace SkyShoot.Game.Controls
 {
 	internal class InputControl : Nuclex.UserInterface.Controls.Desktop.InputControl
 	{
