@@ -33,7 +33,7 @@ namespace SkyShoot.Game.Controls
 
 		public override Vector2 SightPosition
 		{
-			get { throw new NotImplementedException(); }
+			get { return new Vector2();}
 		}
 
 		public override ButtonState ShootButton

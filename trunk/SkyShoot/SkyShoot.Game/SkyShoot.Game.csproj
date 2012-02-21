@@ -136,8 +136,8 @@
     <Compile Include="Client\Weapon\Projectile.cs" />
     <Compile Include="Controls\Gamepad.cs" />
     <Compile Include="Controls\Controller.cs" />
+    <Compile Include="Controls\InputControl.cs" />
     <Compile Include="Controls\KeyboardAndMouse.cs" />
-    <Compile Include="Screens\Controls\InputControl.cs" />
     <Compile Include="Screens\CreateGameScreen.cs" />
     <Compile Include="Screens\NewAccountScreen.cs" />
     <Compile Include="Screens\OptionsMenuScreen.cs" />

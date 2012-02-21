@@ -24,11 +24,7 @@ namespace SkyShoot.Game.Controls
 			return new Vector2();
 		}
 
-		/*public bool IsNewKeyPressed(Keys key)
-		{
-			return (_currentKeyboardState.IsKeyDown(key) &&
-			        _lastKeyState.IsKeyUp(key));
-		}
+		/*
 
 		public bool IsNewButtonPressed(Buttons button)
 		{

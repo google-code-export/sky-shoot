@@ -26,6 +26,25 @@ namespace SkyShoot.Game.Controls
 
 			_currentKeyboardState = InputManager.GetKeyboard().GetState();
 			_currentMouseState = InputManager.GetMouse().GetState();
+
+			if(IsNewKeyPressed(Keys.S))
+			{
+				Index++;
+				Index %= Length;
+				FocusChanged();
+			}
+			if (IsNewKeyPressed(Keys.W))
+			{
+				Index--;
+				if (Index == -1)
+					Index = Length - 1;
+				FocusChanged();
+			}
+
+			if(IsNewKeyPressed(Keys.Enter))
+			{
+				NotifyListeners(Index);
+			}
 		}
 
 		private Vector2 _oldRunVector;
@@ -82,6 +101,12 @@ namespace SkyShoot.Game.Controls
 			if (runVector.Length() > 0)
 				runVector.Normalize();
 			return runVector;
+		}
+
+		public bool IsNewKeyPressed(Keys key)
+		{
+			return (_currentKeyboardState.IsKeyDown(key) &&
+					_lastKeyState.IsKeyUp(key));
 		}
 	}
 }
