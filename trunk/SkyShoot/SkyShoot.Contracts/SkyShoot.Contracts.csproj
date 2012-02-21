@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bonuses\AObtainableDamageModifier.cs" />
+    <Compile Include="GameEvents\AGameEvent.cs" />
     <Compile Include="ObjectBuffer.cs" />
     <Compile Include="Service\Constants.cs" />
     <Compile Include="Mobs\AMob.cs" />
