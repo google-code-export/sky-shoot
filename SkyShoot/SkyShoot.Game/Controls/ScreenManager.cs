@@ -19,6 +19,8 @@ namespace SkyShoot.Game.Controls
 
 		private readonly InputState _inputState;
 
+		private readonly Controller _controller;
+
 		public GuiManager Gui
 		{
 			get { return _gui; }
@@ -150,7 +152,9 @@ namespace SkyShoot.Game.Controls
 			Game.Components.Add(_gui);
 			Game.Components.Add(_inputManager);
 
-			_inputState = new InputState(_inputManager);
+			//_inputState = new InputState(_inputManager);
+			
+			_controller = new Gamepad(_inputManager);
 		}
 
 		public static ScreenManager Instance
@@ -201,7 +205,8 @@ namespace SkyShoot.Game.Controls
 
 		public override void Update(GameTime gameTime)
 		{
-			_inputState.Update();
+			//_inputState.Update();
+			_controller.Update();
 
 			foreach (GameScreen screen in _screens)
 			{
