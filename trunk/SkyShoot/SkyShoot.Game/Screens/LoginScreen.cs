@@ -1,7 +1,9 @@
 ﻿using System;
 
 using Nuclex.UserInterface;
+
 using Nuclex.UserInterface.Controls;
+
 using Nuclex.UserInterface.Controls.Desktop;
 
 using Microsoft.Xna.Framework;
@@ -9,8 +11,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-using SkyShoot.Game.Client.Game;
 using SkyShoot.Game.Controls;
+
+using SkyShoot.Game.Client.Game;
 
 namespace SkyShoot.Game.Screens
 {
@@ -41,6 +44,14 @@ namespace SkyShoot.Game.Screens
 
 		public LoginScreen()
 		{
+			Desktop.Bounds = new UniRectangle(
+				new UniScalar(0.1f, 0.0f), new UniScalar(0.1f, 0.0f),
+				new UniScalar(0.8f, 0.0f), new UniScalar(0.8f, 0.0f)
+			);
+
+			Height = ScreenManager.Instance.Height;
+			Width = ScreenManager.Instance.Width;
+
 			// Login Input
 			_loginBox = new Controls.InputControl
 			{
@@ -87,14 +98,6 @@ namespace SkyShoot.Game.Screens
 				Text = "Create new account",
 				Bounds = new UniRectangle(new UniScalar(0.5f, -75f), new UniScalar(0.4f, 70), 150, 32)
 			};
-
-			Desktop.Bounds = new UniRectangle(
-				new UniScalar(0.1f, 0.0f), new UniScalar(0.1f, 0.0f),
-				new UniScalar(0.8f, 0.0f), new UniScalar(0.8f, 0.0f)
-			);
-
-			Height = ScreenManager.Instance.Height;
-			Width = ScreenManager.Instance.Width;
 		}
 
 		public override void LoadContent()
@@ -109,17 +112,21 @@ namespace SkyShoot.Game.Screens
 
 			_texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");
 
-			Desktop.Children.Add(_passwordBox);
 			Desktop.Children.Add(_loginBox);
+			Desktop.Children.Add(_passwordBox);
 			Desktop.Children.Add(_loginLabel);
 			Desktop.Children.Add(_passwordLabel);
 			Desktop.Children.Add(_exitButton);
-			Desktop.Children.Add(_loginButton);
 			Desktop.Children.Add(_newAccountButton);
+			Desktop.Children.Add(_loginButton);
 
-			_loginButton.Pressed += LoginButtonPressed;
-			_exitButton.Pressed += ExitButtonPressed;
-			_newAccountButton.Pressed += NewAccountButtonPressed;
+			ScreenManager.Instance.Controller.RegisterListener(_loginButton, LoginButtonPressed);
+			ScreenManager.Instance.Controller.RegisterListener(_exitButton, ExitButtonPressed);
+			ScreenManager.Instance.Controller.RegisterListener(_newAccountButton, NewAccountButtonPressed);
+
+			//_loginButton.Pressed += LoginButtonPressed;
+			//_exitButton.Pressed += ExitButtonPressed;
+			//_newAccountButton.Pressed += NewAccountButtonPressed;
 		}
 
 		public override void UnloadContent()
@@ -144,7 +151,6 @@ namespace SkyShoot.Game.Screens
 
 		private void LoginButtonPressed(object sender, EventArgs args)
 		{
-			FocusedControl = null;
 			if (_loginBox.Text.Length < 3)
 			{
 				MessageBox.Message = "Username is too short!\nPress Ok to continue";
@@ -170,7 +176,6 @@ namespace SkyShoot.Game.Screens
 
 		private void NewAccountButtonPressed(object sender, EventArgs args)
 		{
-			FocusedControl = null;
 			if (_loginBox.Text.Length < 3)
 			{
 				MessageBox.Message = "Username is too short!\nPress Ok to continue";

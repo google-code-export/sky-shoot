@@ -6,10 +6,13 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 using Nuclex.UserInterface;
+
 using Nuclex.UserInterface.Controls;
+
 using Nuclex.UserInterface.Controls.Desktop;
 
 using SkyShoot.Contracts.Session;
+
 using SkyShoot.Game.Controls;
 
 using SkyShoot.Game.Client.Game;
@@ -213,6 +216,9 @@ namespace SkyShoot.Game.Screens
 			Desktop.Children.Remove(_gameMode);
 			Desktop.Children.Remove(_backButton);
 			Desktop.Children.Remove(_tile);
+
+			_createButton.Pressed -= CreateButtonPressed;
+			_backButton.Pressed -= BackButtonPressed;
 		}
 
 		public override void Update(GameTime gameTime)

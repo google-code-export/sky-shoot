@@ -21,14 +21,14 @@ namespace SkyShoot.Game.Screens
 	{
 		private GuiManager _gui;
 
-		private LabelControl _loginLabel;
-		private LabelControl _passwordLabel;
+		private readonly LabelControl _loginLabel;
+		private readonly LabelControl _passwordLabel;
 
-		private InputControl _loginBox;
-		private InputControl _passwordBox;
+		private readonly InputControl _loginBox;
+		private readonly InputControl _passwordBox;
 
-		private ButtonControl _backButton;
-		private ButtonControl _okButton;
+		private readonly ButtonControl _backButton;
+		private readonly ButtonControl _okButton;
 
 		private static Texture2D _texture;
 
@@ -132,6 +132,9 @@ namespace SkyShoot.Game.Screens
 			Desktop.Children.Remove(_passwordLabel);
 			Desktop.Children.Remove(_backButton);
 			Desktop.Children.Remove(_okButton);
+
+			_backButton.Pressed -= BackButtonPressed;
+			_okButton.Pressed -= OkButtonPressed;
 		}
 
 		private void BackButtonPressed(object sender, EventArgs args)

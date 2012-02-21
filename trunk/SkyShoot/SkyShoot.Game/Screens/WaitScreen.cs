@@ -13,8 +13,9 @@ using Nuclex.UserInterface.Controls.Desktop;
 
 using SkyShoot.Contracts.Session;
 
-using SkyShoot.Game.Client.Game;
 using SkyShoot.Game.Controls;
+
+using SkyShoot.Game.Client.Game;
 
 namespace SkyShoot.Game.Screens
 {
@@ -30,8 +31,8 @@ namespace SkyShoot.Game.Screens
 
 		private GuiManager _gui;
 
-		private ListControl _playersList;
-		private ButtonControl _leaveButton;
+		private readonly ListControl _playersList;
+		private readonly ButtonControl _leaveButton;
 
 		private List<string> _tmpPlayersList;
 
@@ -48,25 +49,24 @@ namespace SkyShoot.Game.Screens
 
 		public WaitScreen()
 		{
-			_playersList = new ListControl
-			{
-				Bounds = new UniRectangle(-60f, -4f, 200f, 300f)
-			};
-
-			_leaveButton = new ButtonControl
-			{
-				Text = "Leave",
-				Bounds =
-					new UniRectangle(new UniScalar(0.5f, -378f), new UniScalar(0.4f, 190f), 120, 32)
-			};
-
 			Desktop.Bounds = new UniRectangle(
 				new UniScalar(0.1f, 0.0f), new UniScalar(0.1f, 0.0f),
 				new UniScalar(0.8f, 0.0f), new UniScalar(0.8f, 0.0f)
-			);
+				);
 
 			Height = ScreenManager.Instance.Height;
 			Width = ScreenManager.Instance.Width;
+
+			_playersList = new ListControl
+			               	{
+			               		Bounds = new UniRectangle(-60f, -4f, 200f, 300f)
+			               	};
+
+			_leaveButton = new ButtonControl
+			               	{
+			               		Text = "Leave",
+			               		Bounds = new UniRectangle(new UniScalar(0.5f, -378f), new UniScalar(0.4f, 190f), 120, 32)
+			               	};
 		}
 
 		public override void LoadContent()
@@ -75,7 +75,7 @@ namespace SkyShoot.Game.Screens
 
 			_gui = ScreenManager.Instance.Gui;
 			_gui.Screen = this;
-			
+
 			if (_content == null)
 				_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 
@@ -110,11 +110,19 @@ namespace SkyShoot.Game.Screens
 			_playersList.Slider.Bounds.Size.Y.Offset -= 2.0f;
 			_playersList.SelectionMode = ListSelectionMode.Single;
 			_playersList.SelectedItems.Add(4);
-			
-			Desktop.Children.Add(_leaveButton);
+
 			Desktop.Children.Add(_playersList);
+			Desktop.Children.Add(_leaveButton);
 
 			_leaveButton.Pressed += LeaveButtonPressed;
+		}
+
+		public override void UnloadContent()
+		{
+			Desktop.Children.Remove(_leaveButton);
+			Desktop.Children.Remove(_playersList);
+
+			_leaveButton.Pressed -= LeaveButtonPressed;
 		}
 
 		private void LeaveButtonPressed(object sender, EventArgs args)
@@ -153,7 +161,7 @@ namespace SkyShoot.Game.Screens
 			_spriteBatch.DrawString(_spriteFont, MaxPlayers, new Vector2(400f, 320f), Color.Red, 0,
 			                        new Vector2(0f, 0f), 0.8f, SpriteEffects.None, 1f);
 			_spriteBatch.End();
-			
+
 			base.Draw(gameTime);
 			_gui.Draw(gameTime);
 		}

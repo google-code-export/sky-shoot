@@ -11,8 +11,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-using SkyShoot.Game.Client.View;
 using SkyShoot.Game.Controls;
+
+using SkyShoot.Game.Client.View;
 
 namespace SkyShoot.Game.Screens
 {
@@ -20,21 +21,21 @@ namespace SkyShoot.Game.Screens
 	{
 		private GuiManager _gui;
 
-		private ListControl _keyboardList;
+		private readonly ListControl _keyboardList;
 
-		private LabelControl _titleLabel;
-		private LabelControl _cursorLabel;
-		private LabelControl _keyboardLabel;
-		private LabelControl _fullscreenLabel;
+		private readonly LabelControl _titleLabel;
+		private readonly LabelControl _cursorLabel;
+		private readonly LabelControl _keyboardLabel;
+		private readonly LabelControl _fullscreenLabel;
 
-		private OptionControl _fullscreenButton;
+		private readonly OptionControl _fullscreenButton;
 
-		private ChoiceControl _arrowButton;
-		private ChoiceControl _plusButton;
-		private ChoiceControl _crossButton;
-		private ChoiceControl _targetButton;
+		private readonly ChoiceControl _arrowButton;
+		private readonly ChoiceControl _plusButton;
+		private readonly ChoiceControl _crossButton;
+		private readonly ChoiceControl _targetButton;
 
-		private ButtonControl _backButton;
+		private readonly ButtonControl _backButton;
 
 		private ContentManager _content;
 
@@ -190,7 +191,14 @@ namespace SkyShoot.Game.Screens
 			Desktop.Children.Remove(_plusButton);
 			Desktop.Children.Remove(_crossButton);
 			Desktop.Children.Remove(_targetButton);
-			Desktop.Children.Remove(_backButton);			
+			Desktop.Children.Remove(_backButton);
+
+			_arrowButton.Changed -= ArrowButtonPressed;
+			_plusButton.Changed -= PlusButtonPressed;
+			_crossButton.Changed -= CrossButtonPressed;
+			_targetButton.Changed -= TargetButtonPressed;
+
+			_backButton.Pressed -= BackButtonPressed;
 		}
 
 		private void ArrowButtonPressed(object sender, EventArgs e)
@@ -241,11 +249,14 @@ namespace SkyShoot.Game.Screens
 		public override void Draw(GameTime gameTime)
 		{
 			_spriteBatch = ScreenManager.Instance.SpriteBatch;
+
 			_spriteBatch.Begin();
 			_spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
 			_spriteBatch.End();
+
 			base.Draw(gameTime);
 			_gui.Draw(gameTime);
+			
 			_spriteBatch.Begin(SpriteSortMode.Texture, BlendState.AlphaBlend);
 			var pos1 = new Vector2(250f, 370f);
 			var pos2 = new Vector2(340f, 370f);

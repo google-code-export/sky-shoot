@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Collections.ObjectModel;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -11,7 +11,7 @@ namespace SkyShoot.Game.Controls
 {
 	public abstract class Controller
 	{
-		public delegate void ButtonPressed(object sender, EventArgs e);
+		//public delegate void EventHandler(object sender, EventArgs e);
 
 		protected GameScreen ActiveScreen
 		{
@@ -20,14 +20,30 @@ namespace SkyShoot.Game.Controls
 
 		protected int Length
 		{
-			get { return ActiveScreen.Desktop.Children.Count; }
+			get { return Controls.Count; }
+		}
+
+		private Collection<Control> Controls
+		{
+			get
+			{
+				var controls = new Collection<Control>();
+				foreach (Control control in ActiveScreen.Desktop.Children)
+				{
+					if (control is IFocusable)
+					{
+						controls.Add(control);
+					}
+				}
+				return controls;
+			}
 		}
 
 		protected int Index = 0;
 
 		protected readonly InputManager InputManager;
 
-		protected IDictionary<Control, List<ButtonPressed>> Listeners = new Dictionary<Control, List<ButtonPressed>>();   
+		protected IDictionary<Control, List<EventHandler>> Listeners = new Dictionary<Control, List<EventHandler>>();   
 
 		protected Controller(InputManager inputManager)
 		{
@@ -42,22 +58,22 @@ namespace SkyShoot.Game.Controls
 
 		public abstract ButtonState ShootButton { get; }
 
-		public virtual void RegisterListener(Control control, ButtonPressed buttonPressed)
+		public virtual void RegisterListener(Control control, EventHandler eventHandler)
 		{
-			List<ButtonPressed> currentListeners;
+			List<EventHandler> currentListeners;
 
 			if (!Listeners.TryGetValue(control, out currentListeners))
 			{
-				currentListeners = new List<ButtonPressed>();
+				currentListeners = new List<EventHandler>();
 				Listeners.Add(control, currentListeners);
 			}
 
-			currentListeners.Add(buttonPressed);
+			currentListeners.Add(eventHandler);
 		}
 
 		protected void FocusChanged()
 		{
-			ActiveScreen.FocusedControl = ActiveScreen.Desktop.Children[Index];
+			ActiveScreen.FocusedControl = Controls[Index];
 		}
 
 		protected void NotifyListeners(Control control)
@@ -73,7 +89,7 @@ namespace SkyShoot.Game.Controls
 
 		protected void NotifyListeners(int index)
 		{
-			NotifyListeners(ActiveScreen.Desktop.Children[index]);
+			NotifyListeners(Controls[index]);
 		}
 	}
 }
