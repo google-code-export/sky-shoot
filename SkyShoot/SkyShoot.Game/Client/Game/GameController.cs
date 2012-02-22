@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 
 using System.Diagnostics;
 using System.ServiceModel;
@@ -19,8 +20,30 @@ using SkyShoot.Game.Client.View;
 
 using AMob = SkyShoot.Contracts.Mobs.AMob;
 
+using System.Security.Cryptography;
+
 namespace SkyShoot.Game.Client.Game
 {
+
+	public class HashHelper
+	{
+		public static string GetMd5Hash(string input) // выдаёт последовательность из 32 шестнадцатеричных цифр (md5 хеш от аргумента)
+		{
+			MD5 md5Hasher = MD5.Create();
+
+			byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(input));
+
+			StringBuilder sBuilder = new StringBuilder();
+
+			for (int i = 0; i < data.Length; i++)
+			{
+				sBuilder.Append(data[i].ToString("x2"));
+			}
+
+			return sBuilder.ToString();
+		}
+	}
+
 	public sealed class GameController : ISkyShootGameCallback, ISkyShootGameService
 	{
 		public static Guid MyId { get; private set; }
@@ -248,7 +271,7 @@ namespace SkyShoot.Game.Client.Game
 		{
 			try
 			{
-				return _adminService.Register(username, password);
+				return _adminService.Register(username, HashHelper.GetMd5Hash(password));
 			}
 			catch (Exception e)
 			{
@@ -262,7 +285,7 @@ namespace SkyShoot.Game.Client.Game
 			Guid? login = null;
 			try
 			{
-				login = _adminService.Login(username, password);
+				login = _adminService.Login(username, HashHelper.GetMd5Hash(password));
 			}
 			catch (Exception e)
 			{
