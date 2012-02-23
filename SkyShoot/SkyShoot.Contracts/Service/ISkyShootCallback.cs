@@ -11,10 +11,10 @@ using Microsoft.Xna.Framework;
 
 namespace SkyShoot.Contracts.Service
 {
-	public interface ISkyShootGameCallback
+	public interface ISkyShootCallback
 	{
-		//[OperationContract(IsOneWay = true)]
-		//void GameStart(AMob[] mobs,GameLevel arena);
+		[OperationContract(IsOneWay = true)]
+		void GameStart(AMob[] mobs,GameLevel arena);
 
 		[OperationContract(IsOneWay = true)]
 		void MobShot(AMob mob, AProjectile[] projectiles);
@@ -40,17 +40,17 @@ namespace SkyShoot.Contracts.Service
 		[OperationContract(IsOneWay = true)]
 		void BonusDisappeared(AObtainableDamageModifier bonus);
 
-		//[OperationContract(IsOneWay = true)]
-		//void GameOver();
+		[OperationContract(IsOneWay = true)]
+		void GameOver();
 
-		//[OperationContract(IsOneWay = true)]
-		//void PlayerLeft(AMob mob);
+		[OperationContract(IsOneWay = true)]
+		void PlayerLeft(AMob mob);
 
 		[OperationContract(IsOneWay = true)]
 		void SynchroFrame(AMob[] mobs);
 
-		//[OperationContract(IsOneWay = true)]
-		//void PlayerListChanged(String[] names);
+		[OperationContract(IsOneWay = true)]
+		void PlayerListChanged(String[] names);
 
 	}
 }

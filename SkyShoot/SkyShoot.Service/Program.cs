@@ -18,15 +18,15 @@ namespace SkyShoot.ServProgram
 			var host = new ServiceHost(typeof(MainSkyShootService),
 				new Uri("net.tcp://localhost:777"));
 
-			host.AddServiceEndpoint(typeof(ISkyShootAdministratorService),
-															new NetTcpBinding(SecurityMode.None), "SkyShootAdministratorService");
+			host.AddServiceEndpoint(typeof(ISkyShootService),
+															new NetTcpBinding(SecurityMode.None), "SkyShootService");
 
-			var firstMetadataBehavior =
+			var metadataBehavior =
 					host.Description.Behaviors.Find<ServiceMetadataBehavior>(); 
-			if (firstMetadataBehavior == null)
+			if (metadataBehavior == null)
 			{
-				firstMetadataBehavior = new ServiceMetadataBehavior {HttpGetEnabled = false};
-				host.Description.Behaviors.Add(firstMetadataBehavior);
+				metadataBehavior = new ServiceMetadataBehavior {HttpGetEnabled = false};
+				host.Description.Behaviors.Add(metadataBehavior);
 			}
 
 			host.AddServiceEndpoint(typeof(IMetadataExchange),
@@ -37,29 +37,6 @@ namespace SkyShoot.ServProgram
 			Console.WriteLine("Started!");
 			Console.ReadKey();
 			host.Close();
-
-			var game = new ServiceHost(typeof(MainSkyShootService),
-				new Uri("net.tcp://localhost:777"));
-
-			host.AddServiceEndpoint(typeof(ISkyShootGameService),
-															new NetTcpBinding(SecurityMode.None), "SkyShootGameService");
-
-			var secondMetadataBehavior =
-					host.Description.Behaviors.Find<ServiceMetadataBehavior>();
-			if (secondMetadataBehavior == null)
-			{
-				secondMetadataBehavior = new ServiceMetadataBehavior { HttpGetEnabled = false };
-				host.Description.Behaviors.Add(firstMetadataBehavior);
-			}
-
-			host.AddServiceEndpoint(typeof(IMetadataExchange),
-					MetadataExchangeBindings.CreateMexTcpBinding(),
-					"mex");
-
-			game.Open();
-			Console.WriteLine("Started!");
-			Console.ReadKey();
-			game.Close();
 		}
 	}
 }

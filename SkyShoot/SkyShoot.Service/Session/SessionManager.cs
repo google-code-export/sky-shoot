@@ -33,7 +33,6 @@ namespace SkyShoot.Service.Session
 		public bool JoinGame(GameDescription game, MainSkyShootService player)
 		{
 			GameSession session = _gameSessions.Find(curGame => curGame.LocalGameDescription.GameId == game.GameId);
-			//session.UpdatePlayersList();
 			return session.AddPlayer(player);
 
 		}
@@ -65,7 +64,6 @@ namespace SkyShoot.Service.Session
 				var game = _gameSessions.Find(gameSession => gameSession.LocalGameDescription.Players.Contains(player.Name));
 				var leavingPlayer = player;
 				game.PlayerLeave(leavingPlayer);
-				//game.UpdatePlayersList();
 				if (game.Players.Count == 0)
 				{
 					game.Stop();

@@ -53,12 +53,11 @@ namespace SkyShoot.Service
 
 	[ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant,
 			InstanceContextMode = InstanceContextMode.PerSession)]
-	public class MainSkyShootService : AMob, ISkyShootGameService, ISkyShootGameCallback, ISkyShootAdministratorCallback, ISkyShootAdministratorService
+	public class MainSkyShootService : AMob, ISkyShootService, ISkyShootCallback
 	{
 		public static int globalID = 0;
 		public int localID;
-		private ISkyShootGameCallback _gameCallback;
-		private ISkyShootAdministratorCallback _adminCallback;
+		private ISkyShootCallback _callback;
 		public string Name;
 
 		//private Account.AccountManager _accountManager = new Account.AccountManager();
@@ -92,7 +91,7 @@ namespace SkyShoot.Service
 			if (result)
 			{
 				Name = username;
-				_gameCallback = OperationContext.Current.GetCallbackChannel<ISkyShootGameCallback>();
+				_callback = OperationContext.Current.GetCallbackChannel<ISkyShootCallback>();
 				IsPlayer = true;
 
 				ClientsList.Add(this);
@@ -195,7 +194,7 @@ namespace SkyShoot.Service
 			
 			try
 			{
-				_adminCallback.GameStart(mobsCopy, arena);
+				_callback.GameStart(mobsCopy, arena);
 			}
 			catch (Exception) { this.Disconnect(); }
 			Trace.WriteLine("callback: GameStarted");
@@ -208,7 +207,7 @@ namespace SkyShoot.Service
 
 			try
 			{
-				_gameCallback.SpawnMob(mobCopy);
+				_callback.SpawnMob(mobCopy);
 			}
 			catch (Exception ) { this.Disconnect(); }
 		}
@@ -220,7 +219,7 @@ namespace SkyShoot.Service
 
 			try
 			{
-				_gameCallback.Hit(mobCopy, projCopy);
+				_callback.Hit(mobCopy, projCopy);
 			}
 			catch (Exception ) { this.Disconnect(); }
 		}
@@ -231,7 +230,7 @@ namespace SkyShoot.Service
 
 			try
 			{
-				_gameCallback.MobDead(mobCopy);
+				_callback.MobDead(mobCopy);
 			}
 			catch (Exception ) { this.Disconnect(); }
 		}
@@ -245,7 +244,7 @@ namespace SkyShoot.Service
 
 			try
 			{
-				_gameCallback.MobMoved(mobCopy, direction);
+				_callback.MobMoved(mobCopy, direction);
 			}
 			catch (Exception ) { this.Disconnect(); }
 		}
@@ -257,7 +256,7 @@ namespace SkyShoot.Service
 
 			try
 			{
-				_gameCallback.MobShot(mobCopy, projsCopy);
+				_callback.MobShot(mobCopy, projsCopy);
 			}
 			catch (Exception)  { this.Disconnect(); }
 		}
@@ -266,7 +265,7 @@ namespace SkyShoot.Service
 		{
 			try
 			{
-				_gameCallback.BonusDropped(bonus);
+				_callback.BonusDropped(bonus);
 			}
 			catch (Exception ) { this.Disconnect(); }
 		}
@@ -275,7 +274,7 @@ namespace SkyShoot.Service
 		{
 			try
 			{
-				_gameCallback.BonusExpired(bonus);
+				_callback.BonusExpired(bonus);
 			}
 			catch (Exception ) { this.Disconnect(); }
 		}
@@ -284,7 +283,7 @@ namespace SkyShoot.Service
 		{
 			try
 			{
-				_gameCallback.BonusDisappeared(bonus);
+				_callback.BonusDisappeared(bonus);
 			}
 			catch (Exception ) { this.Disconnect(); }
 		}
@@ -293,7 +292,7 @@ namespace SkyShoot.Service
 		{
 			try
 			{
-				_adminCallback.GameOver();
+				_callback.GameOver();
 				Trace.WriteLine(localID + ": GameOver");
 			}
 			catch (Exception ) { this.Disconnect(); }
@@ -305,7 +304,7 @@ namespace SkyShoot.Service
 
 			try
 			{
-				_adminCallback.PlayerLeft(mobCopy);
+				_callback.PlayerLeft(mobCopy);
 			}
 			catch (Exception ) { this.Disconnect(); }
 		}
@@ -316,7 +315,7 @@ namespace SkyShoot.Service
 
 			try
 			{
-				_gameCallback.SynchroFrame(mobsCopy);
+				_callback.SynchroFrame(mobsCopy);
 			}
 			catch (Exception ) { this.Disconnect(); }
 		}
@@ -326,7 +325,7 @@ namespace SkyShoot.Service
 		{
 			try
 			{
-				_adminCallback.PlayerListChanged(names);
+				_callback.PlayerListChanged(names);
 			}
 			catch(Exception){ this.Disconnect(); }
 
