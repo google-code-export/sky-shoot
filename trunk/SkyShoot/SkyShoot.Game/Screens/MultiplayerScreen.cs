@@ -23,22 +23,20 @@ namespace SkyShoot.Game.Screens
 {
 	internal class MultiplayerScreen : GameScreen
 	{
-		private GuiManager _gui;
+		private  LabelControl _mapLabel;
 
-		private readonly LabelControl _mapLabel;
+		private ButtonControl _backButton;
+		private ButtonControl _createGameButton;
+		private ButtonControl _joinGameButton;
+		private ButtonControl _refreshButton;
 
-		private readonly ButtonControl _backButton;
-		private readonly ButtonControl _createGameButton;
-		private readonly ButtonControl _joinGameButton;
-		private readonly ButtonControl _refreshButton;
-
-		private readonly ListControl _gameList;
+		private ListControl _gameList;
 
 		private GameDescription[] _tempGameList;
 
 		private static Texture2D _texture;
 
-		private ContentManager _content;
+		private readonly ContentManager _content;
 
 		private SpriteBatch _spriteBatch;
 
@@ -57,6 +55,27 @@ namespace SkyShoot.Game.Screens
 			Height = ScreenManager.Instance.Height;
 			Width = ScreenManager.Instance.Width;
 
+			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
+
+			_texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");
+
+			InitializeControls();
+
+			Desktop.Children.Add(_createGameButton);
+			Desktop.Children.Add(_backButton);
+			Desktop.Children.Add(_joinGameButton);
+			Desktop.Children.Add(_mapLabel);
+			Desktop.Children.Add(_gameList);
+			Desktop.Children.Add(_refreshButton);
+
+			ScreenManager.Instance.Controller.AddListener(_backButton, BackButtonPressed);
+			ScreenManager.Instance.Controller.AddListener(_joinGameButton, JoinGameButtonPressed);
+			ScreenManager.Instance.Controller.AddListener(_createGameButton, CreateGameButtonPressed);
+			ScreenManager.Instance.Controller.AddListener(_refreshButton, RefreshButtonPressed);
+		}
+
+		private void InitializeControls()
+		{
 			// CreateGame Button
 			_createGameButton = new ButtonControl
 			{
@@ -96,30 +115,22 @@ namespace SkyShoot.Game.Screens
 				Bounds = new UniRectangle(300f, -10f, 225f, 300f)
 			};
 
+			_gameList.Slider.Bounds.Location.X.Offset -= 1.0f;
+			_gameList.Slider.Bounds.Location.Y.Offset += 1.0f;
+			_gameList.Slider.Bounds.Size.Y.Offset -= 2.0f;
+
 			// Refresh Button
 			_refreshButton = new ButtonControl
 			{
 				Text = "Refresh",
 				Bounds =
 					new UniRectangle(new UniScalar(0.5f, -20f), new UniScalar(0.4f, 140f), 120, 32)
-			};
+			};			
 		}
 
 		public override void LoadContent()
 		{
 			base.LoadContent();
-
-			_gui = ScreenManager.Instance.Gui;
-			_gui.Screen = this;
-
-			if (_content == null)
-				_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
-
-			_texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");
-			
-			_gameList.Slider.Bounds.Location.X.Offset -= 1.0f;
-			_gameList.Slider.Bounds.Location.Y.Offset += 1.0f;
-			_gameList.Slider.Bounds.Size.Y.Offset -= 2.0f;
 
 			// todo
 			// запрос списка игр с сервера и его вывод
@@ -136,38 +147,16 @@ namespace SkyShoot.Game.Screens
 			_gameList.SelectionMode = ListSelectionMode.Single;
 			_gameList.SelectedItems.Add(4);
 			_gameList.SelectedItems[0] = 0;
-
-			Desktop.Children.Add(_createGameButton);
-			Desktop.Children.Add(_backButton);
-			Desktop.Children.Add(_joinGameButton);
-			Desktop.Children.Add(_mapLabel);
-			Desktop.Children.Add(_gameList);
-			Desktop.Children.Add(_refreshButton);
-
-			_backButton.Pressed += BackButtonPressed;
-			_joinGameButton.Pressed += JoinGameButtonPressed;
-			_createGameButton.Pressed += CreateGameButtonPressed;
-			_refreshButton.Pressed += RefreshButtonPressed;
 		}
 
 		public override void UnloadContent()
 		{
-			Desktop.Children.Remove(_createGameButton);
-			Desktop.Children.Remove(_backButton);
-			Desktop.Children.Remove(_joinGameButton);
-			Desktop.Children.Remove(_mapLabel);
-			Desktop.Children.Remove(_gameList);
-			Desktop.Children.Remove(_refreshButton);
-
-			_backButton.Pressed -= BackButtonPressed;
-			_joinGameButton.Pressed -= JoinGameButtonPressed;
-			_createGameButton.Pressed -= CreateGameButtonPressed;
-			_refreshButton.Pressed -= RefreshButtonPressed;
+			_content.Unload();
 		}
 
 		private void BackButtonPressed(object sender, EventArgs args)
 		{
-			ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenEnum.MainMenuScreen;
+			ScreenManager.Instance.SetActiveScreen(typeof(MainMenuScreen));
 		}
 
 		private void JoinGameButtonPressed(object sender, EventArgs args)
@@ -190,15 +179,14 @@ namespace SkyShoot.Game.Screens
 					WaitScreen.MaxPlayers = _tempGameList[_gameList.SelectedItems[0]].MaximumPlayersAllowed + "";
 					WaitScreen.GameId = _tempGameList[_gameList.SelectedItems[0]].GameId;
 
-					ScreenManager.Instance.ActiveScreen =
-						ScreenManager.ScreenEnum.WaitScreen;
+					ScreenManager.Instance.SetActiveScreen(typeof(WaitScreen));
 				}
 			}
 		}
 
 		private void CreateGameButtonPressed(object sender, EventArgs args)
 		{
-			ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenEnum.CreateGameScreen;
+			ScreenManager.Instance.SetActiveScreen(typeof(CreateGameScreen));
 		}
 
 		private void RefreshButtonPressed(object sender, EventArgs args)
@@ -224,7 +212,7 @@ namespace SkyShoot.Game.Screens
 			_spriteBatch.End();
 			
 			base.Draw(gameTime);
-			_gui.Draw(gameTime);
+			// _gui.Draw(gameTime);
 		}
 	}
 }

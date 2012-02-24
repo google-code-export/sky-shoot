@@ -16,17 +16,15 @@ namespace SkyShoot.Game.Screens
 {
 	internal class MainMenuScreen : GameScreen
 	{
-		private GuiManager _gui;
-
 		private static Texture2D _texture;
 
 		private ContentManager _content;
 
 		private SpriteBatch _spriteBatch;
 
-		private readonly ButtonControl _playGameButton;
-		private readonly ButtonControl _optionsButton;
-		private readonly ButtonControl _logoffButton;
+		private ButtonControl _playGameButton;
+		private ButtonControl _optionsButton;
+		private ButtonControl _logoffButton;
 
 		public override bool IsMenuScreen
 		{
@@ -43,6 +41,21 @@ namespace SkyShoot.Game.Screens
 			Height = ScreenManager.Instance.Height;
 			Width = ScreenManager.Instance.Width;
 
+			InitializeControls();
+
+			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
+
+			Desktop.Children.Add(_playGameButton);
+			Desktop.Children.Add(_optionsButton);
+			Desktop.Children.Add(_logoffButton);
+
+			ScreenManager.Instance.Controller.AddListener(_playGameButton, PlayGameButtonPressed);
+			ScreenManager.Instance.Controller.AddListener(_optionsButton, OptionsButtonPressed);
+			ScreenManager.Instance.Controller.AddListener(_logoffButton, LogoffMenuButtonPressed);
+		}
+
+		private void InitializeControls()
+		{
 			_playGameButton = new ButtonControl
 			{
 				Text = "Multiplayer",
@@ -65,58 +78,34 @@ namespace SkyShoot.Game.Screens
 				Bounds =
 					new UniRectangle(new UniScalar(0.30f, 0), new UniScalar(0.5f, 0),
 									 new UniScalar(0.4f, 0), new UniScalar(0.1f, 0)),
-			};
+			};			
 		}
 
 		public override void LoadContent()
 		{
 			base.LoadContent();
 
-			_gui = ScreenManager.Instance.Gui;
-			_gui.Screen = this;
-
-			if (_content == null)
-				_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
-
 			_texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");
-
-			Desktop.Children.Add(_playGameButton);		
-			Desktop.Children.Add(_optionsButton);
-			Desktop.Children.Add(_logoffButton);
-
-			ScreenManager.Instance.Controller.RegisterListener(_playGameButton, PlayGameButtonPressed);
-			ScreenManager.Instance.Controller.RegisterListener(_optionsButton, OptionsButtonPressed);
-			ScreenManager.Instance.Controller.RegisterListener(_logoffButton, LogoffMenuButtonPressed);
-
-			//_playGameButton.Pressed += PlayGameButtonPressed;
-			//_optionsButton.Pressed += OptionsButtonPressed;
-			//_logoffButton.Pressed += LogoffMenuButtonPressed;
 		}
 
 		public override void UnloadContent()
 		{
-			Desktop.Children.Remove(_playGameButton);
-			Desktop.Children.Remove(_optionsButton);
-			Desktop.Children.Remove(_logoffButton);
-
-			_playGameButton.Pressed -= PlayGameButtonPressed;
-			_optionsButton.Pressed -= OptionsButtonPressed;
-			_logoffButton.Pressed -= LogoffMenuButtonPressed;
+			_content.Unload();
 		}
 
 		private void PlayGameButtonPressed(object sender, EventArgs e)
 		{
-			ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenEnum.MultiplayerScreen;
+			ScreenManager.Instance.SetActiveScreen(typeof(MultiplayerScreen));
 		}
 
 		private void OptionsButtonPressed(object sender, EventArgs e)
 		{
-			ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenEnum.OptionsScreen;
+			ScreenManager.Instance.SetActiveScreen(typeof(OptionsMenuScreen));
 		}
 
 		private void LogoffMenuButtonPressed(object sender, EventArgs e)
 		{
-			ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenEnum.LoginScreen;
+			ScreenManager.Instance.SetActiveScreen(typeof(LoginScreen));
 		}
 
 		public override void Draw(GameTime gameTime)
@@ -127,7 +116,7 @@ namespace SkyShoot.Game.Screens
 			_spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
 			_spriteBatch.End();
 
-			_gui.Draw(gameTime);
+			// _gui.Draw(gameTime);
 			base.Draw(gameTime);
 		}
 	}

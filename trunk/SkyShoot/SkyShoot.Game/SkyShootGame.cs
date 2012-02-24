@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Audio;
 
 using SkyShoot.Game.Client.View;
 using SkyShoot.Game.Controls;
+using SkyShoot.Game.Screens;
 
 namespace SkyShoot.Game
 {
@@ -57,7 +58,7 @@ namespace SkyShoot.Game
 
 			base.Initialize();
 
-			ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenEnum.LoginScreen;
+			ScreenManager.Instance.SetActiveScreen(typeof(LoginScreen));// = ScreenManager.ScreenEnum.LoginScreen;
 		}
 
 		protected override void LoadContent()

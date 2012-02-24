@@ -79,9 +79,9 @@ namespace SkyShoot.Game.Controls
 			get { return _currentMouseState.LeftButton; }
 		}
 
-		public override void RegisterListener(Control control, EventHandler buttonPressed)
+		public override void AddListener(Control control, EventHandler buttonPressed)
 		{
-			base.RegisterListener(control, buttonPressed);
+			base.AddListener(control, buttonPressed);
 			(control as ButtonControl).Pressed += buttonPressed;
 		}
 
