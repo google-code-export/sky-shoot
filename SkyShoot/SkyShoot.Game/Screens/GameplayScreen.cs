@@ -2,6 +2,7 @@
 
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 
 using SkyShoot.Game.Client.Game;
 using SkyShoot.Game.Client.View;
@@ -13,6 +14,9 @@ namespace SkyShoot.Game.Screens
 	internal class GameplayScreen : GameScreen
 	{
 		private ContentManager _content;
+		AudioEngine engine;
+		SoundBank soundBank;
+		WaveBank waveBank;
 
 		public override bool IsMenuScreen
 		{
@@ -23,6 +27,13 @@ namespace SkyShoot.Game.Screens
 		{
 			if (_content == null)
 				_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
+
+			engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
+			soundBank = new SoundBank(engine, "Content\\Sounds\\Sound Bank.xsb");
+			waveBank = new WaveBank(engine, "Content\\Sounds\\Wave Bank.xwb");
+
+			//Cue cue = soundBank.GetCue("la-la-la");
+			//cue.Play();
 
 			// load landscapes
 			Textures.SandLandscape = _content.Load<Texture2D>("Textures/Landscapes/SandLandscape");

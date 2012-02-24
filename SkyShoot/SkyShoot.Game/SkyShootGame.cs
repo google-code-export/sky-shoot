@@ -5,6 +5,7 @@ using System.Diagnostics;
 using Microsoft.Xna.Framework;
 
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 
 using SkyShoot.Game.Client.View;
 using SkyShoot.Game.Controls;
@@ -16,11 +17,14 @@ namespace SkyShoot.Game
 		private ScreenManager _screenManager;
 		private SpriteBatch _spriteBatch;
 		private readonly GraphicsDeviceManager _graphics;
+		AudioEngine engine;
+		SoundBank soundBank;
+		WaveBank waveBank;
 
 		public SkyShootGame()
 		{
 			_graphics = new GraphicsDeviceManager(this);
-			Content.RootDirectory = "Content";
+			Content.RootDirectory = "Content";			
 			bool fscreen = Settings.Default.FullScreenSelected;
 			switch (fscreen)
 			{
@@ -44,6 +48,12 @@ namespace SkyShoot.Game
 			ScreenManager.Init(this);
 			_screenManager = ScreenManager.Instance;
 			Components.Add(_screenManager);
+			engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
+			soundBank = new SoundBank(engine, "Content\\Sounds\\Sound Bank.xsb");
+			waveBank = new WaveBank(engine, "Content\\Sounds\\Wave Bank.xwb");
+
+			Cue cue = soundBank.GetCue("STARWARS");
+			cue.Play();
 
 			base.Initialize();
 

@@ -3,6 +3,7 @@ using System;
 using Microsoft.Xna.Framework;
 
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 
 using SkyShoot.Contracts.Weapon.Projectiles;
 
@@ -19,9 +20,19 @@ namespace SkyShoot.Game.Client.Weapon
 
 		public Boolean IsActive { get; private set; }
 
+		AudioEngine engine;
+		SoundBank soundBank;
+		WaveBank waveBank;
+
 		public Projectile(AProjectile projectile) :
 			base(projectile)
 		{
+			engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
+			soundBank = new SoundBank(engine, "Content\\Sounds\\Sound Bank.xsb");
+			waveBank = new WaveBank(engine, "Content\\Sounds\\Wave Bank.xwb");
+
+			Cue cue = soundBank.GetCue("LASER");
+			cue.Play();
 			// todo
 			switch (Type)
 			{
@@ -39,7 +50,7 @@ namespace SkyShoot.Game.Client.Weapon
 		}
 
 		public void Update(GameTime gameTime)
-		{
+		{		
 			int milliseconds = gameTime.ElapsedGameTime.Milliseconds;
 
 			Vector2 movement = Direction * Speed * milliseconds;
