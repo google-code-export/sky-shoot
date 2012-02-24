@@ -82,5 +82,17 @@ namespace SkyShoot.Game {
                 this["FullScreenSelected"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IsGamepad {
+            get {
+                return ((bool)(this["IsGamepad"]));
+            }
+            set {
+                this["IsGamepad"] = value;
+            }
+        }
     }
 }
