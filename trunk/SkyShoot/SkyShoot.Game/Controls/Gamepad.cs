@@ -29,6 +29,7 @@ namespace SkyShoot.Game.Controls
 			{
 				Index++;
 				Index %= Length;
+				Console.WriteLine("DOWN" + Index);
 				FocusChanged();
 			}
 			if (IsNewButtonPressed(Buttons.DPadUp))
@@ -36,6 +37,7 @@ namespace SkyShoot.Game.Controls
 				Index--;
 				if (Index == -1)
 					Index = Length - 1;
+				Console.WriteLine("UP" + Index);
 				FocusChanged();
 			}
 
@@ -75,7 +77,7 @@ namespace SkyShoot.Game.Controls
 
 		public bool IsNewButtonPressed(Buttons button)
 		{
-			return (_currentGamePadState.IsButtonDown(button) &&
+			return (_currentGamePadState.IsButtonUp(button) &&
 					_lastGamePadState.IsButtonDown(button));
 		}
 	}
