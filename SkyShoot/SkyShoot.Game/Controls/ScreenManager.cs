@@ -27,13 +27,6 @@ namespace SkyShoot.Game.Controls
 			get { return _controller; }
 		}
 
-		/*private GuiManager Gui
-		{
-			get { return _gui; }
-		}*/
-
-		// private readonly List<GameScreen> _screens = new List<GameScreen>();
-
 		private SpriteBatch _spriteBatch;
 		private SpriteFont _font;
 
@@ -118,7 +111,6 @@ namespace SkyShoot.Game.Controls
 				_controller = new Gamepad(_inputManager);
 			else
 				_controller = new KeyboardAndMouse(_inputManager);
-
 		}
 
 		public static ScreenManager Instance
@@ -166,11 +158,6 @@ namespace SkyShoot.Game.Controls
 			_activeScreen.Draw(gameTime);
 			_gui.Draw(gameTime);
 		}
-
-		/* public GameScreen[] GetScreens()
-		{
-			return _screens.ToArray();
-		}*/
 
 		// todo remove
 		public Vector2 GetMousePosition()

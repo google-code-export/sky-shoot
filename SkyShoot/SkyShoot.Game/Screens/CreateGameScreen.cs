@@ -48,32 +48,13 @@ namespace SkyShoot.Game.Screens
 
 		public CreateGameScreen()
 		{
-			Desktop.Bounds = new UniRectangle(
-				new UniScalar(0.1f, 0.0f), new UniScalar(0.1f, 0.0f),
-				new UniScalar(0.8f, 0.0f), new UniScalar(0.8f, 0.0f)
-				);
-
-			Height = ScreenManager.Instance.Height;
-			Width = ScreenManager.Instance.Width;
-
+			CreateControls();
 			InitializeControls();
 
 			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
-
-			Desktop.Children.Add(_maxPlayersList);
-			Desktop.Children.Add(_maxPlayersLabel);
-			Desktop.Children.Add(_tileLabel);
-			Desktop.Children.Add(_tileList);
-			Desktop.Children.Add(_gameModeLabel);
-			Desktop.Children.Add(_gameModList);
-			Desktop.Children.Add(_maxPlayers);
-			Desktop.Children.Add(_createButton);
-			Desktop.Children.Add(_gameMode);
-			Desktop.Children.Add(_backButton);
-			Desktop.Children.Add(_tile);
 		}
 
-		private void InitializeControls()
+		private void CreateControls()
 		{
 			// выбора максимального кол-ва игроков
 			_maxPlayersLabel = new LabelControl
@@ -183,10 +164,26 @@ namespace SkyShoot.Game.Screens
 			              	};
 		}
 
+		private void InitializeControls()
+		{
+			Desktop.Children.Add(_maxPlayersList);
+			Desktop.Children.Add(_maxPlayersLabel);
+			Desktop.Children.Add(_tileLabel);
+			Desktop.Children.Add(_tileList);
+			Desktop.Children.Add(_gameModeLabel);
+			Desktop.Children.Add(_gameModList);
+			Desktop.Children.Add(_maxPlayers);
+			Desktop.Children.Add(_createButton);
+			Desktop.Children.Add(_gameMode);
+			Desktop.Children.Add(_backButton);
+			Desktop.Children.Add(_tile);
+
+			ScreenManager.Instance.Controller.AddListener(_createButton, CreateButtonPressed);
+			ScreenManager.Instance.Controller.AddListener(_backButton, BackButtonPressed);
+		}
+
 		public override void LoadContent()
 		{
-			base.LoadContent();
-
 			_texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");
 
 			// кол-во игроков
@@ -197,9 +194,6 @@ namespace SkyShoot.Game.Screens
 
 			// мод
 			_gameModList.SelectedItems[0] = 0;
-
-			ScreenManager.Instance.Controller.AddListener(_createButton, CreateButtonPressed);
-			ScreenManager.Instance.Controller.AddListener(_backButton, BackButtonPressed);
 		}
 
 		public override void UnloadContent()
@@ -209,8 +203,6 @@ namespace SkyShoot.Game.Screens
 
 		public override void Update(GameTime gameTime)
 		{
-			base.Update(gameTime);
-
 			if (_maxPlayersList == null) return;
 
 			_maxPlayers.Text = _maxPlayersList.Items[_maxPlayersList.SelectedItems[0]];
@@ -282,9 +274,6 @@ namespace SkyShoot.Game.Screens
 			_spriteBatch.Begin();
 			_spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
 			_spriteBatch.End();
-
-			base.Draw(gameTime);
-			// _gui.Draw(gameTime);
 		}
 	}
 }

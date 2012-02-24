@@ -29,10 +29,8 @@ namespace SkyShoot.Game.Screens
 
 		public static Int32 GameId { get; set; }
 
-		// private GuiManager _gui;
-
-		private readonly ListControl _playersList;
-		private readonly ButtonControl _leaveButton;
+		private ListControl _playersList;
+		private ButtonControl _leaveButton;
 
 		private List<string> _tmpPlayersList;
 
@@ -49,16 +47,14 @@ namespace SkyShoot.Game.Screens
 
 		public WaitScreen()
 		{
-			Desktop.Bounds = new UniRectangle(
-				new UniScalar(0.1f, 0.0f), new UniScalar(0.1f, 0.0f),
-				new UniScalar(0.8f, 0.0f), new UniScalar(0.8f, 0.0f)
-				);
-
-			Height = ScreenManager.Instance.Height;
-			Width = ScreenManager.Instance.Width;
+			CreateControls();
+			InititalizeControls();
 
 			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
+		}
 
+		private void CreateControls()
+		{
 			_playersList = new ListControl
 			               	{
 			               		Bounds = new UniRectangle(-60f, -4f, 200f, 300f)
@@ -70,6 +66,14 @@ namespace SkyShoot.Game.Screens
 			               		Bounds = new UniRectangle(new UniScalar(0.5f, -378f), new UniScalar(0.4f, 190f), 120, 32)
 			               	};
 
+			_playersList.Slider.Bounds.Location.X.Offset -= 1.0f;
+			_playersList.Slider.Bounds.Location.Y.Offset += 1.0f;
+			_playersList.Slider.Bounds.Size.Y.Offset -= 2.0f;
+			_playersList.SelectionMode = ListSelectionMode.Single;
+		}
+
+		private void InititalizeControls()
+		{
 			Desktop.Children.Add(_playersList);
 			Desktop.Children.Add(_leaveButton);
 
@@ -78,13 +82,8 @@ namespace SkyShoot.Game.Screens
 
 		public override void LoadContent()
 		{
-			base.LoadContent();
-
 			_texture = _content.Load<Texture2D>("Textures/screens/screen_02_fix");
 			_spriteFont = _content.Load<SpriteFont>("Times New Roman");
-
-			// _gui = ScreenManager.Instance.Gui;
-			// _gui.Screen = this;
 
 			// todo rename variable
 			// вывод списка игрков
@@ -108,27 +107,19 @@ namespace SkyShoot.Game.Screens
 			{
 				_playersList.Items.Add(player);
 			}
-			_playersList.Slider.Bounds.Location.X.Offset -= 1.0f;
-			_playersList.Slider.Bounds.Location.Y.Offset += 1.0f;
-			_playersList.Slider.Bounds.Size.Y.Offset -= 2.0f;
-			_playersList.SelectionMode = ListSelectionMode.Single;
+			// todo Разобраться
 			_playersList.SelectedItems.Add(4);
 		}
 
 		public override void UnloadContent()
 		{
-			// Desktop.Children.Remove(_leaveButton);
-			// Desktop.Children.Remove(_playersList);
-
 			_content.Unload();
-
-			// ScreenManager.Instance.Controller.RemoveListener(_leaveButton, LeaveButtonPressed);
 		}
 
 		private void LeaveButtonPressed(object sender, EventArgs args)
 		{
 			GameController.Instance.LeaveGame();
-			ScreenManager.Instance.SetActiveScreen(typeof(MultiplayerScreen));// = ScreenManager.ScreenEnum.MultiplayerScreen;
+			ScreenManager.Instance.SetActiveScreen(typeof (MultiplayerScreen));
 		}
 
 		public void ChangePlayerList(String[] names)
@@ -161,9 +152,6 @@ namespace SkyShoot.Game.Screens
 			_spriteBatch.DrawString(_spriteFont, MaxPlayers, new Vector2(400f, 320f), Color.Red, 0,
 			                        new Vector2(0f, 0f), 0.8f, SpriteEffects.None, 1f);
 			_spriteBatch.End();
-
-			base.Draw(gameTime);
-			//_gui.Draw(gameTime);
 		}
 	}
 }

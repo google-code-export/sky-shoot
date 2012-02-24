@@ -23,7 +23,7 @@ namespace SkyShoot.Game.Screens
 {
 	internal class MultiplayerScreen : GameScreen
 	{
-		private  LabelControl _mapLabel;
+		private LabelControl _mapLabel;
 
 		private ButtonControl _backButton;
 		private ButtonControl _createGameButton;
@@ -47,20 +47,70 @@ namespace SkyShoot.Game.Screens
 
 		public MultiplayerScreen()
 		{
-			Desktop.Bounds = new UniRectangle(
-				new UniScalar(0.1f, 0.0f), new UniScalar(0.1f, 0.0f),
-				new UniScalar(0.8f, 0.0f), new UniScalar(0.8f, 0.0f)
-			);
-
-			Height = ScreenManager.Instance.Height;
-			Width = ScreenManager.Instance.Width;
+			CreateControls();
+			InititalizeControls();
 
 			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
+		}
 
-			_texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");
+		private void CreateControls()
+		{
+			// CreateGame Button
+			_createGameButton = new ButtonControl
+			                    	{
+			                    		Text = "Create Game",
+			                    		Bounds =
+			                    			new UniRectangle(new UniScalar(0.5f, -350f), new UniScalar(0.4f, -160f), 120,
+			                    			                 32)
+			                    	};
 
-			InitializeControls();
+			// Back Button
+			_backButton = new ButtonControl
+			              	{
+			              		Text = "Back",
+			              		Bounds =
+			              			new UniRectangle(new UniScalar(0.5f, -350f), new UniScalar(0.4f, -80f), 120, 32)
+			              	};
 
+			// JoinGame Button
+			_joinGameButton = new ButtonControl
+			                  	{
+			                  		Text = "Join Game",
+			                  		Bounds =
+			                  			new UniRectangle(new UniScalar(0.5f, -350f), new UniScalar(0.4f, -120f), 120,
+			                  			                 32)
+			                  	};
+
+			// Label of maps
+			_mapLabel = new LabelControl
+			            	{
+			            		Bounds = new UniRectangle(300.0f, -30.0f, 200.0f, 24.0f),
+			            		Text = "Games"
+			            	};
+
+			// Games List
+			_gameList = new ListControl
+			            	{
+			            		Bounds = new UniRectangle(300f, -10f, 225f, 300f)
+			            	};
+
+			_gameList.Slider.Bounds.Location.X.Offset -= 1.0f;
+			_gameList.Slider.Bounds.Location.Y.Offset += 1.0f;
+			_gameList.Slider.Bounds.Size.Y.Offset -= 2.0f;
+
+			_gameList.SelectionMode = ListSelectionMode.Single;
+
+			// Refresh Button
+			_refreshButton = new ButtonControl
+			                 	{
+			                 		Text = "Refresh",
+			                 		Bounds =
+			                 			new UniRectangle(new UniScalar(0.5f, -20f), new UniScalar(0.4f, 140f), 120, 32)
+			                 	};
+		}
+
+		private void InititalizeControls()
+		{
 			Desktop.Children.Add(_createGameButton);
 			Desktop.Children.Add(_backButton);
 			Desktop.Children.Add(_joinGameButton);
@@ -74,63 +124,9 @@ namespace SkyShoot.Game.Screens
 			ScreenManager.Instance.Controller.AddListener(_refreshButton, RefreshButtonPressed);
 		}
 
-		private void InitializeControls()
-		{
-			// CreateGame Button
-			_createGameButton = new ButtonControl
-			{
-				Text = "Create Game",
-				Bounds =
-					new UniRectangle(new UniScalar(0.5f, -350f), new UniScalar(0.4f, -160f), 120,
-									 32)
-			};
-
-			// Back Button
-			_backButton = new ButtonControl
-			{
-				Text = "Back",
-				Bounds =
-					new UniRectangle(new UniScalar(0.5f, -350f), new UniScalar(0.4f, -80f), 120, 32)
-			};
-
-			// JoinGame Button
-			_joinGameButton = new ButtonControl
-			{
-				Text = "Join Game",
-				Bounds =
-					new UniRectangle(new UniScalar(0.5f, -350f), new UniScalar(0.4f, -120f), 120,
-									 32)
-			};
-
-			// Label of maps
-			_mapLabel = new LabelControl
-			{
-				Bounds = new UniRectangle(300.0f, -30.0f, 200.0f, 24.0f),
-				Text = "Games"
-			};
-
-			// Games List
-			_gameList = new ListControl
-			{
-				Bounds = new UniRectangle(300f, -10f, 225f, 300f)
-			};
-
-			_gameList.Slider.Bounds.Location.X.Offset -= 1.0f;
-			_gameList.Slider.Bounds.Location.Y.Offset += 1.0f;
-			_gameList.Slider.Bounds.Size.Y.Offset -= 2.0f;
-
-			// Refresh Button
-			_refreshButton = new ButtonControl
-			{
-				Text = "Refresh",
-				Bounds =
-					new UniRectangle(new UniScalar(0.5f, -20f), new UniScalar(0.4f, 140f), 120, 32)
-			};			
-		}
-
 		public override void LoadContent()
 		{
-			base.LoadContent();
+			_texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");
 
 			// todo
 			// запрос списка игр с сервера и его вывод
@@ -144,7 +140,6 @@ namespace SkyShoot.Game.Screens
 			{
 				_gameList.Items.Add(gameDescription.ToString());
 			}
-			_gameList.SelectionMode = ListSelectionMode.Single;
 			_gameList.SelectedItems.Add(4);
 			_gameList.SelectedItems[0] = 0;
 		}
@@ -156,7 +151,7 @@ namespace SkyShoot.Game.Screens
 
 		private void BackButtonPressed(object sender, EventArgs args)
 		{
-			ScreenManager.Instance.SetActiveScreen(typeof(MainMenuScreen));
+			ScreenManager.Instance.SetActiveScreen(typeof (MainMenuScreen));
 		}
 
 		private void JoinGameButtonPressed(object sender, EventArgs args)
@@ -179,14 +174,14 @@ namespace SkyShoot.Game.Screens
 					WaitScreen.MaxPlayers = _tempGameList[_gameList.SelectedItems[0]].MaximumPlayersAllowed + "";
 					WaitScreen.GameId = _tempGameList[_gameList.SelectedItems[0]].GameId;
 
-					ScreenManager.Instance.SetActiveScreen(typeof(WaitScreen));
+					ScreenManager.Instance.SetActiveScreen(typeof (WaitScreen));
 				}
 			}
 		}
 
 		private void CreateGameButtonPressed(object sender, EventArgs args)
 		{
-			ScreenManager.Instance.SetActiveScreen(typeof(CreateGameScreen));
+			ScreenManager.Instance.SetActiveScreen(typeof (CreateGameScreen));
 		}
 
 		private void RefreshButtonPressed(object sender, EventArgs args)
@@ -210,9 +205,6 @@ namespace SkyShoot.Game.Screens
 			_spriteBatch.Begin();
 			_spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
 			_spriteBatch.End();
-			
-			base.Draw(gameTime);
-			// _gui.Draw(gameTime);
 		}
 	}
 }
