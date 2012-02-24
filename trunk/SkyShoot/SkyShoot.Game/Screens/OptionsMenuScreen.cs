@@ -19,22 +19,21 @@ namespace SkyShoot.Game.Screens
 {
 	internal class OptionsMenuScreen : GameScreen
 	{
+		private  ListControl _keyboardList;
 
-		private readonly ListControl _keyboardList;
+		private  LabelControl _titleLabel;
+		private  LabelControl _cursorLabel;
+		private  LabelControl _keyboardLabel;
+		private  LabelControl _fullscreenLabel;
 
-		private readonly LabelControl _titleLabel;
-		private readonly LabelControl _cursorLabel;
-		private readonly LabelControl _keyboardLabel;
-		private readonly LabelControl _fullscreenLabel;
+		private  OptionControl _fullscreenButton;
 
-		private readonly OptionControl _fullscreenButton;
+		private  ChoiceControl _arrowButton;
+		private  ChoiceControl _plusButton;
+		private  ChoiceControl _crossButton;
+		private  ChoiceControl _targetButton;
 
-		private readonly ChoiceControl _arrowButton;
-		private readonly ChoiceControl _plusButton;
-		private readonly ChoiceControl _crossButton;
-		private readonly ChoiceControl _targetButton;
-
-		private readonly ButtonControl _backButton;
+		private  ButtonControl _backButton;
 
 		private readonly ContentManager _content;
 
@@ -51,64 +50,64 @@ namespace SkyShoot.Game.Screens
 
 		public OptionsMenuScreen()
 		{
-			Desktop.Bounds = new UniRectangle(
-				new UniScalar(0.1f, 0.0f), new UniScalar(0.1f, 0.0f),
-				new UniScalar(0.8f, 0.0f), new UniScalar(0.8f, 0.0f)
-				);
+			CreateControls();
+			InitializeControls();
 
-			Height = ScreenManager.Instance.Height;
-			Width = ScreenManager.Instance.Width;
+			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
+		}
 
+		private void CreateControls()
+		{
 			_titleLabel = new LabelControl("Options")
-			              	{
-			              		Bounds = new UniRectangle(new UniScalar(0.5f, -32), new UniScalar(0.1f, -70), 100, 30)
-			              	};
+			{
+				Bounds = new UniRectangle(new UniScalar(0.5f, -32), new UniScalar(0.1f, -70), 100, 30)
+			};
 
 			_fullscreenLabel = new LabelControl("FullScreen: ")
-			                   	{
-			                   		Bounds =
-			                   			new UniRectangle(new UniScalar(0.5f, -50), new UniScalar(0.3f, -70), 80, 30)
-			                   	};
+			{
+				Bounds =
+					new UniRectangle(new UniScalar(0.5f, -50), new UniScalar(0.3f, -70), 80, 30)
+			};
 
 			_fullscreenButton = new OptionControl
-			                    	{
-			                    		Bounds =
-			                    			new UniRectangle(new UniScalar(0.5f, 30), new UniScalar(0.3f, -70), 100, 30)
-			                    	};
+			{
+				Bounds =
+					new UniRectangle(new UniScalar(0.5f, 30), new UniScalar(0.3f, -70), 100, 30)
+			};
 
 			_keyboardLabel = new LabelControl("Keyboard:")
-			                 	{
-			                 		Bounds =
-			                 			new UniRectangle(new UniScalar(0.5f, -150), new UniScalar(0.5f, -70), 50, 30)
-			                 	};
+			{
+				Bounds =
+					new UniRectangle(new UniScalar(0.5f, -150), new UniScalar(0.5f, -70), 50, 30)
+			};
 
 			_backButton = new ButtonControl
-			              	{
-			              		Text = "Back",
-			              		Bounds = new UniRectangle(new UniScalar(0.5f, -50), new UniScalar(1.1f, -70), 100, 30)
-			              	};
+			{
+				Text = "Back",
+				Bounds = new UniRectangle(new UniScalar(0.5f, -50), new UniScalar(1.1f, -70), 100, 30)
+			};
 
 			_cursorLabel = new LabelControl("Cursor:")
-			               	{
-			               		Bounds =
-			               			new UniRectangle(new UniScalar(0.5f, -220), new UniScalar(0.8f, -70), 70, 30)
-			               	};
+			{
+				Bounds =
+					new UniRectangle(new UniScalar(0.5f, -220), new UniScalar(0.8f, -70), 70, 30)
+			};
 
 			_arrowButton = new ChoiceControl
-			               	{
-			               		Bounds =
-			               			new UniRectangle(new UniScalar(0.5f, -140), new UniScalar(0.9f, -70), 70, 30)
-			               	};
+			{
+				Bounds =
+					new UniRectangle(new UniScalar(0.5f, -140), new UniScalar(0.9f, -70), 70, 30)
+			};
 
 			_crossButton = new ChoiceControl
-			               	{
-			               		Bounds = new UniRectangle(new UniScalar(0.5f, 40), new UniScalar(0.9f, -70), 70, 30)
-			               	};
+			{
+				Bounds = new UniRectangle(new UniScalar(0.5f, 40), new UniScalar(0.9f, -70), 70, 30)
+			};
 
 			_keyboardList = new ListControl
-			                	{
-			                		Bounds = new UniRectangle(260f, 175f, 150f, 50f)
-			                	};
+			{
+				Bounds = new UniRectangle(260f, 175f, 150f, 50f)
+			};
 
 			_keyboardList.Items.Add("A, S, D, W");
 			_keyboardList.Items.Add("Arrows");
@@ -118,30 +117,19 @@ namespace SkyShoot.Game.Screens
 			_keyboardList.SelectionMode = ListSelectionMode.Single;
 
 			_plusButton = new ChoiceControl
-			              	{
-			              		Bounds = new UniRectangle(new UniScalar(0.5f, -50), new UniScalar(0.9f, -70), 70, 30)
-			              	};
+			{
+				Bounds = new UniRectangle(new UniScalar(0.5f, -50), new UniScalar(0.9f, -70), 70, 30)
+			};
 
 			_targetButton = new ChoiceControl
-			                	{
-			                		Bounds =
-			                			new UniRectangle(new UniScalar(0.5f, 130), new UniScalar(0.9f, -70), 70, 30)
-			                	};
+			{
+				Bounds =
+					new UniRectangle(new UniScalar(0.5f, 130), new UniScalar(0.9f, -70), 70, 30)
+			};			
+		}
 
-			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
-
-			_keyboardList.SelectionChanged += KeyboardChoice;
-
-			_fullscreenButton.Selected = Settings.Default.FullScreenSelected;
-
-			_fullscreenButton.Changed += FullScreenSelected;
-			_arrowButton.Changed += ArrowButtonPressed;
-			_plusButton.Changed += PlusButtonPressed;
-			_crossButton.Changed += CrossButtonPressed;
-			_targetButton.Changed += TargetButtonPressed;
-
-			ScreenManager.Instance.Controller.AddListener(_backButton, BackButtonPressed);
-
+		private void InitializeControls()
+		{
 			Desktop.Children.Add(_titleLabel);
 			Desktop.Children.Add(_fullscreenLabel);
 			Desktop.Children.Add(_fullscreenButton);
@@ -153,12 +141,24 @@ namespace SkyShoot.Game.Screens
 			Desktop.Children.Add(_crossButton);
 			Desktop.Children.Add(_targetButton);
 			Desktop.Children.Add(_backButton);
+
+
+			// todo изменить подписку
+			_keyboardList.SelectionChanged += KeyboardChoice;
+
+			_fullscreenButton.Selected = Settings.Default.FullScreenSelected;
+
+			_fullscreenButton.Changed += FullScreenSelected;
+			_arrowButton.Changed += ArrowButtonPressed;
+			_plusButton.Changed += PlusButtonPressed;
+			_crossButton.Changed += CrossButtonPressed;
+			_targetButton.Changed += TargetButtonPressed;
+
+			ScreenManager.Instance.Controller.AddListener(_backButton, BackButtonPressed);
 		}
 
 		public override void LoadContent()
 		{
-			base.LoadContent();
-
 			_texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");
 
 			Textures.Arrow = _content.Load<Texture2D>("Textures/Cursors/Arrow");
@@ -242,9 +242,6 @@ namespace SkyShoot.Game.Screens
 			_spriteBatch.Begin();
 			_spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
 			_spriteBatch.End();
-
-			base.Draw(gameTime);
-			// _gui.Draw(gameTime);
 
 			_spriteBatch.Begin(SpriteSortMode.Texture, BlendState.AlphaBlend);
 			var pos1 = new Vector2(250f, 370f);

@@ -42,32 +42,13 @@ namespace SkyShoot.Game.Screens
 
 		public LoginScreen()
 		{
-			Desktop.Bounds = new UniRectangle(
-				new UniScalar(0.1f, 0.0f), new UniScalar(0.1f, 0.0f),
-				new UniScalar(0.8f, 0.0f), new UniScalar(0.8f, 0.0f)
-				);
-
-			Height = ScreenManager.Instance.Height;
-			Width = ScreenManager.Instance.Width;
-
+			CreateControls();
 			InitializeControls();
 
 			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
-
-			Desktop.Children.Add(_loginBox);
-			Desktop.Children.Add(_passwordBox);
-			Desktop.Children.Add(_loginLabel);
-			Desktop.Children.Add(_passwordLabel);
-			Desktop.Children.Add(_exitButton);
-			Desktop.Children.Add(_newAccountButton);
-			Desktop.Children.Add(_loginButton);
-
-			ScreenManager.Instance.Controller.AddListener(_loginButton, LoginButtonPressed);
-			ScreenManager.Instance.Controller.AddListener(_exitButton, ExitButtonPressed);
-			ScreenManager.Instance.Controller.AddListener(_newAccountButton, NewAccountButtonPressed);
 		}
 
-		private void InitializeControls()
+		private void CreateControls()
 		{
 			// Login Input
 			_loginBox = new Controls.InputControl
@@ -117,9 +98,23 @@ namespace SkyShoot.Game.Screens
 			                    	};
 		}
 
+		private void InitializeControls()
+		{
+			Desktop.Children.Add(_loginBox);
+			Desktop.Children.Add(_passwordBox);
+			Desktop.Children.Add(_loginLabel);
+			Desktop.Children.Add(_passwordLabel);
+			Desktop.Children.Add(_exitButton);
+			Desktop.Children.Add(_newAccountButton);
+			Desktop.Children.Add(_loginButton);
+
+			ScreenManager.Instance.Controller.AddListener(_loginButton, LoginButtonPressed);
+			ScreenManager.Instance.Controller.AddListener(_exitButton, ExitButtonPressed);
+			ScreenManager.Instance.Controller.AddListener(_newAccountButton, NewAccountButtonPressed);			
+		}
+
 		public override void LoadContent()
 		{
-			base.LoadContent();
 			_texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");
 		}
 
@@ -198,9 +193,6 @@ namespace SkyShoot.Game.Screens
 			_spriteBatch.Begin();
 			_spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
 			_spriteBatch.End();
-
-			//_gui.Draw(gameTime);
-			base.Draw(gameTime);
 		}
 	}
 }

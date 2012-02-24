@@ -14,23 +14,25 @@ namespace SkyShoot.Game.Screens
 	internal class GameplayScreen : GameScreen
 	{
 		private ContentManager _content;
-		AudioEngine engine;
-		SoundBank soundBank;
-		WaveBank waveBank;
+		private AudioEngine _engine;
+		private SoundBank _soundBank;
+		private WaveBank _waveBank;
 
 		public override bool IsMenuScreen
 		{
 			get { return false; }
 		}
 
+		public GameplayScreen()
+		{
+			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");			
+		}
+
 		public override void LoadContent()
 		{
-			if (_content == null)
-				_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
-
-			engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
-			soundBank = new SoundBank(engine, "Content\\Sounds\\Sound Bank.xsb");
-			waveBank = new WaveBank(engine, "Content\\Sounds\\Wave Bank.xwb");
+			_engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
+			_soundBank = new SoundBank(_engine, "Content\\Sounds\\Sound Bank.xsb");
+			_waveBank = new WaveBank(_engine, "Content\\Sounds\\Wave Bank.xwb");
 
 			//Cue cue = soundBank.GetCue("la-la-la");
 			//cue.Play();
