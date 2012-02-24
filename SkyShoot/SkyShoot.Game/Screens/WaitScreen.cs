@@ -29,14 +29,14 @@ namespace SkyShoot.Game.Screens
 
 		public static Int32 GameId { get; set; }
 
-		private GuiManager _gui;
+		// private GuiManager _gui;
 
 		private readonly ListControl _playersList;
 		private readonly ButtonControl _leaveButton;
 
 		private List<string> _tmpPlayersList;
 
-		private ContentManager _content;
+		private readonly ContentManager _content;
 		private static Texture2D _texture;
 
 		private SpriteBatch _spriteBatch;
@@ -57,6 +57,8 @@ namespace SkyShoot.Game.Screens
 			Height = ScreenManager.Instance.Height;
 			Width = ScreenManager.Instance.Width;
 
+			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
+
 			_playersList = new ListControl
 			               	{
 			               		Bounds = new UniRectangle(-60f, -4f, 200f, 300f)
@@ -67,21 +69,22 @@ namespace SkyShoot.Game.Screens
 			               		Text = "Leave",
 			               		Bounds = new UniRectangle(new UniScalar(0.5f, -378f), new UniScalar(0.4f, 190f), 120, 32)
 			               	};
+
+			Desktop.Children.Add(_playersList);
+			Desktop.Children.Add(_leaveButton);
+
+			ScreenManager.Instance.Controller.AddListener(_leaveButton, LeaveButtonPressed);
 		}
 
 		public override void LoadContent()
 		{
 			base.LoadContent();
 
-			_gui = ScreenManager.Instance.Gui;
-			_gui.Screen = this;
-
-			if (_content == null)
-				_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
-
 			_texture = _content.Load<Texture2D>("Textures/screens/screen_02_fix");
-
 			_spriteFont = _content.Load<SpriteFont>("Times New Roman");
+
+			// _gui = ScreenManager.Instance.Gui;
+			// _gui.Screen = this;
 
 			// todo rename variable
 			// вывод списка игрков
@@ -110,25 +113,22 @@ namespace SkyShoot.Game.Screens
 			_playersList.Slider.Bounds.Size.Y.Offset -= 2.0f;
 			_playersList.SelectionMode = ListSelectionMode.Single;
 			_playersList.SelectedItems.Add(4);
-
-			Desktop.Children.Add(_playersList);
-			Desktop.Children.Add(_leaveButton);
-
-			_leaveButton.Pressed += LeaveButtonPressed;
 		}
 
 		public override void UnloadContent()
 		{
-			Desktop.Children.Remove(_leaveButton);
-			Desktop.Children.Remove(_playersList);
+			// Desktop.Children.Remove(_leaveButton);
+			// Desktop.Children.Remove(_playersList);
 
-			_leaveButton.Pressed -= LeaveButtonPressed;
+			_content.Unload();
+
+			// ScreenManager.Instance.Controller.RemoveListener(_leaveButton, LeaveButtonPressed);
 		}
 
 		private void LeaveButtonPressed(object sender, EventArgs args)
 		{
 			GameController.Instance.LeaveGame();
-			ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenEnum.MultiplayerScreen;
+			ScreenManager.Instance.SetActiveScreen(typeof(MultiplayerScreen));// = ScreenManager.ScreenEnum.MultiplayerScreen;
 		}
 
 		public void ChangePlayerList(String[] names)
@@ -163,7 +163,7 @@ namespace SkyShoot.Game.Screens
 			_spriteBatch.End();
 
 			base.Draw(gameTime);
-			_gui.Draw(gameTime);
+			//_gui.Draw(gameTime);
 		}
 	}
 }

@@ -8,13 +8,13 @@ using Microsoft.Xna.Framework.Graphics;
 using Nuclex.UserInterface;
 
 using Nuclex.UserInterface.Controls.Desktop;
+
 using SkyShoot.Game.Controls;
 
 namespace SkyShoot.Game.Screens
 {
 	internal class MessageBox : GameScreen
 	{
-		private GuiManager _gui;
 
 		private Texture2D _texture;
 
@@ -22,7 +22,7 @@ namespace SkyShoot.Game.Screens
 
 		private ButtonControl _okButton;
 
-		public ScreenManager.ScreenEnum Next { get; set; }
+		public Type Next { get; set; }
 
 		public static String Message { get; set; }
 
@@ -34,8 +34,9 @@ namespace SkyShoot.Game.Screens
 		public override void LoadContent()
 		{
 			base.LoadContent();
-			_gui = ScreenManager.Instance.Gui;
-			_gui.Screen = this;
+
+			// _gui = ScreenManager.Instance.Gui;
+			// _gui.Screen = this;
 
 			Height = ScreenManager.Instance.Height;
 			Width = ScreenManager.Instance.Width;
@@ -61,7 +62,7 @@ namespace SkyShoot.Game.Screens
 
 		public void OkButtonPressed(object sender, EventArgs e)
 		{
-			ScreenManager.Instance.ActiveScreen = Next;
+			ScreenManager.Instance.SetActiveScreen(Next);// = Next;
 		}
 
 		public override void Draw(GameTime gameTime)
@@ -78,7 +79,7 @@ namespace SkyShoot.Game.Screens
 			spriteBatch.DrawString(font, Message, textPosition, Color.White);
 			spriteBatch.End();
 			base.Draw(gameTime);
-			_gui.Draw(gameTime);
+			// _gui.Draw(gameTime);
 		}
 	}
 }

@@ -1,7 +1,10 @@
 ﻿using System;
+
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+
 using Microsoft.Xna.Framework;
+
 using Microsoft.Xna.Framework.Input;
 
 using Nuclex.Input;
@@ -15,7 +18,7 @@ namespace SkyShoot.Game.Controls
 
 		protected GameScreen ActiveScreen
 		{
-			get { return ScreenManager.Instance.CurrentScreen; }
+			get { return ScreenManager.Instance.GetActiveScreen(); }
 		}
 
 		protected int Length
@@ -58,7 +61,7 @@ namespace SkyShoot.Game.Controls
 
 		public abstract ButtonState ShootButton { get; }
 
-		public virtual void RegisterListener(Control control, EventHandler eventHandler)
+		public virtual void AddListener(Control control, EventHandler eventHandler)
 		{
 			List<EventHandler> currentListeners;
 
@@ -69,6 +72,15 @@ namespace SkyShoot.Game.Controls
 			}
 
 			currentListeners.Add(eventHandler);
+		}
+
+		public virtual void RemoveListener(Control control, EventHandler eventHandler)
+		{
+			if (Listeners.ContainsKey(control))
+			{
+				List<EventHandler> currentListeners = Listeners[control];
+				currentListeners.Remove(eventHandler);
+			}
 		}
 
 		protected void FocusChanged()

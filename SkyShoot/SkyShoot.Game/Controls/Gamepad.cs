@@ -48,7 +48,8 @@ namespace SkyShoot.Game.Controls
 
 		public override Vector2? RunVector
 		{
-			get { throw new NotImplementedException(); }
+			// TODO!
+			get { return GetRunVector(_currentGamePadState); }
 		}
 
 		public override Vector2 SightPosition

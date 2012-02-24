@@ -19,7 +19,6 @@ namespace SkyShoot.Game.Screens
 {
 	internal class OptionsMenuScreen : GameScreen
 	{
-		private GuiManager _gui;
 
 		private readonly ListControl _keyboardList;
 
@@ -37,7 +36,7 @@ namespace SkyShoot.Game.Screens
 
 		private readonly ButtonControl _backButton;
 
-		private ContentManager _content;
+		private readonly ContentManager _content;
 
 		private static Texture2D _texture;
 
@@ -55,116 +54,93 @@ namespace SkyShoot.Game.Screens
 			Desktop.Bounds = new UniRectangle(
 				new UniScalar(0.1f, 0.0f), new UniScalar(0.1f, 0.0f),
 				new UniScalar(0.8f, 0.0f), new UniScalar(0.8f, 0.0f)
-			);
+				);
 
 			Height = ScreenManager.Instance.Height;
 			Width = ScreenManager.Instance.Width;
 
 			_titleLabel = new LabelControl("Options")
-			{
-				Bounds = new UniRectangle(new UniScalar(0.5f, -32), new UniScalar(0.1f, -70), 100, 30)
-			};
+			              	{
+			              		Bounds = new UniRectangle(new UniScalar(0.5f, -32), new UniScalar(0.1f, -70), 100, 30)
+			              	};
 
 			_fullscreenLabel = new LabelControl("FullScreen: ")
-			{
-				Bounds =
-					new UniRectangle(new UniScalar(0.5f, -50), new UniScalar(0.3f, -70), 80, 30)
-			};
+			                   	{
+			                   		Bounds =
+			                   			new UniRectangle(new UniScalar(0.5f, -50), new UniScalar(0.3f, -70), 80, 30)
+			                   	};
 
 			_fullscreenButton = new OptionControl
-			{
-				Bounds =
-					new UniRectangle(new UniScalar(0.5f, 30), new UniScalar(0.3f, -70), 100, 30)
-			};
+			                    	{
+			                    		Bounds =
+			                    			new UniRectangle(new UniScalar(0.5f, 30), new UniScalar(0.3f, -70), 100, 30)
+			                    	};
 
 			_keyboardLabel = new LabelControl("Keyboard:")
-			{
-				Bounds =
-					new UniRectangle(new UniScalar(0.5f, -150), new UniScalar(0.5f, -70), 50, 30)
-			};
+			                 	{
+			                 		Bounds =
+			                 			new UniRectangle(new UniScalar(0.5f, -150), new UniScalar(0.5f, -70), 50, 30)
+			                 	};
 
 			_backButton = new ButtonControl
-			{
-				Text = "Back",
-				Bounds = new UniRectangle(new UniScalar(0.5f, -50), new UniScalar(1.1f, -70), 100, 30)
-			};
+			              	{
+			              		Text = "Back",
+			              		Bounds = new UniRectangle(new UniScalar(0.5f, -50), new UniScalar(1.1f, -70), 100, 30)
+			              	};
 
 			_cursorLabel = new LabelControl("Cursor:")
-			{
-				Bounds =
-					new UniRectangle(new UniScalar(0.5f, -220), new UniScalar(0.8f, -70), 70, 30)
-			};
+			               	{
+			               		Bounds =
+			               			new UniRectangle(new UniScalar(0.5f, -220), new UniScalar(0.8f, -70), 70, 30)
+			               	};
 
 			_arrowButton = new ChoiceControl
-			{
-				Bounds =
-					new UniRectangle(new UniScalar(0.5f, -140), new UniScalar(0.9f, -70), 70, 30)
-			};
+			               	{
+			               		Bounds =
+			               			new UniRectangle(new UniScalar(0.5f, -140), new UniScalar(0.9f, -70), 70, 30)
+			               	};
 
 			_crossButton = new ChoiceControl
-			{
-				Bounds = new UniRectangle(new UniScalar(0.5f, 40), new UniScalar(0.9f, -70), 70, 30)
-			};
+			               	{
+			               		Bounds = new UniRectangle(new UniScalar(0.5f, 40), new UniScalar(0.9f, -70), 70, 30)
+			               	};
 
 			_keyboardList = new ListControl
-			{
-				Bounds = new UniRectangle(260f, 175f, 150f, 50f)
-			};
+			                	{
+			                		Bounds = new UniRectangle(260f, 175f, 150f, 50f)
+			                	};
 
-			_plusButton = new ChoiceControl
-			{
-				Bounds = new UniRectangle(new UniScalar(0.5f, -50), new UniScalar(0.9f, -70), 70, 30)
-			};
-
-			_targetButton = new ChoiceControl
-			{
-				Bounds =
-					new UniRectangle(new UniScalar(0.5f, 130), new UniScalar(0.9f, -70), 70, 30)
-			};
-		} 
-
-		public override void LoadContent()
-		{
-			base.LoadContent();
-
-			_gui = ScreenManager.Instance.Gui;
-			_gui.Screen = this;
-
-			if (_content == null)
-				_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
-
-			_texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");
-			Textures.Arrow = _content.Load<Texture2D>("Textures/Cursors/Arrow");
-			Textures.Plus = _content.Load<Texture2D>("Textures/Cursors/Plus");
-			Textures.Cross = _content.Load<Texture2D>("Textures/Cursors/Cross");
-			Textures.Target = _content.Load<Texture2D>("Textures/Cursors/Target");
-
-			_fullscreenButton.Selected = Settings.Default.FullScreenSelected;
-			_fullscreenButton.Changed += FullScreenSelected;
-			
 			_keyboardList.Items.Add("A, S, D, W");
 			_keyboardList.Items.Add("Arrows");
 			_keyboardList.Slider.Bounds.Location.X.Offset -= 1.0f;
 			_keyboardList.Slider.Bounds.Location.Y.Offset += 1.0f;
 			_keyboardList.Slider.Bounds.Size.Y.Offset -= 2.0f;
 			_keyboardList.SelectionMode = ListSelectionMode.Single;
-			_keyboardList.SelectedItems.Add(Settings.Default.KeyboardLayout == 0 ? 0 : 1);
+
+			_plusButton = new ChoiceControl
+			              	{
+			              		Bounds = new UniRectangle(new UniScalar(0.5f, -50), new UniScalar(0.9f, -70), 70, 30)
+			              	};
+
+			_targetButton = new ChoiceControl
+			                	{
+			                		Bounds =
+			                			new UniRectangle(new UniScalar(0.5f, 130), new UniScalar(0.9f, -70), 70, 30)
+			                	};
+
+			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
+
 			_keyboardList.SelectionChanged += KeyboardChoice;
 
-			switch (Settings.Default.Cursor)
-			{
-				case 1: _arrowButton.Selected = true; break;
-				case 2: _plusButton.Selected = true; break;
-				case 3: _plusButton.Selected = true; break;
-				case 4: _targetButton.Selected = true; break;
-			}
+			_fullscreenButton.Selected = Settings.Default.FullScreenSelected;
 
+			_fullscreenButton.Changed += FullScreenSelected;
 			_arrowButton.Changed += ArrowButtonPressed;
 			_plusButton.Changed += PlusButtonPressed;
 			_crossButton.Changed += CrossButtonPressed;
 			_targetButton.Changed += TargetButtonPressed;
 
-			_backButton.Pressed += BackButtonPressed;
+			ScreenManager.Instance.Controller.AddListener(_backButton, BackButtonPressed);
 
 			Desktop.Children.Add(_titleLabel);
 			Desktop.Children.Add(_fullscreenLabel);
@@ -179,26 +155,39 @@ namespace SkyShoot.Game.Screens
 			Desktop.Children.Add(_backButton);
 		}
 
+		public override void LoadContent()
+		{
+			base.LoadContent();
+
+			_texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");
+
+			Textures.Arrow = _content.Load<Texture2D>("Textures/Cursors/Arrow");
+			Textures.Plus = _content.Load<Texture2D>("Textures/Cursors/Plus");
+			Textures.Cross = _content.Load<Texture2D>("Textures/Cursors/Cross");
+			Textures.Target = _content.Load<Texture2D>("Textures/Cursors/Target");
+
+			_keyboardList.SelectedItems.Add(Settings.Default.KeyboardLayout == 0 ? 0 : 1);
+			
+			switch (Settings.Default.Cursor)
+			{
+				case 1:
+					_arrowButton.Selected = true;
+					break;
+				case 2:
+					_plusButton.Selected = true;
+					break;
+				case 3:
+					_plusButton.Selected = true;
+					break;
+				case 4:
+					_targetButton.Selected = true;
+					break;
+			}
+		}
+
 		public override void UnloadContent()
 		{
-			Desktop.Children.Remove(_titleLabel);
-			Desktop.Children.Remove(_fullscreenLabel);
-			Desktop.Children.Remove(_fullscreenButton);
-			Desktop.Children.Remove(_keyboardLabel);
-			Desktop.Children.Remove(_keyboardList);
-			Desktop.Children.Remove(_cursorLabel);
-			Desktop.Children.Remove(_arrowButton);
-			Desktop.Children.Remove(_plusButton);
-			Desktop.Children.Remove(_crossButton);
-			Desktop.Children.Remove(_targetButton);
-			Desktop.Children.Remove(_backButton);
 
-			_arrowButton.Changed -= ArrowButtonPressed;
-			_plusButton.Changed -= PlusButtonPressed;
-			_crossButton.Changed -= CrossButtonPressed;
-			_targetButton.Changed -= TargetButtonPressed;
-
-			_backButton.Pressed -= BackButtonPressed;
 		}
 
 		private void ArrowButtonPressed(object sender, EventArgs e)
@@ -237,7 +226,7 @@ namespace SkyShoot.Game.Screens
 
 		private void BackButtonPressed(object sender, EventArgs e)
 		{
-			ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenEnum.MainMenuScreen;
+			ScreenManager.Instance.SetActiveScreen(typeof(MainMenuScreen));// = ScreenManager.ScreenEnum.MainMenuScreen;
 		}
 
 		private void FullScreenSelected(object sender, EventArgs e)
@@ -255,8 +244,8 @@ namespace SkyShoot.Game.Screens
 			_spriteBatch.End();
 
 			base.Draw(gameTime);
-			_gui.Draw(gameTime);
-			
+			// _gui.Draw(gameTime);
+
 			_spriteBatch.Begin(SpriteSortMode.Texture, BlendState.AlphaBlend);
 			var pos1 = new Vector2(250f, 370f);
 			var pos2 = new Vector2(340f, 370f);

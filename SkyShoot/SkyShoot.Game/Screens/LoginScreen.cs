@@ -19,21 +19,19 @@ namespace SkyShoot.Game.Screens
 {
 	internal class LoginScreen : GameScreen
 	{
-		private GuiManager _gui;
+		private LabelControl _loginLabel;
+		private LabelControl _passwordLabel;
 
-		private readonly LabelControl _loginLabel;
-		private readonly LabelControl _passwordLabel;
+		private Controls.InputControl _loginBox;
+		private Controls.InputControl _passwordBox;
 
-		private readonly Controls.InputControl _loginBox;
-		private readonly Controls.InputControl _passwordBox;
-
-		private readonly ButtonControl _exitButton;
-		private readonly ButtonControl _loginButton;
-		private readonly ButtonControl _newAccountButton;
+		private ButtonControl _exitButton;
+		private ButtonControl _loginButton;
+		private ButtonControl _newAccountButton;
 
 		private static Texture2D _texture;
 
-		private ContentManager _content;
+		private readonly ContentManager _content;
 
 		private SpriteBatch _spriteBatch;
 
@@ -47,70 +45,14 @@ namespace SkyShoot.Game.Screens
 			Desktop.Bounds = new UniRectangle(
 				new UniScalar(0.1f, 0.0f), new UniScalar(0.1f, 0.0f),
 				new UniScalar(0.8f, 0.0f), new UniScalar(0.8f, 0.0f)
-			);
+				);
 
 			Height = ScreenManager.Instance.Height;
 			Width = ScreenManager.Instance.Width;
 
-			// Login Input
-			_loginBox = new Controls.InputControl
-			{
-				Bounds = new UniRectangle(new UniScalar(0.5f, -100f), new UniScalar(0.4f, -30), 200, 30),
-				Text = Settings.Default.login
-			};
+			InitializeControls();
 
-			// Password Input
-			_passwordBox = new Controls.InputControl
-			{
-				Bounds = new UniRectangle(new UniScalar(0.5f, -100f), new UniScalar(0.4f, 30), 200, 30),
-				Text = Settings.Default.password
-			};
-
-			// Login Label
-			_loginLabel = new LabelControl("Username")
-			{
-				Bounds = new UniRectangle(new UniScalar(0.5f, -32), new UniScalar(0.4f, -70), 100, 30)
-			};
-
-			// Password Label
-			_passwordLabel = new LabelControl("Password")
-			{
-				Bounds = new UniRectangle(new UniScalar(0.5f, -32), new UniScalar(0.4f, 0), 100, 30)
-			};
-
-			// Login Button
-			_loginButton = new ButtonControl
-			{
-				Text = "Login",
-				Bounds = new UniRectangle(new UniScalar(0.5f, 110), new UniScalar(0.4f, 70), 100, 32)
-			};
-
-			// Back Button
-			_exitButton = new ButtonControl
-			{
-				Text = "Exit",
-				Bounds = new UniRectangle(new UniScalar(0.5f, -210f), new UniScalar(0.4f, 70), 100, 32)
-			};
-
-			// New Account Button
-			_newAccountButton = new ButtonControl
-			{
-				Text = "Create new account",
-				Bounds = new UniRectangle(new UniScalar(0.5f, -75f), new UniScalar(0.4f, 70), 150, 32)
-			};
-		}
-
-		public override void LoadContent()
-		{
-			base.LoadContent();
-
-			_gui = ScreenManager.Instance.Gui;
-			_gui.Screen = this;
-
-			if (_content == null)
-				_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
-
-			_texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");
+			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 
 			Desktop.Children.Add(_loginBox);
 			Desktop.Children.Add(_passwordBox);
@@ -120,28 +62,70 @@ namespace SkyShoot.Game.Screens
 			Desktop.Children.Add(_newAccountButton);
 			Desktop.Children.Add(_loginButton);
 
-			ScreenManager.Instance.Controller.RegisterListener(_loginButton, LoginButtonPressed);
-			ScreenManager.Instance.Controller.RegisterListener(_exitButton, ExitButtonPressed);
-			ScreenManager.Instance.Controller.RegisterListener(_newAccountButton, NewAccountButtonPressed);
+			ScreenManager.Instance.Controller.AddListener(_loginButton, LoginButtonPressed);
+			ScreenManager.Instance.Controller.AddListener(_exitButton, ExitButtonPressed);
+			ScreenManager.Instance.Controller.AddListener(_newAccountButton, NewAccountButtonPressed);
+		}
 
-			//_loginButton.Pressed += LoginButtonPressed;
-			//_exitButton.Pressed += ExitButtonPressed;
-			//_newAccountButton.Pressed += NewAccountButtonPressed;
+		private void InitializeControls()
+		{
+			// Login Input
+			_loginBox = new Controls.InputControl
+			            	{
+			            		Bounds = new UniRectangle(new UniScalar(0.5f, -100f), new UniScalar(0.4f, -30), 200, 30),
+			            		Text = Settings.Default.login
+			            	};
+
+			// Password Input
+			_passwordBox = new Controls.InputControl
+			               	{
+			               		Bounds = new UniRectangle(new UniScalar(0.5f, -100f), new UniScalar(0.4f, 30), 200, 30),
+			               		Text = Settings.Default.password
+			               	};
+
+			// Login Label
+			_loginLabel = new LabelControl("Username")
+			              	{
+			              		Bounds = new UniRectangle(new UniScalar(0.5f, -32), new UniScalar(0.4f, -70), 100, 30)
+			              	};
+
+			// Password Label
+			_passwordLabel = new LabelControl("Password")
+			                 	{
+			                 		Bounds = new UniRectangle(new UniScalar(0.5f, -32), new UniScalar(0.4f, 0), 100, 30)
+			                 	};
+
+			// Login Button
+			_loginButton = new ButtonControl
+			               	{
+			               		Text = "Login",
+			               		Bounds = new UniRectangle(new UniScalar(0.5f, 110), new UniScalar(0.4f, 70), 100, 32)
+			               	};
+
+			// Back Button
+			_exitButton = new ButtonControl
+			              	{
+			              		Text = "Exit",
+			              		Bounds = new UniRectangle(new UniScalar(0.5f, -210f), new UniScalar(0.4f, 70), 100, 32)
+			              	};
+
+			// New Account Button
+			_newAccountButton = new ButtonControl
+			                    	{
+			                    		Text = "Create new account",
+			                    		Bounds = new UniRectangle(new UniScalar(0.5f, -75f), new UniScalar(0.4f, 70), 150, 32)
+			                    	};
+		}
+
+		public override void LoadContent()
+		{
+			base.LoadContent();
+			_texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");
 		}
 
 		public override void UnloadContent()
 		{
-			Desktop.Children.Remove(_passwordBox);
-			Desktop.Children.Remove(_loginBox);
-			Desktop.Children.Remove(_loginLabel);
-			Desktop.Children.Remove(_passwordLabel);
-			Desktop.Children.Remove(_exitButton);
-			Desktop.Children.Remove(_loginButton);
-			Desktop.Children.Remove(_newAccountButton);
-
-			_loginButton.Pressed -= LoginButtonPressed;
-			_exitButton.Pressed -= ExitButtonPressed;
-			_newAccountButton.Pressed -= NewAccountButtonPressed;
+			_content.Unload();
 		}
 
 		private void ExitButtonPressed(object sender, EventArgs args)
@@ -154,12 +138,12 @@ namespace SkyShoot.Game.Screens
 			if (_loginBox.Text.Length < 3)
 			{
 				MessageBox.Message = "Username is too short!\nPress Ok to continue";
-				ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenEnum.MessageScreen;
+				ScreenManager.Instance.SetActiveScreen(typeof (MessageBox));
 			}
 			else if (_passwordBox.Text.Length < 3)
 			{
 				MessageBox.Message = "Password is too short!\nPress Ok to continue";
-				ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenEnum.MessageScreen;
+				ScreenManager.Instance.SetActiveScreen(typeof (MessageBox));
 			}
 			else
 			{
@@ -169,7 +153,7 @@ namespace SkyShoot.Game.Screens
 
 				if (GameController.Instance.Login(_loginBox.Text, _passwordBox.Text).HasValue)
 				{
-					ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenEnum.MainMenuScreen;
+					ScreenManager.Instance.SetActiveScreen(typeof (MainMenuScreen));
 				}
 			}
 		}
@@ -179,12 +163,12 @@ namespace SkyShoot.Game.Screens
 			if (_loginBox.Text.Length < 3)
 			{
 				MessageBox.Message = "Username is too short!\nPress Ok to continue";
-				ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenEnum.MessageScreen;
+				ScreenManager.Instance.SetActiveScreen(typeof (MessageBox));
 			}
 			else if (_passwordBox.Text.Length < 3)
 			{
 				MessageBox.Message = "Password is too short!\nPress Ok to continue";
-				ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenEnum.MessageScreen;
+				ScreenManager.Instance.SetActiveScreen(typeof (MessageBox));
 			}
 			else
 			{
@@ -196,13 +180,13 @@ namespace SkyShoot.Game.Screens
 				{
 					if (GameController.Instance.Login(_loginBox.Text, _passwordBox.Text).HasValue)
 					{
-						ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenEnum.MainMenuScreen;
+						ScreenManager.Instance.SetActiveScreen(typeof (MainMenuScreen));
 					}
 				}
 				else
 				{
 					MessageBox.Message = "Registration failed";
-					ScreenManager.Instance.ActiveScreen = ScreenManager.ScreenEnum.MessageScreen;
+					ScreenManager.Instance.SetActiveScreen(typeof (MessageBox));
 				}
 			}
 		}
@@ -215,7 +199,7 @@ namespace SkyShoot.Game.Screens
 			_spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
 			_spriteBatch.End();
 
-			_gui.Draw(gameTime);
+			//_gui.Draw(gameTime);
 			base.Draw(gameTime);
 		}
 	}
