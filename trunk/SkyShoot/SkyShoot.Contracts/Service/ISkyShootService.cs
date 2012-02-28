@@ -7,7 +7,7 @@ using SkyShoot.Contracts.Perks;
 using SkyShoot.Contracts.Bonuses;
 using SkyShoot.Contracts.Session;
 
-using Microsoft.Xna.Framework;
+using SkyShoot.XNA.Framework;
 using SkyShoot.Contracts.Weapon.Projectiles;
 using System.Collections.Generic;
 using SkyShoot.Contracts.GameEvents;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using SkyShoot.Contracts.Session;
 using SkyShoot.Contracts.Mobs;
-using Microsoft.Xna.Framework;
+using SkyShoot.XNA.Framework;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Weapon.Projectiles;
 using System.Timers;

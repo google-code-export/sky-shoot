@@ -97,15 +97,15 @@ namespace SkyShoot.Game.Client.Game
 		{
 			Vector2 myPosition;
 
-			try
-			{
-				myPosition = GetMob(GameController.MyId).Coordinates;
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				return;
-			}
+            try
+            {
+                myPosition = GetMob(GameController.MyId).CoordinatesM;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return;
+            }
 
 			Camera2D.Position = myPosition;
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SkyShoot.Contracts.Mobs;
-using Microsoft.Xna.Framework;
+using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Contracts.GameEvents
 {

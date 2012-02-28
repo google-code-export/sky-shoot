@@ -159,6 +159,7 @@
     <Compile Include="Screens\MessageBox.cs" />
     <Compile Include="Screens\MultiplayerScreen.cs" />
     <Compile Include="SkyShootGame.cs" />
+    <Compile Include="TypeConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
@@ -180,6 +181,10 @@
     <ProjectReference Include="..\SkyShoot.GameContent\SkyShoot.GameContent.contentproj">
       <Name>SkyShoot.GameContent</Name>
       <XnaReferenceType>Content</XnaReferenceType>
+    </ProjectReference>
+    <ProjectReference Include="..\SkyShoot.Xna.Framework.Lite\SkyShoot.Xna.Lite.csproj">
+      <Project>{B76FFCE6-2D2B-43F2-B71F-EDA7ED82FEB5}</Project>
+      <Name>SkyShoot.Xna.Lite</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

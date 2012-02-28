@@ -18,7 +18,7 @@ namespace SkyShoot.Service.Weapon
 			_reloadSpeed = Constants.CLAW_ATTACK_RATE;
 		}
 
-		public override Contracts.Weapon.Projectiles.AProjectile[] CreateBullets(Contracts.Mobs.AGameObject owner, Microsoft.Xna.Framework.Vector2 direction)
+		public override Contracts.Weapon.Projectiles.AProjectile[] CreateBullets(Contracts.Mobs.AGameObject owner, SkyShoot.XNA.Framework.Vector2 direction)
 		{
 			throw new NotImplementedException();
 		}

@@ -70,7 +70,6 @@
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Services.Client" />
@@ -109,6 +108,10 @@
     <ProjectReference Include="..\SkyShoot.Contracts\SkyShoot.Contracts.csproj">
       <Project>{27DFF06E-1942-47CE-8BF4-02F7CB108F6A}</Project>
       <Name>SkyShoot.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SkyShoot.Xna.Framework.Lite\SkyShoot.Xna.Lite.csproj">
+      <Project>{B76FFCE6-2D2B-43F2-B71F-EDA7ED82FEB5}</Project>
+      <Name>SkyShoot.Xna.Lite</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

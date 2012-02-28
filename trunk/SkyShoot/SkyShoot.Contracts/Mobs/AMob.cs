@@ -2,7 +2,7 @@
 
 using System.Runtime.Serialization;
 
-using Microsoft.Xna.Framework;
+using SkyShoot.XNA.Framework;
 
 using SkyShoot.Contracts.Bonuses;
 
