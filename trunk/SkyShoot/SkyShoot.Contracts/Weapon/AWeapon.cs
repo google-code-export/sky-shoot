@@ -12,12 +12,12 @@ namespace SkyShoot.Contracts.Weapon
 	{
 		protected AWeapon(Guid id) : base(id) { Owner = null; }
 
-		protected AWeapon(Guid id, AMob owner) : base(id) 
+		protected AWeapon(Guid id, AGameObject owner) : base(id) 
 		{
 			this.Owner = owner;
 		}
 
-		public abstract AProjectile[] CreateBullets(AMob owner, Vector2 direction);
+		public abstract AProjectile[] CreateBullets(AGameObject owner, Vector2 direction);
 
 		protected int _reloadSpeed;
 

@@ -11,7 +11,7 @@ using IDrawable = SkyShoot.Game.Client.View.IDrawable;
 
 namespace SkyShoot.Game.Client.Players
 {
-	public class Mob : Contracts.Mobs.AMob, IDrawable
+	public class Mob : Contracts.Mobs.AGameObject, IDrawable
 	{
 		public Animation2D Animation { get; set; }
 
@@ -27,7 +27,7 @@ namespace SkyShoot.Game.Client.Players
 		private const int FrameTime = 500;
 		private const bool Looping = true;
 
-		public Mob(Contracts.Mobs.AMob other, Animation2D animation)
+		public Mob(Contracts.Mobs.AGameObject other, Animation2D animation)
 			: base(other)
 		{
 			_healthTextureHeight = 5;

@@ -24,12 +24,12 @@ namespace SkyShoot.Service.Weapon
 			Init();
 		}
 
-		public Shotgun(Guid id, AMob owner) : base(id, owner)
+		public Shotgun(Guid id, AGameObject owner) : base(id, owner)
 		{
 			Init();
 		}
 
-		public override AProjectile[] CreateBullets(AMob owner, Vector2 direction)
+		public override AProjectile[] CreateBullets(AGameObject owner, Vector2 direction)
 		{
 			ShotgunBullet[] bullets = new ShotgunBullet[8];
 

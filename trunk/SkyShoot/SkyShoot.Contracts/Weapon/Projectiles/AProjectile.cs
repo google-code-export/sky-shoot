@@ -9,13 +9,13 @@ using SkyShoot.Contracts.Mobs;
 namespace SkyShoot.Contracts.Weapon.Projectiles
 {
 	[DataContract]
-	public class AProjectile
+	public class AProjectile : AGameObject
 	{
-		protected AProjectile(AMob owner, Guid id, Vector2 direction)
+		protected AProjectile(AGameObject owner, Guid id, Vector2 direction)
 		{
 			Owner = owner;
 			Id = id;
-			Direction = direction;
+			RunVector = direction;
 			Coordinates = owner.Coordinates;
 		}
 
@@ -26,14 +26,15 @@ namespace SkyShoot.Contracts.Weapon.Projectiles
 
 		public void Copy(AProjectile other)
 		{
-			this.Coordinates = other.Coordinates;
+			base.Copy(other);
+			//this.Coordinates = other.Coordinates;
 			this.Damage = other.Damage;
-			this.Direction = other.Direction;
-			this.Id = other.Id;
+			//this.RunVector = other.RunVector;
+			//this.Id = other.Id;
 			this.LifeDistance = other.LifeDistance;
 			this.Owner = other.Owner;
-			this.Speed = other.Speed;
-			this.Type = other.Type;
+			//this.Speed = other.Speed;
+			
 		}
 
 		public AProjectile(AProjectile other)
@@ -41,36 +42,27 @@ namespace SkyShoot.Contracts.Weapon.Projectiles
 			Copy(other);
 		}
 
-		[DataMember]
-		public Guid Id { get; set; }
+		//[DataMember]
+		//public Guid Id { get; set; }
 
-		public AMob Owner { get; set; }
+		public AGameObject Owner { get; set; }
 
-		[DataMember]
-		public Vector2 Coordinates;// { get; set; } // вероятно, set должен быть public-методом
+		//[DataMember]
+		//public Vector2 Coordinates;// { get; set; } // вероятно, set должен быть public-методом
 
-		[DataMember]
-		public Vector2 Direction;// { get; set; }
+		//[DataMember]
+		//public Vector2 RunVector;// { get; set; }
 
-		[DataMember]
-		public float Speed { get; set; }
+		//[DataMember]
+		//public float Speed { get; set; }
 
-		[DataMember]
+		//[DataMember]
 		public float LifeDistance { get; set; }
 
-		[DataMember]
-		public float Damage { get; set; }
+		
 
 		public Vector2 OldCoordinates;
 
-		public enum EnumBulletType
-		{
-			Bullet,
-			Rocket,
-			Flame,
-		}
-
-		[DataMember]
-		public EnumBulletType Type { get; set; }
+		
 	}
 }

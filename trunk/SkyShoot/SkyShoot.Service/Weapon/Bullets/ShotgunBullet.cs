@@ -9,10 +9,10 @@ namespace SkyShoot.Service.Weapon.Bullets
 {
 	public class ShotgunBullet : AProjectile
 	{
-	   
-		private const EnumBulletType TYPE = EnumBulletType.Bullet;
 
-		public ShotgunBullet(AMob owner, Guid id, Vector2 direction)
+		private const AGameObject.EnumObjectType TYPE = AGameObject.EnumObjectType.Bullet;
+
+		public ShotgunBullet(AGameObject owner, Guid id, Vector2 direction)
 			: base(owner, id, direction) 
 		{
 			Speed = Constants.SHOTGUN_BULLET_SPEED;

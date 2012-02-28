@@ -14,22 +14,22 @@ namespace SkyShoot.Contracts.Service
 	public interface ISkyShootCallback
 	{
 		[OperationContract(IsOneWay = true)]
-		void GameStart(AMob[] mobs,GameLevel arena);
+		void GameStart(AGameObject[] mobs,GameLevel arena);
 
 		[OperationContract(IsOneWay = true)]
-		void MobShot(AMob mob, AProjectile[] projectiles);
+		void MobShot(AGameObject mob, AProjectile[] projectiles);
 
 		[OperationContract(IsOneWay = true)]
-		void SpawnMob(AMob mob);
+		void SpawnMob(AGameObject mob);
 
 		[OperationContract(IsOneWay = true)]
-		void Hit(AMob mob, AProjectile projectile);
+		void Hit(AGameObject mob, AProjectile projectile);
 
 		[OperationContract(IsOneWay = true)]
-		void MobMoved(AMob mob, Vector2 direction);
+		void MobMoved(AGameObject mob, Vector2 direction);
 
 		[OperationContract(IsOneWay = true)]
-		void MobDead(AMob mob);
+		void MobDead(AGameObject mob);
 
 		[OperationContract(IsOneWay = true)]
 		void BonusDropped(AObtainableDamageModifier bonus);
@@ -44,10 +44,10 @@ namespace SkyShoot.Contracts.Service
 		void GameOver();
 
 		[OperationContract(IsOneWay = true)]
-		void PlayerLeft(AMob mob);
+		void PlayerLeft(AGameObject mob);
 
 		[OperationContract(IsOneWay = true)]
-		void SynchroFrame(AMob[] mobs);
+		void SynchroFrame(AGameObject[] mobs);
 
 		[OperationContract(IsOneWay = true)]
 		void PlayerListChanged(String[] names);

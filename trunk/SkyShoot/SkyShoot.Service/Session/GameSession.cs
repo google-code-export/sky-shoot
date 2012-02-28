@@ -11,6 +11,7 @@ using System.Timers;
 using SkyShoot.Contracts;
 using System.Diagnostics;
 using SkyShoot.ServProgram.Session;
+using SkyShoot.Contracts.GameEvents;
 
 namespace SkyShoot.Service.Session
 {
@@ -24,8 +25,8 @@ namespace SkyShoot.Service.Session
 
 		public GameDescription LocalGameDescription { get; private set; }
 
-		public bool IsStarted { get; set; }		
-		private GameLevel _gameLevel;
+		public bool IsStarted { get; set; }
+		public GameLevel GameLevel { get; private set; }
 		private SpiderFactory _spiderFactory;
 		private long _timerCounter;
 		private long _intervalToSpawn = 0;
@@ -39,16 +40,17 @@ namespace SkyShoot.Service.Session
 		public GameSession(TileSet tileSet, int maxPlayersAllowed, GameMode gameType, int gameID)
 		{
 			IsStarted = false;
-			_gameLevel = new GameLevel(tileSet);
+			GameLevel = new GameLevel(tileSet);
 
 			var playerNames = new List<string>();
 
 			_mobs = new List<Mob>();
 			Players = new List<MainSkyShootService>();
 			_projectiles = new ObjectPool<AProjectile>();
+			//_gameEventStack = new Stack<AGameEvent>();
 
 			LocalGameDescription = new GameDescription(playerNames, maxPlayersAllowed, gameType, gameID, tileSet);
-			_spiderFactory= new SpiderFactory(_gameLevel);
+			_spiderFactory= new SpiderFactory(GameLevel);
 		}
 
 		public event SomebodyMovesHandler SomebodyMoves; 
@@ -59,16 +61,17 @@ namespace SkyShoot.Service.Session
 		public event SomebodySpawnsHandler SomebodySpawns;
 		public event NewPlayerConnectedHandler NewPlayerConnected;
 		
-		private void SomebodyMoved(AMob sender, Vector2 direction)
+		private void SomebodyMoved(AGameObject sender, Vector2 direction)
 		{
 			sender.RunVector = direction;
 			if (SomebodyMoves != null)
 			{
 				SomebodyMoves(sender, direction);
 			}
+			pushEvent(new ObjectDirectionChanged(direction,sender.Id,_timerCounter));
 		}
 
-		private void SomebodyShot(AMob sender, Vector2 direction)
+		private void SomebodyShot(AGameObject sender, Vector2 direction)
 		{
 			sender.ShootVector = direction;
 			if (SomebodyShoots != null)
@@ -78,8 +81,11 @@ namespace SkyShoot.Service.Session
 					if ((sender as MainSkyShootService).Weapon.Reload(System.DateTime.Now.Ticks / 10000))
 					{
 						var a = (sender as MainSkyShootService).Weapon.CreateBullets(sender, direction);
-						foreach (var b in a) 
+						foreach (var b in a)
+						{
 							_projectiles.getInActive().Copy(b);
+							pushEvent(new NewObjectEvent(b,_timerCounter));
+						}
 						//Trace.WriteLine("projectile added", "GameSession");
 
 						SomebodyShoots(sender, a);
@@ -88,44 +94,50 @@ namespace SkyShoot.Service.Session
 			}
 		}
 
-		public void SomebodyDied(AMob sender)
+		public void SomebodyDied(AGameObject sender)
 		{
 			if (SomebodyDies != null)
 			{
 				SomebodyDies(sender);
 			}
+
+			pushEvent(new ObjectDeleted(sender.Id, _timerCounter));
 		}
 
-		public void SomebodySpawned(AMob sender) 
+		public void SomebodySpawned(AGameObject sender) 
 		{
 			if (SomebodySpawns != null) 
 			{
 				SomebodySpawns(sender);
 			}
+
+			pushEvent(new NewObjectEvent(sender,_timerCounter));
 		}
 
 		public void MobDead(Mob mob)
 		{
-			SomebodyDied(mob);
+			//SomebodyDied(mob);
 			//mob.MeMoved -= SomebodyMoved;
+			pushEvent(new ObjectDeleted(mob.Id,_timerCounter));
 			_mobs.Remove(mob);
 		}
 
-		public void SomebodyHitted(AMob mob, AProjectile projectile)
+		public void SomebodyHitted(AGameObject mob, AProjectile projectile)
 		{
 			if(SomebodyHit != null)	SomebodyHit(mob, projectile);
+			pushEvent(new ObjectHealthChanged(mob.HealthAmount, mob.Id, _timerCounter));
 		}
 
 		public void PlayerLeave(MainSkyShootService player)
 		{
 			LocalGameDescription.Players.Remove(player.Name);
 			
-			this.SomebodyHit -= player.Hit;
-			this.SomebodyMoves -= player.MobMoved;
-			this.SomebodyShoots -= player.MobShot;
-			this.SomebodySpawns -= player.SpawnMob;
-			this.SomebodyDies -= player.MobDead;
-			this.StartGame -= player.GameStart;
+			//this.SomebodyHit -= player.Hit;
+			//this.SomebodyMoves -= player.MobMoved;
+			//this.SomebodyShoots -= player.MobShot;
+			//this.SomebodySpawns -= player.SpawnMob;
+			//this.SomebodyDies -= player.MobDead;
+			//this.StartGame -= player.GameStart;
 			
 			player.MeMoved -= SomebodyMoved;
 			player.MeShot -= SomebodyShot;
@@ -135,16 +147,25 @@ namespace SkyShoot.Service.Session
 			Players.Remove(player);
 			if (!IsStarted)
 			{ 
-				UpdatePlayersList(player);
+				//UpdatePlayersList(player);
 			}
 			Trace.WriteLine(player.Name + "leaved game");
 			
 		}
 
+		private void pushEvent(AGameEvent gameEvent)
+		{
+			foreach (var playerDead in Players)
+			{
+				playerDead.NewEvents.Enqueue(gameEvent);
+			}
+		}
+
 		public void PlayerDead(MainSkyShootService player)
 		{
 
-			player.GameOver();
+			//player.GameOver();
+
 			SomebodyDied(player);			
 			player.Disconnect();//временно
 		}
@@ -164,17 +185,16 @@ namespace SkyShoot.Service.Session
 			for(int i = 0; i < Players.Count; i++)
 			{
 				var player = Players[i];
-				this.SomebodyMoves += player.MobMoved;
+				//this.SomebodyMoves += player.MobMoved;
 				player.MeMoved += SomebodyMoved;
-
-				this.SomebodyShoots += player.MobShot;
+				//this.SomebodyShoots += player.MobShot;
 				player.MeShot += SomebodyShot;
 
-				this.SomebodySpawns += player.SpawnMob;
+				//this.SomebodySpawns += player.SpawnMob;
 
-				this.SomebodyDies += player.MobDead;
+				//this.SomebodyDies += player.MobDead;
 				
-				this.SomebodyHit += player.Hit;
+				//this.SomebodyHit += player.Hit;
 
 				player.Coordinates = new Vector2(500,500);
 				player.Speed = Constants.PLAYER_DEFAULT_SPEED;
@@ -182,13 +202,13 @@ namespace SkyShoot.Service.Session
 				player.Weapon = new Weapon.Pistol(Guid.NewGuid(), player);
 				player.RunVector = new Vector2(0, 0);
 				player.MaxHealthAmount = player.HealthAmount = 100f;
-
+				
 			}
 			System.Threading.Thread.Sleep(1000);
 			if (!IsStarted && StartGame != null)
 			{
 				IsStarted = true;
-				StartGame(Players.ToArray(), _gameLevel);
+				StartGame(Players.ToArray(), GameLevel);
 			
 			}
 			_timerCounter = 0;
@@ -212,11 +232,11 @@ namespace SkyShoot.Service.Session
 			Players.Add(player);
 			LocalGameDescription.Players.Add(player.Name);
 			var names = new String[Players.Count];
-			UpdatePlayersList(player);
+			//UpdatePlayersList(player);
 
 			if (NewPlayerConnected != null) NewPlayerConnected(player);
 
-			StartGame += player.GameStart;
+			//StartGame += player.GameStart;
 
 			if (Players.Count == LocalGameDescription.MaximumPlayersAllowed)
 			{
@@ -296,7 +316,7 @@ namespace SkyShoot.Service.Session
 					continue;
 				}
 				//var projectile = _projectiles[i];
-				var newCord = projectile.Coordinates + projectile.Direction * projectile.Speed * _updateDelay;
+				var newCord = projectile.Coordinates + projectile.RunVector * projectile.Speed * _updateDelay;
 
 				//Проверка на касание пули и моба
 				var hitedMob = hitTestProjectile(projectile, newCord);
@@ -323,11 +343,11 @@ namespace SkyShoot.Service.Session
 
 			if (_timerCounter % 10 == 0)
 			{
-				var allObjects = new List<AMob>(_mobs);
+				var allObjects = new List<AGameObject>(_mobs);
 				allObjects.AddRange(Players);
 				for (int i = 0; i < Players.Count; i++)
 				{
-					Players[i].SynchroFrame(allObjects.ToArray());
+					//Players[i].SynchroFrame(allObjects.ToArray());
 				}
 				Trace.WriteLine("SynchroFrame");
 			}
@@ -337,7 +357,7 @@ namespace SkyShoot.Service.Session
 			//_updated = false;
 			System.Threading.Monitor.Exit(_updating);
 		}
-
+	/*
 		public void UpdatePlayersList(MainSkyShootService player)
 		{
 			var names = LocalGameDescription.Players.ToArray();
@@ -345,11 +365,11 @@ namespace SkyShoot.Service.Session
 			{
 				if (Players[i] != player)
 				{
-					Players[i].PlayerListChanged(names);
+					//Players[i].PlayerListChanged(names);
 				}
 			}
 		}
-
+		*/
 		private Mob hitTestProjectile(AProjectile projectile, Vector2 newCord)
 		{
 			var prX = newCord.X - projectile.Coordinates.X;
@@ -417,15 +437,15 @@ namespace SkyShoot.Service.Session
 			}
 		} 
 
-		private Vector2 ComputeMovement(AMob mob)
+		private Vector2 ComputeMovement(AGameObject mob)
 		{
 			
 			var newCoord = mob.RunVector*mob.Speed*_updateDelay + mob.Coordinates ;
 
 			if (mob.IsPlayer)
 			{
-				newCoord.X = MathHelper.Clamp(newCoord.X, 0, _gameLevel.levelHeight);
-				newCoord.Y = MathHelper.Clamp(newCoord.Y, 0, _gameLevel.levelWidth);
+				newCoord.X = MathHelper.Clamp(newCoord.X, 0, GameLevel.levelHeight);
+				newCoord.Y = MathHelper.Clamp(newCoord.Y, 0, GameLevel.levelWidth);
 			}
 			
 			return newCoord;

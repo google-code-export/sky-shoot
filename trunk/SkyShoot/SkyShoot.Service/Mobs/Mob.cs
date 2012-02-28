@@ -10,7 +10,7 @@ using SkyShoot.Contracts.Weapon.Projectiles;
 
 namespace SkyShoot.Contracts.Mobs
 {
-	public class Mob : AMob
+	public class Mob : AGameObject
 	{
 		public MainSkyShootService targetPlayer { get; set; }
 
