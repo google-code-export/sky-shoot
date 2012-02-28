@@ -36,11 +36,11 @@ namespace SkyShoot.Game.Client.Weapon
 			// todo
 			switch (Type)
 			{
-				case EnumBulletType.Bullet:
+				case EnumObjectType.Bullet:
 					break;
-				case EnumBulletType.Flame:
+				case EnumObjectType.Flame:
 					break;
-				case EnumBulletType.Rocket:
+				case EnumObjectType.Rocket:
 					break;
 			}
 
@@ -53,7 +53,7 @@ namespace SkyShoot.Game.Client.Weapon
 		{		
 			int milliseconds = gameTime.ElapsedGameTime.Milliseconds;
 
-			Vector2 movement = Direction * Speed * milliseconds;
+			Vector2 movement = RunVector * Speed * milliseconds;
 
 			Coordinates += movement;
 
@@ -69,7 +69,7 @@ namespace SkyShoot.Game.Client.Weapon
 
 		public void Draw(SpriteBatch spriteBatch)
 		{
-			var rotation = (float) Math.Atan2(Direction.Y, Direction.X) + MathHelper.PiOver2;
+			var rotation = (float) Math.Atan2(RunVector.Y, RunVector.X) + MathHelper.PiOver2;
 
 			spriteBatch.Draw(Texture,
 			                 Coordinates,

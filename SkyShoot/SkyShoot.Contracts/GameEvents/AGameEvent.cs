@@ -12,6 +12,7 @@ namespace SkyShoot.Contracts.GameEvents
 	[KnownType(typeof( NewObjectEvent))] //возможно должно быть не здесь
 	[KnownType(typeof(ObjectDirectionChanged))]
 	[KnownType(typeof(ObjectDeleted))]
+	[KnownType(typeof(ObjectHealthChanged))]
 	public abstract class AGameEvent
 	{
 		[DataMember]
@@ -19,20 +20,25 @@ namespace SkyShoot.Contracts.GameEvents
 		[DataMember]
 		public Guid guid { get; protected set; }
 
-		public abstract void updateMob(AMob mob);
+		public AGameEvent(Guid id,long timeStamp){
+			guid = id;
+			TimeStamp = timeStamp;
+		}
+
+		public abstract void updateMob(AGameObject mob);
 		//этот метод будет вызываться на клиенте при нахождении соответствующего объекта
 	}
 
 	public class NewObjectEvent : AGameEvent{
 		[DataMember]
-		AMob newMob;
-		public NewObjectEvent(AMob mob,long timeStamp){
+		private AGameObject newMob;
+		public NewObjectEvent(AGameObject mob,long timeStamp)
+			:base(mob.Id,timeStamp)
+		{
 			newMob = mob;
-			guid = mob.Id;
-			TimeStamp = timeStamp;
 		}
 
-		public override void updateMob(AMob mob)
+		public override void updateMob(AGameObject mob)
 		{
 			mob.Copy(newMob);
 		}
@@ -41,15 +47,14 @@ namespace SkyShoot.Contracts.GameEvents
 	public class ObjectDirectionChanged : AGameEvent
 	{
 		[DataMember]
-		Vector2 newRunDirection;
+		private Vector2 newRunDirection;
 		public ObjectDirectionChanged(Vector2 direction,Guid id,long timeStamp)
+			:base(id,timeStamp)
 		{
 			newRunDirection = direction;
-			guid = id;
-			TimeStamp = timeStamp;
 		}
 
-		public override void updateMob(AMob mob)
+		public override void updateMob(AGameObject mob)
 		{
 			mob.RunVector = newRunDirection;
 		}
@@ -58,15 +63,30 @@ namespace SkyShoot.Contracts.GameEvents
 	public class ObjectDeleted : AGameEvent
 	{
 		public ObjectDeleted(Guid id,long timeStamp)
+			:base(id,timeStamp)
 		{
-			guid = id;
-			TimeStamp = timeStamp;
 		}
 
-		
-		public override void updateMob(AMob mob)
+		public override void updateMob(AGameObject mob)
 		{
-			//mob.IsActive = false; //это если на клиенте тоже сделать ObjectPool
+			mob.IsActive = false;
+		}
+	}
+
+	public class ObjectHealthChanged : AGameEvent
+	{
+		[DataMember]
+		private float health;
+
+		public ObjectHealthChanged(float newHp, Guid id, long timeStamp)
+			: base(id, timeStamp)
+		{
+			health = newHp;
+		}
+
+		public override void updateMob(AGameObject mob)
+		{
+			mob.HealthAmount = health;
 		}
 	}
 }

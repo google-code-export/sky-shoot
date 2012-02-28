@@ -15,22 +15,23 @@ using SkyShoot.Contracts.Session;
 using SkyShoot.Contracts.Weapon.Projectiles;
 
 using SkyShoot.Contracts.Weapon;
+using SkyShoot.Contracts.GameEvents;
 
 namespace SkyShoot.Service
 {
 	static class TypeConverter
 	{
-		public static AMob Mob(AMob m)
+		public static AGameObject Mob(AGameObject m)
 		{
-			return new AMob(m);
+			return new AGameObject(m);
 		}
 
-		public static AMob[] Mobs(AMob[] ms)
+		public static AGameObject[] Mobs(AGameObject[] ms)
 		{
-			var rs = new AMob[ms.Length];
+			var rs = new AGameObject[ms.Length];
 			for (int i = 0; i < ms.Length; i++)
 			{
-				rs[i] = new AMob(ms[i]);
+				rs[i] = new AGameObject(ms[i]);
 			}
 			return rs;
 		}
@@ -53,19 +54,24 @@ namespace SkyShoot.Service
 
 	[ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant,
 			InstanceContextMode = InstanceContextMode.PerSession)]
-	public class MainSkyShootService : AMob, ISkyShootService, ISkyShootCallback
+	public class MainSkyShootService : AGameObject, ISkyShootService//, ISkyShootCallback
 	{
 		public static int globalID = 0;
 		public int localID;
 		private ISkyShootCallback _callback;
 		public string Name;
+		public Queue<AGameEvent> NewEvents;
 
 		//private Account.AccountManager _accountManager = new Account.AccountManager();
 		private readonly Session.SessionManager _sessionManager = Session.SessionManager.Instance;
 
 		private static readonly List<MainSkyShootService> ClientsList = new List<MainSkyShootService>();
 
-		public MainSkyShootService() : base(new Vector2(0, 0), Guid.NewGuid()) { localID = globalID; globalID++; }
+		public MainSkyShootService() : base(new Vector2(0, 0), Guid.NewGuid()) 
+		{
+			NewEvents = new Queue<AGameEvent>();
+			localID = globalID; globalID++; 
+		}
 
 		public void Disconnect() { _sessionManager.LeaveGame(this); }
 
@@ -150,22 +156,29 @@ namespace SkyShoot.Service
 		//public event SomebodySpawnsHandler MobSpawned;
 		//public event SomebodyDiesHandler MobDied;
 
-		public void Move(Vector2 direction) // приходит снаружи от клиента
+		public Queue<AGameEvent> Move(Vector2 direction) // приходит снаружи от клиента
 		{
 			if (MeMoved != null)
 			{
 				MeMoved(this, direction);
 			}
+			return NewEvents;
 		}
 
-		public void Shoot(Vector2 direction)
+		public Queue<AGameEvent> Shoot(Vector2 direction)
 		{
 			if (MeShot != null)
 			{
 				MeShot(this, direction);
 			}
+			return NewEvents;
 		}
 
+		public Queue<AGameEvent> GetEvents()
+		{
+			return NewEvents;
+		}
+		/*
 		public void TakeBonus(Contracts.Bonuses.AObtainableDamageModifier bonus)
 		{
 			bonus.Owner.State |= bonus.Type;
@@ -175,7 +188,7 @@ namespace SkyShoot.Service
 		{
 			throw new NotImplementedException();
 		}
-
+		*/
 		public void LeaveGame()
 		{
 			bool result = _sessionManager.LeaveGame(this);
@@ -188,19 +201,32 @@ namespace SkyShoot.Service
 			ClientsList.Remove(this);
 		}
 
-		public void GameStart(AMob[] mobs,GameLevel arena)
+		public GameLevel GameStart(int gameId)
 		{
-			var mobsCopy = TypeConverter.Mobs(mobs);
+			return _sessionManager.GameStarted(gameId);
+			//var mobsCopy = TypeConverter.Mobs(mobs);
 			
-			try
-			{
-				_callback.GameStart(mobsCopy, arena);
-			}
-			catch (Exception) { this.Disconnect(); }
-			Trace.WriteLine("callback: GameStarted");
+			//try
+			//{
+			//	_callback.GameStart(mobsCopy, arena);
+			//}
+			//catch (Exception) { this.Disconnect(); }
+			//Trace.WriteLine("callback: GameStarted");
 		}
 
-		public void SpawnMob(AMob mob)
+
+		public AGameObject[] SynchroFrame()
+		{
+			return null; //заглушка
+		}
+
+		public String[] PlayerListUpdate()
+		{
+			return null; //заглушка
+		}
+
+		/*
+		public void SpawnMob(AGameObject mob)
 		{
 			var mobCopy = TypeConverter.Mob(mob);
 			//Trace.WriteLine("callback.SpawnMob(mID: " + mob.Id + ")");
@@ -212,7 +238,7 @@ namespace SkyShoot.Service
 			catch (Exception ) { this.Disconnect(); }
 		}
 
-		public void Hit(AMob mob, AProjectile projectile)
+		public void Hit(AGameObject mob, AProjectile projectile)
 		{
 			var mobCopy = TypeConverter.Mob(mob);
 			var projCopy = projectile==null ? null : TypeConverter.Projectile(projectile);
@@ -224,7 +250,7 @@ namespace SkyShoot.Service
 			catch (Exception ) { this.Disconnect(); }
 		}
 
-		public void MobDead(AMob mob)
+		public void MobDead(AGameObject mob)
 		{
 			var mobCopy = TypeConverter.Mob(mob);
 
@@ -235,7 +261,7 @@ namespace SkyShoot.Service
 			catch (Exception ) { this.Disconnect(); }
 		}
 
-		public void MobMoved(AMob mob, Vector2 direction)
+		public void MobMoved(AGameObject mob, Vector2 direction)
 		{
 			if (mob == this)
 				return;
@@ -249,7 +275,7 @@ namespace SkyShoot.Service
 			catch (Exception ) { this.Disconnect(); }
 		}
 
-		public void MobShot(AMob mob, AProjectile[] projectiles)
+		public void MobShot(AGameObject mob, AProjectile[] projectiles)
 		{
 			var mobCopy = TypeConverter.Mob(mob);
 			var projsCopy = TypeConverter.Projectiles(projectiles);
@@ -298,7 +324,7 @@ namespace SkyShoot.Service
 			catch (Exception ) { this.Disconnect(); }
 		}
 
-		public void PlayerLeft(AMob mob)
+		public void PlayerLeft(AGameObject mob)
 		{
 			var mobCopy = TypeConverter.Mob(mob);
 
@@ -309,7 +335,7 @@ namespace SkyShoot.Service
 			catch (Exception ) { this.Disconnect(); }
 		}
 
-		public void SynchroFrame(AMob[] mobs)
+		public void SynchroFrame(AGameObject[] mobs)
 		{
 			var mobsCopy = TypeConverter.Mobs(mobs);
 
@@ -329,6 +355,8 @@ namespace SkyShoot.Service
 			}
 			catch(Exception){ this.Disconnect(); }
 
-		}
+		}*/
+
+
 	}
 }

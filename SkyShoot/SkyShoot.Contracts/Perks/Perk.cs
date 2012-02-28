@@ -22,7 +22,7 @@ namespace SkyShoot.Contracts.Perks
 		[DataMember]
 		public Guid Id { get; set; }
 
-		public AMob Owner { get; set; }
+		public AGameObject Owner { get; set; }
 	 
 
 

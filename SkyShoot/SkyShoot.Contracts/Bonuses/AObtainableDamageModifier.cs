@@ -27,7 +27,7 @@ namespace SkyShoot.Contracts.Bonuses
 		[DataMember]
 		public Guid Id { get; set; }
 
-		public AMob Owner { get; set; }
+		public AGameObject Owner { get; set; }
 
 		public AObtainableDamageModifiers Type { get; set; }
 

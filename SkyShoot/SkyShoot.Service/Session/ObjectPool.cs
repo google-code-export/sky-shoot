@@ -7,7 +7,7 @@ using SkyShoot.Contracts.Weapon.Projectiles;
 
 namespace SkyShoot.ServProgram.Session
 {
-	class ObjectPool<T> where T:AProjectile,new()
+	class ObjectPool<T> where T:AGameObject,new()
 	{
 		public ObjectPoolNode FirstActive;
 		private ObjectPoolNode _firstInActive;

@@ -18,7 +18,7 @@ using SkyShoot.Game.Screens;
 
 using SkyShoot.Game.Client.View;
 
-using AMob = SkyShoot.Contracts.Mobs.AMob;
+using AMob = SkyShoot.Contracts.Mobs.AGameObject;
 
 using System.Security.Cryptography;
 
@@ -74,7 +74,7 @@ namespace SkyShoot.Game.Client.Game
 
 			GameModel = new GameModel(GameFactory.CreateClientGameLevel(arena));
 
-			foreach (AMob mob in mobs)
+			foreach (AGameObject mob in mobs)
 			{
 				var clientMob = GameFactory.CreateClientMob(mob);
 				GameModel.AddMob(clientMob);
@@ -154,7 +154,7 @@ namespace SkyShoot.Game.Client.Game
 		{
 			// update ShootVector
 			var clientMob = GameModel.GetMob(mob.Id);
-			clientMob.ShootVector = projectiles[projectiles.Length - 1].Direction;
+			clientMob.ShootVector = projectiles[projectiles.Length - 1].RunVector;
 
 			// add projectiles
 			foreach (var aProjectile in projectiles)
@@ -170,7 +170,7 @@ namespace SkyShoot.Game.Client.Game
 
 			foreach (var mob in mobs)
 			{
-				AMob clientMob;
+				AGameObject clientMob;
 				try
 				{
 					clientMob = GameModel.GetMob(mob.Id);

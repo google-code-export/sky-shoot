@@ -77,5 +77,10 @@ namespace SkyShoot.Service.Session
 				return false;
 			}
 		}
+
+		public GameLevel GameStarted(int gameId)
+		{
+			return _gameSessions.Find(x => x.LocalGameDescription.GameId == gameId).GameLevel;
+		}
 	}
 }

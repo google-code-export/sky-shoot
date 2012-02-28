@@ -11,7 +11,7 @@ namespace SkyShoot.Game.Client.Game
 {
 	internal class GameFactory
 	{
-		public static Mob CreateClientMob(Contracts.Mobs.AMob mob)
+		public static Mob CreateClientMob(Contracts.Mobs.AGameObject mob)
 		{
 			// todo mob type
 			return new Mob(mob, mob.IsPlayer ? Textures.PlayerAnimation : Textures.SpiderAnimation);
