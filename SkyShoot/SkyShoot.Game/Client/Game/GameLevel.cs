@@ -1,13 +1,9 @@
 using System;
-
 using Microsoft.Xna.Framework;
-
 using Microsoft.Xna.Framework.Graphics;
-
 using SkyShoot.Contracts.Session;
 
 using SkyShoot.Game.Client.View;
-
 using IDrawable = SkyShoot.Game.Client.View.IDrawable;
 
 namespace SkyShoot.Game.Client.Game

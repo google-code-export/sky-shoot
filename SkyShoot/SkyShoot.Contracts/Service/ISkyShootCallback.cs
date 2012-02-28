@@ -7,7 +7,7 @@ using SkyShoot.Contracts.Bonuses;
 
 using SkyShoot.Contracts.Weapon.Projectiles;
 
-using Microsoft.Xna.Framework;
+using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Contracts.Service
 {

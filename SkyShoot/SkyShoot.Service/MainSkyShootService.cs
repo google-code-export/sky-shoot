@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 using System.Diagnostics;
 
-using Microsoft.Xna.Framework;
+using SkyShoot.XNA.Framework;
 
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Service;

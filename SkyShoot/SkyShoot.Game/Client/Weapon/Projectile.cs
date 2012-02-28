@@ -9,7 +9,6 @@ using SkyShoot.Contracts.Weapon.Projectiles;
 
 using SkyShoot.Game.Client.Game;
 using SkyShoot.Game.Client.View;
-
 using IDrawable = SkyShoot.Game.Client.View.IDrawable;
 
 namespace SkyShoot.Game.Client.Weapon
@@ -72,7 +71,7 @@ namespace SkyShoot.Game.Client.Weapon
 			var rotation = (float) Math.Atan2(RunVector.Y, RunVector.X) + MathHelper.PiOver2;
 
 			spriteBatch.Draw(Texture,
-			                 Coordinates,
+			                 TypeConverter.Vector2_s2m(Coordinates),
 			                 null,
 			                 Color.White,
 			                 rotation,

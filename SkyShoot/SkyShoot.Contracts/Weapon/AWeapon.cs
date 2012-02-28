@@ -3,7 +3,7 @@
 using SkyShoot.Contracts.Bonuses;
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Weapon.Projectiles;
-using Microsoft.Xna.Framework;
+using SkyShoot.XNA.Framework;
 using System.Runtime.Serialization;
 
 namespace SkyShoot.Contracts.Weapon

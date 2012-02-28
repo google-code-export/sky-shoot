@@ -52,10 +52,10 @@ namespace SkyShoot.Game.Client.View
 			return Create(width, heigth < 1 ? 1 : heigth, c);
 		}
 
-		public static Texture2D ProjectileTexture
-		{
-			get { return Create(3, 30, Color.Red); }
-		}
+        public static Texture2D ProjectileTexture
+        {
+            get { return Create(1, 4, Color.Red); }
+        }
 
 		// create a colored rectangle
 		public static Texture2D Create(int width, int height, Color color)

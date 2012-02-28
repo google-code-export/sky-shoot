@@ -18,7 +18,7 @@ using SkyShoot.Game.Screens;
 
 using SkyShoot.Game.Client.View;
 
-using AMob = SkyShoot.Contracts.Mobs.AGameObject;
+using SkyShoot.Contracts.Mobs;
 
 using System.Security.Cryptography;
 
@@ -68,7 +68,7 @@ namespace SkyShoot.Game.Client.Game
 
 		#region ServerInput
 
-		public void GameStart(AMob[] mobs, Contracts.Session.GameLevel arena)
+		public void GameStart(AGameObject[] mobs, Contracts.Session.GameLevel arena)
 		{
 			ScreenManager.Instance.SetActiveScreen(typeof(GameplayScreen)); // = ScreenManager.ScreenEnum.GameplayScreen;
 
@@ -84,29 +84,29 @@ namespace SkyShoot.Game.Client.Game
 			IsGameStarted = true;
 		}
 
-		public void SpawnMob(AMob mob)
+		public void SpawnMob(AGameObject mob)
 		{
 			var clientMob = GameFactory.CreateClientMob(mob);
 			GameModel.AddMob(clientMob);
 		}
 
-		public void Hit(AMob mob, AProjectile projectile)
+		public void Hit(AGameObject mob, AProjectile projectile)
 		{
 			if (projectile != null)
 				GameModel.RemoveProjectile(projectile.Id);
 			GameModel.GetMob(mob.Id).HealthAmount = mob.HealthAmount;
 		}
 
-		public void MobDead(AMob mob)
+		public void MobDead(AGameObject mob)
 		{
 			GameModel.RemoveMob(mob.Id);
 			GameModel.GameLevel.AddTexture(mob.IsPlayer ? Textures.DeadPlayerTexture : Textures.DeadSpiderTexture,
-			                               mob.Coordinates);
+			                              TypeConverter.Vector2_s2m(mob.Coordinates));
 		}
 
-		public void MobMoved(AMob mob, Vector2 direction)
+		public void MobMoved(AGameObject mob,SkyShoot.XNA.Framework.Vector2 direction)
 		{
-			GameModel.GetMob(mob.Id).RunVector = direction;
+			GameModel.GetMob(mob.Id).RunVector =direction;// TypeConverter.Vector2_m2s(direction);
 		}
 
 		public void BonusDropped(AObtainableDamageModifier bonus)
@@ -130,7 +130,7 @@ namespace SkyShoot.Game.Client.Game
 			ScreenManager.Instance.SetActiveScreen(typeof(MainMenuScreen));
 		}
 
-		public void PlayerLeft(AMob mob)
+		public void PlayerLeft(AGameObject mob)
 		{
 			//TODO! issue 26? 
 
@@ -150,7 +150,7 @@ namespace SkyShoot.Game.Client.Game
 				GameModel.RemoveMob(mob.Id);
 		}
 
-		public void MobShot(AMob mob, AProjectile[] projectiles)
+		public void MobShot(AGameObject mob, AProjectile[] projectiles)
 		{
 			// update ShootVector
 			var clientMob = GameModel.GetMob(mob.Id);
@@ -163,10 +163,10 @@ namespace SkyShoot.Game.Client.Game
 			}
 		}
 
-		public void SynchroFrame(AMob[] mobs)
+		public AGameObject[] SynchroFrame(AGameObject[] mobs)
 		{
 			if (!IsGameStarted)
-				return;
+				return null;
 
 			foreach (var mob in mobs)
 			{
@@ -190,6 +190,7 @@ namespace SkyShoot.Game.Client.Game
 				clientMob.Speed = mob.Speed;
 				clientMob.State = mob.State;
 			}
+			return null;
 		}
 
 		public void PlayerListChanged(String[] names)
@@ -228,21 +229,21 @@ namespace SkyShoot.Game.Client.Game
 			if (currentRunVector.HasValue)
 			{
 				Move(currentRunVector.Value);
-				player.RunVector = currentRunVector.Value;
+				player.RunVectorM = currentRunVector.Value;
 			}
 
 			Vector2 mouseCoordinates = controller.SightPosition;
 			
-			player.ShootVector = mouseCoordinates - GameModel.Camera2D.ConvertToLocal(player.Coordinates);
-			if (player.ShootVector.Length() > 0)
-				player.ShootVector.Normalize();
+            player.ShootVectorM = mouseCoordinates - GameModel.Camera2D.ConvertToLocal(player.CoordinatesM);
+            if (player.ShootVector.Length() > 0)
+                player.ShootVector.Normalize();
 
 			if (controller.ShootButton == ButtonState.Pressed)
 			{
 				if ((DateTime.Now - _dateTime).Milliseconds > Rate)
 				{
 					_dateTime = DateTime.Now;
-					Shoot(player.ShootVector);
+					Shoot(player.ShootVectorM);
 				}
 			}
 		}
@@ -340,47 +341,64 @@ namespace SkyShoot.Game.Client.Game
 			}
 		}
 
-		public void Move(Vector2 direction)
-		{
-			try
-			{
-				_service.Move(direction);
-			}
-			catch (Exception e)
-			{
-				FatalError(e);
-			}
-		}
+    	public void Move(Vector2 direction)
+    	{
+    		Move(TypeConverter.Vector2_m2s(direction));
+    	}
 
-		public void Shoot(Vector2 direction)
-		{
-			try
-			{
-				_service.Shoot(direction);
-			}
-			catch (Exception e)
-			{
-				FatalError(e);
-			}
-		}
+    	public void Move(SkyShoot.XNA.Framework.Vector2 direction)
+        {
+            try
+            {
+							var sw = new Stopwatch(); sw.Start();
+                _service.Move(direction);
+							sw.Stop();
+							Trace.WriteLine("SW:serv:Move " + sw.ElapsedMilliseconds);
+            }
+            catch (Exception e)
+            {
+                FatalError(e);
+            }
+        }
 
-		public void TakeBonus(AObtainableDamageModifier bonus)
-		{
-			try
-			{
-				_service.TakeBonus(bonus);
-			}
-			catch (Exception e)
-			{
-				FatalError(e);
-			}
-		}
+        public void Shoot(SkyShoot.XNA.Framework.Vector2 direction)
+        {
+            try
+            {
+							var sw = new Stopwatch(); sw.Start();
+                _service.Shoot(direction);
+								sw.Stop();
+								Trace.WriteLine("SW:serv:Shoot " + sw.ElapsedMilliseconds);
+
+            }
+            catch (Exception e)
+            {
+                FatalError(e);
+            }
+        }
+
+    	public void Shoot(Vector2 direction)
+    	{
+    		Shoot(TypeConverter.Vector2_m2s(direction));
+    	}
+
+    	public void TakeBonus(AObtainableDamageModifier bonus)
+        {
+            try
+            {
+				//_service.TakeBonus(bonus);
+            }
+            catch (Exception e)
+            {
+                FatalError(e);
+            }
+        }
 
 		public void TakePerk(Perk perk)
 		{
 			try
 			{
-				_service.TakePerk(perk);
+				//_service.TakePerk(perk);
 			}
 			catch (Exception e)
 			{

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
+using SkyShoot.XNA.Framework;
 using SkyShoot.Contracts.Session;
 using SkyShoot.Service.Mobs;
 using SkyShoot.Service.Weapon;
