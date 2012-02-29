@@ -180,6 +180,15 @@ namespace SkyShoot.Service.Session
 			IsStarted = false;
 		}
 
+		public AGameObject[] GetSynchroFrame()
+		{
+			var allObjects = new List<AGameObject>(_mobs);
+			allObjects.AddRange(Players);
+			Trace.WriteLine("SynchroFrame");
+			return allObjects.ToArray();
+
+		}
+
 		public void Start()
 		{
 			for(int i = 0; i < Players.Count; i++)
@@ -340,36 +349,13 @@ namespace SkyShoot.Service.Session
 			}
 
 			//_projectiles.RemoveAll(x => (x==null) || (x.LifeDistance <= 0));
-
-			if (_timerCounter % 10 == 0)
-			{
-				var allObjects = new List<AGameObject>(_mobs);
-				allObjects.AddRange(Players);
-				for (int i = 0; i < Players.Count; i++)
-				{
-					//Players[i].SynchroFrame(allObjects.ToArray());
-				}
-				Trace.WriteLine("SynchroFrame");
-			}
 			Trace.WriteLine(System.DateTime.Now.Ticks/10000 - now);
 			Trace.WriteLine("update end " + _timerCounter);
 			_timerCounter++;
 			//_updated = false;
 			System.Threading.Monitor.Exit(_updating);
 		}
-	/*
-		public void UpdatePlayersList(MainSkyShootService player)
-		{
-			var names = LocalGameDescription.Players.ToArray();
-			for (int i = 0; i < Players.Count; i++)
-			{
-				if (Players[i] != player)
-				{
-					//Players[i].PlayerListChanged(names);
-				}
-			}
-		}
-		*/
+		
 		private Mob hitTestProjectile(AProjectile projectile, Vector2 newCord)
 		{
 			var prX = newCord.X - projectile.Coordinates.X;
