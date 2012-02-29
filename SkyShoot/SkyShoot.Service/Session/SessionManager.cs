@@ -5,12 +5,16 @@ using System.Linq;
 using System.Collections.Generic;
 
 using SkyShoot.Contracts.Session;
+using SkyShoot.Contracts.Mobs;
+using System.Collections.Concurrent;
 
 namespace SkyShoot.Service.Session
 {
 	public sealed class SessionManager
 	{
 		private static readonly SessionManager LocalInstance = new SessionManager();
+
+		public Dictionary<Guid, GameSession> SessionTable;
 
 		public static SessionManager Instance
 		{
@@ -25,6 +29,7 @@ namespace SkyShoot.Service.Session
 
 		private SessionManager()
 		{
+			SessionTable = new Dictionary<Guid,GameSession>();
 			_gameSessions = new List<GameSession>();
 			_gameId = 1;
 		}
@@ -33,6 +38,7 @@ namespace SkyShoot.Service.Session
 		public bool JoinGame(GameDescription game, MainSkyShootService player)
 		{
 			GameSession session = _gameSessions.Find(curGame => curGame.LocalGameDescription.GameId == game.GameId);
+			SessionTable.Add(player.Id, session);
 			return session.AddPlayer(player);
 
 		}
@@ -42,6 +48,7 @@ namespace SkyShoot.Service.Session
 		{
 			var gameSession = new GameSession(tileSet, maxPlayers, mode, _gameId);
 			_gameSessions.Add(gameSession);
+			SessionTable.Add(client.Id, gameSession);
 			_gameId++;
 			gameSession.AddPlayer(client);
 			
@@ -61,7 +68,8 @@ namespace SkyShoot.Service.Session
 		{
 			try
 			{
-				var game = _gameSessions.Find(gameSession => gameSession.LocalGameDescription.Players.Contains(player.Name));
+				GameSession game;
+				SessionTable.TryGetValue(player.Id,out game);
 				var leavingPlayer = player;
 				game.PlayerLeave(leavingPlayer);
 				if (game.Players.Count == 0)
@@ -70,6 +78,7 @@ namespace SkyShoot.Service.Session
 					_gameSessions.Remove(game);
 					
 				}
+				SessionTable.Remove(player.Id);
 				return true;
 			}
 			catch (Exception)
@@ -77,10 +86,11 @@ namespace SkyShoot.Service.Session
 				return false;
 			}
 		}
-
+		//временно
 		public GameLevel GameStarted(int gameId)
 		{
-			return _gameSessions.Find(x => x.LocalGameDescription.GameId == gameId).GameLevel;
+			var game = _gameSessions.Find(x => x.LocalGameDescription.GameId == gameId);
+			return game.IsStarted ? game.GameLevel : null;
 		}
 	}
 }

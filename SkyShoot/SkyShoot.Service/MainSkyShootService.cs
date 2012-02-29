@@ -16,6 +16,7 @@ using SkyShoot.Contracts.Weapon.Projectiles;
 
 using SkyShoot.Contracts.Weapon;
 using SkyShoot.Contracts.GameEvents;
+using SkyShoot.Service.Session;
 
 namespace SkyShoot.Service
 {
@@ -162,7 +163,7 @@ namespace SkyShoot.Service
 			{
 				MeMoved(this, direction);
 			}
-			return NewEvents;
+			return GetEvents();
 		}
 
 		public Queue<AGameEvent> Shoot(Vector2 direction)
@@ -171,12 +172,14 @@ namespace SkyShoot.Service
 			{
 				MeShot(this, direction);
 			}
-			return NewEvents;
+			return GetEvents();
 		}
 
 		public Queue<AGameEvent> GetEvents()
 		{
-			return NewEvents;
+			Queue<AGameEvent> events = new Queue<AGameEvent>(NewEvents);
+			NewEvents.Clear();
+			return events;
 		}
 		/*
 		public void TakeBonus(Contracts.Bonuses.AObtainableDamageModifier bonus)
@@ -203,26 +206,23 @@ namespace SkyShoot.Service
 
 		public GameLevel GameStart(int gameId)
 		{
+			Trace.WriteLine("callback: GameStarted");
 			return _sessionManager.GameStarted(gameId);
-			//var mobsCopy = TypeConverter.Mobs(mobs);
-			
-			//try
-			//{
-			//	_callback.GameStart(mobsCopy, arena);
-			//}
-			//catch (Exception) { this.Disconnect(); }
-			//Trace.WriteLine("callback: GameStarted");
 		}
 
 
 		public AGameObject[] SynchroFrame()
 		{
-			return null; //заглушка
+			GameSession session;
+			_sessionManager.SessionTable.TryGetValue(Id,out session);
+			return session.GetSynchroFrame();
 		}
 
 		public String[] PlayerListUpdate()
 		{
-			return null; //заглушка
+			GameSession session;
+			_sessionManager.SessionTable.TryGetValue(Id, out session);
+			return session.LocalGameDescription.Players.ToArray();
 		}
 
 		/*
