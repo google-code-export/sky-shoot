@@ -53,64 +53,42 @@ namespace SkyShoot.Service.Session
 			_spiderFactory= new SpiderFactory(GameLevel);
 		}
 
-		public event SomebodyMovesHandler SomebodyMoves; 
-		public event SomebodyShootsHandler SomebodyShoots;
-		public event StartGameHandler StartGame;
-		public event SomebodyDiesHandler SomebodyDies;
-		public event SomebodyHitHandler SomebodyHit;
-		public event SomebodySpawnsHandler SomebodySpawns;
-		public event NewPlayerConnectedHandler NewPlayerConnected;
+		//public event SomebodyMovesHandler SomebodyMoves; 
+		//public event SomebodyDiesHandler SomebodyDies;
+		//public event SomebodyHitHandler SomebodyHit;
 		
 		private void SomebodyMoved(AGameObject sender, Vector2 direction)
 		{
 			sender.RunVector = direction;
-			if (SomebodyMoves != null)
-			{
-				SomebodyMoves(sender, direction);
-			}
 			pushEvent(new ObjectDirectionChanged(direction,sender.Id,_timerCounter));
 		}
 
 		private void SomebodyShot(AGameObject sender, Vector2 direction)
 		{
 			sender.ShootVector = direction;
-			if (SomebodyShoots != null)
+			
+			if ((sender as MainSkyShootService).Weapon != null)
 			{
-				if ((sender as MainSkyShootService).Weapon != null)
+				if ((sender as MainSkyShootService).Weapon.Reload(System.DateTime.Now.Ticks / 10000))
 				{
-					if ((sender as MainSkyShootService).Weapon.Reload(System.DateTime.Now.Ticks / 10000))
+					var a = (sender as MainSkyShootService).Weapon.CreateBullets(sender, direction);
+					foreach (var b in a)
 					{
-						var a = (sender as MainSkyShootService).Weapon.CreateBullets(sender, direction);
-						foreach (var b in a)
-						{
-							_projectiles.getInActive().Copy(b);
-							pushEvent(new NewObjectEvent(b,_timerCounter));
-						}
-						//Trace.WriteLine("projectile added", "GameSession");
-
-						SomebodyShoots(sender, a);
+						_projectiles.getInActive().Copy(b);
+						pushEvent(new NewObjectEvent(b,_timerCounter));
 					}
+					//Trace.WriteLine("projectile added", "GameSession");
 				}
 			}
 		}
 
 		public void SomebodyDied(AGameObject sender)
 		{
-			if (SomebodyDies != null)
-			{
-				SomebodyDies(sender);
-			}
-
 			pushEvent(new ObjectDeleted(sender.Id, _timerCounter));
 		}
 
 		public void SomebodySpawned(AGameObject sender) 
-		{
-			if (SomebodySpawns != null) 
-			{
-				SomebodySpawns(sender);
-			}
-
+		{			
 			pushEvent(new NewObjectEvent(sender,_timerCounter));
 		}
 
@@ -124,31 +102,17 @@ namespace SkyShoot.Service.Session
 
 		public void SomebodyHitted(AGameObject mob, AProjectile projectile)
 		{
-			if(SomebodyHit != null)	SomebodyHit(mob, projectile);
 			pushEvent(new ObjectHealthChanged(mob.HealthAmount, mob.Id, _timerCounter));
 		}
 
 		public void PlayerLeave(MainSkyShootService player)
 		{
 			LocalGameDescription.Players.Remove(player.Name);
-			
-			//this.SomebodyHit -= player.Hit;
-			//this.SomebodyMoves -= player.MobMoved;
-			//this.SomebodyShoots -= player.MobShot;
-			//this.SomebodySpawns -= player.SpawnMob;
-			//this.SomebodyDies -= player.MobDead;
-			//this.StartGame -= player.GameStart;
-			
+
 			player.MeMoved -= SomebodyMoved;
 			player.MeShot -= SomebodyShot;
-			//player.MobSpawned -= SomebodySpawned;
-			//player.MobDied -= SomebodyDied;
 
 			Players.Remove(player);
-			if (!IsStarted)
-			{ 
-				//UpdatePlayersList(player);
-			}
 			Trace.WriteLine(player.Name + "leaved game");
 			
 		}
@@ -214,11 +178,9 @@ namespace SkyShoot.Service.Session
 				
 			}
 			System.Threading.Thread.Sleep(1000);
-			if (!IsStarted && StartGame != null)
+			if (!IsStarted)
 			{
 				IsStarted = true;
-				StartGame(Players.ToArray(), GameLevel);
-			
 			}
 			_timerCounter = 0;
 			_updating = false;
@@ -243,7 +205,7 @@ namespace SkyShoot.Service.Session
 			var names = new String[Players.Count];
 			//UpdatePlayersList(player);
 
-			if (NewPlayerConnected != null) NewPlayerConnected(player);
+			//if (NewPlayerConnected != null) NewPlayerConnected(player);
 
 			//StartGame += player.GameStart;
 

@@ -70,11 +70,12 @@ namespace SkyShoot.Service
 
 		public MainSkyShootService() : base(new Vector2(0, 0), Guid.NewGuid()) 
 		{
+			IsPlayer = true;
 			NewEvents = new Queue<AGameEvent>();
 			localID = globalID; globalID++; 
 		}
 
-		public void Disconnect() { _sessionManager.LeaveGame(this); }
+		public void Disconnect() { this.LeaveGame(); }
 
 		public bool Register(string username, string password)
 		{
@@ -206,7 +207,7 @@ namespace SkyShoot.Service
 
 		public GameLevel GameStart(int gameId)
 		{
-			Trace.WriteLine("callback: GameStarted");
+			Trace.WriteLine("GameStarted");
 			return _sessionManager.GameStarted(gameId);
 		}
 
@@ -224,139 +225,6 @@ namespace SkyShoot.Service
 			_sessionManager.SessionTable.TryGetValue(Id, out session);
 			return session.LocalGameDescription.Players.ToArray();
 		}
-
-		/*
-		public void SpawnMob(AGameObject mob)
-		{
-			var mobCopy = TypeConverter.Mob(mob);
-			//Trace.WriteLine("callback.SpawnMob(mID: " + mob.Id + ")");
-
-			try
-			{
-				_callback.SpawnMob(mobCopy);
-			}
-			catch (Exception ) { this.Disconnect(); }
-		}
-
-		public void Hit(AGameObject mob, AProjectile projectile)
-		{
-			var mobCopy = TypeConverter.Mob(mob);
-			var projCopy = projectile==null ? null : TypeConverter.Projectile(projectile);
-
-			try
-			{
-				_callback.Hit(mobCopy, projCopy);
-			}
-			catch (Exception ) { this.Disconnect(); }
-		}
-
-		public void MobDead(AGameObject mob)
-		{
-			var mobCopy = TypeConverter.Mob(mob);
-
-			try
-			{
-				_callback.MobDead(mobCopy);
-			}
-			catch (Exception ) { this.Disconnect(); }
-		}
-
-		public void MobMoved(AGameObject mob, Vector2 direction)
-		{
-			if (mob == this)
-				return;
-
-			var mobCopy = TypeConverter.Mob(mob);
-
-			try
-			{
-				_callback.MobMoved(mobCopy, direction);
-			}
-			catch (Exception ) { this.Disconnect(); }
-		}
-
-		public void MobShot(AGameObject mob, AProjectile[] projectiles)
-		{
-			var mobCopy = TypeConverter.Mob(mob);
-			var projsCopy = TypeConverter.Projectiles(projectiles);
-
-			try
-			{
-				_callback.MobShot(mobCopy, projsCopy);
-			}
-			catch (Exception)  { this.Disconnect(); }
-		}
-
-		public void BonusDropped(Contracts.Bonuses.AObtainableDamageModifier bonus)
-		{
-			try
-			{
-				_callback.BonusDropped(bonus);
-			}
-			catch (Exception ) { this.Disconnect(); }
-		}
-
-		public void BonusExpired(Contracts.Bonuses.AObtainableDamageModifier bonus)
-		{
-			try
-			{
-				_callback.BonusExpired(bonus);
-			}
-			catch (Exception ) { this.Disconnect(); }
-		}
-
-		public void BonusDisappeared(Contracts.Bonuses.AObtainableDamageModifier bonus)
-		{
-			try
-			{
-				_callback.BonusDisappeared(bonus);
-			}
-			catch (Exception ) { this.Disconnect(); }
-		}
-
-		public void GameOver()
-		{
-			try
-			{
-				_callback.GameOver();
-				Trace.WriteLine(localID + ": GameOver");
-			}
-			catch (Exception ) { this.Disconnect(); }
-		}
-
-		public void PlayerLeft(AGameObject mob)
-		{
-			var mobCopy = TypeConverter.Mob(mob);
-
-			try
-			{
-				_callback.PlayerLeft(mobCopy);
-			}
-			catch (Exception ) { this.Disconnect(); }
-		}
-
-		public void SynchroFrame(AGameObject[] mobs)
-		{
-			var mobsCopy = TypeConverter.Mobs(mobs);
-
-			try
-			{
-				_callback.SynchroFrame(mobsCopy);
-			}
-			catch (Exception ) { this.Disconnect(); }
-		}
-		
-		// передает массив игроков данной игры
-		public void PlayerListChanged(String[] names)
-		{
-			try
-			{
-				_callback.PlayerListChanged(names);
-			}
-			catch(Exception){ this.Disconnect(); }
-
-		}*/
-
 
 	}
 }
