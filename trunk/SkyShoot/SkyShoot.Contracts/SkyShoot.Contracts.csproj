@@ -64,7 +64,7 @@
     <Compile Include="GameEvents\AGameEvent.cs" />
     <Compile Include="ObjectBuffer.cs" />
     <Compile Include="Service\Constants.cs" />
-    <Compile Include="Mobs\AMob.cs" />
+    <Compile Include="Mobs\AGameObject.cs" />
     <Compile Include="Perks\Perk.cs" />
     <Compile Include="Session\TileSet.cs" />
     <Compile Include="Session\GameDescription.cs" />

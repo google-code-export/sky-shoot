@@ -34,14 +34,14 @@ namespace SkyShoot.Game.Controls
 			{
 				Index++;
 				Index %= Length;
-				FocusChanged();
+				// FocusChanged();
 			}
 			if (IsNewKeyPressed(Keys.Up))
 			{
 				Index--;
 				if (Index == -1)
 					Index = Length - 1;
-				FocusChanged();
+				// FocusChanged();
 			}
 
 			if(IsNewKeyPressed(Keys.Enter))
@@ -114,8 +114,8 @@ namespace SkyShoot.Game.Controls
 
 		public bool IsNewKeyPressed(Keys key)
 		{
-			return (_currentKeyboardState.IsKeyDown(key) &&
-					_lastKeyState.IsKeyUp(key));
+			return (_currentKeyboardState.IsKeyUp(key) &&
+					_lastKeyState.IsKeyDown(key));
 		}
 	}
 }

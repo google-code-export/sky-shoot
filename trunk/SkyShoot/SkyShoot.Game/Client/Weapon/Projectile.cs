@@ -17,7 +17,23 @@ namespace SkyShoot.Game.Client.Weapon
 	{
 		public Texture2D Texture { get; private set; }
 
-		public Boolean IsActive { get; private set; }
+		public Vector2 CoordinatesM
+		{
+			get { return TypeConverter.XnaLite2Xna(Coordinates); }
+			set { Coordinates = TypeConverter.Xna2XnaLite(value); }
+		}
+
+		public Vector2 RunVectorM
+		{
+			get { return TypeConverter.XnaLite2Xna(RunVector); }
+			set { RunVector = TypeConverter.Xna2XnaLite(value); }
+		}
+
+		public Vector2 ShootVectorM
+		{
+			get { return TypeConverter.XnaLite2Xna(ShootVector); }
+			set { ShootVector = TypeConverter.Xna2XnaLite(value); }
+		}
 
 		AudioEngine engine;
 		SoundBank soundBank;
@@ -52,9 +68,9 @@ namespace SkyShoot.Game.Client.Weapon
 		{		
 			int milliseconds = gameTime.ElapsedGameTime.Milliseconds;
 
-			Vector2 movement = RunVector * Speed * milliseconds;
+			Vector2 movement = RunVectorM * Speed * milliseconds;
 
-			Coordinates += movement;
+			CoordinatesM += movement;
 
 			LifeDistance -= movement.Length();
 
@@ -71,7 +87,7 @@ namespace SkyShoot.Game.Client.Weapon
 			var rotation = (float) Math.Atan2(RunVector.Y, RunVector.X) + MathHelper.PiOver2;
 
 			spriteBatch.Draw(Texture,
-			                 TypeConverter.Vector2_s2m(Coordinates),
+			                 TypeConverter.XnaLite2Xna(Coordinates),
 			                 null,
 			                 Color.White,
 			                 rotation,
