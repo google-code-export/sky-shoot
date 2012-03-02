@@ -150,7 +150,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Controls\GameScreen.cs" />
-    <Compile Include="Controls\InputState.cs" />
     <Compile Include="Controls\ScreenManager.cs" />
     <Compile Include="Screens\GameplayScreen.cs" />
     <Compile Include="Screens\LoadingScreen.cs" />

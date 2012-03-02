@@ -50,7 +50,7 @@ namespace SkyShoot.Game.Controls
 
 		public override Vector2? RunVector
 		{
-			// TODO!
+			// TODO, 10%!
 			get { return GetRunVector(_currentGamePadState); }
 		}
 
@@ -61,7 +61,7 @@ namespace SkyShoot.Game.Controls
 
 		public override ButtonState ShootButton
 		{
-			get { throw new NotImplementedException(); }
+			get { return _currentGamePadState.Buttons.X; }
 		}
 
 		private Vector2 GetRunVector(GamePadState gamePadState)
@@ -72,6 +72,7 @@ namespace SkyShoot.Game.Controls
 				runVector = gamePadState.ThumbSticks.Left;
 				runVector.Y = -runVector.Y;
 			}
+			Console.WriteLine(runVector);
 			return runVector;
 		}
 

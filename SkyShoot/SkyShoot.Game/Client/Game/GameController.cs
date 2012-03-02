@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 using System.Diagnostics;
@@ -6,7 +7,7 @@ using System.ServiceModel;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-
+using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Perks;
 using SkyShoot.Contracts.Bonuses;
 using SkyShoot.Contracts.Service;
@@ -27,7 +28,8 @@ namespace SkyShoot.Game.Client.Game
 
 	public class HashHelper
 	{
-		public static string GetMd5Hash(string input) // выдаёт последовательность из 32 шестнадцатеричных цифр (md5 хеш от аргумента)
+		public static string GetMd5Hash(string input)
+			// выдаёт последовательность из 32 шестнадцатеричных цифр (md5 хеш от аргумента)
 		{
 			MD5 md5Hasher = MD5.Create();
 
@@ -70,7 +72,7 @@ namespace SkyShoot.Game.Client.Game
 
 		public void GameStart(AGameObject[] mobs, Contracts.Session.GameLevel arena)
 		{
-			ScreenManager.Instance.SetActiveScreen(typeof(GameplayScreen)); // = ScreenManager.ScreenEnum.GameplayScreen;
+			ScreenManager.Instance.SetActiveScreen(typeof (GameplayScreen)); // = ScreenManager.ScreenEnum.GameplayScreen;
 
 			GameModel = new GameModel(GameFactory.CreateClientGameLevel(arena));
 
@@ -101,12 +103,12 @@ namespace SkyShoot.Game.Client.Game
 		{
 			GameModel.RemoveMob(mob.Id);
 			GameModel.GameLevel.AddTexture(mob.IsPlayer ? Textures.DeadPlayerTexture : Textures.DeadSpiderTexture,
-			                              TypeConverter.Vector2_s2m(mob.Coordinates));
+			                               TypeConverter.XnaLite2Xna(mob.Coordinates));
 		}
 
-		public void MobMoved(AGameObject mob,SkyShoot.XNA.Framework.Vector2 direction)
+		public void MobMoved(AGameObject mob, XNA.Framework.Vector2 direction)
 		{
-			GameModel.GetMob(mob.Id).RunVector =direction;// TypeConverter.Vector2_m2s(direction);
+			GameModel.GetMob(mob.Id).RunVector = direction; // TypeConverter.Vector2_m2s(direction);
 		}
 
 		public void BonusDropped(AObtainableDamageModifier bonus)
@@ -127,7 +129,7 @@ namespace SkyShoot.Game.Client.Game
 
 		public void GameOver()
 		{
-			ScreenManager.Instance.SetActiveScreen(typeof(MainMenuScreen));
+			ScreenManager.Instance.SetActiveScreen(typeof (MainMenuScreen));
 		}
 
 		public void PlayerLeft(AGameObject mob)
@@ -163,10 +165,10 @@ namespace SkyShoot.Game.Client.Game
 			}
 		}
 
-		public AGameObject[] SynchroFrame(AGameObject[] mobs)
+		public void SynchroFrame(AGameObject[] mobs)
 		{
 			if (!IsGameStarted)
-				return null;
+				return;
 
 			foreach (var mob in mobs)
 			{
@@ -182,7 +184,6 @@ namespace SkyShoot.Game.Client.Game
 				if (clientMob == null)
 					continue;
 
-
 				clientMob.Coordinates = mob.Coordinates;
 				clientMob.HealthAmount = mob.HealthAmount;
 				clientMob.RunVector = mob.RunVector;
@@ -190,7 +191,6 @@ namespace SkyShoot.Game.Client.Game
 				clientMob.Speed = mob.Speed;
 				clientMob.State = mob.State;
 			}
-			return null;
 		}
 
 		public void PlayerListChanged(String[] names)
@@ -209,6 +209,7 @@ namespace SkyShoot.Game.Client.Game
 				}
 			}
 		}
+
 		#endregion
 
 		#region ClientInput
@@ -233,10 +234,10 @@ namespace SkyShoot.Game.Client.Game
 			}
 
 			Vector2 mouseCoordinates = controller.SightPosition;
-			
-            player.ShootVectorM = mouseCoordinates - GameModel.Camera2D.ConvertToLocal(player.CoordinatesM);
-            if (player.ShootVector.Length() > 0)
-                player.ShootVector.Normalize();
+
+			player.ShootVectorM = mouseCoordinates - GameModel.Camera2D.ConvertToLocal(player.CoordinatesM);
+			if (player.ShootVector.Length() > 0)
+				player.ShootVector.Normalize();
 
 			if (controller.ShootButton == ButtonState.Pressed)
 			{
@@ -259,10 +260,10 @@ namespace SkyShoot.Game.Client.Game
 			Trace.WriteLine(e);
 
 			// back to multiplayer screen
-			ScreenManager.Instance.SetActiveScreen(typeof(LoginScreen));
+			ScreenManager.Instance.SetActiveScreen(typeof (LoginScreen));
 
 			MessageBox.Message = "Connection error!";
-			ScreenManager.Instance.SetActiveScreen(typeof(MessageBox));
+			ScreenManager.Instance.SetActiveScreen(typeof (MessageBox));
 		}
 
 		public bool Register(string username, string password)
@@ -296,7 +297,7 @@ namespace SkyShoot.Game.Client.Game
 			else
 			{
 				MessageBox.Message = "Connection error!";
-				ScreenManager.Instance.SetActiveScreen(typeof(MessageBox));
+				ScreenManager.Instance.SetActiveScreen(typeof (MessageBox));
 			}
 
 			return login;
@@ -341,58 +342,66 @@ namespace SkyShoot.Game.Client.Game
 			}
 		}
 
-    	public void Move(Vector2 direction)
-    	{
-    		Move(TypeConverter.Vector2_m2s(direction));
-    	}
+		public void Move(Vector2 direction)
+		{
+			Move(TypeConverter.Xna2XnaLite(direction));
+		}
 
-    	public void Move(SkyShoot.XNA.Framework.Vector2 direction)
-        {
-            try
-            {
-							var sw = new Stopwatch(); sw.Start();
-                _service.Move(direction);
-							sw.Stop();
-							Trace.WriteLine("SW:serv:Move " + sw.ElapsedMilliseconds);
-            }
-            catch (Exception e)
-            {
-                FatalError(e);
-            }
-        }
+		public Queue<AGameEvent> Move(XNA.Framework.Vector2 direction)
+		{
+			try
+			{
+				// var sw = new Stopwatch();
+				// sw.Start();
+				return _service.Move(direction);
+				// sw.Stop();
+				// Trace.WriteLine("SW:serv:Move " + sw.ElapsedMilliseconds);
+			}
+			catch (Exception e)
+			{
+				FatalError(e);
+				return null;
+			}
+		}
 
-        public void Shoot(SkyShoot.XNA.Framework.Vector2 direction)
-        {
-            try
-            {
-							var sw = new Stopwatch(); sw.Start();
-                _service.Shoot(direction);
-								sw.Stop();
-								Trace.WriteLine("SW:serv:Shoot " + sw.ElapsedMilliseconds);
+		public Queue<AGameEvent> Shoot(XNA.Framework.Vector2 direction)
+		{
+			try
+			{
+				// var sw = new Stopwatch();
+				// sw.Start();
+				return _service.Shoot(direction);
+				// sw.Stop();
+				// Trace.WriteLine("SW:serv:Shoot " + sw.ElapsedMilliseconds);
+			}
+			catch (Exception e)
+			{
+				FatalError(e);
+				return null;
+			}
+		}
 
-            }
-            catch (Exception e)
-            {
-                FatalError(e);
-            }
-        }
+		public Queue<AGameEvent> GetEvents()
+		{
+			throw new NotImplementedException();
+		}
 
-    	public void Shoot(Vector2 direction)
-    	{
-    		Shoot(TypeConverter.Vector2_m2s(direction));
-    	}
+		public void Shoot(Vector2 direction)
+		{
+			Shoot(TypeConverter.Xna2XnaLite(direction));
+		}
 
-    	public void TakeBonus(AObtainableDamageModifier bonus)
-        {
-            try
-            {
+		public void TakeBonus(AObtainableDamageModifier bonus)
+		{
+			try
+			{
 				//_service.TakeBonus(bonus);
-            }
-            catch (Exception e)
-            {
-                FatalError(e);
-            }
-        }
+			}
+			catch (Exception e)
+			{
+				FatalError(e);
+			}
+		}
 
 		public void TakePerk(Perk perk)
 		{
@@ -417,6 +426,22 @@ namespace SkyShoot.Game.Client.Game
 				FatalError(e);
 			}
 		}
+
+		public Contracts.Session.GameLevel GameStart(int gameId)
+		{
+			throw new NotImplementedException();
+		}
+
+		public AGameObject[] SynchroFrame()
+		{
+			throw new NotImplementedException();
+		}
+
+		public string[] PlayerListUpdate()
+		{
+			throw new NotImplementedException();
+		}
+
 		#endregion
 	}
 }
