@@ -97,7 +97,11 @@ namespace SkyShoot.Contracts.Mobs
 			[EnumMember]
 			Flame,
 			[EnumMember]
-			Bonus
+			Bonus,
+			[EnumMember]
+			LaserBullet,
+			[EnumMember]
+			ShutgunBullet
 		}
 
 		[DataMember]

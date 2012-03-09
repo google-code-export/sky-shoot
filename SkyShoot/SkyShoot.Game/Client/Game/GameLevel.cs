@@ -1,6 +1,8 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
+
 using SkyShoot.Contracts.Session;
 
 using SkyShoot.Game.Client.View;
@@ -18,26 +20,47 @@ namespace SkyShoot.Game.Client.Game
 
 		private static Texture2D _texture;
 
+		AudioEngine engine;
+		SoundBank soundBank;
+		WaveBank waveBank;
+		Cue cue;
+
 		public GameLevel(Contracts.Session.GameLevel gameLevel)
 		{
 			Width = (int) gameLevel.levelWidth;
 			Height = (int) gameLevel.levelHeight;
 
+			engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
+			soundBank = new SoundBank(engine, "Content\\Sounds\\Sound Bank.xsb");
+			waveBank = new WaveBank(engine, "Content\\Sounds\\Wave Bank.xwb");
+
 			switch (gameLevel.UsedTileSet)
 			{
 				case TileSet.Grass:
+					Cue grassCue = soundBank.GetCue("cricket00");
+					grassCue.Play();
 					_texture = Textures.Clone(Textures.GrassLandscape);
 					break;
 				case TileSet.Desert:
+					Cue desertCue = soundBank.GetCue("wind03");
+					desertCue.Play();
 					_texture = Textures.Clone(Textures.DesertLandscape);
 					break;
 				case TileSet.Sand:
+					Cue sandtCue = soundBank.GetCue("wind03");
+					sandtCue.Play();
 					_texture = Textures.Clone(Textures.SandLandscape);
 					break;
 				case TileSet.Snow:
+					Cue snowCue = soundBank.GetCue("wind01b");
+					snowCue.Play();
 					_texture = Textures.Clone(Textures.SnowLandscape);
 					break;
 				case TileSet.Volcanic:
+					Cue volcCue = soundBank.GetCue("lava_burn1");
+					Cue lavaCue = soundBank.GetCue("lava");
+					volcCue.Play();
+					lavaCue.Play();
 					_texture = Textures.Clone(Textures.VolcanicLandscape);
 					break;
 			}

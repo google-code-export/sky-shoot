@@ -135,6 +135,7 @@ namespace SkyShoot.Game.Controls
 			RegisterScreen(new WaitScreen());
 			RegisterScreen(new LoadingScreen());
 			RegisterScreen(new GameplayScreen());
+			RegisterScreen(new GameMenuScreen());
 		}
 
 		protected override void UnloadContent()

@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Input;
 using Nuclex.Input;
 using Nuclex.UserInterface.Controls;
 using Nuclex.UserInterface.Controls.Desktop;
+using SkyShoot.Game.Screens;
 
 namespace SkyShoot.Game.Controls
 {
@@ -47,6 +48,11 @@ namespace SkyShoot.Game.Controls
 			if(IsNewKeyPressed(Keys.Enter))
 			{
 				NotifyListeners(Index);
+			}
+
+			if (IsNewKeyPressed(Keys.Escape))
+			{
+				ScreenManager.Instance.SetActiveScreen(typeof(GameMenuScreen));
 			}
 		}
 
