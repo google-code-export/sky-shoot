@@ -46,8 +46,7 @@ namespace SkyShoot.Game.Client.Weapon
 			soundBank = new SoundBank(engine, "Content\\Sounds\\Sound Bank.xsb");
 			waveBank = new WaveBank(engine, "Content\\Sounds\\Wave Bank.xwb");
 
-			Cue cue = soundBank.GetCue("LASER");
-			cue.Play();
+			Type = EnumObjectType.LaserBullet;
 			// todo
 			switch (Type)
 			{
@@ -57,6 +56,14 @@ namespace SkyShoot.Game.Client.Weapon
 					break;
 				case EnumObjectType.Rocket:
 					break;
+				case EnumObjectType.LaserBullet:
+					Cue laserCue = soundBank.GetCue("LASER");
+					laserCue.Play();
+					break;
+				case EnumObjectType.ShutgunBullet:
+					Cue shutgunCue = soundBank.GetCue("GUNSHOT");
+					shutgunCue.Play();
+					break;
 			}
 
 			Texture = Textures.ProjectileTexture;
@@ -65,7 +72,7 @@ namespace SkyShoot.Game.Client.Weapon
 		}
 
 		public void Update(GameTime gameTime)
-		{		
+		{
 			int milliseconds = gameTime.ElapsedGameTime.Milliseconds;
 
 			Vector2 movement = RunVectorM * Speed * milliseconds;

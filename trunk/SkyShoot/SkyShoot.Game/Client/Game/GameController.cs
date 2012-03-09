@@ -7,6 +7,8 @@ using System.ServiceModel;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
+
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Perks;
 using SkyShoot.Contracts.Bonuses;
@@ -25,7 +27,6 @@ using System.Security.Cryptography;
 
 namespace SkyShoot.Game.Client.Game
 {
-
 	public class HashHelper
 	{
 		public static string GetMd5Hash(string input)
@@ -48,6 +49,10 @@ namespace SkyShoot.Game.Client.Game
 
 	public sealed class GameController : ISkyShootCallback, ISkyShootService
 	{
+		AudioEngine engine;
+		SoundBank soundBank;
+		WaveBank waveBank;
+
 		public static Guid MyId { get; private set; }
 
 		public bool IsGameStarted { get; private set; }
@@ -101,9 +106,18 @@ namespace SkyShoot.Game.Client.Game
 
 		public void MobDead(AGameObject mob)
 		{
+			var random = new Random();
+
+			engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
+			soundBank = new SoundBank(engine, "Content\\Sounds\\Sound Bank.xsb");
+			waveBank = new WaveBank(engine, "Content\\Sounds\\Wave Bank.xwb");
+
+			//Cue cue = soundBank.GetCue("angry01");
+			Cue cueDeath = soundBank.GetCue("guts04a");
 			GameModel.RemoveMob(mob.Id);
 			GameModel.GameLevel.AddTexture(mob.IsPlayer ? Textures.DeadPlayerTexture : Textures.DeadSpiderTexture,
 			                               TypeConverter.XnaLite2Xna(mob.Coordinates));
+			cueDeath.Play();
 		}
 
 		public void MobMoved(AGameObject mob, XNA.Framework.Vector2 direction)
@@ -130,6 +144,7 @@ namespace SkyShoot.Game.Client.Game
 		public void GameOver()
 		{
 			ScreenManager.Instance.SetActiveScreen(typeof (MainMenuScreen));
+			IsGameStarted = false;
 		}
 
 		public void PlayerLeft(AGameObject mob)

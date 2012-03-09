@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework;
 
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 
 using SkyShoot.Game.Controls;
 
@@ -19,22 +20,29 @@ namespace SkyShoot.Game.Screens
 {
 	internal class OptionsMenuScreen : GameScreen
 	{
-		private  ListControl _keyboardList;
+		private ListControl _keyboardList;
 
-		private  LabelControl _titleLabel;
-		private  LabelControl _cursorLabel;
-		private  LabelControl _keyboardLabel;
-		private  LabelControl _fullscreenLabel;
+		private LabelControl _titleLabel;
+		private LabelControl _cursorLabel;
+		private LabelControl _keyboardLabel;
+		private LabelControl _fullscreenLabel;
+		private LabelControl _volumeLabel;
 
-		private  OptionControl _fullscreenButton;
+		private OptionControl _fullscreenButton;
 
-		private  ChoiceControl _arrowButton;
-		private  ChoiceControl _plusButton;
-		private  ChoiceControl _crossButton;
-		private  ChoiceControl _targetButton;
+		private ChoiceControl _arrowButton;
+		private ChoiceControl _plusButton;
+		private ChoiceControl _crossButton;
+		private ChoiceControl _targetButton;
 
-		private  ButtonControl _backButton;
-
+		private ButtonControl _backButton;
+		private ButtonControl _upVolume;
+		private ButtonControl _downVolume;
+		AudioEngine engine;
+		SoundBank soundBank;
+		WaveBank waveBank;
+		AudioCategory musicCategory;
+		
 		private readonly ContentManager _content;
 
 		private static Texture2D _texture;
@@ -66,19 +74,19 @@ namespace SkyShoot.Game.Screens
 			_fullscreenLabel = new LabelControl("FullScreen: ")
 			{
 				Bounds =
-					new UniRectangle(new UniScalar(0.5f, -50), new UniScalar(0.3f, -70), 80, 30)
+					new UniRectangle(new UniScalar(0.5f, -50), new UniScalar(0.25f, -70), 80, 30)
 			};
 
 			_fullscreenButton = new OptionControl
 			{
 				Bounds =
-					new UniRectangle(new UniScalar(0.5f, 30), new UniScalar(0.3f, -70), 100, 30)
+					new UniRectangle(new UniScalar(0.5f, 30), new UniScalar(0.25f, -70), 100, 30)
 			};
 
 			_keyboardLabel = new LabelControl("Keyboard:")
 			{
 				Bounds =
-					new UniRectangle(new UniScalar(0.5f, -150), new UniScalar(0.5f, -70), 50, 30)
+					new UniRectangle(new UniScalar(0.5f, -150), new UniScalar(0.4f, -70), 50, 30)
 			};
 
 			_backButton = new ButtonControl
@@ -87,26 +95,45 @@ namespace SkyShoot.Game.Screens
 				Bounds = new UniRectangle(new UniScalar(0.5f, -50), new UniScalar(1.1f, -70), 100, 30)
 			};
 
+			_upVolume = new ButtonControl
+			{
+				Text = "+",
+				Bounds = new UniRectangle(new UniScalar(0.5f, -50), new UniScalar(0.9f, -70), 100, 30)
+			};
+
+			_downVolume = new ButtonControl
+			{
+				Text = "-",
+				Bounds = new UniRectangle(new UniScalar(0.5f, -50), new UniScalar(0.9f, -30), 100, 30)
+			};
+
+			_volumeLabel = new LabelControl("Volume:")
+			{
+				Bounds =
+					new UniRectangle(new UniScalar(0.62f, -220), new UniScalar(0.94f, -70), 70, 30)
+			};
+
+
 			_cursorLabel = new LabelControl("Cursor:")
 			{
 				Bounds =
-					new UniRectangle(new UniScalar(0.5f, -220), new UniScalar(0.8f, -70), 70, 30)
+					new UniRectangle(new UniScalar(0.5f, -220), new UniScalar(0.58f, -70), 70, 30)
 			};
 
 			_arrowButton = new ChoiceControl
 			{
 				Bounds =
-					new UniRectangle(new UniScalar(0.5f, -140), new UniScalar(0.9f, -70), 70, 30)
+					new UniRectangle(new UniScalar(0.5f, -140), new UniScalar(0.7f, -70), 70, 30)
 			};
 
 			_crossButton = new ChoiceControl
 			{
-				Bounds = new UniRectangle(new UniScalar(0.5f, 40), new UniScalar(0.9f, -70), 70, 30)
+				Bounds = new UniRectangle(new UniScalar(0.5f, 40), new UniScalar(0.7f, -70), 70, 30)
 			};
 
 			_keyboardList = new ListControl
 			{
-				Bounds = new UniRectangle(260f, 175f, 150f, 50f)
+				Bounds = new UniRectangle(260f, 125f, 150f, 50f)
 			};
 
 			_keyboardList.Items.Add("A, S, D, W");
@@ -118,14 +145,14 @@ namespace SkyShoot.Game.Screens
 
 			_plusButton = new ChoiceControl
 			{
-				Bounds = new UniRectangle(new UniScalar(0.5f, -50), new UniScalar(0.9f, -70), 70, 30)
+				Bounds = new UniRectangle(new UniScalar(0.5f, -50), new UniScalar(0.7f, -70), 70, 30)
 			};
 
 			_targetButton = new ChoiceControl
 			{
 				Bounds =
-					new UniRectangle(new UniScalar(0.5f, 130), new UniScalar(0.9f, -70), 70, 30)
-			};			
+					new UniRectangle(new UniScalar(0.5f, 130), new UniScalar(0.7f, -70), 70, 30)
+			};
 		}
 
 		private void InitializeControls()
@@ -141,6 +168,9 @@ namespace SkyShoot.Game.Screens
 			Desktop.Children.Add(_crossButton);
 			Desktop.Children.Add(_targetButton);
 			Desktop.Children.Add(_backButton);
+			Desktop.Children.Add(_upVolume);
+			Desktop.Children.Add(_downVolume);
+			Desktop.Children.Add(_volumeLabel);
 
 
 			// todo изменить подписку
@@ -153,8 +183,17 @@ namespace SkyShoot.Game.Screens
 			_plusButton.Changed += PlusButtonPressed;
 			_crossButton.Changed += CrossButtonPressed;
 			_targetButton.Changed += TargetButtonPressed;
+			_upVolume.Pressed += UpButtonPressed;
+			_downVolume.Pressed += DownButtonPressed;
+
+			engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
+			soundBank = new SoundBank(engine, "Content\\Sounds\\Sound Bank.xsb");
+			waveBank = new WaveBank(engine, "Content\\Sounds\\Wave Bank.xwb");
+			musicCategory = engine.GetCategory("Music");
 
 			ScreenManager.Instance.Controller.AddListener(_backButton, BackButtonPressed);
+			ScreenManager.Instance.Controller.AddListener(_upVolume, UpButtonPressed);
+			ScreenManager.Instance.Controller.AddListener(_downVolume, DownButtonPressed);
 		}
 
 		public override void LoadContent()
@@ -167,7 +206,7 @@ namespace SkyShoot.Game.Screens
 			Textures.Target = _content.Load<Texture2D>("Textures/Cursors/Target");
 
 			_keyboardList.SelectedItems.Add(Settings.Default.KeyboardLayout == 0 ? 0 : 1);
-			
+
 			switch (Settings.Default.Cursor)
 			{
 				case 1:
@@ -194,7 +233,7 @@ namespace SkyShoot.Game.Screens
 		{
 			Curs = 1;
 			Settings.Default.Cursor = Curs;
-			Settings.Default.Save();
+			Settings.Default.Save();			
 		}
 
 		private void PlusButtonPressed(object sender, EventArgs e)
@@ -220,19 +259,42 @@ namespace SkyShoot.Game.Screens
 
 		private void KeyboardChoice(object sender, EventArgs e)
 		{
-			Settings.Default.KeyboardLayout = (short) (_keyboardList.SelectedItems[0] == 0 ? 0 : 1);
+			Settings.Default.KeyboardLayout = (short)(_keyboardList.SelectedItems[0] == 0 ? 0 : 1);
 			Settings.Default.Save();
 		}
 
 		private void BackButtonPressed(object sender, EventArgs e)
 		{
-			ScreenManager.Instance.SetActiveScreen(typeof(MainMenuScreen));// = ScreenManager.ScreenEnum.MainMenuScreen;
+			if (Game.Client.Game.GameController.Instance.IsGameStarted)
+				ScreenManager.Instance.SetActiveScreen(typeof(GameplayScreen));
+			else
+				ScreenManager.Instance.SetActiveScreen(typeof(MainMenuScreen));
+		}
+
+		private void UpButtonPressed(object sender, EventArgs e)
+		{
+			Settings.Default.Volume = MathHelper.Clamp(Settings.Default.Volume + 0.1f, 0.0f, 2.0f);
+			Settings.Default.Save();
+			musicCategory.SetVolume(Settings.Default.Volume);
+		}
+
+		private void DownButtonPressed(object sender, EventArgs e)
+		{
+			Settings.Default.Volume = MathHelper.Clamp(Settings.Default.Volume - 0.1f, 0.0f, 2.0f);
+			Settings.Default.Save();
+			musicCategory.SetVolume(Settings.Default.Volume);
 		}
 
 		private void FullScreenSelected(object sender, EventArgs e)
 		{
 			Settings.Default.FullScreenSelected = _fullscreenButton.Selected;
 			Settings.Default.Save();
+		}
+
+		public override void Update(GameTime gameTime)
+		{
+			engine.Update();
+			base.Update(gameTime);
 		}
 
 		public override void Draw(GameTime gameTime)
@@ -244,10 +306,10 @@ namespace SkyShoot.Game.Screens
 			_spriteBatch.End();
 
 			_spriteBatch.Begin(SpriteSortMode.Texture, BlendState.AlphaBlend);
-			var pos1 = new Vector2(250f, 370f);
-			var pos2 = new Vector2(340f, 370f);
-			var pos3 = new Vector2(430f, 370f);
-			var pos4 = new Vector2(520f, 370f);
+			var pos1 = new Vector2(250f, 270f);
+			var pos2 = new Vector2(340f, 270f);
+			var pos3 = new Vector2(430f, 270f);
+			var pos4 = new Vector2(520f, 270f);
 			_spriteBatch.Draw(Textures.Arrow, pos1, Color.White);
 			_spriteBatch.Draw(Textures.Plus, pos2, Color.White);
 			_spriteBatch.Draw(Textures.Cross, pos3, Color.White);
