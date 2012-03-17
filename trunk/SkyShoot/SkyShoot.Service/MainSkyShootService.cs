@@ -191,6 +191,10 @@ namespace SkyShoot.Service
 		{
 			GameSession session;
 			_sessionManager.SessionTable.TryGetValue(Id, out session);
+			if(session == null)
+			{
+				return new string[]{};
+			}
 			return session.LocalGameDescription.Players.ToArray();
 		}
 

@@ -207,13 +207,19 @@ namespace SkyShoot.WinFormsClient
 
 		void AskGame()
 		{
-			if(InvokeRequired)
+			if (InvokeRequired)
 			{
 				Invoke(new MethodInvoker(AskGame));
 				return;
 			}
+			Hide();
 			_games = new GameManagerForm(_service);
 			_games.ShowDialog(this);
+			if (IsDisposed)
+			{
+				return;
+			}
+			Show();
 		}
 
 		private void UpdateSt(Object stateInfo)
@@ -223,6 +229,7 @@ namespace SkyShoot.WinFormsClient
 				if (!GameRuning)
 				{
 					AskGame();
+
 					_level = _games.Level;
 					GameStart(_level);
 				}
@@ -238,6 +245,11 @@ namespace SkyShoot.WinFormsClient
 						continue;
 					}
 					_objects.AddRange(syncObjects);
+					var tempMe = _objects.Find(m => m.Id == _me.Id);
+					if (tempMe != null)
+					{
+						_me.Copy(tempMe);
+					}
 					//lock (_objects)
 					{
 						try
@@ -365,7 +377,7 @@ namespace SkyShoot.WinFormsClient
 			foreach (var gameEvent in events)
 			{
 				var gameObject = _objects.Find(o => o.Id == gameEvent.Id);
-				if(gameObject != null)
+				if (gameObject != null)
 				{
 					gameEvent.UpdateMob(gameObject);
 				}

@@ -55,7 +55,7 @@ namespace SkyShoot.WinFormsClient
 				return;
 			}
 			DialogResult = DialogResult.OK;
-			
+			_updatingThread.Abort();			
 			Close();
 		}
 
@@ -197,10 +197,10 @@ namespace SkyShoot.WinFormsClient
 		}
 
 
-
-		private void GameManagerForm_OnFormClosed(object sender, FormClosedEventArgs e)
+		private void BtExitClick(object sender, EventArgs e)
 		{
-			//Application.Exit();
+			_updatingThread.Abort();
+			Application.Exit();
 		}
 	}
 }
