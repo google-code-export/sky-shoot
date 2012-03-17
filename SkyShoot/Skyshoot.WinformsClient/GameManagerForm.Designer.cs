@@ -37,6 +37,7 @@
 			this.label2 = new System.Windows.Forms.Label();
 			this.lblStatus = new System.Windows.Forms.Label();
 			this.btLeave = new System.Windows.Forms.Button();
+			this.btExit = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// btRefresh
@@ -127,11 +128,23 @@
 			this.btLeave.UseVisualStyleBackColor = true;
 			this.btLeave.Click += new System.EventHandler(this.btLeave_OnClick);
 			// 
+			// btExit
+			// 
+			this.btExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btExit.Location = new System.Drawing.Point(259, 330);
+			this.btExit.Name = "btExit";
+			this.btExit.Size = new System.Drawing.Size(106, 28);
+			this.btExit.TabIndex = 9;
+			this.btExit.Text = "Exit";
+			this.btExit.UseVisualStyleBackColor = true;
+			this.btExit.Click += new System.EventHandler(this.BtExitClick);
+			// 
 			// GameManagerForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(377, 381);
+			this.Controls.Add(this.btExit);
 			this.Controls.Add(this.btLeave);
 			this.Controls.Add(this.lblStatus);
 			this.Controls.Add(this.lstbPlayers);
@@ -147,7 +160,6 @@
 			this.Name = "GameManagerForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "GameManagerForm";
-			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.GameManagerForm_OnFormClosed);
 			this.Load += new System.EventHandler(this.GameManagerForm_OnLoad);
 			this.ResumeLayout(false);
 			this.PerformLayout();
@@ -165,5 +177,6 @@
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Label lblStatus;
 		private System.Windows.Forms.Button btLeave;
+		private System.Windows.Forms.Button btExit;
 	}
 }
