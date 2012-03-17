@@ -119,9 +119,9 @@ namespace SkyShoot.Service.Session
 
 		private void pushEvent(AGameEvent gameEvent)
 		{
-			foreach (var playerDead in Players)
+			foreach (var player in Players)
 			{
-				playerDead.NewEvents.Enqueue(gameEvent);
+				player.NewEvents.Enqueue(gameEvent);
 			}
 		}
 

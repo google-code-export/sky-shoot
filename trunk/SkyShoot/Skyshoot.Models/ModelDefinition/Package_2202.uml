@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="1a0d1d14-59dc-4496-9979-968c4e232adf"
+  name="SkyShoot"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="cb901fb6-b5a9-41ba-8598-14cb4a070777"
+      handle="viewcode://./CodeSchema_Namespace?Namespace=SkyShoot"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="1c2585cd-b216-4f07-86fa-4feed3625f14"
+        LastKnownName="Game"
+        LastKnownLocation="Package1_2202.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="2501029a-4e61-4bef-8cf1-0508033b4438"
+        LastKnownName="Contracts"
+        LastKnownLocation="Package10_2202.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="c7fa35cb-6d33-4507-a4b7-940b361efe06"
+        LastKnownName="Service"
+        LastKnownLocation="Package_2227.uml" />
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

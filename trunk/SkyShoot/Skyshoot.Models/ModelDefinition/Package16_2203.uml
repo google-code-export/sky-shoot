@@ -1,0 +1,254 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="0ce37d6f-c602-4a0a-8428-8a591e75e950"
+  name="Input"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="866c7a54-8a72-459b-8c55-7dfcb3e3c3fc"
+      handle="viewcode://./CodeSchema_Namespace?Namespace=SkyShoot.XNA.Input"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <enumeration
+        Id="864298f1-e67c-4616-ba28-5961ee336f2d"
+        name="Buttons"
+        isAbstract="false"
+        isLeaf="false">
+        <referencesInternal>
+          <reference
+            Id="78c4b494-4a2d-4127-8fdc-f24d4907a586"
+            handle="viewcode://./CodeSchema_Enum?Assembly=&quot;file:///C:/Program Files/Microsoft XNA/XNA Game Studio/v4.0/References/Windows/x86/SkyShoot.XNA.dll&quot; Namespace=SkyShoot.XNA.Input Type=Buttons"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="f9bb4b29-15eb-4277-8a96-98a87333733c"
+            name="enum"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="288699d6-ad93-443e-88ff-fcf65d10f453">
+                <propertyInstance
+                  Id="f7121ee7-3f4c-4d36-b459-bd45d54769a6"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="869ddc9d-c40d-43fd-9edb-ee57c0f67e39">
+                <propertyInstance
+                  Id="1e4cb527-cc6b-42ef-ac44-5c007d6ffd58"
+                  name="BaseType"
+                  value="int" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="ba716650-63f5-4576-bb50-ee10106699e1">
+                <propertyInstance
+                  Id="286ad492-39b9-461d-af78-28b4739be984"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </enumeration>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <enumeration
+        Id="28ee9e80-1403-4bc9-8d39-cbdc739a21e6"
+        name="Keys"
+        isAbstract="false"
+        isLeaf="false">
+        <referencesInternal>
+          <reference
+            Id="56d4e4de-aed4-42b8-91d3-97833fe5b1d8"
+            handle="viewcode://./CodeSchema_Enum?Assembly=&quot;file:///C:/Program Files/Microsoft XNA/XNA Game Studio/v4.0/References/Windows/x86/SkyShoot.XNA.dll&quot; Namespace=SkyShoot.XNA.Input Type=Keys"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="1784416a-edf8-4a53-a35d-7dba4ae1b1c3"
+            name="enum"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="1a5d9ade-3b7d-4528-b5a5-de43760a5fbb">
+                <propertyInstance
+                  Id="4b1149e9-d16c-4dd5-b492-578638588157"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="85d7dbda-7fc5-4f48-b477-6737cfa0e1bf">
+                <propertyInstance
+                  Id="60b3f553-8b52-4f84-9718-34fd48d27a83"
+                  name="BaseType"
+                  value="int" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="44cd5ea1-37b5-4766-8aa4-e80f2a14ceed">
+                <propertyInstance
+                  Id="e6ab4c94-456d-4e83-b117-a1c2925b5dd2"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </enumeration>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="999a7561-ba50-4420-b468-89da32e28a94"
+        name="KeyboardState"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="d37734d4-a24a-49a4-b4b5-448223c38e90"
+            handle="viewcode://./CodeSchema_Struct?Assembly=&quot;file:///C:/Program Files/Microsoft XNA/XNA Game Studio/v4.0/References/Windows/x86/SkyShoot.XNA.dll&quot; Namespace=SkyShoot.XNA.Input Type=KeyboardState"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="508a4ac5-6c21-4cd6-ad8e-1989ad74a1e1"
+            name="struct"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="bcf814c6-25aa-4863-8a4d-7ec02f872a03">
+                <propertyInstance
+                  Id="3d91e780-d272-4201-9c34-468a0162d437"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="8c02d1ea-e117-4369-b799-4a486125320f">
+                <propertyInstance
+                  Id="d674be1f-1171-4340-9708-fc14ea3c51c7"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="750355d3-0a65-44c9-b132-0e5cbb67ca18">
+                <propertyInstance
+                  Id="e8a10a7e-f801-4d4c-b947-97e1850eef1b"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="597869d6-1120-43b4-9313-8a0859a9e37f">
+                <propertyInstance
+                  Id="1e94b165-ce8d-4a02-b2f8-ec71ac5b1614"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="94e18d6e-23d9-4f6c-85bb-1d870a249f69"
+        name="GamePadState"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="ceb61e39-022b-4805-9fba-d11c8f616b2d"
+            handle="viewcode://./CodeSchema_Struct?Assembly=&quot;file:///C:/Program Files/Microsoft XNA/XNA Game Studio/v4.0/References/Windows/x86/SkyShoot.XNA.dll&quot; Namespace=SkyShoot.XNA.Input Type=GamePadState"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="c7f49c2c-9e48-470c-a948-7992c46b9d4d"
+            name="struct"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="2c145cc7-834a-4bff-b86a-357fbd4fcf51">
+                <propertyInstance
+                  Id="33f8749b-2fde-4947-8d97-a6ca4d3ec97e"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="9c80dc17-cc6b-4525-ae6b-26659bcbc91a">
+                <propertyInstance
+                  Id="19d6af2c-db07-448b-b106-f06f3ebaf390"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="6597900a-586b-40cf-92c1-bbbcc92ba51f">
+                <propertyInstance
+                  Id="03b012f6-0d27-411a-885d-e1be2feb8832"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="2f7f3599-c4b8-40d5-948f-693e2c340e71">
+                <propertyInstance
+                  Id="d609abba-d88b-486a-87a5-6a895b18debb"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="0b4c16f4-2842-49fc-b54b-918e530b3560"
+        name="MouseState"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="11ef7e60-6fed-40f3-833c-42038a886553"
+            handle="viewcode://./CodeSchema_Struct?Assembly=&quot;file:///C:/Program Files/Microsoft XNA/XNA Game Studio/v4.0/References/Windows/x86/SkyShoot.XNA.dll&quot; Namespace=SkyShoot.XNA.Input Type=MouseState"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="517b19c2-bd50-49de-8900-3c7eb9c93869"
+            name="struct"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="d4e3bb59-610c-4e92-910b-7a9921bf9e16">
+                <propertyInstance
+                  Id="f64c143d-5e0b-41d9-8952-c58df1528eed"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="654e178a-7d42-4e77-82a5-36396f99e52b">
+                <propertyInstance
+                  Id="7d8eac21-f6bd-4c23-97fa-af5ba6adb94d"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="7f12abc5-d1d6-481d-872f-1b67d053e4cb">
+                <propertyInstance
+                  Id="0beec9c1-ca08-4d0c-9fd4-20115b8d1c9b"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="da9892a4-e395-4a3f-bd69-ecdc45b030ac">
+                <propertyInstance
+                  Id="8e1b4d86-abbe-4597-bc1e-926aa35ccb6a"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </class>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>
