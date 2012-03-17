@@ -40,13 +40,15 @@ namespace SkyShoot.Contracts.Service
 		bool JoinGame(GameDescription game);
 
 		[OperationContract]
-		Queue<AGameEvent> Move(Vector2 direction);
+		//Queue<AGameEvent> Move(Vector2 direction);
+		AGameEvent[] Move(Vector2 direction);
 
 		[OperationContract]
 		Queue<AGameEvent> Shoot(Vector2 direction);
 
 		[OperationContract]
-		Queue<AGameEvent> GetEvents();
+		AGameEvent[] GetEvents();
+		//Queue<AGameEvent> GetEvents();
 
 		//[OperationContract(IsOneWay = true)]
 		//void TakeBonus(AObtainableDamageModifier bonus);

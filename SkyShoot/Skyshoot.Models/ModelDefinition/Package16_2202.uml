@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="a40afb32-4b1e-4498-b5b1-b3e9a99a0c78"
+  name="Nuclex"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="c3dda731-0eac-4b2f-8ff3-73056694b8ba"
+      handle="viewcode://./CodeSchema_Namespace?Namespace=Nuclex"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="9cc34826-5fe5-408d-9e07-44eeb27b3271"
+        LastKnownName="UserInterface"
+        LastKnownLocation="Package_2203.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="51c2f42d-38ed-4958-8015-eb36f4e1c34f"
+        LastKnownName="Input"
+        LastKnownLocation="Package15_2203.uml" />
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

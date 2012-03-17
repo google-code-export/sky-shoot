@@ -1,57 +1,20 @@
 ﻿using System;
-
 using System.ServiceModel;
 
 using System.Collections.Generic;
 
 using System.Diagnostics;
-
+using SkyShoot.Contracts;
 using SkyShoot.XNA.Framework;
 
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Session;
-
-using SkyShoot.Contracts.Weapon.Projectiles;
-
-using SkyShoot.Contracts.Weapon;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Service.Session;
 
 namespace SkyShoot.Service
 {
-	static class TypeConverter
-	{
-		public static AGameObject Mob(AGameObject m)
-		{
-			return new AGameObject(m);
-		}
-
-		public static AGameObject[] Mobs(AGameObject[] ms)
-		{
-			var rs = new AGameObject[ms.Length];
-			for (int i = 0; i < ms.Length; i++)
-			{
-				rs[i] = new AGameObject(ms[i]);
-			}
-			return rs;
-		}
-
-		public static AProjectile Projectile(AProjectile p)
-		{
-			return new AProjectile(p);
-		}
-
-		public static AProjectile[] Projectiles(AProjectile[] ps)
-		{
-			var rs = new AProjectile[ps.Length];
-			for (int i = 0; i < ps.Length; i++)
-			{
-				rs[i] = new AProjectile(ps[i]);
-			}
-			return rs;
-		}
-	}
 
 	[ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant,
 			InstanceContextMode = InstanceContextMode.PerSession)]
@@ -59,7 +22,7 @@ namespace SkyShoot.Service
 	{
 		public static int globalID = 0;
 		public int localID;
-		private ISkyShootCallback _callback;
+		//private ISkyShootCallback _callback;
 		public string Name;
 		public Queue<AGameEvent> NewEvents;
 
@@ -99,7 +62,7 @@ namespace SkyShoot.Service
 			if (result)
 			{
 				Name = username;
-				_callback = OperationContext.Current.GetCallbackChannel<ISkyShootCallback>();
+				//_callback = OperationContext.Current.GetCallbackChannel<ISkyShootCallback>();
 				IsPlayer = true;
 
 				ClientsList.Add(this);
@@ -158,7 +121,8 @@ namespace SkyShoot.Service
 		//public event SomebodySpawnsHandler MobSpawned;
 		//public event SomebodyDiesHandler MobDied;
 
-		public Queue<AGameEvent> Move(Vector2 direction) // приходит снаружи от клиента
+		//public Queue<AGameEvent> Move(Vector2 direction) // приходит снаружи от клиента
+		public AGameEvent[] Move(Vector2 direction) // приходит снаружи от клиента
 		{
 			if (MeMoved != null)
 			{
@@ -173,12 +137,12 @@ namespace SkyShoot.Service
 			{
 				MeShot(this, direction);
 			}
-			return GetEvents();
+			return null;// GetEvents();
 		}
 
-		public Queue<AGameEvent> GetEvents()
+		public AGameEvent[] GetEvents()
 		{
-			Queue<AGameEvent> events = new Queue<AGameEvent>(NewEvents);
+			var events = NewEvents.ToArray();//new Queue<AGameEvent>(NewEvents);
 			NewEvents.Clear();
 			return events;
 		}
@@ -216,7 +180,11 @@ namespace SkyShoot.Service
 		{
 			GameSession session;
 			_sessionManager.SessionTable.TryGetValue(Id,out session);
-			return session.GetSynchroFrame();
+			if(session ==null)
+			{
+				return null;
+			}
+			return GameObjectConverter.ArrayedObjects(session.GetSynchroFrame());
 		}
 
 		public String[] PlayerListUpdate()

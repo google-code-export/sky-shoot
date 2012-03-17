@@ -1,0 +1,547 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="67bbe899-2c91-4c8f-bca0-fcce568d210d"
+  name="Weapon"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="ff3d1646-ec6d-4300-bcda-445d9879f887"
+      handle="viewcode://./CodeSchema_Namespace?Namespace=SkyShoot.Game.Client.Weapon"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <class
+        Id="d6d5f137-3245-4340-986f-b20532f1c517"
+        name="Projectile"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="3a2f9963-5c46-4137-be0b-64e578589197"
+            handle="viewcode://./CodeSchema_Class?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Game/bin/anyCPU/Debug/SkyShoot.Game.exe Namespace=SkyShoot.Game.Client.Weapon Type=Projectile"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="af7ad5a5-2995-4106-8672-e39175cad960"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="53169828-9bf9-4354-bdc6-178b4cf5ebef">
+                <propertyInstance
+                  Id="ca426206-5f31-492e-a1b4-ffe5079b12ea"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="d40147b2-4af9-4147-81cc-0e03ffec8bff">
+                <propertyInstance
+                  Id="f6be6d10-a304-41bc-ba4f-a2818896704e"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="187de9c6-7247-448c-a01f-9e9ba1d8e033">
+                <propertyInstance
+                  Id="666c4709-ea6c-46f1-ac7d-fa5812114595"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="05f56b23-c26e-4037-99e3-975d7f8eed82">
+                <propertyInstance
+                  Id="669d9109-b4f4-447e-b109-877595b56f8e"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="8cdb8960-c38e-46b1-9951-7da230e296e3">
+                <propertyInstance
+                  Id="dbb5b300-8602-498a-8b20-f72c3d9ab021"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <suppliersInternal>
+          <interfaceRealization
+            Id="778d18d1-551c-47a8-ab68-96fabb8bc6d1">
+            <interfaceMoniker
+              Id="78cf4a87-3798-47ca-8bb7-1930dcc645aa"
+              LastKnownName="IDrawable"
+              LastKnownLocation="Package9_2202.uml" />
+          </interfaceRealization>
+        </suppliersInternal>
+        <generalsInternal>
+          <generalization
+            Id="5a3138ef-b5c1-4633-be33-f757d2120670"
+            isSubstitutable="false">
+            <classMoniker
+              Id="ee583f98-3cd0-4801-b8c2-a8f18c0f94a0"
+              LastKnownName="AProjectile"
+              LastKnownLocation="Package8_2203.uml" />
+          </generalization>
+        </generalsInternal>
+        <targetEnds>
+          <association
+            Id="592e00c8-83d9-4733-a404-2f8e6506ff38"
+            isDerived="false"
+            sourceEndRoleName="Projectile"
+            targetEndRoleName="Texture"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="8205d33f-e17a-4546-9ef6-05d2652ec9f8"
+              LastKnownName="Texture2D"
+              LastKnownLocation="Package8_2202.uml" />
+            <description>Property Texture references type Texture2D.</description>
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="7c099d41-0e45-456a-a672-d77e0a318482"
+                  name="Projectile"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="3e05ecaf-fe85-4e7c-8d38-d00992448b2c"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="509f4323-b6ea-4b6e-9285-032b4fbddd1e"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="cb67533f-aa81-4bb2-8aaf-538d58c0c253"
+                  name="Texture"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="0e12b8c3-956e-48f5-8efe-65a3e863a41b"
+                      name="Lower"
+                      value="1" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="c3322cb8-e8da-4e57-84e2-1697b26dd5c0"
+                      name="Upper"
+                      value="1" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <ownedAttributesInternal>
+          <property
+            Id="e231f7e4-7704-49fe-90de-ba604ae94acf"
+            name="IsActive"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="ba66247f-d5e2-4e8b-bd71-667444fbb080"
+                handle="viewcode://./CodeSchema_Property?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Game/bin/anyCPU/Debug/SkyShoot.Game.exe Namespace=SkyShoot.Game.Client.Weapon Type=Projectile Member=IsActive"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="2f092619-3465-41ae-a829-8e9e5c159cc4"
+                name="property"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f0a6f4df-0ea2-402c-9335-6ae7fd8edd85">
+                    <propertyInstance
+                      Id="e60ca05a-d11f-418c-9c94-1dcb04f5fba4"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="fb7ebda0-6024-4901-9b74-67c6fb81b05a">
+                    <propertyInstance
+                      Id="4bed3fac-076c-4c7c-aad0-9073cbe8f78e"
+                      name="Get"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="cf0ce861-3b97-40b9-aebd-3ee4744f07b6">
+                    <propertyInstance
+                      Id="39b72b94-7730-4b35-8ff1-cc195b7d4976"
+                      name="HasBody"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="db054abe-0cd6-408b-9c0e-d8a6373008e9">
+                    <propertyInstance
+                      Id="bf1a6d03-92b9-463d-8be0-98d626b54a9c"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="41c7f3ab-7bfb-4dc1-8900-9cbd68dbd94d">
+                    <propertyInstance
+                      Id="5c5064c2-5bbc-49de-9895-8d340ecff059"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="69854581-913f-4290-a476-d32e2246f129">
+                    <propertyInstance
+                      Id="ce217bd6-98ad-4a86-998a-b79bc8ed1745"
+                      name="Set"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <primitiveTypeMoniker
+                Id="8943dc84-709e-4f62-b15a-a3273aa6f165"
+                LastKnownName="Boolean"
+                LastKnownLocation="SkyshootModels.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="68c00779-6169-46c1-9388-57bf43cf41f7"
+            name="Texture"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="7229cbea-7540-4496-82c6-cea161333788"
+                handle="viewcode://./CodeSchema_Property?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Game/bin/anyCPU/Debug/SkyShoot.Game.exe Namespace=SkyShoot.Game.Client.Weapon Type=Projectile Member=Texture"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="a2bf7f1f-94f1-4c70-adec-ac6505156e54"
+                name="property"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="802dace1-8a97-4866-a19e-94bf4158bc5f">
+                    <propertyInstance
+                      Id="d467278a-8cec-4974-b33b-79b3fb2b8567"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="644f1e49-6147-4168-8921-684b1560114c">
+                    <propertyInstance
+                      Id="6b4ed610-057d-438e-ac7d-febecb067c1e"
+                      name="Get"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="65b01f93-d2c0-496a-8e04-a6a8626b0aac">
+                    <propertyInstance
+                      Id="177838d2-cdf8-4a73-b27d-e2dd71bac3e5"
+                      name="HasBody"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="7de13776-5994-4da3-ba99-f8d3baded329">
+                    <propertyInstance
+                      Id="876020fd-a63a-408e-a12a-3a9f012db2fb"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="75264c73-91c5-4a84-9224-c07de6eb4e5a">
+                    <propertyInstance
+                      Id="bf861d3c-80f5-4b5b-9140-ff8c4848e7bf"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="09c99e85-1fb4-4c62-b67b-7dcefda3a7a6">
+                    <propertyInstance
+                      Id="e843d7c4-43d7-4d02-8ff6-5def96466ae7"
+                      name="Set"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="8205d33f-e17a-4546-9ef6-05d2652ec9f8"
+                LastKnownName="Texture2D"
+                LastKnownLocation="Package8_2202.uml" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="be247ca8-a8bf-4905-9a97-925218e88beb"
+            name="Update"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="c001fe84-2b8a-4bb4-8652-65176cd4d935"
+                handle="viewcode://./CodeSchema_Method?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Game/bin/anyCPU/Debug/SkyShoot.Game.exe Namespace=SkyShoot.Game.Client.Weapon Type=Projectile Member=(Name=Update OverloadingParameters=[(Assembly=&quot;file:///C:/Program Files/Microsoft XNA/XNA Game Studio/v4.0/References/Windows/x86/SkyShoot.XNA.Game.dll&quot; Namespace=SkyShoot.XNA Type=GameTime)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="14aac1ad-0c5e-49da-8486-f09b728b6a4d"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="fba9b107-b1b0-4fb2-babb-5710519f9eef">
+                    <propertyInstance
+                      Id="9d3dd7ae-7ad6-4488-9638-60a9784a4b91"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="985e3626-9e1a-4c5e-a8f2-43c521644199">
+                    <propertyInstance
+                      Id="498aa7fa-9af0-48be-985c-3e2715846e0e"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="40c3c643-2b2b-4678-a3a6-0c3e20bafdd9">
+                    <propertyInstance
+                      Id="fd8c3f74-8257-4d66-abf9-dd8a9f6ac693"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="59b27104-e50d-4c99-a922-047e22c2cae5">
+                    <propertyInstance
+                      Id="c0de21be-0463-46c3-900f-75f14210778d"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="34631969-7763-47df-8999-b10d479ebe33">
+                    <propertyInstance
+                      Id="41866e5a-db0e-435a-a094-1981168a5742"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="f209b60f-4ad1-4a31-8cbe-646fc99391dc"
+                  name="gameTime"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="26dd3a26-1cc1-4735-9567-c2286575f441"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Game/bin/anyCPU/Debug/SkyShoot.Game.exe Namespace=SkyShoot.Game.Client.Weapon Type=Projectile Member=(Name=Update OverloadingParameters=[(Assembly=&quot;file:///C:/Program Files/Microsoft XNA/XNA Game Studio/v4.0/References/Windows/x86/SkyShoot.XNA.Game.dll&quot; Namespace=SkyShoot.XNA Type=GameTime)]) ParameterIdentifier=gameTime"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="b70daa0c-0acc-4b2d-a1ab-7919f54eb133"
+                      LastKnownName="GameTime"
+                      LastKnownLocation="Package7_2202.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="e2336ccf-9dd2-490a-879a-06488eae784d"
+            name="Draw"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="184c25ea-ef86-4ed7-aa01-331e15c98765"
+                handle="viewcode://./CodeSchema_Method?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Game/bin/anyCPU/Debug/SkyShoot.Game.exe Namespace=SkyShoot.Game.Client.Weapon Type=Projectile Member=(Name=Draw OverloadingParameters=[(Assembly=&quot;file:///C:/Program Files/Microsoft XNA/XNA Game Studio/v4.0/References/Windows/x86/SkyShoot.XNA.Graphics.dll&quot; Namespace=SkyShoot.XNA.Graphics Type=SpriteBatch)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="7e975a9c-f707-45d6-881f-95e9c80a9eaf"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ad4efeba-544c-4a52-a1f2-bd6271f015e9">
+                    <propertyInstance
+                      Id="0ad7195b-0be4-4918-84fe-e207baa1300f"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e1d951fe-59a4-460b-aa64-0b0d2da2ae5e">
+                    <propertyInstance
+                      Id="b27103c6-074e-4578-a257-6ca9b498dfc8"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6dddb798-877a-4275-97fa-4431bb6854cc">
+                    <propertyInstance
+                      Id="d12c96b1-dc8c-48c6-a8f6-9681b542c0db"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d022c3ef-67ba-4e38-84ae-86d079999c62">
+                    <propertyInstance
+                      Id="8d1321c1-da4c-46af-90cd-94b026f48373"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b997f9ed-513c-4726-9a47-57cea4f163bf">
+                    <propertyInstance
+                      Id="6cf68c7b-54df-4c7a-850f-ccacddd369cc"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="a5aab9e9-75c3-4ca1-b3e6-df2d6ac7e4f9"
+                  name="spriteBatch"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="f4f6ddf4-8e6a-4f7a-bf46-180861c1427e"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Game/bin/anyCPU/Debug/SkyShoot.Game.exe Namespace=SkyShoot.Game.Client.Weapon Type=Projectile Member=(Name=Draw OverloadingParameters=[(Assembly=&quot;file:///C:/Program Files/Microsoft XNA/XNA Game Studio/v4.0/References/Windows/x86/SkyShoot.XNA.Graphics.dll&quot; Namespace=SkyShoot.XNA.Graphics Type=SpriteBatch)]) ParameterIdentifier=spriteBatch"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="8c52ac72-4b6f-42d9-b182-fb8d635b9910"
+                      LastKnownName="SpriteBatch"
+                      LastKnownLocation="Package8_2202.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="0023be3f-bb3b-4942-a401-f6f8aff9d816"
+            name="Projectile"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="93ba0d61-2d80-4f90-b937-19caf2057c58"
+                handle="viewcode://./CodeSchema_Method?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Game/bin/anyCPU/Debug/SkyShoot.Game.exe Namespace=SkyShoot.Game.Client.Weapon Type=Projectile Member=(Name=.ctor OverloadingParameters=[(Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Weapon.Projectiles Type=AProjectile)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="c278333d-2c95-4de7-97d4-2e8889ed4490"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="145f7722-60e0-44e3-9270-e8ba9e9e3516">
+                    <propertyInstance
+                      Id="3b6b967f-fa76-4b02-8e06-4660e1257f4d"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="da7fe268-7cfd-4e0d-b1c7-5bc582daf09c">
+                    <propertyInstance
+                      Id="eddd74cd-13f1-451a-821f-ceadc4cdbc1e"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="37da25a5-8ff3-4d03-8a3f-72bada299b0f">
+                    <propertyInstance
+                      Id="b18e3618-28c5-4d31-82f8-44924b520c9b"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6046a042-8846-4c07-914b-718d7be2a7fe">
+                    <propertyInstance
+                      Id="395ffb91-f3d3-4190-abe8-75af1ff6e7fe"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f2aecb67-4470-4ade-905d-349d98a270a9">
+                    <propertyInstance
+                      Id="4b674503-a194-45f8-891c-262074545b75"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="4d2390da-0994-4c4d-906c-bc2d1d1a0393"
+                  name="projectile"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="808bf8d0-143c-4063-8523-cda2089a4b31"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Game/bin/anyCPU/Debug/SkyShoot.Game.exe Namespace=SkyShoot.Game.Client.Weapon Type=Projectile Member=(Name=.ctor OverloadingParameters=[(Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Weapon.Projectiles Type=AProjectile)]) ParameterIdentifier=projectile"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="ee583f98-3cd0-4801-b8c2-a8f18c0f94a0"
+                      LastKnownName="AProjectile"
+                      LastKnownLocation="Package8_2203.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

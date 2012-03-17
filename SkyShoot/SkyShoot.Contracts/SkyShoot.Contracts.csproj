@@ -73,6 +73,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Session\GameLevel.cs" />
     <Compile Include="Session\GameMode.cs" />
+    <Compile Include="TypeConverter.cs" />
     <Compile Include="Weapon\AWeapon.cs" />
     <Compile Include="Weapon\Projectiles\AProjectile.cs" />
   </ItemGroup>

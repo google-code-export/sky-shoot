@@ -1,0 +1,408 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.ServiceModel;
+using System.Threading;
+using System.Windows.Forms;
+using Microsoft.Xna.Framework;
+using SkyShoot.Contracts.Mobs;
+using SkyShoot.Contracts.Service;
+using SkyShoot.Contracts.Session;
+using SkyShoot.Contracts.Weapon.Projectiles;
+using SkyShoot.Contracts;
+using System.Diagnostics;
+
+namespace SkyShoot.WinFormsClient
+{
+	public partial class MainForm : Form, ISkyShootCallback
+	{
+		#region переменные
+		GameManagerForm games;
+		ISkyShootService Service;
+
+		System.Threading.Timer _tm;
+		AMob me;
+		List<AMob> _mobs;
+		List<AProjectile> _bullets;
+
+		GameLevel _arena;
+
+		DateTime _prev;
+		Thread th;
+		public bool _gameRuning;
+		#endregion
+
+		#region ISkyShootServiceCallback
+		public void GameStart(AMob[] mobs, GameLevel arena)
+		{
+			if (mobs == null)
+				return;
+			_gameRuning = true;
+			games.Hide();
+			th = new Thread(UpdateSt);
+			th.Start();
+			_prev = DateTime.Now;
+			//foreach (AMob m in mobs)
+			//{
+			//  _mobs[
+			//}
+			_mobs.Clear();
+			_mobs.AddRange(mobs);
+			me = _mobs.Find(m => m.Id == me.Id);
+			_arena = arena;
+		}
+
+		public void MobShot(SkyShoot.Contracts.Mobs.AMob mob, SkyShoot.Contracts.Weapon.Projectiles.AProjectile[] projectiles)
+		{
+			try
+			{
+				Trace.WriteLine("MobShot: " + projectiles.Length);
+				_bullets.AddRange(projectiles);
+			}
+			catch(Exception e)
+			{
+				Trace.WriteLine("MobShot: " + e);
+			}
+		}
+
+		public void SpawnMob(SkyShoot.Contracts.Mobs.AMob mob)
+		{
+			try
+			{
+				Trace.WriteLine("SpawnMob: " + mob.Coordinates+ ";"+mob.IsPlayer);
+				_mobs.Add(mob);
+			}
+			catch (Exception e)
+			{
+				Trace.WriteLine("MobShot: " + e);
+			}
+
+		}
+
+		public void Hit(SkyShoot.Contracts.Mobs.AMob mob, SkyShoot.Contracts.Weapon.Projectiles.AProjectile projectile)
+		{
+			try
+			{
+				Trace.WriteLine("Hit: " + projectile);
+				var b = _bullets.Find(x => x.Id == projectile.Id);
+				_bullets.Remove(b);
+			}
+			catch (Exception e)
+			{
+				Trace.WriteLine("Hit: " + e);
+ 
+			}
+		}
+
+		public void MobMoved(SkyShoot.Contracts.Mobs.AMob mob, Microsoft.Xna.Framework.Vector2 direction)
+		{
+			AMob m = _mobs.Find(curm => curm.Id == mob.Id);
+			if (m == null)
+				return;
+			m.Copy(mob);
+			m.RunVector = direction;
+			Redraw();
+		}
+
+		public void MobDead(SkyShoot.Contracts.Mobs.AMob mob)
+		{
+			AMob m = _mobs.Find(curm => curm.Id == mob.Id);
+			if (m == null)
+				return;
+			_mobs.Remove(m);
+		}
+
+		public void BonusDropped(SkyShoot.Contracts.Bonuses.AObtainableDamageModifier bonus)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void BonusExpired(SkyShoot.Contracts.Bonuses.AObtainableDamageModifier bonus)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void BonusDisappeared(SkyShoot.Contracts.Bonuses.AObtainableDamageModifier bonus)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void GameOver()
+		{
+			_gameRuning = false;
+			th.Suspend();
+			games.ShowDialog();
+		}
+
+		public void PlayerLeft(SkyShoot.Contracts.Mobs.AMob mob)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void SynchroFrame(SkyShoot.Contracts.Mobs.AMob[] mobs)
+		{
+			return;
+			AMob t;
+			foreach (AMob m in mobs)
+			{
+				t = _mobs.Find(cm => cm.Id == m.Id);
+				if (t != null)
+				{
+					t.Copy(m);
+					if (me.Id == t.Id)
+					{
+					}
+				}
+
+			}
+		}
+
+		#endregion
+
+		#region манипуляции с интерфейсом
+		void Redraw()
+		{
+			if (InvokeRequired)
+			{
+				this.Invoke(new MethodInvoker(Redraw));
+				return;
+			}
+			//this.DoubleBuffered = true;
+			this._pnCanvas.Invalidate();
+		}
+
+		void UpdateSt(Object stateInfo)
+		{
+			while (true)
+			{
+				Thread.Sleep(100);
+				DateTime now = DateTime.Now;
+				lock (_mobs)
+				{
+					try
+					{
+						foreach (AMob m in _mobs)
+						{
+							if (!(float.IsNaN(m.RunVector.X) || float.IsNaN(m.RunVector.Y)))
+							{
+								m.Coordinates += 
+									m.RunVector *
+									(m.Speed * (float)((now - _prev).TotalMilliseconds));
+								if (m.IsPlayer)
+								{
+									m.Coordinates = Vector2.Clamp(m.Coordinates,
+									new Vector2(0, 0),
+										new Vector2(_arena.levelWidth, _arena.levelHeight));/**/
+									//m.Coordinates = new Vector2();
+								}
+							}
+						}
+					}
+					catch
+					{ }
+				}
+				lock (_bullets)
+				{
+					try
+					{
+						_bullets.RemoveAll(x => (x.LifeTime <= 0));
+						AProjectile m;
+						for (int i = 0; i < _bullets.Count; i++)
+						{
+							m = _bullets[i];
+							m.LifeTime--;
+							m.Coordinates = Vector2.Clamp(/**/m.Coordinates +
+									m.Direction *
+									(m.Speed * (float)((now - _prev).TotalMilliseconds) ),
+									new Vector2(0, 0),
+										new Vector2(_arena.levelWidth, _arena.levelHeight));/**/
+						}
+					}
+					catch
+					{ }
+				}
+				_prev = now;
+				SetStatus("[pos: " + me.Coordinates.X + ";" + me.Coordinates.Y + "] [dir: " +
+					me.RunVector.X + ";" + me.RunVector.Y + "]");
+				Redraw();
+			}
+		}
+		void SetStatus(String sts)
+		{
+			try
+			{
+				this.toolStripStatusLabel1.Text = sts;
+			}
+			catch
+			{ }
+		}
+		#endregion
+
+		public MainForm()
+		{
+			InitializeComponent();
+			var channelFactory = new DuplexChannelFactory<ISkyShootService>(this, "SkyShootEndpoint");
+			Service = channelFactory.CreateChannel();
+			_gameRuning = false;
+			me = new AMob();
+			_mobs = new List<AMob>();
+			_bullets = new List<AProjectile>();
+		}
+
+		#region events
+		private void MainForm_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (!_gameRuning)
+				return;
+			Vector2 v = new Vector2();
+			switch (e.KeyValue)
+			{
+				case 'W':
+				case 'w':
+					v.Y = -1;
+					break;
+				case 'S':
+				case 's':
+					v.Y = 1;
+					break;
+				case 'D':
+				case 'd':
+					v.X = 1;
+					break;
+				case 'A':
+				case 'a':
+					v.X = -1;
+					break;
+			}
+			v.Normalize();
+			me.RunVector = v;
+			Service.Move(v);
+		}
+
+		private void MainForm_KeyUp(object sender, KeyEventArgs e)
+		{
+			me.RunVector = new Vector2(0, 0);
+			Service.Move(me.RunVector);
+		}
+
+		private void MainForm_Load(object sender, EventArgs e)
+		{
+			LoginForm login = new LoginForm();
+			if (login.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+			{
+				Login(login.UserName, login.Password);
+				games = new GameManagerForm(Service);
+				games.ShowDialog();
+				//GameStart(null, null);
+			}
+			else
+			{
+				Application.Exit();
+			}
+		}
+
+		private void MainForm_Paint(object sender, PaintEventArgs e)
+		{
+			float r = 5f, x, y;
+			using (var g = e.Graphics)
+			{
+				foreach (var m in _mobs)
+				{
+					x = m.Coordinates.X * _pnCanvas.Width / _arena.levelWidth;
+					y = m.Coordinates.Y * _pnCanvas.Height / _arena.levelHeight;
+					g.FillEllipse(m.IsPlayer?Brushes.Black:Brushes.Green,
+						new System.Drawing.RectangleF(
+							new System.Drawing.PointF(x - r, y - r),
+						new SizeF(2 * r, 2 * r)));
+					if (m.IsPlayer)
+					{
+						g.DrawLine(new Pen(m.IsPlayer ? System.Drawing.Color.Red : System.Drawing.Color.Green, 3),
+							new PointF(x, y),
+							new PointF(x + m.ShootVector.X * 2 * r, y + m.ShootVector.Y * 2 * r));
+					}
+				}
+				r = 2f;
+				foreach (var m in _bullets)
+				{
+					x = m.Coordinates.X * _pnCanvas.Width / _arena.levelWidth;
+					y = m.Coordinates.Y * _pnCanvas.Height / _arena.levelHeight;
+					g.FillEllipse(Brushes.Red,
+						new System.Drawing.RectangleF(
+							new System.Drawing.PointF(x - r, y - r),
+						new SizeF(2 * r, 2 * r)));
+				}
+			}
+		}
+
+		private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			Service.LeaveGame();
+			if (th != null)
+			{
+				th.Abort();
+			}
+		}
+
+		private void pnCanvas_MouseMove(object sender, MouseEventArgs e)
+		{
+			var v = (new Vector2(
+					(float)e.X / (float)_pnCanvas.Width * _arena.levelWidth,
+					(float)e.Y / (float)_pnCanvas.Height * _arena.levelHeight))
+				- me.Coordinates;
+			v.Normalize();
+			me.ShootVector = v;
+		}
+
+		private void pnCanvas_Click(object sender, MouseEventArgs e)
+		{
+			var v = (new Vector2(
+					(float)e.X / (float)_pnCanvas.Width * _arena.levelWidth,
+					(float)e.Y / (float)_pnCanvas.Height * _arena.levelHeight))
+				- me.Coordinates;
+			v.Normalize();
+			me.ShootVector = v;
+			Service.Shoot(v);
+		}
+
+
+		#endregion
+
+		#region просто методы
+		bool Login(string username, string password)
+		{
+			Guid? id;
+			try
+			{
+				id = Service.Login(username, password);
+				if (id != null)
+				{
+					me.Id = (Guid)id;
+					me.IsPlayer = true;
+					SetStatus("Logon successfull");
+					return true;
+				}
+				else
+				{
+					SetStatus("No such login");
+					return false;
+				}
+			}
+			catch (Exception)
+			{
+				return false;
+			}
+		}
+
+		#endregion
+
+
+
+		public void NewPlayerConnected(AMob player)
+		{
+			throw new NotImplementedException();
+		}
+
+
+
+	}
+}
