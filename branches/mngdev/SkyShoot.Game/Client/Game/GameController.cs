@@ -57,15 +57,19 @@ namespace SkyShoot.Game.Client.Game
 
 		public bool IsGameStarted { get; private set; }
 
-		private static readonly GameController LocalInstance = new GameController();
+		private static GameController _localInstance;
 
 		private ISkyShootService _service;
 
 		public static GameController Instance
 		{
-			get { return LocalInstance; }
+			get
+			{
+				if (_localInstance == null)
+					_localInstance = new GameController();
+				return _localInstance;
+			}
 		}
-
 		public GameModel GameModel { get; private set; }
 
 		private GameController()
