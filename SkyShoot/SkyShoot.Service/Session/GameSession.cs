@@ -12,6 +12,7 @@ using SkyShoot.Contracts;
 using System.Diagnostics;
 using SkyShoot.ServProgram.Session;
 using SkyShoot.Contracts.GameEvents;
+using SkyShoot.Contracts.Bonuses;
 
 namespace SkyShoot.Service.Session
 {
@@ -21,6 +22,7 @@ namespace SkyShoot.Service.Session
 		public List<MainSkyShootService> Players { get; set; }
 
 		private List<Mob> _mobs { get; set; }
+		private List<AGameBonus> _bonuses { get; set; }
 		private ObjectPool<AProjectile> _projectiles { get; set; }
 
 		public GameDescription LocalGameDescription { get; private set; }
@@ -45,6 +47,7 @@ namespace SkyShoot.Service.Session
 			var playerNames = new List<string>();
 
 			_mobs = new List<Mob>();
+			_bonuses = new List<AGameBonus>();
 			Players = new List<MainSkyShootService>();
 			_projectiles = new ObjectPool<AProjectile>();
 			//_gameEventStack = new Stack<AGameEvent>();
@@ -89,14 +92,21 @@ namespace SkyShoot.Service.Session
 
 		public void SomebodySpawned(AGameObject sender) 
 		{			
-			pushEvent(new NewObjectEvent(sender,_timerCounter));
+			pushEvent(new NewObjectEvent(sender, _timerCounter));
+		}
+
+		private void NewBonusDropped(AGameObject bonus)
+		{
+			_bonuses.Add((AGameBonus) bonus);
+			pushEvent(new NewObjectEvent(bonus, _timerCounter));
 		}
 
 		public void MobDead(Mob mob)
 		{
 			//SomebodyDied(mob);
 			//mob.MeMoved -= SomebodyMoved;
-			pushEvent(new ObjectDeleted(mob.Id,_timerCounter));
+			NewBonusDropped(new AGameBonus(mob.Coordinates));
+			pushEvent(new ObjectDeleted(mob.Id, _timerCounter));
 			_mobs.Remove(mob);
 		}
 
@@ -274,6 +284,27 @@ namespace SkyShoot.Service.Session
 
 				//Проверка на касание игрока и моба
 				hitTestTouch(player);
+
+				List<AGameBonus> bonuses2delete = new List<AGameBonus>();
+				for(int j = 0; j < _bonuses.Count; j ++)
+				{
+					var bonus = _bonuses[j];
+					if (Vector2.Distance(bonus.Coordinates, player.Coordinates) < player.Radius)
+					{
+						if(!bonus.IsActive)
+						{
+							continue;
+						}
+						player.bonuses.Add(bonus);
+						bonus.IsActive = false;
+						pushEvent(new ObjectDeleted(bonus.Id, _timerCounter));
+						bonuses2delete.Add(bonus);
+					} 
+				}
+				foreach (AGameBonus bonus in bonuses2delete)
+				{
+					_bonuses.Remove(bonus);
+				}
 			}
 			Trace.WriteLine("" + _projectiles.size);
 			for (var pr = _projectiles.FirstActive; pr != null; pr = _projectiles.Next(pr) )
