@@ -90,7 +90,6 @@
     <Compile Include="Logger\TableTraceListenerProg.cs" />
     <Compile Include="MainSkyShootService.cs" />
     <Compile Include="Mobs\IMobFactory.cs" />
-    <Compile Include="Mobs\Mob.cs" />
     <Compile Include="Mobs\Spider.cs" />
     <Compile Include="Mobs\SpiderFactory.cs" />
     <Compile Include="Program.cs" />

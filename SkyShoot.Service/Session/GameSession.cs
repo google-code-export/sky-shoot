@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using SkyShoot.Contracts.Session;
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.XNA.Framework;
-using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Weapon.Projectiles;
 using System.Timers;
 using SkyShoot.Contracts;
@@ -20,8 +17,9 @@ namespace SkyShoot.Service.Session
 	{
 		public List<MainSkyShootService> Players { get; set; }
 
-		private List<Mob> _mobs { get; set; }
-		private ObjectPool<AProjectile> _projectiles { get; set; }
+		private List<Mob> _mobs;
+		//private ObjectPool<AGameObject> _mobs;// { get; set; }
+		private ObjectPool<AProjectile> _projectiles;
 
 		public GameDescription LocalGameDescription { get; private set; }
 
@@ -45,6 +43,7 @@ namespace SkyShoot.Service.Session
 			var playerNames = new List<string>();
 
 			_mobs = new List<Mob>();
+			//_mobs = new ObjectPool<AGameObject>();
 			Players = new List<MainSkyShootService>();
 			_projectiles = new ObjectPool<AProjectile>();
 			//_gameEventStack = new Stack<AGameEvent>();
@@ -74,7 +73,8 @@ namespace SkyShoot.Service.Session
 					var a = (sender as MainSkyShootService).Weapon.CreateBullets(sender, direction);
 					foreach (var b in a)
 					{
-						_projectiles.getInActive().Copy(b);
+						_projectiles.GetInActive().Copy(b);
+						//_mobs.Add(b);// GetInActive().Copy(b);
 						pushEvent(new NewObjectEvent(b,_timerCounter));
 					}
 					//Trace.WriteLine("projectile added", "GameSession");
@@ -146,7 +146,7 @@ namespace SkyShoot.Service.Session
 
 		public AGameObject[] GetSynchroFrame()
 		{
-			var allObjects = new List<AGameObject>(_mobs);
+			var allObjects = new List<AGameObject>(_mobs.ToArray());
 			allObjects.AddRange(Players);
 			Trace.WriteLine("SynchroFrame");
 			return allObjects.ToArray();
@@ -222,7 +222,7 @@ namespace SkyShoot.Service.Session
 
 		private void TimerElapsedListener(object sender, EventArgs e)
 		{			
-			update();
+			Update();
 					
 		}
 
@@ -234,7 +234,7 @@ namespace SkyShoot.Service.Session
 				_intervalToSpawn = (long) Math.Exp(4.8 - (float)_timerCounter/40000f);
 				
 				var mob = _spiderFactory.CreateMob();
-				System.Diagnostics.Trace.WriteLine("mob spawned" + mob.Id);
+				Trace.WriteLine("mob spawned" + mob.Id);
 				
 				_mobs.Add(mob);
 				SomebodySpawned(mob);
@@ -246,8 +246,10 @@ namespace SkyShoot.Service.Session
 			}
 		}
 
-		// здесь будут производится обработка всех действий
-		private void update() 
+		/// <summary>
+		/// здесь будут производится обработка всех действий
+		/// </summary>
+		private void Update() 
 		{
 			if (!System.Threading.Monitor.TryEnter(_updating)) return;
 
@@ -261,7 +263,7 @@ namespace SkyShoot.Service.Session
 			for (int i = 0; i < _mobs.Count; i++)
 			{
 				var mob = _mobs[i];
-				mob.Think(Players);
+				mob.Think(new List<AGameObject>(Players.ToArray()));
 				mob.Coordinates = ComputeMovement(mob);
 				//System.Diagnostics.Trace.WriteLine("Mob cord: " + mob.Coordinates); 
 
@@ -275,7 +277,7 @@ namespace SkyShoot.Service.Session
 				//Проверка на касание игрока и моба
 				hitTestTouch(player);
 			}
-			Trace.WriteLine("" + _projectiles.size);
+			Trace.WriteLine("" + _projectiles.Size);
 			for (var pr = _projectiles.FirstActive; pr != null; pr = _projectiles.Next(pr) )
 			{
 				

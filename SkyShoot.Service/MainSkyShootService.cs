@@ -33,7 +33,7 @@ namespace SkyShoot.Service
 
 		public MainSkyShootService() : base(new Vector2(0, 0), Guid.NewGuid()) 
 		{
-			IsPlayer = true;
+			ObjectType = EnumObjectType.Player;
 			NewEvents = new Queue<AGameEvent>();
 			localID = globalID; globalID++; 
 		}
@@ -63,7 +63,7 @@ namespace SkyShoot.Service
 			{
 				Name = username;
 				//_callback = OperationContext.Current.GetCallbackChannel<ISkyShootCallback>();
-				IsPlayer = true;
+				ObjectType = EnumObjectType.Player;
 
 				ClientsList.Add(this);
 			}

@@ -24,17 +24,16 @@ namespace SkyShoot.Contracts.Weapon.Projectiles
 			Owner = null;
 		}
 
-		public void Copy(AProjectile other)
+		public override void Copy(AGameObject other)
 		{
+			if (!(other is AProjectile))
+			{
+				throw new Exception("Type mistmath");
+			}
+			var otherProjectile = other as AProjectile;
 			base.Copy(other);
-			//this.Coordinates = other.Coordinates;
-			this.Damage = other.Damage;
-			//this.RunVector = other.RunVector;
-			//this.Id = other.Id;
-			this.LifeDistance = other.LifeDistance;
-			this.Owner = other.Owner;
-			//this.Speed = other.Speed;
-			
+			LifeDistance = otherProjectile.LifeDistance;
+			Owner = otherProjectile.Owner;
 		}
 
 		public AProjectile(AProjectile other)
@@ -42,24 +41,9 @@ namespace SkyShoot.Contracts.Weapon.Projectiles
 			Copy(other);
 		}
 
-		//[DataMember]
-		//public Guid Id { get; set; }
-
 		public AGameObject Owner { get; set; }
 
-		//[DataMember]
-		//public Vector2 Coordinates;// { get; set; } // вероятно, set должен быть public-методом
-
-		//[DataMember]
-		//public Vector2 RunVector;// { get; set; }
-
-		//[DataMember]
-		//public float Speed { get; set; }
-
-		//[DataMember]
 		public float LifeDistance { get; set; }
-
-		
 
 		public Vector2 OldCoordinates;
 

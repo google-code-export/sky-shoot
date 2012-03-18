@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 using SkyShoot.XNA.Framework;
@@ -13,81 +13,13 @@ namespace SkyShoot.Contracts.Mobs
 	[DataContract]
 	public class AGameObject
 	{
-
-		[DataMember]
-		public bool IsPlayer { get; set; }
-
-		[DataMember]
-		public float Damage { get; set; }// до тех пор пока пулю не сделаем мобом с оружием
-
-		[DataMember]
-		public Guid Id { get; set; }
-
-		[DataMember]
-		public Vector2 RunVector;// { get; set; }
-
-		[DataMember]
-		public Vector2 ShootVector;// { get; set; }
-
-		[DataMember]
-		public Vector2 Coordinates;
-
-		[DataMember]
-		public float HealthAmount { get; set; }
-
-		//[DataMember]
-		public float Radius { get; set; } // размер моба
-
-		[DataMember]
-		public float Speed { get; set; } //скорость: пикселы в миллисекунду
-
-		public AWeapon Weapon { get; set; }
-
-		[DataMember]
-		public bool IsActive { get; set; }
-
-		[DataMember]
-		public AObtainableDamageModifier.AObtainableDamageModifiers State { get; set; }
-
-		[DataMember]
-		public float MaxHealthAmount { get; set; }
-
-		public AGameObject(Vector2 coordinates, Guid id)
-		{
-			RunVector = ShootVector = new Vector2(0, 1);
-			Coordinates = coordinates;
-			Id = id;
-			IsActive = true;
-		}
-
-		public AGameObject(AGameObject other)
-		{
-			Copy(other);
-		}
-
-		public void Copy(AGameObject other)
-		{
-			Coordinates = other.Coordinates;
-			Id = other.Id;
-			HealthAmount = other.HealthAmount;
-			IsPlayer = other.IsPlayer;
-			Radius = other.Radius;
-			RunVector = other.RunVector;
-			ShootVector = other.ShootVector;
-			Speed = other.Speed;
-			State = other.State;
-			MaxHealthAmount = other.MaxHealthAmount;
-			IsActive = other.IsActive;
-			Type = other.Type;
-			this.Type = other.Type;
-		}
-
-		public AGameObject()
-		{
-		}
-
+		/// <summary>
+		/// основное перечисление всех возможных типов обектов игры
+		/// </summary>
 		public enum EnumObjectType
 		{
+			[EnumMember]
+			Player,
 			[EnumMember]
 			Mob,
 			[EnumMember]
@@ -104,9 +36,112 @@ namespace SkyShoot.Contracts.Mobs
 			ShutgunBullet
 		}
 
+		#region основные свойства
+		#region административные
+		//[DataMember]
+		public bool IsPlayer 
+		{ 
+			get { return ObjectType == EnumObjectType.Player; }
+		}
+	
 		[DataMember]
-		public EnumObjectType Type { get; set; }
+		public Guid Id { get; set; }
+
+		[DataMember]
+		public EnumObjectType ObjectType { get; set; }
+
+		[DataMember]
+		public bool IsActive { get; set; }
+
+		#endregion
+
+		#region здоровье и урон
+		[DataMember]
+		public float Damage { get; set; }
+
+		public AWeapon Weapon { get; set; }
+
+		[DataMember]
+		public float HealthAmount { get; set; }
+
+		[DataMember]
+		public float MaxHealthAmount { get; set; }
+
+		[DataMember]
+		public AObtainableDamageModifier.AObtainableDamageModifiers State { get; set; }
+
+		#endregion
+
+		#region перемещение и геометрия
+		[DataMember]
+		public Vector2 RunVector;// { get; set; }
+
+		[DataMember]
+		public Vector2 ShootVector;// { get; set; }
+
+		[DataMember]
+		public Vector2 Coordinates;
+
+		[DataMember]
+		public float Radius { get; set; } // размер моба
+	
+		[DataMember]
+		public float Speed { get; set; } //скорость: пикселы в миллисекунду
+
+		#endregion
+
 
 		// расширить типом моба, размером, цветом, и т.д.
+		#endregion
+
+		#region служебные функции (конструкторы)
+		public AGameObject(Vector2 coordinates, Guid id)
+		{
+			RunVector = ShootVector = new Vector2(0, 1);
+			Coordinates = coordinates;
+			Id = id;
+			IsActive = true;
+		}
+
+		public AGameObject(AGameObject other)
+		{
+			Copy(other);
+		}
+
+		public virtual void Copy(AGameObject other)
+		{
+			Id = other.Id;
+			State = other.State;
+			IsActive = other.IsActive;
+			ObjectType = other.ObjectType;
+
+			HealthAmount = other.HealthAmount;
+			Damage = other.Damage;
+			MaxHealthAmount = other.MaxHealthAmount;
+
+			Coordinates = other.Coordinates;
+			Radius = other.Radius;
+			RunVector = other.RunVector;
+			ShootVector = other.ShootVector;
+			Speed = other.Speed;
+		}
+
+		public AGameObject()
+		{
+		}
+		#endregion
+
+		#region основные функции
+		public virtual void Move()
+		{
+			RunVector = Vector2.Normalize(RunVector);
+			ShootVector = RunVector;
+		}
+
+		public virtual void Think(List<AGameObject> players)
+		{
+		}
+
+		#endregion
 	}
 }

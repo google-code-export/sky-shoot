@@ -526,7 +526,6 @@ namespace SkyShoot.WinFormsClient
 					_me = new AGameObject { Coordinates = Vector2.Zero };
 
 					_me.Id = (Guid)id;
-					_me.IsPlayer = true;
 					SetStatus("Logon successfull");
 					return true;
 				}
