@@ -31,8 +31,8 @@ namespace SkyShoot.Contracts.GameEvents
 	{
 		[DataMember]
 		private AGameObject _newMob;
-		public NewObjectEvent(AGameObject mob,long timeStamp)
-			:base(mob.Id,timeStamp)
+		public NewObjectEvent(AGameObject mob, long timeStamp)
+			: base(mob.Id, timeStamp)
 		{
 			_newMob = GameObjectConverter.OneObject(mob);
 		}

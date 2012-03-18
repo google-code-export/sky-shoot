@@ -11,6 +11,7 @@ using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Session;
 using SkyShoot.Contracts.GameEvents;
+using SkyShoot.Contracts.Bonuses;
 using SkyShoot.Service.Session;
 
 namespace SkyShoot.Service
@@ -25,6 +26,7 @@ namespace SkyShoot.Service
 		//private ISkyShootCallback _callback;
 		public string Name;
 		public Queue<AGameEvent> NewEvents;
+		public List<AGameBonus> bonuses;
 
 		//private Account.AccountManager _accountManager = new Account.AccountManager();
 		private readonly Session.SessionManager _sessionManager = Session.SessionManager.Instance;
@@ -35,7 +37,9 @@ namespace SkyShoot.Service
 		{
 			IsPlayer = true;
 			NewEvents = new Queue<AGameEvent>();
-			localID = globalID; globalID++; 
+			localID = globalID;
+			globalID ++;
+ 			bonuses = new List<AGameBonus>();
 		}
 
 		public void Disconnect() { this.LeaveGame(); }
