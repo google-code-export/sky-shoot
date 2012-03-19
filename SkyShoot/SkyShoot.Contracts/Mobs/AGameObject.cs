@@ -87,7 +87,7 @@ namespace SkyShoot.Contracts.Mobs
 		{
 		}
 
-		public void Think(List<AGameObject> players = null) { }
+		public virtual void Think(List<AGameObject> players = null) { }
 
 		public enum EnumObjectType
 		{
