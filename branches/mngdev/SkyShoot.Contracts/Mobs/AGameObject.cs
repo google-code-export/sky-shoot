@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
-
+using SkyShoot.Contracts.Session;
 using SkyShoot.XNA.Framework;
 
 using SkyShoot.Contracts.Bonuses;
@@ -42,6 +42,18 @@ namespace SkyShoot.Contracts.Mobs
 		public bool IsPlayer 
 		{ 
 			get { return ObjectType == EnumObjectType.Player; }
+		}
+		public bool IsBullet
+		{
+			get
+			{
+				return 
+					ObjectType == EnumObjectType.Bullet || 
+					ObjectType == EnumObjectType.Flame ||
+					ObjectType == EnumObjectType.LaserBullet ||
+					ObjectType == EnumObjectType.ShutgunBullet || 
+					ObjectType == EnumObjectType.Rocket;
+			}
 		}
 	
 		[DataMember]
@@ -128,6 +140,7 @@ namespace SkyShoot.Contracts.Mobs
 
 		public AGameObject()
 		{
+			IsActive = true;
 		}
 		#endregion
 
@@ -139,7 +152,16 @@ namespace SkyShoot.Contracts.Mobs
 		}
 
 		public virtual void Think(List<AGameObject> players)
+		{}
+
+		public virtual void Do(AGameObject obj)
+		{}
+
+		public virtual Vector2 ComputeMovement(long updateDelay, GameLevel gameLevel)
 		{
+
+			var newCoord = RunVector * Speed * updateDelay + Coordinates;
+			return newCoord;
 		}
 
 		#endregion
