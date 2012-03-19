@@ -60,6 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bonuses\AGameBonus.cs" />
     <Compile Include="Bonuses\AObtainableDamageModifier.cs" />
     <Compile Include="GameEvents\AGameEvent.cs" />
     <Compile Include="Mobs\Mob.cs" />

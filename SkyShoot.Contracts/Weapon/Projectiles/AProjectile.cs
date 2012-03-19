@@ -47,6 +47,23 @@ namespace SkyShoot.Contracts.Weapon.Projectiles
 
 		public Vector2 OldCoordinates;
 
-		
+		public override void Do(AGameObject obj)
+		{
+			if(Owner.Id == obj.Id) // не трогать создателя пули
+				return;
+			obj.HealthAmount -= Damage;
+		}
+
+		public override Vector2 ComputeMovement(long updateDelay, Session.GameLevel gameLevel)
+		{
+			//!! rewrite
+			var newCoord = base.ComputeMovement(updateDelay, gameLevel);
+			var x = MathHelper.Clamp(newCoord.X, 0, gameLevel.levelHeight);
+			var y = MathHelper.Clamp(newCoord.Y, 0, gameLevel.levelWidth);
+			const float epsilon = 0.01f;
+			IsActive = (Math.Abs(newCoord.X - x) < epsilon) 
+				&& (Math.Abs(newCoord.Y - y) < epsilon);
+			return newCoord;
+		}
 	}
 }

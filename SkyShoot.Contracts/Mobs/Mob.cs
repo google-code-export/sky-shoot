@@ -69,15 +69,21 @@ namespace SkyShoot.Contracts.Mobs
 
 		private int _wait;
 
-		public void Stop()
+		private void Stop()
 		{
 			RunVector = new Vector2(0, 0);
 			_wait = 30;
 		}
 
-		public void DamageTaken(AProjectile bullet)
+		public override void Do(AGameObject obj)
 		{
-			HealthAmount -= bullet.Damage;
+			obj.HealthAmount -= Damage;
+			Stop();
 		}
+
+		//public void DamageTaken(AProjectile bullet)
+		//{
+		//  HealthAmount -= bullet.Damage;
+		//}
 	}
 }

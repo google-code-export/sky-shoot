@@ -11,6 +11,7 @@ using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Session;
 using SkyShoot.Contracts.GameEvents;
+using SkyShoot.Contracts.Bonuses;
 using SkyShoot.Service.Session;
 
 namespace SkyShoot.Service
@@ -25,6 +26,7 @@ namespace SkyShoot.Service
 		//private ISkyShootCallback _callback;
 		public string Name;
 		public Queue<AGameEvent> NewEvents;
+		public List<AGameBonus> bonuses;
 
 		//private Account.AccountManager _accountManager = new Account.AccountManager();
 		private readonly Session.SessionManager _sessionManager = Session.SessionManager.Instance;
@@ -35,10 +37,15 @@ namespace SkyShoot.Service
 		{
 			ObjectType = EnumObjectType.Player;
 			NewEvents = new Queue<AGameEvent>();
-			localID = globalID; globalID++; 
+			localID = globalID;
+			globalID ++;
+ 			bonuses = new List<AGameBonus>();
 		}
 
-		public void Disconnect() { this.LeaveGame(); }
+		public void Disconnect()
+		{
+			LeaveGame();
+		}
 
 		public bool Register(string username, string password)
 		{
@@ -198,5 +205,25 @@ namespace SkyShoot.Service
 			return session.LocalGameDescription.Players.ToArray();
 		}
 
+		public override Vector2 ComputeMovement(long updateDelay, GameLevel gameLevel)
+		{
+			var newCoord = base.ComputeMovement(updateDelay, gameLevel);
+			newCoord.X = MathHelper.Clamp(newCoord.X, 0, gameLevel.levelHeight);
+			newCoord.Y = MathHelper.Clamp(newCoord.Y, 0, gameLevel.levelWidth);
+
+			return newCoord;
+		}
+
+		public override void Do(AGameObject obj)
+		{
+			base.Do(obj);
+			if(obj.ObjectType == EnumObjectType.Bonus)
+			{
+				obj.IsActive = false;
+				var bonus = new AGameBonus();
+				bonus.Copy(obj);
+				bonuses.Add(bonus);
+			}
+		}
 	}
 }
