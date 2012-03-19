@@ -42,6 +42,11 @@ namespace SkyShoot.Contracts.Weapon.Projectiles
 			Copy(other);
 		}
 
+		public override void Think(System.Collections.Generic.List<AGameObject> players = null)
+		{
+			this.Coordinates += RunVector * Speed;
+		}
+
 		//[DataMember]
 		//public Guid Id { get; set; }
 
