@@ -27,26 +27,30 @@ namespace SkyShoot.Contracts.Mobs
 			Damage = 10;
 		}
 
-		public void FindTarget(List<MainSkyShootService> targetPlayers)
+		public void FindTarget(List<AGameObject> targetPlayers)
 		{
 			float distance = 1000000;
 			float temp;
 
 			for (int i = 0; i < targetPlayers.Count;i++ )
 			{
+				if ((targetPlayers[i]).GetType() != typeof(MainSkyShootService))
+				{
+					continue;
+				}
 				temp = Vector2.Distance(Coordinates, targetPlayers[i].Coordinates);
 
 				if (distance > temp)
 				{
 					distance = temp;
-					targetPlayer = targetPlayers[i];
+					targetPlayer = (MainSkyShootService)targetPlayers[i];
 				}
 			}
 		}
 
 		//public event SomebodyMovesHandler MeMoved;
 
-		public virtual void Move()
+		protected virtual void Move()
 		{
 			if(targetPlayer == null)
 				return;
@@ -63,7 +67,7 @@ namespace SkyShoot.Contracts.Mobs
 			*/
 		}
 
-		public virtual void Think(List<MainSkyShootService> players)
+		public override void  Think(List<AGameObject> players = null)
 		{
 			if (wait == 0)
 			{
@@ -81,6 +85,8 @@ namespace SkyShoot.Contracts.Mobs
 			{
 				wait--;
 			}
+
+			Move();
 		}
 
 		private int wait;

@@ -183,6 +183,7 @@ namespace SkyShoot.Service.Session
 				player.Speed = Constants.PLAYER_DEFAULT_SPEED;
 				player.Radius = Constants.PLAYER_RADIUS;
 				player.Weapon = new Weapon.Pistol(Guid.NewGuid(), player);
+			//	player.Weapon = new Weapon.Shotgun(Guid.NewGuid());
 				player.RunVector = new Vector2(0, 0);
 				player.MaxHealthAmount = player.HealthAmount = 100f;
 				
@@ -265,13 +266,15 @@ namespace SkyShoot.Service.Session
 			SpawnMob();
 			 var now = DateTime.Now.Ticks/10000;
 			_updateDelay = now - _lastUpdate;
-			_lastUpdate = now;	 
+			_lastUpdate = now;
 
-			
+			var gameObjects = new List<AGameObject>();
+			gameObjects.AddRange(Players);
+
 			for (int i = 0; i < _mobs.Count; i++)
 			{
 				var mob = _mobs[i];
-				mob.Think(Players);
+				mob.Think(gameObjects);
 				mob.Coordinates = ComputeMovement(mob);
 				//System.Diagnostics.Trace.WriteLine("Mob cord: " + mob.Coordinates); 
 

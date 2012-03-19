@@ -120,6 +120,11 @@ namespace SkyShoot.Service
 			}
 		}
 
+		public override void Think(List<AGameObject> players)
+		{
+			throw new NotImplementedException();
+		}
+
 		public event SomebodyMovesHandler MeMoved;
 		public event ClientShootsHandler MeShot;
 		//public event SomebodySpawnsHandler MobSpawned;

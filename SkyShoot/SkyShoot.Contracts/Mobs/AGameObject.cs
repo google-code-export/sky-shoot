@@ -7,6 +7,7 @@ using SkyShoot.XNA.Framework;
 using SkyShoot.Contracts.Bonuses;
 
 using SkyShoot.Contracts.Weapon;
+using System.Collections.Generic;
 
 namespace SkyShoot.Contracts.Mobs
 {
@@ -85,6 +86,8 @@ namespace SkyShoot.Contracts.Mobs
 		public AGameObject()
 		{
 		}
+
+		public void Think(List<AGameObject> players = null) { }
 
 		public enum EnumObjectType
 		{
