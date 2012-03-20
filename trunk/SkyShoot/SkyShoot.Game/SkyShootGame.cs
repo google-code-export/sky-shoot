@@ -60,7 +60,7 @@ namespace SkyShoot.Game
 
 			ScreenManager.Instance.SetActiveScreen(typeof(LoginScreen));// = ScreenManager.ScreenEnum.LoginScreen;
 			//ScreenManager.Instance.SetActiveScreen(typeof(OptionsMenuScreen));
-			//ScreenManager.Instance.SetActiveScreen(typeof(GameMenuScreen));
+			//ScreenManager.Instance.SetActiveScreen(typeof(MainMenuScreen));
 		}
 
 		protected override void LoadContent()

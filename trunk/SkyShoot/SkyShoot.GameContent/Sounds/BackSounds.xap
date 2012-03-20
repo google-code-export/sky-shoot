@@ -225,8 +225,8 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = <none>;
-    Bank Last Revised Low = 442378579;
-    Bank Last Revised High = 30211850;
+    Bank Last Revised Low = 347631314;
+    Bank Last Revised High = 30213801;
 
     Wave
     {
@@ -593,6 +593,29 @@ Wave Bank
             File Type = 1;
             Last Modified Low = 2971490816;
             Last Modified High = 29277504;
+        }
+    }
+
+    Wave
+    {
+        Name = RICOCHET;
+        File = RICOCHET.WAV;
+        Build Settings Last Modified Low = 292238146;
+        Build Settings Last Modified High = 30213801;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 1;
+            Sampling Rate = 11025;
+            Bits Per Sample = 0;
+            Play Region Offset = 44;
+            Play Region Length = 8859;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 505034240;
+            Last Modified High = 29086810;
         }
     }
 }
@@ -1357,6 +1380,53 @@ Sound Bank
         }
     }
 
+    Sound
+    {
+        Name = RICOCHET;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank;
+                    Bank Index = 0;
+                    Entry Name = RICOCHET;
+                    Entry Index = 16;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
     Cue
     {
         Name = guts04a;
@@ -1672,6 +1742,26 @@ Sound Bank
         {
             Name = heartbeat;
             Index = 15;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = RICOCHET;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = RICOCHET;
+            Index = 16;
             Weight Min = 0;
             Weight Max = 255;
         }

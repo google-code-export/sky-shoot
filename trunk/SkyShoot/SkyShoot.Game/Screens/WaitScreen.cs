@@ -16,11 +16,16 @@ using SkyShoot.Contracts.Session;
 using SkyShoot.Game.Controls;
 
 using SkyShoot.Game.Client.Game;
+using Microsoft.Xna.Framework.Audio;
 
 namespace SkyShoot.Game.Screens
 {
 	internal class WaitScreen : GameScreen
 	{
+		AudioEngine engine;
+		SoundBank soundBank;
+		WaveBank waveBank;
+
 		public static String Tile { get; set; }
 
 		public static String GameMode { get; set; }
@@ -78,6 +83,10 @@ namespace SkyShoot.Game.Screens
 			Desktop.Children.Add(_leaveButton);
 
 			ScreenManager.Instance.Controller.AddListener(_leaveButton, LeaveButtonPressed);
+
+			engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
+			soundBank = new SoundBank(engine, "Content\\Sounds\\Sound Bank.xsb");
+			waveBank = new WaveBank(engine, "Content\\Sounds\\Wave Bank.xwb");
 		}
 
 		public override void LoadContent()
@@ -118,6 +127,9 @@ namespace SkyShoot.Game.Screens
 
 		private void LeaveButtonPressed(object sender, EventArgs args)
 		{
+			Cue cue = soundBank.GetCue("RICOCHET");
+			cue.Play();
+
 			GameController.Instance.LeaveGame();
 			ScreenManager.Instance.SetActiveScreen(typeof (MultiplayerScreen));
 		}
