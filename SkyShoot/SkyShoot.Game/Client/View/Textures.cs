@@ -28,6 +28,10 @@ namespace SkyShoot.Game.Client.View
 		public static Texture2D Cross;
 		public static Texture2D Target;
 
+		//weapon textures
+		public static Texture2D Gun;
+		public static Texture2D Laser;
+
 		// stone textures
 		public static Texture2D[] Stones = new Texture2D[StonesAmount];
 

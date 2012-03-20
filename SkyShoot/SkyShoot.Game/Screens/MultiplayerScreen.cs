@@ -18,11 +18,16 @@ using SkyShoot.Contracts.Session;
 using SkyShoot.Game.Controls;
 
 using SkyShoot.Game.Client.Game;
+using Microsoft.Xna.Framework.Audio;
 
 namespace SkyShoot.Game.Screens
 {
 	internal class MultiplayerScreen : GameScreen
 	{
+		AudioEngine engine;
+		SoundBank soundBank;
+		WaveBank waveBank;
+
 		private LabelControl _mapLabel;
 
 		private ButtonControl _backButton;
@@ -122,6 +127,10 @@ namespace SkyShoot.Game.Screens
 			ScreenManager.Instance.Controller.AddListener(_joinGameButton, JoinGameButtonPressed);
 			ScreenManager.Instance.Controller.AddListener(_createGameButton, CreateGameButtonPressed);
 			ScreenManager.Instance.Controller.AddListener(_refreshButton, RefreshButtonPressed);
+
+			engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
+			soundBank = new SoundBank(engine, "Content\\Sounds\\Sound Bank.xsb");
+			waveBank = new WaveBank(engine, "Content\\Sounds\\Wave Bank.xwb");
 		}
 
 		public override void LoadContent()
@@ -151,11 +160,17 @@ namespace SkyShoot.Game.Screens
 
 		private void BackButtonPressed(object sender, EventArgs args)
 		{
+			Cue cue = soundBank.GetCue("RICOCHET");
+			cue.Play();
+
 			ScreenManager.Instance.SetActiveScreen(typeof (MainMenuScreen));
 		}
 
 		private void JoinGameButtonPressed(object sender, EventArgs args)
 		{
+			Cue cue = soundBank.GetCue("RICOCHET");
+			cue.Play();
+
 			_tempGameList = GameController.Instance.GetGameList();
 
 			if (_tempGameList == null)
@@ -181,11 +196,17 @@ namespace SkyShoot.Game.Screens
 
 		private void CreateGameButtonPressed(object sender, EventArgs args)
 		{
+			Cue cue = soundBank.GetCue("RICOCHET");
+			cue.Play();
+
 			ScreenManager.Instance.SetActiveScreen(typeof (CreateGameScreen));
 		}
 
 		private void RefreshButtonPressed(object sender, EventArgs args)
 		{
+			Cue cue = soundBank.GetCue("RICOCHET");
+			cue.Play();
+
 			_gameList.Items.Clear();
 			_tempGameList = GameController.Instance.GetGameList();
 

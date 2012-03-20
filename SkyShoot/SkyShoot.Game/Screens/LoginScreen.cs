@@ -14,11 +14,16 @@ using Microsoft.Xna.Framework.Graphics;
 using SkyShoot.Game.Controls;
 
 using SkyShoot.Game.Client.Game;
+using Microsoft.Xna.Framework.Audio;
 
 namespace SkyShoot.Game.Screens
 {
 	internal class LoginScreen : GameScreen
 	{
+		AudioEngine engine;
+		SoundBank soundBank;
+		WaveBank waveBank;
+
 		private LabelControl _loginLabel;
 		private LabelControl _passwordLabel;
 
@@ -87,7 +92,7 @@ namespace SkyShoot.Game.Screens
 			_exitButton = new ButtonControl
 			              	{
 			              		Text = "Exit",
-			              		Bounds = new UniRectangle(new UniScalar(0.5f, -210f), new UniScalar(0.4f, 70), 100, 32)
+			              		Bounds = new UniRectangle(new UniScalar(0.5f, -210f), new UniScalar(0.4f, 70), 100, 32),												
 			              	};
 
 			// New Account Button
@@ -110,7 +115,11 @@ namespace SkyShoot.Game.Screens
 
 			ScreenManager.Instance.Controller.AddListener(_loginButton, LoginButtonPressed);
 			ScreenManager.Instance.Controller.AddListener(_exitButton, ExitButtonPressed);
-			ScreenManager.Instance.Controller.AddListener(_newAccountButton, NewAccountButtonPressed);			
+			ScreenManager.Instance.Controller.AddListener(_newAccountButton, NewAccountButtonPressed);
+
+			engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
+			soundBank = new SoundBank(engine, "Content\\Sounds\\Sound Bank.xsb");
+			waveBank = new WaveBank(engine, "Content\\Sounds\\Wave Bank.xwb");
 		}
 
 		public override void LoadContent()
@@ -125,11 +134,17 @@ namespace SkyShoot.Game.Screens
 
 		private void ExitButtonPressed(object sender, EventArgs args)
 		{
+			Cue cue = soundBank.GetCue("RICOCHET");
+			cue.Play();
+
 			ScreenManager.Instance.Game.Exit();
 		}
 
 		private void LoginButtonPressed(object sender, EventArgs args)
 		{
+			Cue cue = soundBank.GetCue("RICOCHET");
+			cue.Play();
+
 			if (_loginBox.Text.Length < 3)
 			{
 				MessageBox.Message = "Username is too short!\nPress Ok to continue";
@@ -149,12 +164,15 @@ namespace SkyShoot.Game.Screens
 				if (GameController.Instance.Login(_loginBox.Text, _passwordBox.Text).HasValue)
 				{
 					ScreenManager.Instance.SetActiveScreen(typeof (MainMenuScreen));
-				}
+				}				
 			}
 		}
 
 		private void NewAccountButtonPressed(object sender, EventArgs args)
 		{
+			Cue cue = soundBank.GetCue("RICOCHET");
+			cue.Play();
+
 			if (_loginBox.Text.Length < 3)
 			{
 				MessageBox.Message = "Username is too short!\nPress Ok to continue";
@@ -183,7 +201,7 @@ namespace SkyShoot.Game.Screens
 					MessageBox.Message = "Registration failed";
 					ScreenManager.Instance.SetActiveScreen(typeof (MessageBox));
 				}
-			}
+			}			
 		}
 
 		public override void Draw(GameTime gameTime)
