@@ -47,7 +47,8 @@ namespace SkyShoot.Game.Client.Game
 		}
 	}
 
-	public sealed class GameController : ISkyShootCallback, ISkyShootService
+	public sealed class GameController :// ISkyShootCallback, 
+		ISkyShootService
 	{
 		AudioEngine engine;
 		SoundBank soundBank;
@@ -57,15 +58,19 @@ namespace SkyShoot.Game.Client.Game
 
 		public bool IsGameStarted { get; private set; }
 
-		private static readonly GameController LocalInstance = new GameController();
+		private static GameController _localInstance;
 
 		private ISkyShootService _service;
 
 		public static GameController Instance
 		{
-			get { return LocalInstance; }
+			get
+			{
+				if (_localInstance == null)
+					_localInstance = new GameController();
+				return _localInstance;
+			}
 		}
-
 		public GameModel GameModel { get; private set; }
 
 		private GameController()
@@ -362,7 +367,7 @@ namespace SkyShoot.Game.Client.Game
 			Move(TypeConverter.Xna2XnaLite(direction));
 		}
 
-		public Queue<AGameEvent> Move(XNA.Framework.Vector2 direction)
+		public AGameEvent[] Move(XNA.Framework.Vector2 direction)
 		{
 			try
 			{
@@ -396,7 +401,7 @@ namespace SkyShoot.Game.Client.Game
 			}
 		}
 
-		public Queue<AGameEvent> GetEvents()
+		public AGameEvent[] GetEvents()
 		{
 			throw new NotImplementedException();
 		}
