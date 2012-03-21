@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using SkyShoot.XNA.Framework;
-using SkyShoot.Contracts.Weapon.Projectiles;
 
 namespace SkyShoot.Contracts.Mobs
 {
@@ -36,16 +35,11 @@ namespace SkyShoot.Contracts.Mobs
 			}
 		}
 
-		//public event SomebodyMovesHandler MeMoved;
+		//public override void Move()
+		//{
 
-		public override void Move()
-		{
-			if (Target == null)
-				return;
-			RunVector = new Vector2(Target.Coordinates.X - Coordinates.X, Target.Coordinates.Y - Coordinates.Y);
-
-			base.Move();
-		}
+		//  //base.Move();
+		//}
 
 		public override void  Think(List<AGameObject> players)
 		{
@@ -57,7 +51,9 @@ namespace SkyShoot.Contracts.Mobs
 					{
 						FindTarget(players);
 					}
-					Move();
+					if (Target == null)
+						return;
+					RunVector = new Vector2(Target.Coordinates.X - Coordinates.X, Target.Coordinates.Y - Coordinates.Y);
 				}
 				_thinkCounter++;
 			}

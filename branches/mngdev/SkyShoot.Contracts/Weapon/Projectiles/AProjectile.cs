@@ -32,7 +32,7 @@ namespace SkyShoot.Contracts.Weapon.Projectiles
 			}
 			var otherProjectile = other as AProjectile;
 			base.Copy(other);
-			LifeDistance = otherProjectile.LifeDistance;
+			//LifeDistance = otherProjectile.LifeDistance;
 			Owner = otherProjectile.Owner;
 		}
 
@@ -43,15 +43,16 @@ namespace SkyShoot.Contracts.Weapon.Projectiles
 
 		public AGameObject Owner { get; set; }
 
-		public float LifeDistance { get; set; }
-
-		public Vector2 OldCoordinates;
+		//[Obsolete("Use health")]
+		//public float LifeDistance { get; set; }
 
 		public override void Do(AGameObject obj)
 		{
 			if(Owner.Id == obj.Id) // не трогать создателя пули
 				return;
 			obj.HealthAmount -= Damage;
+			// убираем пулю
+			IsActive = false;
 		}
 
 		public override Vector2 ComputeMovement(long updateDelay, Session.GameLevel gameLevel)
@@ -61,6 +62,7 @@ namespace SkyShoot.Contracts.Weapon.Projectiles
 			var x = MathHelper.Clamp(newCoord.X, 0, gameLevel.levelHeight);
 			var y = MathHelper.Clamp(newCoord.Y, 0, gameLevel.levelWidth);
 			const float epsilon = 0.01f;
+			// убрать пулю, которая вышла за экран
 			IsActive = (Math.Abs(newCoord.X - x) < epsilon) 
 				&& (Math.Abs(newCoord.Y - y) < epsilon);
 			return newCoord;
