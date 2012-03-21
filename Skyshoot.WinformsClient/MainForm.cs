@@ -237,14 +237,17 @@ namespace SkyShoot.WinFormsClient
 				{
 					Thread.Sleep(100);
 					DateTime now = DateTime.Now;
-					_objects.Clear();
 					var syncObjects = _service.SynchroFrame();
 					if (syncObjects == null)
 					{
 						GameRuning = false;
 						continue;
 					}
-					_objects.AddRange(syncObjects);
+					lock (_objects)
+					{
+						_objects.Clear();
+						_objects.AddRange(syncObjects);
+					}
 					var tempMe = _objects.Find(m => m.Id == _me.Id);
 					if (tempMe != null)
 					{
@@ -417,46 +420,72 @@ namespace SkyShoot.WinFormsClient
 			using (var g = e.Graphics)
 			{
 				try
-				//lock (_objects)
 				{
-					foreach (var m in _objects)
+					AGameObject[] objects2Paint;
+					lock (_objects)
 					{
-						r = 5f;
+						objects2Paint = _objects.ToArray();
+					}
+					foreach (var m in objects2Paint)
+					{
+						if (!m.IsActive)
+						{
+							continue;
+						}
 						x = (m.Coordinates.X) * _pnCanvas.Width / _level.levelWidth;
 						y = (m.Coordinates.Y) * _pnCanvas.Height / _level.levelHeight;
-						//r = m.Radius*0.5f*_pnCanvas.Width/_level.levelWidth;
-						g.FillEllipse(m.IsPlayer ? Brushes.Black : Brushes.Green,
-													new RectangleF(
-														new PointF(x - r, y - r),
-														new SizeF(2 * r, 2 * r)));
-						//if (m.IsPlayer)
+						switch (m.ObjectType)
 						{
+						case AGameObject.EnumObjectType.Mob:
+						case AGameObject.EnumObjectType.Player:
+							r = 5f;
+							g.FillEllipse(m.IsPlayer ? Brushes.Black : Brushes.Green,
+														new RectangleF(
+															new PointF(x - r, y - r),
+															new SizeF(2 * r, 2 * r)));
 							g.DrawLine(new Pen(m.IsPlayer ? Color.Red : Color.Green, 3),
 												 new PointF(x, y),
 												 new PointF(x + m.ShootVector.X * 2 * r, y + m.ShootVector.Y * 2 * r));
+
+							Color c;
+							if (m.HealthAmount > 0.60f * m.MaxHealthAmount)
+							{
+								c = Color.Lime;
+							}
+							else if (m.HealthAmount > 0.30f * m.MaxHealthAmount)
+							{
+								c = Color.Yellow;
+							}
+							else
+							{
+								c = Color.Red;
+							}
+							g.DrawLine(new Pen(c, 2f),
+												 x - r, y - r, x + 2 * r * m.HealthAmount / m.MaxHealthAmount, y - r);
+							break;
+						case AGameObject.EnumObjectType.Bullet:
+						case AGameObject.EnumObjectType.LaserBullet:
+						case AGameObject.EnumObjectType.ShutgunBullet:
+							r = 2f;
+							g.FillEllipse(Brushes.Red,
+														new RectangleF(
+															new PointF(x - r, y - r),
+															new SizeF(2 * r, 2 * r)));
+							break;
+						default:
+							r = 3f;
+							g.FillEllipse(Brushes.Blue,
+														new RectangleF(
+															new PointF(x - r, y - r),
+															new SizeF(2 * r, 2 * r)));
+							break;
 						}
-						Color c;
-						if (m.HealthAmount > 0.60f * m.MaxHealthAmount)
-						{
-							c = Color.Lime;
-						}
-						else if (m.HealthAmount > 0.30f * m.MaxHealthAmount)
-						{
-							c = Color.Yellow;
-						}
-						else
-						{
-							c = Color.Red;
-						}
-						g.DrawLine(new Pen(c, 2f),
-											 x - r, y - r, x + 2 * r * m.HealthAmount / m.MaxHealthAmount, y - r);
 					}
 				}
 				catch (Exception exc)
 				{
 					Trace.WriteLine("Exc: " + exc);
 				}
-				//r = 2f;
 				//try
 				//  //lock (_bullets)
 				//{

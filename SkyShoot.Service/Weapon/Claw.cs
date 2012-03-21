@@ -7,6 +7,7 @@ using SkyShoot.Contracts;
 
 namespace SkyShoot.Service.Weapon
 {
+	//!!@todo 2 delete
 	class Claw:AWeapon
 	{
 		public Claw(Guid id) : base(id) { Owner = null; }

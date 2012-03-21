@@ -16,43 +16,52 @@ namespace SkyShoot.Contracts.Mobs
 		/// <summary>
 		/// основное перечисление всех возможных типов обектов игры
 		/// </summary>
+		[Flags]
 		public enum EnumObjectType
 		{
 			[EnumMember]
-			Player,
+			LivingObject = 0x0001,
 			[EnumMember]
-			Mob,
+			Player = LivingObject | 0x2,
 			[EnumMember]
-			Bullet,
+			Mob = LivingObject | 0x4,
 			[EnumMember]
-			Rocket,
+			Bullet = 0x0010,
 			[EnumMember]
-			Flame,
+			Rocket = Bullet | 0x0010,
 			[EnumMember]
-			Bonus,
+			Flame = Bullet | 0x0020,
 			[EnumMember]
-			LaserBullet,
+			LaserBullet = Bullet | 0x0040,
 			[EnumMember]
-			ShutgunBullet
+			ShutgunBullet = Bullet | 0x0080,
+			[EnumMember]
+			Bonus = 0x1000,
 		}
 
 		#region основные свойства
 		#region административные
-		//[DataMember]
+		/// <summary>
+		/// проверка вида объекта
+		/// </summary>
+		/// <returns></returns>
+		public bool Is(EnumObjectType objectType)
+		{
+			return (ObjectType & objectType) == objectType;
+		}
+
+		[Obsolete("This prorepty is deprecated. Use Is funciton.")]
 		public bool IsPlayer 
 		{ 
-			get { return ObjectType == EnumObjectType.Player; }
+			get { return Is(EnumObjectType.Player); }
 		}
+
+		[Obsolete("This prorepty is deprecated. Use Is funciton.")]
 		public bool IsBullet
 		{
 			get
 			{
-				return 
-					ObjectType == EnumObjectType.Bullet || 
-					ObjectType == EnumObjectType.Flame ||
-					ObjectType == EnumObjectType.LaserBullet ||
-					ObjectType == EnumObjectType.ShutgunBullet || 
-					ObjectType == EnumObjectType.Rocket;
+				return Is(EnumObjectType.Bullet);
 			}
 		}
 	
@@ -60,10 +69,18 @@ namespace SkyShoot.Contracts.Mobs
 		public Guid Id { get; set; }
 
 		[DataMember]
-		public EnumObjectType ObjectType { get; set; }
+		public EnumObjectType ObjectType 
+		{
+			get;
+			set;
+		}
 
-		[DataMember]
-		public bool IsActive { get; set; }
+		//[DataMember]
+		public bool IsActive 
+		{ 
+			get { return HealthAmount > 0; }
+			set { HealthAmount = value ? 1 : -1; }
+			}
 
 		#endregion
 
@@ -112,7 +129,7 @@ namespace SkyShoot.Contracts.Mobs
 			RunVector = ShootVector = new Vector2(0, 1);
 			Coordinates = coordinates;
 			Id = id;
-			IsActive = true;
+			//IsActive = true;
 		}
 
 		public AGameObject(AGameObject other)
@@ -124,7 +141,7 @@ namespace SkyShoot.Contracts.Mobs
 		{
 			Id = other.Id;
 			State = other.State;
-			IsActive = other.IsActive;
+			//IsActive = other.IsActive;
 			ObjectType = other.ObjectType;
 
 			HealthAmount = other.HealthAmount;
@@ -140,16 +157,16 @@ namespace SkyShoot.Contracts.Mobs
 
 		public AGameObject()
 		{
-			IsActive = true;
+			//IsActive = true;
 		}
 		#endregion
 
 		#region основные функции
-		public virtual void Move()
-		{
-			RunVector = Vector2.Normalize(RunVector);
-			ShootVector = RunVector;
-		}
+		//public virtual void Move()
+		//{
+		//  RunVector = Vector2.Normalize(RunVector);
+		//  ShootVector = RunVector;
+		//}
 
 		public virtual void Think(List<AGameObject> players)
 		{}
@@ -159,7 +176,11 @@ namespace SkyShoot.Contracts.Mobs
 
 		public virtual Vector2 ComputeMovement(long updateDelay, GameLevel gameLevel)
 		{
-
+			// если вектор не ноль то можно делать нормирование
+			if (RunVector.LengthSquared() > 0.01f)
+			{
+				RunVector = Vector2.Normalize(RunVector);
+			}
 			var newCoord = RunVector * Speed * updateDelay + Coordinates;
 			return newCoord;
 		}

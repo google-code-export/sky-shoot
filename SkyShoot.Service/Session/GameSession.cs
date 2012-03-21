@@ -82,7 +82,10 @@ namespace SkyShoot.Service.Session
 					{
 						//_projectiles.Add(b);
 						//_projectiles.GetInActive().Copy(b);
-						_gameObjects.Add(b);// GetInActive().Copy(b);
+						lock (_gameObjects)
+						{
+							_gameObjects.Add(b);// GetInActive().Copy(b);
+						}
 						PushEvent(new NewObjectEvent(b,_timerCounter));
 					}
 					//Trace.WriteLine("projectile added", "GameSession");
@@ -147,7 +150,11 @@ namespace SkyShoot.Service.Session
 
 		public void PlayerDead(MainSkyShootService player)
 		{
-
+			if(player == null)
+			{
+				Trace.WriteLine("strange error");
+				return;
+			}
 			//player.GameOver();
 
 			SomebodyDied(player);			
@@ -249,10 +256,12 @@ namespace SkyShoot.Service.Session
 	#region local functions
 		public void SpawnMob()
 		{
+#if DEBUG
 			//!! debug
 			var t = _gameObjects.FindAll(m => m.ObjectType == AGameObject.EnumObjectType.Mob);
 			if(t != null && t.Count > 2)
 				return;
+#endif
 			if (_intervalToSpawn == 0)
 			{
 				_intervalToSpawn = (long) Math.Exp(4.8 - (float)_timerCounter/40000f);
@@ -284,75 +293,95 @@ namespace SkyShoot.Service.Session
 			_lastUpdate = now;
 
 			int shift = Players.Count;
-			for (int i = 0; i < shift + _gameObjects.Count; i++)
+			lock (_gameObjects)
 			{
-				AGameObject activeObject;
-				if(i < shift)
+
+				for (int i = 0; i < shift + _gameObjects.Count; i++)
 				{
-					activeObject = Players[i];
-				}
-				else
-				{
-					activeObject = _gameObjects[i - shift];
-				}
-				// объект не существует
-				if (!activeObject.IsActive)
-				{
-					continue;
-				}
-				activeObject.Think(new List<AGameObject>(Players));
-				var newCoord = activeObject.ComputeMovement(_updateDelay, GameLevel);
-				var canMove = true;
-				/* <b>int j = 0</b> потому что каждый с каждым, а действия не симметричны*/
-				for (int j = 0 ; j < shift + _gameObjects.Count; j++)
-				{
-					// тот же самый объект. сам с собой он ничего не делает
-					if (i == j)
+					AGameObject activeObject;
+					if (i < shift)
 					{
-						continue;
-					}
-					AGameObject slaveObject;
-					if (j < shift)
-					{
-						slaveObject = Players[j];
+						activeObject = Players[i];
 					}
 					else
 					{
-						slaveObject = _gameObjects[j - shift];
+						activeObject = _gameObjects[i - shift];
 					}
 					// объект не существует
-					if (!slaveObject.IsActive)
+					if (!activeObject.IsActive)
 					{
 						continue;
 					}
-					//!! rewrite sqrt!!
-					// обект далеко. не рассамтриваем
-					if(Vector2.Distance(newCoord, slaveObject.Coordinates) > (activeObject.Radius + slaveObject.Radius))
+					activeObject.Think(new List<AGameObject>(Players));
+					var newCoord = activeObject.ComputeMovement(_updateDelay, GameLevel);
+					var canMove = true;
+					/* <b>int j = 0</b> потому что каждый с каждым, а действия не симметричны*/
+					for (int j = 0; j < shift + _gameObjects.Count; j++)
 					{
-						continue;
+						// тот же самый объект. сам с собой он ничего не делает
+						if (i == j)
+						{
+							continue;
+						}
+						AGameObject slaveObject;
+						if (j < shift)
+						{
+							slaveObject = Players[j];
+						}
+						else
+						{
+							slaveObject = _gameObjects[j - shift];
+						}
+						// объект не существует
+						if (!slaveObject.IsActive)
+						{
+							continue;
+						}
+						//!! rewrite sqrt!!
+						// обект далеко. не рассамтриваем
+						if (Vector2.Distance(newCoord, slaveObject.Coordinates) > (activeObject.Radius + slaveObject.Radius))
+						{
+							continue;
+						}
+						activeObject.Do(slaveObject);
+						//if (activeObject.IsBullet)
+						//{
+						//  // пуля поиспользована, должна быть удалена
+						//  activeObject.HealthAmount = -1;
+						//  break;
+						//}
+						if (!slaveObject.IsBullet &&
+						    slaveObject.ObjectType != AGameObject.EnumObjectType.Bonus)
+						{
+							//удаляемся ли мы от объекта
+							canMove = Vector2.DistanceSquared(activeObject.Coordinates, slaveObject.Coordinates) <
+							          Vector2.DistanceSquared(newCoord, slaveObject.Coordinates);
+						}
 					}
-					activeObject.Do(slaveObject);
-					if (activeObject.IsBullet)
+					if (canMove)
 					{
-						// пуля поиспользована, должна быть удалена
-						activeObject.HealthAmount = -1;
-						break;
+						activeObject.Coordinates = newCoord;
 					}
-					if (!slaveObject.IsBullet && 
-						slaveObject.ObjectType != AGameObject.EnumObjectType.Bonus)
+					else
 					{
-						canMove = false;
+						activeObject.RunVector = Vector2.Zero;
+					}
+					if (!activeObject.IsActive)
+					{
+						MobDead(activeObject);
 					}
 				}
-				if (canMove)
+
+				for (int i = 0; i < Players.Count; i++)
 				{
-					activeObject.Coordinates = newCoord;
+					var activeObject = Players[i];
+					if (!activeObject.IsActive)
+					{
+						PlayerDead(activeObject);
+					}
 				}
-				if(activeObject.HealthAmount < 0)
-				{
-					activeObject.IsActive = false;
-					MobDead(activeObject);
-				}
+
+				_gameObjects.RemoveAll(m => !m.IsActive);
 			}
 
 			/*
