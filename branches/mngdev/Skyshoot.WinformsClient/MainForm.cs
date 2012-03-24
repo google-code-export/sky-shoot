@@ -22,14 +22,14 @@ namespace SkyShoot.WinFormsClient
 		private readonly ISkyShootService _service;
 
 		private AGameObject _me;
-		private List<AGameObject> _objects;
+		private readonly List<AGameObject> _objects;
 
 		private Vector2 _prevMove;
 
 		private GameLevel _level;
 
 		private DateTime _prev;
-		private Thread _th;
+		private readonly Thread _th;
 		public bool GameRuning;
 
 		#endregion
@@ -438,7 +438,7 @@ namespace SkyShoot.WinFormsClient
 						{
 						case AGameObject.EnumObjectType.Mob:
 						case AGameObject.EnumObjectType.Player:
-							r = 5f;
+							r = m.Radius * _pnCanvas.Width / _level.levelWidth;
 							g.FillEllipse(m.IsPlayer ? Brushes.Black : Brushes.Green,
 														new RectangleF(
 															new PointF(x - r, y - r),
@@ -552,9 +552,8 @@ namespace SkyShoot.WinFormsClient
 				Guid? id = _service.Login(username, password);
 				if (id != null)
 				{
-					_me = new AGameObject { Coordinates = Vector2.Zero };
+					_me = new AGameObject {Coordinates = Vector2.Zero, Id = (Guid) id};
 
-					_me.Id = (Guid)id;
 					SetStatus("Logon successfull");
 					return true;
 				}

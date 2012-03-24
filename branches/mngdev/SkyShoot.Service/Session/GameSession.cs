@@ -338,22 +338,20 @@ namespace SkyShoot.Service.Session
 							continue;
 						}
 						//!! rewrite sqrt!!
-						// обект далеко. не рассамтриваем
-						if (Vector2.Distance(newCoord, slaveObject.Coordinates) > (activeObject.Radius + slaveObject.Radius))
+						// объект далеко. не рассамтриваем
+						var rR = (activeObject.Radius + slaveObject.Radius);
+						if (Vector2.DistanceSquared(newCoord, slaveObject.Coordinates) > rR*rR)
 						{
 							continue;
 						}
 						activeObject.Do(slaveObject);
-						//if (activeObject.IsBullet)
-						//{
-						//  // пуля поиспользована, должна быть удалена
-						//  activeObject.HealthAmount = -1;
-						//  break;
-						//}
-						if (!slaveObject.IsBullet &&
-						    slaveObject.ObjectType != AGameObject.EnumObjectType.Bonus)
+						//!! @todo rewrite
+						if (!slaveObject.IsBullet && !activeObject.IsBullet && 
+						    slaveObject.ObjectType != AGameObject.EnumObjectType.Bonus &&
+							activeObject.ObjectType != AGameObject.EnumObjectType.Bonus)
 						{
 							//удаляемся ли мы от объекта
+							// если да, то можем двигаться
 							canMove = Vector2.DistanceSquared(activeObject.Coordinates, slaveObject.Coordinates) <
 							          Vector2.DistanceSquared(newCoord, slaveObject.Coordinates);
 						}
