@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Nuclex.UserInterface;
 
 using Nuclex.UserInterface.Controls.Desktop;
-
+using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Session;
 
 using SkyShoot.Game.Controls;
@@ -56,6 +56,7 @@ namespace SkyShoot.Game.Screens
 			InititalizeControls();
 
 			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
+			_updateCount = 0;
 		}
 
 		private void CreateControls()
@@ -87,6 +88,26 @@ namespace SkyShoot.Game.Screens
 			engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
 			soundBank = new SoundBank(engine, "Content\\Sounds\\Sound Bank.xsb");
 			waveBank = new WaveBank(engine, "Content\\Sounds\\Wave Bank.xwb");
+		}
+
+		private int _updateCount ;
+		public override void Update(GameTime gameTime)
+		{
+			base.Update(gameTime);
+			// обновляемся только каждый 30 апдейт (два раза в секунду)
+			if(_updateCount++ % 30 != 0)
+				return;
+			var level = GameController.Instance.GameStart(GameId);
+			if (level != null)
+			{
+				// игра началась
+				GameController.Instance.GameStart(new AGameObject[] {}, level);
+			}
+			else
+			{
+				// игра еще не началась, обновляем список игроков
+				ChangePlayerList(GameController.Instance.PlayerListUpdate());
+			}
 		}
 
 		public override void LoadContent()

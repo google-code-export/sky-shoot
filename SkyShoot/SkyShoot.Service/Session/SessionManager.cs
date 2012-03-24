@@ -90,7 +90,7 @@ namespace SkyShoot.Service.Session
 		public GameLevel GameStarted(int gameId)
 		{
 			var game = _gameSessions.Find(x => x.LocalGameDescription.GameId == gameId);
-			return game.IsStarted ? game.GameLevel : null;
+			return game==null?null:(game.IsStarted ? game.GameLevel : null);
 		}
 	}
 }

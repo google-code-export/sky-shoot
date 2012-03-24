@@ -78,7 +78,7 @@ namespace SkyShoot.Game.Client.Game
 			InitConnection();
 		}
 
-		#region ServerInput
+		#region бывший callbacks
 
 		public void GameStart(AGameObject[] mobs, Contracts.Session.GameLevel arena)
 		{
@@ -148,6 +148,7 @@ namespace SkyShoot.Game.Client.Game
 
 		public void GameOver()
 		{
+			GameModel = null;
 			ScreenManager.Instance.SetActiveScreen(typeof (MainMenuScreen));
 			IsGameStarted = false;
 		}
@@ -271,8 +272,18 @@ namespace SkyShoot.Game.Client.Game
 
 		private void InitConnection()
 		{
-			var channelFactory = new DuplexChannelFactory<ISkyShootService>(this, "SkyShootEndpoint");
-			_service = channelFactory.CreateChannel();
+			try
+			{
+				var channelFactory = new ChannelFactory<ISkyShootService>("SkyShootEndpoint");
+				_service = channelFactory.CreateChannel();
+			}
+			catch (Exception exc)
+			{
+				Trace.WriteLine("Can't connect to SkyShootService");
+				Trace.WriteLine(exc);
+				// !! @todo catch this!
+				throw;
+			}
 		}
 
 		private void FatalError(Exception e)
@@ -449,17 +460,41 @@ namespace SkyShoot.Game.Client.Game
 
 		public Contracts.Session.GameLevel GameStart(int gameId)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				return _service.GameStart(gameId);
+			}
+			catch (Exception e)
+			{
+				FatalError(e);				
+				throw;
+			}
 		}
 
 		public AGameObject[] SynchroFrame()
 		{
-			throw new NotImplementedException();
+			try
+			{
+				return _service.SynchroFrame();
+			}
+			catch (Exception exc)
+			{
+				Trace.WriteLine(exc);
+				return new AGameObject[]{};
+			}
 		}
 
 		public string[] PlayerListUpdate()
 		{
-			throw new NotImplementedException();
+			try
+			{
+				return _service.PlayerListUpdate();
+			}
+			catch (Exception exc)
+			{
+				Trace.WriteLine(exc);
+				return new string[]{};
+			}
 		}
 
 		#endregion

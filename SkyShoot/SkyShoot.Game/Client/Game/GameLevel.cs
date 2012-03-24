@@ -33,8 +33,8 @@ namespace SkyShoot.Game.Client.Game
 			Width = (int) gameLevel.levelWidth;
 			Height = (int) gameLevel.levelHeight;
 
-			_gunTexture = Textures.Clone(Textures.Gun);
-			_laserTexture = Textures.Clone(Textures.Laser);
+			//_gunTexture = Textures.Clone(Textures.Gun);
+			//_laserTexture = Textures.Clone(Textures.Laser);
 
 			engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
 			soundBank = new SoundBank(engine, "Content\\Sounds\\Sound Bank.xsb");
@@ -90,8 +90,8 @@ namespace SkyShoot.Game.Client.Game
 		public void Draw(SpriteBatch spriteBatch)
 		{
 			spriteBatch.Draw(_texture, Vector2.Zero, new Rectangle(0, 0, Width, Height), Color.White);
-			spriteBatch.Draw(_gunTexture, new Rectangle(Width + 5, Height + 29, Width + 45, Height + 5), Color.White);
-			spriteBatch.Draw(_laserTexture, new Rectangle(Width + 50, Height + 29, Width + 90, Height + 5), Color.White);
+			//spriteBatch.Draw(_gunTexture, new Rectangle(Width + 5, Height + 29, Width + 45, Height + 5), Color.White);
+			//spriteBatch.Draw(_laserTexture, new Rectangle(Width + 50, Height + 29, Width + 90, Height + 5), Color.White);
 		}
 	}
 }

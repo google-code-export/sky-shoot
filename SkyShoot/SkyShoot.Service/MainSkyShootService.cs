@@ -188,7 +188,7 @@ namespace SkyShoot.Service
 		public AGameObject[] SynchroFrame()
 		{
 			GameSession session;
-			_sessionManager.SessionTable.TryGetValue(Id,out session);
+			_sessionManager.SessionTable.TryGetValue(Id, out session);
 			if(session ==null)
 			{
 				return null;
