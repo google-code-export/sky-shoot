@@ -75,13 +75,36 @@ namespace SkyShoot.Game.Client.Game
 				Trace.WriteLine("Projectile with such ID does not exist", "GameModel/RemoveProjectile");
 		}
 
+		private int _updateCouter = 0;
 		public void Update(GameTime gameTime)
 		{
+			var sw = new Stopwatch();
+			sw.Start();
+			if (_updateCouter++ % 30 == 0)
+			{
+				var newMobs = GameController.Instance.SynchroFrame();
+				if (newMobs == null)
+				{
+					GameController.Instance.GameOver();
+					return;
+				}
+				Mobs.Clear();
+				foreach (var aGameObject in newMobs)
+				{
+					Mobs.TryAdd(aGameObject.Id, GameFactory.CreateClientMob(aGameObject));
+				}
+			}
 			// update mobs
+			sw.Stop();
+			Trace.WriteLine("SW:sync: "+sw.ElapsedMilliseconds);
+			sw.Restart();
 			foreach (var aMob in Mobs)
 			{
 				aMob.Value.Update(gameTime);
 			}
+			sw.Stop();
+			Trace.WriteLine("SW:mobup: " + sw.ElapsedMilliseconds);
+			sw.Restart();
 
 			// update projectiles
 			foreach (var projectile in Projectiles)
@@ -91,31 +114,31 @@ namespace SkyShoot.Game.Client.Game
 				else
 					RemoveProjectile(projectile.Value.Id);
 			}
+			sw.Stop();
+			Trace.WriteLine("SW:prjup: " + sw.ElapsedMilliseconds);
 		}
 
 		public void Draw(SpriteBatch spriteBatch)
 		{
 			Vector2 myPosition;
 
-            try
-            {
-                myPosition = GetMob(GameController.MyId).CoordinatesM;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                return;
-            }
+			var me = GetMob(GameController.MyId);
+			if (me == null)
+			{
+				return;
+			}
+			myPosition = me.CoordinatesM;
+
 
 			Camera2D.Position = myPosition;
 
 			spriteBatch.Begin(SpriteSortMode.Immediate,
-			                  BlendState.AlphaBlend,
-			                  null,
-			                  null,
-			                  null,
-			                  null,
-			                  Camera2D.GetTransformation(Textures.GraphicsDevice));
+												BlendState.AlphaBlend,
+												null,
+												null,
+												null,
+												null,
+												Camera2D.GetTransformation(Textures.GraphicsDevice));
 
 			// draw background
 			GameLevel.Draw(spriteBatch);

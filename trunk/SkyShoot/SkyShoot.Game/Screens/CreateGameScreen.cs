@@ -276,7 +276,7 @@ namespace SkyShoot.Game.Screens
 			WaitScreen.Tile = _tile.Text;
 			WaitScreen.GameMode = _gameMode.Text;
 			WaitScreen.MaxPlayers = _maxPlayers.Text;
-			WaitScreen.GameId = GameController.Instance.GetGameList().Length;
+			WaitScreen.GameId = gameDescription.GameId;
 
 			ScreenManager.Instance.SetActiveScreen(typeof (WaitScreen));
 		}
