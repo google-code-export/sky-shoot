@@ -16,7 +16,7 @@ namespace SkyShoot.Service.Weapon
 			: base(id) 
 		{
 			this.Owner = owner;
-			_reloadSpeed = Constants.CLAW_ATTACK_RATE;
+			ReloadSpeed = Constants.CLAW_ATTACK_RATE;
 		}
 
 		public override Contracts.Weapon.Projectiles.AProjectile[] CreateBullets(Contracts.Mobs.AGameObject owner, SkyShoot.XNA.Framework.Vector2 direction)

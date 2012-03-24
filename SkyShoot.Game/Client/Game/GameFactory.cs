@@ -27,6 +27,7 @@ namespace SkyShoot.Game.Client.Game
 			throw new NotImplementedException();
 		}
 
+		//!!  @todo delete this
 		public static Projectile CreateClientProjectile(Contracts.Weapon.Projectiles.AProjectile projectile)
 		{
 			return new Projectile(projectile);

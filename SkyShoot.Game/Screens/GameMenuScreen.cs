@@ -11,11 +11,16 @@ using Nuclex.UserInterface;
 using Nuclex.UserInterface.Controls.Desktop;
 
 using SkyShoot.Game.Controls;
+using Microsoft.Xna.Framework.Audio;
 
 namespace SkyShoot.Game.Screens
 {
 	class GameMenuScreen : GameScreen
 	{
+		AudioEngine engine;
+		SoundBank soundBank;
+		WaveBank waveBank;
+
 		private static Texture2D _texture;
 
 		private readonly ContentManager _content;
@@ -75,6 +80,10 @@ namespace SkyShoot.Game.Screens
 			ScreenManager.Instance.Controller.AddListener(_continueButton, ContinueButtonPressed);
 			ScreenManager.Instance.Controller.AddListener(_optionsButton, OptionsButtonPressed);
 			ScreenManager.Instance.Controller.AddListener(_exitButton, ExitButtonPressed);
+
+			engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
+			soundBank = new SoundBank(engine, "Content\\Sounds\\Sound Bank.xsb");
+			waveBank = new WaveBank(engine, "Content\\Sounds\\Wave Bank.xwb");
 		}
 
 		public override void LoadContent()
@@ -89,16 +98,25 @@ namespace SkyShoot.Game.Screens
 
 		private void ContinueButtonPressed(object sender, EventArgs e)
 		{
+			Cue cue = soundBank.GetCue("RICOCHET");
+			cue.Play();
+
 			ScreenManager.Instance.SetActiveScreen(typeof(GameplayScreen));
 		}
 
 		private void OptionsButtonPressed(object sender, EventArgs e)
 		{
+			Cue cue = soundBank.GetCue("RICOCHET");
+			cue.Play();
+
 			ScreenManager.Instance.SetActiveScreen(typeof(OptionsMenuScreen));
 		}
 
 		private void ExitButtonPressed(object sender, EventArgs e)
 		{
+			Cue cue = soundBank.GetCue("RICOCHET");
+			cue.Play();
+
 			ScreenManager.Instance.SetActiveScreen(typeof(LoginScreen));
 		}
 

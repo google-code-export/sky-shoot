@@ -38,6 +38,7 @@ namespace SkyShoot.Game.Screens
 		private ButtonControl _backButton;
 		private ButtonControl _upVolume;
 		private ButtonControl _downVolume;
+
 		AudioEngine engine;
 		SoundBank soundBank;
 		WaveBank waveBank;
@@ -231,6 +232,9 @@ namespace SkyShoot.Game.Screens
 
 		private void ArrowButtonPressed(object sender, EventArgs e)
 		{
+			Cue cue = soundBank.GetCue("RICOCHET");
+			cue.Play();
+
 			Curs = 1;
 			Settings.Default.Cursor = Curs;
 			Settings.Default.Save();			
@@ -238,6 +242,9 @@ namespace SkyShoot.Game.Screens
 
 		private void PlusButtonPressed(object sender, EventArgs e)
 		{
+			Cue cue = soundBank.GetCue("RICOCHET");
+			cue.Play();
+
 			Curs = 2;
 			Settings.Default.Cursor = Curs;
 			Settings.Default.Save();
@@ -245,6 +252,9 @@ namespace SkyShoot.Game.Screens
 
 		private void CrossButtonPressed(object sender, EventArgs e)
 		{
+			Cue cue = soundBank.GetCue("RICOCHET");
+			cue.Play();
+
 			Curs = 3;
 			Settings.Default.Cursor = Curs;
 			Settings.Default.Save();
@@ -252,6 +262,9 @@ namespace SkyShoot.Game.Screens
 
 		private void TargetButtonPressed(object sender, EventArgs e)
 		{
+			Cue cue = soundBank.GetCue("RICOCHET");
+			cue.Play();
+
 			Curs = 4;
 			Settings.Default.Cursor = Curs;
 			Settings.Default.Save();
@@ -265,6 +278,9 @@ namespace SkyShoot.Game.Screens
 
 		private void BackButtonPressed(object sender, EventArgs e)
 		{
+			Cue cue = soundBank.GetCue("RICOCHET");
+			cue.Play();
+
 			if (Game.Client.Game.GameController.Instance.IsGameStarted)
 				ScreenManager.Instance.SetActiveScreen(typeof(GameplayScreen));
 			else
@@ -273,6 +289,9 @@ namespace SkyShoot.Game.Screens
 
 		private void UpButtonPressed(object sender, EventArgs e)
 		{
+			Cue cue = soundBank.GetCue("RICOCHET");
+			cue.Play();
+
 			Settings.Default.Volume = MathHelper.Clamp(Settings.Default.Volume + 0.1f, 0.0f, 2.0f);
 			Settings.Default.Save();
 			musicCategory.SetVolume(Settings.Default.Volume);
@@ -280,6 +299,9 @@ namespace SkyShoot.Game.Screens
 
 		private void DownButtonPressed(object sender, EventArgs e)
 		{
+			Cue cue = soundBank.GetCue("RICOCHET");
+			cue.Play();
+
 			Settings.Default.Volume = MathHelper.Clamp(Settings.Default.Volume - 0.1f, 0.0f, 2.0f);
 			Settings.Default.Save();
 			musicCategory.SetVolume(Settings.Default.Volume);
@@ -287,6 +309,9 @@ namespace SkyShoot.Game.Screens
 
 		private void FullScreenSelected(object sender, EventArgs e)
 		{
+			Cue cue = soundBank.GetCue("RICOCHET");
+			cue.Play();
+
 			Settings.Default.FullScreenSelected = _fullscreenButton.Selected;
 			Settings.Default.Save();
 		}

@@ -29,7 +29,7 @@ namespace SkyShoot.Service
 		public List<AGameBonus> bonuses;
 
 		//private Account.AccountManager _accountManager = new Account.AccountManager();
-		private readonly Session.SessionManager _sessionManager = Session.SessionManager.Instance;
+		private readonly SessionManager _sessionManager = SessionManager.Instance;
 
 		private static readonly List<MainSkyShootService> ClientsList = new List<MainSkyShootService>();
 
@@ -96,7 +96,7 @@ namespace SkyShoot.Service
 			}
 			catch (Exception e)
 			{
-				Trace.Fail(this.Name + " unable to create game. " + e.Message);
+				Trace.Fail(Name + " unable to create game. " + e.Message);
 				return null;
 			}
 		}
@@ -108,17 +108,17 @@ namespace SkyShoot.Service
 				bool result = _sessionManager.JoinGame(game, this);
 				if (result)
 				{
-					Trace.WriteLine(this.Name + "has joined the game ID=" + game.GameId);
+					Trace.WriteLine(Name + "has joined the game ID=" + game.GameId);
 				}
 				else
 				{
-					Trace.WriteLine(this.Name + "has not joined the game ID=" + game.GameId);
+					Trace.WriteLine(Name + "has not joined the game ID=" + game.GameId);
 				}
 				return result;
 			}
 			catch(Exception e)
 			{
-				Trace.Fail(this.Name + "has not joined the game." + e.Message);
+				Trace.Fail(Name + "has not joined the game." + e.Message);
 				return false;
 			}
 		}
@@ -186,7 +186,7 @@ namespace SkyShoot.Service
 		public AGameObject[] SynchroFrame()
 		{
 			GameSession session;
-			_sessionManager.SessionTable.TryGetValue(Id,out session);
+			_sessionManager.SessionTable.TryGetValue(Id, out session);
 			if(session ==null)
 			{
 				return null;

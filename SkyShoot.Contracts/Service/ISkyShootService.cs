@@ -3,12 +3,9 @@
 using System.ServiceModel;
 
 using SkyShoot.Contracts.Mobs;
-using SkyShoot.Contracts.Perks;
-using SkyShoot.Contracts.Bonuses;
 using SkyShoot.Contracts.Session;
 
 using SkyShoot.XNA.Framework;
-using SkyShoot.Contracts.Weapon.Projectiles;
 using System.Collections.Generic;
 using SkyShoot.Contracts.GameEvents;
 
@@ -59,14 +56,21 @@ namespace SkyShoot.Contracts.Service
 		[OperationContract]
 		void LeaveGame();
 
+		/// <summary>
+		/// проверка началась ли игра
+		/// </summary>
+		/// <param name="gameId">идетификатор игры</param>
+		/// <returns>если игра не началась возвращает null</returns>
 		[OperationContract]
-		GameLevel GameStart(int gameId);//если игра не началась возвращает null
-		//void GameStart(AGameObject[] mobs, GameLevel arena);
-
+		GameLevel GameStart(int gameId);
 
 		[OperationContract]
 		AGameObject[] SynchroFrame();
 
+		/// <summary>
+		/// возвращает список игроков
+		/// </summary>
+		/// <returns>массив имен игроков</returns>
 		[OperationContract]
 		String[] PlayerListUpdate();
 	}

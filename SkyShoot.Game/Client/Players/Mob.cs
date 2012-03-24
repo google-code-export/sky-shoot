@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Audio;
-
+using SkyShoot.Contracts.Mobs;
 using SkyShoot.Game.Client.Game;
 using SkyShoot.Game.Client.View;
 using IDrawable = SkyShoot.Game.Client.View.IDrawable;
