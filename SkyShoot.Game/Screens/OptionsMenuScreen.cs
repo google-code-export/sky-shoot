@@ -38,6 +38,7 @@ namespace SkyShoot.Game.Screens
 		private ButtonControl _backButton;
 		private ButtonControl _upVolume;
 		private ButtonControl _downVolume;
+		private LabelControl _volumeValueLabel;
 
 		AudioEngine engine;
 		SoundBank soundBank;
@@ -114,6 +115,13 @@ namespace SkyShoot.Game.Screens
 					new UniRectangle(new UniScalar(0.62f, -220), new UniScalar(0.94f, -70), 70, 30)
 			};
 
+			_volumeValueLabel = new LabelControl
+			{
+				Text = (Math.Round(Settings.Default.Volume,1)).ToString(),
+				Bounds =
+					new UniRectangle(new UniScalar(1.0f, -220), new UniScalar(0.94f, -70), 70, 30)
+			};
+
 
 			_cursorLabel = new LabelControl("Cursor:")
 			{
@@ -172,6 +180,7 @@ namespace SkyShoot.Game.Screens
 			Desktop.Children.Add(_upVolume);
 			Desktop.Children.Add(_downVolume);
 			Desktop.Children.Add(_volumeLabel);
+			Desktop.Children.Add(_volumeValueLabel);
 
 
 			// todo изменить подписку
@@ -292,9 +301,10 @@ namespace SkyShoot.Game.Screens
 			Cue cue = soundBank.GetCue("RICOCHET");
 			cue.Play();
 
-			Settings.Default.Volume = MathHelper.Clamp(Settings.Default.Volume + 0.1f, 0.0f, 2.0f);
+			Settings.Default.Volume = MathHelper.Clamp(Settings.Default.Volume + 0.05f, 0.0f, 1.0f);
 			Settings.Default.Save();
 			musicCategory.SetVolume(Settings.Default.Volume);
+			_volumeValueLabel.Text = (100*Math.Round(Settings.Default.Volume, 1)).ToString()+"%";
 		}
 
 		private void DownButtonPressed(object sender, EventArgs e)
@@ -302,9 +312,10 @@ namespace SkyShoot.Game.Screens
 			Cue cue = soundBank.GetCue("RICOCHET");
 			cue.Play();
 
-			Settings.Default.Volume = MathHelper.Clamp(Settings.Default.Volume - 0.1f, 0.0f, 2.0f);
+			Settings.Default.Volume = MathHelper.Clamp(Settings.Default.Volume - 0.05f, 0.0f, 1.0f);
 			Settings.Default.Save();
 			musicCategory.SetVolume(Settings.Default.Volume);
+			_volumeValueLabel.Text = (100*Math.Round(Settings.Default.Volume, 1)).ToString()+"%";
 		}
 
 		private void FullScreenSelected(object sender, EventArgs e)

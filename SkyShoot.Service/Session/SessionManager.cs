@@ -72,7 +72,7 @@ namespace SkyShoot.Service.Session
 				SessionTable.TryGetValue(player.Id,out game);
 				var leavingPlayer = player;
 				game.PlayerLeave(leavingPlayer);
-				if (game.Players.Count == 0)
+				if (game.PlayersCount() == 0)
 				{
 					game.Stop();
 					_gameSessions.Remove(game);

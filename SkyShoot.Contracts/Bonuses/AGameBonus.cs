@@ -12,6 +12,8 @@ namespace SkyShoot.Contracts.Bonuses
 		private int _milliseconds; // @Sergey Terechenko : time = health
 		private DateTime _startTime;
 
+		public float DamageFactor;
+
 		public AGameBonus(Vector2 coordinates) : base(coordinates, Guid.NewGuid()) { }
 
 		public AGameBonus(): base(Vector2.Zero, Guid.NewGuid()) { }
@@ -19,6 +21,11 @@ namespace SkyShoot.Contracts.Bonuses
 		public bool IsExpired(DateTime time)
 		{
 			return (time.CompareTo(_startTime.AddMilliseconds(_milliseconds)) == 1);
+		}
+
+		public void Taken(DateTime startTime)
+		{
+			this._startTime = startTime;
 		}
 	}               
 }

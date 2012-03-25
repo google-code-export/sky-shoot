@@ -19,6 +19,19 @@ namespace SkyShoot.Contracts.Mobs
 		[Flags]
 		public enum EnumObjectType
 		{
+			/*
+			 * 32-bit 00000000
+			 *        ||||||||
+			 *        ||/|/|/+-- LivingObject (something with mind and health)
+			 *        || | |  
+			 *        || | +---- Bullets
+			 *        || |    
+			 *        || |+----- Bonuses
+			 *        ||      
+			 *        |+-------- Walls      
+			 *        |
+			 *        +--------- Reserved
+			 */
 			[EnumMember]
 			LivingObject = 0x0001,
 			[EnumMember]
@@ -26,17 +39,23 @@ namespace SkyShoot.Contracts.Mobs
 			[EnumMember]
 			Mob = LivingObject | 0x4,
 			[EnumMember]
-			Bullet = 0x0010,
+			Bullet = 0x010,
 			[EnumMember]
-			Rocket = Bullet | 0x0010,
+			Flame = Bullet | 0x020,
 			[EnumMember]
-			Flame = Bullet | 0x0020,
+			LaserBullet = Bullet | 0x040,
 			[EnumMember]
-			LaserBullet = Bullet | 0x0040,
+			ShutgunBullet = Bullet | 0x080,
 			[EnumMember]
-			ShutgunBullet = Bullet | 0x0080,
+			Rocket = Bullet | 0x100,
 			[EnumMember]
-			Bonus = 0x1000,
+			Bonus = 0x01000,
+			[EnumMember]
+			DoubleDamage = Bonus | 0x02000,
+			[EnumMember]
+			Shield = Bonus | 0x04000,
+			[EnumMember]
+			Wall = 0x0100000,
 		}
 
 		#region основные свойства
