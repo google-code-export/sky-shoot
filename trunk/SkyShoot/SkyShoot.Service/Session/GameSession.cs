@@ -11,6 +11,7 @@ using System.Timers;
 using SkyShoot.Contracts;
 using System.Diagnostics;
 using SkyShoot.ServProgram.Session;
+using SkyShoot.Service.Bonus;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Bonuses;
 
@@ -30,6 +31,7 @@ namespace SkyShoot.Service.Session
 		public bool IsStarted { get; set; }
 		public GameLevel GameLevel { get; private set; }
 		private SpiderFactory _spiderFactory;
+		private BonusFactory _bonusFactory;
 		private long _timerCounter;
 		private long _intervalToSpawn = 0;
 
@@ -53,7 +55,8 @@ namespace SkyShoot.Service.Session
 			//_gameEventStack = new Stack<AGameEvent>();
 
 			LocalGameDescription = new GameDescription(playerNames, maxPlayersAllowed, gameType, gameID, tileSet);
-			_spiderFactory= new SpiderFactory(GameLevel);
+			_spiderFactory = new SpiderFactory(GameLevel);
+			_bonusFactory = new BonusFactory();
 		}
 
 		//public event SomebodyMovesHandler SomebodyMoves; 
@@ -108,7 +111,7 @@ namespace SkyShoot.Service.Session
 		{
 			//SomebodyDied(mob);
 			//mob.MeMoved -= SomebodyMoved;
-			NewBonusDropped(new AGameBonus(mob.Coordinates));
+			NewBonusDropped(this._bonusFactory.CreateBonus(mob.Coordinates));
 			pushEvent(new ObjectDeleted(mob.Id, _timerCounter));
 			_mobs.Remove(mob);
 		}
