@@ -379,7 +379,12 @@ namespace SkyShoot.WinFormsClient
 		{
 			foreach (var gameEvent in events)
 			{
-				var gameObject = _objects.Find(o => o.Id == gameEvent.Id);
+				var t = _objects.FindAll(o => o == null);
+				if(t.Count != 0)
+				{
+					Trace.WriteLine(t);
+				}
+				var gameObject = _objects.Find(o => o!= null && o.Id == gameEvent.Id);
 				if (gameObject != null)
 				{
 					gameEvent.UpdateMob(gameObject);
@@ -448,6 +453,7 @@ namespace SkyShoot.WinFormsClient
 												 new PointF(x + m.ShootVector.X * 2 * r, y + m.ShootVector.Y * 2 * r));
 
 							Color c;
+							r--;
 							if (m.HealthAmount > 0.60f * m.MaxHealthAmount)
 							{
 								c = Color.Lime;
@@ -461,7 +467,7 @@ namespace SkyShoot.WinFormsClient
 								c = Color.Red;
 							}
 							g.DrawLine(new Pen(c, 2f),
-												 x - r, y - r, x + 2 * r * m.HealthAmount / m.MaxHealthAmount, y - r);
+												 x - r, y - r, x + r * m.HealthAmount / m.MaxHealthAmount, y - r);
 							break;
 						case AGameObject.EnumObjectType.Bullet:
 						case AGameObject.EnumObjectType.LaserBullet:
@@ -471,6 +477,14 @@ namespace SkyShoot.WinFormsClient
 														new RectangleF(
 															new PointF(x - r, y - r),
 															new SizeF(2 * r, 2 * r)));
+							break;
+						case AGameObject.EnumObjectType.Wall:
+							r = m.Radius * _pnCanvas.Width / _level.levelWidth;
+							var rh = m.Radius * _pnCanvas.Height / _level.levelHeight;
+							g.FillRectangle(Brushes.Black,
+								new RectangleF(
+									new PointF(x - r, y - rh),
+									new SizeF(2 * r, 2 * rh)));
 							break;
 						default:
 							r = 3f;
@@ -508,7 +522,15 @@ namespace SkyShoot.WinFormsClient
 
 		private void MainForm_OnFormClosing(object sender, FormClosingEventArgs e)
 		{
-			_service.LeaveGame();
+			try
+			{
+				_service.LeaveGame();
+			}
+			// возможно, сервер уже выключили к этому моменту
+			catch (Exception exc)
+			{
+				Trace.WriteLine(exc);
+			}
 			if (_th != null)
 			{
 				_th.Abort();

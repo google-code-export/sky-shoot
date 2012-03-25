@@ -25,12 +25,17 @@ namespace SkyShoot.Contracts.Mobs
 
 			for (int i = 0; i < targetPlayers.Count;i++ )
 			{
-				float temp = Vector2.Distance(Coordinates, targetPlayers[i].Coordinates);
+				var pl = targetPlayers[i];
+				if(!pl.IsPlayer)
+				{
+					continue;
+				}
+				float temp = Vector2.Distance(Coordinates, pl.Coordinates);
 
 				if (distance > temp)
 				{
 					distance = temp;
-					Target = targetPlayers[i];
+					Target = pl;
 				}
 			}
 		}
@@ -73,6 +78,9 @@ namespace SkyShoot.Contracts.Mobs
 
 		public override void Do(AGameObject obj)
 		{
+			// не кусаем друзей-товарищей
+			if(obj.Is(EnumObjectType.Mob))
+				return;
 			obj.HealthAmount -= Damage;
 			Stop();
 		}

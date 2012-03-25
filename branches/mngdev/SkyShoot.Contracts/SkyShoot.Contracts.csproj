@@ -64,6 +64,7 @@
     <Compile Include="Bonuses\AObtainableDamageModifier.cs" />
     <Compile Include="GameEvents\AGameEvent.cs" />
     <Compile Include="Mobs\Mob.cs" />
+    <Compile Include="Mobs\Wall.cs" />
     <Compile Include="ObjectBuffer.cs" />
     <Compile Include="Service\Constants.cs" />
     <Compile Include="Mobs\AGameObject.cs" />
