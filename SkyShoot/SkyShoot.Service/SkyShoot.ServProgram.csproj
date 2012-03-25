@@ -84,7 +84,7 @@
   <ItemGroup>
     <Compile Include="Account\AccountInfoPrg.cs" />
     <Compile Include="Account\AccountManagerPrg.cs" />
-    <Compile Include="Bonus\ABonus.cs" />
+    <Compile Include="Bonus\BonusFactory.cs" />
     <Compile Include="Bonus\DoubleDamage.cs" />
     <Compile Include="Bonus\Shield.cs" />
     <Compile Include="Logger\TableTraceListenerProg.cs" />
