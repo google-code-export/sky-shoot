@@ -32,7 +32,15 @@ namespace SkyShoot.Contracts.Weapon
 				return true;
 			}
 			return false;
-
 		}
+
+		public void ApplyModifier(AProjectile[] projectiles, float damage)
+		{
+			foreach (AProjectile projectile in projectiles)
+			{
+				projectile.Damage *= damage;
+			}
+		}
+
 	}
 }

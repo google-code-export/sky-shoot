@@ -75,6 +75,9 @@ namespace SkyShoot.Service.Session
 				if ((sender as MainSkyShootService).Weapon.Reload(System.DateTime.Now.Ticks / 10000))
 				{
 					var a = (sender as MainSkyShootService).Weapon.CreateBullets(sender, direction);
+					AGameBonus doubleDamage = (sender as MainSkyShootService).getBonus(AGameObject.EnumObjectType.DoubleDamage);
+					float damage = doubleDamage == null ? 1f : doubleDamage.damageFactor;
+					(sender as MainSkyShootService).Weapon.ApplyModifier(a, damage);
 					foreach (var b in a)
 					{
 						_projectiles.getInActive().Copy(b);
@@ -298,7 +301,8 @@ namespace SkyShoot.Service.Session
 						{
 							continue;
 						}
-						player.bonuses.Add(bonus);
+						player.AddBonus(bonus);
+						bonus.taken(new DateTime(_lastUpdate)); // !!
 						bonus.IsActive = false;
 						pushEvent(new ObjectDeleted(bonus.Id, _timerCounter));
 						bonuses2delete.Add(bonus);
@@ -406,7 +410,9 @@ namespace SkyShoot.Service.Session
 				{
 					if (mob.Weapon.Reload(System.DateTime.Now.Ticks / 10000))
 					{
-						player.HealthAmount -= mob.Damage;
+						AGameBonus shield = player.getBonus(AGameBonus.EnumObjectType.Shield);
+						float damage = shield == null ? 1f : shield.damageFactor;
+						player.HealthAmount -= damage * mob.Damage;
 						SomebodyHitted(player, null);
 						mob.Stop();
 					}

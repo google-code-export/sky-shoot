@@ -42,6 +42,24 @@ namespace SkyShoot.Service
  			bonuses = new List<AGameBonus>();
 		}
 
+		public void AddBonus(AGameBonus bonus)
+		{
+			bonuses.RemoveAll(b => b.Type == bonus.Type);
+			bonuses.Add(bonus);
+		}
+
+		public AGameBonus getBonus(EnumObjectType bonusType)
+		{
+			foreach (AGameBonus bonus in this.bonuses)
+			{
+				if (bonus.Type.Equals(bonusType))
+				{
+					return bonus;
+				}
+			}
+			return null;
+		}
+
 		public void Disconnect() { this.LeaveGame(); }
 
 		public bool Register(string username, string password)
