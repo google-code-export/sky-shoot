@@ -9,19 +9,19 @@ namespace SkyShoot.Contracts.Bonuses
 {
 	public class AGameBonus : AGameObject
 	{
-		private int _milliseconds; // @Sergey Terechenko : time = health
-		private DateTime _startTime;
+		protected int _milliseconds; // @Sergey Terechenko : time = health
+		protected long _startTime;
 
 		public float damageFactor;
 
 		public AGameBonus(Vector2 coordinates) : base(coordinates, Guid.NewGuid()) { }
 
-		public bool IsExpired(DateTime time)
+		public bool IsExpired(long time)
 		{
-			return (time.CompareTo(_startTime.AddMilliseconds(_milliseconds)) == 1);
+			return (time - _startTime > _milliseconds);
 		}
 
-		public void taken(DateTime startTime)
+		public void taken(long startTime)
 		{
 			this._startTime = startTime;
 		}

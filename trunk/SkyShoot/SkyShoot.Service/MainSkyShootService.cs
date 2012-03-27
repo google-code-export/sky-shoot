@@ -225,5 +225,9 @@ namespace SkyShoot.Service
 			return session.LocalGameDescription.Players.ToArray();
 		}
 
+		public void DeleteExpiredBonuses(long time)
+		{
+			this.bonuses.RemoveAll(b => b.IsExpired(time));
+		}
 	}
 }
