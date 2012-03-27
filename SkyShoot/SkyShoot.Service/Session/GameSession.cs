@@ -290,6 +290,7 @@ namespace SkyShoot.Service.Session
 			{
 				var player = Players[i];
 				player.Coordinates = ComputeMovement(player);
+				player.DeleteExpiredBonuses(_lastUpdate);
 
 				//Проверка на касание игрока и моба
 				hitTestTouch(player);
@@ -305,7 +306,7 @@ namespace SkyShoot.Service.Session
 							continue;
 						}
 						player.AddBonus(bonus);
-						bonus.taken(new DateTime(_lastUpdate)); // !!
+						bonus.taken(_lastUpdate);
 						bonus.IsActive = false;
 						pushEvent(new ObjectDeleted(bonus.Id, _timerCounter));
 						bonuses2delete.Add(bonus);
