@@ -41,5 +41,8 @@ namespace SkyShoot.Contracts
 		public const float LEVELBORDER = 50;
 
 		#endregion
+
+		public const int SHIELD_MILLISECONDS = 30000;
+		public const int DOUBLE_DAMAGE_MILLISECONDS = 30000;
 	}
 }

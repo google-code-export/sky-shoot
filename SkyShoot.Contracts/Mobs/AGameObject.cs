@@ -187,10 +187,10 @@ namespace SkyShoot.Contracts.Mobs
 		//  ShootVector = RunVector;
 		//}
 
-		public virtual void Think(List<AGameObject> players)
+		public virtual void Think(List<AGameObject> players, long time)
 		{}
 
-		public virtual void Do(AGameObject obj)
+		public virtual void Do(AGameObject obj, long time)
 		{}
 
 		public virtual Vector2 ComputeMovement(long updateDelay, GameLevel gameLevel)

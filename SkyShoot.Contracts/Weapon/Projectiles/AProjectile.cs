@@ -46,7 +46,7 @@ namespace SkyShoot.Contracts.Weapon.Projectiles
 		//[Obsolete("Use health")]
 		//public float LifeDistance { get; set; }
 
-		public override void Do(AGameObject obj)
+		public override void Do(AGameObject obj, long time)
 		{
 			if(Owner.Id == obj.Id) // не трогать создателя пули
 				return;
