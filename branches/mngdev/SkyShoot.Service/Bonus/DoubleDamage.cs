@@ -1,4 +1,5 @@
 ﻿using SkyShoot.Contracts.Bonuses;
+using SkyShoot.Contracts;
 using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Service.Bonus
@@ -11,6 +12,7 @@ namespace SkyShoot.Service.Bonus
 		{
 			ObjectType = EnumObjectType.DoubleDamage;
 			DamageFactor = 2f;
+			this._milliseconds = Constants.DOUBLE_DAMAGE_MILLISECONDS;
 		}
 	}
 }

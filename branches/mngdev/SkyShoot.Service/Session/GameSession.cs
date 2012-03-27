@@ -127,7 +127,14 @@ namespace SkyShoot.Service.Session
 		{
 			//SomebodyDied(mob);
 			//mob.MeMoved -= SomebodyMoved;
-			NewBonusDropped(this._bonusFactory.CreateBonus(mob.Coordinates));
+			if (mob.Is(AGameObject.EnumObjectType.LivingObject))
+			{
+				AGameBonus b = _bonusFactory.CreateBonus(mob.Coordinates);
+				b.IsActive = true;
+				_gameObjects.Add(b);
+				NewBonusDropped(b);
+			}
+
 			if(mob.IsPlayer)
 			{
 				PlayerDead(mob as MainSkyShootService);
@@ -342,7 +349,8 @@ namespace SkyShoot.Service.Session
 					}
 					//var t = new List<AGameObject>(Players);
 					//t.AddRange(_gameObjects);
-					activeObject.Think(_gameObjects);
+					activeObject.Think(_gameObjects, now);
+
 					var newCoord = activeObject.ComputeMovement(_updateDelay, GameLevel);
 					var canMove = true;
 					/* <b>int j = 0</b> потому что каждый с каждым, а действия не симметричны*/
@@ -370,15 +378,16 @@ namespace SkyShoot.Service.Session
 						//!! rewrite sqrt!!
 						// объект далеко. не рассамтриваем
 						var rR = (activeObject.Radius + slaveObject.Radius);
-						if (Vector2.DistanceSquared(newCoord, slaveObject.Coordinates) > rR*rR)
+						if (Vector2.DistanceSquared(newCoord, slaveObject.Coordinates) > rR*rR &&
+							Vector2.DistanceSquared(activeObject.Coordinates, slaveObject.Coordinates) > rR * rR)
 						{
 							continue;
 						}
-						activeObject.Do(slaveObject);
+						activeObject.Do(slaveObject, now);
 						//!! @todo rewrite
 						if (!slaveObject.IsBullet && !activeObject.IsBullet && 
-						    slaveObject.ObjectType != AGameObject.EnumObjectType.Bonus &&
-							activeObject.ObjectType != AGameObject.EnumObjectType.Bonus)
+						    slaveObject.Is(AGameObject.EnumObjectType.Bonus) &&
+							activeObject.Is(AGameObject.EnumObjectType.Bonus))
 						{
 							//удаляемся ли мы от объекта
 							// если да, то можем двигаться
@@ -430,6 +439,7 @@ namespace SkyShoot.Service.Session
 			{
 				var player = Players[i];
 				player.Coordinates = ComputeMovement(player);
+				player.DeleteExpiredBonuses(_lastUpdate);
 
 				//Проверка на касание игрока и моба
 				HitTestTouch(player);
@@ -445,7 +455,7 @@ namespace SkyShoot.Service.Session
 							continue;
 						}
 						player.AddBonus(bonus);
-						bonus.taken(new DateTime(_lastUpdate)); // !!
+						bonus.taken(_lastUpdate);
 						bonus.IsActive = false;
 						PushEvent(new ObjectDeleted(bonus.Id, _timerCounter));
 						bonuses2delete.Add(bonus);

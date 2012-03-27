@@ -46,7 +46,7 @@ namespace SkyShoot.Contracts.Mobs
 		//  //base.Move();
 		//}
 
-		public override void  Think(List<AGameObject> players)
+		public override void  Think(List<AGameObject> players, long time)
 		{
 			if (_wait == 0)
 			{
@@ -76,7 +76,7 @@ namespace SkyShoot.Contracts.Mobs
 			_wait = 30;
 		}
 
-		public override void Do(AGameObject obj)
+		public override void Do(AGameObject obj, long time)
 		{
 			// не кусаем друзей-товарищей
 			if(obj.Is(EnumObjectType.Mob))

@@ -229,16 +229,27 @@ namespace SkyShoot.Service
 			return newCoord;
 		}
 
-		public override void Do(AGameObject obj)
+		public override void Do(AGameObject obj, long time)
 		{
-			base.Do(obj);
-			if(obj.ObjectType == EnumObjectType.Bonus)
+			base.Do(obj, time);
+			if(obj.Is(EnumObjectType.Bonus))
 			{
 				obj.IsActive = false;
-				var bonus = new AGameBonus();
-				bonus.Copy(obj);
+				var bonus = new AGameBonus(obj);
+				//bonus.Copy(obj);
 				bonuses.Add(bonus);
+				bonus.taken(time);
 			}
+		}
+		public void DeleteExpiredBonuses(long time)
+		{
+			this.bonuses.RemoveAll(b => b.IsExpired(time));
+		}
+
+		public override void Think(List<AGameObject> players, long time)
+		{
+			base.Think(players, time);
+			DeleteExpiredBonuses(time);
 		}
 	}
 }
