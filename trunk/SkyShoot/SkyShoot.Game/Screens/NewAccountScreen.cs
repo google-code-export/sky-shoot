@@ -143,12 +143,12 @@ namespace SkyShoot.Game.Screens
 			if (_loginBox.Text.Length < 3)
 			{
 				MessageBox.Message = "Username is too short!\nPress Ok to continue";
-				ScreenManager.Instance.SetActiveScreen(typeof (MessageBox)); // = ScreenManager.ScreenEnum.MessageScreen;
+				ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MessageBoxScreen); // = ScreenManager.ScreenEnum.MessageScreen;
 			}
 			else if (_passwordBox.Text.Length < 3)
 			{
 				MessageBox.Message = "Password is too short!\nPress Ok to continue";
-				ScreenManager.Instance.SetActiveScreen(typeof (MessageBox));
+				ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MessageBoxScreen);
 			}
 			else
 			{
@@ -160,7 +160,7 @@ namespace SkyShoot.Game.Screens
 				{
 					if (GameController.Instance.Login(_loginBox.Text, _passwordBox.Text).HasValue)
 					{
-						ScreenManager.Instance.SetActiveScreen(typeof (MultiplayerScreen));
+						ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MultiplayerScreen);
 					}
 				}
 			}

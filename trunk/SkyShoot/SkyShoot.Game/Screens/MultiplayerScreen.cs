@@ -163,7 +163,7 @@ namespace SkyShoot.Game.Screens
 			Cue cue = soundBank.GetCue("RICOCHET");
 			cue.Play();
 
-			ScreenManager.Instance.SetActiveScreen(typeof (MainMenuScreen));
+			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MainMenuScreen);
 		}
 
 		private void JoinGameButtonPressed(object sender, EventArgs args)
@@ -189,7 +189,7 @@ namespace SkyShoot.Game.Screens
 					WaitScreen.MaxPlayers = _tempGameList[_gameList.SelectedItems[0]].MaximumPlayersAllowed + "";
 					WaitScreen.GameId = _tempGameList[_gameList.SelectedItems[0]].GameId;
 
-					ScreenManager.Instance.SetActiveScreen(typeof (WaitScreen));
+					ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.WaitScreen);
 				}
 			}
 		}
@@ -199,7 +199,7 @@ namespace SkyShoot.Game.Screens
 			Cue cue = soundBank.GetCue("RICOCHET");
 			cue.Play();
 
-			ScreenManager.Instance.SetActiveScreen(typeof (CreateGameScreen));
+			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.CreateGameScreen);
 		}
 
 		private void RefreshButtonPressed(object sender, EventArgs args)

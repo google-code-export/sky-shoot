@@ -152,7 +152,7 @@ namespace SkyShoot.Game.Screens
 			cue.Play();
 
 			GameController.Instance.LeaveGame();
-			ScreenManager.Instance.SetActiveScreen(typeof (MultiplayerScreen));
+			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MultiplayerScreen);
 		}
 
 		public void ChangePlayerList(String[] names)
