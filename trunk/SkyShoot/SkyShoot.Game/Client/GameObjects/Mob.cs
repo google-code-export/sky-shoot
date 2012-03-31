@@ -47,6 +47,19 @@ namespace SkyShoot.Game.Client.GameObjects
 		private const int FrameTime = 500;
 		private const bool Looping = true;
 
+		// todo remove
+		public Mob(Animation2D animation)
+		{
+			_engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
+			_soundBank = new SoundBank(_engine, "Content\\Sounds\\Sound Bank.xsb");
+			waveBank = new WaveBank(_engine, "Content\\Sounds\\Wave Bank.xwb");
+
+			_healthTextureHeight = 5;
+
+			Animation = animation;
+			Animation.Initialize(FrameTime, Looping);			
+		}
+
 		public Mob(AGameObject other, Animation2D animation)
 			: base(other)
 		{			
