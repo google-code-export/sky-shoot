@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Nuclex.UserInterface;
 
 using Nuclex.UserInterface.Controls.Desktop;
-using SkyShoot.Contracts.Mobs;
+
 using SkyShoot.Contracts.Session;
 
 using SkyShoot.Game.Controls;
@@ -22,9 +22,9 @@ namespace SkyShoot.Game.Screens
 {
 	internal class WaitScreen : GameScreen
 	{
-		AudioEngine engine;
-		SoundBank soundBank;
-		WaveBank waveBank;
+		private AudioEngine _engine;
+		private SoundBank _soundBank;
+		WaveBank _waveBank;
 
 		public static String Tile { get; set; }
 
@@ -85,9 +85,9 @@ namespace SkyShoot.Game.Screens
 
 			ScreenManager.Instance.Controller.AddListener(_leaveButton, LeaveButtonPressed);
 
-			engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
-			soundBank = new SoundBank(engine, "Content\\Sounds\\Sound Bank.xsb");
-			waveBank = new WaveBank(engine, "Content\\Sounds\\Wave Bank.xwb");
+			_engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
+			_soundBank = new SoundBank(_engine, "Content\\Sounds\\Sound Bank.xsb");
+			_waveBank = new WaveBank(_engine, "Content\\Sounds\\Wave Bank.xwb");
 		}
 
 		private int _updateCount ;
@@ -148,7 +148,7 @@ namespace SkyShoot.Game.Screens
 
 		private void LeaveButtonPressed(object sender, EventArgs args)
 		{
-			Cue cue = soundBank.GetCue("RICOCHET");
+			Cue cue = _soundBank.GetCue("RICOCHET");
 			cue.Play();
 
 			GameController.Instance.LeaveGame();

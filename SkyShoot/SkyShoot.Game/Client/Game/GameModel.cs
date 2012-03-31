@@ -1,11 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Collections.Concurrent;
 
 using Microsoft.Xna.Framework;
 
 using Microsoft.Xna.Framework.Graphics;
-using SkyShoot.Contracts.Mobs;
+using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Game.Client.GameObjects;
 using SkyShoot.Game.Client.View;
 
@@ -75,13 +76,48 @@ namespace SkyShoot.Game.Client.Game
 				Trace.WriteLine("Projectile with such ID does not exist", "GameModel/RemoveProjectile");
 		}
 
+		private void ApplyEvents(IEnumerable<AGameEvent> gameEvents)
+		{
+			foreach (var gameEvent in gameEvents)
+			{
+				// todo getGameObject
+				var gameObject = GetMob(gameEvent.GameObjectId);
+				if (gameObject != null)
+					gameEvent.UpdateMob(gameObject);
+				else
+				{
+					// todo rewrite!
+					Mob mob = new Mob(Textures.SpiderAnimation);
+					gameEvent.UpdateMob(mob);
+					AddMob(mob);
+				}
+			}
+		}
+
 		private int _updateCouter = 0;
 
 		public void Update(GameTime gameTime)
 		{
+			// update mobs
+			foreach (var aMob in Mobs)
+			{
+				aMob.Value.Update(gameTime);
+			}
+
+			// update projectiles
+			foreach (var projectile in Projectiles)
+			{
+				if (projectile.Value.IsActive)
+					projectile.Value.Update(gameTime);
+				else
+					RemoveProjectile(projectile.Value.Id);
+			}
+
+			ApplyEvents(GameController.Instance.GetEvents());
+
 			// var sw = new Stopwatch();
 			// sw.Start();
-			if (_updateCouter++ % 30 == 0)
+			/*if (_updateCouter++ % 30 == 0)
 			{
 				var serverGameObjects = GameController.Instance.SynchroFrame();
 				if (serverGameObjects == null)
@@ -98,27 +134,15 @@ namespace SkyShoot.Game.Client.Game
 					else
 						clientMob.Copy(serverGameObject);
 				}
-			}
-			// update mobs
+			}*/
 			// sw.Stop();
 			// Trace.WriteLine("SW:sync: "+sw.ElapsedMilliseconds);
 			// sw.Restart();
-			foreach (var aMob in Mobs)
-			{
-				aMob.Value.Update(gameTime);
-			}
+
 			// sw.Stop();
 			// Trace.WriteLine("SW:mobup: " + sw.ElapsedMilliseconds);
 			// sw.Restart();
 
-			// update projectiles
-			foreach (var projectile in Projectiles)
-			{
-				if (projectile.Value.IsActive)
-					projectile.Value.Update(gameTime);
-				else
-					RemoveProjectile(projectile.Value.Id);
-			}
 			// sw.Stop();
 			// Trace.WriteLine("SW:prjup: " + sw.ElapsedMilliseconds);
 		}
@@ -151,6 +175,7 @@ namespace SkyShoot.Game.Client.Game
 			// draw mobs
 			foreach (var aMob in Mobs)
 			{
+				// Trace.WriteLine(aMob.Value.Coordinates);
 				aMob.Value.Draw(spriteBatch);
 			}
 
