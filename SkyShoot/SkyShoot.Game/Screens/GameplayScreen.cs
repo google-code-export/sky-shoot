@@ -11,14 +11,14 @@ using SkyShoot.Game.Client.View;
 using SkyShoot.Game.Controls;
 
 using Nuclex.UserInterface;
-using Nuclex.UserInterface.Controls;
+
 using Nuclex.UserInterface.Controls.Desktop;
 
 namespace SkyShoot.Game.Screens
 {
 	internal class GameplayScreen : GameScreen
 	{
-		private ContentManager _content;
+		private readonly ContentManager _content;
 
 		public override bool IsMenuScreen
 		{

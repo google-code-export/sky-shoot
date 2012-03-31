@@ -36,7 +36,7 @@ namespace SkyShoot.Game.Client.Game
 
 			byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(input));
 
-			StringBuilder sBuilder = new StringBuilder();
+			var sBuilder = new StringBuilder();
 
 			for (int i = 0; i < data.Length; i++)
 			{
@@ -50,9 +50,9 @@ namespace SkyShoot.Game.Client.Game
 	public sealed class GameController :// ISkyShootCallback, 
 		ISkyShootService
 	{
-		AudioEngine engine;
-		SoundBank soundBank;
-		WaveBank waveBank;
+		AudioEngine _engine;
+		SoundBank _soundBank;
+		WaveBank _waveBank;
 
 		public static Guid MyId { get; private set; }
 
@@ -64,13 +64,9 @@ namespace SkyShoot.Game.Client.Game
 
 		public static GameController Instance
 		{
-			get
-			{
-				if (_localInstance == null)
-					_localInstance = new GameController();
-				return _localInstance;
-			}
+			get { return _localInstance ?? (_localInstance = new GameController()); }
 		}
+
 		public GameModel GameModel { get; private set; }
 
 		private GameController()
@@ -80,13 +76,15 @@ namespace SkyShoot.Game.Client.Game
 
 		#region бывший callbacks
 
-		public void GameStart(AGameObject[] mobs, Contracts.Session.GameLevel arena)
+		public void GameStart(Contracts.Session.GameLevel arena)
 		{
 			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.GameplayScreen);
 
 			GameModel = new GameModel(GameFactory.CreateClientGameLevel(arena));
 
-			foreach (AGameObject mob in mobs)
+			var gameObjects = SynchroFrame();
+
+			foreach (AGameObject mob in gameObjects)
 			{
 				var clientMob = GameFactory.CreateClientMob(mob);
 				GameModel.AddMob(clientMob);
@@ -111,14 +109,12 @@ namespace SkyShoot.Game.Client.Game
 
 		public void MobDead(AGameObject mob)
 		{
-			var random = new Random();
-
-			engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
-			soundBank = new SoundBank(engine, "Content\\Sounds\\Sound Bank.xsb");
-			waveBank = new WaveBank(engine, "Content\\Sounds\\Wave Bank.xwb");
+			_engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
+			_soundBank = new SoundBank(_engine, "Content\\Sounds\\Sound Bank.xsb");
+			_waveBank = new WaveBank(_engine, "Content\\Sounds\\Wave Bank.xwb");
 
 			//Cue cue = soundBank.GetCue("angry01");
-			Cue cueDeath = soundBank.GetCue("guts04a");
+			Cue cueDeath = _soundBank.GetCue("guts04a");
 			GameModel.RemoveMob(mob.Id);
 			GameModel.GameLevel.AddTexture(mob.IsPlayer ? Textures.DeadPlayerTexture : Textures.DeadSpiderTexture,
 			                               TypeConverter.XnaLite2Xna(mob.Coordinates));
@@ -186,7 +182,7 @@ namespace SkyShoot.Game.Client.Game
 			}
 		}
 
-		public void SynchroFrame(AGameObject[] mobs)
+		/*public void SynchroFrame(AGameObject[] mobs)
 		{
 			if (!IsGameStarted)
 				return;
@@ -212,7 +208,7 @@ namespace SkyShoot.Game.Client.Game
 				clientMob.Speed = mob.Speed;
 				clientMob.State = mob.State;
 			}
-		}
+		}*/
 
 		public void PlayerListChanged(String[] names)
 		{
@@ -289,9 +285,6 @@ namespace SkyShoot.Game.Client.Game
 		private void FatalError(Exception e)
 		{
 			Trace.WriteLine(e);
-
-			// back to multiplayer screen
-			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.LoginScreen);
 
 			MessageBox.Message = "Connection error!";
 			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MessageBoxScreen);

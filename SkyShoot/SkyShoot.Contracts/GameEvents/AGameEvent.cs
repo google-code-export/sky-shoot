@@ -1,24 +1,30 @@
 ﻿using System;
+
 using System.Runtime.Serialization;
+
 using SkyShoot.Contracts.Mobs;
+
 using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Contracts.GameEvents
 {
 	[DataContract]
-	[KnownType(typeof( NewObjectEvent))] //возможно должно быть не здесь
-	[KnownType(typeof(ObjectDirectionChanged))]
-	[KnownType(typeof(ObjectDeleted))]
-	[KnownType(typeof(ObjectHealthChanged))]
+	[KnownType(typeof (NewObjectEvent))] //возможно должно быть не здесь
+	[KnownType(typeof (ObjectDirectionChanged))]
+	[KnownType(typeof (ObjectDeleted))]
+	[KnownType(typeof (ObjectHealthChanged))]
 	public abstract class AGameEvent
 	{
 		[DataMember]
-		public long TimeStamp { get; protected set; }//номер update'a
-		[DataMember]
-		public Guid Id { get; protected set; }
+		public long TimeStamp { get; protected set; }
 
-		public AGameEvent(Guid id,long timeStamp){
-			Id = id;
+		//номер update'a
+		[DataMember]
+		public Guid GameObjectId { get; protected set; }
+
+		protected AGameEvent(Guid id, long timeStamp)
+		{
+			GameObjectId = id;
 			TimeStamp = timeStamp;
 		}
 
@@ -29,8 +35,8 @@ namespace SkyShoot.Contracts.GameEvents
 	[DataContract]
 	public class NewObjectEvent : AGameEvent
 	{
-		[DataMember]
-		private AGameObject _newMob;
+		[DataMember] private AGameObject _newMob;
+
 		public NewObjectEvent(AGameObject mob, long timeStamp)
 			: base(mob.Id, timeStamp)
 		{
@@ -46,10 +52,10 @@ namespace SkyShoot.Contracts.GameEvents
 	[DataContract]
 	public class ObjectDirectionChanged : AGameEvent
 	{
-		[DataMember]
-		private Vector2 _newRunDirection;
-		public ObjectDirectionChanged(Vector2 direction,Guid id,long timeStamp)
-			:base(id,timeStamp)
+		[DataMember] private Vector2 _newRunDirection;
+
+		public ObjectDirectionChanged(Vector2 direction, Guid id, long timeStamp)
+			: base(id, timeStamp)
 		{
 			_newRunDirection = direction;
 		}
@@ -63,8 +69,8 @@ namespace SkyShoot.Contracts.GameEvents
 	[DataContract]
 	public class ObjectDeleted : AGameEvent
 	{
-		public ObjectDeleted(Guid id,long timeStamp)
-			:base(id,timeStamp)
+		public ObjectDeleted(Guid id, long timeStamp)
+			: base(id, timeStamp)
 		{
 		}
 
@@ -77,8 +83,7 @@ namespace SkyShoot.Contracts.GameEvents
 	[DataContract]
 	public class ObjectHealthChanged : AGameEvent
 	{
-		[DataMember]
-		private float _health;
+		[DataMember] private float _health;
 
 		public ObjectHealthChanged(float newHp, Guid id, long timeStamp)
 			: base(id, timeStamp)

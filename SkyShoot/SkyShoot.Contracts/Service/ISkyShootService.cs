@@ -17,13 +17,12 @@ namespace SkyShoot.Contracts.Service
 	public delegate void SomebodyMovesHandler(AGameObject sender, Vector2 direction);
 	public delegate void ClientShootsHandler(AGameObject sender, Vector2 direction);
 	public delegate void SomebodyDiesHandler(AGameObject sender);
-	public delegate void SomebodyHitHandler(AGameObject target, Weapon.Projectiles.AProjectile projectile);
+	public delegate void SomebodyHitHandler(AGameObject target, AProjectile projectile);
 	
 	//[ServiceContract(CallbackContract = typeof(ISkyShootCallback))]
 	[ServiceContract]
 	public interface ISkyShootService
 	{
-
 		[OperationContract(IsInitiating = true)]
 		bool Register(string username, string password);
 

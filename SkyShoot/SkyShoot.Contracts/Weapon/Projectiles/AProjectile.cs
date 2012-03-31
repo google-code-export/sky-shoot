@@ -27,14 +27,9 @@ namespace SkyShoot.Contracts.Weapon.Projectiles
 		public void Copy(AProjectile other)
 		{
 			base.Copy(other);
-			//this.Coordinates = other.Coordinates;
-			this.Damage = other.Damage;
-			//this.RunVector = other.RunVector;
-			//this.Id = other.Id;
-			this.LifeDistance = other.LifeDistance;
-			this.Owner = other.Owner;
-			//this.Speed = other.Speed;
-			
+			Damage = other.Damage;
+			LifeDistance = other.LifeDistance;
+			Owner = other.Owner;
 		}
 
 		public AProjectile(AProjectile other)
@@ -44,30 +39,13 @@ namespace SkyShoot.Contracts.Weapon.Projectiles
 
 		public override void Think(System.Collections.Generic.List<AGameObject> players = null)
 		{
-			this.Coordinates += RunVector * Speed;
+			Coordinates += RunVector * Speed;
 		}
-
-		//[DataMember]
-		//public Guid Id { get; set; }
 
 		public AGameObject Owner { get; set; }
 
-		//[DataMember]
-		//public Vector2 Coordinates;// { get; set; } // вероятно, set должен быть public-методом
-
-		//[DataMember]
-		//public Vector2 RunVector;// { get; set; }
-
-		//[DataMember]
-		//public float Speed { get; set; }
-
-		//[DataMember]
 		public float LifeDistance { get; set; }
 
-		
-
 		public Vector2 OldCoordinates;
-
-		
 	}
 }

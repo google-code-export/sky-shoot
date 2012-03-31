@@ -1,20 +1,18 @@
 using System;
-
 using Microsoft.Xna.Framework;
-
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Graphics;
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.Game.Client.Game;
 using SkyShoot.Game.Client.View;
 using IDrawable = SkyShoot.Game.Client.View.IDrawable;
 
-namespace SkyShoot.Game.Client.Players
+namespace SkyShoot.Game.Client.GameObjects
 {
-	public class Mob : Contracts.Mobs.AGameObject, IDrawable
+	public class Mob : AGameObject, IDrawable
 	{
-		AudioEngine engine;
-		SoundBank soundBank;
+		private readonly AudioEngine _engine;
+		private readonly SoundBank _soundBank;
 		WaveBank waveBank;
 
 		public Vector2 CoordinatesM
@@ -49,12 +47,12 @@ namespace SkyShoot.Game.Client.Players
 		private const int FrameTime = 500;
 		private const bool Looping = true;
 
-		public Mob(Contracts.Mobs.AGameObject other, Animation2D animation)
+		public Mob(AGameObject other, Animation2D animation)
 			: base(other)
 		{			
-			engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
-			soundBank = new SoundBank(engine, "Content\\Sounds\\Sound Bank.xsb");
-			waveBank = new WaveBank(engine, "Content\\Sounds\\Wave Bank.xwb");			
+			_engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
+			_soundBank = new SoundBank(_engine, "Content\\Sounds\\Sound Bank.xsb");
+			waveBank = new WaveBank(_engine, "Content\\Sounds\\Wave Bank.xwb");			
 
 			_healthTextureHeight = 5;
 
@@ -133,7 +131,7 @@ namespace SkyShoot.Game.Client.Players
 				Coordinates.Y = MathHelper.Clamp(Coordinates.Y, 0, GameLevel.Height);
 			}
 
-			Cue cue = soundBank.GetCue("angry");
+			Cue cue = _soundBank.GetCue("angry");
 			var random = new Random();
 			int k = random.Next(1000);
 			if (k <= 5) Scream(cue);
