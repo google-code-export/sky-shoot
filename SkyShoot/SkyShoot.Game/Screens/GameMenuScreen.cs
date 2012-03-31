@@ -101,7 +101,7 @@ namespace SkyShoot.Game.Screens
 			Cue cue = soundBank.GetCue("RICOCHET");
 			cue.Play();
 
-			ScreenManager.Instance.SetActiveScreen(typeof(GameplayScreen));
+			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.GameplayScreen);
 		}
 
 		private void OptionsButtonPressed(object sender, EventArgs e)
@@ -109,7 +109,7 @@ namespace SkyShoot.Game.Screens
 			Cue cue = soundBank.GetCue("RICOCHET");
 			cue.Play();
 
-			ScreenManager.Instance.SetActiveScreen(typeof(OptionsMenuScreen));
+			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.OptionsMenuScreen);
 		}
 
 		private void ExitButtonPressed(object sender, EventArgs e)
@@ -117,7 +117,7 @@ namespace SkyShoot.Game.Screens
 			Cue cue = soundBank.GetCue("RICOCHET");
 			cue.Play();
 
-			ScreenManager.Instance.SetActiveScreen(typeof(LoginScreen));
+			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.LoginScreen);
 		}
 
 		public override void Draw(GameTime gameTime)

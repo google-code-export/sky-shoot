@@ -223,7 +223,7 @@ namespace SkyShoot.Game.Screens
 		{
 			Cue cue = soundBank.GetCue("RICOCHET");
 			cue.Play();
-			ScreenManager.Instance.SetActiveScreen(typeof (MultiplayerScreen)); // = ScreenManager.ScreenEnum.MultiplayerScreen;
+			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MultiplayerScreen);
 		}
 
 		private void CreateButtonPressed(object sender, EventArgs args)
@@ -278,7 +278,7 @@ namespace SkyShoot.Game.Screens
 			WaitScreen.MaxPlayers = _maxPlayers.Text;
 			WaitScreen.GameId = gameDescription.GameId;
 
-			ScreenManager.Instance.SetActiveScreen(typeof (WaitScreen));
+			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.WaitScreen);
 		}
 
 		public override void Draw(GameTime gameTime)

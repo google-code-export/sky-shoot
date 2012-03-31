@@ -148,12 +148,12 @@ namespace SkyShoot.Game.Screens
 			if (_loginBox.Text.Length < 3)
 			{
 				MessageBox.Message = "Username is too short!\nPress Ok to continue";
-				ScreenManager.Instance.SetActiveScreen(typeof (MessageBox));
+				ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MessageBoxScreen);
 			}
 			else if (_passwordBox.Text.Length < 3)
 			{
 				MessageBox.Message = "Password is too short!\nPress Ok to continue";
-				ScreenManager.Instance.SetActiveScreen(typeof (MessageBox));
+				ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MessageBoxScreen);
 			}
 			else
 			{
@@ -163,7 +163,7 @@ namespace SkyShoot.Game.Screens
 
 				if (GameController.Instance.Login(_loginBox.Text, _passwordBox.Text).HasValue)
 				{
-					ScreenManager.Instance.SetActiveScreen(typeof (MainMenuScreen));
+					ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MainMenuScreen);
 				}				
 			}
 		}
@@ -176,12 +176,12 @@ namespace SkyShoot.Game.Screens
 			if (_loginBox.Text.Length < 3)
 			{
 				MessageBox.Message = "Username is too short!\nPress Ok to continue";
-				ScreenManager.Instance.SetActiveScreen(typeof (MessageBox));
+				ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MessageBoxScreen);
 			}
 			else if (_passwordBox.Text.Length < 3)
 			{
 				MessageBox.Message = "Password is too short!\nPress Ok to continue";
-				ScreenManager.Instance.SetActiveScreen(typeof (MessageBox));
+				ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MessageBoxScreen);
 			}
 			else
 			{
@@ -193,13 +193,13 @@ namespace SkyShoot.Game.Screens
 				{
 					if (GameController.Instance.Login(_loginBox.Text, _passwordBox.Text).HasValue)
 					{
-						ScreenManager.Instance.SetActiveScreen(typeof (MainMenuScreen));
+						ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MainMenuScreen);
 					}
 				}
 				else
 				{
 					MessageBox.Message = "Registration failed";
-					ScreenManager.Instance.SetActiveScreen(typeof (MessageBox));
+					ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MessageBoxScreen);
 				}
 			}			
 		}

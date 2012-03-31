@@ -82,7 +82,7 @@ namespace SkyShoot.Game.Client.Game
 
 		public void GameStart(AGameObject[] mobs, Contracts.Session.GameLevel arena)
 		{
-			ScreenManager.Instance.SetActiveScreen(typeof (GameplayScreen)); // = ScreenManager.ScreenEnum.GameplayScreen;
+			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.GameplayScreen);
 
 			GameModel = new GameModel(GameFactory.CreateClientGameLevel(arena));
 
@@ -149,7 +149,7 @@ namespace SkyShoot.Game.Client.Game
 		public void GameOver()
 		{
 			GameModel = null;
-			ScreenManager.Instance.SetActiveScreen(typeof (MainMenuScreen));
+			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MainMenuScreen);
 			IsGameStarted = false;
 		}
 
@@ -291,10 +291,10 @@ namespace SkyShoot.Game.Client.Game
 			Trace.WriteLine(e);
 
 			// back to multiplayer screen
-			ScreenManager.Instance.SetActiveScreen(typeof (LoginScreen));
+			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.LoginScreen);
 
 			MessageBox.Message = "Connection error!";
-			ScreenManager.Instance.SetActiveScreen(typeof (MessageBox));
+			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MessageBoxScreen);
 		}
 
 		public bool Register(string username, string password)
@@ -328,7 +328,7 @@ namespace SkyShoot.Game.Client.Game
 			else
 			{
 				MessageBox.Message = "Connection error!";
-				ScreenManager.Instance.SetActiveScreen(typeof (MessageBox));
+				ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MessageBoxScreen);
 			}
 
 			return login;

@@ -290,10 +290,10 @@ namespace SkyShoot.Game.Screens
 			Cue cue = soundBank.GetCue("RICOCHET");
 			cue.Play();
 
-			if (Game.Client.Game.GameController.Instance.IsGameStarted)
-				ScreenManager.Instance.SetActiveScreen(typeof(GameplayScreen));
+			if (Client.Game.GameController.Instance.IsGameStarted)
+				ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.GameplayScreen);
 			else
-				ScreenManager.Instance.SetActiveScreen(typeof(MainMenuScreen));
+				ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MainMenuScreen);
 		}
 
 		private void UpButtonPressed(object sender, EventArgs e)
