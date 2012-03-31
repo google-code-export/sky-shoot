@@ -262,11 +262,9 @@ namespace SkyShoot.WinFormsClient
 								m.Coordinates +=
 									m.RunVector *
 									(m.Speed * (float)((now - _prev).TotalMilliseconds));
-								if (m.IsPlayer)
+								if (m.Type == AGameObject.EnumObjectType.Player)
 								{
-									m.Coordinates = Vector2.Clamp(m.Coordinates,
-																								new Vector2(0, 0),
-																								new Vector2(_level.levelWidth, _level.levelHeight)); /**/
+									m.Coordinates = Vector2.Clamp(m.Coordinates, new Vector2(0, 0), new Vector2(_level.levelWidth, _level.levelHeight)); /**/
 								}
 							}
 						}
@@ -425,13 +423,13 @@ namespace SkyShoot.WinFormsClient
 						x = (m.Coordinates.X) * _pnCanvas.Width / _level.levelWidth;
 						y = (m.Coordinates.Y) * _pnCanvas.Height / _level.levelHeight;
 						//r = m.Radius*0.5f*_pnCanvas.Width/_level.levelWidth;
-						g.FillEllipse(m.IsPlayer ? Brushes.Black : Brushes.Green,
+						g.FillEllipse(m.Type == AGameObject.EnumObjectType.Player ? Brushes.Black : Brushes.Green,
 													new RectangleF(
 														new PointF(x - r, y - r),
 														new SizeF(2 * r, 2 * r)));
 						//if (m.IsPlayer)
 						{
-							g.DrawLine(new Pen(m.IsPlayer ? Color.Red : Color.Green, 3),
+							g.DrawLine(new Pen(m.Type == AGameObject.EnumObjectType.Player ? Color.Red : Color.Green, 3),
 												 new PointF(x, y),
 												 new PointF(x + m.ShootVector.X * 2 * r, y + m.ShootVector.Y * 2 * r));
 						}
@@ -526,7 +524,7 @@ namespace SkyShoot.WinFormsClient
 					_me = new AGameObject { Coordinates = Vector2.Zero };
 
 					_me.Id = (Guid)id;
-					_me.IsPlayer = true;
+					_me.Type = AGameObject.EnumObjectType.Player;
 					SetStatus("Logon successfull");
 					return true;
 				}

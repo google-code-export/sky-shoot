@@ -138,7 +138,7 @@ namespace SkyShoot.Game.Client.GameObjects
 			int milliseconds = gameTime.ElapsedGameTime.Milliseconds;
 			Coordinates += RunVector * Speed * milliseconds;
 
-			if (IsPlayer)
+			if (Type == EnumObjectType.Player)
 			{
 				Coordinates.X = MathHelper.Clamp(Coordinates.X, 0, GameLevel.Width);
 				Coordinates.Y = MathHelper.Clamp(Coordinates.Y, 0, GameLevel.Height);

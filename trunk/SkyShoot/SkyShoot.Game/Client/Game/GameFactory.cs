@@ -1,6 +1,7 @@
 using System;
 
 using SkyShoot.Contracts.Bonuses;
+using SkyShoot.Contracts.Mobs;
 using SkyShoot.Game.Client.GameObjects;
 using SkyShoot.Game.Client.View;
 
@@ -8,10 +9,17 @@ namespace SkyShoot.Game.Client.Game
 {
 	internal class GameFactory
 	{
-		public static Mob CreateClientMob(Contracts.Mobs.AGameObject mob)
+		public static Mob CreateClientMob(AGameObject mob)
 		{
 			// todo mob type
-			return new Mob(mob, mob.IsPlayer ? Textures.PlayerAnimation : Textures.SpiderAnimation);
+			switch (mob.Type)
+			{
+				case AGameObject.EnumObjectType.Player:
+					return new Mob(mob, Textures.PlayerAnimation);
+				case AGameObject.EnumObjectType.Mob:
+					return new Mob(mob, Textures.SpiderAnimation);
+			}
+			return null;
 		}
 
 		public static GameLevel CreateClientGameLevel(Contracts.Session.GameLevel gameLevel)
