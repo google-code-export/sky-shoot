@@ -100,12 +100,12 @@ namespace SkyShoot.Game.Screens
 			var level = GameController.Instance.GameStart(GameId);
 			if (level != null)
 			{
-				// игра началась
-				GameController.Instance.GameStart(new AGameObject[] {}, level);
+				// game started
+				GameController.Instance.GameStart(level);
 			}
 			else
 			{
-				// игра еще не началась, обновляем список игроков
+				// game has not started, update player list
 				ChangePlayerList(GameController.Instance.PlayerListUpdate());
 			}
 		}

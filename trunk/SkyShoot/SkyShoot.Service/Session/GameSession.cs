@@ -130,7 +130,6 @@ namespace SkyShoot.Service.Session
 
 			Players.Remove(player);
 			Trace.WriteLine(player.Name + "leaved game");
-			
 		}
 
 		private void pushEvent(AGameEvent gameEvent)
@@ -164,7 +163,7 @@ namespace SkyShoot.Service.Session
 		{
 			var allObjects = new List<AGameObject>(_mobs);
 			allObjects.AddRange(Players);
-			Trace.WriteLine("SynchroFrame");
+			// Trace.WriteLine("SynchroFrame");
 			return allObjects.ToArray();
 
 		}
@@ -209,7 +208,6 @@ namespace SkyShoot.Service.Session
 			_gameTimer.Elapsed += TimerElapsedListener;
 			_gameTimer.Start();
 			Trace.WriteLine("Game Started");
-			
 		}
 
 		public bool AddPlayer(MainSkyShootService player)
@@ -228,11 +226,9 @@ namespace SkyShoot.Service.Session
 
 			if (Players.Count == LocalGameDescription.MaximumPlayersAllowed)
 			{
-				Trace.WriteLine("player added"+player.Name);
+				// Trace.WriteLine("player added"+player.Name);
 				var startThread = new System.Threading.Thread(new System.Threading.ThreadStart(Start));
 				startThread.Start();
-				
-				
 			}
 			return true;
 		}
@@ -251,7 +247,7 @@ namespace SkyShoot.Service.Session
 				_intervalToSpawn = (long) Math.Exp(4.8 - (float)_timerCounter/40000f);
 				
 				var mob = _spiderFactory.CreateMob();
-				System.Diagnostics.Trace.WriteLine("mob spawned" + mob.Id);
+				// System.Diagnostics.Trace.WriteLine("mob spawned" + mob.Id);
 				
 				_mobs.Add(mob);
 				SomebodySpawned(mob);
@@ -268,7 +264,7 @@ namespace SkyShoot.Service.Session
 		{
 			if (!System.Threading.Monitor.TryEnter(_updating)) return;
 
-			Trace.WriteLine("update begin "+ _timerCounter);
+			// Trace.WriteLine("update begin "+ _timerCounter);
 			SpawnMob();
 			 var now = DateTime.Now.Ticks/10000;
 			_updateDelay = now - _lastUpdate;
@@ -317,7 +313,7 @@ namespace SkyShoot.Service.Session
 					_bonuses.Remove(bonus);
 				}
 			}
-			Trace.WriteLine("" + _projectiles.size);
+			// Trace.WriteLine("" + _projectiles.size);
 			for (var pr = _projectiles.FirstActive; pr != null; pr = _projectiles.Next(pr) )
 			{
 				
@@ -353,8 +349,8 @@ namespace SkyShoot.Service.Session
 			}
 
 			//_projectiles.RemoveAll(x => (x==null) || (x.LifeDistance <= 0));
-			Trace.WriteLine(System.DateTime.Now.Ticks/10000 - now);
-			Trace.WriteLine("update end " + _timerCounter);
+			// Trace.WriteLine(System.DateTime.Now.Ticks/10000 - now);
+			// Trace.WriteLine("update end " + _timerCounter);
 			_timerCounter++;
 			//_updated = false;
 			System.Threading.Monitor.Exit(_updating);

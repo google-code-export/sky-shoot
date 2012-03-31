@@ -1,17 +1,13 @@
 using System;
-
 using Microsoft.Xna.Framework;
-
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Audio;
-
+using Microsoft.Xna.Framework.Graphics;
 using SkyShoot.Contracts.Weapon.Projectiles;
-
 using SkyShoot.Game.Client.Game;
 using SkyShoot.Game.Client.View;
 using IDrawable = SkyShoot.Game.Client.View.IDrawable;
 
-namespace SkyShoot.Game.Client.Weapon
+namespace SkyShoot.Game.Client.GameObjects
 {
 	public class Projectile : AProjectile, IDrawable
 	{

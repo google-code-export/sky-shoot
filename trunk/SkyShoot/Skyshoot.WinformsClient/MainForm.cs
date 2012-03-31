@@ -376,7 +376,7 @@ namespace SkyShoot.WinFormsClient
 		{
 			foreach (var gameEvent in events)
 			{
-				var gameObject = _objects.Find(o => o.Id == gameEvent.Id);
+				var gameObject = _objects.Find(o => o.Id == gameEvent.GameObjectId);
 				if (gameObject != null)
 				{
 					gameEvent.UpdateMob(gameObject);

@@ -14,7 +14,6 @@ namespace SkyShoot.Contracts.Mobs
 	[DataContract]
 	public class AGameObject
 	{
-
 		[DataMember]
 		public bool IsPlayer { get; set; }
 
@@ -80,7 +79,6 @@ namespace SkyShoot.Contracts.Mobs
 			MaxHealthAmount = other.MaxHealthAmount;
 			IsActive = other.IsActive;
 			Type = other.Type;
-			this.Type = other.Type;
 		}
 
 		public AGameObject()

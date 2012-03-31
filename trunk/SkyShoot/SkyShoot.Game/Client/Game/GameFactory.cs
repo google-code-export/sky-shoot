@@ -1,11 +1,8 @@
 using System;
 
 using SkyShoot.Contracts.Bonuses;
-
+using SkyShoot.Game.Client.GameObjects;
 using SkyShoot.Game.Client.View;
-using SkyShoot.Game.Client.Weapon;
-using SkyShoot.Game.Client.Bonuses;
-using SkyShoot.Game.Client.Players;
 
 namespace SkyShoot.Game.Client.Game
 {

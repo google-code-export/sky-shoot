@@ -198,7 +198,7 @@ namespace SkyShoot.Service
 
 		public GameLevel GameStart(int gameId)
 		{
-			Trace.WriteLine("GameStarted");
+			// Trace.WriteLine("GameStarted");
 			return _sessionManager.GameStarted(gameId);
 		}
 
