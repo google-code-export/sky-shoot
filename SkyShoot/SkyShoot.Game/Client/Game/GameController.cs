@@ -49,9 +49,9 @@ namespace SkyShoot.Game.Client.Game
 
 	public sealed class GameController : ISkyShootService
 	{
-		AudioEngine _engine;
-		SoundBank _soundBank;
-		WaveBank _waveBank;
+		private AudioEngine _engine;
+		private SoundBank _soundBank;
+		private WaveBank _waveBank;
 
 		public static Guid MyId { get; private set; }
 
@@ -115,8 +115,9 @@ namespace SkyShoot.Game.Client.Game
 			//Cue cue = soundBank.GetCue("angry01");
 			Cue cueDeath = _soundBank.GetCue("guts04a");
 			GameModel.RemoveMob(mob.Id);
-			GameModel.GameLevel.AddTexture(mob.IsPlayer ? Textures.DeadPlayerTexture : Textures.DeadSpiderTexture,
-			                               TypeConverter.XnaLite2Xna(mob.Coordinates));
+			GameModel.GameLevel.AddTexture(mob.Type == AGameObject.EnumObjectType.Player
+			                               	? Textures.DeadPlayerTexture
+			                               	: Textures.DeadSpiderTexture, TypeConverter.XnaLite2Xna(mob.Coordinates));
 			cueDeath.Play();
 		}
 
@@ -411,7 +412,7 @@ namespace SkyShoot.Game.Client.Game
 			}
 			catch (Exception e)
 			{
-				FatalError(e);				
+				FatalError(e);
 				throw;
 			}
 		}
@@ -425,7 +426,7 @@ namespace SkyShoot.Game.Client.Game
 			catch (Exception exc)
 			{
 				Trace.WriteLine(exc);
-				return new AGameObject[]{};
+				return new AGameObject[] {};
 			}
 		}
 
@@ -438,7 +439,7 @@ namespace SkyShoot.Game.Client.Game
 			catch (Exception exc)
 			{
 				Trace.WriteLine(exc);
-				return new string[]{};
+				return new string[] {};
 			}
 		}
 

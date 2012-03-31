@@ -14,8 +14,8 @@ namespace SkyShoot.Contracts.Mobs
 	[DataContract]
 	public class AGameObject
 	{
-		[DataMember]
-		public bool IsPlayer { get; set; }
+		// [DataMember]
+		// public bool IsPlayer { get; set; }
 
 		[DataMember]
 		public float Damage { get; set; }// до тех пор пока пулю не сделаем мобом с оружием
@@ -70,7 +70,6 @@ namespace SkyShoot.Contracts.Mobs
 			Coordinates = other.Coordinates;
 			Id = other.Id;
 			HealthAmount = other.HealthAmount;
-			IsPlayer = other.IsPlayer;
 			Radius = other.Radius;
 			RunVector = other.RunVector;
 			ShootVector = other.ShootVector;
@@ -89,6 +88,8 @@ namespace SkyShoot.Contracts.Mobs
 
 		public enum EnumObjectType
 		{
+			[EnumMember]
+			Player,
 			[EnumMember]
 			Mob,
 			[EnumMember]

@@ -1,26 +1,27 @@
 ﻿using System;
+
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
 using SkyShoot.XNA.Framework;
-using SkyShoot.Contracts.Service;
+
 using SkyShoot.Service;
-using SkyShoot.Service.Weapon.Bullets;
+
 using SkyShoot.Contracts.Weapon.Projectiles;
 
 namespace SkyShoot.Contracts.Mobs
 {
 	public class Mob : AGameObject
 	{
-		public MainSkyShootService targetPlayer { get; set; }
+		public MainSkyShootService TargetPlayer { get; set; }
 
-		public float Damage { get; set; }
+		// already inherited
+		// public float Damage { get; set; }
 
 		private int _counter;
 
 		public Mob(float healthAmount)
 		{
-			IsPlayer = false;
+			Type = EnumObjectType.Mob;
 			_counter = 0;
 			Id = Guid.NewGuid();
 			MaxHealthAmount = HealthAmount = healthAmount;
@@ -43,7 +44,7 @@ namespace SkyShoot.Contracts.Mobs
 				if (distance > temp)
 				{
 					distance = temp;
-					targetPlayer = (MainSkyShootService)targetPlayers[i];
+					TargetPlayer = (MainSkyShootService)targetPlayers[i];
 				}
 			}
 		}
@@ -52,9 +53,9 @@ namespace SkyShoot.Contracts.Mobs
 
 		protected virtual void Move()
 		{
-			if(targetPlayer == null)
+			if(TargetPlayer == null)
 				return;
-			RunVector = new Vector2(targetPlayer.Coordinates.X - Coordinates.X, targetPlayer.Coordinates.Y - Coordinates.Y);
+			RunVector = new Vector2(TargetPlayer.Coordinates.X - Coordinates.X, TargetPlayer.Coordinates.Y - Coordinates.Y);
 			RunVector = Vector2.Normalize(RunVector);
 			ShootVector = RunVector;
 
@@ -73,7 +74,7 @@ namespace SkyShoot.Contracts.Mobs
 			{
 				if (_counter % 10 == 0)
 				{
-					if (!players.Contains(targetPlayer) || targetPlayer == null)
+					if (!players.Contains(TargetPlayer) || TargetPlayer == null)
 					{
 						FindTarget(players);
 					}

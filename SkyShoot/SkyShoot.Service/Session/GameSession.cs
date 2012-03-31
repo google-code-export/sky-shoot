@@ -78,7 +78,7 @@ namespace SkyShoot.Service.Session
 				if ((sender as MainSkyShootService).Weapon.Reload(System.DateTime.Now.Ticks / 10000))
 				{
 					var a = (sender as MainSkyShootService).Weapon.CreateBullets(sender, direction);
-					AGameBonus doubleDamage = (sender as MainSkyShootService).getBonus(AGameObject.EnumObjectType.DoubleDamage);
+					AGameBonus doubleDamage = (sender as MainSkyShootService).GetBonus(AGameObject.EnumObjectType.DoubleDamage);
 					float damage = doubleDamage == null ? 1f : doubleDamage.damageFactor;
 					(sender as MainSkyShootService).Weapon.ApplyModifier(a, damage);
 					foreach (var b in a)
@@ -410,7 +410,7 @@ namespace SkyShoot.Service.Session
 				{
 					if (mob.Weapon.Reload(System.DateTime.Now.Ticks / 10000))
 					{
-						AGameBonus shield = player.getBonus(AGameBonus.EnumObjectType.Shield);
+						AGameBonus shield = player.GetBonus(AGameBonus.EnumObjectType.Shield);
 						float damage = shield == null ? 1f : shield.damageFactor;
 						player.HealthAmount -= damage * mob.Damage;
 						SomebodyHitted(player, null);
@@ -430,7 +430,7 @@ namespace SkyShoot.Service.Session
 			
 			var newCoord = mob.RunVector*mob.Speed*_updateDelay + mob.Coordinates ;
 
-			if (mob.IsPlayer)
+			if (mob.Type == AGameObject.EnumObjectType.Player)
 			{
 				newCoord.X = MathHelper.Clamp(newCoord.X, 0, GameLevel.levelHeight);
 				newCoord.Y = MathHelper.Clamp(newCoord.Y, 0, GameLevel.levelWidth);
