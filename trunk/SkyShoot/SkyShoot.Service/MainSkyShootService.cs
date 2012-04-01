@@ -43,6 +43,13 @@ namespace SkyShoot.Service
 
 		public void AddBonus(AGameBonus bonus)
 		{
+			if (bonus.Type == EnumObjectType.Remedy)
+			{
+				float health = this.HealthAmount;
+				float potentialHealth = health + health * bonus.damageFactor;
+				this.HealthAmount = potentialHealth > this.MaxHealthAmount ? this.MaxHealthAmount : potentialHealth;
+				return;
+			}
 			Bonuses.RemoveAll(b => b.Type == bonus.Type);
 			Bonuses.Add(bonus);
 		}

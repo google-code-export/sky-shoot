@@ -297,7 +297,7 @@ namespace SkyShoot.Service.Session
 					var bonus = _bonuses[j];
 					if (Vector2.Distance(bonus.Coordinates, player.Coordinates) < player.Radius)
 					{
-						if(!bonus.IsActive)
+						if (!bonus.IsActive)
 						{
 							continue;
 						}
