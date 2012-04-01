@@ -22,9 +22,7 @@ namespace SkyShoot.Game.Screens
 {
 	internal class WaitScreen : GameScreen
 	{
-		private AudioEngine _engine;
-		private SoundBank _soundBank;
-		WaveBank _waveBank;
+		private SoundManager _soundManager;
 
 		public static String Tile { get; set; }
 
@@ -55,6 +53,7 @@ namespace SkyShoot.Game.Screens
 			CreateControls();
 			InititalizeControls();
 
+			_soundManager = new SoundManager();
 			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 			_updateCount = 0;
 		}
@@ -84,10 +83,6 @@ namespace SkyShoot.Game.Screens
 			Desktop.Children.Add(_leaveButton);
 
 			ScreenManager.Instance.Controller.AddListener(_leaveButton, LeaveButtonPressed);
-
-			_engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
-			_soundBank = new SoundBank(_engine, "Content\\Sounds\\Sound Bank.xsb");
-			_waveBank = new WaveBank(_engine, "Content\\Sounds\\Wave Bank.xwb");
 		}
 
 		private int _updateCount ;
@@ -148,8 +143,7 @@ namespace SkyShoot.Game.Screens
 
 		private void LeaveButtonPressed(object sender, EventArgs args)
 		{
-			Cue cue = _soundBank.GetCue("RICOCHET");
-			cue.Play();
+			_soundManager.SoundPlay("RICOCHET");
 
 			GameController.Instance.LeaveGame();
 			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MultiplayerScreen);

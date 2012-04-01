@@ -22,9 +22,7 @@ namespace SkyShoot.Game.Screens
 {
 	internal class NewAccountScreen : GameScreen
 	{
-		AudioEngine engine;
-		SoundBank soundBank;
-		WaveBank waveBank;
+		private SoundManager _soundManager;
 
 		private LabelControl _loginLabel;
 		private LabelControl _passwordLabel;
@@ -51,6 +49,7 @@ namespace SkyShoot.Game.Screens
 			CreateControls();
 			InitializeControls();
 
+			_soundManager = new SoundManager();
 			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 		}
 
@@ -111,10 +110,6 @@ namespace SkyShoot.Game.Screens
 
 			ScreenManager.Instance.Controller.AddListener(_backButton, BackButtonPressed);
 			ScreenManager.Instance.Controller.AddListener(_okButton, OkButtonPressed);
-
-			engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
-			soundBank = new SoundBank(engine, "Content\\Sounds\\Sound Bank.xsb");
-			waveBank = new WaveBank(engine, "Content\\Sounds\\Wave Bank.xwb");
 		}
 
 		public override void LoadContent()
@@ -129,16 +124,14 @@ namespace SkyShoot.Game.Screens
 
 		private void BackButtonPressed(object sender, EventArgs args)
 		{
-			Cue cue = soundBank.GetCue("RICOCHET");
-			cue.Play();
+			_soundManager.SoundPlay("RICOCHET");
 
 			throw new NotImplementedException();
 		}
 
 		private void OkButtonPressed(object sender, EventArgs args)
 		{
-			Cue cue = soundBank.GetCue("RICOCHET");
-			cue.Play();
+			_soundManager.SoundPlay("RICOCHET");
 
 			if (_loginBox.Text.Length < 3)
 			{
