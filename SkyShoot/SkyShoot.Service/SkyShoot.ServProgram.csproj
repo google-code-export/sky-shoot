@@ -86,6 +86,7 @@
     <Compile Include="Account\AccountManagerPrg.cs" />
     <Compile Include="Bonus\BonusFactory.cs" />
     <Compile Include="Bonus\DoubleDamage.cs" />
+    <Compile Include="Bonus\Remedy.cs" />
     <Compile Include="Bonus\Shield.cs" />
     <Compile Include="Logger\TableTraceListenerProg.cs" />
     <Compile Include="MainSkyShootService.cs" />

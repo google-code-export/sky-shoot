@@ -44,5 +44,6 @@ namespace SkyShoot.Contracts
 
 		public const int SHIELD_MILLISECONDS = 30000;
 		public const int DOUBLE_DAMAGE_MILLISECONDS = 30000;
+		public const int REMEDY_MILLISECONDS = 30000; // redundant
 	}
 }
