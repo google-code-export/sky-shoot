@@ -12,14 +12,13 @@ using Nuclex.UserInterface.Controls.Desktop;
 
 using SkyShoot.Game.Controls;
 using Microsoft.Xna.Framework.Audio;
+using SkyShoot.Game.Client.Game;
 
 namespace SkyShoot.Game.Screens
 {
 	internal class MainMenuScreen : GameScreen
 	{
-		AudioEngine engine;
-		SoundBank soundBank;
-		WaveBank waveBank;
+		private SoundManager _soundManager;
 
 		private static Texture2D _texture;
 
@@ -41,6 +40,7 @@ namespace SkyShoot.Game.Screens
 			CreateControls();
 			InitializeControls();
 
+			_soundManager = new SoundManager();
 			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 		}
 
@@ -80,10 +80,6 @@ namespace SkyShoot.Game.Screens
 			ScreenManager.Instance.Controller.AddListener(_playGameButton, PlayGameButtonPressed);
 			ScreenManager.Instance.Controller.AddListener(_optionsButton, OptionsButtonPressed);
 			ScreenManager.Instance.Controller.AddListener(_logoffButton, LogoffMenuButtonPressed);
-
-			engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
-			soundBank = new SoundBank(engine, "Content\\Sounds\\Sound Bank.xsb");
-			waveBank = new WaveBank(engine, "Content\\Sounds\\Wave Bank.xwb");
 		}
 
 		public override void LoadContent()
@@ -98,24 +94,21 @@ namespace SkyShoot.Game.Screens
 
 		private void PlayGameButtonPressed(object sender, EventArgs e)
 		{
-			Cue cue = soundBank.GetCue("RICOCHET");
-			cue.Play();
+			_soundManager.SoundPlay("RICOCHET");
 
 			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MultiplayerScreen);
 		}
 
 		private void OptionsButtonPressed(object sender, EventArgs e)
 		{
-			Cue cue = soundBank.GetCue("RICOCHET");
-			cue.Play();
+			_soundManager.SoundPlay("RICOCHET");
 
 			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.OptionsMenuScreen);
 		}
 
 		private void LogoffMenuButtonPressed(object sender, EventArgs e)
 		{
-			Cue cue = soundBank.GetCue("RICOCHET");
-			cue.Play();
+			_soundManager.SoundPlay("RICOCHET");
 
 			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.LoginScreen);
 		}
