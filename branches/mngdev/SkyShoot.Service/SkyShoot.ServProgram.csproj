@@ -86,10 +86,12 @@
     <Compile Include="Account\AccountManagerPrg.cs" />
     <Compile Include="Bonus\BonusFactory.cs" />
     <Compile Include="Bonus\DoubleDamage.cs" />
+    <Compile Include="Bonus\Remedy.cs" />
     <Compile Include="Bonus\Shield.cs" />
     <Compile Include="Logger\TableTraceListenerProg.cs" />
     <Compile Include="MainSkyShootService.cs" />
     <Compile Include="Mobs\IMobFactory.cs" />
+    <Compile Include="Mobs\Mob.cs" />
     <Compile Include="Mobs\Spider.cs" />
     <Compile Include="Mobs\SpiderFactory.cs" />
     <Compile Include="Program.cs" />

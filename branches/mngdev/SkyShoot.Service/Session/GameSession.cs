@@ -89,7 +89,7 @@ namespace SkyShoot.Service.Session
 				if (sender.Weapon.Reload(System.DateTime.Now.Ticks / 10000))
 				{
 					var a = sender.Weapon.CreateBullets(sender, direction);
-					AGameBonus doubleDamage = (sender as MainSkyShootService).getBonus(AGameObject.EnumObjectType.DoubleDamage);
+					AGameBonus doubleDamage = (sender as MainSkyShootService).GetBonus(AGameObject.EnumObjectType.DoubleDamage);
 					float damage = doubleDamage == null ? 1f : doubleDamage.DamageFactor;
 					(sender as MainSkyShootService).Weapon.ApplyModifier(a, damage);
 					foreach (var b in a)
@@ -159,7 +159,6 @@ namespace SkyShoot.Service.Session
 			//Players.Remove(player);
 			_gameObjects.Remove(player);
 			Trace.WriteLine(player.Name + "leaved game");
-			
 		}
 
 		private void PushEvent(AGameEvent gameEvent)
@@ -200,7 +199,7 @@ namespace SkyShoot.Service.Session
 		{
 			var allObjects = new List<AGameObject>(_gameObjects.ToArray());
 			//allObjects.AddRange(Players);
-			Trace.WriteLine("SynchroFrame");
+			// Trace.WriteLine("SynchroFrame");
 			return allObjects.ToArray();
 
 		}
@@ -254,7 +253,6 @@ namespace SkyShoot.Service.Session
 			_gameTimer.Elapsed += TimerElapsedListener;
 			_gameTimer.Start();
 			Trace.WriteLine("Game Started");
-			
 		}
 
 		public bool AddPlayer(MainSkyShootService player)
@@ -273,11 +271,9 @@ namespace SkyShoot.Service.Session
 
 			if (_gameObjects.Count == LocalGameDescription.MaximumPlayersAllowed)
 			{
-				Trace.WriteLine("player added"+player.Name);
+				// Trace.WriteLine("player added"+player.Name);
 				var startThread = new System.Threading.Thread(new System.Threading.ThreadStart(Start));
 				startThread.Start();
-				
-				
 			}
 			return true;
 		}
@@ -302,7 +298,7 @@ namespace SkyShoot.Service.Session
 				_intervalToSpawn = (long) Math.Exp(4.8 - (float)_timerCounter/40000f);
 				
 				var mob = _spiderFactory.CreateMob();
-				Trace.WriteLine("mob spawned" + mob.Id);
+				// System.Diagnostics.Trace.WriteLine("mob spawned" + mob.Id);
 				
 				_gameObjects.Add(mob);
 				SomebodySpawned(mob);
@@ -321,7 +317,7 @@ namespace SkyShoot.Service.Session
 		{
 			if (!System.Threading.Monitor.TryEnter(_updating)) return;
 
-			Trace.WriteLine("update begin "+ _timerCounter);
+			// Trace.WriteLine("update begin "+ _timerCounter);
 			SpawnMob();
 			 var now = DateTime.Now.Ticks/10000;
 			_updateDelay = now - _lastUpdate;
@@ -450,7 +446,7 @@ namespace SkyShoot.Service.Session
 					var bonus = _bonuses[j];
 					if (Vector2.Distance(bonus.Coordinates, player.Coordinates) < player.Radius)
 					{
-						if(!bonus.IsActive)
+						if (!bonus.IsActive)
 						{
 							continue;
 						}
@@ -466,9 +462,8 @@ namespace SkyShoot.Service.Session
 					_bonuses.Remove(bonus);
 				}
 			}
-			//Trace.WriteLine("" + _projectiles.Size);
-			//for (var pr = _projectiles.FirstActive; pr != null; pr = _projectiles.Next(pr))
-			foreach (var projectile in _projectiles)
+			// Trace.WriteLine("" + _projectiles.size);
+			for (var pr = _projectiles.FirstActive; pr != null; pr = _projectiles.Next(pr) )
 			{
 				
 				//if (pr == null || pr.Item == null) continue;
@@ -506,8 +501,8 @@ namespace SkyShoot.Service.Session
 			/**/
 
 			//_projectiles.RemoveAll(x => (x==null) || (x.LifeDistance <= 0));
-			Trace.WriteLine(System.DateTime.Now.Ticks/10000 - now);
-			Trace.WriteLine("update end " + _timerCounter);
+			// Trace.WriteLine(System.DateTime.Now.Ticks/10000 - now);
+			// Trace.WriteLine("update end " + _timerCounter);
 			_timerCounter++;
 			//_updated = false;
 			System.Threading.Monitor.Exit(_updating);
@@ -567,7 +562,7 @@ namespace SkyShoot.Service.Session
 				{
 					if (mob.Weapon.Reload(DateTime.Now.Ticks / 10000))
 					{
-						AGameBonus shield = player.getBonus(AGameBonus.EnumObjectType.Shield);
+						AGameBonus shield = player.GetBonus(AGameBonus.EnumObjectType.Shield);
 						float damage = shield == null ? 1f : shield.DamageFactor;
 						player.HealthAmount -= damage * mob.Damage;
 						SomebodyHitted(player, null);
@@ -587,6 +582,20 @@ namespace SkyShoot.Service.Session
 		public int PlayersCount()
 		{
 			return _gameObjects.FindAll(o => o.IsPlayer).Count;
+		}
+
+		private Vector2 ComputeMovement(AGameObject mob)
+		{
+			
+			var newCoord = mob.RunVector*mob.Speed*_updateDelay + mob.Coordinates ;
+
+			if (mob.IsPlayer)
+			{
+				newCoord.X = MathHelper.Clamp(newCoord.X, 0, GameLevel.levelHeight);
+				newCoord.Y = MathHelper.Clamp(newCoord.Y, 0, GameLevel.levelWidth);
+			}
+			
+			return newCoord;
 		}
 	}
 }

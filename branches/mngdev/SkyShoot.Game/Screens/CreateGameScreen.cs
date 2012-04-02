@@ -22,9 +22,7 @@ namespace SkyShoot.Game.Screens
 {
 	internal class CreateGameScreen : GameScreen
 	{
-		AudioEngine engine;
-		SoundBank soundBank;
-		WaveBank waveBank;
+		private SoundManager _soundManager;
 
 		private ListControl _maxPlayersList;
 		private ListControl _tileList;
@@ -56,6 +54,7 @@ namespace SkyShoot.Game.Screens
 			CreateControls();
 			InitializeControls();
 
+			_soundManager = new SoundManager();
 			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 		}
 
@@ -185,10 +184,6 @@ namespace SkyShoot.Game.Screens
 
 			ScreenManager.Instance.Controller.AddListener(_createButton, CreateButtonPressed);
 			ScreenManager.Instance.Controller.AddListener(_backButton, BackButtonPressed);
-
-			engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
-			soundBank = new SoundBank(engine, "Content\\Sounds\\Sound Bank.xsb");
-			waveBank = new WaveBank(engine, "Content\\Sounds\\Wave Bank.xwb");
 		}
 
 		public override void LoadContent()
@@ -221,15 +216,13 @@ namespace SkyShoot.Game.Screens
 
 		private void BackButtonPressed(object sender, EventArgs args)
 		{
-			Cue cue = soundBank.GetCue("RICOCHET");
-			cue.Play();
-			ScreenManager.Instance.SetActiveScreen(typeof (MultiplayerScreen)); // = ScreenManager.ScreenEnum.MultiplayerScreen;
+			_soundManager.SoundPlay("RICOCHET");
+			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MultiplayerScreen);
 		}
 
 		private void CreateButtonPressed(object sender, EventArgs args)
 		{
-			Cue cue = soundBank.GetCue("RICOCHET");
-			cue.Play();
+			_soundManager.SoundPlay("RICOCHET");
 
 			GameMode m;
 			TileSet ts;
@@ -278,7 +271,7 @@ namespace SkyShoot.Game.Screens
 			WaitScreen.MaxPlayers = _maxPlayers.Text;
 			WaitScreen.GameId = gameDescription.GameId;
 
-			ScreenManager.Instance.SetActiveScreen(typeof (WaitScreen));
+			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.WaitScreen);
 		}
 
 		public override void Draw(GameTime gameTime)

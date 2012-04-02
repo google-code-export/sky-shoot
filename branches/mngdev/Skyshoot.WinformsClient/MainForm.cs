@@ -267,9 +267,7 @@ namespace SkyShoot.WinFormsClient
 									(m.Speed * (float)((now - _prev).TotalMilliseconds));
 								if (m.IsPlayer)
 								{
-									m.Coordinates = Vector2.Clamp(m.Coordinates,
-																								new Vector2(0, 0),
-																								new Vector2(_level.levelWidth, _level.levelHeight)); /**/
+									m.Coordinates = Vector2.Clamp(m.Coordinates, new Vector2(0, 0), new Vector2(_level.levelWidth, _level.levelHeight)); /**/
 								}
 							}
 						}
@@ -384,7 +382,7 @@ namespace SkyShoot.WinFormsClient
 				{
 					Trace.WriteLine(t);
 				}
-				var gameObject = _objects.Find(o => o!= null && o.Id == gameEvent.Id);
+				var gameObject = _objects.Find(o => o!= null && o.Id == gameEvent.GameObjectId);
 				if (gameObject != null)
 				{
 					gameEvent.UpdateMob(gameObject);

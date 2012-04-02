@@ -15,6 +15,7 @@ using Microsoft.Xna.Framework.Audio;
 using SkyShoot.Game.Controls;
 
 using SkyShoot.Game.Client.View;
+using SkyShoot.Game.Client.Game;
 
 namespace SkyShoot.Game.Screens
 {
@@ -40,10 +41,7 @@ namespace SkyShoot.Game.Screens
 		private ButtonControl _downVolume;
 		private LabelControl _volumeValueLabel;
 
-		AudioEngine engine;
-		SoundBank soundBank;
-		WaveBank waveBank;
-		AudioCategory musicCategory;
+		private SoundManager _soundManager;
 		
 		private readonly ContentManager _content;
 
@@ -196,10 +194,7 @@ namespace SkyShoot.Game.Screens
 			_upVolume.Pressed += UpButtonPressed;
 			_downVolume.Pressed += DownButtonPressed;
 
-			engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
-			soundBank = new SoundBank(engine, "Content\\Sounds\\Sound Bank.xsb");
-			waveBank = new WaveBank(engine, "Content\\Sounds\\Wave Bank.xwb");
-			musicCategory = engine.GetCategory("Music");
+			_soundManager = new SoundManager();
 
 			ScreenManager.Instance.Controller.AddListener(_backButton, BackButtonPressed);
 			ScreenManager.Instance.Controller.AddListener(_upVolume, UpButtonPressed);
@@ -241,8 +236,7 @@ namespace SkyShoot.Game.Screens
 
 		private void ArrowButtonPressed(object sender, EventArgs e)
 		{
-			Cue cue = soundBank.GetCue("RICOCHET");
-			cue.Play();
+			_soundManager.SoundPlay("RICOCHET");
 
 			Curs = 1;
 			Settings.Default.Cursor = Curs;
@@ -251,8 +245,7 @@ namespace SkyShoot.Game.Screens
 
 		private void PlusButtonPressed(object sender, EventArgs e)
 		{
-			Cue cue = soundBank.GetCue("RICOCHET");
-			cue.Play();
+			_soundManager.SoundPlay("RICOCHET");
 
 			Curs = 2;
 			Settings.Default.Cursor = Curs;
@@ -261,8 +254,7 @@ namespace SkyShoot.Game.Screens
 
 		private void CrossButtonPressed(object sender, EventArgs e)
 		{
-			Cue cue = soundBank.GetCue("RICOCHET");
-			cue.Play();
+			_soundManager.SoundPlay("RICOCHET");
 
 			Curs = 3;
 			Settings.Default.Cursor = Curs;
@@ -271,8 +263,7 @@ namespace SkyShoot.Game.Screens
 
 		private void TargetButtonPressed(object sender, EventArgs e)
 		{
-			Cue cue = soundBank.GetCue("RICOCHET");
-			cue.Play();
+			_soundManager.SoundPlay("RICOCHET");
 
 			Curs = 4;
 			Settings.Default.Cursor = Curs;
@@ -287,41 +278,37 @@ namespace SkyShoot.Game.Screens
 
 		private void BackButtonPressed(object sender, EventArgs e)
 		{
-			Cue cue = soundBank.GetCue("RICOCHET");
-			cue.Play();
+			_soundManager.SoundPlay("RICOCHET");
 
-			if (Game.Client.Game.GameController.Instance.IsGameStarted)
-				ScreenManager.Instance.SetActiveScreen(typeof(GameplayScreen));
+			if (Client.Game.GameController.Instance.IsGameStarted)
+				ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.GameplayScreen);
 			else
-				ScreenManager.Instance.SetActiveScreen(typeof(MainMenuScreen));
+				ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MainMenuScreen);
 		}
 
 		private void UpButtonPressed(object sender, EventArgs e)
 		{
-			Cue cue = soundBank.GetCue("RICOCHET");
-			cue.Play();
+			_soundManager.SoundPlay("RICOCHET");
 
 			Settings.Default.Volume = MathHelper.Clamp(Settings.Default.Volume + 0.05f, 0.0f, 1.0f);
 			Settings.Default.Save();
-			musicCategory.SetVolume(Settings.Default.Volume);
+			//musicCategory.SetVolume(Settings.Default.Volume);
 			_volumeValueLabel.Text = (100*Math.Round(Settings.Default.Volume, 1)).ToString()+"%";
 		}
 
 		private void DownButtonPressed(object sender, EventArgs e)
 		{
-			Cue cue = soundBank.GetCue("RICOCHET");
-			cue.Play();
+			_soundManager.SoundPlay("RICOCHET");
 
 			Settings.Default.Volume = MathHelper.Clamp(Settings.Default.Volume - 0.05f, 0.0f, 1.0f);
 			Settings.Default.Save();
-			musicCategory.SetVolume(Settings.Default.Volume);
+			//musicCategory.SetVolume(Settings.Default.Volume);
 			_volumeValueLabel.Text = (100*Math.Round(Settings.Default.Volume, 1)).ToString()+"%";
 		}
 
 		private void FullScreenSelected(object sender, EventArgs e)
 		{
-			Cue cue = soundBank.GetCue("RICOCHET");
-			cue.Play();
+			_soundManager.SoundPlay("RICOCHET");
 
 			Settings.Default.FullScreenSelected = _fullscreenButton.Selected;
 			Settings.Default.Save();
@@ -329,7 +316,6 @@ namespace SkyShoot.Game.Screens
 
 		public override void Update(GameTime gameTime)
 		{
-			engine.Update();
 			base.Update(gameTime);
 		}
 

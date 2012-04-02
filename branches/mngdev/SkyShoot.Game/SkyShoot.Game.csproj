@@ -123,17 +123,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Client\Bonuses\ABonus.cs" />
+    <Compile Include="Client\GameObjects\ABonus.cs" />
+    <Compile Include="Client\GameObjects\GameObject.cs" />
+    <Compile Include="Client\GameObjects\Mob.cs" />
+    <Compile Include="Client\GameObjects\Projectile.cs" />
     <Compile Include="Client\Game\GameController.cs" />
     <Compile Include="Client\Game\GameFactory.cs" />
     <Compile Include="Client\Game\GameLevel.cs" />
     <Compile Include="Client\Game\GameModel.cs" />
-    <Compile Include="Client\Players\Mob.cs" />
+    <Compile Include="Client\Game\SoundManager.cs" />
     <Compile Include="Client\View\Animation2D.cs" />
     <Compile Include="Client\View\Camera2D.cs" />
     <Compile Include="Client\View\IDrawable.cs" />
     <Compile Include="Client\View\Textures.cs" />
-    <Compile Include="Client\Weapon\Projectile.cs" />
     <Compile Include="Controls\Gamepad.cs" />
     <Compile Include="Controls\Controller.cs" />
     <Compile Include="Controls\InputControl.cs" />

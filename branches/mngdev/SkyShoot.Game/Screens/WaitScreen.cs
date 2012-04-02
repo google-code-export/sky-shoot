@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Nuclex.UserInterface;
 
 using Nuclex.UserInterface.Controls.Desktop;
-using SkyShoot.Contracts.Mobs;
+
 using SkyShoot.Contracts.Session;
 
 using SkyShoot.Game.Controls;
@@ -22,9 +22,7 @@ namespace SkyShoot.Game.Screens
 {
 	internal class WaitScreen : GameScreen
 	{
-		AudioEngine engine;
-		SoundBank soundBank;
-		WaveBank waveBank;
+		private SoundManager _soundManager;
 
 		public static String Tile { get; set; }
 
@@ -55,6 +53,7 @@ namespace SkyShoot.Game.Screens
 			CreateControls();
 			InititalizeControls();
 
+			_soundManager = new SoundManager();
 			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 			_updateCount = 0;
 		}
@@ -84,10 +83,6 @@ namespace SkyShoot.Game.Screens
 			Desktop.Children.Add(_leaveButton);
 
 			ScreenManager.Instance.Controller.AddListener(_leaveButton, LeaveButtonPressed);
-
-			engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
-			soundBank = new SoundBank(engine, "Content\\Sounds\\Sound Bank.xsb");
-			waveBank = new WaveBank(engine, "Content\\Sounds\\Wave Bank.xwb");
 		}
 
 		private int _updateCount ;
@@ -100,12 +95,12 @@ namespace SkyShoot.Game.Screens
 			var level = GameController.Instance.GameStart(GameId);
 			if (level != null)
 			{
-				// игра началась
-				GameController.Instance.GameStart(new AGameObject[] {}, level);
+				// game started
+				GameController.Instance.GameStart(level);
 			}
 			else
 			{
-				// игра еще не началась, обновляем список игроков
+				// game has not started, update player list
 				ChangePlayerList(GameController.Instance.PlayerListUpdate());
 			}
 		}
@@ -148,11 +143,10 @@ namespace SkyShoot.Game.Screens
 
 		private void LeaveButtonPressed(object sender, EventArgs args)
 		{
-			Cue cue = soundBank.GetCue("RICOCHET");
-			cue.Play();
+			_soundManager.SoundPlay("RICOCHET");
 
 			GameController.Instance.LeaveGame();
-			ScreenManager.Instance.SetActiveScreen(typeof (MultiplayerScreen));
+			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MultiplayerScreen);
 		}
 
 		public void ChangePlayerList(String[] names)

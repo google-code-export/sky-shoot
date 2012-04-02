@@ -13,13 +13,19 @@ namespace SkyShoot.Service.Bonus
 
 		public AGameBonus CreateBonus(Vector2 coordinates)
 		{
-			if (_random.Next(2) == 0)
+			// TODO: special nice method for choosing bonus type 
+			int r = _random.Next(3);
+			if (r == 0)
 			{
 				return new Shield(coordinates);
 			}
-			else
+			if (r == 1)
 			{
 				return new DoubleDamage(coordinates);
+			}
+			else
+			{
+				return new Remedy(coordinates);
 			}
 		}
 	}

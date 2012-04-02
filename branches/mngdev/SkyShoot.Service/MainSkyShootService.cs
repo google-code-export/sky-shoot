@@ -16,17 +16,16 @@ using SkyShoot.Service.Session;
 
 namespace SkyShoot.Service
 {
-
 	[ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant,
 			InstanceContextMode = InstanceContextMode.PerSession)]
 	public class MainSkyShootService : AGameObject, ISkyShootService//, ISkyShootCallback
 	{
-		public static int globalID = 0;
-		public int localID;
+		public static int GlobalID = 0;
+		public int LocalID;
 		//private ISkyShootCallback _callback;
 		public string Name;
 		public Queue<AGameEvent> NewEvents;
-		public List<AGameBonus> bonuses;
+		public List<AGameBonus> Bonuses;
 
 		//private Account.AccountManager _accountManager = new Account.AccountManager();
 		private readonly SessionManager _sessionManager = SessionManager.Instance;
@@ -37,20 +36,27 @@ namespace SkyShoot.Service
 		{
 			ObjectType = EnumObjectType.Player;
 			NewEvents = new Queue<AGameEvent>();
-			localID = globalID;
-			globalID ++;
- 			bonuses = new List<AGameBonus>();
+			LocalID = GlobalID;
+			GlobalID ++;
+ 			Bonuses = new List<AGameBonus>();
 		}
 
 		public void AddBonus(AGameBonus bonus)
 		{
-			bonuses.RemoveAll(b => b.ObjectType == bonus.ObjectType);
-			bonuses.Add(bonus);
+			if (bonus.Is(EnumObjectType.Remedy))
+			{
+				var health = HealthAmount;
+				var potentialHealth = health + health * bonus.DamageFactor;
+				HealthAmount = potentialHealth > MaxHealthAmount ? MaxHealthAmount : potentialHealth;
+				return;
+			}
+			Bonuses.RemoveAll(b => b.ObjectType == bonus.ObjectType);
+			Bonuses.Add(bonus);
 		}
 
-		public AGameBonus getBonus(EnumObjectType bonusType)
+		public AGameBonus GetBonus(EnumObjectType bonusType)
 		{
-			foreach (AGameBonus bonus in this.bonuses)
+			foreach (AGameBonus bonus in Bonuses)
 			{
 				if (bonus.ObjectType.Equals(bonusType))
 				{
@@ -60,7 +66,7 @@ namespace SkyShoot.Service
 			return null;
 		}
 
-		public void Disconnect() { this.LeaveGame(); }
+		public void Disconnect() { LeaveGame(); }
 
 		public bool Register(string username, string password)
 		{
@@ -123,17 +129,17 @@ namespace SkyShoot.Service
 				bool result = _sessionManager.JoinGame(game, this);
 				if (result)
 				{
-					Trace.WriteLine(Name + "has joined the game ID=" + game.GameId);
+					Trace.WriteLine(Name + " has joined the game ID = " + game.GameId);
 				}
 				else
 				{
-					Trace.WriteLine(Name + "has not joined the game ID=" + game.GameId);
+					Trace.WriteLine(Name + " has not joined the game ID = " + game.GameId);
 				}
 				return result;
 			}
 			catch(Exception e)
 			{
-				Trace.Fail(Name + "has not joined the game." + e.Message);
+				Trace.Fail(Name + " has not joined the game. " + e.Message);
 				return false;
 			}
 		}
@@ -193,7 +199,7 @@ namespace SkyShoot.Service
 
 		public GameLevel GameStart(int gameId)
 		{
-			Trace.WriteLine("GameStarted");
+			// Trace.WriteLine("GameStarted");
 			return _sessionManager.GameStarted(gameId);
 		}
 
@@ -237,13 +243,13 @@ namespace SkyShoot.Service
 				obj.IsActive = false;
 				var bonus = new AGameBonus(obj);
 				//bonus.Copy(obj);
-				bonuses.Add(bonus);
+				Bonuses.Add(bonus);
 				bonus.taken(time);
 			}
 		}
 		public void DeleteExpiredBonuses(long time)
 		{
-			this.bonuses.RemoveAll(b => b.IsExpired(time));
+			Bonuses.RemoveAll(b => b.IsExpired(time));
 		}
 
 		public override void Think(List<AGameObject> players, long time)

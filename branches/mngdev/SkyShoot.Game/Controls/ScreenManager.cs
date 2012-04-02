@@ -17,6 +17,21 @@ namespace SkyShoot.Game.Controls
 {
 	public class ScreenManager : DrawableGameComponent
 	{
+		public enum ScreenEnum
+		{
+			CreateGameScreen,
+			GameMenuScreen,
+			GameplayScreen,
+			LoadingScreen,
+			LoginScreen,
+			MainMenuScreen,
+			MessageBoxScreen,
+			MultiplayerScreen,
+			NewAccountScreen,
+			OptionsMenuScreen,
+			WaitScreen
+		}
+
 		private readonly GuiManager _gui;
 		private readonly InputManager _inputManager;
 
@@ -54,14 +69,13 @@ namespace SkyShoot.Game.Controls
 
 		private GameScreen _activeScreen;
 
-		private readonly Dictionary<Type, GameScreen> _screens = new Dictionary<Type, GameScreen>();
+		private readonly Dictionary<ScreenEnum, GameScreen> _screens = new Dictionary<ScreenEnum, GameScreen>();
 
-		public void RegisterScreen(GameScreen gameScreen)
+		public void RegisterScreen(ScreenEnum screenName, GameScreen gameScreen)
 		{
-			if (!_screens.ContainsKey(gameScreen.GetType()))
+			if (!_screens.ContainsKey(screenName))
 			{
-				Type gameScreenType = gameScreen.GetType();
-				_screens.Add(gameScreenType, gameScreen);
+				_screens.Add(screenName, gameScreen);
 			}
 			else
 			{
@@ -69,11 +83,11 @@ namespace SkyShoot.Game.Controls
 			}
 		}
 
-		public void SetActiveScreen(Type gameScreenType)
+		public void SetActiveScreen(ScreenEnum screenName)
 		{
-			if (_screens.ContainsKey(gameScreenType))
+			if (_screens.ContainsKey(screenName))
 			{
-				_activeScreen = _screens[gameScreenType];
+				_activeScreen = _screens[screenName];
 				_gui.Screen = _activeScreen;
 				_activeScreen.LoadContent();
 			}
@@ -125,17 +139,17 @@ namespace SkyShoot.Game.Controls
 			_spriteBatch = new SpriteBatch(GraphicsDevice);
 			_font = content.Load<SpriteFont>("menufont");
 
-			RegisterScreen(new LoginScreen());
-			RegisterScreen(new MessageBox());
-			RegisterScreen(new MainMenuScreen());
-			RegisterScreen(new OptionsMenuScreen());
-			RegisterScreen(new NewAccountScreen());
-			RegisterScreen(new MultiplayerScreen());
-			RegisterScreen(new CreateGameScreen());
-			RegisterScreen(new WaitScreen());
-			RegisterScreen(new LoadingScreen());
-			RegisterScreen(new GameplayScreen());
-			RegisterScreen(new GameMenuScreen());
+			RegisterScreen(ScreenEnum.LoginScreen,  new LoginScreen());
+			RegisterScreen(ScreenEnum.MessageBoxScreen,  new MessageBox());
+			RegisterScreen(ScreenEnum.MainMenuScreen, new MainMenuScreen());
+			RegisterScreen(ScreenEnum.OptionsMenuScreen, new OptionsMenuScreen());
+			RegisterScreen(ScreenEnum.NewAccountScreen, new NewAccountScreen());
+			RegisterScreen(ScreenEnum.MultiplayerScreen, new MultiplayerScreen());
+			RegisterScreen(ScreenEnum.CreateGameScreen, new CreateGameScreen());
+			RegisterScreen(ScreenEnum.WaitScreen, new WaitScreen());
+			RegisterScreen(ScreenEnum.LoadingScreen, new LoadingScreen());
+			RegisterScreen(ScreenEnum.GameplayScreen, new GameplayScreen());
+			RegisterScreen(ScreenEnum.GameMenuScreen, new GameMenuScreen());
 		}
 
 		protected override void UnloadContent()

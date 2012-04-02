@@ -26,7 +26,7 @@ namespace SkyShoot.Contracts.Weapon
 		{
 			if (shotTime - ReloadSpeed > _reload)
 			{
-				System.Diagnostics.Trace.WriteLine("Player is hitted " + shotTime + " : " + ReloadSpeed);
+				// System.Diagnostics.Trace.WriteLine("Player is hitted " + shotTime + " : " + _reloadSpeed);
 				_reload = shotTime;
 				return true;
 			}

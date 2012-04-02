@@ -5,11 +5,11 @@ using System.Diagnostics;
 using Microsoft.Xna.Framework;
 
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Audio;
 
 using SkyShoot.Game.Client.View;
 using SkyShoot.Game.Controls;
 using SkyShoot.Game.Screens;
+using SkyShoot.Game.Client.Game;
 
 namespace SkyShoot.Game
 {
@@ -18,9 +18,8 @@ namespace SkyShoot.Game
 		private ScreenManager _screenManager;
 		private SpriteBatch _spriteBatch;
 		private readonly GraphicsDeviceManager _graphics;
-		AudioEngine engine;
-		SoundBank soundBank;
-		WaveBank waveBank;
+		private SoundManager _soundManager;
+
 
 		public SkyShootGame()
 		{
@@ -40,6 +39,7 @@ namespace SkyShoot.Game
 					break;
 			}
 			IsMouseVisible = false;
+
 		}
 
 		protected override void Initialize()
@@ -49,18 +49,14 @@ namespace SkyShoot.Game
 			ScreenManager.Init(this);
 			_screenManager = ScreenManager.Instance;
 			Components.Add(_screenManager);
-			engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
-			soundBank = new SoundBank(engine, "Content\\Sounds\\Sound Bank.xsb");
-			waveBank = new WaveBank(engine, "Content\\Sounds\\Wave Bank.xwb");
 
-			Cue cue = soundBank.GetCue("STARWARS");
-			cue.Play();
+			_soundManager = new SoundManager();
+
+			_soundManager.SoundPlay("STARWARS");
 
 			base.Initialize();
 
-			ScreenManager.Instance.SetActiveScreen(typeof(LoginScreen));// = ScreenManager.ScreenEnum.LoginScreen;
-			//ScreenManager.Instance.SetActiveScreen(typeof(OptionsMenuScreen));
-			//ScreenManager.Instance.SetActiveScreen(typeof(MainMenuScreen));
+			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.LoginScreen);
 		}
 
 		protected override void LoadContent()

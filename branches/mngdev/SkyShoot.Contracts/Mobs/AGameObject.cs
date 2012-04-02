@@ -55,6 +55,8 @@ namespace SkyShoot.Contracts.Mobs
 			[EnumMember]
 			Shield = Bonus | 0x04000,
 			[EnumMember]
+			Remedy = Bonus | 0x08000,
+			[EnumMember]
 			Wall = 0x0100000,
 		}
 

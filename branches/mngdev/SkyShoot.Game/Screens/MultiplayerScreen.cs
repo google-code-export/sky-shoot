@@ -24,9 +24,7 @@ namespace SkyShoot.Game.Screens
 {
 	internal class MultiplayerScreen : GameScreen
 	{
-		AudioEngine engine;
-		SoundBank soundBank;
-		WaveBank waveBank;
+		private SoundManager _soundManager;
 
 		private LabelControl _mapLabel;
 
@@ -55,6 +53,7 @@ namespace SkyShoot.Game.Screens
 			CreateControls();
 			InititalizeControls();
 
+			_soundManager = new SoundManager();
 			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 		}
 
@@ -127,10 +126,6 @@ namespace SkyShoot.Game.Screens
 			ScreenManager.Instance.Controller.AddListener(_joinGameButton, JoinGameButtonPressed);
 			ScreenManager.Instance.Controller.AddListener(_createGameButton, CreateGameButtonPressed);
 			ScreenManager.Instance.Controller.AddListener(_refreshButton, RefreshButtonPressed);
-
-			engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
-			soundBank = new SoundBank(engine, "Content\\Sounds\\Sound Bank.xsb");
-			waveBank = new WaveBank(engine, "Content\\Sounds\\Wave Bank.xwb");
 		}
 
 		public override void LoadContent()
@@ -160,16 +155,14 @@ namespace SkyShoot.Game.Screens
 
 		private void BackButtonPressed(object sender, EventArgs args)
 		{
-			Cue cue = soundBank.GetCue("RICOCHET");
-			cue.Play();
+			_soundManager.SoundPlay("RICOCHET");			
 
-			ScreenManager.Instance.SetActiveScreen(typeof (MainMenuScreen));
+			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MainMenuScreen);
 		}
 
 		private void JoinGameButtonPressed(object sender, EventArgs args)
 		{
-			Cue cue = soundBank.GetCue("RICOCHET");
-			cue.Play();
+			_soundManager.SoundPlay("RICOCHET");
 
 			_tempGameList = GameController.Instance.GetGameList();
 
@@ -189,23 +182,21 @@ namespace SkyShoot.Game.Screens
 					WaitScreen.MaxPlayers = _tempGameList[_gameList.SelectedItems[0]].MaximumPlayersAllowed + "";
 					WaitScreen.GameId = _tempGameList[_gameList.SelectedItems[0]].GameId;
 
-					ScreenManager.Instance.SetActiveScreen(typeof (WaitScreen));
+					ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.WaitScreen);
 				}
 			}
 		}
 
 		private void CreateGameButtonPressed(object sender, EventArgs args)
 		{
-			Cue cue = soundBank.GetCue("RICOCHET");
-			cue.Play();
+			_soundManager.SoundPlay("RICOCHET");
 
-			ScreenManager.Instance.SetActiveScreen(typeof (CreateGameScreen));
+			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.CreateGameScreen);
 		}
 
 		private void RefreshButtonPressed(object sender, EventArgs args)
 		{
-			Cue cue = soundBank.GetCue("RICOCHET");
-			cue.Play();
+			_soundManager.SoundPlay("RICOCHET");
 
 			_gameList.Items.Clear();
 			_tempGameList = GameController.Instance.GetGameList();

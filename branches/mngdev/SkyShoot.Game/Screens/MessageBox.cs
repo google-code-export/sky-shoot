@@ -11,14 +11,13 @@ using Nuclex.UserInterface.Controls.Desktop;
 
 using SkyShoot.Game.Controls;
 using Microsoft.Xna.Framework.Audio;
+using SkyShoot.Game.Client.Game;
 
 namespace SkyShoot.Game.Screens
 {
 	internal class MessageBox : GameScreen
 	{
-		AudioEngine engine;
-		SoundBank soundBank;
-		WaveBank waveBank;
+		private SoundManager _soundManager;
 
 		private Texture2D _texture;
 
@@ -26,7 +25,7 @@ namespace SkyShoot.Game.Screens
 
 		private ButtonControl _okButton;
 
-		public Type Next { get; set; }
+		public ScreenManager.ScreenEnum Next { get; set; }
 
 		public static String Message { get; set; }
 
@@ -40,6 +39,7 @@ namespace SkyShoot.Game.Screens
 			CreateControls();
 			InitializeControls();
 
+			_soundManager = new SoundManager();
 			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 		}
 
@@ -57,10 +57,6 @@ namespace SkyShoot.Game.Screens
 			Desktop.Children.Add(_okButton);
 
 			ScreenManager.Instance.Controller.AddListener(_okButton, OkButtonPressed);
-
-			engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
-			soundBank = new SoundBank(engine, "Content\\Sounds\\Sound Bank.xsb");
-			waveBank = new WaveBank(engine, "Content\\Sounds\\Wave Bank.xwb");
 		}
 
 		public override void LoadContent()
@@ -75,8 +71,7 @@ namespace SkyShoot.Game.Screens
 
 		public void OkButtonPressed(object sender, EventArgs e)
 		{
-			Cue cue = soundBank.GetCue("RICOCHET");
-			cue.Play();
+			_soundManager.SoundPlay("RICOCHET");
 
 			ScreenManager.Instance.SetActiveScreen(Next); // = Next;
 		}

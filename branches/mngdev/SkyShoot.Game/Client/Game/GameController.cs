@@ -36,7 +36,7 @@ namespace SkyShoot.Game.Client.Game
 
 			byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(input));
 
-			StringBuilder sBuilder = new StringBuilder();
+			var sBuilder = new StringBuilder();
 
 			for (int i = 0; i < data.Length; i++)
 			{
@@ -47,12 +47,11 @@ namespace SkyShoot.Game.Client.Game
 		}
 	}
 
-	public sealed class GameController :// ISkyShootCallback, 
-		ISkyShootService
+	public sealed class GameController : ISkyShootService
 	{
-		AudioEngine engine;
-		SoundBank soundBank;
-		WaveBank waveBank;
+		private AudioEngine _engine;
+		private SoundBank _soundBank;
+		private WaveBank _waveBank;
 
 		public static Guid MyId { get; private set; }
 
@@ -64,13 +63,9 @@ namespace SkyShoot.Game.Client.Game
 
 		public static GameController Instance
 		{
-			get
-			{
-				if (_localInstance == null)
-					_localInstance = new GameController();
-				return _localInstance;
-			}
+			get { return _localInstance ?? (_localInstance = new GameController()); }
 		}
+
 		public GameModel GameModel { get; private set; }
 
 		private GameController()
@@ -78,15 +73,15 @@ namespace SkyShoot.Game.Client.Game
 			InitConnection();
 		}
 
-		#region бывший callbacks
-
-		public void GameStart(AGameObject[] mobs, Contracts.Session.GameLevel arena)
+		public void GameStart(Contracts.Session.GameLevel arena)
 		{
-			ScreenManager.Instance.SetActiveScreen(typeof (GameplayScreen)); // = ScreenManager.ScreenEnum.GameplayScreen;
+			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.GameplayScreen);
 
 			GameModel = new GameModel(GameFactory.CreateClientGameLevel(arena));
 
-			foreach (AGameObject mob in mobs)
+			var gameObjects = SynchroFrame();
+
+			foreach (AGameObject mob in gameObjects)
 			{
 				var clientMob = GameFactory.CreateClientMob(mob);
 				GameModel.AddMob(clientMob);
@@ -95,6 +90,8 @@ namespace SkyShoot.Game.Client.Game
 			// GameModel initialized, set boolean flag  
 			IsGameStarted = true;
 		}
+
+		#region бывший callbacks
 
 		public void SpawnMob(AGameObject mob)
 		{
@@ -111,22 +108,22 @@ namespace SkyShoot.Game.Client.Game
 
 		public void MobDead(AGameObject mob)
 		{
-			var random = new Random();
-
-			engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
-			soundBank = new SoundBank(engine, "Content\\Sounds\\Sound Bank.xsb");
-			waveBank = new WaveBank(engine, "Content\\Sounds\\Wave Bank.xwb");
+			_engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
+			_soundBank = new SoundBank(_engine, "Content\\Sounds\\Sound Bank.xsb");
+			_waveBank = new WaveBank(_engine, "Content\\Sounds\\Wave Bank.xwb");
 
 			//Cue cue = soundBank.GetCue("angry01");
-			Cue cueDeath = soundBank.GetCue("guts04a");
+			Cue cueDeath = _soundBank.GetCue("guts04a");
 			GameModel.RemoveMob(mob.Id);
-			GameModel.GameLevel.AddTexture(mob.IsPlayer ? Textures.DeadPlayerTexture : Textures.DeadSpiderTexture,
-			                               TypeConverter.XnaLite2Xna(mob.Coordinates));
+			GameModel.GameLevel.AddTexture(mob.Is(AGameObject.EnumObjectType.Player)
+			                               	? Textures.DeadPlayerTexture
+			                               	: Textures.DeadSpiderTexture, TypeConverter.XnaLite2Xna(mob.Coordinates));
 			cueDeath.Play();
 		}
 
 		public void MobMoved(AGameObject mob, XNA.Framework.Vector2 direction)
 		{
+			// Trace.WriteLine("MobMoved!");
 			GameModel.GetMob(mob.Id).RunVector = direction; // TypeConverter.Vector2_m2s(direction);
 		}
 
@@ -149,26 +146,12 @@ namespace SkyShoot.Game.Client.Game
 		public void GameOver()
 		{
 			GameModel = null;
-			ScreenManager.Instance.SetActiveScreen(typeof (MainMenuScreen));
+			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MainMenuScreen);
 			IsGameStarted = false;
 		}
 
 		public void PlayerLeft(AGameObject mob)
 		{
-			//TODO! issue 26? 
-
-			/*for (int i = 0; i < ScreenManager.ScreenManager.Instance.GetScreens().Length; i++)
-			{
-				if (ScreenManager.ScreenManager.Instance.GetScreens()[i] is WaitScreen)
-				{
-					if (ScreenManager.ScreenManager.Instance.GetScreens()[i].IsActive)
-					{
-						var waitScreen = (WaitScreen)ScreenManager.ScreenManager.Instance.GetScreens()[i];
-						waitScreen.RemovePlayer(mob.IsPlayer);
-					}
-				}	
-			}*/
-
 			if (IsGameStarted)
 				GameModel.RemoveMob(mob.Id);
 		}
@@ -183,51 +166,6 @@ namespace SkyShoot.Game.Client.Game
 			foreach (var aProjectile in projectiles)
 			{
 				GameModel.AddProjectile(GameFactory.CreateClientProjectile(aProjectile));
-			}
-		}
-
-		public void SynchroFrame(AGameObject[] mobs)
-		{
-			if (!IsGameStarted)
-				return;
-
-			foreach (var mob in mobs)
-			{
-				AGameObject clientMob;
-				try
-				{
-					clientMob = GameModel.GetMob(mob.Id);
-				}
-				catch
-				{
-					continue;
-				}
-				if (clientMob == null)
-					continue;
-
-				clientMob.Coordinates = mob.Coordinates;
-				clientMob.HealthAmount = mob.HealthAmount;
-				clientMob.RunVector = mob.RunVector;
-				clientMob.ShootVector = mob.ShootVector;
-				clientMob.Speed = mob.Speed;
-				clientMob.State = mob.State;
-			}
-		}
-
-		public void PlayerListChanged(String[] names)
-		{
-			//TODO! issue 26?
-			// for (int i = 0; i < ScreenManager.Instance.GetScreens().Length; i++)
-			{
-				// if (ScreenManager.Instance.GetScreens()[i] is WaitScreen)
-				{
-					//todo!
-					//if (ScreenManager.ScreenManager.Instance.GetScreens()[i].IsActive)
-					//{
-					// var screen = (WaitScreen) ScreenManager.Instance.GetScreens()[i];
-					// screen.ChangePlayerList(names);
-					//}
-				}
 			}
 		}
 
@@ -277,12 +215,15 @@ namespace SkyShoot.Game.Client.Game
 				var channelFactory = new ChannelFactory<ISkyShootService>("SkyShootEndpoint");
 				_service = channelFactory.CreateChannel();
 			}
-			catch (Exception exc)
+			catch (Exception e)
 			{
-				Trace.WriteLine("Can't connect to SkyShootService");
-				Trace.WriteLine(exc);
+				FatalError(e);
+				// Trace.WriteLine("Can't connect to SkyShootService");
+				// Trace.WriteLine(e);
 				// !! @todo catch this!
-				throw;
+				MessageBox.Message = "Connection error!";
+				ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MessageBoxScreen);
+				// throw;
 			}
 		}
 
@@ -290,11 +231,8 @@ namespace SkyShoot.Game.Client.Game
 		{
 			Trace.WriteLine(e);
 
-			// back to multiplayer screen
-			ScreenManager.Instance.SetActiveScreen(typeof (LoginScreen));
-
 			MessageBox.Message = "Connection error!";
-			ScreenManager.Instance.SetActiveScreen(typeof (MessageBox));
+			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MessageBoxScreen);
 		}
 
 		public bool Register(string username, string password)
@@ -328,7 +266,7 @@ namespace SkyShoot.Game.Client.Game
 			else
 			{
 				MessageBox.Message = "Connection error!";
-				ScreenManager.Instance.SetActiveScreen(typeof (MessageBox));
+				ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MessageBoxScreen);
 			}
 
 			return login;
@@ -414,7 +352,15 @@ namespace SkyShoot.Game.Client.Game
 
 		public AGameEvent[] GetEvents()
 		{
-			throw new NotImplementedException();
+			try
+			{
+				return _service.GetEvents();
+			}
+			catch (Exception e)
+			{
+				FatalError(e);
+				return null;
+			}
 		}
 
 		public void Shoot(Vector2 direction)
@@ -466,7 +412,7 @@ namespace SkyShoot.Game.Client.Game
 			}
 			catch (Exception e)
 			{
-				FatalError(e);				
+				FatalError(e);
 				throw;
 			}
 		}
@@ -480,7 +426,7 @@ namespace SkyShoot.Game.Client.Game
 			catch (Exception exc)
 			{
 				Trace.WriteLine(exc);
-				return new AGameObject[]{};
+				return new AGameObject[] {};
 			}
 		}
 
@@ -493,7 +439,7 @@ namespace SkyShoot.Game.Client.Game
 			catch (Exception exc)
 			{
 				Trace.WriteLine(exc);
-				return new string[]{};
+				return new string[] {};
 			}
 		}
 

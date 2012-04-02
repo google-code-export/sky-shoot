@@ -1,13 +1,14 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Collections.Concurrent;
 
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
+using Microsoft.Xna.Framework.Graphics;
+using SkyShoot.Contracts.GameEvents;
+using SkyShoot.Game.Client.GameObjects;
 using SkyShoot.Game.Client.View;
-using SkyShoot.Game.Client.Weapon;
-using SkyShoot.Game.Client.Players;
 
 namespace SkyShoot.Game.Client.Game
 {
@@ -75,36 +76,33 @@ namespace SkyShoot.Game.Client.Game
 				Trace.WriteLine("Projectile with such ID does not exist", "GameModel/RemoveProjectile");
 		}
 
-		private int _updateCouter = 0;
-		public void Update(GameTime gameTime)
+		private void ApplyEvents(IEnumerable<AGameEvent> gameEvents)
 		{
-			var sw = new Stopwatch();
-			sw.Start();
-			if (_updateCouter++ % 30 == 0)
+			foreach (var gameEvent in gameEvents)
 			{
-				var newMobs = GameController.Instance.SynchroFrame();
-				if (newMobs == null)
+				// todo getGameObject
+				var gameObject = GetMob(gameEvent.GameObjectId);
+				if (gameObject != null)
+					gameEvent.UpdateMob(gameObject);
+				else
 				{
-					GameController.Instance.GameOver();
-					return;
-				}
-				Mobs.Clear();
-				foreach (var aGameObject in newMobs)
-				{
-					Mobs.TryAdd(aGameObject.Id, GameFactory.CreateClientMob(aGameObject));
+					// todo rewrite!
+					Mob mob = new Mob(Textures.SpiderAnimation);
+					gameEvent.UpdateMob(mob);
+					AddMob(mob);
 				}
 			}
+		}
+
+		private int _updateCouter = 0;
+
+		public void Update(GameTime gameTime)
+		{
 			// update mobs
-			sw.Stop();
-			Trace.WriteLine("SW:sync: "+sw.ElapsedMilliseconds);
-			sw.Restart();
 			foreach (var aMob in Mobs)
 			{
 				aMob.Value.Update(gameTime);
 			}
-			sw.Stop();
-			Trace.WriteLine("SW:mobup: " + sw.ElapsedMilliseconds);
-			sw.Restart();
 
 			// update projectiles
 			foreach (var projectile in Projectiles)
@@ -114,31 +112,62 @@ namespace SkyShoot.Game.Client.Game
 				else
 					RemoveProjectile(projectile.Value.Id);
 			}
-			sw.Stop();
-			Trace.WriteLine("SW:prjup: " + sw.ElapsedMilliseconds);
+
+			ApplyEvents(GameController.Instance.GetEvents());
+
+			// var sw = new Stopwatch();
+			// sw.Start();
+			/*if (_updateCouter++ % 30 == 0)
+			{
+				var serverGameObjects = GameController.Instance.SynchroFrame();
+				if (serverGameObjects == null)
+				{
+					GameController.Instance.GameOver();
+					return;
+				}
+
+				foreach (var serverGameObject in serverGameObjects)
+				{
+					AGameObject clientMob = GetMob(serverGameObject.Id);
+					if (clientMob == null)
+						Mobs.TryAdd(serverGameObject.Id, GameFactory.CreateClientMob(serverGameObject));
+					else
+						clientMob.Copy(serverGameObject);
+				}
+			}*/
+			// sw.Stop();
+			// Trace.WriteLine("SW:sync: "+sw.ElapsedMilliseconds);
+			// sw.Restart();
+
+			// sw.Stop();
+			// Trace.WriteLine("SW:mobup: " + sw.ElapsedMilliseconds);
+			// sw.Restart();
+
+			// sw.Stop();
+			// Trace.WriteLine("SW:prjup: " + sw.ElapsedMilliseconds);
 		}
 
 		public void Draw(SpriteBatch spriteBatch)
 		{
-			Vector2 myPosition;
-
 			var me = GetMob(GameController.MyId);
+
 			if (me == null)
 			{
+				// Trace.Write("DRAW WARNING");
 				return;
 			}
-			myPosition = me.CoordinatesM;
 
+			Vector2 myPosition = me.CoordinatesM;
 
 			Camera2D.Position = myPosition;
 
 			spriteBatch.Begin(SpriteSortMode.Immediate,
-												BlendState.AlphaBlend,
-												null,
-												null,
-												null,
-												null,
-												Camera2D.GetTransformation(Textures.GraphicsDevice));
+			                  BlendState.AlphaBlend,
+			                  null,
+			                  null,
+			                  null,
+			                  null,
+			                  Camera2D.GetTransformation(Textures.GraphicsDevice));
 
 			// draw background
 			GameLevel.Draw(spriteBatch);
@@ -146,6 +175,7 @@ namespace SkyShoot.Game.Client.Game
 			// draw mobs
 			foreach (var aMob in Mobs)
 			{
+				// Trace.WriteLine(aMob.Value.Coordinates);
 				aMob.Value.Draw(spriteBatch);
 			}
 
