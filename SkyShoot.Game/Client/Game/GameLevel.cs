@@ -21,12 +21,11 @@ namespace SkyShoot.Game.Client.Game
 		private static Texture2D _texture;
 
 		private static Texture2D _gunTexture;
-		private static Texture2D _laserTexture;
+		private static Texture2D _laserTexture;		
 
 		AudioEngine engine;
 		SoundBank soundBank;
 		WaveBank waveBank;
-		Cue cue;
 
 		public GameLevel(Contracts.Session.GameLevel gameLevel)
 		{
@@ -80,6 +79,8 @@ namespace SkyShoot.Game.Client.Game
 				                                 random.Next(Height - Textures.Stones[stone].Height));
 				Textures.Merge(_texture, Textures.Stones[stone], randomPosition);
 			}
+
+			//Textures.Merge(_texture, Textures.Gun, weaponPosition);
 		}
 
 		public void AddTexture(Texture2D texture, Vector2 position)

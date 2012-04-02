@@ -1,17 +1,13 @@
 using System;
-
 using Microsoft.Xna.Framework;
-
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Audio;
-
+using Microsoft.Xna.Framework.Graphics;
 using SkyShoot.Contracts.Weapon.Projectiles;
-
 using SkyShoot.Game.Client.Game;
 using SkyShoot.Game.Client.View;
 using IDrawable = SkyShoot.Game.Client.View.IDrawable;
 
-namespace SkyShoot.Game.Client.Weapon
+namespace SkyShoot.Game.Client.GameObjects
 {
 	public class Projectile : AProjectile, IDrawable
 	{
@@ -46,9 +42,9 @@ namespace SkyShoot.Game.Client.Weapon
 			soundBank = new SoundBank(engine, "Content\\Sounds\\Sound Bank.xsb");
 			waveBank = new WaveBank(engine, "Content\\Sounds\\Wave Bank.xwb");
 
-			Type = EnumObjectType.LaserBullet;
+			ObjectType = EnumObjectType.LaserBullet;
 			// todo
-			switch (Type)
+			switch (ObjectType)
 			{
 				case EnumObjectType.Bullet:
 					break;
@@ -79,13 +75,13 @@ namespace SkyShoot.Game.Client.Weapon
 
 			CoordinatesM += movement;
 
-			LifeDistance -= movement.Length();
+			HealthAmount -= movement.Length();
 
 			if (Coordinates.X < 0 || Coordinates.X >= GameLevel.Width)
 				IsActive = false;
 			if (Coordinates.Y < 0 || Coordinates.Y >= GameLevel.Height)
 				IsActive = false;
-			if (LifeDistance <= 0f)
+			if (HealthAmount <= 0f)
 				IsActive = false;
 		}
 

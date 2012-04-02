@@ -4,7 +4,7 @@ using System.ServiceModel;
 
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Session;
-
+using SkyShoot.Contracts.Weapon.Projectiles;
 using SkyShoot.XNA.Framework;
 using System.Collections.Generic;
 using SkyShoot.Contracts.GameEvents;
@@ -14,13 +14,12 @@ namespace SkyShoot.Contracts.Service
 	public delegate void SomebodyMovesHandler(AGameObject sender, Vector2 direction);
 	public delegate void ClientShootsHandler(AGameObject sender, Vector2 direction);
 	public delegate void SomebodyDiesHandler(AGameObject sender);
-	public delegate void SomebodyHitHandler(AGameObject target, Weapon.Projectiles.AProjectile projectile);
+	public delegate void SomebodyHitHandler(AGameObject target, AProjectile projectile);
 	
 	//[ServiceContract(CallbackContract = typeof(ISkyShootCallback))]
 	[ServiceContract]
 	public interface ISkyShootService
 	{
-
 		[OperationContract(IsInitiating = true)]
 		bool Register(string username, string password);
 
@@ -37,7 +36,6 @@ namespace SkyShoot.Contracts.Service
 		bool JoinGame(GameDescription game);
 
 		[OperationContract]
-		//Queue<AGameEvent> Move(Vector2 direction);
 		AGameEvent[] Move(Vector2 direction);
 
 		[OperationContract]
@@ -45,7 +43,6 @@ namespace SkyShoot.Contracts.Service
 
 		[OperationContract]
 		AGameEvent[] GetEvents();
-		//Queue<AGameEvent> GetEvents();
 
 		//[OperationContract(IsOneWay = true)]
 		//void TakeBonus(AObtainableDamageModifier bonus);

@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 
+using System;
+
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -8,21 +10,32 @@ using SkyShoot.Game.Client.View;
 
 using SkyShoot.Game.Controls;
 
+using Nuclex.UserInterface;
+
+using Nuclex.UserInterface.Controls.Desktop;
+
 namespace SkyShoot.Game.Screens
 {
 	internal class GameplayScreen : GameScreen
 	{
-		private ContentManager _content;
+		private readonly ContentManager _content;
 
 		public override bool IsMenuScreen
 		{
 			get { return false; }
 		}
 
+		public static short Weapon = 1;
+
+		private ButtonControl _gunButton;
+		private ButtonControl _laserButton;
+
 		public GameplayScreen()
 		{
-			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");			
-		}
+			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
+			CreateControls();
+			InitializeControls();
+		}		
 
 		public override void LoadContent()
 		{	
@@ -32,6 +45,10 @@ namespace SkyShoot.Game.Screens
 			Textures.SnowLandscape = _content.Load<Texture2D>("Textures/Landscapes/SnowLandscape");
 			Textures.DesertLandscape = _content.Load<Texture2D>("Textures/Landscapes/DesertLandscape");
 			Textures.VolcanicLandscape = _content.Load<Texture2D>("Textures/Landscapes/VolcanicLandscape");
+
+			//load weapon
+			Textures.Gun = _content.Load<Texture2D>("Textures/Weapon/Gun");
+			Textures.Laser = _content.Load<Texture2D>("Textures/Weapon/Laser");
 
 			// load stones
 			for (int i = 1; i <= Textures.StonesAmount; i++)
@@ -64,6 +81,43 @@ namespace SkyShoot.Game.Screens
 					_content.Load<Texture2D>("Textures/Mobs/man_animation(new man)/run/run_" + i.ToString("D2")));
 
 			ScreenManager.Instance.Game.ResetElapsedTime();
+		}
+
+		private void CreateControls()
+		{
+			_gunButton = new ButtonControl
+			{
+				Text = "Gun",
+				Bounds = new UniRectangle(new UniVector(-70, -50), new UniVector(80, 40)),
+			};
+
+			_laserButton = new ButtonControl
+			{
+				Text = "Laser",
+				Bounds = new UniRectangle(new UniVector(20, -50), new UniVector(80, 40)),
+			};
+		}
+
+		private void InitializeControls()
+		{
+			Desktop.Children.Add(_gunButton);
+			Desktop.Children.Add(_laserButton);
+
+			_gunButton.Pressed += GunButtonPressed;
+			_laserButton.Pressed += LaserButtonPressed;
+
+			ScreenManager.Instance.Controller.AddListener(_gunButton, GunButtonPressed);
+			ScreenManager.Instance.Controller.AddListener(_laserButton, LaserButtonPressed);
+		}
+
+		private void GunButtonPressed(object sender, EventArgs e)
+		{
+			Weapon = 1;
+		}
+
+		private void LaserButtonPressed(object sender, EventArgs e)
+		{
+			Weapon = 2;
 		}
 
 		public override void UnloadContent()

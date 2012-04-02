@@ -63,7 +63,6 @@
     <Compile Include="Bonuses\AGameBonus.cs" />
     <Compile Include="Bonuses\AObtainableDamageModifier.cs" />
     <Compile Include="GameEvents\AGameEvent.cs" />
-    <Compile Include="Mobs\Mob.cs" />
     <Compile Include="Mobs\Wall.cs" />
     <Compile Include="ObjectBuffer.cs" />
     <Compile Include="Service\Constants.cs" />
@@ -71,7 +70,6 @@
     <Compile Include="Perks\Perk.cs" />
     <Compile Include="Session\TileSet.cs" />
     <Compile Include="Session\GameDescription.cs" />
-    <Compile Include="Service\ISkyShootCallback.cs" />
     <Compile Include="Service\ISkyShootService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Session\GameLevel.cs" />
