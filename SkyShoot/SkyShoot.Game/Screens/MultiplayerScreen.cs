@@ -53,7 +53,8 @@ namespace SkyShoot.Game.Screens
 			CreateControls();
 			InititalizeControls();
 
-			_soundManager = new SoundManager();
+			SoundManager.Initialize();
+			_soundManager = SoundManager.Instance;
 			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 		}
 

@@ -9,51 +9,63 @@ namespace SkyShoot.Game.Client.Game
 {
 	class SoundManager
 	{
-		public AudioEngine engine;
-		public SoundBank soundBank;
-		public WaveBank waveBank;
-		public AudioCategory musicCategory;
-		private static SoundManager manager;
+		public AudioEngine _engine;
+		public SoundBank _soundBank;
+		public WaveBank _waveBank;
+		public AudioCategory _musicCategory;
+		private static SoundManager _instance;	
 
-		public SoundManager()
+		public static SoundManager Instance
 		{
-			Initialize();
+			get { return _instance; }
 		}
 
-		public void Initialize()
+		private SoundManager()
 		{
-				engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
-				soundBank = new SoundBank(engine, "Content\\Sounds\\Sound Bank.xsb");
-				waveBank = new WaveBank(engine, "Content\\Sounds\\Wave Bank.xwb");
-				musicCategory = engine.GetCategory("Music");
+      //Initialize();	
+			LoadSounds();
+				
 		}
 
-		public static SoundManager Manager
-		{
-			get { return manager; }
+		public static void Initialize()
+		{				
+				if (_instance == null)
+					_instance = new SoundManager();
+				//else
+				//{
+				//  throw new Exception("Already initialized");
+				//}
 		}
+
+		public void LoadSounds()
+		{
+			_engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
+			_soundBank = new SoundBank(_engine, "Content\\Sounds\\Sound Bank.xsb");
+			_waveBank = new WaveBank(_engine, "Content\\Sounds\\Wave Bank.xwb");
+			_musicCategory = _engine.GetCategory("Music");
+		}		
 
 		public void SoundPlay(string songName)
 		{
-			Cue cue = soundBank.GetCue(songName);
+			Cue cue = _soundBank.GetCue(songName);
 			cue.Play();
 		}
 
 		public void CuePause(string songName)
 		{
-			Cue cue = soundBank.GetCue(songName);
+			Cue cue = _soundBank.GetCue(songName);
 			cue.Pause();
 		}
 
 		public void CueResume(string songName)
 		{
-			Cue cue = soundBank.GetCue(songName);
+			Cue cue = _soundBank.GetCue(songName);
 			cue.Resume();
 		}
 
 		public void CueStop(string songName)
 		{
-			Cue cue = soundBank.GetCue(songName);
+			Cue cue = _soundBank.GetCue(songName);
 			cue.Stop(AudioStopOptions.AsAuthored);
 		}
 	}
