@@ -276,8 +276,13 @@ namespace SkyShoot.Service.Session
 			for (int i = 0; i < _mobs.Count; i++)
 			{
 				var mob = _mobs[i];
+				Vector2 oldVector = new Vector2(mob.RunVector.X,mob.RunVector.Y);
 				mob.Think(gameObjects);
 				mob.Coordinates = ComputeMovement(mob);
+				if ((mob.RunVector - oldVector).Length() > 0.001) 
+				{
+					SomebodyMoved(mob, mob.RunVector);
+				}
 				//System.Diagnostics.Trace.WriteLine("Mob cord: " + mob.Coordinates); 
 
 			}
