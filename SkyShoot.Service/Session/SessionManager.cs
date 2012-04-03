@@ -7,28 +7,33 @@ using System.Collections.Generic;
 using SkyShoot.Contracts.Session;
 using SkyShoot.Contracts.Mobs;
 using System.Collections.Concurrent;
+using System.Collections;
 
 namespace SkyShoot.Service.Session
 {
 	public sealed class SessionManager
 	{
-		private static readonly SessionManager LocalInstance = new SessionManager();
+		//private static readonly SessionManager LocalInstance = new SessionManager();
 
 		public Dictionary<Guid, GameSession> SessionTable;
-
+		public static List<SessionManager> Instances = new List<SessionManager>() { 
+										new SessionManager(Guid.NewGuid()),new SessionManager(Guid.NewGuid())};
+		/*
 		public static SessionManager Instance
 		{
 			get { return LocalInstance; }
 		}
-
+		*/
 		//Содержит текущие игры
 		private readonly List<GameSession> _gameSessions;
 
 		//Уникальный идентификатор, который присваивается каждой игре при её создании
 		private int _gameId;
+		public Guid ManagerId;
 
-		private SessionManager()
+		protected SessionManager(Guid guid)
 		{
+			ManagerId = guid;
 			SessionTable = new Dictionary<Guid,GameSession>();
 			_gameSessions = new List<GameSession>();
 			_gameId = 1;
@@ -44,23 +49,23 @@ namespace SkyShoot.Service.Session
 		}
 		
 		//Создаем новую игру
-		public GameDescription CreateGame(GameMode mode, int maxPlayers, MainSkyShootService client, TileSet tileSet)
+		public GameDescription CreateGame(GameMode mode, int maxPlayers, TileSet tileSet)
 		{
 			var gameSession = new GameSession(tileSet, maxPlayers, mode, _gameId);
 			_gameSessions.Add(gameSession);
-			SessionTable.Add(client.Id, gameSession);
+			//SessionTable.Add(client.Id, gameSession);
 			_gameId++;
-			gameSession.AddPlayer(client);
+			//gameSession.AddPlayer(client);
 			
 			return gameSession.LocalGameDescription;
 		}
 
 	   //Возвращает список игр.
-		public GameDescription[] GetGameList()
+		public IEnumerable<GameDescription> GetGameList()
 		{
 			var gameSessions = _gameSessions.ToArray();
 
-			return (from t in gameSessions where !t.IsStarted select t.LocalGameDescription).ToArray();
+			return (from t in gameSessions where !t.IsStarted select t.LocalGameDescription);
 		}
 
 		//Ищем игру, в которой находится игрок и удаляем его оттуда.

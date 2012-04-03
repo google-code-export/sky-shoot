@@ -20,6 +20,7 @@ namespace SkyShoot.WinFormsClient
 
 		private GameManagerForm _games;
 		private readonly ISkyShootService _service;
+		private readonly ISkyShootLogin _loginService;
 
 		private AGameObject _me;
 		private List<AGameObject> _objects;
@@ -213,7 +214,7 @@ namespace SkyShoot.WinFormsClient
 				return;
 			}
 			Hide();
-			_games = new GameManagerForm(_service);
+			_games = new GameManagerForm(_service,_loginService,_me.Id);
 			_games.ShowDialog(this);
 			if (IsDisposed)
 			{
@@ -238,41 +239,57 @@ namespace SkyShoot.WinFormsClient
 					Thread.Sleep(100);
 					DateTime now = DateTime.Now;
 					_objects.Clear();
-					var syncObjects = _service.SynchroFrame();
-					if (syncObjects == null)
+					using (OperationContextScope scope = new OperationContextScope((IContextChannel)_service))
 					{
-						GameRuning = false;
-						continue;
-					}
-					_objects.AddRange(syncObjects);
-					var tempMe = _objects.Find(m => m.Id == _me.Id);
-					if (tempMe != null)
-					{
-						_me.Copy(tempMe);
-					}
-					//lock (_objects)
-					{
+						var header = new MessageHeader<Guid>((Guid)_me.Id);
+						var untyped = header.GetUntypedHeader("ID", "namespace");
+						OperationContext.Current.OutgoingMessageHeaders.Clear();
+						OperationContext.Current.OutgoingMessageHeaders.Add(untyped);
+						AGameObject[] syncObjects = null;
+						// if (GameRuning)
 						try
+						{ syncObjects = _service.SynchroFrame(); }
+						catch (CommunicationException)
 						{
-							foreach (var t in _objects)
+							//мне кажется это вполне логичный exception и он тут к месту
+							GameRuning = false;
+							break;
+						}
+						if (syncObjects == null)
+						{
+							GameRuning = false;
+							continue;
+						}
+						_objects.AddRange(syncObjects);
+						var tempMe = _objects.Find(m => m.Id == _me.Id);
+						if (tempMe != null)
+						{
+							_me.Copy(tempMe);
+						}
+						//lock (_objects)
+						{
+							try
 							{
-								var m = t;
-								if (float.IsNaN(m.RunVector.X) || float.IsNaN(m.RunVector.Y))
-									continue;
-								m.Coordinates +=
-									m.RunVector *
-									(m.Speed * (float)((now - _prev).TotalMilliseconds));
-								if (m.IsPlayer)
+								foreach (var t in _objects)
 								{
-									m.Coordinates = Vector2.Clamp(m.Coordinates,
-																								new Vector2(0, 0),
-																								new Vector2(_level.levelWidth, _level.levelHeight)); /**/
+									var m = t;
+									if (float.IsNaN(m.RunVector.X) || float.IsNaN(m.RunVector.Y))
+										continue;
+									m.Coordinates +=
+										m.RunVector *
+										(m.Speed * (float)((now - _prev).TotalMilliseconds));
+									if (m.IsPlayer)
+									{
+										m.Coordinates = Vector2.Clamp(m.Coordinates,
+																									new Vector2(0, 0),
+																									new Vector2(_level.levelWidth, _level.levelHeight)); /**/
+									}
 								}
 							}
-						}
-						catch (Exception e)
-						{
-							Trace.WriteLine("Cli: Update: " + e);
+							catch (Exception e)
+							{
+								Trace.WriteLine("Cli: Update: " + e);
+							}
 						}
 					}
 					//lock (_bullets)
@@ -326,7 +343,10 @@ namespace SkyShoot.WinFormsClient
 		public MainForm()
 		{
 			InitializeComponent();
-			var channelFactory = new ChannelFactory<ISkyShootService>("SkyShootEndpoint");
+			var channelFactory = new ChannelFactory<ISkyShootService>(new NetTcpBinding(), "net.tcp://localhost:777");
+			var loginChannelFactory = new ChannelFactory<ISkyShootLogin>(new NetTcpBinding(), "net.tcp://localhost:777");
+
+			_loginService = loginChannelFactory.CreateChannel();
 			_service = channelFactory.CreateChannel();
 			GameRuning = false;
 			_objects = new List<AGameObject>();
@@ -366,8 +386,15 @@ namespace SkyShoot.WinFormsClient
 			{
 				//_th.Suspend();
 				_prevMove = v;
-				ApplyEvents(_service.GetEvents());
-				ApplyEvents(_service.Move(v));
+				using (OperationContextScope scope = new OperationContextScope((IContextChannel)_service))
+				{
+					var header = new MessageHeader<Guid>((Guid)_me.Id);
+					var untyped = header.GetUntypedHeader("ID", "namespace");
+					OperationContext.Current.OutgoingMessageHeaders.Add(untyped);
+
+					ApplyEvents(_service.GetEvents());
+					ApplyEvents(_service.Move(v));
+				}
 				//_th.Resume();
 			}
 		}
@@ -381,6 +408,10 @@ namespace SkyShoot.WinFormsClient
 				{
 					gameEvent.UpdateMob(gameObject);
 				}
+				if (!_me.IsActive)
+				{
+					GameRuning = false;
+				}
 			}
 		}
 
@@ -389,7 +420,14 @@ namespace SkyShoot.WinFormsClient
 		{
 			var v = new Vector2(0, 0);
 			_me.RunVector = v;
-			_service.Move(v);
+			using (OperationContextScope scope = new OperationContextScope((IContextChannel)_service))
+			{
+				var header = new MessageHeader<Guid>((Guid)_me.Id);
+				var untyped = header.GetUntypedHeader("ID", "namespace");
+				OperationContext.Current.OutgoingMessageHeaders.Add(untyped);
+
+				_service.Move(v);
+			}
 		}
 
 		private void MainForm_OnLoad(object sender, EventArgs e)
@@ -479,7 +517,14 @@ namespace SkyShoot.WinFormsClient
 
 		private void MainForm_OnFormClosing(object sender, FormClosingEventArgs e)
 		{
-			_service.LeaveGame();
+			using (OperationContextScope scope = new OperationContextScope((IContextChannel)_service))
+			{
+
+				var header = new MessageHeader<Guid>(_me.Id);
+				var untyped = header.GetUntypedHeader("ID", "namespace");
+				OperationContext.Current.OutgoingMessageHeaders.Add(untyped);
+				_service.LeaveGame();
+			}
 			if (_th != null)
 			{
 				_th.Abort();
@@ -508,7 +553,14 @@ namespace SkyShoot.WinFormsClient
 							- _me.Coordinates;
 			v.Normalize();
 			_me.ShootVector = v;
-			_service.Shoot(v);
+			using (OperationContextScope scope = new OperationContextScope((IContextChannel)_service))
+			{
+				
+				var header = new MessageHeader<Guid>(_me.Id);
+				var untyped = header.GetUntypedHeader("ID", "namespace");
+				OperationContext.Current.OutgoingMessageHeaders.Add(untyped);
+				_service.Shoot(v);
+			}
 		}
 
 
@@ -520,9 +572,19 @@ namespace SkyShoot.WinFormsClient
 		{
 			try
 			{
-				Guid? id = _service.Login(username, password);
+				Guid? id;//= new Guid();
+				
+				//using (OperationContextScope scope = new OperationContextScope((IContextChannel)_service))
+				//{
+					id = _loginService.Login(username, password);
+				//	var header = new MessageHeader<Guid>((Guid)id);
+				//	var untyped = header.GetUntypedHeader("ID", "namespace");
+				//	OperationContext.Current.OutgoingMessageHeaders.Add(untyped);
+				//}
 				if (id != null)
 				{
+					
+
 					_me = new AGameObject { Coordinates = Vector2.Zero };
 
 					_me.Id = (Guid)id;
@@ -536,8 +598,9 @@ namespace SkyShoot.WinFormsClient
 					return false;
 				}
 			}
-			catch (Exception)
+			catch (Exception e)
 			{
+				var a = e.StackTrace;
 				return false;
 			}
 		}
