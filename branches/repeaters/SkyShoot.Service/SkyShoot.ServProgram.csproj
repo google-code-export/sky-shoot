@@ -74,7 +74,9 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Services.Client" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Routing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -98,6 +100,8 @@
     <Compile Include="Session\GameSession.cs" />
     <Compile Include="Session\ObjectPool.cs" />
     <Compile Include="Session\SessionManager.cs" />
+    <Compile Include="SkyShootLoginService.cs" />
+    <Compile Include="SkyShootMessageFilter.cs" />
     <Compile Include="Weapon\Bullets\PistolBullet.cs" />
     <Compile Include="Weapon\Bullets\ShotgunBullet.cs" />
     <Compile Include="Weapon\Claw.cs" />

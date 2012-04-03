@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using SkyShoot.Contracts.Session;
 using SkyShoot.Contracts.Service;
 using System.Diagnostics;
+using System.ServiceModel;
 
 namespace SkyShoot.WinFormsClient
 {
@@ -15,6 +16,7 @@ namespace SkyShoot.WinFormsClient
 		private GameDescription[] _list;
 		private GameDescription _activeGame;
 		private Thread _updatingThread;
+		private bool isRegistered = false;
 		#endregion
 
 		#region
@@ -34,13 +36,23 @@ namespace SkyShoot.WinFormsClient
 
 		private void UpdateStatus()
 		{
-			while (Level == null)
+			using (OperationContextScope scope = new OperationContextScope((IContextChannel)_service))
 			{
-				Thread.Sleep(100);
-				if (_activeGame != null)
+				var header = new MessageHeader<Guid>((Guid)_id);
+				var untyped = header.GetUntypedHeader("ID", "namespace");
+				//OperationContext.Current.OutgoingMessageHeaders.Clear();
+				OperationContext.Current.OutgoingMessageHeaders.Add(untyped);
+				while (Level == null)
 				{
-					Level = _service.GameStart(_activeGame.GameId);
-					UpdatePlayerList();
+					Thread.Sleep(100);
+					if (_activeGame != null && isRegistered)
+					{
+
+						Level = _service.GameStart(_activeGame.GameId);
+						UpdatePlayerList();
+
+
+					}
 				}
 			}
 			// close this windows
@@ -67,7 +79,14 @@ namespace SkyShoot.WinFormsClient
 				return;
 			}
 			lstbPlayers.Items.Clear();
-			lstbPlayers.Items.AddRange(_service.PlayerListUpdate());
+			using (OperationContextScope scope = new OperationContextScope((IContextChannel)_service))
+			{
+				var header = new MessageHeader<Guid>((Guid)_id);
+				var untyped = header.GetUntypedHeader("ID", "namespace");
+				OperationContext.Current.OutgoingMessageHeaders.Add(untyped);
+
+				lstbPlayers.Items.AddRange(_service.PlayerListUpdate());
+			}
 		}
 
 
@@ -109,10 +128,14 @@ namespace SkyShoot.WinFormsClient
 		}
 
 		public GameLevel Level { get; private set; }
+		private ISkyShootLogin _loginService;
+		private Guid _id;
 
-		public GameManagerForm(ISkyShootService service)
+		public GameManagerForm(ISkyShootService service,ISkyShootLogin loginService,Guid id)
 		{
+			_id = id;
 			_service = service;
+			_loginService = loginService;
 			InitializeComponent();
 		}
 
@@ -120,7 +143,7 @@ namespace SkyShoot.WinFormsClient
 		{
 			try
 			{
-				_list = _service.GetGameList();
+				_list = _loginService.GetGameList();
 			}
 			catch (Exception exc)
 			{
@@ -148,8 +171,20 @@ namespace SkyShoot.WinFormsClient
 				{
 					return;
 				}
-				_activeGame = _service.CreateGame(newGame.Mode, newGame.MaxPlayers,
+
+				_activeGame = _loginService.CreateGame(newGame.Mode, newGame.MaxPlayers,
 				                                  newGame.Tile);
+
+				isRegistered = _loginService.RegisterForGame(_activeGame);
+
+				using (OperationContextScope scope = new OperationContextScope((IContextChannel)_service))
+				{
+					var header = new MessageHeader<Guid>((Guid)_id);
+					var untyped = header.GetUntypedHeader("ID", "namespace");
+					OperationContext.Current.OutgoingMessageHeaders.Add(untyped);
+					_service.JoinGame(_activeGame);
+				}
+
 				if (_activeGame != null)
 				{
 					Mode = Modes.Created;
@@ -180,7 +215,14 @@ namespace SkyShoot.WinFormsClient
 
 		private void btLeave_OnClick(object sender, EventArgs e)
 		{
-			_service.LeaveGame();
+			using (OperationContextScope scope = new OperationContextScope((IContextChannel)_service))
+			{
+				var header = new MessageHeader<Guid>((Guid)_id);
+				var untyped = header.GetUntypedHeader("ID", "namespace");
+				OperationContext.Current.OutgoingMessageHeaders.Add(untyped);
+
+				_service.LeaveGame();
+			}
 			lstbGames.ClearSelected();
 			RefreshClick(sender, e);
 			_activeGame = null;
@@ -191,7 +233,19 @@ namespace SkyShoot.WinFormsClient
 		{
 			if (_activeGame == null)
 				return;
-			_service.JoinGame(_activeGame);
+
+			
+				isRegistered = _loginService.RegisterForGame(_activeGame);
+				using (OperationContextScope scope = new OperationContextScope((IContextChannel)_service))
+				{
+					var header = new MessageHeader<Guid>((Guid)_id);
+					var untyped = header.GetUntypedHeader("ID", "namespace");
+					OperationContext.Current.OutgoingMessageHeaders.Add(untyped);
+					_service.JoinGame(_activeGame);
+				}
+				
+
+
 			RefreshClick(sender, e);
 			Mode = Modes.Joined;
 		}
