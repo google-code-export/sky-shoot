@@ -50,8 +50,8 @@ namespace SkyShoot.Game
 			_screenManager = ScreenManager.Instance;
 			Components.Add(_screenManager);
 
-			_soundManager = new SoundManager();
-
+			SoundManager.Initialize();
+			_soundManager = SoundManager.Instance;
 			_soundManager.SoundPlay("STARWARS");
 
 			base.Initialize();
