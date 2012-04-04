@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SkyShoot.Contracts;
 using SkyShoot.Contracts.Bonuses;
 using SkyShoot.XNA.Framework;
 
@@ -12,9 +13,8 @@ namespace SkyShoot.Service.Bonus
 		private Random _random = new Random();
 
 		public AGameBonus CreateBonus(Vector2 coordinates)
-		{
-			// TODO: special nice method for choosing bonus type 
-			int r = _random.Next(3);
+		{ 
+			int r = _random.Next(Constants.BONUS_TYPE_COUNT);
 			if (r == 0)
 			{
 				return new Shield(coordinates);
@@ -23,9 +23,13 @@ namespace SkyShoot.Service.Bonus
 			{
 				return new DoubleDamage(coordinates);
 			}
-			else
+			if (r == 2)
 			{
 				return new Remedy(coordinates);
+			}
+			else
+			{
+				return new Speedup(coordinates);
 			}
 		}
 	}

@@ -76,6 +76,10 @@ namespace SkyShoot.Service.Session
 		
 		private void SomebodyMoved(AGameObject sender, Vector2 direction)
 		{
+			AGameBonus speedUpBonus = (sender as MainSkyShootService).GetBonus(AGameObject.EnumObjectType.Speedup);
+			float speedUp = speedUpBonus == null ? 1f : speedUpBonus.damageFactor;
+			direction.X *= speedUp;
+			direction.Y *= speedUp;
 			sender.RunVector = direction;
 			PushEvent(new ObjectDirectionChanged(direction,sender.Id,_timerCounter));
 		}
@@ -424,9 +428,14 @@ namespace SkyShoot.Service.Session
 			/*
 			for (int i = 0; i < _gameObjects.Count; i++)
 			{
-				var mob = _gameObjects[i];
-				mob.Think(new List<AGameObject>(Players.ToArray()));
+				var mob = _mobs[i];
+				Vector2 oldVector = new Vector2(mob.RunVector.X,mob.RunVector.Y);
+				mob.Think(gameObjects);
 				mob.Coordinates = ComputeMovement(mob);
+				if ((mob.RunVector - oldVector).Length() > 0.001) 
+				{
+					SomebodyMoved(mob, mob.RunVector);
+				}
 				//System.Diagnostics.Trace.WriteLine("Mob cord: " + mob.Coordinates); 
 
 			}
