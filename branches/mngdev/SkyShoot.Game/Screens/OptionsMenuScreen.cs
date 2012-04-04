@@ -61,6 +61,8 @@ namespace SkyShoot.Game.Screens
 			CreateControls();
 			InitializeControls();
 
+			SoundManager.Initialize();
+			_soundManager = SoundManager.Instance;
 			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 		}
 
@@ -192,9 +194,7 @@ namespace SkyShoot.Game.Screens
 			_crossButton.Changed += CrossButtonPressed;
 			_targetButton.Changed += TargetButtonPressed;
 			_upVolume.Pressed += UpButtonPressed;
-			_downVolume.Pressed += DownButtonPressed;
-
-			_soundManager = new SoundManager();
+			_downVolume.Pressed += DownButtonPressed;		
 
 			ScreenManager.Instance.Controller.AddListener(_backButton, BackButtonPressed);
 			ScreenManager.Instance.Controller.AddListener(_upVolume, UpButtonPressed);
