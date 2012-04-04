@@ -65,8 +65,12 @@ namespace SkyShoot.Service.Session
 		
 		private void SomebodyMoved(AGameObject sender, Vector2 direction)
 		{
+			AGameBonus speedUpBonus = (sender as MainSkyShootService).GetBonus(AGameObject.EnumObjectType.Speedup);
+			float speedUp = speedUpBonus == null ? 1f : speedUpBonus.damageFactor;
+			direction.X *= speedUp;
+			direction.Y *= speedUp;
 			sender.RunVector = direction;
-			pushEvent(new ObjectDirectionChanged(direction,sender.Id,_timerCounter));
+			pushEvent(new ObjectDirectionChanged(direction, sender.Id, _timerCounter));
 		}
 
 		private void SomebodyShot(AGameObject sender, Vector2 direction)

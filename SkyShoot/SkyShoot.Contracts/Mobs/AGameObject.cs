@@ -109,7 +109,9 @@ namespace SkyShoot.Contracts.Mobs
 			[EnumMember]
 			Shield,
 			[EnumMember]
-			Remedy
+			Remedy,
+			[EnumMember]
+			Speedup
 		}
 
 		[DataMember]
