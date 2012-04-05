@@ -22,7 +22,7 @@ namespace SkyShoot.Game.Client.Game
 
 		private SoundManager()
 		{
-      //Initialize();	
+			//Initialize();	
 			LoadSounds();
 				
 		}

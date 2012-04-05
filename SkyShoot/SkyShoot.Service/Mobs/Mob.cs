@@ -1,28 +1,19 @@
 ﻿using System;
-
 using System.Collections.Generic;
-
 using SkyShoot.XNA.Framework;
-
-using SkyShoot.Service;
-
-using SkyShoot.Contracts.Weapon.Projectiles;
 
 namespace SkyShoot.Contracts.Mobs
 {
 	public class Mob : AGameObject
 	{
-		public MainSkyShootService TargetPlayer { get; set; }
+		public AGameObject Target { get; set; }
 
-		// already inherited
-		// public float Damage { get; set; }
-
-		private int _counter;
+		private int _thinkCounter;
 
 		public Mob(float healthAmount)
 		{
-			Type = EnumObjectType.Mob;
-			_counter = 0;
+			ObjectType = EnumObjectType.Mob;
+			_thinkCounter = 0;
 			Id = Guid.NewGuid();
 			MaxHealthAmount = HealthAmount = healthAmount;
 			Damage = 10;
@@ -31,76 +22,72 @@ namespace SkyShoot.Contracts.Mobs
 		public void FindTarget(List<AGameObject> targetPlayers)
 		{
 			float distance = 1000000;
-			float temp;
 
 			for (int i = 0; i < targetPlayers.Count;i++ )
 			{
-				if ((targetPlayers[i]).GetType() != typeof(MainSkyShootService))
+				var pl = targetPlayers[i];
+				if(!pl.IsPlayer)
 				{
 					continue;
 				}
-				temp = Vector2.Distance(Coordinates, targetPlayers[i].Coordinates);
+				float temp = Vector2.Distance(Coordinates, pl.Coordinates);
 
 				if (distance > temp)
 				{
 					distance = temp;
-					TargetPlayer = (MainSkyShootService)targetPlayers[i];
+					Target = pl;
 				}
 			}
 		}
 
-		//public event SomebodyMovesHandler MeMoved;
+		//public override void Move()
+		//{
 
-		protected virtual void Move()
+		//  //base.Move();
+		//}
+
+		public override void  Think(List<AGameObject> players, long time)
 		{
-			if(TargetPlayer == null)
-				return;
-			RunVector = new Vector2(TargetPlayer.Coordinates.X - Coordinates.X, TargetPlayer.Coordinates.Y - Coordinates.Y);
-			RunVector = Vector2.Normalize(RunVector);
-			ShootVector = RunVector;
-
-			/*
-			if (MeMoved != null)
+			if (_wait == 0)
 			{
-				System.Diagnostics.Trace.WriteLine("Mob run vector" + RunVector);
-				MeMoved(this, RunVector);
-			}
-			*/
-		}
-
-		public override void  Think(List<AGameObject> players = null)
-		{
-			if (wait == 0)
-			{
-				if (_counter % 10 == 0)
+				if (_thinkCounter % 10 == 0)
 				{
-					if (!players.Contains(TargetPlayer) || TargetPlayer == null)
+					if (!players.Contains(Target) || Target == null)
 					{
 						FindTarget(players);
 					}
-					Move();
+					if (Target == null)
+						return;
+					RunVector = new Vector2(Target.Coordinates.X - Coordinates.X, Target.Coordinates.Y - Coordinates.Y);
 				}
-				_counter++;
+				_thinkCounter++;
 			}
 			else
 			{
-				wait--;
+				_wait--;
 			}
-
-			Move();
 		}
 
-		private int wait;
+		private int _wait;
 
-		public void Stop()
+		private void Stop()
 		{
 			RunVector = new Vector2(0, 0);
-			wait = 30;
+			_wait = 30;
 		}
 
-		public void DamageTaken(AProjectile bullet)
+		public override void Do(AGameObject obj, long time)
 		{
-			HealthAmount -= bullet.Damage;
+			// не кусаем друзей-товарищей
+			if(obj.Is(EnumObjectType.Mob))
+				return;
+			obj.HealthAmount -= Damage;
+			Stop();
 		}
+
+		//public void DamageTaken(AProjectile bullet)
+		//{
+		//  HealthAmount -= bullet.Damage;
+		//}
 	}
 }

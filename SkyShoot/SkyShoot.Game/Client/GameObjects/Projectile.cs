@@ -42,9 +42,9 @@ namespace SkyShoot.Game.Client.GameObjects
 			soundBank = new SoundBank(engine, "Content\\Sounds\\Sound Bank.xsb");
 			waveBank = new WaveBank(engine, "Content\\Sounds\\Wave Bank.xwb");
 
-			Type = EnumObjectType.LaserBullet;
+			ObjectType = EnumObjectType.LaserBullet;
 			// todo
-			switch (Type)
+			switch (ObjectType)
 			{
 				case EnumObjectType.Bullet:
 					break;
@@ -75,13 +75,13 @@ namespace SkyShoot.Game.Client.GameObjects
 
 			CoordinatesM += movement;
 
-			LifeDistance -= movement.Length();
+			HealthAmount -= movement.Length();
 
 			if (Coordinates.X < 0 || Coordinates.X >= GameLevel.Width)
 				IsActive = false;
 			if (Coordinates.Y < 0 || Coordinates.Y >= GameLevel.Height)
 				IsActive = false;
-			if (LifeDistance <= 0f)
+			if (HealthAmount <= 0f)
 				IsActive = false;
 		}
 

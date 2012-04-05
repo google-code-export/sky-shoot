@@ -24,12 +24,16 @@ namespace SkyShoot.Contracts.Weapon.Projectiles
 			Owner = null;
 		}
 
-		public void Copy(AProjectile other)
+		public override void Copy(AGameObject other)
 		{
+			if (!(other is AProjectile))
+			{
+				throw new Exception("Type mistmath");
+			}
+			var otherProjectile = other as AProjectile;
 			base.Copy(other);
-			Damage = other.Damage;
-			LifeDistance = other.LifeDistance;
-			Owner = other.Owner;
+			//LifeDistance = otherProjectile.LifeDistance;
+			Owner = otherProjectile.Owner;
 		}
 
 		public AProjectile(AProjectile other)
@@ -37,15 +41,31 @@ namespace SkyShoot.Contracts.Weapon.Projectiles
 			Copy(other);
 		}
 
-		public override void Think(System.Collections.Generic.List<AGameObject> players = null)
-		{
-			Coordinates += RunVector * Speed;
-		}
-
 		public AGameObject Owner { get; set; }
 
-		public float LifeDistance { get; set; }
+		//[Obsolete("Use health")]
+		//public float LifeDistance { get; set; }
 
-		public Vector2 OldCoordinates;
+		public override void Do(AGameObject obj, long time)
+		{
+			if(Owner.Id == obj.Id) // не трогать создателя пули
+				return;
+			obj.HealthAmount -= Damage;
+			// убираем пулю
+			IsActive = false;
+		}
+
+		public override Vector2 ComputeMovement(long updateDelay, Session.GameLevel gameLevel)
+		{
+			//!! rewrite
+			var newCoord = base.ComputeMovement(updateDelay, gameLevel);
+			var x = MathHelper.Clamp(newCoord.X, 0, gameLevel.levelHeight);
+			var y = MathHelper.Clamp(newCoord.Y, 0, gameLevel.levelWidth);
+			const float epsilon = 0.01f;
+			// убрать пулю, которая вышла за экран
+			IsActive = (Math.Abs(newCoord.X - x) < epsilon) 
+				&& (Math.Abs(newCoord.Y - y) < epsilon);
+			return newCoord;
+		}
 	}
 }

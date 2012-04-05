@@ -12,7 +12,7 @@ namespace SkyShoot.Game.Client.Game
 		public static Mob CreateClientMob(AGameObject mob)
 		{
 			// todo mob type
-			switch (mob.Type)
+			switch (mob.ObjectType)
 			{
 				case AGameObject.EnumObjectType.Player:
 					return new Mob(mob, Textures.PlayerAnimation);

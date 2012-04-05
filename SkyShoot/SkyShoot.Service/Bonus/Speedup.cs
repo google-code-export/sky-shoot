@@ -15,8 +15,8 @@ namespace SkyShoot.Service.Bonus
 			: base(coordinates)
 		{
 			this._milliseconds = Constants.SPEEDUP_MILLISECONDS;
-			this.Type = EnumObjectType.Speedup;
-			this.damageFactor = 1.5f; // not damage, but speedup here
+			this.ObjectType = EnumObjectType.Speedup;
+			this.DamageFactor = 1.5f; // not damage, but speedup here
 		}
 	}
 }

@@ -22,14 +22,14 @@ namespace SkyShoot.WinFormsClient
 		private readonly ISkyShootService _service;
 
 		private AGameObject _me;
-		private List<AGameObject> _objects;
+		private readonly List<AGameObject> _objects;
 
 		private Vector2 _prevMove;
 
 		private GameLevel _level;
 
 		private DateTime _prev;
-		private Thread _th;
+		private readonly Thread _th;
 		public bool GameRuning;
 
 		#endregion
@@ -237,14 +237,17 @@ namespace SkyShoot.WinFormsClient
 				{
 					Thread.Sleep(100);
 					DateTime now = DateTime.Now;
-					_objects.Clear();
 					var syncObjects = _service.SynchroFrame();
 					if (syncObjects == null)
 					{
 						GameRuning = false;
 						continue;
 					}
-					_objects.AddRange(syncObjects);
+					lock (_objects)
+					{
+						_objects.Clear();
+						_objects.AddRange(syncObjects);
+					}
 					var tempMe = _objects.Find(m => m.Id == _me.Id);
 					if (tempMe != null)
 					{
@@ -262,7 +265,7 @@ namespace SkyShoot.WinFormsClient
 								m.Coordinates +=
 									m.RunVector *
 									(m.Speed * (float)((now - _prev).TotalMilliseconds));
-								if (m.Type == AGameObject.EnumObjectType.Player)
+								if (m.IsPlayer)
 								{
 									m.Coordinates = Vector2.Clamp(m.Coordinates, new Vector2(0, 0), new Vector2(_level.levelWidth, _level.levelHeight)); /**/
 								}
@@ -374,7 +377,12 @@ namespace SkyShoot.WinFormsClient
 		{
 			foreach (var gameEvent in events)
 			{
-				var gameObject = _objects.Find(o => o.Id == gameEvent.GameObjectId);
+				var t = _objects.FindAll(o => o == null);
+				if(t.Count != 0)
+				{
+					Trace.WriteLine(t);
+				}
+				var gameObject = _objects.Find(o => o!= null && o.Id == gameEvent.GameObjectId);
 				if (gameObject != null)
 				{
 					gameEvent.UpdateMob(gameObject);
@@ -415,46 +423,81 @@ namespace SkyShoot.WinFormsClient
 			using (var g = e.Graphics)
 			{
 				try
-				//lock (_objects)
 				{
-					foreach (var m in _objects)
+					AGameObject[] objects2Paint;
+					lock (_objects)
 					{
-						r = 5f;
+						objects2Paint = _objects.ToArray();
+					}
+					foreach (var m in objects2Paint)
+					{
+						if (!m.IsActive)
+						{
+							continue;
+						}
 						x = (m.Coordinates.X) * _pnCanvas.Width / _level.levelWidth;
 						y = (m.Coordinates.Y) * _pnCanvas.Height / _level.levelHeight;
-						//r = m.Radius*0.5f*_pnCanvas.Width/_level.levelWidth;
-						g.FillEllipse(m.Type == AGameObject.EnumObjectType.Player ? Brushes.Black : Brushes.Green,
-													new RectangleF(
-														new PointF(x - r, y - r),
-														new SizeF(2 * r, 2 * r)));
-						//if (m.IsPlayer)
+						switch (m.ObjectType)
 						{
-							g.DrawLine(new Pen(m.Type == AGameObject.EnumObjectType.Player ? Color.Red : Color.Green, 3),
+						case AGameObject.EnumObjectType.Mob:
+						case AGameObject.EnumObjectType.Player:
+							r = m.Radius * _pnCanvas.Width / _level.levelWidth;
+							g.FillEllipse(m.IsPlayer ? Brushes.Black : Brushes.Green,
+														new RectangleF(
+															new PointF(x - r, y - r),
+															new SizeF(2 * r, 2 * r)));
+							g.DrawLine(new Pen(m.IsPlayer ? Color.Red : Color.Green, 3),
 												 new PointF(x, y),
 												 new PointF(x + m.ShootVector.X * 2 * r, y + m.ShootVector.Y * 2 * r));
+
+							Color c;
+							r--;
+							if (m.HealthAmount > 0.60f * m.MaxHealthAmount)
+							{
+								c = Color.Lime;
+							}
+							else if (m.HealthAmount > 0.30f * m.MaxHealthAmount)
+							{
+								c = Color.Yellow;
+							}
+							else
+							{
+								c = Color.Red;
+							}
+							g.DrawLine(new Pen(c, 2f),
+												 x - r, y - r, x + r * m.HealthAmount / m.MaxHealthAmount, y - r);
+							break;
+						case AGameObject.EnumObjectType.Bullet:
+						case AGameObject.EnumObjectType.LaserBullet:
+						case AGameObject.EnumObjectType.ShutgunBullet:
+							r = 2f;
+							g.FillEllipse(Brushes.Red,
+														new RectangleF(
+															new PointF(x - r, y - r),
+															new SizeF(2 * r, 2 * r)));
+							break;
+						case AGameObject.EnumObjectType.Wall:
+							r = m.Radius * _pnCanvas.Width / _level.levelWidth;
+							var rh = m.Radius * _pnCanvas.Height / _level.levelHeight;
+							g.FillRectangle(Brushes.Black,
+								new RectangleF(
+									new PointF(x - r, y - rh),
+									new SizeF(2 * r, 2 * rh)));
+							break;
+						default:
+							r = 3f;
+							g.FillEllipse(Brushes.Blue,
+														new RectangleF(
+															new PointF(x - r, y - r),
+															new SizeF(2 * r, 2 * r)));
+							break;
 						}
-						Color c;
-						if (m.HealthAmount > 0.60f * m.MaxHealthAmount)
-						{
-							c = Color.Lime;
-						}
-						else if (m.HealthAmount > 0.30f * m.MaxHealthAmount)
-						{
-							c = Color.Yellow;
-						}
-						else
-						{
-							c = Color.Red;
-						}
-						g.DrawLine(new Pen(c, 2f),
-											 x - r, y - r, x + 2 * r * m.HealthAmount / m.MaxHealthAmount, y - r);
 					}
 				}
 				catch (Exception exc)
 				{
 					Trace.WriteLine("Exc: " + exc);
 				}
-				//r = 2f;
 				//try
 				//  //lock (_bullets)
 				//{
@@ -477,7 +520,15 @@ namespace SkyShoot.WinFormsClient
 
 		private void MainForm_OnFormClosing(object sender, FormClosingEventArgs e)
 		{
-			_service.LeaveGame();
+			try
+			{
+				_service.LeaveGame();
+			}
+			// возможно, сервер уже выключили к этому моменту
+			catch (Exception exc)
+			{
+				Trace.WriteLine(exc);
+			}
 			if (_th != null)
 			{
 				_th.Abort();
@@ -521,10 +572,8 @@ namespace SkyShoot.WinFormsClient
 				Guid? id = _service.Login(username, password);
 				if (id != null)
 				{
-					_me = new AGameObject { Coordinates = Vector2.Zero };
+					_me = new AGameObject {Coordinates = Vector2.Zero, Id = (Guid) id};
 
-					_me.Id = (Guid)id;
-					_me.Type = AGameObject.EnumObjectType.Player;
 					SetStatus("Logon successfull");
 					return true;
 				}

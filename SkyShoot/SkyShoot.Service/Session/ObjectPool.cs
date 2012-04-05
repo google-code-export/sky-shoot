@@ -1,23 +1,30 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using SkyShoot.Contracts.Mobs;
-using SkyShoot.Contracts.Weapon.Projectiles;
 
 namespace SkyShoot.ServProgram.Session
 {
-	class ObjectPool<T> where T:AGameObject,new()
+	class ObjectPool<T> : IEnumerable<T> where T: AGameObject, new()
+	//class ObjectPool<T> where T : AGameObject, new()// : IEnumerable<T>//
 	{
 		public ObjectPoolNode FirstActive;
 		private ObjectPoolNode _firstInActive;
-		public int size;
+		public int Size;
 
 		public ObjectPool()
 		{
-			size = 0;
+			Size = 0;
 		}
-		public T getInActive()
+
+		public int Count
+		{
+			get 
+			{
+				return Size;
+			}
+		}
+
+		public T GetInActive()
 		{
 			T t;
 			if (_firstInActive != null)
@@ -28,7 +35,7 @@ namespace SkyShoot.ServProgram.Session
 			}
 			else
 			{
-				size++;
+				Size++;
 				t = new T();
 			}
 			ObjectPoolNode newFirst = new ObjectPoolNode(t, true);
@@ -65,9 +72,28 @@ namespace SkyShoot.ServProgram.Session
 				Item = mob;
 				this.isActive = isActive;
 			}
+		}
 
-			
+		public T[] ToArray()
+		{
+			var res = new List<T>(Size);
+			var t = FirstActive;
+			while (t != null)
+			{
+				res.Add(t.Item);
+				t = t.Next;
+			}
+			return res.ToArray();
+		}
 
+		public IEnumerator<T> GetEnumerator()
+		{
+			throw new System.NotImplementedException();
+		}
+
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return GetEnumerator();
 		}
 	}
 }

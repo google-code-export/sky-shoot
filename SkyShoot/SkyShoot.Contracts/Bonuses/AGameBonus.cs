@@ -12,9 +12,21 @@ namespace SkyShoot.Contracts.Bonuses
 		protected int _milliseconds; // @Sergey Terechenko : time = health
 		protected long _startTime;
 
-		public float damageFactor;
+		public float DamageFactor;
 
 		public AGameBonus(Vector2 coordinates) : base(coordinates, Guid.NewGuid()) { }
+
+		public AGameBonus(AGameObject o)
+		{
+			var b = o as AGameBonus;
+			if(b == null)
+			{
+				throw new TypeAccessException();
+			}
+			Copy(b);
+			_milliseconds = b._milliseconds;
+			_startTime = b._startTime;
+		}
 
 		public bool IsExpired(long time)
 		{
