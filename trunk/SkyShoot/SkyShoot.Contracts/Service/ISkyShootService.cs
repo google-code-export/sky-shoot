@@ -3,12 +3,9 @@
 using System.ServiceModel;
 
 using SkyShoot.Contracts.Mobs;
-using SkyShoot.Contracts.Perks;
-using SkyShoot.Contracts.Bonuses;
 using SkyShoot.Contracts.Session;
-
-using SkyShoot.XNA.Framework;
 using SkyShoot.Contracts.Weapon.Projectiles;
+using SkyShoot.XNA.Framework;
 using System.Collections.Generic;
 using SkyShoot.Contracts.GameEvents;
 

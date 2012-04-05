@@ -100,6 +100,7 @@
     <Compile Include="Session\GameSession.cs" />
     <Compile Include="Session\ObjectPool.cs" />
     <Compile Include="Session\SessionManager.cs" />
+    <Compile Include="Mobs\WallFactory.cs" />
     <Compile Include="Weapon\Bullets\PistolBullet.cs" />
     <Compile Include="Weapon\Bullets\ShotgunBullet.cs" />
     <Compile Include="Weapon\Claw.cs" />

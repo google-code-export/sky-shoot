@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using SkyShoot.Contracts.Bonuses;
-using SkyShoot.Contracts.Mobs;
+﻿using SkyShoot.Contracts.Bonuses;
 using SkyShoot.Contracts;
 using SkyShoot.XNA.Framework;
 
@@ -15,8 +10,8 @@ namespace SkyShoot.Service.Bonus
 		//    : base(id, 0, 1, 30000, startTime, AObtainableDamageModifier.AObtainableDamageModifiers.Shield) {	}
 		public Shield(Vector2 coordinates) : base(coordinates)
 		{
-			this.Type = AGameObject.EnumObjectType.Shield;
-			this.damageFactor = 0.5f;
+			ObjectType = EnumObjectType.Shield;
+			DamageFactor = 0.5f;
 			this._milliseconds = Constants.SHIELD_MILLISECONDS;
 		}
 	}

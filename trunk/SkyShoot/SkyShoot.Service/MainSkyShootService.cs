@@ -34,7 +34,7 @@ namespace SkyShoot.Service
 
 		public MainSkyShootService() : base(new Vector2(0, 0), Guid.NewGuid()) 
 		{
-			Type = EnumObjectType.Player;
+			ObjectType = EnumObjectType.Player;
 			NewEvents = new Queue<AGameEvent>();
 			LocalID = GlobalID;
 			GlobalID ++;
@@ -43,14 +43,14 @@ namespace SkyShoot.Service
 
 		public void AddBonus(AGameBonus bonus)
 		{
-			if (bonus.Type == EnumObjectType.Remedy)
+			if (bonus.Is(EnumObjectType.Remedy))
 			{
-				float health = this.HealthAmount;
-				float potentialHealth = health + health * bonus.damageFactor;
-				this.HealthAmount = potentialHealth > this.MaxHealthAmount ? this.MaxHealthAmount : potentialHealth;
+				var health = HealthAmount;
+				var potentialHealth = health + health * bonus.DamageFactor;
+				HealthAmount = potentialHealth > MaxHealthAmount ? MaxHealthAmount : potentialHealth;
 				return;
 			}
-			Bonuses.RemoveAll(b => b.Type == bonus.Type);
+			Bonuses.RemoveAll(b => b.ObjectType == bonus.ObjectType);
 			Bonuses.Add(bonus);
 		}
 
@@ -58,7 +58,7 @@ namespace SkyShoot.Service
 		{
 			foreach (AGameBonus bonus in Bonuses)
 			{
-				if (bonus.Type.Equals(bonusType))
+				if (bonus.ObjectType.Equals(bonusType))
 				{
 					return bonus;
 				}
@@ -91,7 +91,7 @@ namespace SkyShoot.Service
 			{
 				Name = username;
 				//_callback = OperationContext.Current.GetCallbackChannel<ISkyShootCallback>();
-				Type = EnumObjectType.Player;
+				ObjectType = EnumObjectType.Player;
 
 				ClientsList.Add(this);
 			}
@@ -142,11 +142,6 @@ namespace SkyShoot.Service
 				Trace.Fail(Name + " has not joined the game. " + e.Message);
 				return false;
 			}
-		}
-
-		public override void Think(List<AGameObject> players)
-		{
-			throw new NotImplementedException();
 		}
 
 		public event SomebodyMovesHandler MeMoved;
@@ -231,9 +226,36 @@ namespace SkyShoot.Service
 			return session.LocalGameDescription.Players.ToArray();
 		}
 
+		public override Vector2 ComputeMovement(long updateDelay, GameLevel gameLevel)
+		{
+			var newCoord = base.ComputeMovement(updateDelay, gameLevel);
+			newCoord.X = MathHelper.Clamp(newCoord.X, 0, gameLevel.levelHeight);
+			newCoord.Y = MathHelper.Clamp(newCoord.Y, 0, gameLevel.levelWidth);
+
+			return newCoord;
+		}
+
+		public override void Do(AGameObject obj, long time)
+		{
+			base.Do(obj, time);
+			if(obj.Is(EnumObjectType.Bonus))
+			{
+				obj.IsActive = false;
+				var bonus = new AGameBonus(obj);
+				//bonus.Copy(obj);
+				Bonuses.Add(bonus);
+				bonus.taken(time);
+			}
+		}
 		public void DeleteExpiredBonuses(long time)
 		{
 			Bonuses.RemoveAll(b => b.IsExpired(time));
+		}
+
+		public override void Think(List<AGameObject> players, long time)
+		{
+			base.Think(players, time);
+			DeleteExpiredBonuses(time);
 		}
 	}
 }
