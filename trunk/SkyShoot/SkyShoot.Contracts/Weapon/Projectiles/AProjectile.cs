@@ -26,18 +26,26 @@ namespace SkyShoot.Contracts.Weapon.Projectiles
 
 		public override void Copy(AGameObject other)
 		{
-			if (!(other is AProjectile))
+			// todo temporary
+			/*if (!(other is AProjectile))
 			{
 				throw new Exception("Type mistmath");
-			}
-			var otherProjectile = other as AProjectile;
+			}*/
+			// todo otherProjectile == null!
+			// var otherProjectile = other as AProjectile;
 			base.Copy(other);
 			//LifeDistance = otherProjectile.LifeDistance;
-			Owner = otherProjectile.Owner;
+			// todo refactor
+			// Owner = otherProjectile.Owner;
 		}
 
-		public AProjectile(AProjectile other)
+		public AProjectile(AGameObject other)
 		{
+			// todo temporary
+			// if (!(other is AProjectile))
+			// {
+			//	throw new Exception("Type mistmath");
+			// }
 			Copy(other);
 		}
 

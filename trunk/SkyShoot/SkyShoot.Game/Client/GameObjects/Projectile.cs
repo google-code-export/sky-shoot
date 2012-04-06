@@ -1,10 +1,16 @@
 using System;
+
 using Microsoft.Xna.Framework;
+
 using Microsoft.Xna.Framework.Audio;
+
 using Microsoft.Xna.Framework.Graphics;
+using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Weapon.Projectiles;
+
 using SkyShoot.Game.Client.Game;
 using SkyShoot.Game.Client.View;
+
 using IDrawable = SkyShoot.Game.Client.View.IDrawable;
 
 namespace SkyShoot.Game.Client.GameObjects
@@ -31,16 +37,16 @@ namespace SkyShoot.Game.Client.GameObjects
 			set { ShootVector = TypeConverter.Xna2XnaLite(value); }
 		}
 
-		AudioEngine engine;
-		SoundBank soundBank;
-		WaveBank waveBank;
+		private readonly AudioEngine _engine;
+		private readonly SoundBank _soundBank;
+		private WaveBank _waveBank;
 
-		public Projectile(AProjectile projectile) :
+		public Projectile(AGameObject projectile) :
 			base(projectile)
 		{
-			engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
-			soundBank = new SoundBank(engine, "Content\\Sounds\\Sound Bank.xsb");
-			waveBank = new WaveBank(engine, "Content\\Sounds\\Wave Bank.xwb");
+			_engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
+			_soundBank = new SoundBank(_engine, "Content\\Sounds\\Sound Bank.xsb");
+			_waveBank = new WaveBank(_engine, "Content\\Sounds\\Wave Bank.xwb");
 
 			ObjectType = EnumObjectType.LaserBullet;
 			// todo
@@ -53,16 +59,19 @@ namespace SkyShoot.Game.Client.GameObjects
 				case EnumObjectType.Rocket:
 					break;
 				case EnumObjectType.LaserBullet:
-					Cue laserCue = soundBank.GetCue("LASER");
+					Cue laserCue = _soundBank.GetCue("LASER");
 					laserCue.Play();
 					break;
 				case EnumObjectType.ShutgunBullet:
-					Cue shutgunCue = soundBank.GetCue("GUNSHOT");
+					Cue shutgunCue = _soundBank.GetCue("GUNSHOT");
 					shutgunCue.Play();
 					break;
 			}
 
 			Texture = Textures.ProjectileTexture;
+
+			// todo temporary
+			HealthAmount = 1000;
 
 			IsActive = true;
 		}

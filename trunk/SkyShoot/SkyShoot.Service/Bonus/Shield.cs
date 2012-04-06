@@ -12,7 +12,7 @@ namespace SkyShoot.Service.Bonus
 		{
 			ObjectType = EnumObjectType.Shield;
 			DamageFactor = 0.5f;
-			this._milliseconds = Constants.SHIELD_MILLISECONDS;
+			this.milliseconds = Constants.SHIELD_MILLISECONDS;
 		}
 	}
 }
