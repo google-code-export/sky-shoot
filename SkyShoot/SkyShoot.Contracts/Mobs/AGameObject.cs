@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using SkyShoot.Contracts.Session;
+using SkyShoot.Contracts.Weapon.Projectiles;
 using SkyShoot.XNA.Framework;
 
 using SkyShoot.Contracts.Bonuses;
@@ -11,6 +12,8 @@ using SkyShoot.Contracts.Weapon;
 namespace SkyShoot.Contracts.Mobs
 {
 	[DataContract]
+	[KnownType(typeof(AProjectile))]
+	[KnownType(typeof (AGameBonus))]
 	public class AGameObject
 	{
 		/// <summary>
@@ -102,7 +105,7 @@ namespace SkyShoot.Contracts.Mobs
 		public bool IsActive 
 		{ 
 			get { return HealthAmount > 0; }
-			set { HealthAmount = value ? 1 : -1; }
+			set { HealthAmount = value ? HealthAmount : -1; }
 			}
 
 		#endregion

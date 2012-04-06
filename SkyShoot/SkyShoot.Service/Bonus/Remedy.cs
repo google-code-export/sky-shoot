@@ -11,7 +11,7 @@ namespace SkyShoot.Service.Bonus
 		{
 			ObjectType = EnumObjectType.Remedy;
 			DamageFactor = 0.25f;
-			_milliseconds = Constants.REMEDY_MILLISECONDS; // redundant
+			milliseconds = Constants.REMEDY_MILLISECONDS; // redundant
 		}
 	}
 }

@@ -1,10 +1,16 @@
 using System;
+
 using Microsoft.Xna.Framework;
+
 using Microsoft.Xna.Framework.Audio;
+
 using Microsoft.Xna.Framework.Graphics;
+
 using SkyShoot.Contracts.Mobs;
+
 using SkyShoot.Game.Client.Game;
 using SkyShoot.Game.Client.View;
+
 using IDrawable = SkyShoot.Game.Client.View.IDrawable;
 
 namespace SkyShoot.Game.Client.GameObjects
@@ -13,7 +19,7 @@ namespace SkyShoot.Game.Client.GameObjects
 	{
 		private readonly AudioEngine _engine;
 		private readonly SoundBank _soundBank;
-		WaveBank waveBank;
+		private WaveBank _waveBank;
 
 		public Vector2 CoordinatesM
 		{
@@ -47,25 +53,12 @@ namespace SkyShoot.Game.Client.GameObjects
 		private const int FrameTime = 500;
 		private const bool Looping = true;
 
-		// todo remove
-		public Mob(Animation2D animation)
-		{
-			_engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
-			_soundBank = new SoundBank(_engine, "Content\\Sounds\\Sound Bank.xsb");
-			waveBank = new WaveBank(_engine, "Content\\Sounds\\Wave Bank.xwb");
-
-			_healthTextureHeight = 5;
-
-			Animation = animation;
-			Animation.Initialize(FrameTime, Looping);			
-		}
-
 		public Mob(AGameObject other, Animation2D animation)
 			: base(other)
 		{			
 			_engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
 			_soundBank = new SoundBank(_engine, "Content\\Sounds\\Sound Bank.xsb");
-			waveBank = new WaveBank(_engine, "Content\\Sounds\\Wave Bank.xwb");			
+			_waveBank = new WaveBank(_engine, "Content\\Sounds\\Wave Bank.xwb");			
 
 			_healthTextureHeight = 5;
 

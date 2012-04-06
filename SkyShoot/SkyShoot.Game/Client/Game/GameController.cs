@@ -93,12 +93,6 @@ namespace SkyShoot.Game.Client.Game
 
 		#region бывший callbacks
 
-		public void SpawnMob(AGameObject mob)
-		{
-			var clientMob = GameFactory.CreateClientMob(mob);
-			GameModel.AddMob(clientMob);
-		}
-
 		public void Hit(AGameObject mob, AProjectile projectile)
 		{
 			if (projectile != null)

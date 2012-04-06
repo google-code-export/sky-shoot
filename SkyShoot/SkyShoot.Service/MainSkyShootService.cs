@@ -244,7 +244,7 @@ namespace SkyShoot.Service
 				var bonus = new AGameBonus(obj);
 				//bonus.Copy(obj);
 				Bonuses.Add(bonus);
-				bonus.taken(time);
+				bonus.Taken(time);
 			}
 		}
 		public void DeleteExpiredBonuses(long time)
