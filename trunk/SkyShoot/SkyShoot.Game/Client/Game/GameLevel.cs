@@ -21,11 +21,9 @@ namespace SkyShoot.Game.Client.Game
 		private static Texture2D _texture;
 
 		private static Texture2D _gunTexture;
-		private static Texture2D _laserTexture;		
+		private static Texture2D _laserTexture;
 
-		AudioEngine engine;
-		SoundBank soundBank;
-		WaveBank waveBank;
+		private SoundManager _soundManager;
 
 		public GameLevel(Contracts.Session.GameLevel gameLevel)
 		{
@@ -35,37 +33,30 @@ namespace SkyShoot.Game.Client.Game
 			//_gunTexture = Textures.Clone(Textures.Gun);
 			//_laserTexture = Textures.Clone(Textures.Laser);
 
-			engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
-			soundBank = new SoundBank(engine, "Content\\Sounds\\Sound Bank.xsb");
-			waveBank = new WaveBank(engine, "Content\\Sounds\\Wave Bank.xwb");
+			SoundManager.Initialize();
+			_soundManager = SoundManager.Instance;
 
 			switch (gameLevel.UsedTileSet)
 			{
 				case TileSet.Grass:
-					Cue grassCue = soundBank.GetCue("cricket00");
-					grassCue.Play();
+					_soundManager.SoundPlay(2);
 					_texture = Textures.Clone(Textures.GrassLandscape);
 					break;
 				case TileSet.Desert:
-					Cue desertCue = soundBank.GetCue("wind03");
-					desertCue.Play();
+					_soundManager.SoundPlay(1);
 					_texture = Textures.Clone(Textures.DesertLandscape);
 					break;
 				case TileSet.Sand:
-					Cue sandtCue = soundBank.GetCue("wind03");
-					sandtCue.Play();
+					_soundManager.SoundPlay(1);
 					_texture = Textures.Clone(Textures.SandLandscape);
 					break;
 				case TileSet.Snow:
-					Cue snowCue = soundBank.GetCue("wind01b");
-					snowCue.Play();
+					_soundManager.SoundPlay(9);
 					_texture = Textures.Clone(Textures.SnowLandscape);
 					break;
 				case TileSet.Volcanic:
-					Cue volcCue = soundBank.GetCue("lava_burn1");
-					Cue lavaCue = soundBank.GetCue("lava");
-					volcCue.Play();
-					lavaCue.Play();
+					_soundManager.SoundPlay(5);
+					_soundManager.SoundPlay(6);
 					_texture = Textures.Clone(Textures.VolcanicLandscape);
 					break;
 			}
