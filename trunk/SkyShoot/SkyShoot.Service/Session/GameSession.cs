@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using SkyShoot.Contracts.Session;
 using SkyShoot.Contracts.Mobs;
+using SkyShoot.Contracts.Weapon.Projectiles;
+using SkyShoot.Service.Bonuses;
 using SkyShoot.Service.Mobs;
 using SkyShoot.XNA.Framework;
-using SkyShoot.Contracts.Weapon.Projectiles;
 using System.Timers;
 using SkyShoot.Contracts;
 using System.Diagnostics;
 using SkyShoot.ServProgram.Session;
 using SkyShoot.Service.Bonus;
 using SkyShoot.Contracts.GameEvents;
-using SkyShoot.Contracts.Bonuses;
 
 namespace SkyShoot.Service.Session
 {
@@ -25,9 +25,9 @@ namespace SkyShoot.Service.Session
 		//private ObjectPool<AGameObject> _mobs;// { get; set; }
 		//private List<AProjectile> _projectiles;
 		//private ObjectPool<AProjectile> _projectiles;
-		private List<Mob> _mobs { get; set; }
-		private List<AGameBonus> _bonuses { get; set; }
-		private ObjectPool<AProjectile> _projectiles { get; set; }
+		//private List<Mob> _mobs { get; set; }
+		//private List<AGameBonus> _bonuses { get; set; }
+		//private ObjectPool<AProjectile> _projectiles { get; set; }
 
 		public GameDescription LocalGameDescription { get; private set; }
 
@@ -56,7 +56,7 @@ namespace SkyShoot.Service.Session
 
 			_gameObjects = new List<AGameObject>();
 			//_mobs = new ObjectPool<AGameObject>();
-			_bonuses = new List<AGameBonus>();
+			//_bonuses = new List<AGameBonus>();
 			//Players = new List<MainSkyShootService>();
 			//_projectiles = new List<AProjectile>();
 			//_projectiles = new ObjectPool<AProjectile>();
@@ -123,7 +123,7 @@ namespace SkyShoot.Service.Session
 
 		private void NewBonusDropped(AGameObject bonus)
 		{
-			_bonuses.Add((AGameBonus) bonus);
+			_gameObjects.Add((AGameBonus) bonus);
 			PushEvent(new NewObjectEvent(bonus, _timerCounter));
 		}
 
@@ -217,7 +217,7 @@ namespace SkyShoot.Service.Session
 				var player = _gameObjects[i] as MainSkyShootService;
 				if (player == null)
 				{
-					Trace.WriteLine("Eroor: !!! IsPlayer true for non player object");
+					Trace.WriteLine("Error: !!! IsPlayer true for non player object");
 					continue;
 				}
 				//this.SomebodyMoves += player.MobMoved;

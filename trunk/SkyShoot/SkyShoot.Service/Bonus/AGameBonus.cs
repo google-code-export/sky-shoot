@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Runtime.Serialization;
 using SkyShoot.Contracts.Mobs;
-
 using SkyShoot.XNA.Framework;
 
-namespace SkyShoot.Contracts.Bonuses
+namespace SkyShoot.Service.Bonuses
 {
-	[DataContract]
+	//[DataContract]
 	public class AGameBonus : AGameObject
 	{
-		protected int milliseconds; // @Sergey Terechenko : time = health
-		protected long startTime;
+		protected int Milliseconds; // @Sergey Terechenko : time = health
+		protected long StartTime;
 
 		public float DamageFactor;
 
@@ -24,18 +22,18 @@ namespace SkyShoot.Contracts.Bonuses
 				throw new TypeAccessException();
 			}
 			Copy(b);
-			milliseconds = b.milliseconds;
-			startTime = b.startTime;
+			Milliseconds = b.Milliseconds;
+			StartTime = b.StartTime;
 		}
 
 		public bool IsExpired(long time)
 		{
-			return (time - startTime > milliseconds);
+			return (time - StartTime > Milliseconds);
 		}
 
 		public void Taken(long startTime)
 		{
-			startTime = startTime;
+			StartTime = startTime;
 		}
 	}               
 }

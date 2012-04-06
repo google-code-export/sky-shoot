@@ -1,18 +1,38 @@
 ﻿using System;
-
-using SkyShoot.Contracts.Bonuses;
+using System.Runtime.Serialization;
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Weapon.Projectiles;
 using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Contracts.Weapon
 {
-	public abstract class AWeapon : AObtainableDamageModifier
+	public abstract class AWeapon //: AObtainableDamageModifier
 	{
-		protected AWeapon(Guid id) : base(id) { Owner = null; }
-
-		protected AWeapon(Guid id, AGameObject owner) : base(id) 
+		[Flags]
+		public enum AObtainableDamageModifiers
 		{
+			[EnumMember]
+			DoubleDamage,
+			[EnumMember]
+			Shield,
+			[EnumMember]
+			Pistol,
+			[EnumMember]
+			Shotgun
+		}
+		public Guid Id { get; set; }
+		public AObtainableDamageModifiers WheaponType { get; set; }
+		
+		public AGameObject Owner { get; set; }
+		protected AWeapon(Guid id) 
+		{
+			Owner = null;
+			Id = id;
+		}
+
+		protected AWeapon(Guid id, AGameObject owner) 
+		{
+			Id = id;
 			Owner = owner;
 		}
 

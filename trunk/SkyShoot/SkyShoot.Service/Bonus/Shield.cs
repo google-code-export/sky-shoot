@@ -1,5 +1,5 @@
-﻿using SkyShoot.Contracts.Bonuses;
-using SkyShoot.Contracts;
+﻿using SkyShoot.Contracts;
+using SkyShoot.Service.Bonuses;
 using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Service.Bonus
@@ -12,7 +12,7 @@ namespace SkyShoot.Service.Bonus
 		{
 			ObjectType = EnumObjectType.Shield;
 			DamageFactor = 0.5f;
-			this.milliseconds = Constants.SHIELD_MILLISECONDS;
+			Milliseconds = Constants.SHIELD_MILLISECONDS;
 		}
 	}
 }
