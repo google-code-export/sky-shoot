@@ -130,14 +130,14 @@ namespace SkyShoot.Game.Screens
 
 		private void ExitButtonPressed(object sender, EventArgs args)
 		{
-			_soundManager.SoundPlay("RICOCHET");
+			_soundManager.SoundPlay(0);
 
 			ScreenManager.Instance.Game.Exit();
 		}
 
 		private void LoginButtonPressed(object sender, EventArgs args)
 		{
-			_soundManager.SoundPlay("RICOCHET");
+			_soundManager.SoundPlay(0);
 
 			if (_loginBox.Text.Length < 3)
 			{
@@ -164,7 +164,7 @@ namespace SkyShoot.Game.Screens
 
 		private void NewAccountButtonPressed(object sender, EventArgs args)
 		{
-			_soundManager.SoundPlay("RICOCHET");
+			_soundManager.SoundPlay(0);
 
 			if (_loginBox.Text.Length < 3)
 			{

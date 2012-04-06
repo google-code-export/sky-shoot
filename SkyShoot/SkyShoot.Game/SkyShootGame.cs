@@ -52,7 +52,7 @@ namespace SkyShoot.Game
 
 			SoundManager.Initialize();
 			_soundManager = SoundManager.Instance;
-			_soundManager.SoundPlay("STARWARS");
+			_soundManager.SoundPlay(7);
 
 			base.Initialize();
 

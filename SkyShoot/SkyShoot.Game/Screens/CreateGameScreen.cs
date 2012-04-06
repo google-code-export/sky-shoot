@@ -217,13 +217,13 @@ namespace SkyShoot.Game.Screens
 
 		private void BackButtonPressed(object sender, EventArgs args)
 		{
-			_soundManager.SoundPlay("RICOCHET");
+			_soundManager.SoundPlay(0);
 			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MultiplayerScreen);
 		}
 
 		private void CreateButtonPressed(object sender, EventArgs args)
 		{
-			_soundManager.SoundPlay("RICOCHET");
+			_soundManager.SoundPlay(0);
 
 			GameMode m;
 			TileSet ts;

@@ -156,14 +156,14 @@ namespace SkyShoot.Game.Screens
 
 		private void BackButtonPressed(object sender, EventArgs args)
 		{
-			_soundManager.SoundPlay("RICOCHET");			
+			_soundManager.SoundPlay(0);			
 
 			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MainMenuScreen);
 		}
 
 		private void JoinGameButtonPressed(object sender, EventArgs args)
 		{
-			_soundManager.SoundPlay("RICOCHET");
+			_soundManager.SoundPlay(0);
 
 			_tempGameList = GameController.Instance.GetGameList();
 
@@ -190,14 +190,14 @@ namespace SkyShoot.Game.Screens
 
 		private void CreateGameButtonPressed(object sender, EventArgs args)
 		{
-			_soundManager.SoundPlay("RICOCHET");
+			_soundManager.SoundPlay(0);
 
 			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.CreateGameScreen);
 		}
 
 		private void RefreshButtonPressed(object sender, EventArgs args)
 		{
-			_soundManager.SoundPlay("RICOCHET");
+			_soundManager.SoundPlay(0);
 
 			_gameList.Items.Clear();
 			_tempGameList = GameController.Instance.GetGameList();

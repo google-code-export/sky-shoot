@@ -49,9 +49,7 @@ namespace SkyShoot.Game.Client.Game
 
 	public sealed class GameController : ISkyShootService
 	{
-		private AudioEngine _engine;
-		private SoundBank _soundBank;
-		private WaveBank _waveBank;
+		SoundManager _soundManager;
 
 		public static Guid MyId { get; private set; }
 
@@ -71,6 +69,9 @@ namespace SkyShoot.Game.Client.Game
 		private GameController()
 		{
 			InitConnection();
+
+			SoundManager.Initialize();
+			_soundManager = SoundManager.Instance;
 		}
 
 		public void GameStart(Contracts.Session.GameLevel arena)
@@ -101,18 +102,13 @@ namespace SkyShoot.Game.Client.Game
 		}
 
 		public void MobDead(AGameObject mob)
-		{
-			_engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
-			_soundBank = new SoundBank(_engine, "Content\\Sounds\\Sound Bank.xsb");
-			_waveBank = new WaveBank(_engine, "Content\\Sounds\\Wave Bank.xwb");
-
+		{			
 			//Cue cue = soundBank.GetCue("angry01");
-			Cue cueDeath = _soundBank.GetCue("guts04a");
+			//_soundManager.SoundPlay("guts04a");
 			GameModel.RemoveMob(mob.Id);
 			GameModel.GameLevel.AddTexture(mob.Is(AGameObject.EnumObjectType.Player)
 			                               	? Textures.DeadPlayerTexture
 			                               	: Textures.DeadSpiderTexture, TypeConverter.XnaLite2Xna(mob.Coordinates));
-			cueDeath.Play();
 		}
 
 		public void MobMoved(AGameObject mob, XNA.Framework.Vector2 direction)
