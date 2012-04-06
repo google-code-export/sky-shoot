@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using SkyShoot.Contracts;
-using SkyShoot.Contracts.Bonuses;
+using SkyShoot.Service.Bonuses;
 using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Service.Bonus

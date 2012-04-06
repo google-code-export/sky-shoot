@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using SkyShoot.Contracts.Weapon;
 using SkyShoot.Contracts;
+using SkyShoot.Contracts.Weapon.Projectiles;
 
 namespace SkyShoot.Service.Weapon
 {
@@ -15,11 +13,11 @@ namespace SkyShoot.Service.Weapon
 		public Claw(Guid id, Contracts.Mobs.AGameObject owner)
 			: base(id) 
 		{
-			this.Owner = owner;
+			Owner = owner;
 			ReloadSpeed = Constants.CLAW_ATTACK_RATE;
 		}
 
-		public override Contracts.Weapon.Projectiles.AProjectile[] CreateBullets(Contracts.Mobs.AGameObject owner, SkyShoot.XNA.Framework.Vector2 direction)
+		public override AProjectile[] CreateBullets(Contracts.Mobs.AGameObject owner, SkyShoot.XNA.Framework.Vector2 direction)
 		{
 			throw new NotImplementedException();
 		}

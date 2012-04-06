@@ -15,7 +15,7 @@ namespace SkyShoot.Service.Weapon
 		private void Init()
 		{
 			_rand = new Random();
-			Type = AObtainableDamageModifiers.Shotgun;
+			WheaponType = AObtainableDamageModifiers.Shotgun;
 			ReloadSpeed = SkyShoot.Contracts.Constants.SHOTGUN_ATTACK_RATE;
 		}
 

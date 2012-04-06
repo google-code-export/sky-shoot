@@ -2,18 +2,12 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using SkyShoot.Contracts.Session;
-using SkyShoot.Contracts.Weapon.Projectiles;
-using SkyShoot.XNA.Framework;
-
-using SkyShoot.Contracts.Bonuses;
-
 using SkyShoot.Contracts.Weapon;
+using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Contracts.Mobs
 {
 	[DataContract]
-	[KnownType(typeof(AProjectile))]
-	[KnownType(typeof (AGameBonus))]
 	public class AGameObject
 	{
 		/// <summary>
@@ -105,8 +99,8 @@ namespace SkyShoot.Contracts.Mobs
 		public bool IsActive 
 		{ 
 			get { return HealthAmount > 0; }
-			set { HealthAmount = value ? HealthAmount : -1; }
-			}
+			set { if(!value) HealthAmount = -1; }
+		}
 
 		#endregion
 
@@ -122,8 +116,8 @@ namespace SkyShoot.Contracts.Mobs
 		[DataMember]
 		public float MaxHealthAmount { get; set; }
 
-		[DataMember]
-		public AObtainableDamageModifier.AObtainableDamageModifiers State { get; set; }
+		//[DataMember]
+		//public AObtainableDamageModifier.AObtainableDamageModifiers State { get; set; }
 
 		#endregion
 
@@ -166,7 +160,7 @@ namespace SkyShoot.Contracts.Mobs
 		public virtual void Copy(AGameObject other)
 		{
 			Id = other.Id;
-			State = other.State;
+			//State = other.State;
 			//IsActive = other.IsActive;
 			ObjectType = other.ObjectType;
 

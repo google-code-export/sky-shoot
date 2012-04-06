@@ -1,5 +1,5 @@
 ﻿using SkyShoot.Contracts;
-using SkyShoot.Contracts.Bonuses;
+using SkyShoot.Service.Bonuses;
 using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Service.Bonus
@@ -11,7 +11,7 @@ namespace SkyShoot.Service.Bonus
 		{
 			ObjectType = EnumObjectType.Remedy;
 			DamageFactor = 0.25f;
-			milliseconds = Constants.REMEDY_MILLISECONDS; // redundant
+			Milliseconds = Constants.REMEDY_MILLISECONDS; // redundant
 		}
 	}
 }

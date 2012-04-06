@@ -84,6 +84,7 @@
   <ItemGroup>
     <Compile Include="Account\AccountInfoPrg.cs" />
     <Compile Include="Account\AccountManagerPrg.cs" />
+    <Compile Include="Bonus\AGameBonus.cs" />
     <Compile Include="Bonus\BonusFactory.cs" />
     <Compile Include="Bonus\DoubleDamage.cs" />
     <Compile Include="Bonus\Remedy.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="Session\ObjectPool.cs" />
     <Compile Include="Session\SessionManager.cs" />
     <Compile Include="Mobs\WallFactory.cs" />
+    <Compile Include="Walls\Wall.cs" />
     <Compile Include="Weapon\Bullets\PistolBullet.cs" />
     <Compile Include="Weapon\Bullets\ShotgunBullet.cs" />
     <Compile Include="Weapon\Claw.cs" />
