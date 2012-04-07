@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using SkyShoot.Contracts.Session;
-using SkyShoot.Contracts.Mobs;
-using SkyShoot.Service.Bonuses;
-using SkyShoot.Service.Mobs;
-using SkyShoot.Service.Weapon.Bullets;
-using SkyShoot.XNA.Framework;
+using System.Diagnostics;
+using System.Linq;
 using System.Timers;
 using SkyShoot.Contracts;
-using System.Diagnostics;
-using SkyShoot.Service.Bonus;
 using SkyShoot.Contracts.GameEvents;
+using SkyShoot.Contracts.Mobs;
+using SkyShoot.Contracts.Session;
+using SkyShoot.Service.Bonus;
+using SkyShoot.Service.Bonuses;
+using SkyShoot.Service.Mobs;
+using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Service.Session
 {
@@ -53,10 +53,6 @@ namespace SkyShoot.Service.Session
 			_wallFactory = new WallFactory(GameLevel);
 		}
 
-		//public event SomebodyMovesHandler SomebodyMoves; 
-		//public event SomebodyDiesHandler SomebodyDies;
-		//public event SomebodyHitHandler SomebodyHit;
-		
 		private void SomebodyMoved(AGameObject sender, Vector2 direction)
 		{
 			var player = sender as MainSkyShootService;
@@ -68,7 +64,10 @@ namespace SkyShoot.Service.Session
 				direction.Y *= speedUp;
 			}
 			sender.RunVector = direction;
-			PushEvent(new ObjectDirectionChanged(direction,sender.Id,_timerCounter));
+			lock (_gameObjects)
+			{
+				PushEvent(new ObjectDirectionChanged(direction, sender.Id, _timerCounter));
+			}
 		}
 
 		private void SomebodyShot(AGameObject sender, Vector2 direction)
@@ -77,7 +76,7 @@ namespace SkyShoot.Service.Session
 			
 			if (sender.Weapon != null)
 			{
-				if (sender.Weapon.Reload(System.DateTime.Now.Ticks / 10000))
+				if (sender.Weapon.Reload(DateTime.Now.Ticks / 10000))
 				{
 					var a = sender.Weapon.CreateBullets(sender, direction);
 					var player = sender as MainSkyShootService;
@@ -94,32 +93,33 @@ namespace SkyShoot.Service.Session
 						lock (_gameObjects)
 						{
 							_gameObjects.Add(b);// GetInActive().Copy(b);
+							PushEvent(new NewObjectEvent(b, _timerCounter));
 						}
-						PushEvent(new NewObjectEvent(b,_timerCounter));
 					}
 					//Trace.WriteLine("projectile added", "GameSession");
 				}
 			}
 		}
 
-		public void SomebodyDied(AGameObject sender)
-		{
-			PushEvent(new ObjectDeleted(sender.Id, _timerCounter));
-		}
+		//public void SomebodyDied(AGameObject sender)
+		//{
+		//  PushEvent(new ObjectDeleted(sender.Id, _timerCounter));
+		//}
 
-		public void SomebodySpawned(AGameObject sender) 
-		{			
-			PushEvent(new NewObjectEvent(sender, _timerCounter));
-		}
+		//public void SomebodySpawned(AGameObject sender) 
+		//{			
+		//}
 
-		private void NewBonusDropped(AGameObject bonus)
+		private IEnumerable<AGameEvent> NewBonusDropped(AGameObject bonus, long time)
 		{
 			_gameObjects.Add(bonus);
-			PushEvent(new NewObjectEvent(bonus, _timerCounter));
+			return new[] { new NewObjectEvent(bonus, time) };
 		}
 
-		public void MobDead(AGameObject mob)
+		public IEnumerable<AGameEvent> MobDead(AGameObject mob, long time)
 		{
+			// result = 
+			var r = new List<AGameEvent>();
 			//SomebodyDied(mob);
 			//mob.MeMoved -= SomebodyMoved;
 			if (mob.Is(AGameObject.EnumObjectType.LivingObject))
@@ -127,22 +127,23 @@ namespace SkyShoot.Service.Session
 				AGameBonus b = _bonusFactory.CreateBonus(mob.Coordinates);
 				b.IsActive = true;
 				//_gameObjects.Add(b);
-				NewBonusDropped(b);
+				r.AddRange(NewBonusDropped(b, time));
 			}
 
 			if(mob.Is(AGameObject.EnumObjectType.Player))
 			{
 				PlayerDead(mob as MainSkyShootService);
-				return;
 			}
-			PushEvent(new ObjectDeleted(mob.Id, _timerCounter));
-			_gameObjects.Remove(mob);
+			r.Add(new ObjectDeleted(mob.Id, _timerCounter));
+			// will be delete later
+			//_gameObjects.Remove(mob);
+			return r;
 		}
 
-		public void SomebodyHitted(AGameObject mob, AProjectile projectile)
-		{
-			PushEvent(new ObjectHealthChanged(mob.HealthAmount, mob.Id, _timerCounter));
-		}
+		//public void SomebodyHitted(AGameObject mob, AProjectile projectile)
+		//{
+		//  PushEvent(new ObjectHealthChanged(mob.HealthAmount, mob.Id, _timerCounter));
+		//}
 
 		public void PlayerLeave(MainSkyShootService player)
 		{
@@ -152,20 +153,18 @@ namespace SkyShoot.Service.Session
 			player.MeShot -= SomebodyShot;
 
 			//Players.Remove(player);
-			_gameObjects.Remove(player);
+			lock (_gameObjects)
+			{
+				_gameObjects.Remove(player);
+			}
 			Trace.WriteLine(player.Name + "leaved game");
 		}
 
 		private void PushEvent(AGameEvent gameEvent)
 		{
-			foreach (var player in _gameObjects)
+			foreach (var playerConverted in _gameObjects.Where(player => player.Is(AGameObject.EnumObjectType.Player)).OfType<MainSkyShootService>())
 			{
-				if (player.Is(AGameObject.EnumObjectType.Player))
-				{
-					var playerConverted = player as MainSkyShootService;
-					if (playerConverted != null) 
-						playerConverted.NewEvents.Enqueue(gameEvent);
-				}
+				playerConverted.NewEvents.Enqueue(gameEvent);
 			}
 		}
 
@@ -178,7 +177,7 @@ namespace SkyShoot.Service.Session
 			}
 			//player.GameOver();
 
-			SomebodyDied(player);			
+			//SomebodyDied(player);			
 			player.Disconnect();//временно
 		}
 
@@ -270,7 +269,7 @@ namespace SkyShoot.Service.Session
 			if (_gameObjects.Count == LocalGameDescription.MaximumPlayersAllowed)
 			{
 				// Trace.WriteLine("player added"+player.Name);
-				var startThread = new System.Threading.Thread(new System.Threading.ThreadStart(Start));
+				var startThread = new System.Threading.Thread(Start);
 				startThread.Start();
 			}
 			return true;
@@ -283,8 +282,9 @@ namespace SkyShoot.Service.Session
 		}
 
 	#region local functions
-		public void SpawnMob()
+		public IEnumerable<AGameEvent> SpawnMob(long time)
 		{
+			var r = new List<AGameEvent>();
 #if false
 			// DEBUG 
 			//!! debug
@@ -300,13 +300,14 @@ namespace SkyShoot.Service.Session
 				// System.Diagnostics.Trace.WriteLine("mob spawned" + mob.Id);
 				
 				_gameObjects.Add(mob);
-				SomebodySpawned(mob);
+				r.Add(new NewObjectEvent(mob, time));
 				//mob.MeMoved += new SomebodyMovesHandler(SomebodyMoved);
 			}
 			else
 			{
 				_intervalToSpawn--;
 			}
+			return r;
 		}
 
 		/// <summary>
@@ -317,11 +318,13 @@ namespace SkyShoot.Service.Session
 			if (!System.Threading.Monitor.TryEnter(_updating)) return;
 
 			// Trace.WriteLine("update begin "+ _timerCounter);
-			SpawnMob();
-			 var now = DateTime.Now.Ticks/10000;
+			 var now = DateTime.Now.Ticks / 10000;
 			_updateDelay = now - _lastUpdate;
 			_lastUpdate = now;
 
+			var eventsCash = new List<AGameEvent>(_gameObjects.Count * 3);
+
+			eventsCash.AddRange(SpawnMob(now));
 			lock (_gameObjects)
 			{
 
@@ -333,7 +336,8 @@ namespace SkyShoot.Service.Session
 					{
 						continue;
 					}
-					activeObject.Think(_gameObjects, now);
+					eventsCash.AddRange(
+					activeObject.Think(_gameObjects, now));
 
 					var newCoord = activeObject.ComputeMovement(_updateDelay, GameLevel);
 					var canMove = true;
@@ -359,11 +363,11 @@ namespace SkyShoot.Service.Session
 						{
 							continue;
 						}
-						activeObject.Do(slaveObject, now);
-						//!! @todo rewrite
-						if (!slaveObject.IsBullet && !activeObject.IsBullet && 
-						    !slaveObject.Is(AGameObject.EnumObjectType.Bonus) &&
-							!activeObject.Is(AGameObject.EnumObjectType.Bonus))
+						eventsCash.AddRange(activeObject.Do(slaveObject, now));
+						if (!slaveObject.Is(AGameObject.EnumObjectType.Bullet)
+							&& !activeObject.Is(AGameObject.EnumObjectType.Bullet) 
+							&& !slaveObject.Is(AGameObject.EnumObjectType.Bonus)
+							&& !activeObject.Is(AGameObject.EnumObjectType.Bonus))
 						{
 							//удаляемся ли мы от объекта
 							// если да, то можем двигаться
@@ -371,6 +375,7 @@ namespace SkyShoot.Service.Session
 							          Vector2.DistanceSquared(newCoord, slaveObject.Coordinates);
 						}
 					}
+					var coordDiff = activeObject.Coordinates - newCoord;
 					if (canMove)
 					{
 						activeObject.Coordinates = newCoord;
@@ -379,28 +384,30 @@ namespace SkyShoot.Service.Session
 					{
 						activeObject.RunVector = Vector2.Zero;
 					}
+					if ((coordDiff - activeObject.PrevMoveDiff).LengthSquared() > Constants.Epsilon)
+					{
+						eventsCash.Add(new ObjectDirectionChanged(activeObject.RunVector, activeObject.Id, now));
+					}
+					activeObject.PrevMoveDiff = coordDiff;
 				}
 
-				//for (int i = 0; i < Players.Count; i++)
-				//{
-				//  var activeObject = Players[i];
-				//  if (!activeObject.IsActive)
-				//  {
-				//    PlayerDead(activeObject);
-				//  }
-				//}
-				for (int i = 0; i < _gameObjects.Count; i++)
+				for(int i = 0; i < _gameObjects.Count;i++)
 				{
 					if (!_gameObjects[i].IsActive)
-					{
-						MobDead(_gameObjects[i]);
-					}
+						eventsCash.AddRange(MobDead(_gameObjects[i], now));
+				}
 
+				// flush of events cash
+				foreach (var ev in eventsCash)
+				{
+					PushEvent(ev);
 				}
 
 				_gameObjects.RemoveAll(m => !m.IsActive);
 			}
 
+			#region old code
+			//todo //!! delete
 			/*
 			for (int i = 0; i < _gameObjects.Count; i++)
 			{
@@ -484,6 +491,7 @@ namespace SkyShoot.Service.Session
 
 			}
 			/**/
+#endregion
 
 			//_projectiles.RemoveAll(x => (x==null) || (x.LifeDistance <= 0));
 			// Trace.WriteLine(System.DateTime.Now.Ticks/10000 - now);
@@ -499,7 +507,7 @@ namespace SkyShoot.Service.Session
 		}
 
 	#endregion
-		#region todo delete
+		#region //todo delete
 
 		//private AGameObject HitTestProjectile(AProjectile projectile, Vector2 newCord)
 		//{
@@ -545,8 +553,6 @@ namespace SkyShoot.Service.Session
 		//  return hitedTarget;
 		//}
 
-		//!! todo delete
-
 		//private void HitTestTouch(MainSkyShootService player)
 		//{
 		//  for (int i = 0; i < _gameObjects.Count;i++ )
@@ -572,8 +578,6 @@ namespace SkyShoot.Service.Session
 
 
 
-
-		//!! todo delete
 
 		//private Vector2 ComputeMovement(AGameObject mob)
 		//{

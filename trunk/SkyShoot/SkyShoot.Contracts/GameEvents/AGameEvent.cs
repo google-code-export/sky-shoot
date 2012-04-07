@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 using SkyShoot.Contracts.Mobs;
@@ -12,13 +12,14 @@ namespace SkyShoot.Contracts.GameEvents
 	[KnownType(typeof (NewObjectEvent))] //возможно должно быть не здесь
 	[KnownType(typeof (ObjectDirectionChanged))]
 	[KnownType(typeof (ObjectDeleted))]
-	[KnownType(typeof (ObjectHealthChanged))]
+	[KnownType(typeof(ObjectHealthChanged))]
+	[KnownType(typeof(BonusesChanged))]
 	public abstract class AGameEvent
 	{
+		// now = DateTime.Now.Ticks/10000; //время в миллисекунда с начала игры
 		[DataMember]
 		public long TimeStamp { get; protected set; }
 
-		//номер update'a
 		[DataMember]
 		public Guid GameObjectId { get; protected set; }
 
@@ -28,8 +29,11 @@ namespace SkyShoot.Contracts.GameEvents
 			TimeStamp = timeStamp;
 		}
 
+		/// <summary>
+		/// этот метод будет вызываться на клиенте при нахождении соответствующего объекта
+		/// </summary>
+		/// <param name="mob"></param>
 		public abstract void UpdateMob(AGameObject mob);
-		//этот метод будет вызываться на клиенте при нахождении соответствующего объекта
 	}
 
 	[DataContract]
@@ -94,6 +98,24 @@ namespace SkyShoot.Contracts.GameEvents
 		public override void UpdateMob(AGameObject mob)
 		{
 			mob.HealthAmount = _health;
+		}
+	}
+
+	[DataContract]
+	public class BonusesChanged : AGameEvent
+	{
+		[DataMember]
+		public AGameObject.EnumObjectType Bonuses;
+
+		public BonusesChanged(Guid id, long timeStamp, AGameObject.EnumObjectType bonuses) : 
+			base(id, timeStamp)
+		{
+			Bonuses = bonuses;
+		}
+
+		public override void UpdateMob(AGameObject mob)
+		{
+			//todo //!! придумать что-то, ибо переносить в Mob бонусы нехорошо
 		}
 	}
 }

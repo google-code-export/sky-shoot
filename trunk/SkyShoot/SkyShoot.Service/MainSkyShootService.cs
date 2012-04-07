@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.ServiceModel;
 using SkyShoot.Contracts;
 using SkyShoot.Contracts.GameEvents;
@@ -17,7 +18,7 @@ namespace SkyShoot.Service
 			InstanceContextMode = InstanceContextMode.PerSession)]
 	public class MainSkyShootService : AGameObject, ISkyShootService
 	{
-		public static int GlobalID = 0;
+		public static int GlobalID;
 		public int LocalID;
 		public string Name;
 		public Queue<AGameEvent> NewEvents;
@@ -28,39 +29,43 @@ namespace SkyShoot.Service
 
 		private static readonly List<MainSkyShootService> ClientsList = new List<MainSkyShootService>();
 
-		public MainSkyShootService() : base(new Vector2(0, 0), Guid.NewGuid()) 
+		public MainSkyShootService()
+			: base(new Vector2(0, 0), Guid.NewGuid())
 		{
 			ObjectType = EnumObjectType.Player;
 			NewEvents = new Queue<AGameEvent>();
 			LocalID = GlobalID;
-			GlobalID ++;
- 			Bonuses = new List<AGameBonus>();
+			GlobalID++;
+			Bonuses = new List<AGameBonus>();
 		}
 
-		public void AddBonus(AGameBonus bonus, long time)
+		public AGameEvent[] AddBonus(AGameBonus bonus, long time)
 		{
+			AGameEvent t;
 			if (bonus.Is(EnumObjectType.Remedy))
 			{
 				var health = HealthAmount;
 				var potentialHealth = health + health * bonus.DamageFactor;
 				HealthAmount = potentialHealth > MaxHealthAmount ? MaxHealthAmount : potentialHealth;
-				return;
+				t = new ObjectHealthChanged(HealthAmount, Id, time);
 			}
-			Bonuses.RemoveAll(b => b.ObjectType == bonus.ObjectType);
-			Bonuses.Add(bonus);
-			bonus.Taken(time);
+			else
+			{
+				Bonuses.RemoveAll(b => b.ObjectType == bonus.ObjectType);
+				Bonuses.Add(bonus);
+				bonus.Taken(time);
+				t = new BonusesChanged(Id, time, MergeBonuses());
+			}
+			return new[]
+								{
+									new ObjectDeleted(bonus.Id, time), 
+									t
+								};
 		}
 
 		public AGameBonus GetBonus(EnumObjectType bonusType)
 		{
-			foreach (AGameBonus bonus in Bonuses)
-			{
-				if (bonus.ObjectType.Equals(bonusType))
-				{
-					return bonus;
-				}
-			}
-			return null;
+			return Bonuses.FirstOrDefault(bonus => bonus.Is(bonusType));
 		}
 
 		public void Disconnect() { LeaveGame(); }
@@ -134,7 +139,7 @@ namespace SkyShoot.Service
 				}
 				return result;
 			}
-			catch(Exception e)
+			catch (Exception e)
 			{
 				Trace.Fail(Name + " has not joined the game. " + e.Message);
 				return false;
@@ -169,7 +174,7 @@ namespace SkyShoot.Service
 			NewEvents.Clear();
 			return events;
 		}
-		
+
 		public void LeaveGame()
 		{
 			bool result = _sessionManager.LeaveGame(this);
@@ -193,7 +198,7 @@ namespace SkyShoot.Service
 		{
 			GameSession session;
 			_sessionManager.SessionTable.TryGetValue(Id, out session);
-			if(session ==null)
+			if (session == null)
 			{
 				return null;
 			}
@@ -204,9 +209,9 @@ namespace SkyShoot.Service
 		{
 			GameSession session;
 			_sessionManager.SessionTable.TryGetValue(Id, out session);
-			if(session == null)
+			if (session == null)
 			{
-				return new string[]{};
+				return new string[] { };
 			}
 			return session.LocalGameDescription.Players.ToArray();
 		}
@@ -220,26 +225,37 @@ namespace SkyShoot.Service
 			return newCoord;
 		}
 
-		public override void Do(AGameObject obj, long time)
+		private EnumObjectType MergeBonuses()
 		{
-			base.Do(obj, time);
-			if(obj.Is(EnumObjectType.Bonus))
+			return Bonuses.Aggregate((EnumObjectType)0, (current, bonus) => current | bonus.ObjectType);
+		}
+
+		public override IEnumerable<AGameEvent> Do(AGameObject obj, long time)
+		{
+			// empty array
+			var res = base.Do(obj, time);
+			if (obj.Is(EnumObjectType.Bonus))
 			{
 				obj.IsActive = false;
 				var bonus = new AGameBonus();
 				bonus.Copy(obj);
-				AddBonus(bonus, time);
+
+				return AddBonus(bonus, time);
 			}
+			return res;
 		}
 		public void DeleteExpiredBonuses(long time)
 		{
 			Bonuses.RemoveAll(b => b.IsExpired(time));
 		}
 
-		public override void Think(List<AGameObject> players, long time)
+		public override IEnumerable<AGameEvent> Think(List<AGameObject> players, long time)
 		{
-			base.Think(players, time);
+			// empty list
+			var res = base.Think(players, time);
+			var l = Bonuses.Count;
 			DeleteExpiredBonuses(time);
+			return l != Bonuses.Count ? new AGameEvent[] { new BonusesChanged(Id, time, MergeBonuses()) } : res;
 		}
 	}
 }

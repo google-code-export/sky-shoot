@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Service;
-using SkyShoot.Service.Bonuses;
 using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Contracts.Mobs
@@ -50,8 +50,9 @@ namespace SkyShoot.Contracts.Mobs
 			}
 		}
 
-		public override void Think(List<AGameObject> players, long time)
+		public override IEnumerable<AGameEvent> Think(List<AGameObject> players, long time)
 		{
+			var res = new AGameEvent[] { };
 			if (_wait == 0)
 			{
 				if (_thinkCounter % 10 == 0)
@@ -61,7 +62,7 @@ namespace SkyShoot.Contracts.Mobs
 						FindTarget(players);
 					}
 					if (Target == null)
-						return;
+						return res;
 					RunVector = new Vector2(Target.Coordinates.X - Coordinates.X, Target.Coordinates.Y - Coordinates.Y);
 				}
 				_thinkCounter++;
@@ -70,6 +71,7 @@ namespace SkyShoot.Contracts.Mobs
 			{
 				_wait--;
 			}
+			return res;
 		}
 
 		private int _wait;
@@ -80,25 +82,27 @@ namespace SkyShoot.Contracts.Mobs
 			_wait = 30;
 		}
 
-		public override void Do(AGameObject obj, long time)
+		public override IEnumerable<AGameEvent> Do(AGameObject obj, long time)
 		{
 			// не кусаем друзей-товарищей
 			//if(obj.Is(EnumObjectType.Mob))
 			//  return;
 
 			// ничего не кусаем окромя игроков злобных
-			if (_wait < 1 && obj.Is(EnumObjectType.Player))
+			var player = obj as MainSkyShootService;
+			if (_wait < 1 && obj.Is(EnumObjectType.Player) && (player != null))
 			{
-				var player = obj as MainSkyShootService;
-				if (player == null)
-				{
-					return;
-				}
 				var shield = player.GetBonus(EnumObjectType.Shield);
 				var damage = shield == null ? 1f : shield.DamageFactor;
 				player.HealthAmount -= damage * Damage;
 				Stop();
+				return new AGameEvent[]
+								{
+									new ObjectHealthChanged(player.HealthAmount, player.Id, time), 
+									new ObjectDirectionChanged(RunVector, Id, time)
+								};
 			}
+			return new AGameEvent[] { };
 		}
 	}
 }

@@ -17,14 +17,6 @@ namespace SkyShoot.Contracts.Mobs
 			HealthAmount = 1000000;// очень много, пока хватит
 		}
 
-		public override void Do(AGameObject obj, long time)
-		{
-		}
-
-		public override void Think(List<AGameObject> players, long time)
-		{
-		}
-
 		public override Vector2 ComputeMovement(long updateDelay, Session.GameLevel gameLevel)
 		{
 			return Coordinates;
