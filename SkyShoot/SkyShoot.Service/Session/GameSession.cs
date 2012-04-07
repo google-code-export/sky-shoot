@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using SkyShoot.Contracts.Session;
 using SkyShoot.Contracts.Mobs;
-using SkyShoot.Contracts.Weapon.Projectiles;
 using SkyShoot.Service.Bonuses;
 using SkyShoot.Service.Mobs;
+using SkyShoot.Service.Weapon.Bullets;
 using SkyShoot.XNA.Framework;
 using System.Timers;
 using SkyShoot.Contracts;
 using System.Diagnostics;
-using SkyShoot.ServProgram.Session;
 using SkyShoot.Service.Bonus;
 using SkyShoot.Contracts.GameEvents;
 
@@ -18,36 +17,26 @@ namespace SkyShoot.Service.Session
 	
 	public class GameSession
 	{
-		// merged to _gameObjects
-		//public List<MainSkyShootService> Players { get; set; }
-
-		private List<AGameObject> _gameObjects;
-		//private ObjectPool<AGameObject> _mobs;// { get; set; }
-		//private List<AProjectile> _projectiles;
-		//private ObjectPool<AProjectile> _projectiles;
-		//private List<Mob> _mobs { get; set; }
-		//private List<AGameBonus> _bonuses { get; set; }
-		//private ObjectPool<AProjectile> _projectiles { get; set; }
+		private readonly List<AGameObject> _gameObjects;
 
 		public GameDescription LocalGameDescription { get; private set; }
 
 		public bool IsStarted { get; set; }
 		public GameLevel GameLevel { get; private set; }
-		private SpiderFactory _spiderFactory;
-		private BonusFactory _bonusFactory;
+		private readonly SpiderFactory _spiderFactory;
+		private readonly BonusFactory _bonusFactory;
+		private readonly WallFactory _wallFactory;
 		private long _timerCounter;
-		private long _intervalToSpawn = 0;
+		private long _intervalToSpawn;
 
 		private long _lastUpdate;
 		private long _updateDelay;
 
 		private Timer _gameTimer;
 		private object _updating;
-// ReSharper disable FieldCanBeMadeReadOnly.Local
-		private WallFactory wallFactory;
-// ReSharper restore FieldCanBeMadeReadOnly.Local
 
-		public GameSession(TileSet tileSet, int maxPlayersAllowed, GameMode gameType, int gameID)
+		public GameSession(TileSet tileSet, int maxPlayersAllowed,
+			GameMode gameType, int gameID)
 		{
 			IsStarted = false;
 			GameLevel = new GameLevel(tileSet);
@@ -55,19 +44,13 @@ namespace SkyShoot.Service.Session
 			var playerNames = new List<string>();
 
 			_gameObjects = new List<AGameObject>();
-			//_mobs = new ObjectPool<AGameObject>();
-			//_bonuses = new List<AGameBonus>();
-			//Players = new List<MainSkyShootService>();
-			//_projectiles = new List<AProjectile>();
-			//_projectiles = new ObjectPool<AProjectile>();
-			//_gameEventStack = new Stack<AGameEvent>();
 
 			LocalGameDescription = new GameDescription(playerNames, maxPlayersAllowed, gameType, gameID, tileSet);
 			_spiderFactory = new SpiderFactory(GameLevel);
 			_bonusFactory = new BonusFactory();
 
 			// создание стенок
-			wallFactory = new WallFactory(GameLevel);
+			_wallFactory = new WallFactory(GameLevel);
 		}
 
 		//public event SomebodyMovesHandler SomebodyMoves; 
@@ -76,10 +59,14 @@ namespace SkyShoot.Service.Session
 		
 		private void SomebodyMoved(AGameObject sender, Vector2 direction)
 		{
-			AGameBonus speedUpBonus = (sender as MainSkyShootService).GetBonus(AGameObject.EnumObjectType.Speedup);
-			float speedUp = speedUpBonus == null ? 1f : speedUpBonus.DamageFactor;
-			direction.X *= speedUp;
-			direction.Y *= speedUp;
+			var player = sender as MainSkyShootService;
+			if (player != null)
+			{
+				AGameBonus speedUpBonus = player.GetBonus(AGameObject.EnumObjectType.Speedup);
+				float speedUp = speedUpBonus == null ? 1f : speedUpBonus.DamageFactor;
+				direction.X *= speedUp;
+				direction.Y *= speedUp;
+			}
 			sender.RunVector = direction;
 			PushEvent(new ObjectDirectionChanged(direction,sender.Id,_timerCounter));
 		}
@@ -93,9 +80,13 @@ namespace SkyShoot.Service.Session
 				if (sender.Weapon.Reload(System.DateTime.Now.Ticks / 10000))
 				{
 					var a = sender.Weapon.CreateBullets(sender, direction);
-					AGameBonus doubleDamage = (sender as MainSkyShootService).GetBonus(AGameObject.EnumObjectType.DoubleDamage);
-					float damage = doubleDamage == null ? 1f : doubleDamage.DamageFactor;
-					(sender as MainSkyShootService).Weapon.ApplyModifier(a, damage);
+					var player = sender as MainSkyShootService;
+					if (player != null)
+					{
+						AGameBonus doubleDamage = player.GetBonus(AGameObject.EnumObjectType.DoubleDamage);
+						float damage = doubleDamage == null ? 1f : doubleDamage.DamageFactor;
+						player.Weapon.ApplyModifier(a, damage);
+					}
 					foreach (var b in a)
 					{
 						//_projectiles.Add(b);
@@ -123,7 +114,7 @@ namespace SkyShoot.Service.Session
 
 		private void NewBonusDropped(AGameObject bonus)
 		{
-			_gameObjects.Add((AGameBonus) bonus);
+			_gameObjects.Add(bonus);
 			PushEvent(new NewObjectEvent(bonus, _timerCounter));
 		}
 
@@ -135,16 +126,16 @@ namespace SkyShoot.Service.Session
 			{
 				AGameBonus b = _bonusFactory.CreateBonus(mob.Coordinates);
 				b.IsActive = true;
-				_gameObjects.Add(b);
+				//_gameObjects.Add(b);
 				NewBonusDropped(b);
 			}
 
-			if(mob.IsPlayer)
+			if(mob.Is(AGameObject.EnumObjectType.Player))
 			{
 				PlayerDead(mob as MainSkyShootService);
 				return;
 			}
-			PushEvent(new ObjectDeleted(mob.Id,_timerCounter));
+			PushEvent(new ObjectDeleted(mob.Id, _timerCounter));
 			_gameObjects.Remove(mob);
 		}
 
@@ -169,9 +160,11 @@ namespace SkyShoot.Service.Session
 		{
 			foreach (var player in _gameObjects)
 			{
-				if (player.IsPlayer)
+				if (player.Is(AGameObject.EnumObjectType.Player))
 				{
-					(player as MainSkyShootService).NewEvents.Enqueue(gameEvent);
+					var playerConverted = player as MainSkyShootService;
+					if (playerConverted != null) 
+						playerConverted.NewEvents.Enqueue(gameEvent);
 				}
 			}
 		}
@@ -188,6 +181,7 @@ namespace SkyShoot.Service.Session
 			SomebodyDied(player);			
 			player.Disconnect();//временно
 		}
+
 		public void Stop()
 		{
 			if (_gameTimer != null)
@@ -212,7 +206,7 @@ namespace SkyShoot.Service.Session
 		{
 			for(int i = 0; i < _gameObjects.Count; i++)
 			{
-				if(!_gameObjects[i].IsPlayer)
+				if(!_gameObjects[i].Is(AGameObject.EnumObjectType.Player))
 					continue;
 				var player = _gameObjects[i] as MainSkyShootService;
 				if (player == null)
@@ -240,7 +234,7 @@ namespace SkyShoot.Service.Session
 				
 			}
 
-			_gameObjects.AddRange(wallFactory.CreateWalls());
+			_gameObjects.AddRange(_wallFactory.CreateWalls());
 
 			System.Threading.Thread.Sleep(1000);
 			if (!IsStarted)
@@ -291,7 +285,8 @@ namespace SkyShoot.Service.Session
 	#region local functions
 		public void SpawnMob()
 		{
-#if DEBUG
+#if false
+			// DEBUG 
 			//!! debug
 			var t = _gameObjects.FindAll(m => m.ObjectType == AGameObject.EnumObjectType.Mob);
 			if(t != null && t.Count > 2)
@@ -327,56 +322,37 @@ namespace SkyShoot.Service.Session
 			_updateDelay = now - _lastUpdate;
 			_lastUpdate = now;
 
-			//int shift = Players.Count;
 			lock (_gameObjects)
 			{
 
-				for (int i = 0; i < /*shift + /**/ _gameObjects.Count; i++)
+				for (int i = 0; i < _gameObjects.Count; i++)
 				{
-					AGameObject activeObject;
-					//if (i < shift)
-					//{
-					//  activeObject = Players[i];
-					//}
-					//else
-					//{
-					activeObject = _gameObjects[i];// - shift];
-					//}
+					var activeObject = _gameObjects[i];
 					// объект не существует
 					if (!activeObject.IsActive)
 					{
 						continue;
 					}
-					//var t = new List<AGameObject>(Players);
-					//t.AddRange(_gameObjects);
 					activeObject.Think(_gameObjects, now);
 
 					var newCoord = activeObject.ComputeMovement(_updateDelay, GameLevel);
 					var canMove = true;
 					/* <b>int j = 0</b> потому что каждый с каждым, а действия не симметричны*/
-					for (int j = 0; j < /*shift +/**/ _gameObjects.Count; j++)
+					for (int j = 0; j < _gameObjects.Count; j++)
 					{
 						// тот же самый объект. сам с собой он ничего не делает
 						if (i == j)
 						{
 							continue;
 						}
-						AGameObject slaveObject;
-						//if (j < shift)
-						//{
-						//  slaveObject = Players[j];
-						//}
-						//else
-						//{
-						slaveObject = _gameObjects[j];// - shift];
-						//}
+						var slaveObject = _gameObjects[j];
 						// объект не существует
 						if (!slaveObject.IsActive)
 						{
 							continue;
 						}
 						//!! rewrite sqrt!!
-						// объект далеко. не рассамтриваем
+						// объект далеко. не рассматриваем
 						var rR = (activeObject.Radius + slaveObject.Radius);
 						if (Vector2.DistanceSquared(newCoord, slaveObject.Coordinates) > rR*rR &&
 							Vector2.DistanceSquared(activeObject.Coordinates, slaveObject.Coordinates) > rR * rR)
@@ -386,8 +362,8 @@ namespace SkyShoot.Service.Session
 						activeObject.Do(slaveObject, now);
 						//!! @todo rewrite
 						if (!slaveObject.IsBullet && !activeObject.IsBullet && 
-						    slaveObject.Is(AGameObject.EnumObjectType.Bonus) &&
-							activeObject.Is(AGameObject.EnumObjectType.Bonus))
+						    !slaveObject.Is(AGameObject.EnumObjectType.Bonus) &&
+							!activeObject.Is(AGameObject.EnumObjectType.Bonus))
 						{
 							//удаляемся ли мы от объекта
 							// если да, то можем двигаться
@@ -516,95 +492,102 @@ namespace SkyShoot.Service.Session
 			//_updated = false;
 			System.Threading.Monitor.Exit(_updating);
 		}
-		
-		private AGameObject HitTestProjectile(AProjectile projectile, Vector2 newCord)
-		{
-			var prX = newCord.X - projectile.Coordinates.X;
-			var prY = newCord.Y - projectile.Coordinates.Y;
-
-			AGameObject hitedTarget = null;
-			var minDist = double.MaxValue;
-
-			for (int i = 0; i < _gameObjects.Count; i++)
-			{
-				var mob = _gameObjects[i];
-				var mX = mob.Coordinates.X - projectile.Coordinates.X;
-				var mY = mob.Coordinates.Y - projectile.Coordinates.Y;
-				var mR = mob.Radius;
-				var mDist = Math.Sqrt(mX * mX + mY * mY);
-
-				if (mDist <= mR && mDist < minDist)
-				{
-					//!! hitedTarget = mob;
-					minDist = mDist;
-					continue;
-				}
-
-				if (prX == 0 && prY == 0)
-				{
-					continue;
-				}
-
-				var h = Math.Abs(prX * mY - prY * mX) / Math.Sqrt(prX * prX * + prY * prY);
-
-				//@TODO Проверка углов. Над ней еще надо будет подумать.
-				var cos1 = mX * prX + mY * prY;
-				var cos2 = -1 * (prX * (mX - prX) + prY * (mY - prY));
-
-				if (h <= mR && Math.Sign(cos1) == Math.Sign(cos2) && mDist < minDist)
-				{
-					hitedTarget = mob;
-					minDist = mDist;
-				}
-
-			}
-
-			return hitedTarget;
-		}
-
-		private void HitTestTouch(MainSkyShootService player)
-		{
-			for (int i = 0; i < _gameObjects.Count;i++ )
-			{
-				var mob = _gameObjects[i];
-				if ((mob.Coordinates - player.Coordinates).Length() <= mob.Radius + player.Radius)
-				{
-					if (mob.Weapon.Reload(DateTime.Now.Ticks / 10000))
-					{
-						AGameBonus shield = player.GetBonus(AGameBonus.EnumObjectType.Shield);
-						float damage = shield == null ? 1f : shield.DamageFactor;
-						player.HealthAmount -= damage * mob.Damage;
-						SomebodyHitted(player, null);
-					}
-
-					if (player.HealthAmount <= 0)
-					{
-						PlayerDead(player);
-					}
-				}
-			}
-		} 
-
-
-	#endregion
 
 		public int PlayersCount()
 		{
-			return _gameObjects.FindAll(o => o.IsPlayer).Count;
+			return _gameObjects.FindAll(o => o.Is(AGameObject.EnumObjectType.Player)).Count;
 		}
 
-		private Vector2 ComputeMovement(AGameObject mob)
-		{
-			
-			var newCoord = mob.RunVector*mob.Speed*_updateDelay + mob.Coordinates ;
+	#endregion
+		#region todo delete
 
-			if (mob.IsPlayer)
-			{
-				newCoord.X = MathHelper.Clamp(newCoord.X, 0, GameLevel.levelHeight);
-				newCoord.Y = MathHelper.Clamp(newCoord.Y, 0, GameLevel.levelWidth);
-			}
+		//private AGameObject HitTestProjectile(AProjectile projectile, Vector2 newCord)
+		//{
+		//  var prX = newCord.X - projectile.Coordinates.X;
+		//  var prY = newCord.Y - projectile.Coordinates.Y;
+
+		//  AGameObject hitedTarget = null;
+		//  var minDist = double.MaxValue;
+
+		//  for (int i = 0; i < _gameObjects.Count; i++)
+		//  {
+		//    var mob = _gameObjects[i];
+		//    var mX = mob.Coordinates.X - projectile.Coordinates.X;
+		//    var mY = mob.Coordinates.Y - projectile.Coordinates.Y;
+		//    var mR = mob.Radius;
+		//    var mDist = Math.Sqrt(mX * mX + mY * mY);
+
+		//    if (mDist <= mR && mDist < minDist)
+		//    {
+		//      //!! hitedTarget = mob;
+		//      minDist = mDist;
+		//      continue;
+		//    }
+
+		//    if (prX == 0 && prY == 0)
+		//    {
+		//      continue;
+		//    }
+
+		//    var h = Math.Abs(prX * mY - prY * mX) / Math.Sqrt(prX * prX * + prY * prY);
+
+		//    var cos1 = mX * prX + mY * prY;
+		//    var cos2 = -1 * (prX * (mX - prX) + prY * (mY - prY));
+
+		//    if (h <= mR && Math.Sign(cos1) == Math.Sign(cos2) && mDist < minDist)
+		//    {
+		//      hitedTarget = mob;
+		//      minDist = mDist;
+		//    }
+
+		//  }
+
+		//  return hitedTarget;
+		//}
+
+		//!! todo delete
+
+		//private void HitTestTouch(MainSkyShootService player)
+		//{
+		//  for (int i = 0; i < _gameObjects.Count;i++ )
+		//  {
+		//    var mob = _gameObjects[i];
+		//    if ((mob.Coordinates - player.Coordinates).Length() <= mob.Radius + player.Radius)
+		//    {
+		//      if (mob.Weapon.Reload(DateTime.Now.Ticks / 10000))
+		//      {
+		//        AGameBonus shield = player.GetBonus(AGameObject.EnumObjectType.Shield);
+		//        float damage = shield == null ? 1f : shield.DamageFactor;
+		//        player.HealthAmount -= damage * mob.Damage;
+		//        SomebodyHitted(player, null);
+		//      }
+
+		//      if (player.HealthAmount <= 0)
+		//      {
+		//        PlayerDead(player);
+		//      }
+		//    }
+		//  }
+		//} 
+
+
+
+
+		//!! todo delete
+
+		//private Vector2 ComputeMovement(AGameObject mob)
+		//{
 			
-			return newCoord;
-		}
+		//  var newCoord = mob.RunVector*mob.Speed*_updateDelay + mob.Coordinates ;
+
+		//  if (mob.IsPlayer)
+		//  {
+		//    newCoord.X = MathHelper.Clamp(newCoord.X, 0, GameLevel.levelHeight);
+		//    newCoord.Y = MathHelper.Clamp(newCoord.Y, 0, GameLevel.levelWidth);
+		//  }
+			
+		//  return newCoord;
+		//}
+	#endregion
 	}
 }

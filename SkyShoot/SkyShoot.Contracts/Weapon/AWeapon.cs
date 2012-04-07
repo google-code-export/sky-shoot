@@ -1,27 +1,26 @@
 ﻿using System;
 using System.Runtime.Serialization;
 using SkyShoot.Contracts.Mobs;
-using SkyShoot.Contracts.Weapon.Projectiles;
 using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Contracts.Weapon
 {
-	public abstract class AWeapon //: AObtainableDamageModifier
+	public abstract class AWeapon
 	{
 		[Flags]
-		public enum AObtainableDamageModifiers
+		public enum AWeaponType
 		{
-			[EnumMember]
-			DoubleDamage,
-			[EnumMember]
-			Shield,
+			//[EnumMember]
+			//DoubleDamage,
+			//[EnumMember]
+			//Shield,
 			[EnumMember]
 			Pistol,
 			[EnumMember]
 			Shotgun
 		}
 		public Guid Id { get; set; }
-		public AObtainableDamageModifiers WheaponType { get; set; }
+		public AWeaponType WheaponType { get; set; }
 		
 		public AGameObject Owner { get; set; }
 		protected AWeapon(Guid id) 
@@ -36,7 +35,7 @@ namespace SkyShoot.Contracts.Weapon
 			Owner = owner;
 		}
 
-		public abstract AProjectile[] CreateBullets(AGameObject owner, Vector2 direction);
+		public abstract AGameObject[] CreateBullets(AGameObject owner, Vector2 direction);
 
 		protected int ReloadSpeed;
 
@@ -53,11 +52,14 @@ namespace SkyShoot.Contracts.Weapon
 			return false;
 		}
 
-		public void ApplyModifier(AProjectile[] projectiles, float damage)
+		public void ApplyModifier(AGameObject[] projectiles, float damage)
 		{
-			foreach (AProjectile projectile in projectiles)
+			foreach (AGameObject projectile in projectiles)
 			{
+				if(projectile==null)
+					continue;
 				projectile.Damage *= damage;
+				projectile.Radius *= damage;
 			}
 		}
 

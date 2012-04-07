@@ -73,7 +73,6 @@
     <Compile Include="Session\GameMode.cs" />
     <Compile Include="TypeConverter.cs" />
     <Compile Include="Weapon\AWeapon.cs" />
-    <Compile Include="Weapon\Projectiles\AProjectile.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
@@ -107,7 +106,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Weapon\" />
+    <Folder Include="Weapon\Projectiles\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -437,11 +437,11 @@ namespace SkyShoot.WinFormsClient
 						}
 						x = (m.Coordinates.X) * _pnCanvas.Width / _level.levelWidth;
 						y = (m.Coordinates.Y) * _pnCanvas.Height / _level.levelHeight;
+						r = m.Radius * _pnCanvas.Width / _level.levelWidth; 
 						switch (m.ObjectType)
 						{
 						case AGameObject.EnumObjectType.Mob:
 						case AGameObject.EnumObjectType.Player:
-							r = m.Radius * _pnCanvas.Width / _level.levelWidth;
 							g.FillEllipse(m.IsPlayer ? Brushes.Black : Brushes.Green,
 														new RectangleF(
 															new PointF(x - r, y - r),
@@ -470,19 +470,31 @@ namespace SkyShoot.WinFormsClient
 						case AGameObject.EnumObjectType.Bullet:
 						case AGameObject.EnumObjectType.LaserBullet:
 						case AGameObject.EnumObjectType.ShutgunBullet:
-							r = 2f;
+							//r = 2f;
 							g.FillEllipse(Brushes.Red,
 														new RectangleF(
 															new PointF(x - r, y - r),
 															new SizeF(2 * r, 2 * r)));
 							break;
 						case AGameObject.EnumObjectType.Wall:
-							r = m.Radius * _pnCanvas.Width / _level.levelWidth;
+							//r = m.Radius * _pnCanvas.Width / _level.levelWidth;
 							var rh = m.Radius * _pnCanvas.Height / _level.levelHeight;
 							g.FillRectangle(Brushes.Black,
 								new RectangleF(
 									new PointF(x - r, y - rh),
 									new SizeF(2 * r, 2 * rh)));
+							break;
+						case AGameObject.EnumObjectType.DoubleDamage:
+							//r = m.Radius * _pnCanvas.Width / _level.levelWidth;
+							g.FillEllipse(Brushes.Blue,
+														new RectangleF(
+															new PointF(x - r, y - r),
+															new SizeF(2 * r, 2 * r)));
+							g.DrawString("x2", SystemFonts.MenuFont, Brushes.Blue, x - r, y - r);
+							break;
+						case AGameObject.EnumObjectType.Remedy:
+							g.DrawLine(Pens.Red, x - r, y, x + r, y);
+							g.DrawLine(Pens.Red, x, y - r, x, y + r);
 							break;
 						default:
 							r = 3f;

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using SkyShoot.Service;
+using SkyShoot.Service.Bonuses;
 using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Contracts.Mobs
@@ -16,17 +18,25 @@ namespace SkyShoot.Contracts.Mobs
 			_thinkCounter = 0;
 			Id = Guid.NewGuid();
 			MaxHealthAmount = HealthAmount = healthAmount;
-			Damage = 10;
+			Damage = 20;
+		}
+
+		public override void Copy(AGameObject other)
+		{
+			base.Copy(other);
+			var m = other as Mob;
+			if (m == null)
+				return; //!! throw
+			Target = m.Target;
 		}
 
 		public void FindTarget(List<AGameObject> targetPlayers)
 		{
 			float distance = 1000000;
 
-			for (int i = 0; i < targetPlayers.Count;i++ )
+			foreach (var pl in targetPlayers)
 			{
-				var pl = targetPlayers[i];
-				if(!pl.IsPlayer)
+				if (!pl.Is(EnumObjectType.Player))
 				{
 					continue;
 				}
@@ -40,13 +50,7 @@ namespace SkyShoot.Contracts.Mobs
 			}
 		}
 
-		//public override void Move()
-		//{
-
-		//  //base.Move();
-		//}
-
-		public override void  Think(List<AGameObject> players, long time)
+		public override void Think(List<AGameObject> players, long time)
 		{
 			if (_wait == 0)
 			{
@@ -79,15 +83,22 @@ namespace SkyShoot.Contracts.Mobs
 		public override void Do(AGameObject obj, long time)
 		{
 			// не кусаем друзей-товарищей
-			if(obj.Is(EnumObjectType.Mob))
-				return;
-			obj.HealthAmount -= Damage;
-			Stop();
-		}
+			//if(obj.Is(EnumObjectType.Mob))
+			//  return;
 
-		//public void DamageTaken(AProjectile bullet)
-		//{
-		//  HealthAmount -= bullet.Damage;
-		//}
+			// ничего не кусаем окромя игроков злобных
+			if (_wait < 1 && obj.Is(EnumObjectType.Player))
+			{
+				var player = obj as MainSkyShootService;
+				if (player == null)
+				{
+					return;
+				}
+				var shield = player.GetBonus(EnumObjectType.Shield);
+				var damage = shield == null ? 1f : shield.DamageFactor;
+				player.HealthAmount -= damage * Damage;
+				Stop();
+			}
+		}
 	}
 }
