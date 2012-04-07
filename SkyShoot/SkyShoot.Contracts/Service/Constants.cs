@@ -36,17 +36,20 @@ namespace SkyShoot.Contracts
 		#endregion
 
 		#region common
+		public const float Epsilon = 0.01f;
 
-		public const int FPS = 1000/60;
+		public const int FPS = 1000 / 60;
 		public const float LEVELBORDER = 50;
 
 		#endregion
 
+		#region bonuses
 		public const int BONUS_TYPE_COUNT = 4;
 
 		public const int SHIELD_MILLISECONDS = 30000;
 		public const int DOUBLE_DAMAGE_MILLISECONDS = 30000;
 		public const int REMEDY_MILLISECONDS = 30000; // redundant
 		public const int SPEEDUP_MILLISECONDS = 30000;
+		#endregion
 	}
 }

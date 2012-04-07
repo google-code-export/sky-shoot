@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using SkyShoot.Contracts;
+using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Session;
 using SkyShoot.XNA.Framework;
 using SkyShoot.Contracts.Mobs;
@@ -49,15 +52,19 @@ namespace SkyShoot.Service.Weapon.Bullets
 		//[Obsolete("Use health")]
 		//public float LifeDistance { get; set; }
 
-		public override void Do(AGameObject obj, long time)
+		public override IEnumerable<AGameEvent> Do(AGameObject obj, long time)
 		{
+			var res = new List<AGameEvent>(base.Do(obj, time));
 			if (Owner.Id == obj.Id) // не трогать создателя пули
-				return;
+				return res);
 
 			if (obj.Is(EnumObjectType.LivingObject))
 			{
-				//!! todo сделать проверку на бонус "щит" у обжекта
+				//var shield = player.GetBonus(EnumObjectType.Shield);
+				//var damage = shield == null ? 1f : shield.DamageFactor;
+				// todo //!! сделать проверку на бонус "щит" у обжекта
 				obj.HealthAmount -= Damage;
+				res.Add(new ObjectHealthChanged(obj.HealthAmount, obj.Id, time));
 				// убираем пулю
 				IsActive = false;
 			}
@@ -65,6 +72,12 @@ namespace SkyShoot.Service.Weapon.Bullets
 			{
 				IsActive = false;
 			}
+
+			if(!IsActive)
+			{
+				res.Add(new ObjectDeleted(Id, time));
+			}
+			return res);
 		}
 
 		public override Vector2 ComputeMovement(long updateDelay, GameLevel gameLevel)
@@ -73,10 +86,9 @@ namespace SkyShoot.Service.Weapon.Bullets
 			var newCoord = base.ComputeMovement(updateDelay, gameLevel);
 			var x = MathHelper.Clamp(newCoord.X, 0, gameLevel.levelHeight);
 			var y = MathHelper.Clamp(newCoord.Y, 0, gameLevel.levelWidth);
-			const float epsilon = 0.01f;
 			// убрать пулю, которая вышла за экран
-			IsActive = (Math.Abs(newCoord.X - x) < epsilon) 
-				&& (Math.Abs(newCoord.Y - y) < epsilon);
+			IsActive = (Math.Abs(newCoord.X - x) < Constants.Epsilon)
+				&& (Math.Abs(newCoord.Y - y) < Constants.Epsilon);
 			return newCoord;
 		}
 	}

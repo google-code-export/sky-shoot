@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Session;
 using SkyShoot.Contracts.Weapon;
 using SkyShoot.XNA.Framework;
@@ -131,6 +132,8 @@ namespace SkyShoot.Contracts.Mobs
 		[DataMember]
 		public Vector2 Coordinates;
 
+		public Vector2 PrevMoveDiff;
+
 		[DataMember]
 		public float Radius { get; set; } // размер моба
 	
@@ -182,17 +185,15 @@ namespace SkyShoot.Contracts.Mobs
 		#endregion
 
 		#region основные функции
-		//public virtual void Move()
-		//{
-		//  RunVector = Vector2.Normalize(RunVector);
-		//  ShootVector = RunVector;
-		//}
+		public virtual IEnumerable<AGameEvent> Think(List<AGameObject> players, long time)
+		{
+			return new AGameEvent[] {};
+		}
 
-		public virtual void Think(List<AGameObject> players, long time)
-		{}
-
-		public virtual void Do(AGameObject obj, long time)
-		{}
+		public virtual IEnumerable<AGameEvent> Do(AGameObject obj, long time)
+		{
+			return new AGameEvent[] {};
+		}
 
 		public virtual Vector2 ComputeMovement(long updateDelay, GameLevel gameLevel)
 		{
