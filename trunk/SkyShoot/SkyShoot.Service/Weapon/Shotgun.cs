@@ -1,6 +1,4 @@
 ﻿using System;
-
-using SkyShoot.Contracts.Weapon.Projectiles;
 using SkyShoot.Service.Weapon.Bullets;
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.XNA.Framework;
@@ -15,7 +13,7 @@ namespace SkyShoot.Service.Weapon
 		private void Init()
 		{
 			_rand = new Random();
-			WheaponType = AObtainableDamageModifiers.Shotgun;
+			WheaponType = AWeaponType.Shotgun;
 			ReloadSpeed = SkyShoot.Contracts.Constants.SHOTGUN_ATTACK_RATE;
 		}
 
@@ -29,9 +27,9 @@ namespace SkyShoot.Service.Weapon
 			Init();
 		}
 
-		public override AProjectile[] CreateBullets(AGameObject owner, Vector2 direction)
+		public override AGameObject[] CreateBullets(AGameObject owner, Vector2 direction)
 		{
-			ShotgunBullet[] bullets = new ShotgunBullet[8];
+			var bullets = new ShotgunBullet[8];
 
 			for (int i = 0; i < 8; i++)
 			{

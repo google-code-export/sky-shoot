@@ -4,7 +4,6 @@ using System.ServiceModel;
 
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Session;
-using SkyShoot.Contracts.Weapon.Projectiles;
 using SkyShoot.XNA.Framework;
 using System.Collections.Generic;
 using SkyShoot.Contracts.GameEvents;
@@ -14,7 +13,7 @@ namespace SkyShoot.Contracts.Service
 	public delegate void SomebodyMovesHandler(AGameObject sender, Vector2 direction);
 	public delegate void ClientShootsHandler(AGameObject sender, Vector2 direction);
 	public delegate void SomebodyDiesHandler(AGameObject sender);
-	public delegate void SomebodyHitHandler(AGameObject target, AProjectile projectile);
+	public delegate void SomebodyHitHandler(AGameObject target, AGameObject projectile);
 	
 	//[ServiceContract(CallbackContract = typeof(ISkyShootCallback))]
 	[ServiceContract]

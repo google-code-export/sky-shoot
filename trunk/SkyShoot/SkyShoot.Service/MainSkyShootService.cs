@@ -1,28 +1,24 @@
 ﻿using System;
-using System.ServiceModel;
-
 using System.Collections.Generic;
-
 using System.Diagnostics;
+using System.ServiceModel;
 using SkyShoot.Contracts;
-using SkyShoot.Service.Bonuses;
-using SkyShoot.XNA.Framework;
-
+using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Session;
-using SkyShoot.Contracts.GameEvents;
+using SkyShoot.Service.Bonuses;
 using SkyShoot.Service.Session;
+using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Service
 {
 	[ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant,
 			InstanceContextMode = InstanceContextMode.PerSession)]
-	public class MainSkyShootService : AGameObject, ISkyShootService//, ISkyShootCallback
+	public class MainSkyShootService : AGameObject, ISkyShootService
 	{
 		public static int GlobalID = 0;
 		public int LocalID;
-		//private ISkyShootCallback _callback;
 		public string Name;
 		public Queue<AGameEvent> NewEvents;
 		public List<AGameBonus> Bonuses;
@@ -41,7 +37,7 @@ namespace SkyShoot.Service
  			Bonuses = new List<AGameBonus>();
 		}
 
-		public void AddBonus(AGameBonus bonus)
+		public void AddBonus(AGameBonus bonus, long time)
 		{
 			if (bonus.Is(EnumObjectType.Remedy))
 			{
@@ -52,6 +48,7 @@ namespace SkyShoot.Service
 			}
 			Bonuses.RemoveAll(b => b.ObjectType == bonus.ObjectType);
 			Bonuses.Add(bonus);
+			bonus.Taken(time);
 		}
 
 		public AGameBonus GetBonus(EnumObjectType bonusType)
@@ -146,8 +143,6 @@ namespace SkyShoot.Service
 
 		public event SomebodyMovesHandler MeMoved;
 		public event ClientShootsHandler MeShot;
-		//public event SomebodySpawnsHandler MobSpawned;
-		//public event SomebodyDiesHandler MobDied;
 
 		//public Queue<AGameEvent> Move(Vector2 direction) // приходит снаружи от клиента
 		public AGameEvent[] Move(Vector2 direction) // приходит снаружи от клиента
@@ -174,17 +169,7 @@ namespace SkyShoot.Service
 			NewEvents.Clear();
 			return events;
 		}
-		/*
-		public void TakeBonus(Contracts.Bonuses.AObtainableDamageModifier bonus)
-		{
-			bonus.Owner.State |= bonus.Type;
-		}
-
-		public void TakePerk(Contracts.Perks.Perk perk)
-		{
-			throw new NotImplementedException();
-		}
-		*/
+		
 		public void LeaveGame()
 		{
 			bool result = _sessionManager.LeaveGame(this);
@@ -241,10 +226,9 @@ namespace SkyShoot.Service
 			if(obj.Is(EnumObjectType.Bonus))
 			{
 				obj.IsActive = false;
-				var bonus = new AGameBonus(obj);
-				//bonus.Copy(obj);
-				Bonuses.Add(bonus);
-				bonus.Taken(time);
+				var bonus = new AGameBonus();
+				bonus.Copy(obj);
+				AddBonus(bonus, time);
 			}
 		}
 		public void DeleteExpiredBonuses(long time)

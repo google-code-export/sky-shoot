@@ -1,6 +1,5 @@
 ﻿using System;
 using SkyShoot.Contracts;
-using SkyShoot.Contracts.Weapon.Projectiles;
 using SkyShoot.Service.Weapon.Bullets;
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.XNA.Framework;
@@ -12,17 +11,17 @@ namespace SkyShoot.Service.Weapon
 	{
 		public Pistol(Guid id) : base(id)
 		{
-			WheaponType = AObtainableDamageModifiers.Pistol;
+			WheaponType = AWeaponType.Pistol;
 			ReloadSpeed = Constants.PISTOL_ATTACK_RATE;
 		}
 
 		public Pistol(Guid id, AGameObject owner) : base(id, owner)
 		{
-			WheaponType = AObtainableDamageModifiers.Pistol;
+			WheaponType = AWeaponType.Pistol;
 			ReloadSpeed = Constants.PISTOL_ATTACK_RATE;
 		}
 
-		public override AProjectile[] CreateBullets(AGameObject owner, Vector2 direction)
+		public override AGameObject[] CreateBullets(AGameObject owner, Vector2 direction)
 		{
 			var bullets = new[] { new PistolBullet(owner, Guid.NewGuid(), direction) };
 			return bullets;

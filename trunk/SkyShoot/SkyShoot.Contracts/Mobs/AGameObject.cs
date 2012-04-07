@@ -117,7 +117,7 @@ namespace SkyShoot.Contracts.Mobs
 		public float MaxHealthAmount { get; set; }
 
 		//[DataMember]
-		//public AObtainableDamageModifier.AObtainableDamageModifiers State { get; set; }
+		//public AObtainableDamageModifier.AWeaponType State { get; set; }
 
 		#endregion
 
@@ -152,10 +152,10 @@ namespace SkyShoot.Contracts.Mobs
 			//IsActive = true;
 		}
 
-		public AGameObject(AGameObject other)
-		{
-			Copy(other);
-		}
+		//public AGameObject(AGameObject other)
+		//{
+		//  Copy(other);
+		//}
 
 		public virtual void Copy(AGameObject other)
 		{

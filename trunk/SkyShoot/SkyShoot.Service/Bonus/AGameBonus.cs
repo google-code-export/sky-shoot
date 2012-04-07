@@ -4,7 +4,6 @@ using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Service.Bonuses
 {
-	//[DataContract]
 	public class AGameBonus : AGameObject
 	{
 		protected int Milliseconds; // @Sergey Terechenko : time = health
@@ -12,18 +11,28 @@ namespace SkyShoot.Service.Bonuses
 
 		public float DamageFactor;
 
-		public AGameBonus(Vector2 coordinates) : base(coordinates, Guid.NewGuid()) { }
-
-		public AGameBonus(AGameObject o)
+		public AGameBonus(Vector2 coordinates) : base(coordinates, Guid.NewGuid())
 		{
-			var b = o as AGameBonus;
-			if(b == null)
-			{
-				throw new TypeAccessException();
-			}
-			Copy(b);
+			// the object is alive
+			HealthAmount = MaxHealthAmount = 1;
+			Radius = 6;
+		}
+
+		public AGameBonus()
+		{
+			HealthAmount = MaxHealthAmount = 1;
+			Radius = 6;
+		}
+
+		public override void Copy(AGameObject other)
+		{
+			base.Copy(other);
+			var b = other as AGameBonus;
+			if (b == null)
+				return; // throw
 			Milliseconds = b.Milliseconds;
 			StartTime = b.StartTime;
+			DamageFactor = b.DamageFactor;
 		}
 
 		public bool IsExpired(long time)
