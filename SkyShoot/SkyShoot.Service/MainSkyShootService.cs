@@ -149,17 +149,16 @@ namespace SkyShoot.Service
 		public event SomebodyMovesHandler MeMoved;
 		public event ClientShootsHandler MeShot;
 
-		//public Queue<AGameEvent> Move(Vector2 direction) // приходит снаружи от клиента
 		public AGameEvent[] Move(Vector2 direction) // приходит снаружи от клиента
 		{
 			if (MeMoved != null)
 			{
 				MeMoved(this, direction);
 			}
-			return GetEvents();
+			return null;// GetEvents();
 		}
 
-		public Queue<AGameEvent> Shoot(Vector2 direction)
+		public AGameEvent[] Shoot(Vector2 direction)
 		{
 			if (MeShot != null)
 			{
@@ -196,13 +195,22 @@ namespace SkyShoot.Service
 
 		public AGameObject[] SynchroFrame()
 		{
-			GameSession session;
-			_sessionManager.SessionTable.TryGetValue(Id, out session);
-			if (session == null)
+			try
 			{
-				return null;
+				GameSession session;
+				_sessionManager.SessionTable.TryGetValue(Id, out session);
+				if (session == null)
+				{
+					return null;
+				}
+				return GameObjectConverter.ArrayedObjects(session.GetSynchroFrame());
+
 			}
-			return GameObjectConverter.ArrayedObjects(session.GetSynchroFrame());
+			catch (Exception exc)
+			{
+				Trace.WriteLine("ERROR: Syncroframe broken", exc.ToString());				
+			}
+			return null;
 		}
 
 		public String[] PlayerListUpdate()
