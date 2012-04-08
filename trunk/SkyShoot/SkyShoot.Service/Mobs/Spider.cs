@@ -6,7 +6,7 @@ namespace SkyShoot.Service.Mobs
 {
 	class Spider : Mob
 	{
-		//Как сказали, так и сделал :)
+		// todo //!! move to constants
 		const int RADIUS_MIN = 15;
 		const int RADIUS_MAX = 20;
 

@@ -237,7 +237,12 @@ namespace SkyShoot.WinFormsClient
 				{
 					Thread.Sleep(100);
 					DateTime now = DateTime.Now;
-					var syncObjects = _service.SynchroFrame();
+					AGameObject[] syncObjects; 
+					lock (_service)
+					{
+						syncObjects = _service.SynchroFrame();
+						ApplyEvents(_service.GetEvents());
+					}
 					if (syncObjects == null)
 					{
 						GameRuning = false;
@@ -367,14 +372,18 @@ namespace SkyShoot.WinFormsClient
 			{
 				//_th.Suspend();
 				_prevMove = v;
-				ApplyEvents(_service.GetEvents());
-				ApplyEvents(_service.Move(v));
+				lock (_service)
+				{
+					ApplyEvents(_service.Move(v));
+				}
 				//_th.Resume();
 			}
 		}
 
 		private void ApplyEvents(IEnumerable<AGameEvent> events)
 		{
+			if(events ==null)
+				return;
 			foreach (var gameEvent in events)
 			{
 				var t = _objects.FindAll(o => o == null);
@@ -395,7 +404,10 @@ namespace SkyShoot.WinFormsClient
 		{
 			var v = new Vector2(0, 0);
 			_me.RunVector = v;
-			_service.Move(v);
+			lock (_service)
+			{
+				_service.Move(v);
+			}
 		}
 
 		private void MainForm_OnLoad(object sender, EventArgs e)
@@ -534,7 +546,10 @@ namespace SkyShoot.WinFormsClient
 		{
 			try
 			{
-				_service.LeaveGame();
+				lock (_service)
+				{
+					_service.LeaveGame();
+				}
 			}
 			// возможно, сервер уже выключили к этому моменту
 			catch (Exception exc)
@@ -569,7 +584,10 @@ namespace SkyShoot.WinFormsClient
 							- _me.Coordinates;
 			v.Normalize();
 			_me.ShootVector = v;
-			_service.Shoot(v);
+			lock (_service)
+			{
+				_service.Shoot(v);
+			}
 		}
 
 

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using SkyShoot.XNA.Framework;
 using SkyShoot.Contracts.Session;
 using SkyShoot.Service.Mobs;
@@ -14,13 +11,13 @@ namespace SkyShoot.Contracts.Mobs
 		private float _width;
 		private float _height;
 		private float _border;
-		private float _health; 
+		private float _health;
 
 
 		public SpiderFactory(GameLevel gameLevel)
 		{
 			_width = gameLevel.levelWidth;
-			_height =  gameLevel.levelHeight;
+			_height = gameLevel.levelHeight;
 			_border = Constants.LEVELBORDER;
 			_health = 10; //change to real value
 		}
@@ -35,36 +32,48 @@ namespace SkyShoot.Contracts.Mobs
 			// присваивание случайных координат созданному мобу
 			if (_random.Next(2) == 0) //длина
 			{
-				x = _random.Next( 0, (int) (_width + _border * 2));
+				x = _random.Next(0, (int)(_width + _border * 2));
 
 				if (_random.Next(2) == 0) // верх
 				{
-					y = _random.Next( 0, (int) _border);
+					y = _random.Next(0, (int)_border);
 				}
 				else //низ
 				{
-					y = _random.Next((int) (_height + _border), (int) (_height + _border * 2));
+					y = _random.Next((int)(_height + _border), (int)(_height + _border * 2));
 				}
 			}
 			else // высота
 			{
-				y = _random.Next( 0, (int) (_height + _border *2));
+				y = _random.Next(0, (int)(_height + _border * 2));
 
 				if (_random.Next(2) == 0) // левая
 				{
-					x = _random.Next( 0, (int) _border);
+					x = _random.Next(0, (int)_border);
 				}
 				else // правая
 				{
-					x = _random.Next((int) (_width + _border), (int) (_width + _border*2));
+					x = _random.Next((int)(_width + _border), (int)(_width + _border * 2));
 				}
 
 			}
 
-			var spider = new Spider((float)_health);
+			Mob spider;
+			switch (_random.Next(2))
+			{
+			case 0:
+				spider = new SpiderWithSimpleMind((float)_health);
+				break;
+			case 1:
+				spider = new SpiderWithSimpleMind((float)_health);
+				break;
+			default:
+				spider = new Spider((float)_health);
+				break;
+			}
 			_health *= 1.05f;
-			spider.Coordinates = new Vector2((float) x, (float) y);
-			spider.Weapon = new Claw(Guid.NewGuid(),spider);
+			spider.Coordinates = new Vector2((float)x, (float)y);
+			spider.Weapon = new Claw(Guid.NewGuid(), spider);
 			return spider;
 		}
 	}

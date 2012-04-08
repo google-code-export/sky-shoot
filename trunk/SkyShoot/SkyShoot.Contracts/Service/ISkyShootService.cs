@@ -38,7 +38,7 @@ namespace SkyShoot.Contracts.Service
 		AGameEvent[] Move(Vector2 direction);
 
 		[OperationContract]
-		Queue<AGameEvent> Shoot(Vector2 direction);
+		AGameEvent[] Shoot(Vector2 direction);
 
 		[OperationContract]
 		AGameEvent[] GetEvents();

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 using SkyShoot.Contracts.Mobs;
@@ -9,19 +8,19 @@ using SkyShoot.XNA.Framework;
 namespace SkyShoot.Contracts.GameEvents
 {
 	[DataContract]
-	[KnownType(typeof (NewObjectEvent))] //возможно должно быть не здесь
-	[KnownType(typeof (ObjectDirectionChanged))]
-	[KnownType(typeof (ObjectDeleted))]
+	[KnownType(typeof(NewObjectEvent))]
+	[KnownType(typeof(ObjectDirectionChanged))]
+	[KnownType(typeof(ObjectDeleted))]
 	[KnownType(typeof(ObjectHealthChanged))]
 	[KnownType(typeof(BonusesChanged))]
 	public abstract class AGameEvent
 	{
-		// now = DateTime.Now.Ticks/10000; //время в миллисекунда с начала игры
+		// now = DateTime.Now.Ticks/10000; //время в миллисекундах с начала игры
 		[DataMember]
-		public long TimeStamp { get; protected set; }
+		public long TimeStamp { get; set; }
 
 		[DataMember]
-		public Guid GameObjectId { get; protected set; }
+		public Guid GameObjectId { get; set; }
 
 		protected AGameEvent(Guid id, long timeStamp)
 		{
@@ -39,34 +38,36 @@ namespace SkyShoot.Contracts.GameEvents
 	[DataContract]
 	public class NewObjectEvent : AGameEvent
 	{
-		[DataMember] private AGameObject _newMob;
+		[DataMember]
+		public AGameObject NewMob;
 
 		public NewObjectEvent(AGameObject mob, long timeStamp)
 			: base(mob.Id, timeStamp)
 		{
-			_newMob = GameObjectConverter.OneObject(mob);
+			NewMob = GameObjectConverter.OneObject(mob);
 		}
 
 		public override void UpdateMob(AGameObject mob)
 		{
-			mob.Copy(_newMob);
+			mob.Copy(NewMob);
 		}
 	}
 
 	[DataContract]
 	public class ObjectDirectionChanged : AGameEvent
 	{
-		[DataMember] private Vector2 _newRunDirection;
+		[DataMember]
+		public Vector2 NewRunDirection;
 
 		public ObjectDirectionChanged(Vector2 direction, Guid id, long timeStamp)
 			: base(id, timeStamp)
 		{
-			_newRunDirection = direction;
+			NewRunDirection = direction;
 		}
 
 		public override void UpdateMob(AGameObject mob)
 		{
-			mob.RunVector = _newRunDirection;
+			mob.RunVector = NewRunDirection;
 		}
 	}
 
@@ -87,17 +88,18 @@ namespace SkyShoot.Contracts.GameEvents
 	[DataContract]
 	public class ObjectHealthChanged : AGameEvent
 	{
-		[DataMember] private float _health;
+		[DataMember]
+		public float Health;
 
 		public ObjectHealthChanged(float newHp, Guid id, long timeStamp)
 			: base(id, timeStamp)
 		{
-			_health = newHp;
+			Health = newHp;
 		}
 
 		public override void UpdateMob(AGameObject mob)
 		{
-			mob.HealthAmount = _health;
+			mob.HealthAmount = Health;
 		}
 	}
 
@@ -107,7 +109,7 @@ namespace SkyShoot.Contracts.GameEvents
 		[DataMember]
 		public AGameObject.EnumObjectType Bonuses;
 
-		public BonusesChanged(Guid id, long timeStamp, AGameObject.EnumObjectType bonuses) : 
+		public BonusesChanged(Guid id, long timeStamp, AGameObject.EnumObjectType bonuses) :
 			base(id, timeStamp)
 		{
 			Bonuses = bonuses;

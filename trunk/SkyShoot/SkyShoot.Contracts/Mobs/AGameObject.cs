@@ -138,7 +138,7 @@ namespace SkyShoot.Contracts.Mobs
 		public float Radius { get; set; } // размер моба
 	
 		[DataMember]
-		public float Speed { get; set; } //скорость: пикселы в миллисекунду
+		public  float Speed { get; set; } //скорость: пикселы в миллисекунду
 
 		#endregion
 

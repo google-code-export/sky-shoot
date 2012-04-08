@@ -9,13 +9,14 @@ namespace SkyShoot.Contracts.Mobs
 	public class Mob : AGameObject
 	{
 		public AGameObject Target { get; set; }
-
-		private int _thinkCounter;
+		//todo //!! convert this to time from the update counnter
+		protected int ThinkCounter;
+		protected int Wait;
 
 		public Mob(float healthAmount)
 		{
 			ObjectType = EnumObjectType.Mob;
-			_thinkCounter = 0;
+			ThinkCounter = 0;
 			Id = Guid.NewGuid();
 			MaxHealthAmount = HealthAmount = healthAmount;
 			Damage = 20;
@@ -53,9 +54,9 @@ namespace SkyShoot.Contracts.Mobs
 		public override IEnumerable<AGameEvent> Think(List<AGameObject> players, long time)
 		{
 			var res = new AGameEvent[] { };
-			if (_wait == 0)
+			if (Wait == 0)
 			{
-				if (_thinkCounter % 10 == 0)
+				if (ThinkCounter % 10 == 0)
 				{
 					if (!players.Contains(Target) || Target == null)
 					{
@@ -65,21 +66,20 @@ namespace SkyShoot.Contracts.Mobs
 						return res;
 					RunVector = new Vector2(Target.Coordinates.X - Coordinates.X, Target.Coordinates.Y - Coordinates.Y);
 				}
-				_thinkCounter++;
+				ThinkCounter++;
 			}
 			else
 			{
-				_wait--;
+				Wait--;
 			}
 			return res;
 		}
 
-		private int _wait;
 
 		private void Stop()
 		{
 			RunVector = new Vector2(0, 0);
-			_wait = 30;
+			Wait = 30;
 		}
 
 		public override IEnumerable<AGameEvent> Do(AGameObject obj, long time)
@@ -90,7 +90,7 @@ namespace SkyShoot.Contracts.Mobs
 
 			// ничего не кусаем окромя игроков злобных
 			var player = obj as MainSkyShootService;
-			if (_wait < 1 && obj.Is(EnumObjectType.Player) && (player != null))
+			if (Wait < 1 && obj.Is(EnumObjectType.Player) && (player != null))
 			{
 				var shield = player.GetBonus(EnumObjectType.Shield);
 				var damage = shield == null ? 1f : shield.DamageFactor;

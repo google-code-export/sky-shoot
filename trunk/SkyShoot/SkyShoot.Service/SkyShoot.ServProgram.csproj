@@ -96,6 +96,7 @@
     <Compile Include="Mobs\Mob.cs" />
     <Compile Include="Mobs\Spider.cs" />
     <Compile Include="Mobs\SpiderFactory.cs" />
+    <Compile Include="Mobs\SpiderWithSimpleMind.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="PropertiesProg\AssemblyInfo.cs" />
     <Compile Include="Session\GameSession.cs" />

@@ -289,8 +289,8 @@ namespace SkyShoot.Service.Session
 			// DEBUG 
 			//!! debug
 			var t = _gameObjects.FindAll(m => m.ObjectType == AGameObject.EnumObjectType.Mob);
-			if(t != null && t.Count > 2)
-				return;
+			if(t != null && t.Count > 1)
+				return new AGameEvent[]{};
 #endif
 			if (_intervalToSpawn == 0)
 			{
@@ -376,6 +376,7 @@ namespace SkyShoot.Service.Session
 						}
 					}
 					var coordDiff = activeObject.Coordinates - newCoord;
+					coordDiff.Normalize();
 					if (canMove)
 					{
 						activeObject.Coordinates = newCoord;
