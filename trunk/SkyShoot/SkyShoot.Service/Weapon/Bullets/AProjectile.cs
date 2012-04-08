@@ -56,7 +56,7 @@ namespace SkyShoot.Service.Weapon.Bullets
 		{
 			var res = new List<AGameEvent>(base.Do(obj, time));
 			if (Owner.Id == obj.Id) // не трогать создателя пули
-				return res);
+				return res;
 
 			if (obj.Is(EnumObjectType.LivingObject))
 			{
@@ -77,7 +77,7 @@ namespace SkyShoot.Service.Weapon.Bullets
 			{
 				res.Add(new ObjectDeleted(Id, time));
 			}
-			return res);
+			return res;
 		}
 
 		public override Vector2 ComputeMovement(long updateDelay, GameLevel gameLevel)
