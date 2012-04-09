@@ -14,7 +14,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SkyShoot.Game.Controls;
 
 using SkyShoot.Game.Client.Game;
-using Microsoft.Xna.Framework.Audio;
+
 
 namespace SkyShoot.Game.Screens
 {
@@ -130,14 +130,14 @@ namespace SkyShoot.Game.Screens
 
 		private void ExitButtonPressed(object sender, EventArgs args)
 		{
-			_soundManager.SoundPlay(0);
+			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);
 
 			ScreenManager.Instance.Game.Exit();
 		}
 
 		private void LoginButtonPressed(object sender, EventArgs args)
 		{
-			_soundManager.SoundPlay(0);
+			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);
 
 			if (_loginBox.Text.Length < 3)
 			{
@@ -164,7 +164,7 @@ namespace SkyShoot.Game.Screens
 
 		private void NewAccountButtonPressed(object sender, EventArgs args)
 		{
-			_soundManager.SoundPlay(0);
+			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);
 
 			if (_loginBox.Text.Length < 3)
 			{

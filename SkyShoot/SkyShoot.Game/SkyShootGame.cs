@@ -52,7 +52,7 @@ namespace SkyShoot.Game
 
 			SoundManager.Initialize();
 			_soundManager = SoundManager.Instance;
-			_soundManager.SoundPlay(7);
+			_soundManager.SoundPlay(SoundManager.SoundEnum.MainTheme);
 
 			base.Initialize();
 

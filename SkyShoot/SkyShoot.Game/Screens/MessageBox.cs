@@ -72,7 +72,7 @@ namespace SkyShoot.Game.Screens
 
 		public void OkButtonPressed(object sender, EventArgs e)
 		{
-			_soundManager.SoundPlay(0);
+			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);
 
 			ScreenManager.Instance.SetActiveScreen(Next); // = Next;
 		}

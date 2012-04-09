@@ -103,8 +103,7 @@ namespace SkyShoot.Game.Client.Game
 
 		public void MobDead(AGameObject mob)
 		{			
-			//Cue cue = soundBank.GetCue("angry01");
-			//_soundManager.SoundPlay("guts04a");
+			_soundManager.SoundPlay(SoundManager.SoundEnum.Spider);
 			GameModel.RemoveMob(mob.Id);
 			GameModel.GameLevel.AddTexture(mob.Is(AGameObject.EnumObjectType.Player)
 			                               	? Textures.DeadPlayerTexture

@@ -39,24 +39,24 @@ namespace SkyShoot.Game.Client.Game
 			switch (gameLevel.UsedTileSet)
 			{
 				case TileSet.Grass:
-					_soundManager.SoundPlay(2);
+					_soundManager.SoundPlay(SoundManager.SoundEnum.Grass);
 					_texture = Textures.Clone(Textures.GrassLandscape);
 					break;
 				case TileSet.Desert:
-					_soundManager.SoundPlay(1);
+					_soundManager.SoundPlay(SoundManager.SoundEnum.Desert);
 					_texture = Textures.Clone(Textures.DesertLandscape);
 					break;
 				case TileSet.Sand:
-					_soundManager.SoundPlay(1);
+					_soundManager.SoundPlay(SoundManager.SoundEnum.Desert);
 					_texture = Textures.Clone(Textures.SandLandscape);
 					break;
 				case TileSet.Snow:
-					_soundManager.SoundPlay(9);
+					_soundManager.SoundPlay(SoundManager.SoundEnum.Snow);
 					_texture = Textures.Clone(Textures.SnowLandscape);
 					break;
 				case TileSet.Volcanic:
-					_soundManager.SoundPlay(5);
-					_soundManager.SoundPlay(6);
+					_soundManager.SoundPlay(SoundManager.SoundEnum.Lava);
+					_soundManager.SoundPlay(SoundManager.SoundEnum.Lava2);
 					_texture = Textures.Clone(Textures.VolcanicLandscape);
 					break;
 			}
