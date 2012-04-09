@@ -12,6 +12,7 @@ namespace SkyShoot.Contracts.Service
 {
 	public delegate void SomebodyMovesHandler(AGameObject sender, Vector2 direction);
 	public delegate void ClientShootsHandler(AGameObject sender, Vector2 direction);
+	public delegate void ClientChangeWeaponHandler(AGameObject sender, Weapon.AWeapon weapon);
 	public delegate void SomebodyDiesHandler(AGameObject sender);
 	public delegate void SomebodyHitHandler(AGameObject target, AGameObject projectile);
 	

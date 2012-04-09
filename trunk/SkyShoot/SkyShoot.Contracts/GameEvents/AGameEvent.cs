@@ -13,6 +13,7 @@ namespace SkyShoot.Contracts.GameEvents
 	[KnownType(typeof(ObjectDeleted))]
 	[KnownType(typeof(ObjectHealthChanged))]
 	[KnownType(typeof(BonusesChanged))]
+	[KnownType(typeof(WeaponChanged))]
 	public abstract class AGameEvent
 	{
 		// now = DateTime.Now.Ticks/10000; //время в миллисекундах с начала игры
@@ -100,6 +101,24 @@ namespace SkyShoot.Contracts.GameEvents
 		public override void UpdateMob(AGameObject mob)
 		{
 			mob.HealthAmount = Health;
+		}
+	}
+
+	[DataContract]
+	public class WeaponChanged : AGameEvent
+	{
+		[DataMember]
+		public SkyShoot.Contracts.Weapon.AWeapon weapon;
+
+		public WeaponChanged(SkyShoot.Contracts.Weapon.AWeapon weapon, Guid id, long timeStamp)
+			: base(id, timeStamp)
+		{
+			this.weapon = weapon;
+		}
+
+		public override void UpdateMob(AGameObject mob)
+		{
+			mob.Weapon = weapon;
 		}
 	}
 

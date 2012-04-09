@@ -148,6 +148,16 @@ namespace SkyShoot.Service
 
 		public event SomebodyMovesHandler MeMoved;
 		public event ClientShootsHandler MeShot;
+		public event ClientChangeWeaponHandler MeChangeWeapon;
+
+		public AGameEvent[] ChangeWeapon(SkyShoot.Contracts.Weapon.AWeapon weapon)
+		{
+			if (MeChangeWeapon != null)
+			{
+				MeChangeWeapon(this, weapon);
+			}
+			return null;// GetEvents();
+		}
 
 		public AGameEvent[] Move(Vector2 direction) // приходит снаружи от клиента
 		{

@@ -11,6 +11,7 @@ using SkyShoot.Service.Bonus;
 using SkyShoot.Service.Bonuses;
 using SkyShoot.Service.Mobs;
 using SkyShoot.XNA.Framework;
+using SkyShoot.Contracts.Weapon;
 
 namespace SkyShoot.Service.Session
 {
@@ -51,6 +52,11 @@ namespace SkyShoot.Service.Session
 
 			// создание стенок
 			_wallFactory = new WallFactory(GameLevel);
+		}
+
+		private void SomebodyChangedWeapon(AGameObject sender, AWeapon weapon)
+		{
+			sender.Weapon = weapon;
 		}
 
 		private void SomebodyMoved(AGameObject sender, Vector2 direction)
@@ -151,6 +157,7 @@ namespace SkyShoot.Service.Session
 
 			player.MeMoved -= SomebodyMoved;
 			player.MeShot -= SomebodyShot;
+			player.MeChangeWeapon -= SomebodyChangedWeapon;
 
 			//Players.Remove(player);
 			lock (_gameObjects)
@@ -218,6 +225,7 @@ namespace SkyShoot.Service.Session
 				//this.SomebodyShoots += player.MobShot;
 				player.MeShot += SomebodyShot;
 
+				player.MeChangeWeapon += SomebodyChangedWeapon;
 				//this.SomebodySpawns += player.SpawnMob;
 
 				//this.SomebodyDies += player.MobDead;
