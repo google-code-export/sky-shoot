@@ -56,10 +56,10 @@ namespace SkyShoot.Game.Client.GameObjects
 				case EnumObjectType.Rocket:
 					break;
 				case EnumObjectType.LaserBullet:
-					_soundManager.SoundPlay(4);
+					_soundManager.SoundPlay(SoundManager.SoundEnum.Laser);
 					break;
 				case EnumObjectType.ShutgunBullet:
-					_soundManager.SoundPlay(3);
+					_soundManager.SoundPlay(SoundManager.SoundEnum.Gunshot);
 					break;
 			}
 

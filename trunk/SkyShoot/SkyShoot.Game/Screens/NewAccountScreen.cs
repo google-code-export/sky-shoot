@@ -125,14 +125,14 @@ namespace SkyShoot.Game.Screens
 
 		private void BackButtonPressed(object sender, EventArgs args)
 		{
-			_soundManager.SoundPlay(0);
+			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);
 
 			throw new NotImplementedException();
 		}
 
 		private void OkButtonPressed(object sender, EventArgs args)
 		{
-			_soundManager.SoundPlay(0);
+			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);
 
 			if (_loginBox.Text.Length < 3)
 			{

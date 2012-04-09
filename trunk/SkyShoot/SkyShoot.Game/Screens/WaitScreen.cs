@@ -144,7 +144,7 @@ namespace SkyShoot.Game.Screens
 
 		private void LeaveButtonPressed(object sender, EventArgs args)
 		{
-			_soundManager.SoundPlay(0);
+			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);
 
 			GameController.Instance.LeaveGame();
 			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MultiplayerScreen);

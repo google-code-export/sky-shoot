@@ -95,21 +95,21 @@ namespace SkyShoot.Game.Screens
 
 		private void PlayGameButtonPressed(object sender, EventArgs e)
 		{
-			_soundManager.SoundPlay(0);
+			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);
 
 			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MultiplayerScreen);
 		}
 
 		private void OptionsButtonPressed(object sender, EventArgs e)
 		{
-			_soundManager.SoundPlay(0);
+			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);
 
 			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.OptionsMenuScreen);
 		}
 
 		private void LogoffMenuButtonPressed(object sender, EventArgs e)
 		{
-			_soundManager.SoundPlay(0);
+			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);
 
 			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.LoginScreen);
 		}
