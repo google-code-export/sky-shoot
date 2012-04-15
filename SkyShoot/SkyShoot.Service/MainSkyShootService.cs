@@ -189,7 +189,7 @@ namespace SkyShoot.Service
 
 		public AGameEvent[] GetEvents()
 		{
-			var events = NewEvents.ToArray();//new Queue<AGameEvent>(NewEvents);
+			var events = NewEvents.ToArray(); //new Queue<AGameEvent>(NewEvents);
 			NewEvents.Clear();
 			return events;
 		}
