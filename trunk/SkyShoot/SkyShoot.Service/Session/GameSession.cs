@@ -59,7 +59,7 @@ namespace SkyShoot.Service.Session
 
 		private void SomebodyChangedWeapon(AGameObject sender, SkyShoot.Contracts.Weapon.AWeapon.AWeaponType type)
 		{
-			sender.changeWaponTo(type);
+			sender.ChangeWaponTo(type);
 		}
 
 		private void SomebodyMoved(AGameObject sender, Vector2 direction)
@@ -174,7 +174,10 @@ namespace SkyShoot.Service.Session
 		{
 			foreach (var playerConverted in _gameObjects.Where(player => player.Is(AGameObject.EnumObjectType.Player)).OfType<MainSkyShootService>())
 			{
-				playerConverted.NewEvents.Enqueue(gameEvent);
+				lock (playerConverted.NewEvents)
+				{
+					playerConverted.NewEvents.Enqueue(gameEvent);
+				}
 			}
 		}
 
@@ -381,10 +384,8 @@ namespace SkyShoot.Service.Session
 							continue;
 						}
 						eventsCash.AddRange(activeObject.Do(slaveObject, now));
-						if (!slaveObject.Is(AGameObject.EnumObjectType.Bullet)
-							&& !activeObject.Is(AGameObject.EnumObjectType.Bullet) 
-							&& !slaveObject.Is(AGameObject.EnumObjectType.Bonus)
-							&& !activeObject.Is(AGameObject.EnumObjectType.Bonus))
+						if (slaveObject.Is(AGameObject.EnumObjectType.Block)
+							&& activeObject.Is(AGameObject.EnumObjectType.Block))
 						{
 							//удаляемся ли мы от объекта
 							// если да, то можем двигаться
@@ -424,93 +425,6 @@ namespace SkyShoot.Service.Session
 				_gameObjects.RemoveAll(m => !m.IsActive);
 			}
 
-			#region old code
-			//todo //!! delete
-			/*
-			for (int i = 0; i < _gameObjects.Count; i++)
-			{
-				var mob = _mobs[i];
-				Vector2 oldVector = new Vector2(mob.RunVector.X,mob.RunVector.Y);
-				mob.Think(gameObjects);
-				mob.Coordinates = ComputeMovement(mob);
-				if ((mob.RunVector - oldVector).Length() > 0.001) 
-				{
-					SomebodyMoved(mob, mob.RunVector);
-				}
-				//System.Diagnostics.Trace.WriteLine("Mob cord: " + mob.Coordinates); 
-
-			}
-
-			for(int i = 0; i < Players.Count; i++)
-			{
-				var player = Players[i];
-				player.Coordinates = ComputeMovement(player);
-				player.DeleteExpiredBonuses(_lastUpdate);
-
-				//Проверка на касание игрока и моба
-				HitTestTouch(player);
-
-				List<AGameBonus> bonuses2delete = new List<AGameBonus>();
-				for(int j = 0; j < _bonuses.Count; j ++)
-				{
-					var bonus = _bonuses[j];
-					if (Vector2.Distance(bonus.Coordinates, player.Coordinates) < player.Radius)
-					{
-						if (!bonus.IsActive)
-						{
-							continue;
-						}
-						player.AddBonus(bonus);
-						bonus.taken(_lastUpdate);
-						bonus.IsActive = false;
-						PushEvent(new ObjectDeleted(bonus.Id, _timerCounter));
-						bonuses2delete.Add(bonus);
-					} 
-				}
-				foreach (AGameBonus bonus in bonuses2delete)
-				{
-					_bonuses.Remove(bonus);
-				}
-			}
-			// Trace.WriteLine("" + _projectiles.size);
-			for (var pr = _projectiles.FirstActive; pr != null; pr = _projectiles.Next(pr) )
-			{
-				
-				//if (pr == null || pr.Item == null) continue;
-				//var projectile = pr.Item;
-				if (projectile.LifeDistance <= 0)
-				{
-					projectile.IsActive = false;
-					//pr.isActive = false;
-					continue;
-				}
-				//var projectile = _projectiles[i];
-				var newCord = projectile.Coordinates + projectile.RunVector * projectile.Speed * _updateDelay;
-
-				//Проверка на касание пули и моба
-				var hitedMob = hitTestProjectile(projectile, newCord);
-				if (hitedMob == null)
-				{
-					projectile.OldCoordinates = projectile.Coordinates;
-					projectile.Coordinates = newCord;
-					projectile.LifeDistance -= Vector2.Distance(projectile.Coordinates, projectile.OldCoordinates);
-				}
-				else
-				{
-					projectile.Do(hitedMob);
-					//hitedMob.DamageTaken(projectile);
-					SomebodyHitted(hitedMob, projectile);
-					if (hitedMob.HealthAmount <= 0)
-					{
-						MobDead(hitedMob);
-					}
-					projectile.LifeDistance = -1;
-				}
-
-			}
-			/**/
-#endregion
-
 			//_projectiles.RemoveAll(x => (x==null) || (x.LifeDistance <= 0));
 			// Trace.WriteLine(System.DateTime.Now.Ticks/10000 - now);
 			// Trace.WriteLine("update end " + _timerCounter);
@@ -524,92 +438,6 @@ namespace SkyShoot.Service.Session
 			return _gameObjects.FindAll(o => o.Is(AGameObject.EnumObjectType.Player)).Count;
 		}
 
-	#endregion
-		#region //todo delete
-
-		//private AGameObject HitTestProjectile(AProjectile projectile, Vector2 newCord)
-		//{
-		//  var prX = newCord.X - projectile.Coordinates.X;
-		//  var prY = newCord.Y - projectile.Coordinates.Y;
-
-		//  AGameObject hitedTarget = null;
-		//  var minDist = double.MaxValue;
-
-		//  for (int i = 0; i < _gameObjects.Count; i++)
-		//  {
-		//    var mob = _gameObjects[i];
-		//    var mX = mob.Coordinates.X - projectile.Coordinates.X;
-		//    var mY = mob.Coordinates.Y - projectile.Coordinates.Y;
-		//    var mR = mob.Radius;
-		//    var mDist = Math.Sqrt(mX * mX + mY * mY);
-
-		//    if (mDist <= mR && mDist < minDist)
-		//    {
-		//      //!! hitedTarget = mob;
-		//      minDist = mDist;
-		//      continue;
-		//    }
-
-		//    if (prX == 0 && prY == 0)
-		//    {
-		//      continue;
-		//    }
-
-		//    var h = Math.Abs(prX * mY - prY * mX) / Math.Sqrt(prX * prX * + prY * prY);
-
-		//    var cos1 = mX * prX + mY * prY;
-		//    var cos2 = -1 * (prX * (mX - prX) + prY * (mY - prY));
-
-		//    if (h <= mR && Math.Sign(cos1) == Math.Sign(cos2) && mDist < minDist)
-		//    {
-		//      hitedTarget = mob;
-		//      minDist = mDist;
-		//    }
-
-		//  }
-
-		//  return hitedTarget;
-		//}
-
-		//private void HitTestTouch(MainSkyShootService player)
-		//{
-		//  for (int i = 0; i < _gameObjects.Count;i++ )
-		//  {
-		//    var mob = _gameObjects[i];
-		//    if ((mob.Coordinates - player.Coordinates).Length() <= mob.Radius + player.Radius)
-		//    {
-		//      if (mob.Weapon.Reload(DateTime.Now.Ticks / 10000))
-		//      {
-		//        AGameBonus shield = player.GetBonus(AGameObject.EnumObjectType.Shield);
-		//        float damage = shield == null ? 1f : shield.DamageFactor;
-		//        player.HealthAmount -= damage * mob.Damage;
-		//        SomebodyHitted(player, null);
-		//      }
-
-		//      if (player.HealthAmount <= 0)
-		//      {
-		//        PlayerDead(player);
-		//      }
-		//    }
-		//  }
-		//} 
-
-
-
-
-		//private Vector2 ComputeMovement(AGameObject mob)
-		//{
-			
-		//  var newCoord = mob.RunVector*mob.Speed*_updateDelay + mob.Coordinates ;
-
-		//  if (mob.IsPlayer)
-		//  {
-		//    newCoord.X = MathHelper.Clamp(newCoord.X, 0, GameLevel.levelHeight);
-		//    newCoord.Y = MathHelper.Clamp(newCoord.Y, 0, GameLevel.levelWidth);
-		//  }
-			
-		//  return newCoord;
-		//}
 	#endregion
 	}
 }

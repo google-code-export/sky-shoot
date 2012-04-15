@@ -5,7 +5,6 @@ using System.ServiceModel;
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Session;
 using SkyShoot.XNA.Framework;
-using System.Collections.Generic;
 using SkyShoot.Contracts.GameEvents;
 
 namespace SkyShoot.Contracts.Service
@@ -16,7 +15,6 @@ namespace SkyShoot.Contracts.Service
 	public delegate void SomebodyDiesHandler(AGameObject sender);
 	public delegate void SomebodyHitHandler(AGameObject target, AGameObject projectile);
 	
-	//[ServiceContract(CallbackContract = typeof(ISkyShootCallback))]
 	[ServiceContract]
 	public interface ISkyShootService
 	{
@@ -46,9 +44,6 @@ namespace SkyShoot.Contracts.Service
 
 		[OperationContract]
 		AGameEvent[] GetEvents();
-
-		//[OperationContract(IsOneWay = true)]
-		//void TakeBonus(AObtainableDamageModifier bonus);
 
 		//[OperationContract]
 		//void TakePerk(Perk perk);
