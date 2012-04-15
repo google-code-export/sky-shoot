@@ -12,6 +12,7 @@ using SkyShoot.Service.Bonuses;
 using SkyShoot.Service.Mobs;
 using SkyShoot.XNA.Framework;
 using SkyShoot.Contracts.Weapon;
+using SkyShoot.ServProgram.Mobs;
 
 namespace SkyShoot.Service.Session
 {
@@ -25,6 +26,7 @@ namespace SkyShoot.Service.Session
 		public bool IsStarted { get; set; }
 		public GameLevel GameLevel { get; private set; }
 		private readonly SpiderFactory _spiderFactory;
+		private readonly ShootingMobFactory _shootingMobFactory;
 		private readonly BonusFactory _bonusFactory;
 		private readonly WallFactory _wallFactory;
 		private long _timerCounter;
@@ -49,6 +51,7 @@ namespace SkyShoot.Service.Session
 			LocalGameDescription = new GameDescription(playerNames, maxPlayersAllowed, gameType, gameID, tileSet);
 			_spiderFactory = new SpiderFactory(GameLevel);
 			_bonusFactory = new BonusFactory();
+			_shootingMobFactory = new ShootingMobFactory(GameLevel);
 
 			// создание стенок
 			_wallFactory = new WallFactory(GameLevel);
@@ -302,11 +305,17 @@ namespace SkyShoot.Service.Session
 #endif
 			if (_intervalToSpawn == 0)
 			{
-				_intervalToSpawn = (long) Math.Exp(4.8 - (float)_timerCounter/40000f);
+				_intervalToSpawn = 2 * (long) Math.Exp(4.8 - (float)_timerCounter/40000f);
 				
 				var mob = _spiderFactory.CreateMob();
 				// System.Diagnostics.Trace.WriteLine("mob spawned" + mob.Id);
 				
+				_gameObjects.Add(mob);
+				r.Add(new NewObjectEvent(mob, time));
+
+				mob = _shootingMobFactory.CreateMob();
+				// System.Diagnostics.Trace.WriteLine("mob spawned" + mob.Id);
+
 				_gameObjects.Add(mob);
 				r.Add(new NewObjectEvent(mob, time));
 				//mob.MeMoved += new SomebodyMovesHandler(SomebodyMoved);
@@ -344,8 +353,8 @@ namespace SkyShoot.Service.Session
 					{
 						continue;
 					}
-					eventsCash.AddRange(
-					activeObject.Think(_gameObjects, now));
+					
+					eventsCash.AddRange(activeObject.Think(_gameObjects, now));
 
 					var newCoord = activeObject.ComputeMovement(_updateDelay, GameLevel);
 					var canMove = true;
