@@ -14,7 +14,7 @@ using Color = System.Drawing.Color;
 
 namespace SkyShoot.WinFormsClient
 {
-	public partial class MainForm : Form //, ISkyShootCallback
+	public partial class MainForm : Form
 	{
 		#region переменные
 
@@ -31,10 +31,9 @@ namespace SkyShoot.WinFormsClient
 		private DateTime _prev;
 		private readonly Thread _th;
 		public bool GameRuning;
+		private Vector2 _shoot;
 
 		#endregion
-
-		//#region ISkyShootServiceCallback
 
 		public void GameStart(GameLevel level)
 		{
@@ -45,151 +44,7 @@ namespace SkyShoot.WinFormsClient
 			_objects.Clear();
 			_level = level;
 			_prevMove = Vector2.Zero;
-
-			//_me = _objects.Find(m => m.Id == _me.Id);
-
 		}
-
-		//public void MobShot(AGameObject mob, AProjectile[] projectiles)
-		//{
-		//  try
-		//  {
-		//    Trace.WriteLine("MobShot: " + projectiles.Length);
-		//    //lock (_bullets)
-		//    {
-		//      //_bullets.AddRange(projectiles);
-		//    }
-		//  }
-		//  catch (Exception e)
-		//  {
-		//    Trace.WriteLine("MobShot: " + e);
-		//  }
-		//}
-
-		//public void SpawnMob(AGameObject mob)
-		//{
-		//  try
-		//  {
-		//    Trace.WriteLine("SpawnMob: " + mob.Coordinates + ";" + mob.IsPlayer);
-		//    lock (_objects)
-		//    {
-		//      _objects.Add(mob);
-		//    }
-		//  }
-		//  catch (Exception e)
-		//  {
-		//    Trace.WriteLine("MobShot: " + e);
-		//  }
-
-		//}
-
-		//public void Hit(AGameObject mob, AProjectile projectile)
-		//{
-		//  try
-		//  {
-		//    Trace.WriteLine("Hit: " + projectile);
-		//    //var b = _bullets.Find(x => x.Id == projectile.Id);
-		//    //lock (_bullets)
-		//    //{
-		//    //  _bullets.Remove(b);
-		//    //}
-		//  }
-		//  catch (Exception e)
-		//  {
-		//    Trace.WriteLine("Hit: " + e);
-
-		//  }
-		//}
-
-		//public void MobMoved(AGameObject mob, Vector2 direction)
-		//{
-		//  var m = _objects.Find(curm => curm.Id == mob.Id);
-		//  if (m == null)
-		//    return;
-		//  lock (_objects)
-		//  {
-		//    m.Copy(mob);
-		//    m.RunVector = direction;
-		//  }
-		//  Redraw();
-		//}
-
-		//public void MobDead(AGameObject mob)
-		//{
-		//  AGameObject m = _objects.Find(curm => curm.Id == mob.Id);
-		//  if (m == null)
-		//    return;
-		//  lock (_objects)
-		//  {
-		//    _objects.Remove(m);
-		//  }
-		//}
-
-		//public void BonusDropped(AObtainableDamageModifier bonus)
-		//{
-		//  throw new NotImplementedException();
-		//}
-
-		//public void BonusExpired(AObtainableDamageModifier bonus)
-		//{
-		//  throw new NotImplementedException();
-		//}
-
-		//public void BonusDisappeared(AObtainableDamageModifier bonus)
-		//{
-		//  throw new NotImplementedException();
-		//}
-
-		//private void Stop()
-		//{
-		//  if (InvokeRequired)
-		//  {
-		//    Invoke(new MethodInvoker(Stop));
-		//    return;
-		//  } 
-		//  GameRuning = false;
-		//  if (_th != null)
-		//  {
-		//    _th.Abort();
-		//  }
-		//  Hide();
-		//  _games.ShowDialog();
-		//}
-
-		//public void GameOver()
-		//{
-		//  (new Thread(Stop)).Start();
-		//}
-
-		//public void PlayerLeft(AGameObject mob)
-		//{
-		//  //throw new NotImplementedException();
-		//}
-
-		//public void SynchroFrame(AGameObject[] mobs)
-		//{
-		//  //return;
-		//  foreach (var m in mobs)
-		//  {
-		//    var t = _objects.Find(cm => cm.Id == m.Id);
-		//    if (t == null)
-		//      continue;
-		//    t.Copy(m);
-		//    if (_me.Id == t.Id)
-		//    {
-		//    }
-		//  }
-		//}
-
-		//public void PlayerListChanged(string[] names)
-		//{
-		//  if(!GameRuning && names != null && names.Length != 0)
-		//  {
-		//    _games.UpdatePlayerList(names);
-		//  }
-		//}
-
-		//#endregion
 
 		#region манипуляции с интерфейсом
 
@@ -240,6 +95,15 @@ namespace SkyShoot.WinFormsClient
 					AGameObject[] syncObjects; 
 					lock (_service)
 					{
+						if(_prevMove != _me.RunVector)
+						{
+							ApplyEvents(_service.Move(_prevMove = _me.RunVector));
+						}
+						if (_shoot != Vector2.Zero)
+						{
+							ApplyEvents(_service.Shoot(_shoot));
+							_shoot = Vector2.Zero;
+						}
 						syncObjects = _service.SynchroFrame();
 						ApplyEvents(_service.GetEvents());
 					}
@@ -270,7 +134,7 @@ namespace SkyShoot.WinFormsClient
 								m.Coordinates +=
 									m.RunVector *
 									(m.Speed * (float)((now - _prev).TotalMilliseconds));
-								if (m.IsPlayer)
+								if (m.Is(AGameObject.EnumObjectType.Player))
 								{
 									m.Coordinates = Vector2.Clamp(m.Coordinates, new Vector2(0, 0), new Vector2(_level.levelWidth, _level.levelHeight)); /**/
 								}
@@ -281,32 +145,6 @@ namespace SkyShoot.WinFormsClient
 							Trace.WriteLine("Cli: Update: " + e);
 						}
 					}
-					//lock (_bullets)
-					//{
-					//  try
-					//  {
-					//    _bullets.RemoveAll(x => (x.LifeDistance <= 0));
-					//    foreach (var m in _bullets)
-					//    {
-					//      var diff = m.RunVector*
-					//                 (m.Speed*(float) ((now - _prev).TotalMilliseconds));
-					//      m.LifeDistance -= diff.Length();
-					//      m.Coordinates += diff;
-
-					//      Vector2 v = Vector2.Clamp(m.Coordinates,
-					//                                new Vector2(0, 0),
-					//                                new Vector2(_level.levelWidth, _level.levelHeight));
-					//      if (v != m.Coordinates)
-					//      {
-					//        m.LifeDistance = -1;
-					//      }
-					//    }
-					//  }
-					//  catch (Exception e)
-					//  {
-					//    Trace.WriteLine("Cli: Update: " + e);
-					//  }
-					//}
 					_prev = now;
 					SetStatus("[pos: " + _me.Coordinates.X + ";" + _me.Coordinates.Y + "] [dir: " +
 										_me.RunVector.X + ";" + _me.RunVector.Y + "]");
@@ -368,14 +206,14 @@ namespace SkyShoot.WinFormsClient
 			}
 			v.Normalize();
 			_me.RunVector = v;
-			if (v != _prevMove)
+			//if (v != _prevMove)
 			{
 				//_th.Suspend();
-				_prevMove = v;
-				lock (_service)
-				{
-					ApplyEvents(_service.Move(v));
-				}
+				//_prevMove = v;
+				//lock (_service)
+				//{
+				//  ApplyEvents(_service.Move(v));
+				//}
 				//_th.Resume();
 			}
 		}
@@ -402,12 +240,11 @@ namespace SkyShoot.WinFormsClient
 
 		private void MainForm_OnKeyUp(object sender, KeyEventArgs e)
 		{
-			var v = new Vector2(0, 0);
-			_me.RunVector = v;
-			lock (_service)
-			{
-				_service.Move(v);
-			}
+			_me.RunVector = Vector2.Zero;
+			//lock (_service)
+			//{
+			//  _service.Move(v);
+			//}
 		}
 
 		private void MainForm_OnLoad(object sender, EventArgs e)
@@ -454,11 +291,11 @@ namespace SkyShoot.WinFormsClient
 						{
 						case AGameObject.EnumObjectType.Mob:
 						case AGameObject.EnumObjectType.Player:
-							g.FillEllipse(m.IsPlayer ? Brushes.Black : Brushes.Green,
+							g.FillEllipse(m.Is(AGameObject.EnumObjectType.Player) ? Brushes.Black : Brushes.Green,
 														new RectangleF(
 															new PointF(x - r, y - r),
 															new SizeF(2 * r, 2 * r)));
-							g.DrawLine(new Pen(m.IsPlayer ? Color.Red : Color.Green, 3),
+							g.DrawLine(new Pen(m.Is(AGameObject.EnumObjectType.Player) ? Color.Red : Color.Green, 3),
 												 new PointF(x, y),
 												 new PointF(x + m.ShootVector.X * 2 * r, y + m.ShootVector.Y * 2 * r));
 
@@ -522,23 +359,6 @@ namespace SkyShoot.WinFormsClient
 				{
 					Trace.WriteLine("Exc: " + exc);
 				}
-				//try
-				//  //lock (_bullets)
-				//{
-				//  foreach (var m in _bullets)
-				//  {
-				//    x = (m.Coordinates.X)*_pnCanvas.Width/_level.levelWidth;
-				//    y = (m.Coordinates.Y)*_pnCanvas.Height/_level.levelHeight;
-				//    g.FillEllipse(Brushes.Red,
-				//                  new RectangleF(
-				//                    new PointF(x - r, y - r),
-				//                    new SizeF(2*r, 2*r)));
-				//  }
-				//}
-				//catch (Exception exc)
-				//{
-				//  Trace.WriteLine("Exc: " + exc);
-				//}
 			}
 		}
 
@@ -584,10 +404,11 @@ namespace SkyShoot.WinFormsClient
 							- _me.Coordinates;
 			v.Normalize();
 			_me.ShootVector = v;
-			lock (_service)
-			{
-				_service.Shoot(v);
-			}
+			_shoot = v;
+			//lock (_service)
+			//{
+			//  _service.Shoot(v);
+			//}
 		}
 
 
@@ -607,11 +428,8 @@ namespace SkyShoot.WinFormsClient
 					SetStatus("Logon successfull");
 					return true;
 				}
-				else
-				{
-					SetStatus("No such login");
-					return false;
-				}
+				SetStatus("No such login");
+				return false;
 			}
 			catch (Exception)
 			{
