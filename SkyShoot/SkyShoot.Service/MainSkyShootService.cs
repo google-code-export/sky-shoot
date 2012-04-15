@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.ServiceModel;
+using System.Text;
 using SkyShoot.Contracts;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Mobs;
@@ -38,15 +39,15 @@ namespace SkyShoot.Service
 			GlobalID++;
 			Bonuses = new List<AGameBonus>();
 
-			initWeapons();
+			InitWeapons();
 		}
 
-		private void initWeapons()
+		private void InitWeapons()
 		{
 			Weapons.Add(Contracts.Weapon.AWeapon.AWeaponType.Pistol, new Weapon.Pistol(Guid.NewGuid(), this));
 			Weapons.Add(Contracts.Weapon.AWeapon.AWeaponType.Shotgun, new Weapon.Shotgun(Guid.NewGuid(), this));
 
-			changeWaponTo(Contracts.Weapon.AWeapon.AWeaponType.Pistol);
+			ChangeWaponTo(Contracts.Weapon.AWeapon.AWeaponType.Pistol);
 		}
 
 		public AGameEvent[] AddBonus(AGameBonus bonus, long time)
@@ -189,9 +190,31 @@ namespace SkyShoot.Service
 
 		public AGameEvent[] GetEvents()
 		{
-			var events = NewEvents.ToArray(); //new Queue<AGameEvent>(NewEvents);
-			NewEvents.Clear();
+			AGameEvent[] events;
+			try
+			{
+			lock(NewEvents)
+			{
+				events = NewEvents.ToArray();//new Queue<AGameEvent>(NewEvents);
+				NewEvents.Clear();
+			}
+			var sb = new StringBuilder();
+			sb.Append("GetEvents:");
+			sb.Append(events.Length);
+			foreach (var e in events)
+			{
+				sb.Append(":");
+				sb.Append(e);
+			}
+			Trace.WriteLine(sb);
+			}
+			catch (Exception exc)
+			{
+				Trace.WriteLine("GetEvents:" + exc);
+				throw;
+			}
 			return events;
+			return null;
 		}
 
 		public void LeaveGame()

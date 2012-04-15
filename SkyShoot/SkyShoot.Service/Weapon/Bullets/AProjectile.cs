@@ -60,10 +60,17 @@ namespace SkyShoot.Service.Weapon.Bullets
 
 			if (obj.Is(EnumObjectType.LivingObject))
 			{
-				//var shield = player.GetBonus(EnumObjectType.Shield);
-				//var damage = shield == null ? 1f : shield.DamageFactor;
-				// todo //!! сделать проверку на бонус "щит" у обжекта
-				obj.HealthAmount -= Damage;
+				var damageMod = 1f;
+				if (obj.Is(EnumObjectType.Player))
+				{
+					var player = obj as MainSkyShootService;
+					if (player != null)
+					{
+						var shield = player.GetBonus(EnumObjectType.Shield);
+						damageMod = shield == null ? 1f : shield.DamageFactor;
+					}
+				}
+				obj.HealthAmount -= Damage * damageMod;
 				res.Add(new ObjectHealthChanged(obj.HealthAmount, obj.Id, time));
 				// убираем пулю
 				IsActive = false;

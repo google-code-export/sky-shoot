@@ -11,8 +11,9 @@ namespace SkyShoot.Service.Weapon
 		public Claw(Guid id) : base(id) { Owner = null; }
 
 		public Claw(Guid id, AGameObject owner)
-			: base(id) 
+			: base(id)
 		{
+
 			if (owner == null) throw new ArgumentNullException("owner");
 			Owner = owner;
 			ReloadSpeed = Constants.CLAW_ATTACK_RATE;

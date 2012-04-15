@@ -76,6 +76,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WeaponButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <EmbeddedResource Include="CreateGameDialog.resx">
       <DependentUpon>CreateGameDialog.cs</DependentUpon>
     </EmbeddedResource>

@@ -9,6 +9,7 @@ using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Session;
+using SkyShoot.Contracts.Weapon;
 using SkyShoot.XNA.Framework;
 using Color = System.Drawing.Color;
 
@@ -104,6 +105,10 @@ namespace SkyShoot.WinFormsClient
 							ApplyEvents(_service.Shoot(_shoot));
 							_shoot = Vector2.Zero;
 						}
+						if (_curWeapon != _prevWeapon)
+						{
+							_service.ChangeWeapon(_prevWeapon = _curWeapon);
+						}
 						syncObjects = _service.SynchroFrame();
 						ApplyEvents(_service.GetEvents());
 					}
@@ -167,15 +172,67 @@ namespace SkyShoot.WinFormsClient
 
 		#endregion
 
+		private readonly WeaponButton[] _buttons;
+		private AWeapon.AWeaponType _curWeapon, _prevWeapon;
+
 		public MainForm()
 		{
 			InitializeComponent();
+
+			int bts = Enum.GetNames(typeof(AWeapon.AWeaponType)).Length;
+			_buttons = new WeaponButton[bts];
+			int i = 0;
+			foreach (var s in Enum.GetNames(typeof(AWeapon.AWeaponType)))
+			{
+				var b = new WeaponButton();
+				AWeapon.AWeaponType t;
+				if(!Enum.TryParse(s, out t))
+				{
+					MessageBox.Show(@"Can't load weapons list :(", @"Error");
+				}
+				b.WeaponType = t;
+				b.Name = s;
+				b.Text = @"("+ (i+1).ToString() + @") " + s;
+				b.Click += BClick;
+				b.BorderStyle = BorderStyle.Fixed3D;
+				_buttons[i++] = b;
+			}
+			Controls.AddRange(_buttons);
+			MakeWeaponButtonsLayout();
+
 			var channelFactory = new ChannelFactory<ISkyShootService>("SkyShootEndpoint");
 			_service = channelFactory.CreateChannel();
 			GameRuning = false;
 			_objects = new List<AGameObject>();
 			_th = new Thread(UpdateSt);
 
+			_curWeapon = _prevWeapon = AWeapon.AWeaponType.Pistol;
+		}
+
+		private void MakeWeaponButtonsLayout()
+		{
+			var bts = _buttons.Length;
+			var w = this.ClientSize.Width / bts;
+			var h = statusStrip1.Top - _pnCanvas.Bottom - 2;
+			var x = 1;
+			var y = _pnCanvas.Bottom + 1;
+			for (var i = 0; i < bts; i++)
+			{
+				_buttons[i].Top = y;
+				_buttons[i].Left = x - 1;
+				_buttons[i].Width = w;
+				_buttons[i].Height = h;
+				x += w;
+			}
+		}
+
+
+		void BClick(object sender, EventArgs e)
+		{
+			var b = sender as WeaponButton;
+			if(b == null)
+				return;
+			_curWeapon = b.WeaponType;
 		}
 
 		#region events
@@ -202,6 +259,22 @@ namespace SkyShoot.WinFormsClient
 			case 'A':
 			case 'a':
 				v.X = -1;
+				break;
+			//case '0':
+			case '1':
+			case '2':
+			case '3':
+			case '4':
+			case '5':
+			case '6':
+			case '7':
+			case '8':
+			case '9':
+				int ind = e.KeyValue - '0' - 1;
+				if(ind < _buttons.Length)
+				{
+					BClick(_buttons[ind], null);
+				}
 				break;
 			}
 			v.Normalize();
@@ -438,6 +511,11 @@ namespace SkyShoot.WinFormsClient
 		}
 
 		#endregion
+
+		private void MainFormResize(object sender, EventArgs e)
+		{
+			MakeWeaponButtonsLayout();
+		}
 
 	}
 }

@@ -12,6 +12,7 @@ namespace SkyShoot.Contracts.Mobs
 	[DataContract]
 	public class AGameObject
 	{
+		const int CommonAttributesShift = 32;
 		/// <summary>
 		/// основное перечисление всех возможных типов обектов игры
 		/// </summary>
@@ -19,20 +20,22 @@ namespace SkyShoot.Contracts.Mobs
 		public enum EnumObjectType
 		{
 			/*
-			 * 32-bit 00000000
-			 *        ||||||||
-			 *        ||/|/|/+-- LivingObject (something with mind and health)
-			 *        || | |  
-			 *        || | +---- Bullets
-			 *        || |    
-			 *        || |+----- Bonuses
-			 *        ||      
-			 *        |+-------- Walls      
-			 *        |
-			 *        +--------- Reserved
+			 * 64-bit 00000000 00000000
+			 *            \|/  ||||||||
+			 *             |   ||/|/|/+-- LivingObject (something with mind and health)
+			 *             |   || | |  
+			 *             |   || | +---- Bullets
+			 *             |   || |    
+			 *             |   || |+----- Bonuses
+			 *             |   ||      
+			 *             |   |+-------- Walls      
+			 *             |   |
+			 *             |   +--------- Reserved
+			 *             |
+			 *             +------------- Common attributes
 			 */
 			[EnumMember]
-			LivingObject = 0x0001,
+			LivingObject = 0x0001 | Block,
 			[EnumMember]
 			Player = LivingObject | 0x2,
 			[EnumMember]
@@ -58,7 +61,9 @@ namespace SkyShoot.Contracts.Mobs
 			[EnumMember]
 			Speedup = Bonus | 0x10000,
 			[EnumMember]
-			Wall = 0x0100000,
+			Wall = 0x0100000 | Block,
+			[EnumMember]
+			Block = 0x1 << CommonAttributesShift,
 		}
 
 		#region основные свойства
@@ -211,14 +216,14 @@ namespace SkyShoot.Contracts.Mobs
 			return newCoord;
 		}
 
-		#endregion
-
-		public void changeWaponTo(AWeapon.AWeaponType type)
+		public void ChangeWaponTo(AWeapon.AWeaponType type)
 		{
 			if (Weapons.ContainsKey(type))
 			{
-				this.Weapon = Weapons[type];
+				Weapon = Weapons[type];
 			}
 		}
+		#endregion
+
 	}
 }

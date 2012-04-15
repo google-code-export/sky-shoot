@@ -12,6 +12,9 @@ namespace SkyShoot.ServProgram
 	{
 		static void Main(string[] args)
 		{
+			try
+			{
+
 			Trace.Listeners.Add(new TableTraceListener());
 			Trace.WriteLine(args);
 
@@ -37,6 +40,12 @@ namespace SkyShoot.ServProgram
 			Console.WriteLine("Started!");
 			Console.ReadKey();
 			host.Close();
+			}
+			catch (Exception exc)
+			{
+				Trace.WriteLine("Server crashed: " + exc);
+				throw;
+			}
 		}
 	}
 }
