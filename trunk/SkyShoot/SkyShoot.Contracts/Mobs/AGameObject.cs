@@ -155,6 +155,8 @@ namespace SkyShoot.Contracts.Mobs
 			RunVector = ShootVector = new Vector2(0, 1);
 			Coordinates = coordinates;
 			Id = id;
+
+			Weapons = new Dictionary<AWeapon.AWeaponType, AWeapon>();
 			//IsActive = true;
 		}
 
