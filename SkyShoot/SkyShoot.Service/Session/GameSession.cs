@@ -82,6 +82,7 @@ namespace SkyShoot.Service.Session
 		private void SomebodyShot(AGameObject sender, Vector2 direction)
 		{
 			sender.ShootVector = direction;
+			sender.ShootVector.Normalize();
 			
 			if (sender.Weapon != null)
 			{

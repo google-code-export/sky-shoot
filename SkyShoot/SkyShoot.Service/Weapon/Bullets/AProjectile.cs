@@ -94,9 +94,18 @@ namespace SkyShoot.Service.Weapon.Bullets
 			var x = MathHelper.Clamp(newCoord.X, 0, gameLevel.levelHeight);
 			var y = MathHelper.Clamp(newCoord.Y, 0, gameLevel.levelWidth);
 			// убрать пулю, которая вышла за экран
-			IsActive = (Math.Abs(newCoord.X - x) < Constants.Epsilon)
-				&& (Math.Abs(newCoord.Y - y) < Constants.Epsilon);
+			if( ! ((Math.Abs(newCoord.X - x) < Constants.Epsilon)
+				&& (Math.Abs(newCoord.Y - y) < Constants.Epsilon)))
+			{
+				IsActive = false;
+			}
 			return newCoord;
+		}
+
+		public override IEnumerable<AGameEvent> Think(List<AGameObject> players, long time)
+		{
+			HealthAmount -= PrevMoveDiff.Length();
+			return base.Think(players, time);
 		}
 	}
 }

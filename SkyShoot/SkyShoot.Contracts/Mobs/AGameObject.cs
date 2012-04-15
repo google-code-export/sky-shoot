@@ -165,11 +165,6 @@ namespace SkyShoot.Contracts.Mobs
 			//IsActive = true;
 		}
 
-		//public AGameObject(AGameObject other)
-		//{
-		//  Copy(other);
-		//}
-
 		public virtual void Copy(AGameObject other)
 		{
 			Id = other.Id;
