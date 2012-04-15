@@ -43,8 +43,10 @@ namespace SkyShoot.Service
 
 		private void initWeapons()
 		{
-			Weapons.Add(Contracts.Weapon.AWeapon.AWeaponType.Pistol, new Weapon.Pistol(Guid.NewGuid(),this));
+			Weapons.Add(Contracts.Weapon.AWeapon.AWeaponType.Pistol, new Weapon.Pistol(Guid.NewGuid(), this));
 			Weapons.Add(Contracts.Weapon.AWeapon.AWeaponType.Shotgun, new Weapon.Shotgun(Guid.NewGuid(), this));
+
+			changeWaponTo(Contracts.Weapon.AWeapon.AWeaponType.Pistol);
 		}
 
 		public AGameEvent[] AddBonus(AGameBonus bonus, long time)
