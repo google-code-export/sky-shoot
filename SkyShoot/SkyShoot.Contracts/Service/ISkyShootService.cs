@@ -42,7 +42,7 @@ namespace SkyShoot.Contracts.Service
 		AGameEvent[] Shoot(Vector2 direction);
 
 		[OperationContract]
-		public AGameEvent[] ChangeWeapon(SkyShoot.Contracts.Weapon.AWeapon.AWeaponType type)
+		public AGameEvent[] ChangeWeapon(SkyShoot.Contracts.Weapon.AWeapon.AWeaponType type);
 
 		[OperationContract]
 		AGameEvent[] GetEvents();
