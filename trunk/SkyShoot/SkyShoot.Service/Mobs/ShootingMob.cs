@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using SkyShoot.ServProgram.Mobs;
+﻿using System.Collections.Generic;
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Weapon;
 using SkyShoot.Contracts.GameEvents;
@@ -23,10 +19,11 @@ namespace SkyShoot.ServProgram.Mobs
 			Speed = 0.03f;
 		}
 
-		public override IEnumerable<Contracts.GameEvents.AGameEvent> Think(List<AGameObject> gameObjects, long time)
+		public override IEnumerable<AGameEvent> Think(List<AGameObject> gameObjects, long time)
 		{
 			var res = new List<AGameEvent>(base.Think(gameObjects, time));
 			ShootVector = RunVector;
+			ShootVector.Normalize();
 			if (time - _lastShoot > _shootingDelay && Weapon != null && Weapon.Reload(time))
 			{
 				_lastShoot = time;
