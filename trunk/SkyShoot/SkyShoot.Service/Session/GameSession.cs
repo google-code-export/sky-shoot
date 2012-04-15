@@ -54,9 +54,9 @@ namespace SkyShoot.Service.Session
 			_wallFactory = new WallFactory(GameLevel);
 		}
 
-		private void SomebodyChangedWeapon(AGameObject sender, AWeapon weapon)
+		private void SomebodyChangedWeapon(AGameObject sender, SkyShoot.Contracts.Weapon.AWeapon.AWeaponType type)
 		{
-			sender.Weapon = weapon;
+			sender.changeWaponTo(type);
 		}
 
 		private void SomebodyMoved(AGameObject sender, Vector2 direction)

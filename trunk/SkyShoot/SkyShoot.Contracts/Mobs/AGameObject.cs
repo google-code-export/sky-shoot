@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Runtime.Serialization;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Session;
@@ -111,6 +112,8 @@ namespace SkyShoot.Contracts.Mobs
 
 		public AWeapon Weapon { get; set; }
 
+		public Dictionary<Weapon.AWeapon.AWeaponType,Weapon.AWeapon> Weapons { get; set; }
+
 		[DataMember]
 		public float HealthAmount { get; set; }
 
@@ -207,5 +210,13 @@ namespace SkyShoot.Contracts.Mobs
 		}
 
 		#endregion
+
+		public void changeWaponTo(AWeapon.AWeaponType type)
+		{
+			if (Weapons.ContainsKey(type))
+			{
+				this.Weapon = Weapons[type];
+			}
+		}
 	}
 }

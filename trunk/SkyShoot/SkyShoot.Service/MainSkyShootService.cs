@@ -37,6 +37,14 @@ namespace SkyShoot.Service
 			LocalID = GlobalID;
 			GlobalID++;
 			Bonuses = new List<AGameBonus>();
+
+			initWeapons();
+		}
+
+		private void initWeapons()
+		{
+			Weapons.Add(Contracts.Weapon.AWeapon.AWeaponType.Pistol, new Weapon.Pistol(Guid.NewGuid(),this));
+			Weapons.Add(Contracts.Weapon.AWeapon.AWeaponType.Shotgun, new Weapon.Shotgun(Guid.NewGuid(), this));
 		}
 
 		public AGameEvent[] AddBonus(AGameBonus bonus, long time)
@@ -150,11 +158,11 @@ namespace SkyShoot.Service
 		public event ClientShootsHandler MeShot;
 		public event ClientChangeWeaponHandler MeChangeWeapon;
 
-		public AGameEvent[] ChangeWeapon(SkyShoot.Contracts.Weapon.AWeapon weapon)
+		public AGameEvent[] ChangeWeapon(SkyShoot.Contracts.Weapon.AWeapon.AWeaponType type)
 		{
 			if (MeChangeWeapon != null)
 			{
-				MeChangeWeapon(this, weapon);
+				MeChangeWeapon(this, type);
 			}
 			return null;// GetEvents();
 		}
