@@ -57,7 +57,8 @@ namespace SkyShoot.Game.Screens
 		{
 			// Login Input
 			_loginBox = new Controls.InputControl
-			            	{
+			            	{											
+											IsHidden = false,
 			            		Bounds = new UniRectangle(new UniScalar(0.5f, -100f), new UniScalar(0.4f, -30), 200, 30),
 			            		Text = Settings.Default.login
 			            	};
@@ -65,8 +66,9 @@ namespace SkyShoot.Game.Screens
 			// Password Input
 			_passwordBox = new Controls.InputControl
 			               	{
+												IsHidden = true,
 			               		Bounds = new UniRectangle(new UniScalar(0.5f, -100f), new UniScalar(0.4f, 30), 200, 30),
-			               		Text = Settings.Default.password
+			               		Text = Controls.InputControl.HiddenText(Settings.Default.password)												
 			               	};
 
 			// Login Label
@@ -152,10 +154,10 @@ namespace SkyShoot.Game.Screens
 			else
 			{
 				Settings.Default.login = _loginBox.Text;
-				Settings.Default.password = _passwordBox.Text;
+				Settings.Default.password = _passwordBox.RealText;
 				Settings.Default.Save();
 
-				if (GameController.Instance.Login(_loginBox.Text, _passwordBox.Text).HasValue)
+				if (GameController.Instance.Login(_loginBox.Text, _passwordBox.RealText).HasValue)
 				{
 					ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MainMenuScreen);
 				}				
@@ -179,12 +181,12 @@ namespace SkyShoot.Game.Screens
 			else
 			{
 				Settings.Default.login = _loginBox.Text;
-				Settings.Default.password = _passwordBox.Text;
+				Settings.Default.password = _passwordBox.RealText;
 				Settings.Default.Save();
 
-				if (GameController.Instance.Register(_loginBox.Text, _passwordBox.Text))
+				if (GameController.Instance.Register(_loginBox.Text, _passwordBox.RealText))
 				{
-					if (GameController.Instance.Login(_loginBox.Text, _passwordBox.Text).HasValue)
+					if (GameController.Instance.Login(_loginBox.Text, _passwordBox.RealText).HasValue)
 					{
 						ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MainMenuScreen);
 					}
