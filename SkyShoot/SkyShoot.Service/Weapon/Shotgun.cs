@@ -13,7 +13,7 @@ namespace SkyShoot.Service.Weapon
 		private void Init()
 		{
 			_rand = new Random();
-			WheaponType = AWeaponType.Shotgun;
+			WeaponType = AWeaponType.Shotgun;
 			ReloadSpeed = SkyShoot.Contracts.Constants.SHOTGUN_ATTACK_RATE;
 		}
 

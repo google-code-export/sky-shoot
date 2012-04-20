@@ -17,10 +17,12 @@ namespace SkyShoot.Contracts.Weapon
 			[EnumMember]
 			Pistol,
 			[EnumMember]
-			Shotgun
+			Shotgun,
+			[EnumMember]
+			RocketPistol
 		}
 		public Guid Id { get; set; }
-		public AWeaponType WheaponType { get; set; }
+		public AWeaponType WeaponType { get; set; }
 		
 		public AGameObject Owner { get; set; }
 		protected AWeapon(Guid id) 
