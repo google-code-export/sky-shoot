@@ -3,14 +3,24 @@ namespace SkyShoot.Contracts
 {
 	public static class Constants
 	{
-		#region wepons
+		#region weapons
 
 		#region pistol
 
 		public const float PISTOL_BULLET_SPEED = 0.1f;
-		public const float PISTOL_DAMAGE = 10;
+		public const float PISTOL_BULLET_DAMAGE = 10;
 		public const float PISTOL_BULLET_LIFE_DISTANCE = 3000;
 		public const int PISTOL_ATTACK_RATE = 400;
+
+		#endregion
+
+		#region rocketpistol
+
+		public const float ROCKET_BULLET_SPEED = 0.1f;
+		public const float ROCKET_BULLET_DAMAGE = 10f;
+		public const float ROCKET_BULLET_LIFE_DISTANCE = 3000f;
+		public const int ROCKET_PISTOL_ATTACK_RATE = 1500;
+		public const float ROCKET_BULLET_RADIUS = 65f;
 
 		#endregion
 
@@ -20,6 +30,16 @@ namespace SkyShoot.Contracts
 		public const float SHOTGUN_BULLET_DAMAGE = 2;
 		public const float SHOTGUN_BULLET_LIFE_DISTANCE = 70;
 		public const int SHOTGUN_ATTACK_RATE = 500;
+
+		#endregion
+
+		#region explosion
+
+		public const float EXPLOSION_SPEED = 0f;
+		public const float EXPLOSION_DAMAGE = 70f;
+		public const float EXPLOSION_LIFE_DISTANCE = 1f;
+		public const int EXPLOSION_ATTACK_RATE = 1;
+		public const float EXPLOSION_RADIUS = 65f;
 
 		#endregion
 

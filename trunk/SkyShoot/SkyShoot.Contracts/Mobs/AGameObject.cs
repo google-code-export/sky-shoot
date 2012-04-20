@@ -47,9 +47,11 @@ namespace SkyShoot.Contracts.Mobs
 			[EnumMember]
 			LaserBullet = Bullet | 0x040,
 			[EnumMember]
-			ShutgunBullet = Bullet | 0x080,
+			ShotgunBullet = Bullet | 0x080,
 			[EnumMember]
-			Rocket = Bullet | 0x100,
+			RocketBullet = Bullet | 0x100,
+			[EnumMember]
+			Explosion = Bullet | 0x200,
 			[EnumMember]
 			Bonus = 0x01000,
 			[EnumMember]

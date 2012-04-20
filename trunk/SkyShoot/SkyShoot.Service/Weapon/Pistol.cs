@@ -11,13 +11,13 @@ namespace SkyShoot.Service.Weapon
 	{
 		public Pistol(Guid id) : base(id)
 		{
-			WheaponType = AWeaponType.Pistol;
+			WeaponType = AWeaponType.Pistol;
 			ReloadSpeed = Constants.PISTOL_ATTACK_RATE;
 		}
 
 		public Pistol(Guid id, AGameObject owner) : base(id, owner)
 		{
-			WheaponType = AWeaponType.Pistol;
+			WeaponType = AWeaponType.Pistol;
 			ReloadSpeed = Constants.PISTOL_ATTACK_RATE;
 		}
 

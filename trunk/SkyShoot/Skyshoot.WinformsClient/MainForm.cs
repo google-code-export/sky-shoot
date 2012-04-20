@@ -391,7 +391,7 @@ namespace SkyShoot.WinFormsClient
 							break;
 						case AGameObject.EnumObjectType.Bullet:
 						case AGameObject.EnumObjectType.LaserBullet:
-						case AGameObject.EnumObjectType.ShutgunBullet:
+						case AGameObject.EnumObjectType.ShotgunBullet:
 							//r = 2f;
 							g.FillEllipse(Brushes.Red,
 														new RectangleF(

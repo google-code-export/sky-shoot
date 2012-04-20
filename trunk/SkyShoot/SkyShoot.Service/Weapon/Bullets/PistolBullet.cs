@@ -12,7 +12,7 @@ namespace SkyShoot.Service.Weapon.Bullets
 			: base(owner, id, direction) 
 		{
 			Speed = Constants.PISTOL_BULLET_SPEED;
-			Damage = Constants.PISTOL_DAMAGE;
+			Damage = Constants.PISTOL_BULLET_DAMAGE;
 			HealthAmount = Constants.PISTOL_BULLET_LIFE_DISTANCE;
 			ObjectType = EnumObjectType.LaserBullet;
 		} 
