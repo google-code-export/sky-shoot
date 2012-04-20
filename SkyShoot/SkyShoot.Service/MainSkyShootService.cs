@@ -269,7 +269,13 @@ namespace SkyShoot.Service
 
 		public override Vector2 ComputeMovement(long updateDelay, GameLevel gameLevel)
 		{
+			AGameBonus speedUpBonus = this.GetBonus(AGameObject.EnumObjectType.Speedup);
+			float speedUp = speedUpBonus == null ? 1f : speedUpBonus.DamageFactor;
+			float oldSpeed = this.Speed;
+			this.Speed *= speedUp;
 			var newCoord = base.ComputeMovement(updateDelay, gameLevel);
+			this.Speed = oldSpeed;
+
 			newCoord.X = MathHelper.Clamp(newCoord.X, 0, gameLevel.levelHeight);
 			newCoord.Y = MathHelper.Clamp(newCoord.Y, 0, gameLevel.levelWidth);
 
