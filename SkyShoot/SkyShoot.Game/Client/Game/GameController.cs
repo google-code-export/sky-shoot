@@ -7,15 +7,11 @@ using System.ServiceModel;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Audio;
-
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Perks;
-using SkyShoot.Contracts.Bonuses;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Session;
-
-using SkyShoot.Contracts.Weapon.Projectiles;
+using SkyShoot.Contracts.Weapon;
 using SkyShoot.Game.Controls;
 using SkyShoot.Game.Screens;
 
@@ -94,12 +90,12 @@ namespace SkyShoot.Game.Client.Game
 
 		#region бывший callbacks
 
-		public void Hit(AGameObject mob, AProjectile projectile)
-		{
-			if (projectile != null)
-				GameModel.RemoveProjectile(projectile.Id);
-			GameModel.GetMob(mob.Id).HealthAmount = mob.HealthAmount;
-		}
+		//public void Hi777t(AGameObject mob, AProjectile projectile)
+		//{
+		//  if (projectile != null)
+		//    GameModel.RemoveProjectile(projectile.Id);
+		//  GameModel.GetMob(mob.Id).HealthAmount = mob.HealthAmount;
+		//}
 
 		public void MobDead(AGameObject mob)
 		{			
@@ -116,21 +112,21 @@ namespace SkyShoot.Game.Client.Game
 			GameModel.GetMob(mob.Id).RunVector = direction; // TypeConverter.Vector2_m2s(direction);
 		}
 
-		public void BonusDropped(AObtainableDamageModifier bonus)
-		{
-			throw new NotImplementedException();
-		}
+		//public void BonusDropped(AObtainableDamageModifier bonus)
+		//{
+		//  throw new NotImplementedException();
+		//}
 
-		public void BonusExpired(AObtainableDamageModifier bonus)
-		{
-			var player = GameModel.GetMob(MyId);
-			player.State &= ~bonus.Type;
-		}
+		//public void BonusExpired(AObtainableDamageModifier bonus)
+		//{
+		//  var player = GameModel.GetMob(MyId);
+		//  player.State &= ~bonus.Type;
+		//}
 
-		public void BonusDisappeared(AObtainableDamageModifier bonus)
-		{
-			throw new NotImplementedException();
-		}
+		//public void BonusDisappeared(AObtainableDamageModifier bonus)
+		//{
+		//  throw new NotImplementedException();
+		//}
 
 		public void GameOver()
 		{
@@ -145,18 +141,18 @@ namespace SkyShoot.Game.Client.Game
 				GameModel.RemoveMob(mob.Id);
 		}
 
-		public void MobShot(AGameObject mob, AProjectile[] projectiles)
-		{
-			// update ShootVector
-			var clientMob = GameModel.GetMob(mob.Id);
-			clientMob.ShootVector = projectiles[projectiles.Length - 1].RunVector;
+		//public void MobShot(AGameObject mob, AProjectile[] projectiles)
+		//{
+		//  // update ShootVector
+		//  var clientMob = GameModel.GetMob(mob.Id);
+		//  clientMob.ShootVector = projectiles[projectiles.Length - 1].RunVector;
 
-			// add projectiles
-			foreach (var aProjectile in projectiles)
-			{
-				GameModel.AddProjectile(GameFactory.CreateClientProjectile(aProjectile));
-			}
-		}
+		//  // add projectiles
+		//  foreach (var aProjectile in projectiles)
+		//  {
+		//    GameModel.AddProjectile(GameFactory.CreateClientProjectile(aProjectile));
+		//  }
+		//}
 
 		#endregion
 
@@ -322,7 +318,14 @@ namespace SkyShoot.Game.Client.Game
 			}
 		}
 
-		public Queue<AGameEvent> Shoot(XNA.Framework.Vector2 direction)
+		public AGameEvent[] ChangeWeapon(AWeapon.AWeaponType type)
+		{
+			// do nothing
+			return null;
+			throw new NotImplementedException();
+		}
+
+		public AGameEvent[]  Shoot(XNA.Framework.Vector2 direction)
 		{
 			try
 			{
@@ -357,17 +360,17 @@ namespace SkyShoot.Game.Client.Game
 			Shoot(TypeConverter.Xna2XnaLite(direction));
 		}
 
-		public void TakeBonus(AObtainableDamageModifier bonus)
-		{
-			try
-			{
-				//_service.TakeBonus(bonus);
-			}
-			catch (Exception e)
-			{
-				FatalError(e);
-			}
-		}
+		//public void TakeBonus(AObtainableDamageModifier bonus)
+		//{
+		//  try
+		//  {
+		//    //_service.TakeBonus(bonus);
+		//  }
+		//  catch (Exception e)
+		//  {
+		//    FatalError(e);
+		//  }
+		//}
 
 		public void TakePerk(Perk perk)
 		{

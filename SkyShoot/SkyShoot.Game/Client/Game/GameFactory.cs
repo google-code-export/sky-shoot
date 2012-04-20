@@ -19,16 +19,16 @@ namespace SkyShoot.Game.Client.Game
 
 			throw new Exception();
 		}
+		
+		//public static Projectile CreateClientProjectile(AGameObject serverGameObject)
+		//{
+		//  return new Projectile(serverGameObject);
+		//}
 
-		public static Projectile CreateClientProjectile(AGameObject serverGameObject)
-		{
-			return new Projectile(serverGameObject);
-		}
-
-		public static GameBonus CreateClientGameBonus(AGameObject serverGameObject)
-		{
-			return new GameBonus(serverGameObject);
-		}
+		//public static GameBonus CreateClientGameBonus(AGameObject serverGameObject)
+		//{
+		//  return new GameBonus(serverGameObject);
+		//}
 
 		public static GameLevel CreateClientGameLevel(Contracts.Session.GameLevel gameLevel)
 		{

@@ -23,9 +23,10 @@ namespace SkyShoot.Game.Client.Game
 
 		public ConcurrentDictionary<Guid, Mob> Mobs { get; private set; }
 
-		public ConcurrentDictionary<Guid, Projectile> Projectiles { get; private set; }
+		//!! todo delete
+		//public ConcurrentDictionary<Guid, Projectile> Projectiles { get; private set; }
 
-		public ConcurrentDictionary<Guid, GameBonus> GameBonuses { get; private set; }
+		//public ConcurrentDictionary<Guid, GameBonus> GameBonuses { get; private set; }
 
 		public Camera2D Camera2D { get; private set; }
 
@@ -36,8 +37,8 @@ namespace SkyShoot.Game.Client.Game
 			Camera2D = new Camera2D(GameLevel.Width, GameLevel.Height);
 
 			Mobs = new ConcurrentDictionary<Guid, Mob>();
-			Projectiles = new ConcurrentDictionary<Guid, Projectile>();
-			GameBonuses = new ConcurrentDictionary<Guid, GameBonus>();
+			//Projectiles = new ConcurrentDictionary<Guid, Projectile>();
+			//GameBonuses = new ConcurrentDictionary<Guid, GameBonus>();
 		}
 
 		public void AddMob(Mob mob)
@@ -46,17 +47,18 @@ namespace SkyShoot.Game.Client.Game
 				Trace.WriteLine("Mob already exists", "GameModel/AddMob");
 		}
 
-		public void AddProjectile(Projectile projectile)
-		{
-			if (!Projectiles.TryAdd(projectile.Id, projectile))
-				Trace.WriteLine("Projectile already exists", "GameModel/AddProjectile");
-		}
+		//!! todo delete
+		//public void AddProjectile(Projectile projectile)
+		//{
+		//  if (!Projectiles.TryAdd(projectile.Id, projectile))
+		//    Trace.WriteLine("Projectile already exists", "GameModel/AddProjectile");
+		//}
 
-		public void AddGameBonus(GameBonus gameBonus)
-		{
-			if (!GameBonuses.TryAdd(gameBonus.Id, gameBonus))
-				Trace.WriteLine("GameBonus already exists", "GameModel/AddGameBonus");
-		}
+		//public void AddGameBonus(GameBonus gameBonus)
+		//{
+		//  if (!GameBonuses.TryAdd(gameBonus.Id, gameBonus))
+		//    Trace.WriteLine("GameBonus already exists", "GameModel/AddGameBonus");
+		//}
 
 		public Mob GetMob(Guid id)
 		{
@@ -66,24 +68,25 @@ namespace SkyShoot.Game.Client.Game
 			Trace.WriteLine("Mob with such ID does not exist", "GameModel/GetMob");
 			return null;
 		}
+		//!! todo delete
 
-		public Projectile GetProjectile(Guid id)
-		{
-			Projectile projectile;
-			if (Projectiles.TryGetValue(id, out projectile))
-				return projectile;
-			Trace.WriteLine("Projectile with such ID does not exist", "GameModel/GetProjectile");
-			return null;
-		}
+		//public Projectile GetProjectile(Guid id)
+		//{
+		//  Projectile projectile;
+		//  if (Projectiles.TryGetValue(id, out projectile))
+		//    return projectile;
+		//  Trace.WriteLine("Projectile with such ID does not exist", "GameModel/GetProjectile");
+		//  return null;
+		//}
 
-		public GameBonus GetGameBonus(Guid id)
-		{
-			GameBonus gameBonus;
-			if (GameBonuses.TryGetValue(id, out gameBonus))
-				return gameBonus;
-			Trace.WriteLine("GameBonus with such ID does not exist", "GameModel/GetGameBonus");
-			return null;
-		}
+		//public GameBonus GetGameBonus(Guid id)
+		//{
+		//  GameBonus gameBonus;
+		//  if (GameBonuses.TryGetValue(id, out gameBonus))
+		//    return gameBonus;
+		//  Trace.WriteLine("GameBonus with such ID does not exist", "GameModel/GetGameBonus");
+		//  return null;
+		//}
 
 		public void RemoveMob(Guid id)
 		{
@@ -92,19 +95,19 @@ namespace SkyShoot.Game.Client.Game
 				Trace.WriteLine("Mob with such ID does not exist", "GameModel/RemoveMob");
 		}
 
-		public void RemoveProjectile(Guid id)
-		{
-			Projectile projectile;
-			if (!Projectiles.TryRemove(id, out projectile))
-				Trace.WriteLine("Projectile with such ID does not exist", "GameModel/RemoveProjectile");
-		}
+		//public void RemoveProjectile(Guid id)
+		//{
+		//  Projectile projectile;
+		//  if (!Projectiles.TryRemove(id, out projectile))
+		//    Trace.WriteLine("Projectile with such ID does not exist", "GameModel/RemoveProjectile");
+		//}
 
-		public void RemoveGameBonus(Guid id)
-		{
-			GameBonus gameBonus;
-			if (!GameBonuses.TryRemove(id, out gameBonus))
-				Trace.WriteLine("GameBonus with such ID does not exist", "GameModel/RemoveGameBonus");
-		}
+		//public void RemoveGameBonus(Guid id)
+		//{
+		//  GameBonus gameBonus;
+		//  if (!GameBonuses.TryRemove(id, out gameBonus))
+		//    Trace.WriteLine("GameBonus with such ID does not exist", "GameModel/RemoveGameBonus");
+		//}
 
 		private void ApplyEvents(IEnumerable<AGameEvent> gameEvents)
 		{
@@ -133,23 +136,23 @@ namespace SkyShoot.Game.Client.Game
 					var newGameObject = new AGameObject();
 					gameEvent.UpdateMob(newGameObject);
 
-					if (newGameObject.Is(AGameObject.EnumObjectType.LivingObject))
+					//if (newGameObject.Is(AGameObject.EnumObjectType.LivingObject))
 					{
 						Mob newMob = GameFactory.CreateClientMob(newGameObject);
 						AddMob(newMob);
 					}
 
-					else if (newGameObject.Is(AGameObject.EnumObjectType.Bullet))
-					{
-						Projectile newProjectile = GameFactory.CreateClientProjectile(newGameObject);
-						AddProjectile(newProjectile);
-					}
+					//else if (newGameObject.Is(AGameObject.EnumObjectType.Bullet))
+					//{
+					//  Projectile newProjectile = GameFactory.CreateClientProjectile(newGameObject);
+					//  AddProjectile(newProjectile);
+					//}
 
-					else if (newGameObject.Is(AGameObject.EnumObjectType.Bonus))
-					{
-						GameBonus newGameBonus = GameFactory.CreateClientGameBonus(newGameObject);
-						AddGameBonus(newGameBonus);
-					}
+					//else if (newGameObject.Is(AGameObject.EnumObjectType.Bonus))
+					//{
+					//  GameBonus newGameBonus = GameFactory.CreateClientGameBonus(newGameObject);
+					//  AddGameBonus(newGameBonus);
+					//}
 				}
 
 				else
@@ -168,33 +171,33 @@ namespace SkyShoot.Game.Client.Game
 							}
 						}
 					}
-					else
-					{
-						// is projectile?
-						Projectile projectile = GetProjectile(gameEvent.GameObjectId);
-						if (projectile != null)
-						{
-							gameEvent.UpdateMob(projectile);
-							if (projectile.IsActive == false)
-							{
-								RemoveProjectile(projectile.Id);
-							}
-						}
+					//else
+					//{
+					//  // is projectile?
+					//  Projectile projectile = GetProjectile(gameEvent.GameObjectId);
+					//  if (projectile != null)
+					//  {
+					//    gameEvent.UpdateMob(projectile);
+					//    if (projectile.IsActive == false)
+					//    {
+					//      RemoveProjectile(projectile.Id);
+					//    }
+					//  }
 
-						else
-						{
-							// is gameBonus?
-							GameBonus gameBonus = GetGameBonus(gameEvent.GameObjectId);
-							if (gameBonus != null)
-							{
-								gameEvent.UpdateMob(gameBonus);
-								if (gameBonus.IsActive == false)
-								{
-									RemoveGameBonus(gameBonus.Id);
-								}
-							}
-						}
-					}
+					//  else
+					//  {
+					//    // is gameBonus?
+					//    GameBonus gameBonus = GetGameBonus(gameEvent.GameObjectId);
+					//    if (gameBonus != null)
+					//    {
+					//      gameEvent.UpdateMob(gameBonus);
+					//      if (gameBonus.IsActive == false)
+					//      {
+					//        RemoveGameBonus(gameBonus.Id);
+					//      }
+					//    }
+					//  }
+					//}
 				}
 			}
 		}
@@ -209,14 +212,16 @@ namespace SkyShoot.Game.Client.Game
 				aMob.Value.Update(gameTime);
 			}
 
+			//!! todo delete
+
 			// update projectiles
-			foreach (var projectile in Projectiles)
-			{
-				if (projectile.Value.IsActive)
-					projectile.Value.Update(gameTime);
-				else
-					RemoveProjectile(projectile.Value.Id);
-			}
+			//foreach (var projectile in Projectiles)
+			//{
+			//  if (projectile.Value.IsActive)
+			//    projectile.Value.Update(gameTime);
+			//  else
+			//    RemoveProjectile(projectile.Value.Id);
+			//}
 
 			ApplyEvents(GameController.Instance.GetEvents());
 
@@ -284,11 +289,14 @@ namespace SkyShoot.Game.Client.Game
 				aMob.Value.Draw(spriteBatch);
 			}
 
+			//!! todo delete
+
+
 			// draw projectiles
-			foreach (var aProjectile in Projectiles)
-			{
-				aProjectile.Value.Draw(spriteBatch);
-			}
+			//foreach (var aProjectile in Projectiles)
+			//{
+			//  aProjectile.Value.Draw(spriteBatch);
+			//}
 
 			spriteBatch.End();
 		}
