@@ -54,7 +54,7 @@ namespace SkyShoot.Game.Client.GameObjects
 		private const bool Looping = true;
 
 		public Mob(AGameObject other, Animation2D animation)
-			: base(other)
+			//: base(other)
 		{			
 			_engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
 			_soundBank = new SoundBank(_engine, "Content\\Sounds\\Sound Bank.xsb");
@@ -64,6 +64,7 @@ namespace SkyShoot.Game.Client.GameObjects
 
 			Animation = animation;
 			Animation.Initialize(FrameTime, Looping);			
+			Copy(other);
 		}
 
 		public static void Stop(Cue cue)
