@@ -23,7 +23,7 @@ namespace SkyShoot.Game.Client.Game
 
 		public ConcurrentDictionary<Guid, DrawableGameObject> Mobs { get; private set; }
 
-		//!! todo delete
+		// todo //!! delete
 		//public ConcurrentDictionary<Guid, Projectile> Projectiles { get; private set; }
 
 		//public ConcurrentDictionary<Guid, GameBonus> GameBonuses { get; private set; }
@@ -47,7 +47,7 @@ namespace SkyShoot.Game.Client.Game
 				Trace.WriteLine("DrawableGameObject already exists", "GameModel/AddMob");
 		}
 
-		//!! todo delete
+		// todo //!!  delete
 		//public void AddProjectile(Projectile projectile)
 		//{
 		//  if (!Projectiles.TryAdd(projectile.Id, projectile))
@@ -68,7 +68,7 @@ namespace SkyShoot.Game.Client.Game
 			Trace.WriteLine("DrawableGameObject with such ID does not exist", "GameModel/GetMob");
 			return null;
 		}
-		//!! todo delete
+		// todo //!! delete
 
 		//public Projectile GetProjectile(Guid id)
 		//{
@@ -220,7 +220,7 @@ namespace SkyShoot.Game.Client.Game
 				aMob.Value.Update(gameTime);
 			}
 
-			//!! todo delete
+			// todo //!! delete
 
 			// update projectiles
 			//foreach (var projectile in Projectiles)
@@ -300,7 +300,7 @@ namespace SkyShoot.Game.Client.Game
 				aMob.Value.Draw(spriteBatch);
 			}
 
-			//!! todo delete
+			// todo //!! delete
 
 
 			// draw projectiles

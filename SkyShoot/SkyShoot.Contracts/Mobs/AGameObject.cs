@@ -80,8 +80,8 @@ namespace SkyShoot.Contracts.Mobs
 		}
 
 		[Obsolete("This prorepty is deprecated. Use Is funciton.")]
-		public bool IsPlayer 
-		{ 
+		public bool IsPlayer
+		{
 			get { return Is(EnumObjectType.Player); }
 		}
 
@@ -93,22 +93,22 @@ namespace SkyShoot.Contracts.Mobs
 				return Is(EnumObjectType.Bullet);
 			}
 		}
-	
+
 		[DataMember]
 		public Guid Id { get; set; }
 
 		[DataMember]
-		public EnumObjectType ObjectType 
+		public EnumObjectType ObjectType
 		{
 			get;
 			set;
 		}
 
 		//[DataMember]
-		public bool IsActive 
-		{ 
+		public bool IsActive
+		{
 			get { return HealthAmount > 0; }
-			set { if(!value) HealthAmount = -1; }
+			set { if (!value) HealthAmount = -1; }
 		}
 
 		#endregion
@@ -119,7 +119,7 @@ namespace SkyShoot.Contracts.Mobs
 
 		public AWeapon Weapon { get; set; }
 
-		public Dictionary<Weapon.AWeapon.AWeaponType,Weapon.AWeapon> Weapons { get; set; }
+		public Dictionary<AWeapon.AWeaponType, AWeapon> Weapons { get; set; }
 
 		[DataMember]
 		public float HealthAmount { get; set; }
@@ -146,9 +146,9 @@ namespace SkyShoot.Contracts.Mobs
 
 		[DataMember]
 		public float Radius { get; set; } // размер моба
-	
+
 		[DataMember]
-		public  float Speed { get; set; } //скорость: пикселы в миллисекунду
+		public float Speed { get; set; } //скорость: пикселы в миллисекунду
 
 		#endregion
 
@@ -192,14 +192,14 @@ namespace SkyShoot.Contracts.Mobs
 		#endregion
 
 		#region основные функции
-		public virtual IEnumerable<AGameEvent> Think(List<AGameObject> players, long time)
+		public virtual IEnumerable<AGameEvent> Think(List<AGameObject> gameObjects, List<AGameObject> newGameObjects, long time)
 		{
-			return new AGameEvent[] {};
+			return new AGameEvent[] { };
 		}
 
-		public virtual IEnumerable<AGameEvent> Do(AGameObject obj, long time)
+		public virtual IEnumerable<AGameEvent> Do(AGameObject obj, List<AGameObject> newObjects, long time)
 		{
-			return new AGameEvent[] {};
+			return new AGameEvent[] { };
 		}
 
 		public virtual Vector2 ComputeMovement(long updateDelay, GameLevel gameLevel)

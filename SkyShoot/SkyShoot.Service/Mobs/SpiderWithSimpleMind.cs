@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using SkyShoot.Contracts;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Mobs;
-using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Service.Mobs
 {
@@ -14,9 +13,9 @@ namespace SkyShoot.Service.Mobs
 		{
 		}
 
-		public override IEnumerable<AGameEvent> Think(List<Contracts.Mobs.AGameObject> players, long time)
+		public override IEnumerable<AGameEvent> Think(List<AGameObject> gameObjects, List<AGameObject> newGameObjects, long time)
 		{
-			var r = new List<AGameEvent>(base.Think(players, time));
+			var r = new List<AGameEvent>(base.Think(gameObjects, newGameObjects, time));
 			if (RunVector.LengthSquared() < Constants.Epsilon && Wait < 1)//&& PrevMoveDiff.LengthSquared() < Constants.Epsilon)
 			{
 				//the object is trying to move, but it can't
@@ -26,9 +25,9 @@ namespace SkyShoot.Service.Mobs
 				// set to the max distance on the game
 				float minLen = Constants.LEVELBORDER * Constants.LEVELBORDER,
 					len;
-				for (int i = 0; i < players.Count; i++)
+				for (int i = 0; i < gameObjects.Count; i++)
 				{
-					var p = players[i];
+					var p = gameObjects[i];
 					// myself
 					if (Id == p.Id || p.Is(EnumObjectType.Bonus) || p.Is(EnumObjectType.Bullet))
 						continue;

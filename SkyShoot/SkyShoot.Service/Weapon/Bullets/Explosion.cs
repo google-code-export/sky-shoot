@@ -1,45 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using SkyShoot.Contracts;
+using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.XNA.Framework;
-using SkyShoot.Contracts.GameEvents;
 
 namespace SkyShoot.Service.Weapon.Bullets
 {
 	class Explosion : AProjectile
 	{
 		private bool _isExploded;
+		private int _timeToLeave;
+		private readonly long _explodedTime;
 
-		public Explosion(AGameObject owner, Guid id, Vector2 direction)
-			: base(owner, id, direction) 
+		public Explosion(AGameObject owner, Guid id, Vector2 coordinates, long explodedTime)
+			: base(owner, id, Vector2.Zero)
 		{
+			_explodedTime = explodedTime;
 			Speed = Constants.EXPLOSION_SPEED;
 			Damage = Constants.EXPLOSION_DAMAGE;
 			HealthAmount = Constants.EXPLOSION_LIFE_DISTANCE;
 			ObjectType = EnumObjectType.Explosion;
+			Radius = Constants.EXPLOSION_RADIUS;
+			Coordinates = coordinates;
 			_isExploded = false;
+			_timeToLeave = (int) Constants.EXPLOSION_LIFE_DISTANCE;
 		}
 
-		public override IEnumerable<AGameEvent> Do(AGameObject obj, long time)
+		public override IEnumerable<AGameEvent> Do(AGameObject obj, List<AGameObject> newObjects, long time)
 		{
-			var res = base.Do(obj, time);
+			if (_isExploded && _explodedTime+_timeToLeave < time)
+				return new AGameEvent[]{};
+			var res = new List<AGameEvent>(base.Do(obj, newObjects, time));
 			IsActive = true;
 			_isExploded = true;
-			//!! todo: удалять сообщение objectdeleted
+			// надо удалять сообщение objectdeleted 
+			// потому что на самом деле взрыв этот не должен удаляться
+			res.RemoveAll(o => o.GetType() == typeof(ObjectDeleted));
 			return res;
 		}
 
-		public override IEnumerable<AGameEvent> Think(List<AGameObject> players, long time)
+		public override IEnumerable<AGameEvent> Think(List<AGameObject> players, List<AGameObject> newGameObjects, long time)
 		{
-			if(_isExploded)
+			if (_timeToLeave < 0)//(_isExploded)
 			{
-				IsActive=false;
-				return new AGameEvent[] { new ObjectDeleted(this.Id, time) };
+				IsActive = false;
+				return new AGameEvent[] { new ObjectDeleted(Id, time) };
 			}
-			return new AGameEvent[]{};
+			_timeToLeave--;
+			return new AGameEvent[] { };
 		}
 	}
 }

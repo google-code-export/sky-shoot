@@ -12,8 +12,8 @@ namespace SkyShoot.Contracts.GameEvents
 	[KnownType(typeof(ObjectDirectionChanged))]
 	[KnownType(typeof(ObjectDeleted))]
 	[KnownType(typeof(ObjectHealthChanged))]
-	[KnownType(typeof(BonusesChanged))]
-	[KnownType(typeof(WeaponChanged))]
+	//[KnownType(typeof(BonusesChanged))]
+	//[KnownType(typeof(WeaponChanged))]
 	public abstract class AGameEvent
 	{
 		// now = DateTime.Now.Ticks/10000; //время в миллисекундах с начала игры
@@ -104,39 +104,39 @@ namespace SkyShoot.Contracts.GameEvents
 		}
 	}
 
-	[DataContract]
-	public class WeaponChanged : AGameEvent
-	{
-		[DataMember]
-		public SkyShoot.Contracts.Weapon.AWeapon weapon;
+	//[DataContract]
+	//public class WeaponChanged : AGameEvent
+	//{
+	//  [DataMember]
+	//  public Weapon.AWeapon Weapon;
 
-		public WeaponChanged(SkyShoot.Contracts.Weapon.AWeapon weapon, Guid id, long timeStamp)
-			: base(id, timeStamp)
-		{
-			this.weapon = weapon;
-		}
+	//  public WeaponChanged(Weapon.AWeapon weapon, Guid id, long timeStamp)
+	//    : base(id, timeStamp)
+	//  {
+	//    this.Weapon = weapon;
+	//  }
 
-		public override void UpdateMob(AGameObject mob)
-		{
-			mob.Weapon = weapon;
-		}
-	}
+	//  public override void UpdateMob(AGameObject mob)
+	//  {
+	//    mob.Weapon = Weapon;
+	//  }
+	//}
 
-	[DataContract]
-	public class BonusesChanged : AGameEvent
-	{
-		[DataMember]
-		public AGameObject.EnumObjectType Bonuses;
+	//[DataContract]
+	//public class BonusesChanged : AGameEvent
+	//{
+	//  [DataMember]
+	//  public AGameObject.EnumObjectType Bonuses;
 
-		public BonusesChanged(Guid id, long timeStamp, AGameObject.EnumObjectType bonuses) :
-			base(id, timeStamp)
-		{
-			Bonuses = bonuses;
-		}
+	//  public BonusesChanged(Guid id, long timeStamp, AGameObject.EnumObjectType bonuses) :
+	//    base(id, timeStamp)
+	//  {
+	//    Bonuses = bonuses;
+	//  }
 
-		public override void UpdateMob(AGameObject mob)
-		{
-			//todo //!! придумать что-то, ибо переносить в Mob бонусы нехорошо
-		}
-	}
+	//  public override void UpdateMob(AGameObject mob)
+	//  {
+	//    //todo //!! придумать что-то, ибо переносить в Mob бонусы нехорошо
+	//  }
+	//}
 }

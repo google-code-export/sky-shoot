@@ -1,11 +1,9 @@
 ﻿using System;
-
 using System.ServiceModel;
-
+using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Session;
 using SkyShoot.XNA.Framework;
-using SkyShoot.Contracts.GameEvents;
 
 namespace SkyShoot.Contracts.Service
 {
@@ -40,7 +38,7 @@ namespace SkyShoot.Contracts.Service
 		AGameEvent[] Shoot(Vector2 direction);
 
 		[OperationContract]
-		AGameEvent[] ChangeWeapon(SkyShoot.Contracts.Weapon.AWeapon.AWeaponType type);
+		AGameEvent[] ChangeWeapon(Weapon.AWeapon.AWeaponType type);
 
 		[OperationContract]
 		AGameEvent[] GetEvents();

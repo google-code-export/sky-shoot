@@ -52,9 +52,9 @@ namespace SkyShoot.Service.Weapon.Bullets
 		//[Obsolete("Use health")]
 		//public float LifeDistance { get; set; }
 
-		public override IEnumerable<AGameEvent> Do(AGameObject obj, long time)
+		public override IEnumerable<AGameEvent> Do(AGameObject obj, List<AGameObject> newObjects, long time)
 		{
-			var res = new List<AGameEvent>(base.Do(obj, time));
+			var res = new List<AGameEvent>(base.Do(obj, newObjects, time));
 			if (Owner.Id == obj.Id) // не трогать создателя пули
 				return res;
 
@@ -89,7 +89,7 @@ namespace SkyShoot.Service.Weapon.Bullets
 
 		public override Vector2 ComputeMovement(long updateDelay, GameLevel gameLevel)
 		{
-			//!! rewrite
+			//todo //!! rewrite
 			var newCoord = base.ComputeMovement(updateDelay, gameLevel);
 			var x = MathHelper.Clamp(newCoord.X, 0, gameLevel.levelHeight);
 			var y = MathHelper.Clamp(newCoord.Y, 0, gameLevel.levelWidth);
@@ -102,10 +102,10 @@ namespace SkyShoot.Service.Weapon.Bullets
 			return newCoord;
 		}
 
-		public override IEnumerable<AGameEvent> Think(List<AGameObject> players, long time)
+		public override IEnumerable<AGameEvent> Think(List<AGameObject> players, List<AGameObject> newGameObjects, long time)
 		{
 			HealthAmount -= PrevMoveDiff.Length();
-			return base.Think(players, time);
+			return base.Think(players, newGameObjects, time);
 		}
 	}
 }

@@ -17,10 +17,10 @@ namespace SkyShoot.Contracts
 		#region rocketpistol
 
 		public const float ROCKET_BULLET_SPEED = 0.1f;
-		public const float ROCKET_BULLET_DAMAGE = 10f;
+		public const float ROCKET_BULLET_DAMAGE = 3f;
 		public const float ROCKET_BULLET_LIFE_DISTANCE = 3000f;
 		public const int ROCKET_PISTOL_ATTACK_RATE = 1500;
-		public const float ROCKET_BULLET_RADIUS = 65f;
+		public const float ROCKET_BULLET_RADIUS = 4f;
 
 		#endregion
 
@@ -36,10 +36,10 @@ namespace SkyShoot.Contracts
 		#region explosion
 
 		public const float EXPLOSION_SPEED = 0f;
-		public const float EXPLOSION_DAMAGE = 70f;
-		public const float EXPLOSION_LIFE_DISTANCE = 1f;
+		public const float EXPLOSION_DAMAGE = 40f;
+		public const float EXPLOSION_LIFE_DISTANCE = 80f;
 		public const int EXPLOSION_ATTACK_RATE = 1;
-		public const float EXPLOSION_RADIUS = 65f;
+		public const float EXPLOSION_RADIUS = 50f;
 
 		#endregion
 
