@@ -34,6 +34,7 @@ namespace SkyShoot.Game.Client.View
 
 		// stone textures
 		public static Texture2D[] Stones = new Texture2D[StonesAmount];
+		public static Texture2D OneStone;
 
 		// player animation textures
 		public static Animation2D PlayerAnimation = new Animation2D();
@@ -56,10 +57,10 @@ namespace SkyShoot.Game.Client.View
 			return Create(width, heigth < 1 ? 1 : heigth, c);
 		}
 
-        public static Texture2D ProjectileTexture
-        {
-            get { return Create(1, 4, Color.Red); }
-        }
+		public static Texture2D ProjectileTexture
+		{
+			get { return Create(2, 5, Color.Red); }
+		}
 
 		// create a colored rectangle
 		public static Texture2D Create(int width, int height, Color color)
@@ -109,12 +110,12 @@ namespace SkyShoot.Game.Client.View
 			for (int i = 0; i < small.Height; i++)
 				for (int j = 0; j < small.Width; j++)
 					if (smallData[i * small.Width + j] == Color.Transparent)
-						smallData[i * small.Width + j] = bigData[((int) position.Y + i) * big.Width + ((int) position.X + j)];
+						smallData[i * small.Width + j] = bigData[((int)position.Y + i) * big.Width + ((int)position.X + j)];
 
 			// set the new data
 			big.SetData(
 				0,
-				new Rectangle((int) position.X, (int) position.Y, small.Width, small.Height),
+				new Rectangle((int)position.X, (int)position.Y, small.Width, small.Height),
 				smallData,
 				0,
 				small.Width * small.Height);
@@ -126,16 +127,16 @@ namespace SkyShoot.Game.Client.View
 			{
 				switch (Settings.Default.Cursor)
 				{
-					case 1:
-						return Arrow;
-					case 2:
-						return Plus;
-					case 3:
-						return Cross;
-					case 4:
-						return Target;
-					default:
-						return Arrow;
+				case 1:
+					return Arrow;
+				case 2:
+					return Plus;
+				case 3:
+					return Cross;
+				case 4:
+					return Target;
+				default:
+					return Arrow;
 				}
 			}
 		}
@@ -144,16 +145,16 @@ namespace SkyShoot.Game.Client.View
 		{
 			switch (Settings.Default.Cursor)
 			{
-				case 1:
-					return new Vector2(x - 11f, y - 2.5f);
-				case 2:
-					return new Vector2(x - 23f, y - 23f);
-				case 3:
-					return new Vector2(x - 23f, y - 23f);
-				case 4:
-					return new Vector2(x - 24f, y - 23f);
-				default:
-					return new Vector2(x - 11f, y - 2.5f);
+			case 1:
+				return new Vector2(x - 11f, y - 2.5f);
+			case 2:
+				return new Vector2(x - 23f, y - 23f);
+			case 3:
+				return new Vector2(x - 23f, y - 23f);
+			case 4:
+				return new Vector2(x - 24f, y - 23f);
+			default:
+				return new Vector2(x - 11f, y - 2.5f);
 			}
 		}
 	}

@@ -125,7 +125,7 @@
   <ItemGroup>
     <Compile Include="Client\GameObjects\GameBonus.cs" />
     <Compile Include="Client\GameObjects\GameObject.cs" />
-    <Compile Include="Client\GameObjects\Mob.cs" />
+    <Compile Include="Client\GameObjects\DrawableGameObject.cs" />
     <Compile Include="Client\GameObjects\Projectile.cs" />
     <Compile Include="Client\Game\GameController.cs" />
     <Compile Include="Client\Game\GameFactory.cs" />
