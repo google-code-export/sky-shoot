@@ -193,7 +193,7 @@ namespace SkyShoot.Game.Client.GameObjects
 
 			if (Is(EnumObjectType.Mob))
 			{
-				//!! todo rewrite !!!!!!!!!!!!
+				// todo //!! rewrite !!!!!!!!!!!!
 				//Cue cue = _soundBank.GetCue("angry");
 				//var random = new Random();
 				//int k = random.Next(1000);

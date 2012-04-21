@@ -9,7 +9,7 @@ namespace SkyShoot.Contracts.Mobs
 	public class Mob : AGameObject
 	{
 		public AGameObject Target { get; set; }
-		//todo //!! convert this to time from the update counnter
+		// todo //!! convert this to time from the update counnter
 		protected int ThinkCounter;
 		protected int Wait;
 
@@ -51,16 +51,16 @@ namespace SkyShoot.Contracts.Mobs
 			}
 		}
 
-		public override IEnumerable<AGameEvent> Think(List<AGameObject> players, long time)
+		public override IEnumerable<AGameEvent> Think(List<AGameObject> gameObjects, List<AGameObject> newGameObjects, long time)
 		{
 			var res = new AGameEvent[] { };
 			if (Wait == 0)
 			{
 				if (ThinkCounter % 10 == 0)
 				{
-					if (!players.Contains(Target) || Target == null)
+					if (!gameObjects.Contains(Target) || Target == null)
 					{
-						FindTarget(players);
+						FindTarget(gameObjects);
 					}
 					if (Target == null)
 						return res;
@@ -83,7 +83,7 @@ namespace SkyShoot.Contracts.Mobs
 			Wait = 30;
 		}
 
-		public override IEnumerable<AGameEvent> Do(AGameObject obj, long time)
+		public override IEnumerable<AGameEvent> Do(AGameObject obj, List<AGameObject> newObjects, long time)
 		{
 			// не кусаем друзей-товарищей
 			//if(obj.Is(EnumObjectType.Mob))
@@ -105,5 +105,6 @@ namespace SkyShoot.Contracts.Mobs
 			}
 			return new AGameEvent[] { };
 		}
+
 	}
 }

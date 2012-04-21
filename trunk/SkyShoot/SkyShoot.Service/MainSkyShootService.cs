@@ -46,6 +46,7 @@ namespace SkyShoot.Service
 		{
 			Weapons.Add(Contracts.Weapon.AWeapon.AWeaponType.Pistol, new Weapon.Pistol(Guid.NewGuid(), this));
 			Weapons.Add(Contracts.Weapon.AWeapon.AWeaponType.Shotgun, new Weapon.Shotgun(Guid.NewGuid(), this));
+			Weapons.Add(Contracts.Weapon.AWeapon.AWeaponType.RocketPistol, new Weapon.RocketPistol(Guid.NewGuid(), this));
 
 			ChangeWaponTo(Contracts.Weapon.AWeapon.AWeaponType.Pistol);
 		}
@@ -59,19 +60,24 @@ namespace SkyShoot.Service
 				var potentialHealth = health + health * bonus.DamageFactor;
 				HealthAmount = potentialHealth > MaxHealthAmount ? MaxHealthAmount : potentialHealth;
 				t = new ObjectHealthChanged(HealthAmount, Id, time);
+				return new[]
+								{
+									new ObjectDeleted(bonus.Id, time), 
+									t
+								};
 			}
 			else
 			{
 				Bonuses.RemoveAll(b => b.ObjectType == bonus.ObjectType);
 				Bonuses.Add(bonus);
 				bonus.Taken(time);
-				t = new BonusesChanged(Id, time, MergeBonuses());
-			}
-			return new[]
+				//t = new BonusesChanged(Id, time, MergeBonuses());
+				return new[]
 								{
 									new ObjectDeleted(bonus.Id, time), 
-									t
+									//t
 								};
+			}
 		}
 
 		public AGameBonus GetBonus(EnumObjectType bonusType)
@@ -287,10 +293,10 @@ namespace SkyShoot.Service
 			return Bonuses.Aggregate((EnumObjectType)0, (current, bonus) => current | bonus.ObjectType);
 		}
 
-		public override IEnumerable<AGameEvent> Do(AGameObject obj, long time)
+		public override IEnumerable<AGameEvent> Do(AGameObject obj, List<AGameObject> newObjects, long time)
 		{
 			// empty array
-			var res = base.Do(obj, time);
+			var res = base.Do(obj, newObjects, time);
 			if (obj.Is(EnumObjectType.Bonus))
 			{
 				obj.IsActive = false;
@@ -306,13 +312,13 @@ namespace SkyShoot.Service
 			Bonuses.RemoveAll(b => b.IsExpired(time));
 		}
 
-		public override IEnumerable<AGameEvent> Think(List<AGameObject> players, long time)
+		public override IEnumerable<AGameEvent> Think(List<AGameObject> players, List<AGameObject> newGameObjects, long time)
 		{
 			// empty list
-			var res = base.Think(players, time);
+			var res = base.Think(players, newGameObjects, time);
 			var l = Bonuses.Count;
 			DeleteExpiredBonuses(time);
-			return l != Bonuses.Count ? new AGameEvent[] { new BonusesChanged(Id, time, MergeBonuses()) } : res;
+			return res;// l != Bonuses.Count ? new AGameEvent[] { new BonusesChanged(Id, time, MergeBonuses()) } : res;
 		}
 	}
 }

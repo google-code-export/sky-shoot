@@ -307,6 +307,12 @@ namespace SkyShoot.WinFormsClient
 				{
 					gameEvent.UpdateMob(gameObject);
 				}
+				else
+				{
+					var newObj = new AGameObject();
+					gameEvent.UpdateMob(newObj);
+					_objects.Add(newObj);
+				}
 			}
 		}
 
@@ -392,8 +398,15 @@ namespace SkyShoot.WinFormsClient
 						case AGameObject.EnumObjectType.Bullet:
 						case AGameObject.EnumObjectType.LaserBullet:
 						case AGameObject.EnumObjectType.ShotgunBullet:
+						case AGameObject.EnumObjectType.RocketBullet:
 							//r = 2f;
 							g.FillEllipse(Brushes.Red,
+														new RectangleF(
+															new PointF(x - r, y - r),
+															new SizeF(2 * r, 2 * r)));
+							break;
+						case AGameObject.EnumObjectType.Explosion:
+							g.FillEllipse(new SolidBrush(Color.FromArgb(75, Color.OrangeRed)),
 														new RectangleF(
 															new PointF(x - r, y - r),
 															new SizeF(2 * r, 2 * r)));

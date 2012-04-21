@@ -101,7 +101,7 @@ namespace SkyShoot.Game.Client.Game
 		{			
 			_soundManager.SoundPlay(SoundManager.SoundEnum.Spider);
 			GameModel.RemoveMob(mob.Id);
-			//!! todo
+			// todo //!!
 			//GameModel.GameLevel.AddTexture(mob.Is(AGameObject.EnumObjectType.Player)
 			//                                ? Textures.DeadPlayerTexture
 			//                                : Textures.DeadSpiderTexture, TypeConverter.XnaLite2Xna(mob.Coordinates));

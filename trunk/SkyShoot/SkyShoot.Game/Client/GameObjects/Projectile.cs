@@ -8,7 +8,7 @@ using SkyShoot.Game.Client.View;
 
 using IDrawable = SkyShoot.Game.Client.View.IDrawable;
 
-//!! todo delete
+// todo //!! delete
 namespace SkyShoot.Game.Client.GameObjects
 {
 	//public class Projectile : AProjectile, IDrawable
