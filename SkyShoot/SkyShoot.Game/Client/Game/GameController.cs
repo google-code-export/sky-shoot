@@ -101,9 +101,10 @@ namespace SkyShoot.Game.Client.Game
 		{			
 			_soundManager.SoundPlay(SoundManager.SoundEnum.Spider);
 			GameModel.RemoveMob(mob.Id);
-			GameModel.GameLevel.AddTexture(mob.Is(AGameObject.EnumObjectType.Player)
-			                               	? Textures.DeadPlayerTexture
-			                               	: Textures.DeadSpiderTexture, TypeConverter.XnaLite2Xna(mob.Coordinates));
+			//!! todo
+			//GameModel.GameLevel.AddTexture(mob.Is(AGameObject.EnumObjectType.Player)
+			//                                ? Textures.DeadPlayerTexture
+			//                                : Textures.DeadSpiderTexture, TypeConverter.XnaLite2Xna(mob.Coordinates));
 		}
 
 		public void MobMoved(AGameObject mob, XNA.Framework.Vector2 direction)
@@ -417,7 +418,7 @@ namespace SkyShoot.Game.Client.Game
 			}
 			catch (Exception exc)
 			{
-				Trace.WriteLine(exc);
+				Trace.WriteLine("game:SynchroFrame"+exc);
 				return new AGameObject[] {};
 			}
 		}

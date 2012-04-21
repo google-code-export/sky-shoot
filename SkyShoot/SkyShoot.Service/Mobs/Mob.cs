@@ -72,6 +72,7 @@ namespace SkyShoot.Contracts.Mobs
 			{
 				Wait--;
 			}
+			ShootVector = RunVector;
 			return res;
 		}
 

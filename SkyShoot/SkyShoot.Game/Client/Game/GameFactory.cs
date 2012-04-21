@@ -9,13 +9,23 @@ namespace SkyShoot.Game.Client.Game
 {
 	internal class GameFactory
 	{
-		public static Mob CreateClientMob(AGameObject serverGameObject)
+		public static DrawableGameObject CreateClientMob(AGameObject serverGameObject)
 		{
+			// can't uhse switch 'cause one object can have many merged EnumTypes
 			if (serverGameObject.Is(AGameObject.EnumObjectType.Player))
-				return new Mob(serverGameObject, Textures.PlayerAnimation);
+				return new DrawableGameObject(serverGameObject, Textures.PlayerAnimation);
 
 			if (serverGameObject.Is(AGameObject.EnumObjectType.Mob))
-				return new Mob(serverGameObject, Textures.SpiderAnimation);
+				return new DrawableGameObject(serverGameObject, Textures.SpiderAnimation);
+
+			if (serverGameObject.Is(AGameObject.EnumObjectType.Bullet))
+				return new DrawableGameObject(serverGameObject, Textures.ProjectileTexture);
+			
+			if (serverGameObject.Is(AGameObject.EnumObjectType.Bonus))
+				return new DrawableGameObject(serverGameObject, Textures.Plus);
+
+			if(serverGameObject.Is(AGameObject.EnumObjectType.Wall))
+				return new DrawableGameObject(serverGameObject, Textures.OneStone);
 
 			throw new Exception();
 		}

@@ -1,15 +1,10 @@
 using System;
-
 using System.Diagnostics;
-
 using Microsoft.Xna.Framework;
-
 using Microsoft.Xna.Framework.Graphics;
-
+using SkyShoot.Game.Client.Game;
 using SkyShoot.Game.Client.View;
 using SkyShoot.Game.Controls;
-using SkyShoot.Game.Screens;
-using SkyShoot.Game.Client.Game;
 
 namespace SkyShoot.Game
 {
@@ -80,7 +75,7 @@ namespace SkyShoot.Game
 			}
 			catch (Exception e)
 			{
-				Trace.WriteLine(e);
+				Trace.WriteLine("Update:"+e);
 			}
 		}
 
