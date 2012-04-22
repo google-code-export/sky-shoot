@@ -80,7 +80,7 @@ namespace SkyShoot.Service.Session
 			
 			if (sender.Weapon != null)
 			{
-				if (sender.Weapon.Reload(DateTime.Now.Ticks / 10000))
+				if (sender.Weapon.IsReload(DateTime.Now.Ticks / 10000))
 				{
 					var a = sender.Weapon.CreateBullets(sender, direction);
 					var player = sender as MainSkyShootService;
@@ -312,12 +312,6 @@ namespace SkyShoot.Service.Session
 				_NewObjects.Add(mob);
 				r.Add(new NewObjectEvent(mob, time));
 
-				mob = _shootingMobFactory.CreateMob();
-				// System.Diagnostics.Trace.WriteLine("mob spawned" + mob.Id);
-
-				_NewObjects.Add(mob);
-				r.Add(new NewObjectEvent(mob, time));
-				//mob.MeMoved += new SomebodyMovesHandler(SomebodyMoved);
 			}
 			else
 			{

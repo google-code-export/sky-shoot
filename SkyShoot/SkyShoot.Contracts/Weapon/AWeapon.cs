@@ -10,21 +10,23 @@ namespace SkyShoot.Contracts.Weapon
 		[Flags]
 		public enum AWeaponType
 		{
-			//[EnumMember]
-			//DoubleDamage,
-			//[EnumMember]
-			//Shield,
 			[EnumMember]
 			Pistol,
 			[EnumMember]
 			Shotgun,
 			[EnumMember]
-			RocketPistol
+			RocketPistol,
+			[EnumMember]
+			SpiderPistol
 		}
 		public Guid Id { get; set; }
 		public AWeaponType WeaponType { get; set; }
 		
 		public AGameObject Owner { get; set; }
+		protected int ReloadSpeed;
+
+		protected long Reload;
+
 		protected AWeapon(Guid id) 
 		{
 			Owner = null;
@@ -39,16 +41,12 @@ namespace SkyShoot.Contracts.Weapon
 
 		public abstract AGameObject[] CreateBullets(AGameObject owner, Vector2 direction);
 
-		protected int ReloadSpeed;
-
-		protected long _reload;
-
-		public bool Reload(long shotTime)
+		public bool IsReload(long shotTime)
 		{
-			if (shotTime - ReloadSpeed > _reload)
+			if (shotTime - ReloadSpeed > Reload)
 			{
 				// System.Diagnostics.Trace.WriteLine("Player is hitted " + shotTime + " : " + _reloadSpeed);
-				_reload = shotTime;
+				Reload = shotTime;
 				return true;
 			}
 			return false;

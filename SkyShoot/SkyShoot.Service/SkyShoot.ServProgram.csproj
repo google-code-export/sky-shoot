@@ -98,6 +98,8 @@
     <Compile Include="Mobs\ShootingMobFactory.cs" />
     <Compile Include="Mobs\Spider.cs" />
     <Compile Include="Mobs\SpiderFactory.cs" />
+    <Compile Include="Weapon\Bullets\SpiderBullet.cs" />
+    <Compile Include="Weapon\SpiderWeapon.cs" />
     <Compile Include="Mobs\SpiderWithSimpleMind.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="PropertiesProg\AssemblyInfo.cs" />

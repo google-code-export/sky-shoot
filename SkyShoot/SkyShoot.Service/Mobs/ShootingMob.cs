@@ -14,6 +14,7 @@ namespace SkyShoot.ServProgram.Mobs
 			: base(health)
 		{
 			Weapon = weapon;
+			Weapon.Owner = this;
 			_shootingDelay = shootingDelay;
 			Radius = 10;
 			Speed = 0.03f;
@@ -24,7 +25,7 @@ namespace SkyShoot.ServProgram.Mobs
 			var res = new List<AGameEvent>(base.Think(gameObjects, newGameObjects, time));
 			ShootVector = RunVector;
 			ShootVector.Normalize();
-			if (time - _lastShoot > _shootingDelay && Weapon != null && Weapon.Reload(time))
+			if (time - _lastShoot > _shootingDelay && Weapon != null && Weapon.IsReload(time))
 			{
 				_lastShoot = time;
 				var bullets = Weapon.CreateBullets(this, ShootVector);
