@@ -405,6 +405,12 @@ namespace SkyShoot.WinFormsClient
 															new PointF(x - r, y - r),
 															new SizeF(2 * r, 2 * r)));
 							break;
+						case AGameObject.EnumObjectType.SpiderBullet:
+							g.FillEllipse(Brushes.Lime,
+														new RectangleF(
+															new PointF(x - r, y - r),
+															new SizeF(2 * r, 2 * r)));
+							break;
 						case AGameObject.EnumObjectType.Explosion:
 							g.FillEllipse(new SolidBrush(Color.FromArgb(75, Color.OrangeRed)),
 														new RectangleF(

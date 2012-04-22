@@ -7,6 +7,7 @@ using SkyShoot.Contracts.Session;
 using SkyShoot.Contracts;
 using SkyShoot.Service.Weapon;
 
+// todo //!! 2 delete
 namespace SkyShoot.ServProgram.Mobs
 {
 	class ShootingMobFactory: IMobFactory

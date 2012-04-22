@@ -1,4 +1,5 @@
 ﻿using System;
+using SkyShoot.ServProgram.Mobs;
 using SkyShoot.XNA.Framework;
 using SkyShoot.Contracts.Session;
 using SkyShoot.Service.Mobs;
@@ -8,21 +9,20 @@ namespace SkyShoot.Contracts.Mobs
 {
 	public class SpiderFactory : IMobFactory
 	{
-		private float _width;
-		private float _height;
-		private float _border;
+		private readonly float _width;
+		private readonly float _height;
+		private readonly float _border;
 		private float _health;
-
+		private readonly Random _random;
 
 		public SpiderFactory(GameLevel gameLevel)
 		{
+			_random = new Random();
 			_width = gameLevel.levelWidth;
 			_height = gameLevel.levelHeight;
 			_border = Constants.LEVELBORDER;
 			_health = 10; //change to real value
 		}
-
-		private Random _random = new Random();
 
 		public Mob CreateMob()
 		{
@@ -59,21 +59,25 @@ namespace SkyShoot.Contracts.Mobs
 			}
 
 			Mob spider;
-			switch (_random.Next(2))
+			switch (_random.Next(3))
 			{
 			case 0:
-				spider = new SpiderWithSimpleMind((float)_health);
+				spider = new SpiderWithSimpleMind(_health);
 				break;
 			case 1:
-				spider = new SpiderWithSimpleMind((float)_health);
+				spider = new SpiderWithSimpleMind(_health);
+				break;
+			case 2:
+				var w = new SpiderWeapon(Guid.NewGuid());
+				spider = new ShootingMob(_health, w, 1000);
 				break;
 			default:
-				spider = new Spider((float)_health);
+				spider = new Spider(_health);
 				break;
 			}
 			_health *= 1.05f;
 			spider.Coordinates = new Vector2((float)x, (float)y);
-			spider.Weapon = new Claw(Guid.NewGuid(), spider);
+			//spider.Weapon = new Claw(Guid.NewGuid(), spider);
 			return spider;
 		}
 	}

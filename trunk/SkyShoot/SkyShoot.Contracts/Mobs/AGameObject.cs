@@ -53,6 +53,8 @@ namespace SkyShoot.Contracts.Mobs
 			[EnumMember]
 			Explosion = Bullet | 0x200,
 			[EnumMember]
+			SpiderBullet = Bullet | 0x400,
+			[EnumMember]
 			Bonus = 0x01000,
 			[EnumMember]
 			DoubleDamage = Bonus | 0x02000,
