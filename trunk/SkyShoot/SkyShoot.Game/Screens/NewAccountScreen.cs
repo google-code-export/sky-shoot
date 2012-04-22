@@ -27,8 +27,8 @@ namespace SkyShoot.Game.Screens
 		private LabelControl _loginLabel;
 		private LabelControl _passwordLabel;
 
-		private InputControl _loginBox;
-		private InputControl _passwordBox;
+		private Controls.InputControl _loginBox;
+		private Controls.InputControl _passwordBox;
 
 		private ButtonControl _backButton;
 		private ButtonControl _okButton;
@@ -57,17 +57,20 @@ namespace SkyShoot.Game.Screens
 		private void CreateControls()
 		{
 			// Login Input
-			_loginBox = new InputControl
+			_loginBox = new Controls.InputControl
 			            	{
+											IsHidden = false,
 			            		Bounds = new UniRectangle(new UniScalar(0.5f, -100f), new UniScalar(0.4f, -30), 200, 30),
 			            		Text = ""
 			            	};
 
 			// Password Input
-			_passwordBox = new InputControl
+			_passwordBox = new Controls.InputControl
 			               	{
+												IsHidden = true,
 			               		Bounds =
 			               			new UniRectangle(new UniScalar(0.5f, -100f), new UniScalar(0.4f, 30), 200, 30),
+												RealText = "",
 			               		Text = ""
 			               	};
 
@@ -95,7 +98,7 @@ namespace SkyShoot.Game.Screens
 			// Login Button
 			_okButton = new ButtonControl
 			            	{
-			            		Text = "OK",
+			            		Text = "Create",
 			            		Bounds = new UniRectangle(new UniScalar(0.5f, 110), new UniScalar(0.4f, 70), 100, 32)
 			            	};
 		}
@@ -137,27 +140,35 @@ namespace SkyShoot.Game.Screens
 			if (_loginBox.Text.Length < 3)
 			{
 				MessageBox.Message = "Username is too short!\nPress Ok to continue";
-				ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MessageBoxScreen); // = ScreenManager.ScreenEnum.MessageScreen;
+				MessageBox.Next = ScreenManager.ScreenEnum.NewAccountScreen;
+				ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MessageBoxScreen);
 			}
 			else if (_passwordBox.Text.Length < 3)
 			{
 				MessageBox.Message = "Password is too short!\nPress Ok to continue";
+				MessageBox.Next = ScreenManager.ScreenEnum.NewAccountScreen;
 				ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MessageBoxScreen);
 			}
 			else
 			{
 				Settings.Default.login = _loginBox.Text;
-				Settings.Default.password = _passwordBox.Text;
+				Settings.Default.password = _passwordBox.RealText;
 				Settings.Default.Save();
 
-				if (GameController.Instance.Register(_loginBox.Text, _passwordBox.Text))
+				if (GameController.Instance.Register(_loginBox.Text, _passwordBox.RealText))
 				{
-					if (GameController.Instance.Login(_loginBox.Text, _passwordBox.Text).HasValue)
+					if (GameController.Instance.Login(_loginBox.Text, _passwordBox.RealText).HasValue)
 					{
-						ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MultiplayerScreen);
+						ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MainMenuScreen);
 					}
 				}
-			}
+				else
+				{
+					MessageBox.Message = "Registration failed";
+					MessageBox.Next = ScreenManager.ScreenEnum.NewAccountScreen;
+					ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MessageBoxScreen);
+				}
+			}		
 		}
 
 		public override void Draw(GameTime gameTime)

@@ -208,6 +208,7 @@ namespace SkyShoot.Game.Client.Game
 				// Trace.WriteLine(e);
 				// !! @todo catch this!
 				MessageBox.Message = "Connection error!";
+				MessageBox.Next = ScreenManager.ScreenEnum.LoginScreen;
 				ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MessageBoxScreen);
 				// throw;
 			}
@@ -218,6 +219,7 @@ namespace SkyShoot.Game.Client.Game
 			Trace.WriteLine(e);
 
 			MessageBox.Message = "Connection error!";
+			MessageBox.Next = ScreenManager.ScreenEnum.LoginScreen;
 			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MessageBoxScreen);
 		}
 
@@ -252,6 +254,7 @@ namespace SkyShoot.Game.Client.Game
 			else
 			{
 				MessageBox.Message = "Connection error!";
+				MessageBox.Next = ScreenManager.ScreenEnum.LoginScreen;
 				ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MessageBoxScreen);
 			}
 

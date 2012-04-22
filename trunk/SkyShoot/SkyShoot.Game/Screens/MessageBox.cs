@@ -25,7 +25,7 @@ namespace SkyShoot.Game.Screens
 
 		private ButtonControl _okButton;
 
-		public ScreenManager.ScreenEnum Next { get; set; }
+		public static ScreenManager.ScreenEnum Next { get; set; }
 
 		public static String Message { get; set; }
 

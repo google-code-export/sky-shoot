@@ -68,6 +68,7 @@ namespace SkyShoot.Game.Screens
 			               	{
 												IsHidden = true,
 			               		Bounds = new UniRectangle(new UniScalar(0.5f, -100f), new UniScalar(0.4f, 30), 200, 30),
+												RealText = Settings.Default.password,
 			               		Text = Controls.InputControl.HiddenText(Settings.Default.password)												
 			               	};
 
@@ -144,11 +145,13 @@ namespace SkyShoot.Game.Screens
 			if (_loginBox.Text.Length < 3)
 			{
 				MessageBox.Message = "Username is too short!\nPress Ok to continue";
+				MessageBox.Next = ScreenManager.ScreenEnum.LoginScreen;
 				ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MessageBoxScreen);
 			}
 			else if (_passwordBox.Text.Length < 3)
 			{
 				MessageBox.Message = "Password is too short!\nPress Ok to continue";
+				MessageBox.Next = ScreenManager.ScreenEnum.LoginScreen;
 				ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MessageBoxScreen);
 			}
 			else
@@ -166,37 +169,9 @@ namespace SkyShoot.Game.Screens
 
 		private void NewAccountButtonPressed(object sender, EventArgs args)
 		{
-			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);
-
-			if (_loginBox.Text.Length < 3)
-			{
-				MessageBox.Message = "Username is too short!\nPress Ok to continue";
-				ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MessageBoxScreen);
-			}
-			else if (_passwordBox.Text.Length < 3)
-			{
-				MessageBox.Message = "Password is too short!\nPress Ok to continue";
-				ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MessageBoxScreen);
-			}
-			else
-			{
-				Settings.Default.login = _loginBox.Text;
-				Settings.Default.password = _passwordBox.RealText;
-				Settings.Default.Save();
-
-				if (GameController.Instance.Register(_loginBox.Text, _passwordBox.RealText))
-				{
-					if (GameController.Instance.Login(_loginBox.Text, _passwordBox.RealText).HasValue)
-					{
-						ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MainMenuScreen);
-					}
-				}
-				else
-				{
-					MessageBox.Message = "Registration failed";
-					ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MessageBoxScreen);
-				}
-			}			
+			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);			
+			
+			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.NewAccountScreen);		
 		}
 
 		public override void Draw(GameTime gameTime)
