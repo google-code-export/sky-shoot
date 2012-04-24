@@ -20,8 +20,10 @@ namespace SkyShoot.Game.Client.Game
 		{			
 			Click,
 			Desert,
+			DeadSpider,
 			Grass,
 			Gunshot,
+			Heartbeat,
 			Laser,
 			Lava,
 			Lava2,
@@ -82,8 +84,10 @@ namespace SkyShoot.Game.Client.Game
 
 			sounds.Add(SoundEnum.Click, _soundBank.GetCue("RICOCHET"));
 			sounds.Add(SoundEnum.Desert, _soundBank.GetCue("wind03"));
+			sounds.Add(SoundEnum.DeadSpider, _soundBank.GetCue("guts04a"));
 			sounds.Add(SoundEnum.Grass, _soundBank.GetCue("cricket00"));
 			sounds.Add(SoundEnum.Gunshot, _soundBank.GetCue("GUNSHOT"));
+			sounds.Add(SoundEnum.Heartbeat, _soundBank.GetCue("heartbeat"));
 			sounds.Add(SoundEnum.Laser, _soundBank.GetCue("LASER"));
 			sounds.Add(SoundEnum.Lava, _soundBank.GetCue("lava_burn1"));
 			sounds.Add(SoundEnum.Lava2, _soundBank.GetCue("lava"));
@@ -120,12 +124,20 @@ namespace SkyShoot.Game.Client.Game
 					sounds[SoundEnum.Desert] = _soundBank.GetCue("wind03");
 					sounds[SoundEnum.Desert].Play();
 					break;
+				case SoundEnum.DeadSpider:
+					sounds[SoundEnum.Desert] = _soundBank.GetCue("guts04a");
+					sounds[SoundEnum.Desert].Play();
+					break;
 				case SoundEnum.Grass:
 					sounds[SoundEnum.Grass] = _soundBank.GetCue("cricket00");
 					sounds[SoundEnum.Grass].Play();
 					break;
 				case SoundEnum.Gunshot:
 					sounds[SoundEnum.Gunshot] = _soundBank.GetCue("GUNSHOT");
+					sounds[SoundEnum.Gunshot].Play();
+					break;
+				case SoundEnum.Heartbeat:
+					sounds[SoundEnum.Gunshot] = _soundBank.GetCue("heartbeat");
 					sounds[SoundEnum.Gunshot].Play();
 					break;
 				case SoundEnum.Laser:

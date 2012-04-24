@@ -49,6 +49,18 @@ namespace SkyShoot.Game.Screens
 			//load weapon
 			Textures.Gun = _content.Load<Texture2D>("Textures/Weapon/Gun");
 			Textures.Laser = _content.Load<Texture2D>("Textures/Weapon/Laser");
+			Textures.FlameProjectile = _content.Load<Texture2D>("Textures/Weapon/FlameProjectile");
+			Textures.ShotgunProjectile = _content.Load<Texture2D>("Textures/Weapon/ShotProjectile");
+			Textures.RocketProjectile = _content.Load<Texture2D>("Textures/Weapon/RocketProjectile");
+			Textures.SpiderProjectile = _content.Load<Texture2D>("Textures/Weapon/SpiderProjectile");
+			Textures.Explosion = _content.Load<Texture2D>("Textures/Weapon/Explosion");
+			Textures.DoubleDamage = _content.Load<Texture2D>("Textures/BonusesIcons/DoubleDamage");
+			Textures.Fire = _content.Load<Texture2D>("Textures/BonusesIcons/Fire");
+			Textures.Frozen = _content.Load<Texture2D>("Textures/BonusesIcons/Frozen");
+			Textures.MedChest = _content.Load<Texture2D>("Textures/BonusesIcons/MedChest");
+			Textures.Mirror = _content.Load<Texture2D>("Textures/BonusesIcons/Mirror");
+			Textures.Protection = _content.Load<Texture2D>("Textures/BonusesIcons/Protection");
+			Textures.Speed = _content.Load<Texture2D>("Textures/BonusesIcons/Speed");
 
 			// load stones
 			for (int i = 1; i <= Textures.StonesAmount; i++)
