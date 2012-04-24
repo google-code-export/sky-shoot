@@ -1,0 +1,14 @@
+#summary main page for developers in Russian.
+#labels Phase-Implementation
+
+==Студенческий проект по написанию простейшего "шутера".==
+
+Информация для участников:
+
+Общие правила по работе с svn [http://code.google.com/p/sky-shoot/wiki/SVNcontent link].
+
+Программы, необходимые для работы в проекте [http://code.google.com/p/sky-shoot/wiki/ProgramsToUse link].
+
+*Правила кодирования* [http://code.google.com/p/sky-shoot/downloads/detail?name=SharpDevelopCodingStyle.pdf link]
+
+группа в контакте [http://vk.com/SkyShoot link]
