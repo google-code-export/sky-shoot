@@ -65,6 +65,7 @@
     <Compile Include="Service\Constants.cs" />
     <Compile Include="Mobs\AGameObject.cs" />
     <Compile Include="Perks\Perk.cs" />
+    <Compile Include="Service\ISkyShootLogin.cs" />
     <Compile Include="Session\TileSet.cs" />
     <Compile Include="Session\GameDescription.cs" />
     <Compile Include="Service\ISkyShootService.cs" />

@@ -16,20 +16,14 @@ namespace SkyShoot.Contracts.Service
 	[ServiceContract]
 	public interface ISkyShootService
 	{
-		[OperationContract(IsInitiating = true)]
-		bool Register(string username, string password);
-
-		[OperationContract(IsInitiating = true)]
-		Guid? Login(string username, string password);
-
-		[OperationContract]
-		GameDescription[] GetGameList();
-
-		[OperationContract]
-		GameDescription CreateGame(GameMode mode, int maxPlayers, TileSet level);
+        [OperationContract]
+        GameDescription CreateGame(GameMode mode, int maxPlayers, TileSet level);
 
 		[OperationContract]
 		bool JoinGame(GameDescription game);
+
+        [OperationContract]
+        GameDescription[] GetGameList();
 
 		[OperationContract]
 		AGameEvent[] Move(Vector2 direction);
@@ -55,7 +49,7 @@ namespace SkyShoot.Contracts.Service
 		/// <param name="gameId">идетификатор игры</param>
 		/// <returns>если игра не началась возвращает null</returns>
 		[OperationContract]
-		GameLevel GameStart(int gameId);
+		GameLevel GameStart(Guid gameId);
 
 		[OperationContract]
 		AGameObject[] SynchroFrame();

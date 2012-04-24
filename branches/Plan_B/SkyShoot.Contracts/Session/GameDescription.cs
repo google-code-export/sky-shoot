@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 using System.Collections.Generic;
 
 namespace SkyShoot.Contracts.Session
@@ -14,7 +15,7 @@ namespace SkyShoot.Contracts.Session
 	{
 
 		[DataMember]
-		public int GameId { get; set; }
+		public Guid GameId { get; set; }
 
 		[DataMember]
 		public List<string> Players { get; set; }
@@ -33,7 +34,7 @@ namespace SkyShoot.Contracts.Session
 			return "[ " + UsedTileSet + " ; " + GameType + " ; " + Players.Count + "/" + MaximumPlayersAllowed + " ]";
 		}
 
-		public GameDescription(List<string> players, int maxPlayersAllowed, GameMode gameType, int gameId, TileSet usedTileSet)
+		public GameDescription(List<string> players, int maxPlayersAllowed, GameMode gameType, Guid gameId, TileSet usedTileSet)
 		{
 			GameId = gameId;
 			Players = players;
