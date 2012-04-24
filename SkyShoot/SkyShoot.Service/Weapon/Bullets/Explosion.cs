@@ -11,6 +11,7 @@ namespace SkyShoot.Service.Weapon.Bullets
 	{
 		private bool _isExploded;
 		private int _timeToLeave;
+		private int _timeToDamage;
 		private readonly long _explodedTime;
 
 		public Explosion(AGameObject owner, Guid id, Vector2 coordinates, long explodedTime)
@@ -25,29 +26,29 @@ namespace SkyShoot.Service.Weapon.Bullets
 			Coordinates = coordinates;
 			_isExploded = false;
 			_timeToLeave = (int) Constants.EXPLOSION_LIFE_DISTANCE;
+			_timeToDamage = (int)(Constants.EXPLOSION_LIFE_DISTANCE / 45f);
 		}
 
 		public override IEnumerable<AGameEvent> Do(AGameObject obj, List<AGameObject> newObjects, long time)
 		{
-			if (_isExploded && _explodedTime+_timeToLeave < time)
+			if (_isExploded && _explodedTime + _timeToDamage < time)
 				return new AGameEvent[]{};
 			var res = new List<AGameEvent>(base.Do(obj, newObjects, time));
-			IsActive = true;
 			_isExploded = true;
 			// надо удалять сообщение objectdeleted 
 			// потому что на самом деле взрыв этот не должен удаляться
+			IsActive = true;
 			res.RemoveAll(o => o.GetType() == typeof(ObjectDeleted));
 			return res;
 		}
 
 		public override IEnumerable<AGameEvent> Think(List<AGameObject> players, List<AGameObject> newGameObjects, long time)
 		{
-			if (_timeToLeave < 0)//(_isExploded)
+			if (_explodedTime + _timeToLeave < time)
 			{
 				IsActive = false;
 				return new AGameEvent[] { new ObjectDeleted(Id, time) };
 			}
-			_timeToLeave--;
 			return new AGameEvent[] { };
 		}
 	}

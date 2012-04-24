@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.ServiceModel;
+using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using SkyShoot.Contracts.GameEvents;
@@ -151,23 +152,37 @@ namespace SkyShoot.WinFormsClient
 						}
 					}
 					_prev = now;
-					SetStatus("[pos: " + _me.Coordinates.X + ";" + _me.Coordinates.Y + "] [dir: " +
-										_me.RunVector.X + ";" + _me.RunVector.Y + "]");
+					SetStatus(_me);
 					Redraw();
 				}
 			}
 		}
 
-		private void SetStatus(String sts)
+		private void SetStatus(AGameObject me)
 		{
+			if(me == null)
+				return;
 			try
 			{
-				toolStripStatusLabel1.Text = sts;
+				var sb = new StringBuilder();
+				sb.AppendFormat("[pos: {0}; {1}] [dir: {2}; {3}]", 
+					_me.Coordinates.X, _me.Coordinates.Y, 
+				                _me.RunVector.X,_me.RunVector.Y);
+				toolStripStatusLabel1.Text = sb.ToString();
+				sb.Clear();
+				sb.AppendFormat("{0}/{1}", _me.HealthAmount, _me.MaxHealthAmount);
+				toolStripStatusLabel2.Text = sb.ToString();
 			}
 			catch (Exception e)
 			{
 				Trace.WriteLine("Cli: Status: " + e);
 			}
+		}
+
+		private void SetStatus(String str)
+		{
+			toolStripStatusLabel1.Text = str;
+			toolStripStatusLabel2.Text = "0/0";
 		}
 
 		#endregion
@@ -528,6 +543,8 @@ namespace SkyShoot.WinFormsClient
 				return false;
 			}
 		}
+
+
 
 		#endregion
 

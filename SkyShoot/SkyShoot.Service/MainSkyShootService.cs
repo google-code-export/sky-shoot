@@ -9,6 +9,7 @@ using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Session;
+using SkyShoot.Contracts.Weapon;
 using SkyShoot.Service.Bonuses;
 using SkyShoot.Service.Session;
 using SkyShoot.XNA.Framework;
@@ -44,11 +45,11 @@ namespace SkyShoot.Service
 
 		private void InitWeapons()
 		{
-			Weapons.Add(Contracts.Weapon.AWeapon.AWeaponType.Pistol, new Weapon.Pistol(Guid.NewGuid(), this));
-			Weapons.Add(Contracts.Weapon.AWeapon.AWeaponType.Shotgun, new Weapon.Shotgun(Guid.NewGuid(), this));
-			Weapons.Add(Contracts.Weapon.AWeapon.AWeaponType.RocketPistol, new Weapon.RocketPistol(Guid.NewGuid(), this));
+			Weapons.Add(AWeapon.AWeaponType.Pistol, new Weapon.Pistol(Guid.NewGuid(), this));
+			Weapons.Add(AWeapon.AWeaponType.Shotgun, new Weapon.Shotgun(Guid.NewGuid(), this));
+			Weapons.Add(AWeapon.AWeaponType.RocketPistol, new Weapon.RocketPistol(Guid.NewGuid(), this));
 
-			ChangeWaponTo(Contracts.Weapon.AWeapon.AWeaponType.Pistol);
+			ChangeWaponTo(AWeapon.AWeaponType.Pistol);
 		}
 
 		public AGameEvent[] AddBonus(AGameBonus bonus, long time)

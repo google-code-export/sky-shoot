@@ -31,13 +31,15 @@
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
 			this._pnCanvas = new System.Windows.Forms.Panel();
+			this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
 			this.statusStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// statusStrip1
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1});
+            this.toolStripStatusLabel1,
+            this.toolStripStatusLabel2});
 			this.statusStrip1.Location = new System.Drawing.Point(0, 525);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Size = new System.Drawing.Size(500, 22);
@@ -67,6 +69,13 @@
 			this._pnCanvas.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pnCanvas_OnClick);
 			this._pnCanvas.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnCanvas_OnMouseMove);
 			// 
+			// toolStripStatusLabel2
+			// 
+			this.toolStripStatusLabel2.AutoSize = false;
+			this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
+			this.toolStripStatusLabel2.Size = new System.Drawing.Size(60, 17);
+			this.toolStripStatusLabel2.Text = "0/0";
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -93,6 +102,7 @@
 		private System.Windows.Forms.StatusStrip statusStrip1;
 		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
 		private System.Windows.Forms.Panel _pnCanvas;
+		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
 	}
 }
 
