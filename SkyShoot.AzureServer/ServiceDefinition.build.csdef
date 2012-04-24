@@ -9,14 +9,21 @@
   **********************************************************************************************
 -->
 <ServiceDefinition name="SkyShoot.AzureServer" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition">
-  <WorkerRole name="SkyShoot.Service" vmsize="Small">
-    <Imports></Imports>
+  <WorkerRole name="SkyShoot.GameServer" vmsize="Small">
+    <Imports>
+      <Import moduleName="Diagnostics" />
+    </Imports>
     <Endpoints>
-      <InputEndpoint name="SkyShootEndpoint" protocol="tcp" port="777" />
+      <InternalEndpoint name="ServiceEndpoint" protocol="tcp" />
     </Endpoints>
-    <ConfigurationSettings>
-      <Setting name="DataConnectionString" />
-      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
-    </ConfigurationSettings>
+  </WorkerRole>
+  <WorkerRole name="SkyShoot.LoginServer" vmsize="Small">
+    <Imports>
+      <Import moduleName="Diagnostics" />
+    </Imports>
+    <Endpoints>
+      <InputEndpoint name="ServiceEndpoint" protocol="tcp" port="777" />
+      <InputEndpoint name="LoginEndpoint" protocol="tcp" port="780" />
+    </Endpoints>
   </WorkerRole>
 </ServiceDefinition>

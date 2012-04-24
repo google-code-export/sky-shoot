@@ -37,12 +37,20 @@
     <ServiceConfiguration Include="ServiceConfiguration.Cloud.cscfg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SkyShoot.Service\SkyShoot.Service.csproj">
-      <Name>SkyShoot.Service</Name>
-      <Project>{732b4d54-9127-4ebf-83dc-8fc246a22ab1}</Project>
+    <ProjectReference Include="..\SkyShoot.GameServer\SkyShoot.GameServer.csproj">
+      <Name>SkyShoot.GameServer</Name>
+      <Project>{8a42dfd2-5b0d-4b73-bc20-dbe32c65f0d0}</Project>
       <Private>True</Private>
       <RoleType>Worker</RoleType>
-      <RoleName>SkyShoot.Service</RoleName>
+      <RoleName>SkyShoot.GameServer</RoleName>
+      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+    </ProjectReference>
+    <ProjectReference Include="..\SkyShoot.LoginServer\SkyShoot.LoginServer.csproj">
+      <Name>SkyShoot.LoginServer</Name>
+      <Project>{c5933436-5d14-48a0-89bb-dcc7a908138f}</Project>
+      <Private>True</Private>
+      <RoleType>Worker</RoleType>
+      <RoleName>SkyShoot.LoginServer</RoleName>
       <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
     </ProjectReference>
   </ItemGroup>
