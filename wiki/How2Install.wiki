@@ -1,0 +1,12 @@
+#summary Install and first run description
+#labels Featured,Phase-Deploy
+
+== Installation ==
+
+ # Download the server and one of the clients from [http://code.google.com/p/sky-shoot/downloads/list list]
+ # Unpack and execute all of downloaded installers
+
+
+== First Run ==
+
+ # 
