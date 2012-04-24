@@ -37,7 +37,7 @@ namespace SkyShoot.Contracts
 
 		public const float EXPLOSION_SPEED = 0f;
 		public const float EXPLOSION_DAMAGE = 40f;
-		public const float EXPLOSION_LIFE_DISTANCE = 80f;
+		public const float EXPLOSION_LIFE_DISTANCE = 200f;
 		public const int EXPLOSION_ATTACK_RATE = 1;
 		public const float EXPLOSION_RADIUS = 50f;
 
