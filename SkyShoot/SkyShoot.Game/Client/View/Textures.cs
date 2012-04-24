@@ -31,6 +31,20 @@ namespace SkyShoot.Game.Client.View
 		//weapon textures
 		public static Texture2D Gun;
 		public static Texture2D Laser;
+		public static Texture2D FlameProjectile;
+		public static Texture2D ShotgunProjectile;
+		public static Texture2D RocketProjectile;
+		public static Texture2D SpiderProjectile;
+		public static Texture2D Explosion;
+
+		//bonuses textures
+		public static Texture2D DoubleDamage;
+		public static Texture2D Fire;
+		public static Texture2D Frozen;
+		public static Texture2D MedChest;
+		public static Texture2D Mirror;
+		public static Texture2D Protection;
+		public static Texture2D Speed;
 
 		// stone textures
 		public static Texture2D[] Stones = new Texture2D[StonesAmount];
@@ -57,7 +71,7 @@ namespace SkyShoot.Game.Client.View
 			return Create(width, heigth < 1 ? 1 : heigth, c);
 		}
 
-		public static Texture2D ProjectileTexture
+		public static Texture2D LaserProjectile
 		{
 			get { return Create(2, 5, Color.Red); }
 		}

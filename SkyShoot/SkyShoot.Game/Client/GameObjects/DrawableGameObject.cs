@@ -17,9 +17,7 @@ namespace SkyShoot.Game.Client.GameObjects
 {
 	public class DrawableGameObject : AGameObject, IDrawable
 	{
-		private readonly AudioEngine _engine;
-		private readonly SoundBank _soundBank;
-		private WaveBank _waveBank;
+		private SoundManager _soundManager;
 
 		public Vector2 CoordinatesM
 		{
@@ -63,9 +61,8 @@ namespace SkyShoot.Game.Client.GameObjects
 		public DrawableGameObject(AGameObject other, Animation2D animation)
 		//: base(other)
 		{
-			_engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
-			_soundBank = new SoundBank(_engine, "Content\\Sounds\\Sound Bank.xsb");
-			_waveBank = new WaveBank(_engine, "Content\\Sounds\\Wave Bank.xwb");
+			SoundManager.Initialize();
+			_soundManager = SoundManager.Instance;
 
 			_healthTextureHeight = 5;
 
@@ -77,10 +74,6 @@ namespace SkyShoot.Game.Client.GameObjects
 
 		public DrawableGameObject(AGameObject other, Texture2D staticTexture)
 		{
-			_engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
-			_soundBank = new SoundBank(_engine, "Content\\Sounds\\Sound Bank.xsb");
-			_waveBank = new WaveBank(_engine, "Content\\Sounds\\Wave Bank.xwb");
-
 			_healthTextureHeight = 5;
 
 			Animation = null;
@@ -89,40 +82,25 @@ namespace SkyShoot.Game.Client.GameObjects
 			OriginalRadius = Radius;
 		}
 
-		public static void Stop(Cue cue)
-		{
-			cue.Stop(AudioStopOptions.Immediate);
-		}
-
-		public static void Scream(Cue cue)
-		{
-			cue.Play();
-		}
-
 		public virtual void Draw(SpriteBatch spriteBatch)
 		{
 			var rotation = (float)Math.Atan2(ShootVector.Y, ShootVector.X) + MathHelper.PiOver2;
 
-			//Cue healthCue = soundBank.GetCue("heartbeat");
 			if (Is(EnumObjectType.LivingObject))
 			{
-
 				if (HealthAmount >= 0.6f * MaxHealthAmount)
 				{
-					//Stop(healthCue);
+					//if (Is(EnumObjectType.Player)) _soundManager.CueStop(SoundManager.SoundEnum.Heartbeat);
 					_healthTextureColor = Color.Lime;
 				}
 				else if (HealthAmount >= 0.3f * MaxHealthAmount)
 				{
-					//Stop(healthCue);
+					//if (Is(EnumObjectType.Player)) _soundManager.CueStop(SoundManager.SoundEnum.Heartbeat);
 					_healthTextureColor = Color.Yellow;
 				}
 				else
 				{
-					/*if (!healthCue.IsPlaying)
-					{
-						healthCue.Play();
-					}*/
+					//if (Is(EnumObjectType.Player)) _soundManager.SoundPlay(SoundManager.SoundEnum.Heartbeat);
 					_healthTextureColor = Color.Red;
 				}
 

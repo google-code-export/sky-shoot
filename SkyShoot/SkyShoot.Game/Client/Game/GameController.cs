@@ -99,7 +99,6 @@ namespace SkyShoot.Game.Client.Game
 
 		public void MobDead(AGameObject mob)
 		{			
-			_soundManager.SoundPlay(SoundManager.SoundEnum.Spider);
 			GameModel.RemoveMob(mob.Id);
 			// todo //!!
 			//GameModel.GameLevel.AddTexture(mob.Is(AGameObject.EnumObjectType.Player)
