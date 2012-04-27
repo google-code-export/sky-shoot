@@ -25,8 +25,7 @@ namespace SkyShoot.Service.Weapon
 
 		public override AGameObject[] CreateBullets(AGameObject owner, Vector2 direction)
 		{
-			var bullets = new[] { new PistolBullet(owner, Guid.NewGuid(), direction) };
-			return bullets;
+			return new AGameObject[]{new HeaterBullet(owner, Guid.NewGuid(), direction)};
 		}
 	}
 }
