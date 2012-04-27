@@ -48,7 +48,7 @@ namespace SkyShoot.Contracts
 		public const float HEATER_BULLET_SPEED = 0.5f;
 		public const float HEATER_BULLET_DAMAGE = 100;
 		public const float HEATER_BULLET_LIFE_DISTANCE = 3000;
-		public const int HEATER_ATTACK_RATE = 400;
+		public const int HEATER_ATTACK_RATE = 2000;
 
 		#endregion
 
