@@ -84,9 +84,11 @@
     <Compile Include="Session\GameSession.cs" />
     <Compile Include="Session\ObjectPool.cs" />
     <Compile Include="Session\SessionManager.cs" />
+    <Compile Include="Weapon\Bullets\HeaterBullet.cs" />
     <Compile Include="Weapon\Bullets\PistolBullet.cs" />
     <Compile Include="Weapon\Bullets\ShotgunBullet.cs" />
     <Compile Include="Weapon\Claw.cs" />
+    <Compile Include="Weapon\Heater.cs" />
     <Compile Include="Weapon\Pistol.cs" />
     <Compile Include="Weapon\Shotgun.cs" />
     <Compile Include="WorkerRole.cs" />
