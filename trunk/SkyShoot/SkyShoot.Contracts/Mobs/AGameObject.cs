@@ -65,6 +65,8 @@ namespace SkyShoot.Contracts.Mobs
 			[EnumMember]
 			Speedup = Bonus | 0x10000,
 			[EnumMember]
+			Mirror = Bonus | 0x20000,
+			[EnumMember]
 			Wall = 0x0100000 | Block,
 			[EnumMember]
 			Block = 0x1 << CommonAttributesShift,

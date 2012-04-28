@@ -73,11 +73,12 @@ namespace SkyShoot.Contracts
 		#endregion
 
 		#region bonuses
-		public const int BONUS_TYPE_COUNT = 4;
+		public const int BONUS_TYPE_COUNT = 5;
 
 		public const int SHIELD_MILLISECONDS = 30000;
 		public const int DOUBLE_DAMAGE_MILLISECONDS = 30000;
 		public const int REMEDY_MILLISECONDS = 30000; // redundant
+		public const int MIRROR_MILLISECONDS = 30000; // redundant
 		public const int SPEEDUP_MILLISECONDS = 30000;
 		#endregion
 	}
