@@ -66,6 +66,12 @@ namespace SkyShoot.Service.Weapon.Bullets
 					var player = obj as MainSkyShootService;
 					if (player != null)
 					{
+						var mirror = player.GetBonus(EnumObjectType.Mirror);
+						if (mirror != null)
+						{
+							this.Coordinates = -this.Coordinates;
+							return res;
+						}
 						var shield = player.GetBonus(EnumObjectType.Shield);
 						damageMod = shield == null ? 1f : shield.DamageFactor;
 					}

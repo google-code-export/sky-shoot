@@ -87,6 +87,7 @@
     <Compile Include="Bonus\AGameBonus.cs" />
     <Compile Include="Bonus\BonusFactory.cs" />
     <Compile Include="Bonus\DoubleDamage.cs" />
+    <Compile Include="Bonus\Mirror.cs" />
     <Compile Include="Bonus\Remedy.cs" />
     <Compile Include="Bonus\Shield.cs" />
     <Compile Include="Bonus\Speedup.cs" />

@@ -24,6 +24,10 @@ namespace SkyShoot.Service.Bonus
 			{
 				return new Remedy(coordinates);
 			}
+			if (r == 3)
+			{
+				return new Mirror(coordinates);
+			}
 			else
 			{
 				return new Speedup(coordinates);
