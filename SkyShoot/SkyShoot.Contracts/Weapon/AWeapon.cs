@@ -19,7 +19,9 @@ namespace SkyShoot.Contracts.Weapon
 			[EnumMember]
 			SpiderPistol,
 			[EnumMember]
-			Heater
+			Heater,
+			[EnumMember]
+			FlamePistol
 		}
 		public Guid Id { get; set; }
 		public AWeaponType WeaponType { get; set; }

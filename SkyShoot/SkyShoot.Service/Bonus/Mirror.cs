@@ -4,7 +4,7 @@ using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Service.Bonus
 {
-	class Mirror : AGameBonus
+	public class Mirror : AGameBonus
 	{
 		public Mirror(Vector2 coordinates) : base(coordinates)
 		{

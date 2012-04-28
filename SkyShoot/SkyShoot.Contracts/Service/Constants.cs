@@ -27,9 +27,19 @@ namespace SkyShoot.Contracts
 		#region shotgun
 
 		public const float SHOTGUN_BULLET_SPEED = 0.2f;
-		public const float SHOTGUN_BULLET_DAMAGE = 2;
-		public const float SHOTGUN_BULLET_LIFE_DISTANCE = 70;
+		public const float SHOTGUN_BULLET_DAMAGE = 2f;
+		public const float SHOTGUN_BULLET_LIFE_DISTANCE = 70f;
 		public const int SHOTGUN_ATTACK_RATE = 500;
+
+		#endregion
+
+		#region flame
+
+		public const int FLAME_BULLETS_COUNT = 16;
+		public const float FLAME_SPEED = 0.05f;
+		public const float FLAME_DAMAGE = 0.5f;
+		public const float FLAME_LIFE_DISTANCE = 40f;
+		public const int FLAME_ATTACK_RATE = 5;
 
 		#endregion
 
