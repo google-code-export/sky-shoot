@@ -99,8 +99,10 @@
     <Compile Include="Mobs\ShootingMobFactory.cs" />
     <Compile Include="Mobs\Spider.cs" />
     <Compile Include="Mobs\SpiderFactory.cs" />
+    <Compile Include="Weapon\Bullets\Flame.cs" />
     <Compile Include="Weapon\Bullets\HeaterBullet.cs" />
     <Compile Include="Weapon\Bullets\SpiderBullet.cs" />
+    <Compile Include="Weapon\FlamePistol.cs" />
     <Compile Include="Weapon\Heater.cs" />
     <Compile Include="Weapon\SpiderWeapon.cs" />
     <Compile Include="Mobs\SpiderWithSimpleMind.cs" />

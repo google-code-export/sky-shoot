@@ -5,7 +5,7 @@ using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Service.Bonus
 {
-	class BonusFactory
+	public class BonusFactory
 	{
 		private Random _random = new Random();
 

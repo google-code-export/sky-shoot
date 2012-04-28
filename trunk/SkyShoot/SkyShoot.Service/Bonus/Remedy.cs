@@ -4,7 +4,7 @@ using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Service.Bonus
 {
-	class Remedy : AGameBonus
+	public class Remedy : AGameBonus
 	{
 		public Remedy(Vector2 coordinates)
 			: base(coordinates)
