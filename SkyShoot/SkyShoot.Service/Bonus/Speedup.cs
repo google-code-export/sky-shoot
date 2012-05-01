@@ -11,7 +11,7 @@ namespace SkyShoot.Service.Bonus
 		{
 			Milliseconds = Constants.SPEEDUP_MILLISECONDS;
 			ObjectType = EnumObjectType.Speedup;
-			DamageFactor = 1.5f; // not damage, but speedup here
+			DamageFactor = 2.5f; // not damage, but speedup here
 		}
 	}
 }

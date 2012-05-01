@@ -48,6 +48,8 @@ namespace SkyShoot.Service
 			Weapons.Add(AWeapon.AWeaponType.Pistol, new Weapon.Pistol(Guid.NewGuid(), this));
 			Weapons.Add(AWeapon.AWeaponType.Shotgun, new Weapon.Shotgun(Guid.NewGuid(), this));
 			Weapons.Add(AWeapon.AWeaponType.RocketPistol, new Weapon.RocketPistol(Guid.NewGuid(), this));
+			Weapons.Add(AWeapon.AWeaponType.Heater, new Weapon.Heater(Guid.NewGuid(), this));
+			Weapons.Add(AWeapon.AWeaponType.FlamePistol, new Weapon.FlamePistol(Guid.NewGuid(), this));
 
 			ChangeWaponTo(AWeapon.AWeaponType.Pistol);
 		}
@@ -168,7 +170,7 @@ namespace SkyShoot.Service
 		public event ClientShootsHandler MeShot;
 		public event ClientChangeWeaponHandler MeChangeWeapon;
 
-		public AGameEvent[] ChangeWeapon(SkyShoot.Contracts.Weapon.AWeapon.AWeaponType type)
+		public AGameEvent[] ChangeWeapon(AWeapon.AWeaponType type)
 		{
 			if (MeChangeWeapon != null)
 			{
@@ -274,20 +276,20 @@ namespace SkyShoot.Service
 			return session.LocalGameDescription.Players.ToArray();
 		}
 
-		public override Vector2 ComputeMovement(long updateDelay, GameLevel gameLevel)
-		{
-			AGameBonus speedUpBonus = this.GetBonus(AGameObject.EnumObjectType.Speedup);
-			float speedUp = speedUpBonus == null ? 1f : speedUpBonus.DamageFactor;
-			float oldSpeed = this.Speed;
-			this.Speed *= speedUp;
-			var newCoord = base.ComputeMovement(updateDelay, gameLevel);
-			this.Speed = oldSpeed;
+		//public override Vector2 ComputeMovement(long updateDelay, GameLevel gameLevel)
+		//{
+		//  AGameBonus speedUpBonus = GetBonus(EnumObjectType.Speedup);
+		//  float speedUp = speedUpBonus == null ? 1f : speedUpBonus.DamageFactor;
+		//  float oldSpeed = _speed;
+		//  _speed *= speedUp;
+		//  var newCoord = base.ComputeMovement(updateDelay, gameLevel);
+		//  _speed = oldSpeed;
 
-			newCoord.X = MathHelper.Clamp(newCoord.X, 0, gameLevel.levelHeight);
-			newCoord.Y = MathHelper.Clamp(newCoord.Y, 0, gameLevel.levelWidth);
+		//  newCoord.X = MathHelper.Clamp(newCoord.X, 0, gameLevel.levelHeight);
+		//  newCoord.Y = MathHelper.Clamp(newCoord.Y, 0, gameLevel.levelWidth);
 
-			return newCoord;
-		}
+		//  return newCoord;
+		//}
 
 		private EnumObjectType MergeBonuses()
 		{
@@ -320,6 +322,21 @@ namespace SkyShoot.Service
 			var l = Bonuses.Count;
 			DeleteExpiredBonuses(time);
 			return res;// l != Bonuses.Count ? new AGameEvent[] { new BonusesChanged(Id, time, MergeBonuses()) } : res;
+		}
+
+		public override float Speed
+		{
+			get
+			{
+				AGameBonus speedUpBonus = GetBonus(EnumObjectType.Speedup);
+				float speedUp = speedUpBonus == null ? 1f : speedUpBonus.DamageFactor;
+				var speed = _speed * speedUp;
+				return speed;
+			}
+			set
+			{
+				_speed = value;
+			}
 		}
 	}
 }

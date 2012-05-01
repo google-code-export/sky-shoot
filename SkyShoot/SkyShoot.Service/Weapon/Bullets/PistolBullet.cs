@@ -14,7 +14,7 @@ namespace SkyShoot.Service.Weapon.Bullets
 			Speed = Constants.PISTOL_BULLET_SPEED;
 			Damage = Constants.PISTOL_BULLET_DAMAGE;
 			HealthAmount = Constants.PISTOL_BULLET_LIFE_DISTANCE;
-			ObjectType = EnumObjectType.LaserBullet;
+			ObjectType = EnumObjectType.PistolBullet;
 		} 
 	}
 }

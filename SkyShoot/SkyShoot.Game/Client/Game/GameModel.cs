@@ -113,9 +113,12 @@ namespace SkyShoot.Game.Client.Game
 		{
 			try
 			{
-
+				if(gameEvents == null)
+					return;
 			foreach (var gameEvent in gameEvents)
 			{
+				if(gameEvent == null)
+					continue;
 				//if (gameEvent.GetType() == typeof(ObjectDirectionChanged))
 				//{
 				//  Trace.WriteLine("OBJECT_DIRECTION_CHANGED", "GameModel/ApplyEvents");

@@ -14,6 +14,7 @@ namespace SkyShoot.Service.Weapon.Bullets
 			Speed = Constants.FLAME_SPEED;
 			Damage = Constants.FLAME_DAMAGE;
 			HealthAmount = Constants.FLAME_LIFE_DISTANCE;
+			Radius = Constants.FLAME_RADIUS;
 			ObjectType = EnumObjectType.Flame;
 		}
 	}

@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 
 using Microsoft.Xna.Framework.Graphics;
-
+using SkyShoot.Contracts;
 using SkyShoot.Contracts.Mobs;
 
 using SkyShoot.Game.Client.Game;
@@ -69,7 +69,7 @@ namespace SkyShoot.Game.Client.GameObjects
 			Animation = animation;
 			Animation.Initialize(FrameTime, Looping);
 			Copy(other);
-			OriginalRadius = Radius;
+			MakeOroginalRadius();
 		}
 
 		public DrawableGameObject(AGameObject other, Texture2D staticTexture)
@@ -79,12 +79,39 @@ namespace SkyShoot.Game.Client.GameObjects
 			Animation = null;
 			StaticTexture = staticTexture;
 			Copy(other);
-			OriginalRadius = Radius;
+			MakeOroginalRadius();
+		}
+
+		void MakeOroginalRadius()
+		{
+			switch (ObjectType)
+			{
+			case EnumObjectType.PistolBullet:
+				OriginalRadius = Constants.DEFAULT_BULLET_RADIUS;
+				break;
+			case EnumObjectType.RocketBullet:
+				OriginalRadius = Constants.ROCKET_BULLET_RADIUS;
+				break;
+			case EnumObjectType.Flame:
+				OriginalRadius = Constants.FLAME_RADIUS;
+				break;
+			case EnumObjectType.Explosion:
+				OriginalRadius = Constants.EXPLOSION_RADIUS;
+				break;
+			case EnumObjectType.HeaterBullet:
+				OriginalRadius = Constants.DEFAULT_BULLET_RADIUS;
+				break;
+			default:
+				OriginalRadius = Radius;
+				break;
+			}
 		}
 
 		public virtual void Draw(SpriteBatch spriteBatch)
 		{
 			var rotation = (float)Math.Atan2(ShootVector.Y, ShootVector.X) + MathHelper.PiOver2;
+			if (Is(EnumObjectType.Bonus))
+				rotation = 0;
 
 			if (Is(EnumObjectType.LivingObject))
 			{
@@ -138,7 +165,9 @@ namespace SkyShoot.Game.Client.GameObjects
 				}
 				if(Is(EnumObjectType.Bullet))
 				{
-					scale = Radius/OriginalRadius;
+					scale *= Radius/OriginalRadius;
+					if (Is(EnumObjectType.PistolBullet) || Is(EnumObjectType.HeaterBullet))
+						scale *= 2f;
 				}
 				spriteBatch.Draw(StaticTexture,
 												 CoordinatesM,
