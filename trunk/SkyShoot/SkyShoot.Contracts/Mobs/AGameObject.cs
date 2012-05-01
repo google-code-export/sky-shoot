@@ -35,41 +35,43 @@ namespace SkyShoot.Contracts.Mobs
 			 *             +------------- Common attributes
 			 */
 			[EnumMember]
-			LivingObject = 0x0001 | Block,
+			LivingObject = 0x0001 | Block, //1125899906842625
 			[EnumMember]
-			Player = LivingObject | 0x2,
+			Player = LivingObject | 0x2,//1125899906842626
 			[EnumMember]
-			Mob = LivingObject | 0x4,
+			Mob = LivingObject | 0x4,//1125899906842628
 			[EnumMember]
-			Bullet = 0x010,
+			Bullet = 0x010,//16
 			[EnumMember]
-			Flame = Bullet | 0x020,
+			Flame = Bullet | 0x020,//48
 			[EnumMember]
-			LaserBullet = Bullet | 0x040,
+			PistolBullet = Bullet | 0x040,//80
 			[EnumMember]
-			ShotgunBullet = Bullet | 0x080,
+			ShotgunBullet = Bullet | 0x080,//144
 			[EnumMember]
-			RocketBullet = Bullet | 0x100,
+			RocketBullet = Bullet | 0x100,//272
 			[EnumMember]
-			Explosion = Bullet | 0x200,
+			Explosion = Bullet | 0x200,//528
 			[EnumMember]
-			SpiderBullet = Bullet | 0x400,
+			SpiderBullet = Bullet | 0x400,//1040
 			[EnumMember]
-			Bonus = 0x01000,
+			HeaterBullet = Bullet | 0x800,//
 			[EnumMember]
-			DoubleDamage = Bonus | 0x02000,
+			Bonus = 0x01000,//4096
 			[EnumMember]
-			Shield = Bonus | 0x04000,
+			DoubleDamage = Bonus | 0x02000,//12288
 			[EnumMember]
-			Remedy = Bonus | 0x08000,
+			Shield = Bonus | 0x04000,//20480
 			[EnumMember]
-			Speedup = Bonus | 0x10000,
+			Remedy = Bonus | 0x08000,//36864
 			[EnumMember]
-			Mirror = Bonus | 0x20000,
+			Speedup = Bonus | 0x10000,//69632
 			[EnumMember]
-			Wall = 0x0100000 | Block,
+			Mirror = Bonus | 0x20000,//135168
 			[EnumMember]
-			Block = 0x1 << CommonAttributesShift,
+			Wall = 0x0100000 | Block,//1125899907891200
+			[EnumMember]
+			Block = 0x1 << CommonAttributesShift, //1125899906842624
 		}
 
 		#region основные свойства
@@ -151,8 +153,16 @@ namespace SkyShoot.Contracts.Mobs
 		[DataMember]
 		public float Radius { get; set; } // размер моба
 
+		protected float _speed;
+
 		[DataMember]
-		public float Speed { get; set; } //скорость: пикселы в миллисекунду
+		virtual public float Speed
+		{
+			get { return _speed; }
+			set { _speed = value; }
+		}
+
+		//скорость: пикселы в миллисекунду
 
 		#endregion
 

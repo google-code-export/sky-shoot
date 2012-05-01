@@ -324,8 +324,19 @@ namespace SkyShoot.Game.Client.Game
 		public AGameEvent[] ChangeWeapon(AWeapon.AWeaponType type)
 		{
 			// do nothing
-			return null;
-			throw new NotImplementedException();
+			try
+			{
+				// var sw = new Stopwatch();
+				// sw.Start();
+				return _service.ChangeWeapon(type);
+				// sw.Stop();
+				// Trace.WriteLine("SW:serv:ChangeWeapon " + sw.ElapsedMilliseconds);
+			}
+			catch (Exception e)
+			{
+				FatalError(e);
+				return null;
+			}
 		}
 
 		public AGameEvent[]  Shoot(XNA.Framework.Vector2 direction)

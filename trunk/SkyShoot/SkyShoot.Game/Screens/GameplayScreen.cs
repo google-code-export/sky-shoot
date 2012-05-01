@@ -4,7 +4,7 @@ using System;
 
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-
+using SkyShoot.Contracts.Weapon;
 using SkyShoot.Game.Client.Game;
 using SkyShoot.Game.Client.View;
 
@@ -25,10 +25,12 @@ namespace SkyShoot.Game.Screens
 			get { return false; }
 		}
 
-		public static short Weapon = 1;
+		public static AWeapon.AWeaponType Weapon = AWeapon.AWeaponType.Pistol;
 
-		private ButtonControl _gunButton;
-		private ButtonControl _laserButton;
+		private ButtonControl _pistolButton;
+		private ButtonControl _shotgunButton;
+		private ButtonControl _rocketButton;
+		private ButtonControl _flameButton;
 		private ButtonControl _heaterButton;
 
 		public GameplayScreen()
@@ -36,10 +38,10 @@ namespace SkyShoot.Game.Screens
 			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 			CreateControls();
 			InitializeControls();
-		}		
+		}
 
 		public override void LoadContent()
-		{	
+		{
 			// load landscapes
 			Textures.SandLandscape = _content.Load<Texture2D>("Textures/Landscapes/SandLandscape");
 			Textures.GrassLandscape = _content.Load<Texture2D>("Textures/Landscapes/GrassLandscape");
@@ -99,53 +101,93 @@ namespace SkyShoot.Game.Screens
 
 		private void CreateControls()
 		{
-			_gunButton = new ButtonControl
+			_pistolButton = new ButtonControl
 			{
 				Text = "Pistol",
-				Bounds = new UniRectangle(new UniVector(-70, -50), new UniVector(80, 40)),
+				Bounds = new UniRectangle(new UniVector(70, 470), new UniVector(80, 40)),
 			};
 
-			_laserButton = new ButtonControl
+			_shotgunButton = new ButtonControl
 			{
-				Text = "Laser",
-				Bounds = new UniRectangle(new UniVector(20, -50), new UniVector(80, 40)),
+				Text = "Shotgun",
+				Bounds = new UniRectangle(new UniVector(160, 470), new UniVector(80, 40)),
 			};
+
+			_flameButton = new ButtonControl
+											{
+												Text = "Flame",
+												Bounds = new UniRectangle(new UniVector(250, 470), new UniVector(80, 40)),
+											};
+
+			_rocketButton = new ButtonControl
+												{
+													Text = "Rocket",
+													Bounds = new UniRectangle(new UniVector(340, 470), new UniVector(80, 40)),
+												};
 
 			_heaterButton = new ButtonControl
 			{
 				Text = "Heater",
-				Bounds = new UniRectangle(new UniVector(110, -50), new UniVector(80, 40)),
+				Bounds = new UniRectangle(new UniVector(430, 470), new UniVector(80, 40)),
 			};
 		}
 
 		private void InitializeControls()
 		{
-			Desktop.Children.Add(_gunButton);
-			Desktop.Children.Add(_laserButton);
+			Desktop.Children.Add(_pistolButton);
+			Desktop.Children.Add(_shotgunButton);
+			Desktop.Children.Add(_flameButton);
+			Desktop.Children.Add(_rocketButton);
 			Desktop.Children.Add(_heaterButton);
 
-			_gunButton.Pressed += PistolButtonPressed;
-			_laserButton.Pressed += LaserButtonPressed;
+			_pistolButton.Pressed += PistolButtonPressed;
+			_shotgunButton.Pressed += ShotgunButtonPressed;
+			_flameButton.Pressed += FlameButtonPressed;
+			_rocketButton.Pressed += RocketButtonPressed;
 			_heaterButton.Pressed += HeaterButtonPressed;
 
-			ScreenManager.Instance.Controller.AddListener(_gunButton, PistolButtonPressed);
-			ScreenManager.Instance.Controller.AddListener(_laserButton, LaserButtonPressed);
-			ScreenManager.Instance.Controller.AddListener(_laserButton, HeaterButtonPressed);
+			ScreenManager.Instance.Controller.AddListener(_pistolButton, PistolButtonPressed);
+			ScreenManager.Instance.Controller.AddListener(_shotgunButton, ShotgunButtonPressed);
+			ScreenManager.Instance.Controller.AddListener(_flameButton, FlameButtonPressed);
+			ScreenManager.Instance.Controller.AddListener(_rocketButton, RocketButtonPressed);
+			ScreenManager.Instance.Controller.AddListener(_heaterButton, HeaterButtonPressed);
+
+		}
+
+		private void RocketButtonPressed(object sender, EventArgs e)
+		{
+			Weapon = AWeapon.AWeaponType.RocketPistol;
+			UpdateWeapon();
+		}
+
+
+		private void FlameButtonPressed(object sender, EventArgs e)
+		{
+			Weapon = AWeapon.AWeaponType.FlamePistol;
+			UpdateWeapon();
 		}
 
 		private void PistolButtonPressed(object sender, EventArgs e)
 		{
-			Weapon = 1;
+			Weapon = AWeapon.AWeaponType.Pistol;
+			UpdateWeapon();
 		}
 
-		private void LaserButtonPressed(object sender, EventArgs e)
+		private void ShotgunButtonPressed(object sender, EventArgs e)
 		{
-			Weapon = 2;
+			Weapon = AWeapon.AWeaponType.Shotgun;
+			UpdateWeapon();
 		}
 
 		private void HeaterButtonPressed(object sender, EventArgs e)
 		{
-			Weapon = 3;
+			Weapon = AWeapon.AWeaponType.Heater;
+			UpdateWeapon();
+		}
+
+		private void UpdateWeapon()
+		{
+			GameController.Instance.ChangeWeapon(Weapon);
 		}
 
 		public override void UnloadContent()

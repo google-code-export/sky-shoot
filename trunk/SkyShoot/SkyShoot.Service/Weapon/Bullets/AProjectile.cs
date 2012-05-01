@@ -10,19 +10,23 @@ namespace SkyShoot.Service.Weapon.Bullets
 {
 	public class AProjectile : AGameObject
 	{
+		private bool _mirrored	;
+
 		protected AProjectile(AGameObject owner, Guid id, Vector2 direction)
 		{
 			Owner = owner;
 			Id = id;
 			ShootVector = RunVector = direction;
 			Coordinates = owner.Coordinates;
-			Radius = 3;
+			Radius = Constants.DEFAULT_BULLET_RADIUS;
+			_mirrored = false;
 		}
 
 		public AProjectile()
 		{
 			Owner = null;
-			Radius = 3;
+			Radius = Constants.DEFAULT_BULLET_RADIUS;
+			_mirrored = false;
 		}
 
 		public override void Copy(AGameObject other)
@@ -37,15 +41,6 @@ namespace SkyShoot.Service.Weapon.Bullets
 			//LifeDistance = otherProjectile.LifeDistance;
 			Owner = otherProjectile.Owner;
 		}
-
-		//public AProjectile(AGameObject other)
-		//{
-		//  // if (!(other is AProjectile))
-		//  // {
-		//  //	throw new Exception("Type mistmath");
-		//  // }
-		//  Copy(other);
-		//}
 
 		public AGameObject Owner { get; set; }
 
@@ -67,9 +62,13 @@ namespace SkyShoot.Service.Weapon.Bullets
 					if (player != null)
 					{
 						var mirror = player.GetBonus(EnumObjectType.Mirror);
-						if (mirror != null)
+						if (mirror != null && !_mirrored)
 						{
-							this.Coordinates = -this.Coordinates;
+							RunVector = -RunVector;
+							RunVector.Normalize();// some times we have strange errors with length of run and shoot vectors
+							ShootVector = RunVector;
+							res.Add(new ObjectDirectionChanged(RunVector, Id, time));
+							_mirrored = true;
 							return res;
 						}
 						var shield = player.GetBonus(EnumObjectType.Shield);

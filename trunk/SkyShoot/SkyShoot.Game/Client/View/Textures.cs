@@ -71,6 +71,11 @@ namespace SkyShoot.Game.Client.View
 			return Create(width, heigth < 1 ? 1 : heigth, c);
 		}
 
+		public static Texture2D HeaterProjectile
+		{
+			get { return Create(2, 8, Color.Black); }
+		}
+
 		public static Texture2D LaserProjectile
 		{
 			get { return Create(2, 5, Color.Red); }

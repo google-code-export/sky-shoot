@@ -34,8 +34,11 @@ namespace SkyShoot.Game.Client.Game
 			if (serverGameObject.Is(AGameObject.EnumObjectType.Flame))
 				return new DrawableGameObject(serverGameObject, Textures.FlameProjectile);
 
-			if (serverGameObject.Is(AGameObject.EnumObjectType.LaserBullet))
+			if (serverGameObject.Is(AGameObject.EnumObjectType.PistolBullet))
 				return new DrawableGameObject(serverGameObject, Textures.LaserProjectile);
+
+			if(serverGameObject.Is(AGameObject.EnumObjectType.HeaterBullet))
+				return new DrawableGameObject(serverGameObject, Textures.HeaterProjectile);
 
 			if (serverGameObject.Is(AGameObject.EnumObjectType.ShotgunBullet))
 				return new DrawableGameObject(serverGameObject, Textures.ShotgunProjectile);
@@ -61,10 +64,14 @@ namespace SkyShoot.Game.Client.Game
 			if (serverGameObject.Is(AGameObject.EnumObjectType.Speedup))
 				return new DrawableGameObject(serverGameObject, Textures.Speed);
 
+			if(serverGameObject.Is(AGameObject.EnumObjectType.Mirror))
+				return new DrawableGameObject(serverGameObject, Textures.Mirror);
+
 			if(serverGameObject.Is(AGameObject.EnumObjectType.Wall))
 				return new DrawableGameObject(serverGameObject, Textures.OneStone);
 
-			throw new Exception();
+			return null;
+			//throw new Exception();
 		}
 		
 		//public static Projectile CreateClientProjectile(AGameObject serverGameObject)

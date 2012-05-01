@@ -12,8 +12,6 @@ namespace SkyShoot.Game.Client.Game
 {
 	public class GameLevel : IDrawable
 	{
-		public const int StonesNumber = 50;
-
 		public static int Width { get; private set; }
 
 		public static int Height { get; private set; }
@@ -60,18 +58,6 @@ namespace SkyShoot.Game.Client.Game
 					_texture = Textures.Clone(Textures.VolcanicLandscape);
 					break;
 			}
-
-			var random = new Random();
-
-			for (int i = 0; i < StonesNumber; i++)
-			{
-				int stone = random.Next(3);
-				var randomPosition = new Vector2(random.Next(Width - Textures.Stones[stone].Width),
-				                                 random.Next(Height - Textures.Stones[stone].Height));
-				Textures.Merge(_texture, Textures.Stones[stone], randomPosition);
-			}
-
-			//Textures.Merge(_texture, Textures.Gun, weaponPosition);
 		}
 
 		public void AddTexture(Texture2D texture, Vector2 position)

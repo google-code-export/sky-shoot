@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using SkyShoot.Contracts;
+using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Weapon;
 using SkyShoot.Service.Weapon.Bullets;
-using SkyShoot.Contracts.Mobs;
 using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Service.Weapon
@@ -26,11 +23,11 @@ namespace SkyShoot.Service.Weapon
 
 		public override AGameObject[] CreateBullets(AGameObject owner, Vector2 direction)
 		{
-			Vector2 step = owner.ShootVector / Constants.FLAME_BULLETS_COUNT;
-			Flame[] bullets = new Flame[Constants.FLAME_BULLETS_COUNT];
-			for (int i = 0; i < Constants.FLAME_BULLETS_COUNT; i ++)
+			var step = owner.ShootVector * Constants.FLAME_RADIUS/2;// / Constants.FLAME_BULLETS_COUNT;
+			var bullets = new Flame[Constants.FLAME_BULLETS_COUNT];
+			for (var i = 0; i < Constants.FLAME_BULLETS_COUNT; i ++)
 			{
-				Vector2 bulletCoordinates = owner.Coordinates + i * step;
+				var bulletCoordinates = owner.Coordinates + i * step;
 				bullets[i] = new Flame(owner, Guid.NewGuid(), direction, bulletCoordinates);
 			}
 			return bullets;

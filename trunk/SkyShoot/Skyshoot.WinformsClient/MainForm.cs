@@ -194,11 +194,14 @@ namespace SkyShoot.WinFormsClient
 		{
 			InitializeComponent();
 
-			int bts = Enum.GetNames(typeof(AWeapon.AWeaponType)).Length;
+			//AWeapon.AWeaponType
+			int bts = Enum.GetNames(typeof(AWeapon.AWeaponType)).Length - 1;
 			_buttons = new WeaponButton[bts];
 			int i = 0;
 			foreach (var s in Enum.GetNames(typeof(AWeapon.AWeaponType)))
 			{
+				if(s == AWeapon.AWeaponType.SpiderPistol.ToString())
+					continue;
 				var b = new WeaponButton();
 				AWeapon.AWeaponType t;
 				if(!Enum.TryParse(s, out t))
@@ -381,6 +384,7 @@ namespace SkyShoot.WinFormsClient
 						x = (m.Coordinates.X) * _pnCanvas.Width / _level.levelWidth;
 						y = (m.Coordinates.Y) * _pnCanvas.Height / _level.levelHeight;
 						r = m.Radius * _pnCanvas.Width / _level.levelWidth; 
+						m.ShootVector.Normalize();
 						switch (m.ObjectType)
 						{
 						case AGameObject.EnumObjectType.Mob:
@@ -411,11 +415,17 @@ namespace SkyShoot.WinFormsClient
 												 x - r, y - r, x + r * m.HealthAmount / m.MaxHealthAmount, y - r);
 							break;
 						case AGameObject.EnumObjectType.Bullet:
-						case AGameObject.EnumObjectType.LaserBullet:
+						case AGameObject.EnumObjectType.PistolBullet:
 						case AGameObject.EnumObjectType.ShotgunBullet:
 						case AGameObject.EnumObjectType.RocketBullet:
 							//r = 2f;
 							g.FillEllipse(Brushes.Red,
+														new RectangleF(
+															new PointF(x - r, y - r),
+															new SizeF(2 * r, 2 * r)));
+							break;
+						case AGameObject.EnumObjectType.HeaterBullet:
+							g.FillEllipse(Brushes.Black,
 														new RectangleF(
 															new PointF(x - r, y - r),
 															new SizeF(2 * r, 2 * r)));

@@ -120,6 +120,7 @@
 			// cbMode
 			// 
 			this.cbMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbMode.Enabled = false;
 			this.cbMode.FormattingEnabled = true;
 			this.cbMode.Location = new System.Drawing.Point(84, 60);
 			this.cbMode.Name = "cbMode";

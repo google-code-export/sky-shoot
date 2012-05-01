@@ -41,7 +41,7 @@ namespace SkyShoot.Game.Client.GameObjects
 	//    SoundManager.Initialize();
 	//    _soundManager = SoundManager.Instance;
 
-	//    ObjectType = EnumObjectType.LaserBullet;
+	//    ObjectType = EnumObjectType.PistolBullet;
 	//    // todo
 	//    switch (ObjectType)
 	//    {
@@ -51,7 +51,7 @@ namespace SkyShoot.Game.Client.GameObjects
 	//        break;
 	//      case EnumObjectType.Rocket:
 	//        break;
-	//      case EnumObjectType.LaserBullet:
+	//      case EnumObjectType.PistolBullet:
 	//        _soundManager.SoundPlay(SoundManager.SoundEnum.Laser);
 	//        break;
 	//      case EnumObjectType.ShutgunBullet:

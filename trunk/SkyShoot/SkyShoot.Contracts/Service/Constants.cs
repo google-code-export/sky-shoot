@@ -3,7 +3,10 @@ namespace SkyShoot.Contracts
 {
 	public static class Constants
 	{
+
 		#region weapons
+
+		public const float DEFAULT_BULLET_RADIUS = 5f;
 
 		#region pistol
 
@@ -35,11 +38,12 @@ namespace SkyShoot.Contracts
 
 		#region flame
 
-		public const int FLAME_BULLETS_COUNT = 16;
+		public const int FLAME_BULLETS_COUNT = 24;
 		public const float FLAME_SPEED = 0.05f;
 		public const float FLAME_DAMAGE = 0.5f;
-		public const float FLAME_LIFE_DISTANCE = 40f;
-		public const int FLAME_ATTACK_RATE = 5;
+		public const float FLAME_LIFE_DISTANCE = 120f;
+		public const int FLAME_ATTACK_RATE = 700;
+		public const float FLAME_RADIUS = 5f;
 
 		#endregion
 
@@ -58,7 +62,7 @@ namespace SkyShoot.Contracts
 		public const float HEATER_BULLET_SPEED = 0.5f;
 		public const float HEATER_BULLET_DAMAGE = 100;
 		public const float HEATER_BULLET_LIFE_DISTANCE = 3000;
-		public const int HEATER_ATTACK_RATE = 2000;
+		public const int HEATER_ATTACK_RATE = 7000;
 
 		#endregion
 
@@ -89,7 +93,7 @@ namespace SkyShoot.Contracts
 		public const int DOUBLE_DAMAGE_MILLISECONDS = 30000;
 		public const int REMEDY_MILLISECONDS = 30000; // redundant
 		public const int MIRROR_MILLISECONDS = 30000; // redundant
-		public const int SPEEDUP_MILLISECONDS = 30000;
+		public const int SPEEDUP_MILLISECONDS = 10000;
 		#endregion
 	}
 }
