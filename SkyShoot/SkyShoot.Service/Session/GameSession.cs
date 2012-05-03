@@ -287,7 +287,6 @@ namespace SkyShoot.Service.Session
 		private void TimerElapsedListener(object sender, EventArgs e)
 		{			
 			Update();
-					
 		}
 
 	#region local functions
@@ -301,10 +300,10 @@ namespace SkyShoot.Service.Session
 			if(t != null && t.Count > 1)
 				return new AGameEvent[]{};
 #endif
-			if (_intervalToSpawn == 0)
+			if (_intervalToSpawn < 1)
 			{
 				// todo //!! rewrite!!
-				_intervalToSpawn = 2 * (long) Math.Exp(4.8f - _timerCounter/40000f);
+				_intervalToSpawn = 3 * (long) Math.Exp(4.8f - _timerCounter/4000f);
 				
 				var mob = _spiderFactory.CreateMob();
 				// System.Diagnostics.Trace.WriteLine("mob spawned" + mob.Id);
