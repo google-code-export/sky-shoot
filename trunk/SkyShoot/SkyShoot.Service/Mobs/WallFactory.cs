@@ -7,7 +7,7 @@ namespace SkyShoot.Service.Mobs
 {
 	public class WallFactory
 	{
-		public const int StonesNumber = 50;
+		public const int StonesNumber = 20;
 		protected GameLevel GameLevel { get; set; }
 		
 		public WallFactory(GameLevel gameLevel)
@@ -28,7 +28,7 @@ namespace SkyShoot.Service.Mobs
 			//return res;
 			return new Wall[]
 			{
-				new Wall(new Vector2(GameLevel.levelWidth / 2, GameLevel.levelHeight / 2), 
+				new Wall(new Vector2(-200+GameLevel.levelWidth / 2, -200+GameLevel.levelHeight / 2), 
 				50f, Guid.NewGuid())
 			};
 		}
