@@ -1,8 +1,9 @@
 #summary SkyShoot videos
 #labels Featured
 
+==== [http://www.youtube.com/watch?v=o5g3xUYukFs&list=PL8A834DD944B8A3A0&feature=plpp_play_all All videos] =====
+
 == Beta Release (04 May 2012) ==
-[Videos#All_videos]
 
 One player demo
 
@@ -19,5 +20,3 @@ One player demo
 
 <wiki:video url="http://www.youtube.com/watch?v=o5g3xUYukFs&list=PL8A834DD944B8A3A0&index=1"/>
 
-
-==== [http://www.youtube.com/watch?v=o5g3xUYukFs&list=PL8A834DD944B8A3A0&feature=plpp_play_all All videos] =====
