@@ -1,0 +1,23 @@
+#summary SkyShoot videos
+#labels Featured
+
+== Beta Release (04 May 2012) ==
+[Videos#All_videos]
+
+One player demo
+
+<wiki:video url="http://www.youtube.com/watch?v=_5rcF_Cdfds&list=PL8A834DD944B8A3A0&index=4"/>
+
+== Alpha Release (13 December 2011) ==
+
+Multiplayer
+
+<wiki:video url="http://www.youtube.com/watch?v=ZNXw9WP7_Qc&list=PL8A834DD944B8A3A0&index=2"/>
+
+
+One player demo
+
+<wiki:video url="http://www.youtube.com/watch?v=o5g3xUYukFs&list=PL8A834DD944B8A3A0&index=1"/>
+
+
+==== [http://www.youtube.com/watch?v=o5g3xUYukFs&list=PL8A834DD944B8A3A0&feature=plpp_play_all All videos] =====
