@@ -2,6 +2,9 @@
  * SVN Client: 
   * консольный классический [http://subversion.apache.org/packages.html#windows link]
   * консольный из cygwin
-  * графический понятный aka черепашка *(recommended)* [http://tortoisesvn.net/downloads.html link] 
+  * *(recommended)* графический понятный aka черепашка [http://tortoisesvn.net/downloads.html link] 
   * встраиваемый в студию ankhsvn []
  * MS VS 2010
+  * Windows Azure SDK and Windows Azure Tools [http://www.microsoft.com/en-us/download/details.aspx?id=15658 link]
+  * Microsoft XNA Game Studio 4.0 [http://www.microsoft.com/en-us/download/details.aspx?id=23714 link]
+  * _(optional)_ Windows Phone SDK 7.1 [http://www.microsoft.com/en-us/download/details.aspx?displaylang=en&id=27570 link]
