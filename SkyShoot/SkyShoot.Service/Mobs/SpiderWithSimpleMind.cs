@@ -31,16 +31,17 @@ namespace SkyShoot.Service.Mobs
 					// myself
 					if (Id == p.Id || p.Is(EnumObjectType.Bonus) || p.Is(EnumObjectType.Bullet))
 						continue;
-					len = (p.Coordinates - Coordinates).Length();
-					if (len < 4 * (p.Radius + Radius) )
-					{
-						l.Add(p);
+				    len = (p.Coordinates - Coordinates).Length();
+				    if (len < 4 * (p.Radius + Radius))
+				    {
+				        l.Add(p);
 					}
 					else
 					{
 						// no sence to look at far objects
 						continue;
 					}
+
 					if (len < minLen)
 					{
 						minLen = len;

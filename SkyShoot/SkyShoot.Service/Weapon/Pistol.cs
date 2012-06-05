@@ -1,23 +1,17 @@
 ﻿using System;
 using SkyShoot.Contracts;
-using SkyShoot.Service.Weapon.Bullets;
 using SkyShoot.Contracts.Mobs;
-using SkyShoot.XNA.Framework;
 using SkyShoot.Contracts.Weapon;
+using SkyShoot.Service.Weapon.Bullets;
+using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Service.Weapon
 {
 	public class Pistol : AWeapon
 	{
-		public Pistol(Guid id) : base(id)
+		public Pistol(Guid id, AGameObject owner = null) : base(id, owner)
 		{
-			WeaponType = AWeaponType.Pistol;
-			ReloadSpeed = Constants.PISTOL_ATTACK_RATE;
-		}
-
-		public Pistol(Guid id, AGameObject owner) : base(id, owner)
-		{
-			WeaponType = AWeaponType.Pistol;
+			WeaponType = WeaponType.Pistol;
 			ReloadSpeed = Constants.PISTOL_ATTACK_RATE;
 		}
 

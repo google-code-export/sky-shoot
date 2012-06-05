@@ -1,13 +1,12 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
-
 using System.Diagnostics;
+using System.Security.Cryptography;
 using System.ServiceModel;
-
+using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using SkyShoot.Contracts.GameEvents;
+using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Perks;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Session;
@@ -15,18 +14,14 @@ using SkyShoot.Contracts.Weapon;
 using SkyShoot.Game.Controls;
 using SkyShoot.Game.Screens;
 
-using SkyShoot.Game.Client.View;
-
-using SkyShoot.Contracts.Mobs;
-
-using System.Security.Cryptography;
-
 namespace SkyShoot.Game.Client.Game
 {
 	public class HashHelper
 	{
+        /// <summary>
+        /// выдаёт последовательность из 32 шестнадцатеричных цифр (md5 хеш от аргумента)
+        /// </summary>
 		public static string GetMd5Hash(string input)
-			// выдаёт последовательность из 32 шестнадцатеричных цифр (md5 хеш от аргумента)
 		{
 			MD5 md5Hasher = MD5.Create();
 
@@ -321,7 +316,7 @@ namespace SkyShoot.Game.Client.Game
 			}
 		}
 
-		public AGameEvent[] ChangeWeapon(AWeapon.AWeaponType type)
+		public AGameEvent[] ChangeWeapon(WeaponType type)
 		{
 			// do nothing
 			try

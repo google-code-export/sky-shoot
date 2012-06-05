@@ -5,6 +5,6 @@ namespace SkyShoot.WinFormsClient
 {
 	class WeaponButton : Label
 	{
-		public AWeapon.AWeaponType WeaponType { get; set; }
+		public WeaponType WeaponType { get; set; }
 	}
 }

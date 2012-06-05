@@ -1,12 +1,8 @@
 ﻿using System;
-
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-
 using Microsoft.Xna.Framework;
-
 using Microsoft.Xna.Framework.Input;
-
 using Nuclex.Input;
 using Nuclex.UserInterface.Controls;
 
@@ -16,50 +12,50 @@ namespace SkyShoot.Game.Controls
 	{
 		//public delegate void EventHandler(object sender, EventArgs e);
 
-		protected GameScreen ActiveScreen
-		{
-			get { return ScreenManager.Instance.GetActiveScreen(); }
-		}
+        protected readonly InputManager InputManager;
 
-		protected int Length
-		{
-			get { return Controls.Count; }
-		}
+        protected readonly IDictionary<Control, List<EventHandler>> Listeners = new Dictionary<Control, List<EventHandler>>();
 
-		private Collection<Control> Controls
-		{
-			get
-			{
-				var controls = new Collection<Control>();
-				foreach (Control control in ActiveScreen.Desktop.Children)
-				{
-					if (control is IFocusable)
-					{
-						controls.Add(control);
-					}
-				}
-				return controls;
-			}
-		}
-
-		protected int Index = 0;
-
-		protected readonly InputManager InputManager;
-
-		protected IDictionary<Control, List<EventHandler>> Listeners = new Dictionary<Control, List<EventHandler>>();   
+        protected int Index = 0;
 
 		protected Controller(InputManager inputManager)
 		{
 			InputManager = inputManager;
 		}
 
-		public abstract void Update();
-
 		public abstract Vector2? RunVector { get; }
 
 		public abstract Vector2 SightPosition { get; }
 
 		public abstract ButtonState ShootButton { get; }
+
+        protected GameScreen ActiveScreen
+        {
+            get { return ScreenManager.Instance.GetActiveScreen(); }
+        }
+
+        protected int Length
+        {
+            get { return Controls.Count; }
+        }
+
+        private Collection<Control> Controls
+        {
+            get
+            {
+                var controls = new Collection<Control>();
+                foreach (Control control in ActiveScreen.Desktop.Children)
+                {
+                    if (control is IFocusable)
+                    {
+                        controls.Add(control);
+                    }
+                }
+                return controls;
+            }
+        }
+
+        public abstract void Update();
 
 		public virtual void AddListener(Control control, EventHandler eventHandler)
 		{
@@ -90,10 +86,10 @@ namespace SkyShoot.Game.Controls
 
 		protected void NotifyListeners(Control control)
 		{
-			if(!Listeners.ContainsKey(control))
-				return;
+		    if (!Listeners.ContainsKey(control))
+		        return;
 
-			foreach (var listener in Listeners[control])
+		    foreach (var listener in Listeners[control])
 			{
 				listener(control, null);
 			}

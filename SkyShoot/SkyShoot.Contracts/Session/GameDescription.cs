@@ -1,5 +1,5 @@
-﻿using System.Runtime.Serialization;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace SkyShoot.Contracts.Session
 {
@@ -12,6 +12,18 @@ namespace SkyShoot.Contracts.Session
 	[DataContract]
 	public class GameDescription
 	{
+        public GameDescription()
+        {
+        }
+
+        public GameDescription(List<string> players, int maxPlayersAllowed, GameMode gameType, int gameId, TileSet usedTileSet)
+        {
+            GameId = gameId;
+            Players = players;
+            MaximumPlayersAllowed = maxPlayersAllowed;
+            GameType = gameType;
+            UsedTileSet = usedTileSet;
+        }
 
 		[DataMember]
 		public int GameId { get; set; }
@@ -30,21 +42,7 @@ namespace SkyShoot.Contracts.Session
 
 		public override string ToString()
 		{
-			return "[ " + UsedTileSet + " ; " + GameType + " ; " + Players.Count + "/" + MaximumPlayersAllowed + " ]";
-		}
-
-		public GameDescription(List<string> players, int maxPlayersAllowed, GameMode gameType, int gameId, TileSet usedTileSet)
-		{
-			GameId = gameId;
-			Players = players;
-			MaximumPlayersAllowed = maxPlayersAllowed;
-			GameType = gameType;
-			UsedTileSet = usedTileSet;
-		}
-
-		public GameDescription()
-		{
-
+		    return string.Format("[ {0} ; {1} ; {2}/{3} ]", UsedTileSet, GameType, Players.Count, MaximumPlayersAllowed);
 		}
 	}
 }

@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
 
 namespace SkyShoot.Game.Client.Game
 {
 	class SoundManager
 	{
-		public AudioEngine _engine;
-		public SoundBank _soundBank;
-		public WaveBank _waveBank;
-		public AudioCategory _musicCategory;
-		private static SoundManager _instance;
-		public const int CueAmount = 11;		
+        public const int CueAmount = 11;
+        private static SoundManager _instance;
+	    private AudioEngine _engine;
+	    private SoundBank _soundBank;
+	    private WaveBank _waveBank;
+	    private AudioCategory _musicCategory;
 
 		public enum SoundEnum
 		{			

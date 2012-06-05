@@ -10,7 +10,7 @@ namespace SkyShoot.Service.Weapon
 	{
 		public SpiderWeapon(Guid newGuid) : base(newGuid)
 		{
-			WeaponType = AWeaponType.SpiderPistol;
+			WeaponType = WeaponType.SpiderPistol;
 			ReloadSpeed = Constants.PISTOL_ATTACK_RATE;
 		}
 

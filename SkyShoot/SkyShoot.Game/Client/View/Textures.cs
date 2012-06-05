@@ -1,18 +1,23 @@
 using Microsoft.Xna.Framework;
-
 using Microsoft.Xna.Framework.Graphics;
 
 namespace SkyShoot.Game.Client.View
 {
-	public static class Textures
+    public static class Textures
 	{
+        public static class LandscapeTextures
+        {
+        }
+
 		public const int StonesAmount = 4;
 		public const int MobsAmount = 2;
 
 		public const int PlayerAnimationFrameCount = 2;
 		public const int SpiderAnimationFrameCount = 9;
 
-		// current graphic device
+        /// <summary>
+        /// current graphic device
+        /// </summary>
 		public static GraphicsDevice GraphicsDevice;
 
 		// Landscape textures
@@ -28,7 +33,7 @@ namespace SkyShoot.Game.Client.View
 		public static Texture2D Cross;
 		public static Texture2D Target;
 
-		//weapon textures
+		// weapon textures
 		public static Texture2D Gun;
 		public static Texture2D Laser;
 		public static Texture2D FlameProjectile;
@@ -37,7 +42,7 @@ namespace SkyShoot.Game.Client.View
 		public static Texture2D SpiderProjectile;
 		public static Texture2D Explosion;
 
-		//bonuses textures
+		// bonuses textures
 		public static Texture2D DoubleDamage;
 		public static Texture2D Fire;
 		public static Texture2D Frozen;
@@ -81,7 +86,9 @@ namespace SkyShoot.Game.Client.View
 			get { return Create(2, 5, Color.Red); }
 		}
 
-		// create a colored rectangle
+        /// <summary>
+        /// create a colored rectangle
+        /// </summary>
 		public static Texture2D Create(int width, int height, Color color)
 		{
 			// create the rectangle texture without colors
@@ -89,9 +96,10 @@ namespace SkyShoot.Game.Client.View
 
 			// create a color array for the pixels
 			var colors = new Color[width * height];
+            var newColor = new Color(color.ToVector3());
 			for (int i = 0; i < colors.Length; i++)
 			{
-				colors[i] = new Color(color.ToVector3());
+				colors[i] = newColor;
 			}
 
 			// set the color data for the texture
@@ -100,7 +108,9 @@ namespace SkyShoot.Game.Client.View
 			return texture;
 		}
 
-		// copy a texture
+        /// <summary>
+        /// copy a texture
+        /// </summary>
 		public static Texture2D Clone(Texture2D texture)
 		{
 			// get pixels from texture
@@ -114,7 +124,9 @@ namespace SkyShoot.Game.Client.View
 			return clone;
 		}
 
-		// add small texture into big texture at Vector2D position
+        /// <summary>
+        /// add small texture into big texture at Vector2D position
+        /// </summary>
 		public static void Merge(Texture2D big, Texture2D small, Vector2 position)
 		{
 			// get pixels from big texture

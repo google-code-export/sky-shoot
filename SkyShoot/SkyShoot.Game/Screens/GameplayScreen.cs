@@ -1,31 +1,21 @@
-﻿using Microsoft.Xna.Framework;
-
-using System;
-
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Nuclex.UserInterface;
+using Nuclex.UserInterface.Controls.Desktop;
 using SkyShoot.Contracts.Weapon;
 using SkyShoot.Game.Client.Game;
 using SkyShoot.Game.Client.View;
-
 using SkyShoot.Game.Controls;
-
-using Nuclex.UserInterface;
-
-using Nuclex.UserInterface.Controls.Desktop;
 
 namespace SkyShoot.Game.Screens
 {
 	internal class GameplayScreen : GameScreen
 	{
+	    private static WeaponType _weapon = WeaponType.Pistol;
+
 		private readonly ContentManager _content;
-
-		public override bool IsMenuScreen
-		{
-			get { return false; }
-		}
-
-		public static AWeapon.AWeaponType Weapon = AWeapon.AWeaponType.Pistol;
 
 		private ButtonControl _pistolButton;
 		private ButtonControl _shotgunButton;
@@ -40,6 +30,11 @@ namespace SkyShoot.Game.Screens
 			InitializeControls();
 		}
 
+        public override bool IsMenuScreen
+        {
+            get { return false; }
+        }
+
 		public override void LoadContent()
 		{
 			// load landscapes
@@ -49,7 +44,7 @@ namespace SkyShoot.Game.Screens
 			Textures.DesertLandscape = _content.Load<Texture2D>("Textures/Landscapes/DesertLandscape");
 			Textures.VolcanicLandscape = _content.Load<Texture2D>("Textures/Landscapes/VolcanicLandscape");
 
-			//load weapon
+			// load weapon
 			Textures.Gun = _content.Load<Texture2D>("Textures/Weapon/Gun");
 			Textures.Laser = _content.Load<Texture2D>("Textures/Weapon/Laser");
 			Textures.FlameProjectile = _content.Load<Texture2D>("Textures/Weapon/FlameProjectile");
@@ -98,6 +93,39 @@ namespace SkyShoot.Game.Screens
 
 			ScreenManager.Instance.Game.ResetElapsedTime();
 		}
+
+        public override void UnloadContent()
+        {
+            Textures.PlayerAnimation.Clear();
+            Textures.SpiderAnimation.Clear();
+
+            if (_content != null)
+                _content.Unload();
+        }
+
+        public override void HandleInput(Controller controller)
+        {
+            GameController.Instance.HandleInput(controller);
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+
+            if (GameController.Instance.GameModel == null)
+                return;
+
+            GameController.Instance.GameModel.Update(gameTime);
+        }
+
+        public override void Draw(GameTime gameTime)
+        {
+            GraphicsDevice graphicsDevice = ScreenManager.Instance.GraphicsDevice;
+            SpriteBatch spriteBatch = ScreenManager.Instance.SpriteBatch;
+            graphicsDevice.Clear(Color.SkyBlue);
+
+            GameController.Instance.GameModel.Draw(spriteBatch);
+        }
 
 		private void CreateControls()
 		{
@@ -151,76 +179,41 @@ namespace SkyShoot.Game.Screens
 			ScreenManager.Instance.Controller.AddListener(_flameButton, FlameButtonPressed);
 			ScreenManager.Instance.Controller.AddListener(_rocketButton, RocketButtonPressed);
 			ScreenManager.Instance.Controller.AddListener(_heaterButton, HeaterButtonPressed);
-
 		}
 
 		private void RocketButtonPressed(object sender, EventArgs e)
 		{
-			Weapon = AWeapon.AWeaponType.RocketPistol;
+			_weapon = WeaponType.RocketPistol;
 			UpdateWeapon();
 		}
 
-
 		private void FlameButtonPressed(object sender, EventArgs e)
 		{
-			Weapon = AWeapon.AWeaponType.FlamePistol;
+			_weapon = WeaponType.FlamePistol;
 			UpdateWeapon();
 		}
 
 		private void PistolButtonPressed(object sender, EventArgs e)
 		{
-			Weapon = AWeapon.AWeaponType.Pistol;
+			_weapon = WeaponType.Pistol;
 			UpdateWeapon();
 		}
 
 		private void ShotgunButtonPressed(object sender, EventArgs e)
 		{
-			Weapon = AWeapon.AWeaponType.Shotgun;
+			_weapon = WeaponType.Shotgun;
 			UpdateWeapon();
 		}
 
 		private void HeaterButtonPressed(object sender, EventArgs e)
 		{
-			Weapon = AWeapon.AWeaponType.Heater;
+			_weapon = WeaponType.Heater;
 			UpdateWeapon();
 		}
 
 		private void UpdateWeapon()
 		{
-			GameController.Instance.ChangeWeapon(Weapon);
-		}
-
-		public override void UnloadContent()
-		{
-			Textures.PlayerAnimation.Clear();
-			Textures.SpiderAnimation.Clear();
-
-			if (_content != null)
-				_content.Unload();
-		}
-
-		public override void HandleInput(Controller controller)
-		{
-			GameController.Instance.HandleInput(controller);
-		}
-
-		public override void Update(GameTime gameTime)
-		{
-			base.Update(gameTime);
-
-			if (GameController.Instance.GameModel == null)
-				return;
-
-			GameController.Instance.GameModel.Update(gameTime);
-		}
-
-		public override void Draw(GameTime gameTime)
-		{
-			GraphicsDevice graphicsDevice = ScreenManager.Instance.GraphicsDevice;
-			SpriteBatch spriteBatch = ScreenManager.Instance.SpriteBatch;
-			graphicsDevice.Clear(Color.SkyBlue);
-
-			GameController.Instance.GameModel.Draw(spriteBatch);
+			GameController.Instance.ChangeWeapon(_weapon);
 		}
 	}
 }

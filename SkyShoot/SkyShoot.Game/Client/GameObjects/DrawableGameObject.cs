@@ -1,13 +1,8 @@
 using System;
-
 using Microsoft.Xna.Framework;
-
-using Microsoft.Xna.Framework.Audio;
-
 using Microsoft.Xna.Framework.Graphics;
 using SkyShoot.Contracts;
 using SkyShoot.Contracts.Mobs;
-
 using SkyShoot.Game.Client.Game;
 using SkyShoot.Game.Client.View;
 
@@ -38,12 +33,8 @@ namespace SkyShoot.Game.Client.GameObjects
 		}
 
 		public Animation2D Animation { get; set; }
-		protected Texture2D StaticTexture
-		{
-			get;
-			set;
-		}
 
+		protected Texture2D StaticTexture { get; set; }
 
 		public Texture2D HealthTexture { get; private set; }
 
@@ -159,15 +150,14 @@ namespace SkyShoot.Game.Client.GameObjects
 			}
 			else
 			{
-				if(Is(EnumObjectType.Wall))
-				{
-					scale = Radius / (StaticTexture.Width/2f);
-				}
-				if(Is(EnumObjectType.Bullet))
-				{
-					scale *= Radius/OriginalRadius;
-					if (Is(EnumObjectType.PistolBullet) || Is(EnumObjectType.HeaterBullet))
-						scale *= 2f;
+			    if (Is(EnumObjectType.Wall))
+			    {
+			        scale = Radius / (StaticTexture.Width / 2f);
+			    }
+			    if (Is(EnumObjectType.Bullet))
+			    {
+			        scale *= Radius / OriginalRadius;
+			        if (Is(EnumObjectType.PistolBullet) || Is(EnumObjectType.HeaterBullet)) scale *= 2f;
 				}
 				spriteBatch.Draw(StaticTexture,
 												 CoordinatesM,

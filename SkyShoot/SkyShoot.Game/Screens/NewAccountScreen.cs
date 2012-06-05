@@ -1,28 +1,21 @@
 ﻿using System;
-
 using Microsoft.Xna.Framework;
-
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
-
+using Microsoft.Xna.Framework.Graphics;
 using Nuclex.UserInterface;
-
 using Nuclex.UserInterface.Controls;
-
 using Nuclex.UserInterface.Controls.Desktop;
-
-using SkyShoot.Game.Controls;
-
 using SkyShoot.Game.Client.Game;
-
-using InputControl = Nuclex.UserInterface.Controls.Desktop.InputControl;
-using Microsoft.Xna.Framework.Audio;
+using SkyShoot.Game.Controls;
 
 namespace SkyShoot.Game.Screens
 {
 	internal class NewAccountScreen : GameScreen
 	{
-		private SoundManager _soundManager;
+        private static Texture2D _texture;
+
+        private readonly ContentManager _content;
+		private readonly SoundManager _soundManager;
 
 		private LabelControl _loginLabel;
 		private LabelControl _passwordLabel;
@@ -33,16 +26,7 @@ namespace SkyShoot.Game.Screens
 		private ButtonControl _backButton;
 		private ButtonControl _okButton;
 
-		private static Texture2D _texture;
-
-		private readonly ContentManager _content;
-
 		private SpriteBatch _spriteBatch;
-
-		public override bool IsMenuScreen
-		{
-			get { return true; }
-		}
 
 		public NewAccountScreen()
 		{
@@ -54,67 +38,10 @@ namespace SkyShoot.Game.Screens
 			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 		}
 
-		private void CreateControls()
-		{
-			// Login Input
-			_loginBox = new Controls.InputControl
-			            	{
-											IsHidden = false,
-			            		Bounds = new UniRectangle(new UniScalar(0.5f, -100f), new UniScalar(0.4f, -30), 200, 30),
-			            		Text = ""
-			            	};
-
-			// Password Input
-			_passwordBox = new Controls.InputControl
-			               	{
-												IsHidden = true,
-			               		Bounds =
-			               			new UniRectangle(new UniScalar(0.5f, -100f), new UniScalar(0.4f, 30), 200, 30),
-												RealText = "",
-			               		Text = ""
-			               	};
-
-			// Login Label
-			_loginLabel = new LabelControl("Username")
-			              	{
-			              		Bounds = new UniRectangle(new UniScalar(0.5f, -32), new UniScalar(0.4f, -70), 100, 30)
-			              	};
-
-			// Password Label
-			_passwordLabel = new LabelControl("Password")
-			                 	{
-			                 		Bounds =
-			                 			new UniRectangle(new UniScalar(0.5f, -32), new UniScalar(0.4f, 0), 100, 30)
-			                 	};
-
-			// Back Button
-			_backButton = new ButtonControl
-			              	{
-			              		Text = "Back",
-			              		Bounds =
-			              			new UniRectangle(new UniScalar(0.5f, -210f), new UniScalar(0.4f, 70), 100, 32)
-			              	};
-
-			// Login Button
-			_okButton = new ButtonControl
-			            	{
-			            		Text = "Create",
-			            		Bounds = new UniRectangle(new UniScalar(0.5f, 110), new UniScalar(0.4f, 70), 100, 32)
-			            	};
-		}
-
-		private void InitializeControls()
-		{
-			Desktop.Children.Add(_loginBox);
-			Desktop.Children.Add(_passwordBox);
-			Desktop.Children.Add(_loginLabel);
-			Desktop.Children.Add(_passwordLabel);
-			Desktop.Children.Add(_backButton);
-			Desktop.Children.Add(_okButton);
-
-			ScreenManager.Instance.Controller.AddListener(_backButton, BackButtonPressed);
-			ScreenManager.Instance.Controller.AddListener(_okButton, OkButtonPressed);
-		}
+        public override bool IsMenuScreen
+        {
+            get { return true; }
+        }
 
 		public override void LoadContent()
 		{
@@ -125,6 +52,77 @@ namespace SkyShoot.Game.Screens
 		{
 			_content.Unload();
 		}
+
+        public override void Draw(GameTime gameTime)
+        {
+            _spriteBatch = ScreenManager.Instance.SpriteBatch;
+
+            _spriteBatch.Begin();
+            _spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
+            _spriteBatch.End();
+        }
+
+        private void CreateControls()
+        {
+            // Login Input
+            _loginBox = new Controls.InputControl
+            {
+                IsHidden = false,
+                Bounds = new UniRectangle(new UniScalar(0.5f, -100f), new UniScalar(0.4f, -30), 200, 30),
+                Text = string.Empty
+            };
+
+            // Password Input
+            _passwordBox = new Controls.InputControl
+            {
+                IsHidden = true,
+                Bounds =
+                    new UniRectangle(new UniScalar(0.5f, -100f), new UniScalar(0.4f, 30), 200, 30),
+                RealText = string.Empty,
+                Text = string.Empty
+            };
+
+            // Login Label
+            _loginLabel = new LabelControl("Username")
+            {
+                Bounds = new UniRectangle(new UniScalar(0.5f, -32), new UniScalar(0.4f, -70), 100, 30)
+            };
+
+            // Password Label
+            _passwordLabel = new LabelControl("Password")
+            {
+                Bounds =
+                    new UniRectangle(new UniScalar(0.5f, -32), new UniScalar(0.4f, 0), 100, 30)
+            };
+
+            // Back Button
+            _backButton = new ButtonControl
+            {
+                Text = "Back",
+                Bounds =
+                    new UniRectangle(new UniScalar(0.5f, -210f), new UniScalar(0.4f, 70), 100, 32)
+            };
+
+            // Login Button
+            _okButton = new ButtonControl
+            {
+                Text = "Create",
+                Bounds = new UniRectangle(new UniScalar(0.5f, 110), new UniScalar(0.4f, 70), 100, 32)
+            };
+        }
+
+        private void InitializeControls()
+        {
+            Desktop.Children.Add(_loginBox);
+            Desktop.Children.Add(_passwordBox);
+            Desktop.Children.Add(_loginLabel);
+            Desktop.Children.Add(_passwordLabel);
+            Desktop.Children.Add(_backButton);
+            Desktop.Children.Add(_okButton);
+
+            ScreenManager.Instance.Controller.AddListener(_backButton, BackButtonPressed);
+            ScreenManager.Instance.Controller.AddListener(_okButton, OkButtonPressed);
+        }
 
 		private void BackButtonPressed(object sender, EventArgs args)
 		{
@@ -169,15 +167,6 @@ namespace SkyShoot.Game.Screens
 					ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MessageBoxScreen);
 				}
 			}		
-		}
-
-		public override void Draw(GameTime gameTime)
-		{
-			_spriteBatch = ScreenManager.Instance.SpriteBatch;
-
-			_spriteBatch.Begin();
-			_spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
-			_spriteBatch.End();
 		}
 	}
 }

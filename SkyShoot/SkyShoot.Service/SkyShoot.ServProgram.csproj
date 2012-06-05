@@ -96,7 +96,6 @@
     <Compile Include="Mobs\IMobFactory.cs" />
     <Compile Include="Mobs\Mob.cs" />
     <Compile Include="Mobs\ShootingMob.cs" />
-    <Compile Include="Mobs\ShootingMobFactory.cs" />
     <Compile Include="Mobs\Spider.cs" />
     <Compile Include="Mobs\SpiderFactory.cs" />
     <Compile Include="Weapon\Bullets\Flame.cs" />
@@ -118,7 +117,6 @@
     <Compile Include="Weapon\Bullets\PistolBullet.cs" />
     <Compile Include="Weapon\Bullets\RocketBullet.cs" />
     <Compile Include="Weapon\Bullets\ShotgunBullet.cs" />
-    <Compile Include="Weapon\Claw.cs" />
     <Compile Include="Weapon\Pistol.cs" />
     <Compile Include="Weapon\RocketPistol.cs" />
     <Compile Include="Weapon\Shotgun.cs" />

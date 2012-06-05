@@ -9,11 +9,13 @@ namespace SkyShoot.Service.Weapon.Bullets
 {
 	class Explosion : AProjectile
 	{
-		private bool _isExploded;
-		private int _timeToLeave;
-		private int _timeToDamage;
-		private readonly long _explodedTime;
+        private const int TimeToLeave = (int)Constants.EXPLOSION_LIFE_DISTANCE;
+        private const int TimeToDamage = (int)(Constants.EXPLOSION_LIFE_DISTANCE / 45f);
 
+        private readonly long _explodedTime;
+
+		private bool _isExploded;
+	    
 		public Explosion(AGameObject owner, Guid id, Vector2 coordinates, long explodedTime)
 			: base(owner, id, Vector2.Zero)
 		{
@@ -25,16 +27,16 @@ namespace SkyShoot.Service.Weapon.Bullets
 			Radius = Constants.EXPLOSION_RADIUS;
 			Coordinates = coordinates;
 			_isExploded = false;
-			_timeToLeave = (int) Constants.EXPLOSION_LIFE_DISTANCE;
-			_timeToDamage = (int)(Constants.EXPLOSION_LIFE_DISTANCE / 45f);
 		}
 
 		public override IEnumerable<AGameEvent> Do(AGameObject obj, List<AGameObject> newObjects, long time)
 		{
-			if (_isExploded && _explodedTime + _timeToDamage < time)
-				return new AGameEvent[]{};
-			var res = new List<AGameEvent>(base.Do(obj, newObjects, time));
-			_isExploded = true;
+		    if (_isExploded && _explodedTime + TimeToDamage < time)
+		    {
+		        return new AGameEvent[] { };
+		    }
+		    var res = new List<AGameEvent>(base.Do(obj, newObjects, time));
+		    _isExploded = true;
 			// надо удалять сообщение objectdeleted 
 			// потому что на самом деле взрыв этот не должен удаляться
 			IsActive = true;
@@ -44,7 +46,7 @@ namespace SkyShoot.Service.Weapon.Bullets
 
 		public override IEnumerable<AGameEvent> Think(List<AGameObject> players, List<AGameObject> newGameObjects, long time)
 		{
-			if (_explodedTime + _timeToLeave < time)
+			if (_explodedTime + TimeToLeave < time)
 			{
 				IsActive = false;
 				return new AGameEvent[] { new ObjectDeleted(Id, time) };

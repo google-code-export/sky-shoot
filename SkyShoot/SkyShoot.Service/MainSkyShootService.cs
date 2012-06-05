@@ -45,13 +45,13 @@ namespace SkyShoot.Service
 
 		private void InitWeapons()
 		{
-			Weapons.Add(AWeapon.AWeaponType.Pistol, new Weapon.Pistol(Guid.NewGuid(), this));
-			Weapons.Add(AWeapon.AWeaponType.Shotgun, new Weapon.Shotgun(Guid.NewGuid(), this));
-			Weapons.Add(AWeapon.AWeaponType.RocketPistol, new Weapon.RocketPistol(Guid.NewGuid(), this));
-			Weapons.Add(AWeapon.AWeaponType.Heater, new Weapon.Heater(Guid.NewGuid(), this));
-			Weapons.Add(AWeapon.AWeaponType.FlamePistol, new Weapon.FlamePistol(Guid.NewGuid(), this));
+			Weapons.Add(WeaponType.Pistol, new Weapon.Pistol(Guid.NewGuid(), this));
+			Weapons.Add(WeaponType.Shotgun, new Weapon.Shotgun(Guid.NewGuid(), this));
+			Weapons.Add(WeaponType.RocketPistol, new Weapon.RocketPistol(Guid.NewGuid(), this));
+			Weapons.Add(WeaponType.Heater, new Weapon.Heater(Guid.NewGuid(), this));
+			Weapons.Add(WeaponType.FlamePistol, new Weapon.FlamePistol(Guid.NewGuid(), this));
 
-			ChangeWaponTo(AWeapon.AWeaponType.Pistol);
+			ChangeWaponTo(WeaponType.Pistol);
 		}
 
 		public AGameEvent[] AddBonus(AGameBonus bonus, long time)
@@ -170,7 +170,7 @@ namespace SkyShoot.Service
 		public event ClientShootsHandler MeShot;
 		public event ClientChangeWeaponHandler MeChangeWeapon;
 
-		public AGameEvent[] ChangeWeapon(AWeapon.AWeaponType type)
+		public AGameEvent[] ChangeWeapon(WeaponType type)
 		{
 			if (MeChangeWeapon != null)
 			{

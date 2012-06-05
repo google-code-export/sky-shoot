@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.Serialization;
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.XNA.Framework;
 
@@ -7,41 +6,21 @@ namespace SkyShoot.Contracts.Weapon
 {
 	public abstract class AWeapon
 	{
-		[Flags]
-		public enum AWeaponType
-		{
-			[EnumMember]
-			Pistol,
-			[EnumMember]
-			Shotgun,
-			[EnumMember]
-			RocketPistol,
-			[EnumMember]
-			SpiderPistol,
-			[EnumMember]
-			Heater,
-			[EnumMember]
-			FlamePistol
-		}
-		public Guid Id { get; set; }
-		public AWeaponType WeaponType { get; set; }
-		
-		public AGameObject Owner { get; set; }
-		protected int ReloadSpeed;
+        protected int ReloadSpeed;
 
-		protected long Reload;
+        protected long Reload;		
 
-		protected AWeapon(Guid id) 
-		{
-			Owner = null;
-			Id = id;
-		}
+        protected AWeapon(Guid id, AGameObject owner = null)
+        {
+            Id = id;
+            Owner = owner;
+        }
 
-		protected AWeapon(Guid id, AGameObject owner) 
-		{
-			Id = id;
-			Owner = owner;
-		}
+        public Guid Id { get; set; }
+
+        public WeaponType WeaponType { get; set; }
+
+        public AGameObject Owner { get; set; }
 
 		public abstract AGameObject[] CreateBullets(AGameObject owner, Vector2 direction);
 
@@ -60,12 +39,12 @@ namespace SkyShoot.Contracts.Weapon
 		{
 			foreach (AGameObject projectile in projectiles)
 			{
-				if(projectile==null)
-					continue;
-				projectile.Damage *= damage;
-				projectile.Radius *= damage;
+			    if (projectile != null)
+			    {
+			        projectile.Damage *= damage;
+			        projectile.Radius *= damage;
+			    }
 			}
 		}
-
 	}
 }

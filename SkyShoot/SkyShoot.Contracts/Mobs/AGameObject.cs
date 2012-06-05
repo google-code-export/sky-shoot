@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections;
 using System.Runtime.Serialization;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Session;
@@ -125,7 +124,7 @@ namespace SkyShoot.Contracts.Mobs
 
 		public AWeapon Weapon { get; set; }
 
-		public Dictionary<AWeapon.AWeaponType, AWeapon> Weapons { get; set; }
+		public Dictionary<WeaponType, AWeapon> Weapons { get; set; }
 
 		[DataMember]
 		public float HealthAmount { get; set; }
@@ -134,7 +133,7 @@ namespace SkyShoot.Contracts.Mobs
 		public float MaxHealthAmount { get; set; }
 
 		//[DataMember]
-		//public AObtainableDamageModifier.AWeaponType State { get; set; }
+		//public AObtainableDamageModifier.WeaponType State { get; set; }
 
 		#endregion
 
@@ -177,7 +176,7 @@ namespace SkyShoot.Contracts.Mobs
 			Coordinates = coordinates;
 			Id = id;
 
-			Weapons = new Dictionary<AWeapon.AWeaponType, AWeapon>();
+			Weapons = new Dictionary<WeaponType, AWeapon>();
 			//IsActive = true;
 		}
 
@@ -227,7 +226,7 @@ namespace SkyShoot.Contracts.Mobs
 			return newCoord;
 		}
 
-		public void ChangeWaponTo(AWeapon.AWeaponType type)
+		public void ChangeWaponTo(WeaponType type)
 		{
 			if (Weapons.ContainsKey(type))
 			{

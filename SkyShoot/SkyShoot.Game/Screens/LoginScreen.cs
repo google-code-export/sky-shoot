@@ -1,26 +1,21 @@
 ﻿using System;
-
-using Nuclex.UserInterface;
-
-using Nuclex.UserInterface.Controls;
-
-using Nuclex.UserInterface.Controls.Desktop;
-
 using Microsoft.Xna.Framework;
-
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-
-using SkyShoot.Game.Controls;
-
+using Nuclex.UserInterface;
+using Nuclex.UserInterface.Controls;
+using Nuclex.UserInterface.Controls.Desktop;
 using SkyShoot.Game.Client.Game;
-
+using SkyShoot.Game.Controls;
 
 namespace SkyShoot.Game.Screens
 {
 	internal class LoginScreen : GameScreen
 	{
-		private SoundManager _soundManager;
+        private static Texture2D _texture;
+
+        private readonly ContentManager _content;
+		private readonly SoundManager _soundManager;
 
 		private LabelControl _loginLabel;
 		private LabelControl _passwordLabel;
@@ -32,16 +27,7 @@ namespace SkyShoot.Game.Screens
 		private ButtonControl _loginButton;
 		private ButtonControl _newAccountButton;
 
-		private static Texture2D _texture;
-
-		private readonly ContentManager _content;
-
 		private SpriteBatch _spriteBatch;
-
-		public override bool IsMenuScreen
-		{
-			get { return true; }
-		}
 
 		public LoginScreen()
 		{
@@ -53,12 +39,36 @@ namespace SkyShoot.Game.Screens
 			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 		}
 
+        public override bool IsMenuScreen
+        {
+            get { return true; }
+        }
+
+        public override void LoadContent()
+        {
+            _texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");
+        }
+
+        public override void UnloadContent()
+        {
+            _content.Unload();
+        }
+
+        public override void Draw(GameTime gameTime)
+        {
+            _spriteBatch = ScreenManager.Instance.SpriteBatch;
+
+            _spriteBatch.Begin();
+            _spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
+            _spriteBatch.End();
+        }
+
 		private void CreateControls()
 		{
 			// Login Input
 			_loginBox = new Controls.InputControl
 			            	{											
-											IsHidden = false,
+								IsHidden = false,
 			            		Bounds = new UniRectangle(new UniScalar(0.5f, -100f), new UniScalar(0.4f, -30), 200, 30),
 			            		Text = Settings.Default.login
 			            	};
@@ -66,9 +76,9 @@ namespace SkyShoot.Game.Screens
 			// Password Input
 			_passwordBox = new Controls.InputControl
 			               	{
-												IsHidden = true,
+								IsHidden = true,
 			               		Bounds = new UniRectangle(new UniScalar(0.5f, -100f), new UniScalar(0.4f, 30), 200, 30),
-												RealText = Settings.Default.password,
+								RealText = Settings.Default.password,
 			               		Text = Controls.InputControl.HiddenText(Settings.Default.password)												
 			               	};
 
@@ -100,10 +110,10 @@ namespace SkyShoot.Game.Screens
 
 			// New Account Button
 			_newAccountButton = new ButtonControl
-			                    	{
-			                    		Text = "Create new account",
-			                    		Bounds = new UniRectangle(new UniScalar(0.5f, -75f), new UniScalar(0.4f, 70), 150, 32)
-			                    	};
+			                {
+			                    Text = "Create new account",
+			                    Bounds = new UniRectangle(new UniScalar(0.5f, -75f), new UniScalar(0.4f, 70), 150, 32)
+			                };
 		}
 
 		private void InitializeControls()
@@ -119,16 +129,6 @@ namespace SkyShoot.Game.Screens
 			ScreenManager.Instance.Controller.AddListener(_loginButton, LoginButtonPressed);
 			ScreenManager.Instance.Controller.AddListener(_exitButton, ExitButtonPressed);
 			ScreenManager.Instance.Controller.AddListener(_newAccountButton, NewAccountButtonPressed);
-		}
-
-		public override void LoadContent()
-		{
-			_texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");
-		}
-
-		public override void UnloadContent()
-		{
-			_content.Unload();
 		}
 
 		private void ExitButtonPressed(object sender, EventArgs args)
@@ -172,15 +172,6 @@ namespace SkyShoot.Game.Screens
 			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);			
 			
 			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.NewAccountScreen);		
-		}
-
-		public override void Draw(GameTime gameTime)
-		{
-			_spriteBatch = ScreenManager.Instance.SpriteBatch;
-
-			_spriteBatch.Begin();
-			_spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
-			_spriteBatch.End();
 		}
 	}
 }

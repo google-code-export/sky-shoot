@@ -1,6 +1,6 @@
 ﻿using System;
-using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts;
+using SkyShoot.Contracts.Mobs;
 
 namespace SkyShoot.Service.Mobs
 {
@@ -13,8 +13,7 @@ namespace SkyShoot.Service.Mobs
 		public Spider(float healthAmount)
 			: base(healthAmount)
 		{
-			Random rand = new Random();
-			Radius = rand.Next(RADIUS_MIN, RADIUS_MAX);
+			Radius = new Random().Next(RADIUS_MIN, RADIUS_MAX);
 			Speed = Constants.SPIDER_SPEED;
 		}
 	}

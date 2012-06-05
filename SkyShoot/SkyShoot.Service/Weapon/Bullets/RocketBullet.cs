@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using SkyShoot.Contracts;
+using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.XNA.Framework;
-using SkyShoot.Contracts.GameEvents;
 
 namespace SkyShoot.Service.Weapon.Bullets
 {

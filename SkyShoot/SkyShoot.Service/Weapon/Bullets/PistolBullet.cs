@@ -1,8 +1,7 @@
 ﻿using System;
-
+using SkyShoot.Contracts;
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.XNA.Framework;
-using SkyShoot.Contracts;
 
 namespace SkyShoot.Service.Weapon.Bullets
 {

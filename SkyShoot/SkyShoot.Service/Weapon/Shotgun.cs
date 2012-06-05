@@ -1,30 +1,20 @@
 ﻿using System;
-using SkyShoot.Service.Weapon.Bullets;
 using SkyShoot.Contracts.Mobs;
-using SkyShoot.XNA.Framework;
 using SkyShoot.Contracts.Weapon;
+using SkyShoot.Service.Weapon.Bullets;
+using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Service.Weapon
 {
 	public class Shotgun : AWeapon
 	{
-		private Random _rand;
+		private readonly Random _rand;
 
-		private void Init()
+		public Shotgun(Guid id, AGameObject owner = null) : base(id, owner)
 		{
-			_rand = new Random();
-			WeaponType = AWeaponType.Shotgun;
-			ReloadSpeed = SkyShoot.Contracts.Constants.SHOTGUN_ATTACK_RATE;
-		}
-
-		public Shotgun(Guid id) : base(id)
-		{
-			Init();
-		}
-
-		public Shotgun(Guid id, AGameObject owner) : base(id, owner)
-		{
-			Init();
+            _rand = new Random();
+            WeaponType = WeaponType.Shotgun;
+            ReloadSpeed = SkyShoot.Contracts.Constants.SHOTGUN_ATTACK_RATE;
 		}
 
 		public override AGameObject[] CreateBullets(AGameObject owner, Vector2 direction)
@@ -33,10 +23,10 @@ namespace SkyShoot.Service.Weapon
 
 			for (int i = 0; i < 8; i++)
 			{
-				bullets[i] = new ShotgunBullet(owner, Guid.NewGuid(),
-											   Vector2.Transform(direction,
-																 Matrix.CreateRotationZ(
-																 	(float) (-Math.PI/6f + _rand.NextDouble()*Math.PI/3f))));
+				bullets[i] = new ShotgunBullet(
+                    owner,
+                    Guid.NewGuid(),
+                    Vector2.Transform(direction, Matrix.CreateRotationZ((float) (-Math.PI/6f + _rand.NextDouble()*Math.PI/3f))));
 			}
 
 			return bullets;
