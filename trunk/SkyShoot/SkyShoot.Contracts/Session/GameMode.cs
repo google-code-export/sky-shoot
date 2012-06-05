@@ -7,9 +7,11 @@ namespace SkyShoot.Contracts.Session
 	{
 		[EnumMember]
 		Coop,
+
 		//reserved
 		[EnumMember]
 		Deathmatch,
+
 		//reserved
 		[EnumMember]
 		Campaign,

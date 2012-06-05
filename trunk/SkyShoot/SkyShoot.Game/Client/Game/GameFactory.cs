@@ -1,8 +1,5 @@
-using System;
 using SkyShoot.Contracts.Mobs;
-
 using SkyShoot.Game.Client.GameObjects;
-
 using SkyShoot.Game.Client.View;
 
 namespace SkyShoot.Game.Client.Game

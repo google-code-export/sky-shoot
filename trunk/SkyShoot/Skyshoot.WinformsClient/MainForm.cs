@@ -188,22 +188,22 @@ namespace SkyShoot.WinFormsClient
 		#endregion
 
 		private readonly WeaponButton[] _buttons;
-		private AWeapon.AWeaponType _curWeapon, _prevWeapon;
+		private WeaponType _curWeapon, _prevWeapon;
 
 		public MainForm()
 		{
 			InitializeComponent();
 
-			//AWeapon.AWeaponType
-			int bts = Enum.GetNames(typeof(AWeapon.AWeaponType)).Length - 1;
+			//WeaponType
+			int bts = Enum.GetNames(typeof(WeaponType)).Length - 1;
 			_buttons = new WeaponButton[bts];
 			int i = 0;
-			foreach (var s in Enum.GetNames(typeof(AWeapon.AWeaponType)))
+			foreach (var s in Enum.GetNames(typeof(WeaponType)))
 			{
-				if(s == AWeapon.AWeaponType.SpiderPistol.ToString())
+				if(s == WeaponType.SpiderPistol.ToString())
 					continue;
 				var b = new WeaponButton();
-				AWeapon.AWeaponType t;
+				WeaponType t;
 				if(!Enum.TryParse(s, out t))
 				{
 					MessageBox.Show(@"Can't load weapons list :(", @"Error");
@@ -224,7 +224,7 @@ namespace SkyShoot.WinFormsClient
 			_objects = new List<AGameObject>();
 			_th = new Thread(UpdateSt);
 
-			_curWeapon = _prevWeapon = AWeapon.AWeaponType.Pistol;
+			_curWeapon = _prevWeapon = WeaponType.Pistol;
 		}
 
 		private void MakeWeaponButtonsLayout()

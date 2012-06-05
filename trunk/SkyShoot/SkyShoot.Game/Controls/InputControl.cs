@@ -1,4 +1,3 @@
-using System;
 using Microsoft.Xna.Framework.Input;
 
 namespace SkyShoot.Game.Controls
@@ -6,25 +5,23 @@ namespace SkyShoot.Game.Controls
 	internal class InputControl : Nuclex.UserInterface.Controls.Desktop.InputControl
 	{
 		KeyboardState _keyboardState;
-		int n = Settings.Default.password.Length;
+		private int n = Settings.Default.password.Length;
 
-		public Boolean IsHidden
+		public bool IsHidden
 		{
 			get;
 			set;
 		}
 
-		public String RealText
+		public string RealText
 		{
 			get;
 			set;
 		}
 
-		public static string HiddenText (string text)
-		{			
-			string _newString = "";
-			for (int i = 1; i <= text.Length; i++) _newString += "*";
-			return _newString;
+	    public static string HiddenText(string text)
+	    {
+            return new string('*', text.Length);
 		}
 
 		protected override void OnCharacterEntered(char character)
@@ -35,16 +32,13 @@ namespace SkyShoot.Game.Controls
 				n--;
 			}
 			else
-				if (Char.IsLetter(character) || Char.IsDigit(character) || (character == '_'))
+				if (char.IsLetter(character) || char.IsDigit(character) || (character == '_'))
 				{
 					n++;
 					RealText += character;
-					if (IsHidden) Text += "*";
-					else Text += character;
-					CaretPosition += 1;
+					Text += IsHidden ? '*' : character;
+					CaretPosition++;
 				}
 		}
-
-		
 	}
 }

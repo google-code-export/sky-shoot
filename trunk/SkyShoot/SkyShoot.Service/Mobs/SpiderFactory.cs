@@ -1,9 +1,9 @@
 ﻿using System;
-using SkyShoot.ServProgram.Mobs;
-using SkyShoot.XNA.Framework;
 using SkyShoot.Contracts.Session;
 using SkyShoot.Service.Mobs;
 using SkyShoot.Service.Weapon;
+using SkyShoot.ServProgram.Mobs;
+using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Contracts.Mobs
 {
@@ -12,8 +12,8 @@ namespace SkyShoot.Contracts.Mobs
 		private readonly float _width;
 		private readonly float _height;
 		private readonly float _border;
+        private readonly Random _random;
 		private float _health;
-		private readonly Random _random;
 
 		public SpiderFactory(GameLevel gameLevel)
 		{
@@ -26,38 +26,6 @@ namespace SkyShoot.Contracts.Mobs
 
 		public Mob CreateMob()
 		{
-			int x;
-			int y;
-
-			// присваивание случайных координат созданному мобу
-			if (_random.Next(2) == 0) //длина
-			{
-				x = _random.Next(0, (int)(_width + _border * 2));
-
-				if (_random.Next(2) == 0) // верх
-				{
-					y = _random.Next(0, (int)_border);
-				}
-				else //низ
-				{
-					y = _random.Next((int)(_height + _border), (int)(_height + _border * 2));
-				}
-			}
-			else // высота
-			{
-				y = _random.Next(0, (int)(_height + _border * 2));
-
-				if (_random.Next(2) == 0) // левая
-				{
-					x = _random.Next(0, (int)_border);
-				}
-				else // правая
-				{
-					x = _random.Next((int)(_width + _border), (int)(_width + _border * 2));
-				}
-
-			}
-
 			Mob spider;
 			switch (_random.Next(3))
 			{
@@ -75,10 +43,48 @@ namespace SkyShoot.Contracts.Mobs
 				spider = new Spider(_health);
 				break;
 			}
+
 			_health *= 1.05f;
-			spider.Coordinates = new Vector2((float)x, (float)y);
+		    spider.Coordinates = GetRandomCoord();
 			//spider.Weapon = new Claw(Guid.NewGuid(), spider);
 			return spider;
 		}
+
+        /// <summary>
+        /// присваивание случайных координат созданному мобу
+        /// </summary>
+        private Vector2 GetRandomCoord()
+        {
+            int x;
+            int y;
+            if (_random.Next(2) == 0) // длина
+            {
+                x = _random.Next(0, (int)(_width + _border * 2));
+
+                if (_random.Next(2) == 0) // верх
+                {
+                    y = _random.Next(0, (int)_border);
+                }
+                else //низ
+                {
+                    y = _random.Next((int)(_height + _border), (int)(_height + _border * 2));
+                }
+            }
+            else // высота
+            {
+                y = _random.Next(0, (int)(_height + _border * 2));
+
+                if (_random.Next(2) == 0) // левая
+                {
+                    x = _random.Next(0, (int)_border);
+                }
+                else // правая
+                {
+                    x = _random.Next((int)(_width + _border), (int)(_width + _border * 2));
+                }
+            }
+
+            return new Vector2(x, y);
+        }
 	}
 }

@@ -27,7 +27,6 @@ namespace SkyShoot.Service.Session
 		public bool IsStarted { get; set; }
 		public GameLevel GameLevel { get; private set; }
 		private readonly SpiderFactory _spiderFactory;
-		private readonly ShootingMobFactory _shootingMobFactory;
 		private readonly BonusFactory _bonusFactory;
 		private readonly WallFactory _wallFactory;
 		private long _timerCounter;
@@ -53,13 +52,12 @@ namespace SkyShoot.Service.Session
 			LocalGameDescription = new GameDescription(playerNames, maxPlayersAllowed, gameType, gameID, tileSet);
 			_spiderFactory = new SpiderFactory(GameLevel);
 			_bonusFactory = new BonusFactory();
-			_shootingMobFactory = new ShootingMobFactory(GameLevel);
 
 			// создание стенок
 			_wallFactory = new WallFactory(GameLevel);
 		}
 
-		private void SomebodyChangedWeapon(AGameObject sender, SkyShoot.Contracts.Weapon.AWeapon.AWeaponType type)
+		private void SomebodyChangedWeapon(AGameObject sender, SkyShoot.Contracts.Weapon.WeaponType type)
 		{
 			sender.ChangeWaponTo(type);
 		}

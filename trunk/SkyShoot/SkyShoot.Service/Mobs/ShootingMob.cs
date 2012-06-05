@@ -1,17 +1,18 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Weapon;
-using SkyShoot.Contracts.GameEvents;
 
 namespace SkyShoot.ServProgram.Mobs
 {
-	class ShootingMob: Mob
+    class ShootingMob: Mob
 	{
-		private long _lastShoot;
 		private readonly int _shootingDelay = 10000;
+        private long _lastShoot;
 
-		public ShootingMob(float health, AWeapon weapon,int shootingDelay)
-			: base(health)
+        public ShootingMob(float health, AWeapon weapon, int shootingDelay)
+            : base(health)
 		{
 			Weapon = weapon;
 			Weapon.Owner = this;
@@ -28,11 +29,9 @@ namespace SkyShoot.ServProgram.Mobs
 			if (time - _lastShoot > _shootingDelay && Weapon != null && Weapon.IsReload(time))
 			{
 				_lastShoot = time;
-				var bullets = Weapon.CreateBullets(this, ShootVector);
-				foreach(AGameObject bullet in bullets){
-					res.Add(new NewObjectEvent(bullet,time));
-				}
-				newGameObjects.AddRange(bullets);
+			    var bullets = Weapon.CreateBullets(this, ShootVector);
+			    res.AddRange(bullets.Select(bullet => new NewObjectEvent(bullet, time)));
+			    newGameObjects.AddRange(bullets);
 			}
 			return res;
 		}

@@ -7,7 +7,7 @@ namespace SkyShoot.Service.Bonus
 {
 	public class BonusFactory
 	{
-		private Random _random = new Random();
+		private readonly Random _random = new Random();
 
 		public AGameBonus CreateBonus(Vector2 coordinates)
 		{ 

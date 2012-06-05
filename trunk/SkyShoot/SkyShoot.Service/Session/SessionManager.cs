@@ -1,40 +1,41 @@
 ﻿using System;
-
-using System.Linq;
-
 using System.Collections.Generic;
-
+using System.Linq;
 using SkyShoot.Contracts.Session;
-using SkyShoot.Contracts.Mobs;
-using System.Collections.Concurrent;
 
 namespace SkyShoot.Service.Session
 {
 	public sealed class SessionManager
 	{
-		private static readonly SessionManager LocalInstance = new SessionManager();
+		private static readonly SessionManager localInstance = new SessionManager();
 
 		public Dictionary<Guid, GameSession> SessionTable;
 
-		public static SessionManager Instance
-		{
-			get { return LocalInstance; }
-		}
-
-		//Содержит текущие игры
+        /// <summary>
+        /// Содержит текущие игры
+        /// </summary>
 		private readonly List<GameSession> _gameSessions;
 
-		//Уникальный идентификатор, который присваивается каждой игре при её создании
+        /// <summary>
+        /// Уникальный идентификатор, который присваивается каждой игре при её создании
+        /// </summary>
 		private int _gameId;
 
 		private SessionManager()
 		{
-			SessionTable = new Dictionary<Guid,GameSession>();
+		    SessionTable = new Dictionary<Guid, GameSession>();
 			_gameSessions = new List<GameSession>();
 			_gameId = 1;
 		}
 
-		//Добавляем игрока в текущую игру.
+        public static SessionManager Instance
+        {
+            get { return localInstance; }
+        }
+
+        /// <summary>
+        /// Добавляем игрока в текущую игру.
+        /// </summary>
 		public bool JoinGame(GameDescription game, MainSkyShootService player)
 		{
 			GameSession session = _gameSessions.Find(curGame => curGame.LocalGameDescription.GameId == game.GameId);
@@ -43,7 +44,9 @@ namespace SkyShoot.Service.Session
 
 		}
 		
-		//Создаем новую игру
+		/// <summary>
+        /// Создаем новую игру
+		/// </summary>
 		public GameDescription CreateGame(GameMode mode, int maxPlayers, MainSkyShootService client, TileSet tileSet)
 		{
 			var gameSession = new GameSession(tileSet, maxPlayers, mode, _gameId);
@@ -55,7 +58,9 @@ namespace SkyShoot.Service.Session
 			return gameSession.LocalGameDescription;
 		}
 
-	   //Возвращает список игр.
+	    /// <summary>
+        /// Возвращает список игр.
+	    /// </summary>
 		public GameDescription[] GetGameList()
 		{
 			var gameSessions = _gameSessions.ToArray();
@@ -63,7 +68,9 @@ namespace SkyShoot.Service.Session
 			return (from t in gameSessions where !t.IsStarted select t.LocalGameDescription).ToArray();
 		}
 
-		//Ищем игру, в которой находится игрок и удаляем его оттуда.
+		/// <summary>
+        /// Ищем игру, в которой находится игрок и удаляем его оттуда.
+		/// </summary>
 		public bool LeaveGame(MainSkyShootService player)
 		{
 			try
@@ -89,8 +96,8 @@ namespace SkyShoot.Service.Session
 		
 		public GameLevel GameStarted(int gameId)
 		{
-			var game = _gameSessions.Find(x => x.LocalGameDescription.GameId == gameId);
-			return game==null?null:(game.IsStarted ? game.GameLevel : null);
+		    var game = _gameSessions.Find(x => x.LocalGameDescription.GameId == gameId);
+		    return game != null ? (game.IsStarted ? game.GameLevel : null) : null;
 		}
 	}
 }

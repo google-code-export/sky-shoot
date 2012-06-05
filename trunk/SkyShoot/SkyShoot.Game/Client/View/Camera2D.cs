@@ -5,25 +5,23 @@ namespace SkyShoot.Game.Client.View
 {
 	public class Camera2D
 	{
-		private float _zoom; // Camera Zoom
-		private readonly float _rotation; // Camera Rotation
+        private readonly int _width;
+        private readonly int _height;
 
-		public Vector2 Position { get; set; } // Camera Position
+        /// <summary>
+        /// Camera Rotation
+        /// </summary>
+        private readonly float _rotation;
+        
+        /// <summary>
+        /// Camera Zoom
+        /// </summary>
+		private float _zoom;
 
-		private Matrix _transform; // Matrix Transform
-
-		private readonly int _width;
-		private readonly int _height;
-
-		public float Zoom
-		{
-			get { return _zoom; }
-			set
-			{
-				_zoom = value;
-				if (_zoom < 0.1f) _zoom = 0.1f;
-			} // Negative zoom will flip image
-		}
+        /// <summary>
+        /// Matrix Transform
+        /// </summary>
+        private Matrix _transform;
 
 		public Camera2D(int width, int height)
 		{
@@ -36,7 +34,30 @@ namespace SkyShoot.Game.Client.View
 			_height = height;
 		}
 
-		// Auxiliary function to move the camera
+        /// <summary>
+        /// Camera Position
+        /// </summary>
+        public Vector2 Position { get; set; }
+
+        public float Zoom
+        {
+            get
+            {
+                return _zoom;
+            }
+            set
+            {
+                _zoom = value;
+
+                // Negative zoom will flip image
+                if (_zoom < 0.1f) _zoom = 0.1f;
+            }
+        }
+
+        /// <summary>
+        /// Auxiliary function to move the camera
+        /// </summary>
+        /// <param name="amount">The amount.</param>
 		public void Move(Vector2 amount)
 		{
 			Position += amount;
@@ -48,11 +69,11 @@ namespace SkyShoot.Game.Client.View
 			float viewWidthOver2 = graphicsDevice.Viewport.Width * 0.5f;
 			float viewHeightOver2 = graphicsDevice.Viewport.Height * 0.5f;
 
-			//check x axis
+			// check x axis
 			float transformX = Position.X - viewWidthOver2;
 			transformX = MathHelper.Clamp(transformX, 0, _width - 2 * viewWidthOver2);
 
-			//check y axis
+			// check y axis
 			float transformY = Position.Y - viewHeightOver2;
 			transformY = MathHelper.Clamp(transformY, 0, _height - 2 * viewHeightOver2);
 
