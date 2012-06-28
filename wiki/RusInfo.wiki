@@ -9,6 +9,6 @@
 
 Программы, необходимые для работы в проекте [http://code.google.com/p/sky-shoot/wiki/ProgramsToUse link].
 
-*Правила кодирования* [http://code.google.com/p/sky-shoot/downloads/detail?name=SharpDevelopCodingStyle.pdf link]
+*Правила кодирования* [Codestyle link]
 
 группа в контакте [http://vk.com/SkyShoot link]
