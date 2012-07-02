@@ -25,8 +25,25 @@ namespace SkyShoot.Service
 		public string Name;
 		public Queue<AGameEvent> NewEvents;
 		public List<AGameBonus> Bonuses;
-        public int Exp {get;set;}
-        public int Frag {get; set;}
+	    private int _exp;
+        public int Exp // Описание повышения уровня
+	    {
+	        get { return _exp; }
+            set
+            {
+                if (_exp >= 500 + 500*Level)
+                {
+                    _exp = value - 500 - 500*Level;
+                    Level++;
+                }
+                else
+                {
+                    _exp = value;
+                }
+            }
+	    }
+        public int Frag {get;set;}
+        public int Level {get;set;}
 
 		//private Account.AccountManager _accountManager = new Account.AccountManager();
 		private readonly SessionManager _sessionManager = SessionManager.Instance;
@@ -50,6 +67,7 @@ namespace SkyShoot.Service
         {
             Exp = 0;
             Frag = 0;
+            Level = 1;
         }
         
 		private void InitWeapons()

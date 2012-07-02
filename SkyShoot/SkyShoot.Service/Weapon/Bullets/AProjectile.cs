@@ -55,7 +55,8 @@ namespace SkyShoot.Service.Weapon.Bullets
 
 			if (obj.Is(EnumObjectType.LivingObject))
 			{
-				var damageMod = 1f;
+                var owner = this.Owner as MainSkyShootService;
+                var damageMod = 1f;
 				if (obj.Is(EnumObjectType.Player))
 				{
 					var player = obj as MainSkyShootService;
@@ -74,14 +75,12 @@ namespace SkyShoot.Service.Weapon.Bullets
 						var shield = player.GetBonus(EnumObjectType.Shield);
 						damageMod = shield == null ? 1f : shield.DamageFactor;
 					}
-                    var owner = this.Owner as MainSkyShootService;
                     owner.Frag += 1;
 				}
 				obj.HealthAmount -= Damage * damageMod;
 				res.Add(new ObjectHealthChanged(obj.HealthAmount, obj.Id, time));
 				// убираем пулю
 				IsActive = false;
-                var owner = this.Owner as MainSkyShootService;
                 owner.Exp += 100;
 			}
 
