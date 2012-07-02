@@ -25,6 +25,8 @@ namespace SkyShoot.Service
 		public string Name;
 		public Queue<AGameEvent> NewEvents;
 		public List<AGameBonus> Bonuses;
+        public int Exp {get;set;}
+        public int Frag {get; set;}
 
 		//private Account.AccountManager _accountManager = new Account.AccountManager();
 		private readonly SessionManager _sessionManager = SessionManager.Instance;
@@ -41,8 +43,15 @@ namespace SkyShoot.Service
 			Bonuses = new List<AGameBonus>();
 
 			InitWeapons();
+            InitStatistics();
 		}
 
+        private void InitStatistics() // Начальная статистика
+        {
+            Exp = 0;
+            Frag = 0;
+        }
+        
 		private void InitWeapons()
 		{
 			Weapons.Add(WeaponType.Pistol, new Weapon.Pistol(Guid.NewGuid(), this));

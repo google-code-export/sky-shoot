@@ -74,11 +74,15 @@ namespace SkyShoot.Service.Weapon.Bullets
 						var shield = player.GetBonus(EnumObjectType.Shield);
 						damageMod = shield == null ? 1f : shield.DamageFactor;
 					}
+                    var owner = this.Owner as MainSkyShootService;
+                    owner.Frag += 1;
 				}
 				obj.HealthAmount -= Damage * damageMod;
 				res.Add(new ObjectHealthChanged(obj.HealthAmount, obj.Id, time));
 				// убираем пулю
 				IsActive = false;
+                var owner = this.Owner as MainSkyShootService;
+                owner.Exp += 100;
 			}
 
 		    if (obj.Is(EnumObjectType.Wall))
