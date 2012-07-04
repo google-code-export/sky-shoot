@@ -2,18 +2,28 @@
 using System.Runtime.Serialization;
 
 using SkyShoot.Contracts.Mobs;
-
+using SkyShoot.Contracts.Weapon;
 using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Contracts.GameEvents
 {
+	public enum EventType
+	{
+		NewObjectEvent,
+		ObjectDirectionChangedEvent,
+		ObjectShootEvent,
+		ObjectDeletedEvent,
+		WeaponChangedEvent,
+		EmptyGameEvent
+	}
+
 	[DataContract]
-	[KnownType(typeof(NewObjectEvent))]
-	[KnownType(typeof(ObjectDirectionChanged))]
-	[KnownType(typeof(ObjectDeleted))]
-	[KnownType(typeof(ObjectHealthChanged))]
+	[KnownType(typeof (NewObjectEvent))]
+	[KnownType(typeof (ObjectDirectionChanged))]
+	[KnownType(typeof (ObjectDeleted))]
+	[KnownType(typeof (ObjectHealthChanged))]
 	//[KnownType(typeof(BonusesChanged))]
-	//[KnownType(typeof(WeaponChanged))]
+		//[KnownType(typeof(WeaponChanged))]
 	public abstract class AGameEvent
 	{
 		// now = DateTime.Now.Ticks/10000; //время в миллисекундах с начала игры
@@ -21,9 +31,11 @@ namespace SkyShoot.Contracts.GameEvents
 		public long TimeStamp { get; set; }
 
 		[DataMember]
-		public Guid GameObjectId { get; set; }
+		public Guid? GameObjectId { get; set; }
 
-		protected AGameEvent(Guid id, long timeStamp)
+		public EventType Type;
+
+		protected AGameEvent(Guid? id, long timeStamp)
 		{
 			GameObjectId = id;
 			TimeStamp = timeStamp;
@@ -36,16 +48,29 @@ namespace SkyShoot.Contracts.GameEvents
 		public abstract void UpdateMob(AGameObject mob);
 	}
 
+	public class EmptyEvent : AGameEvent
+	{
+		public EmptyEvent(Guid? id, long timeStamp) : base(id, timeStamp)
+		{
+			Type = EventType.EmptyGameEvent;
+		}
+
+		public override void UpdateMob(AGameObject mob)
+		{
+			throw new NotImplementedException();
+		}
+	}
+
 	[DataContract]
 	public class NewObjectEvent : AGameEvent
 	{
-		[DataMember]
-		public AGameObject NewObj;
+		[DataMember] public AGameObject NewObj;
 
 		public NewObjectEvent(AGameObject obj, long timeStamp)
 			: base(obj.Id, timeStamp)
 		{
 			NewObj = GameObjectConverter.OneObject(obj);
+			Type = EventType.NewObjectEvent;
 		}
 
 		public override void UpdateMob(AGameObject mob)
@@ -57,13 +82,13 @@ namespace SkyShoot.Contracts.GameEvents
 	[DataContract]
 	public class ObjectDirectionChanged : AGameEvent
 	{
-		[DataMember]
-		public Vector2 NewRunDirection;
+		[DataMember] public Vector2 NewRunDirection;
 
-		public ObjectDirectionChanged(Vector2 direction, Guid id, long timeStamp)
+		public ObjectDirectionChanged(Vector2 direction, Guid? id, long timeStamp)
 			: base(id, timeStamp)
 		{
 			NewRunDirection = direction;
+			Type = EventType.ObjectDirectionChangedEvent;
 		}
 
 		public override void UpdateMob(AGameObject mob)
@@ -72,12 +97,29 @@ namespace SkyShoot.Contracts.GameEvents
 		}
 	}
 
+	public class ObjectShootEvent : AGameEvent
+	{
+		public Vector2 ShootDirection;
+
+		public ObjectShootEvent(Vector2 shootDirection, Guid? id, long timeStamp) : base(id, timeStamp)
+		{
+			ShootDirection = shootDirection;
+			Type = EventType.ObjectShootEvent;
+		}
+
+		public override void UpdateMob(AGameObject mob)
+		{
+			throw new NotImplementedException();
+		}
+	}
+
 	[DataContract]
 	public class ObjectDeleted : AGameEvent
 	{
-		public ObjectDeleted(Guid id, long timeStamp)
+		public ObjectDeleted(Guid? id, long timeStamp)
 			: base(id, timeStamp)
 		{
+			Type = EventType.ObjectDeletedEvent;
 		}
 
 		public override void UpdateMob(AGameObject mob)
@@ -89,10 +131,9 @@ namespace SkyShoot.Contracts.GameEvents
 	[DataContract]
 	public class ObjectHealthChanged : AGameEvent
 	{
-		[DataMember]
-		public float Health;
+		[DataMember] public float Health;
 
-		public ObjectHealthChanged(float newHp, Guid id, long timeStamp)
+		public ObjectHealthChanged(float newHp, Guid? id, long timeStamp)
 			: base(id, timeStamp)
 		{
 			Health = newHp;
@@ -104,23 +145,26 @@ namespace SkyShoot.Contracts.GameEvents
 		}
 	}
 
-	//[DataContract]
-	//public class WeaponChanged : AGameEvent
-	//{
-	//  [DataMember]
-	//  public Weapon.AWeapon Weapon;
+	/*[DataContract]*/
+	public class WeaponChanged : AGameEvent
+	{
+		/*[DataMember] */
+		public AWeapon Weapon;
+		public WeaponType WeaponType;
 
-	//  public WeaponChanged(Weapon.AWeapon weapon, Guid id, long timeStamp)
-	//    : base(id, timeStamp)
-	//  {
-	//    this.Weapon = weapon;
-	//  }
+		public WeaponChanged(AWeapon weapon, WeaponType weaponType, Guid? id, long timeStamp)
+			: base(id, timeStamp)
+		{
+			Weapon = weapon;
+			WeaponType = weaponType;
+			Type = EventType.WeaponChangedEvent; 
+		}
 
-	//  public override void UpdateMob(AGameObject mob)
-	//  {
-	//    mob.Weapon = Weapon;
-	//  }
-	//}
+		public override void UpdateMob(AGameObject mob)
+		{
+			mob.Weapon = Weapon;
+		}
+	}
 
 	//[DataContract]
 	//public class BonusesChanged : AGameEvent

@@ -17,7 +17,7 @@ namespace SkyShoot.ServProgram
 			    Trace.Listeners.Add(new TableTraceListener());
 			    Trace.WriteLine(args);
 
-			    var host = new ServiceHost(typeof(MainSkyShootService), new Uri("net.tcp://localhost:777"));
+			    var host = new ServiceHost(typeof(MainSkyShootService), new Uri("net.tcp://localhost:555"));
 
 			    host.AddServiceEndpoint(typeof(ISkyShootService), new NetTcpBinding(SecurityMode.None), "SkyShootService");
 

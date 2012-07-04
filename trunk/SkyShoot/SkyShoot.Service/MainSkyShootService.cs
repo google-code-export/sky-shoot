@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
+using System.Threading;
 using SkyShoot.Contracts;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Mobs;
@@ -18,7 +19,7 @@ using SkyShoot.XNA.Framework;
 namespace SkyShoot.Service
 {
 	[ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant,
-			InstanceContextMode = InstanceContextMode.PerSession)]
+		InstanceContextMode = InstanceContextMode.PerSession)]
 	public class MainSkyShootService : AGameObject, ISkyShootService
 	{
 		public static int GlobalID;
@@ -94,10 +95,10 @@ namespace SkyShoot.Service
 				HealthAmount = potentialHealth > MaxHealthAmount ? MaxHealthAmount : potentialHealth;
 				t = new ObjectHealthChanged(HealthAmount, Id, time);
 				return new[]
-								{
-									new ObjectDeleted(bonus.Id, time), 
-									t
-								};
+				       	{
+				       		new ObjectDeleted(bonus.Id, time),
+				       		t
+				       	};
 			}
 			else
 			{
@@ -106,10 +107,10 @@ namespace SkyShoot.Service
 				bonus.Taken(time);
 				//t = new BonusesChanged(Id, time, MergeBonuses());
 				return new[]
-								{
-									new ObjectDeleted(bonus.Id, time), 
-									//t
-								};
+				       	{
+				       		new ObjectDeleted(bonus.Id, time),
+				       		//t
+				       	};
 			}
 		}
 
@@ -118,7 +119,10 @@ namespace SkyShoot.Service
 			return Bonuses.FirstOrDefault(bonus => bonus.Is(bonusType));
 		}
 
-		public void Disconnect() { LeaveGame(); }
+		public void Disconnect()
+		{
+			LeaveGame();
+		}
 
 		public bool Register(string username, string password)
 		{
@@ -137,7 +141,7 @@ namespace SkyShoot.Service
 
 		public Guid? Login(string username, string password)
 		{
-			bool result = true;//_accountManager.Login(username, password);
+			bool result = true; //_accountManager.Login(username, password);
 
 			if (result)
 			{
@@ -206,7 +210,7 @@ namespace SkyShoot.Service
 			{
 				MeChangeWeapon(this, type);
 			}
-			return null;// GetEvents();
+			return null; // GetEvents();
 		}
 
 		public AGameEvent[] Move(Vector2 direction) // приходит снаружи от клиента
@@ -215,7 +219,7 @@ namespace SkyShoot.Service
 			{
 				MeMoved(this, direction);
 			}
-			return null;// GetEvents();
+			return null; // GetEvents();
 		}
 
 		public AGameEvent[] Shoot(Vector2 direction)
@@ -224,11 +228,14 @@ namespace SkyShoot.Service
 			{
 				MeShot(this, direction);
 			}
-			return null;// GetEvents();
+			return null; // GetEvents();
 		}
 
 		public AGameEvent[] GetEvents()
 		{
+			// TODO uncomment just for test
+			// Thread.Sleep(5000);
+
 			AGameEvent[] events;
 			try
 			{
@@ -253,7 +260,6 @@ namespace SkyShoot.Service
 				throw;
 			}
 			return events;
-			return null;
 		}
 
 		public void LeaveGame()
@@ -310,7 +316,7 @@ namespace SkyShoot.Service
 			_sessionManager.SessionTable.TryGetValue(Id, out session);
 			if (session == null)
 			{
-				return new string[] { };
+				return new string[] {};
 			}
 			return session.LocalGameDescription.Players.ToArray();
 		}
@@ -332,7 +338,7 @@ namespace SkyShoot.Service
 
 		private EnumObjectType MergeBonuses()
 		{
-			return Bonuses.Aggregate((EnumObjectType)0, (current, bonus) => current | bonus.ObjectType);
+			return Bonuses.Aggregate((EnumObjectType) 0, (current, bonus) => current | bonus.ObjectType);
 		}
 
 		public override IEnumerable<AGameEvent> Do(AGameObject obj, List<AGameObject> newObjects, long time)
@@ -349,18 +355,20 @@ namespace SkyShoot.Service
 			}
 			return res;
 		}
+
 		public void DeleteExpiredBonuses(long time)
 		{
 			Bonuses.RemoveAll(b => b.IsExpired(time));
 		}
 
-		public override IEnumerable<AGameEvent> Think(List<AGameObject> players, List<AGameObject> newGameObjects, long time)
+		public override IEnumerable<AGameEvent> Think(List<AGameObject> players, List<AGameObject> newGameObjects,
+		                                              long time)
 		{
 			// empty list
 			var res = base.Think(players, newGameObjects, time);
 			var l = Bonuses.Count;
 			DeleteExpiredBonuses(time);
-			return res;// l != Bonuses.Count ? new AGameEvent[] { new BonusesChanged(Id, time, MergeBonuses()) } : res;
+			return res; // l != Bonuses.Count ? new AGameEvent[] { new BonusesChanged(Id, time, MergeBonuses()) } : res;
 		}
 
 		public override float Speed
@@ -372,10 +380,7 @@ namespace SkyShoot.Service
 				var speed = _speed * speedUp;
 				return speed;
 			}
-			set
-			{
-				_speed = value;
-			}
+			set { _speed = value; }
 		}
 	}
 }
