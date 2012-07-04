@@ -3,6 +3,7 @@ using System.ServiceModel;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Session;
+using SkyShoot.Contracts.Statistics;
 using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Contracts.Service
@@ -61,10 +62,10 @@ namespace SkyShoot.Contracts.Service
 		[OperationContract]
 		AGameObject[] SynchroFrame();
 
-        // [OperationContract]
-        // Выдает таблицу данных о уровне, опыте, фрагах
+	    [OperationContract] // Выдает таблицу данных о уровне, опыте, фрагах
+		Stats? GetStats();
 
-		/// <summary>
+        /// <summary>
 		/// возвращает список игроков
 		/// </summary>
 		/// <returns>массив имен игроков</returns>

@@ -9,6 +9,7 @@ using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Session;
+using SkyShoot.Contracts.Statistics;
 using SkyShoot.Contracts.Weapon;
 using SkyShoot.Service.Bonuses;
 using SkyShoot.Service.Session;
@@ -25,25 +26,27 @@ namespace SkyShoot.Service
 		public string Name;
 		public Queue<AGameEvent> NewEvents;
 		public List<AGameBonus> Bonuses;
-	    private int _exp;
-        public int Exp // Описание повышения уровня
-	    {
-	        get { return _exp; }
-            set
-            {
-                if (_exp >= 500 + 500*Level)
-                {
-                    _exp = value - 500 - 500*Level;
-                    Level++;
-                }
-                else
-                {
-                    _exp = value;
-                }
-            }
-	    }
-        public int Frag {get;set;}
-        public int Level {get;set;}
+		private int _exp;
+		public int PlayerExperience // Описание повышения уровня
+		{
+			get { return _exp; }
+			set
+			{
+				if (_exp >= 500 * PlayerLevel -100)
+				{
+					_exp = value - 500 * PlayerLevel;
+					PlayerLevel++;
+				}
+				else
+				{
+					_exp = value;
+				}
+			}
+		}
+		public int PlayerFrag { get; set; }
+		public int PlayerLevel { get; set; }
+
+
 
 		//private Account.AccountManager _accountManager = new Account.AccountManager();
 		private readonly SessionManager _sessionManager = SessionManager.Instance;
@@ -60,16 +63,16 @@ namespace SkyShoot.Service
 			Bonuses = new List<AGameBonus>();
 
 			InitWeapons();
-            InitStatistics();
+			InitStatistics();
 		}
 
-        private void InitStatistics() // Начальная статистика
-        {
-            Exp = 0;
-            Frag = 0;
-            Level = 1;
-        }
-        
+		private void InitStatistics() // Начальная статистика
+		{
+			PlayerExperience = 0;
+			PlayerFrag = 0;
+			PlayerLevel = 1;
+		}
+
 		private void InitWeapons()
 		{
 			Weapons.Add(WeaponType.Pistol, new Weapon.Pistol(Guid.NewGuid(), this));
@@ -229,20 +232,20 @@ namespace SkyShoot.Service
 			AGameEvent[] events;
 			try
 			{
-			lock(NewEvents)
-			{
-				events = NewEvents.ToArray();//new Queue<AGameEvent>(NewEvents);
-				NewEvents.Clear();
-			}
-			var sb = new StringBuilder();
-			sb.Append("GetEvents:");
-			sb.Append(events.Length);
-			foreach (var e in events)
-			{
-				sb.Append(":");
-				sb.Append(e);
-			}
-			Trace.WriteLine(sb);
+				lock (NewEvents)
+				{
+					events = NewEvents.ToArray();//new Queue<AGameEvent>(NewEvents);
+					NewEvents.Clear();
+				}
+				var sb = new StringBuilder();
+				sb.Append("GetEvents:");
+				sb.Append(events.Length);
+				foreach (var e in events)
+				{
+					sb.Append(":");
+					sb.Append(e);
+				}
+				Trace.WriteLine(sb);
 			}
 			catch (Exception exc)
 			{
@@ -287,9 +290,18 @@ namespace SkyShoot.Service
 			}
 			catch (Exception exc)
 			{
-				Trace.WriteLine("ERROR: Syncroframe broken", exc.ToString());				
+				Trace.WriteLine("ERROR: Syncroframe broken", exc.ToString());
 			}
 			return null;
+		}
+
+		public Stats? GetStats() // Статистика
+		{
+			Stats playerstats;
+			playerstats.Exp = PlayerExperience;
+			playerstats.Frag = PlayerFrag;
+			playerstats.Lvl = PlayerLevel;
+			return playerstats;
 		}
 
 		public String[] PlayerListUpdate()

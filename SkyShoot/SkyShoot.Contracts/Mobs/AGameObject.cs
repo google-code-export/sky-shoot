@@ -17,7 +17,7 @@ namespace SkyShoot.Contracts.Mobs
 		/// основное перечисление всех возможных типов обектов игры
 		/// </summary>
 		[Flags]
-		public enum EnumObjectType
+		public enum EnumObjectType : ulong
 		{
 			/*
 			 * 64-bit 00000000 00000000
@@ -71,7 +71,7 @@ namespace SkyShoot.Contracts.Mobs
 			[EnumMember]
 			Wall = 0x0100000 | Block,//1125899907891200
 			[EnumMember]
-			Block = 0x1 << CommonAttributesShift, //1125899906842624
+			Block = 100000000//0x1 << CommonAttributesShift, //1125899906842624
 		}
 
 		#region основные свойства

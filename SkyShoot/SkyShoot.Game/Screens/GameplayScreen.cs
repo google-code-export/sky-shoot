@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Globalization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Nuclex.UserInterface;
+using Nuclex.UserInterface.Controls;
 using Nuclex.UserInterface.Controls.Desktop;
 using SkyShoot.Contracts.Weapon;
 using SkyShoot.Game.Client.Game;
@@ -22,6 +24,11 @@ namespace SkyShoot.Game.Screens
 		private ButtonControl _rocketButton;
 		private ButtonControl _flameButton;
 		private ButtonControl _heaterButton;
+
+		private LabelControl _lableLevel;
+		private LabelControl _lableExp;
+		private LabelControl _lableFrag;
+		private int counter;
 
 		public GameplayScreen()
 		{
@@ -110,13 +117,31 @@ namespace SkyShoot.Game.Screens
 
         public override void Update(GameTime gameTime)
         {
-            base.Update(gameTime);
+			base.Update(gameTime);
 
             if (GameController.Instance.GameModel == null)
                 return;
 
             GameController.Instance.GameModel.Update(gameTime);
-        }
+			
+			if (counter % 60 == 0)
+			{
+				var stat = GameController.Instance.GetStats();
+				if (stat != null)
+				{
+					_lableLevel.Text = "Level " + stat.Value.Lvl.ToString(CultureInfo.InvariantCulture);
+				}
+				if (stat != null)
+				{
+					_lableExp.Text = "Exp " + stat.Value.Exp.ToString(CultureInfo.InvariantCulture);
+				}
+				if (stat != null)
+				{
+					_lableFrag.Text = "Frag " + stat.Value.Frag.ToString(CultureInfo.InvariantCulture);
+				}
+			}
+			counter++;
+		}
 
         public override void Draw(GameTime gameTime)
         {
@@ -125,10 +150,30 @@ namespace SkyShoot.Game.Screens
             graphicsDevice.Clear(Color.SkyBlue);
 
             GameController.Instance.GameModel.Draw(spriteBatch);
+
+
         }
 
-		private void CreateControls()
+		private void CreateControls() 
 		{
+			_lableLevel = new LabelControl
+			{
+				Text = "Level",
+				Bounds = new UniRectangle(new UniVector(-60, -40), new UniVector(0, 0)),
+			};
+
+			_lableExp = new LabelControl
+			{
+				Text = "Exp",
+				Bounds = new UniRectangle(new UniVector(-60, -20), new UniVector(0, 0)),
+			};
+
+			_lableFrag = new LabelControl
+			{
+				Text = "Frag",
+				Bounds = new UniRectangle(new UniVector(-60, 0), new UniVector(0, 0)),
+			};
+
 			_pistolButton = new ButtonControl
 			{
 				Text = "Pistol",
@@ -142,16 +187,16 @@ namespace SkyShoot.Game.Screens
 			};
 
 			_flameButton = new ButtonControl
-											{
-												Text = "Flame",
-												Bounds = new UniRectangle(new UniVector(250, 470), new UniVector(80, 40)),
-											};
+			{
+				Text = "Flame",
+				Bounds = new UniRectangle(new UniVector(250, 470), new UniVector(80, 40)),
+			};
 
 			_rocketButton = new ButtonControl
-												{
-													Text = "Rocket",
-													Bounds = new UniRectangle(new UniVector(340, 470), new UniVector(80, 40)),
-												};
+			{
+				Text = "Rocket",
+				Bounds = new UniRectangle(new UniVector(340, 470), new UniVector(80, 40)),
+			};
 
 			_heaterButton = new ButtonControl
 			{
@@ -167,6 +212,9 @@ namespace SkyShoot.Game.Screens
 			Desktop.Children.Add(_flameButton);
 			Desktop.Children.Add(_rocketButton);
 			Desktop.Children.Add(_heaterButton);
+			Desktop.Children.Add(_lableLevel);
+			Desktop.Children.Add(_lableExp);
+			Desktop.Children.Add(_lableFrag);
 
 			_pistolButton.Pressed += PistolButtonPressed;
 			_shotgunButton.Pressed += ShotgunButtonPressed;

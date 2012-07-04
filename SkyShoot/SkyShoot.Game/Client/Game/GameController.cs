@@ -10,6 +10,7 @@ using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Perks;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Session;
+using SkyShoot.Contracts.Statistics;
 using SkyShoot.Contracts.Weapon;
 using SkyShoot.Game.Controls;
 using SkyShoot.Game.Screens;
@@ -428,6 +429,18 @@ namespace SkyShoot.Game.Client.Game
 			{
 				Trace.WriteLine("game:SynchroFrame"+exc);
 				return new AGameObject[] {};
+			}
+		}
+
+		public Stats? GetStats() // Статистика
+		{
+			try
+			{
+				return _service.GetStats();
+			}
+			catch
+			{
+				return null;
 			}
 		}
 
