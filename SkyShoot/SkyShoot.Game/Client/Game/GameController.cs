@@ -213,7 +213,7 @@ namespace SkyShoot.Game.Client.Game
 
 		public GameDescription CreateGame(GameMode mode, int maxPlayers, TileSet tile, int teams)
 		{
-			return ConnectionManager.Instance.CreateGame(mode, maxPlayers, tile);
+			return ConnectionManager.Instance.CreateGame(mode, maxPlayers, tile, teams);
 		}
 
 		public bool JoinGame(GameDescription game)
@@ -307,14 +307,7 @@ namespace SkyShoot.Game.Client.Game
 
 		public Stats? GetStats() // Статистика
 		{
-			try
-			{
-				return _service.GetStats();
-			}
-			catch
-			{
-				return null;
-			}
+			return ConnectionManager.Instance.GetStats();
 		}
 		
 		public AGameEvent[] Shoot(XNA.Framework.Vector2 direction)

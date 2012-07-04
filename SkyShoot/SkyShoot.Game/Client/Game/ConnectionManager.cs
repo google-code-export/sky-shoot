@@ -11,6 +11,7 @@ using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Perks;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Session;
+using SkyShoot.Contracts.Statistics;
 using SkyShoot.Contracts.Weapon;
 
 using SkyShoot.Game.Controls;
@@ -241,6 +242,19 @@ namespace SkyShoot.Game.Client.Game
 			}
 		}
 
+		public Stats? GetStats()
+		{
+			try
+			{
+				return _service.GetStats();
+			}
+			catch(Exception e)
+			{
+				FatalError(e);
+				return null;
+			}
+		}
+
 		#endregion
 
 		#region other service methods
@@ -296,11 +310,11 @@ namespace SkyShoot.Game.Client.Game
 			}
 		}
 
-		public GameDescription CreateGame(GameMode mode, int maxPlayers, TileSet tile)
+		public GameDescription CreateGame(GameMode mode, int maxPlayers, TileSet tile, int teams)
 		{
 			try
 			{
-				return _service.CreateGame(mode, maxPlayers, tile);
+				return _service.CreateGame(mode, maxPlayers, tile, teams);
 			}
 			catch (Exception e)
 			{
