@@ -39,7 +39,7 @@ namespace SkyShoot.Service.Session
 		private object _updating;
 
 		public GameSession(TileSet tileSet, int maxPlayersAllowed,
-			GameMode gameType, int gameID)
+			GameMode gameType, int gameID, int teams)
 		{
 			IsStarted = false;
 			GameLevel = new GameLevel(tileSet);
@@ -49,7 +49,7 @@ namespace SkyShoot.Service.Session
 			_gameObjects = new List<AGameObject>();
 			_NewObjects = new List<AGameObject>();
 
-			LocalGameDescription = new GameDescription(playerNames, maxPlayersAllowed, gameType, gameID, tileSet);
+			LocalGameDescription = new GameDescription(playerNames, maxPlayersAllowed, gameType, gameID, tileSet, teams);
 			_spiderFactory = new SpiderFactory(GameLevel);
 			_bonusFactory = new BonusFactory();
 

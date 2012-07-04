@@ -268,11 +268,11 @@ namespace SkyShoot.Game.Client.Game
 			}
 		}
 
-		public GameDescription CreateGame(GameMode mode, int maxPlayers, TileSet tile)
+		public GameDescription CreateGame(GameMode mode, int maxPlayers, TileSet tile, int teams)
 		{
 			try
 			{
-				return _service.CreateGame(mode, maxPlayers, tile);
+				return _service.CreateGame(mode, maxPlayers, tile, teams);
 			}
 			catch (Exception e)
 			{

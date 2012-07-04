@@ -26,7 +26,7 @@ namespace SkyShoot.Contracts.Service
 		GameDescription[] GetGameList();
 
 		[OperationContract]
-		GameDescription CreateGame(GameMode mode, int maxPlayers, TileSet level);
+		GameDescription CreateGame(GameMode mode, int maxPlayers, TileSet level, int teams);
 
 		[OperationContract]
 		bool JoinGame(GameDescription game);

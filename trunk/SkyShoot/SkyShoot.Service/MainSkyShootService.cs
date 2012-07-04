@@ -157,11 +157,11 @@ namespace SkyShoot.Service
 			return _sessionManager.GetGameList();
 		}
 
-		public GameDescription CreateGame(GameMode mode, int maxPlayers, TileSet tileSet)
+		public GameDescription CreateGame(GameMode mode, int maxPlayers, TileSet tileSet, int teams)
 		{
 			try
 			{
-				var gameDescription = _sessionManager.CreateGame(mode, maxPlayers, this, tileSet);
+				var gameDescription = _sessionManager.CreateGame(mode, maxPlayers, this, tileSet, teams);
 				return gameDescription;
 			}
 			catch (Exception e)
