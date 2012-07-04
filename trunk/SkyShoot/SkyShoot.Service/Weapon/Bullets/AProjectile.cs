@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using SkyShoot.Contracts;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Mobs;
@@ -75,13 +76,14 @@ namespace SkyShoot.Service.Weapon.Bullets
 						var shield = player.GetBonus(EnumObjectType.Shield);
 						damageMod = shield == null ? 1f : shield.DamageFactor;
 					}
-                    owner.Frag += 1;
 				}
 				obj.HealthAmount -= Damage * damageMod;
+				if (obj.Is(EnumObjectType.Player) && obj.HealthAmount < 0.1) if (owner != null) owner.PlayerFrag += 1;
+				if (obj.HealthAmount < 0.1) if (owner != null) owner.PlayerExperience += 300; // Получение опыта
+				if (owner != null) owner.PlayerExperience += 50;
 				res.Add(new ObjectHealthChanged(obj.HealthAmount, obj.Id, time));
 				// убираем пулю
 				IsActive = false;
-                owner.Exp += 100;
 			}
 
 		    if (obj.Is(EnumObjectType.Wall))
