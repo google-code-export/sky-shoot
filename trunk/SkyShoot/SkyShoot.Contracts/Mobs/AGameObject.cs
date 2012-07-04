@@ -12,6 +12,7 @@ namespace SkyShoot.Contracts.Mobs
 	public class AGameObject
 	{
 		const int CommonAttributesShift = 32;
+		int team = 0;//Определяет команду. Нечеловеки относятся к 0. Потом можно переписать на структуру принадлежности.
 		/// <summary>
 		/// основное перечисление всех возможных типов обектов игры
 		/// </summary>
@@ -114,6 +115,16 @@ namespace SkyShoot.Contracts.Mobs
 		{
 			get { return HealthAmount > 0; }
 			set { if (!value) HealthAmount = -1; }
+		}
+
+		public int GetTeam()
+		{
+			return team;
+		}
+
+		public void SetTeam(int newTeam)
+		{
+			team = newTeam;
 		}
 
 		#endregion
