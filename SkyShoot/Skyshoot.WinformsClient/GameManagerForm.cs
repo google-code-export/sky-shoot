@@ -149,7 +149,7 @@ namespace SkyShoot.WinFormsClient
 					return;
 				}
 				_activeGame = _service.CreateGame(newGame.Mode, newGame.MaxPlayers,
-				                                  newGame.Tile);
+				                                  newGame.Tile, 1);//заглушка "1" вместо получения количества команд
 				if (_activeGame != null)
 				{
 					Mode = Modes.Created;

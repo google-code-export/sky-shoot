@@ -16,13 +16,14 @@ namespace SkyShoot.Contracts.Session
         {
         }
 
-        public GameDescription(List<string> players, int maxPlayersAllowed, GameMode gameType, int gameId, TileSet usedTileSet)
+        public GameDescription(List<string> players, int maxPlayersAllowed, GameMode gameType, int gameId, TileSet usedTileSet, int teams)
         {
             GameId = gameId;
             Players = players;
             MaximumPlayersAllowed = maxPlayersAllowed;
             GameType = gameType;
             UsedTileSet = usedTileSet;
+			Teams = teams;
         }
 
 		[DataMember]
@@ -40,9 +41,12 @@ namespace SkyShoot.Contracts.Session
 		[DataMember]
 		public TileSet UsedTileSet { get; set; }
 
+		[DataMember]
+		public int Teams { get; set; }
+
 		public override string ToString()
 		{
-		    return string.Format("[ {0} ; {1} ; {2}/{3} ]", UsedTileSet, GameType, Players.Count, MaximumPlayersAllowed);
+		    return string.Format("[ {0} ; {1} ; {2}/{3} ; {4}]", UsedTileSet, GameType, Players.Count, MaximumPlayersAllowed, Teams);
 		}
 	}
 }
