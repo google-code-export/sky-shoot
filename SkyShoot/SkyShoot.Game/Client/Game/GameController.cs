@@ -1,19 +1,21 @@
 using System;
-using System.Diagnostics;
-using System.Security.Cryptography;
-using System.ServiceModel;
+
 using System.Text;
+
+using System.Security.Cryptography;
+
 using Microsoft.Xna.Framework;
+
 using Microsoft.Xna.Framework.Input;
+
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Mobs;
-using SkyShoot.Contracts.Perks;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Session;
 using SkyShoot.Contracts.Statistics;
 using SkyShoot.Contracts.Weapon;
+
 using SkyShoot.Game.Controls;
-using SkyShoot.Game.Screens;
 
 namespace SkyShoot.Game.Client.Game
 {
@@ -49,8 +51,6 @@ namespace SkyShoot.Game.Client.Game
 
 		private static GameController _localInstance;
 
-		private ISkyShootService _service;
-
 		public static GameController Instance
 		{
 			get { return _localInstance ?? (_localInstance = new GameController()); }
@@ -60,7 +60,7 @@ namespace SkyShoot.Game.Client.Game
 
 		private GameController()
 		{
-			InitConnection();
+			// InitConnection();
 
 			SoundManager.Initialize();
 			_soundManager = SoundManager.Instance;
@@ -152,10 +152,10 @@ namespace SkyShoot.Game.Client.Game
 
 		#endregion
 
-		#region ClientInput
+		#region обработка ввода
 
 		private DateTime _dateTime;
-		private const int Rate = 1000 / 10;
+		private const int RATE = 1000 / 10;
 
 		public void HandleInput(Controller controller)
 		{
@@ -181,7 +181,7 @@ namespace SkyShoot.Game.Client.Game
 
 			if (controller.ShootButton == ButtonState.Pressed)
 			{
-				if ((DateTime.Now - _dateTime).Milliseconds > Rate)
+				if ((DateTime.Now - _dateTime).Milliseconds > RATE)
 				{
 					_dateTime = DateTime.Now;
 					Shoot(player.ShootVectorM);
@@ -189,185 +189,60 @@ namespace SkyShoot.Game.Client.Game
 			}
 		}
 
-		private void InitConnection()
-		{
-			try
-			{
-				var channelFactory = new ChannelFactory<ISkyShootService>("SkyShootEndpoint");
-				_service = channelFactory.CreateChannel();
-			}
-			catch (Exception e)
-			{
-				FatalError(e);
-				// Trace.WriteLine("Can't connect to SkyShootService");
-				// Trace.WriteLine(e);
-				// !! @todo catch this!
-				MessageBox.Message = "Connection error!";
-				MessageBox.Next = ScreenManager.ScreenEnum.LoginScreen;
-				ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MessageBoxScreen);
-				// throw;
-			}
-		}
+		#endregion
 
-		private void FatalError(Exception e)
-		{
-			Trace.WriteLine(e);
-
-			MessageBox.Message = "Connection error!";
-			MessageBox.Next = ScreenManager.ScreenEnum.LoginScreen;
-			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MessageBoxScreen);
-		}
+		#region регистрация и прочее
 
 		public bool Register(string username, string password)
 		{
-			try
-			{
-				return _service.Register(username, HashHelper.GetMd5Hash(password));
-			}
-			catch (Exception e)
-			{
-				FatalError(e);
-				return false;
-			}
+			// TODO обращаться напрямую
+			return ConnectionManager.Instance.Register(username, password);
 		}
 
 		public Guid? Login(string username, string password)
 		{
-			Guid? login = null;
-			try
-			{
-				login = _service.Login(username, HashHelper.GetMd5Hash(password));
-			}
-			catch (Exception e)
-			{
-				FatalError(e);
-			}
-			if (login.HasValue)
-			{
-				MyId = login.Value;
-			}
-			else
-			{
-				MessageBox.Message = "Connection error!";
-				MessageBox.Next = ScreenManager.ScreenEnum.LoginScreen;
-				ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MessageBoxScreen);
-			}
-
-			return login;
+			// TODO check for null
+			MyId = ConnectionManager.Instance.Login(username, password).Value;
+			return MyId;
 		}
 
 		public GameDescription[] GetGameList()
 		{
-			try
-			{
-				return _service.GetGameList();
-			}
-			catch (Exception e)
-			{
-				FatalError(e);
-				return null;
-			}
+			return ConnectionManager.Instance.GetGameList();
 		}
 
 		public GameDescription CreateGame(GameMode mode, int maxPlayers, TileSet tile, int teams)
 		{
-			try
-			{
-				return _service.CreateGame(mode, maxPlayers, tile, teams);
-			}
-			catch (Exception e)
-			{
-				FatalError(e);
-				return null;
-			}
+			return ConnectionManager.Instance.CreateGame(mode, maxPlayers, tile);
 		}
 
 		public bool JoinGame(GameDescription game)
 		{
-			try
-			{
-				return _service.JoinGame(game);
-			}
-			catch (Exception e)
-			{
-				FatalError(e);
-				return false;
-			}
+			return ConnectionManager.Instance.JoinGame(game);
 		}
 
-		public void Move(Vector2 direction)
+		public void LeaveGame()
 		{
-			Move(TypeConverter.Xna2XnaLite(direction));
+			ConnectionManager.Instance.LeaveGame();
 		}
 
-		public AGameEvent[] Move(XNA.Framework.Vector2 direction)
+		public Contracts.Session.GameLevel GameStart(int gameId)
 		{
-			try
-			{
-				// var sw = new Stopwatch();
-				// sw.Start();
-				return _service.Move(direction);
-				// sw.Stop();
-				// Trace.WriteLine("SW:serv:Move " + sw.ElapsedMilliseconds);
-			}
-			catch (Exception e)
-			{
-				FatalError(e);
-				return null;
-			}
+			return ConnectionManager.Instance.GameStart(gameId);
 		}
 
-		public AGameEvent[] ChangeWeapon(WeaponType type)
+		public string[] PlayerListUpdate()
 		{
-			// do nothing
-			try
-			{
-				// var sw = new Stopwatch();
-				// sw.Start();
-				return _service.ChangeWeapon(type);
-				// sw.Stop();
-				// Trace.WriteLine("SW:serv:ChangeWeapon " + sw.ElapsedMilliseconds);
-			}
-			catch (Exception e)
-			{
-				FatalError(e);
-				return null;
-			}
+			return ConnectionManager.Instance.PlayerListUpdate();
 		}
 
-		public AGameEvent[]  Shoot(XNA.Framework.Vector2 direction)
-		{
-			try
-			{
-				// var sw = new Stopwatch();
-				// sw.Start();
-				return _service.Shoot(direction);
-				// sw.Stop();
-				// Trace.WriteLine("SW:serv:Shoot " + sw.ElapsedMilliseconds);
-			}
-			catch (Exception e)
-			{
-				FatalError(e);
-				return null;
-			}
-		}
+		#endregion
 
-		public AGameEvent[] GetEvents()
+		#region сама игра
+		
+		public AGameObject[] SynchroFrame()
 		{
-			try
-			{
-				return _service.GetEvents();
-			}
-			catch (Exception e)
-			{
-				FatalError(e);
-				return null;
-			}
-		}
-
-		public void Shoot(Vector2 direction)
-		{
-			Shoot(TypeConverter.Xna2XnaLite(direction));
+			return ConnectionManager.Instance.SynchroFrame();
 		}
 
 		//public void TakeBonus(AObtainableDamageModifier bonus)
@@ -382,54 +257,52 @@ namespace SkyShoot.Game.Client.Game
 		//  }
 		//}
 
-		public void TakePerk(Perk perk)
+		// TODO в ConnectionManager
+		//		public void TakePerk(Perk perk)
+		//		{
+		//			try
+		//			{
+		//				//_service.TakePerk(perk);
+		//			}
+		//			catch (Exception e)
+		//			{
+		//				FatalError(e);
+		//			}
+		//		}
+
+		public void Shoot(Vector2 direction)
 		{
-			try
-			{
-				//_service.TakePerk(perk);
-			}
-			catch (Exception e)
-			{
-				FatalError(e);
-			}
+			Shoot(TypeConverter.Xna2XnaLite(direction));
 		}
 
-		public void LeaveGame()
+		public void Move(Vector2 direction)
 		{
-			try
-			{
-				_service.LeaveGame();
-			}
-			catch (Exception e)
-			{
-				FatalError(e);
-			}
+			Move(TypeConverter.Xna2XnaLite(direction));
 		}
 
-		public Contracts.Session.GameLevel GameStart(int gameId)
+		public AGameEvent[] Move(XNA.Framework.Vector2 direction)
 		{
-			try
-			{
-				return _service.GameStart(gameId);
-			}
-			catch (Exception e)
-			{
-				FatalError(e);
-				throw;
-			}
+			return ConnectionManager.Instance.Move(direction);
 		}
 
-		public AGameObject[] SynchroFrame()
+		public AGameEvent[] ChangeWeapon(WeaponType type)
 		{
-			try
-			{
-				return _service.SynchroFrame();
-			}
-			catch (Exception exc)
-			{
-				Trace.WriteLine("game:SynchroFrame"+exc);
-				return new AGameObject[] {};
-			}
+			// TODO в ConnectionManager
+			// do nothing
+			//			try
+			//			{
+			//				// var sw = new Stopwatch();
+			//				// sw.Start();
+			//				return _service.ChangeWeapon(type);
+			//				// sw.Stop();
+			//				// Trace.WriteLine("SW:serv:ChangeWeapon " + sw.ElapsedMilliseconds);
+			//			}
+			//			catch (Exception e)
+			//			{
+			//				FatalError(e);
+			//				return null;
+			//			}
+			return ConnectionManager.Instance.ChangeWeapon(type);
 		}
 
 		public Stats? GetStats() // Статистика
@@ -443,18 +316,39 @@ namespace SkyShoot.Game.Client.Game
 				return null;
 			}
 		}
-
-		public string[] PlayerListUpdate()
+		
+		public AGameEvent[] Shoot(XNA.Framework.Vector2 direction)
 		{
-			try
-			{
-				return _service.PlayerListUpdate();
-			}
-			catch (Exception exc)
-			{
-				Trace.WriteLine(exc);
-				return new string[] {};
-			}
+			// TODO в ConnectionManager через очередь
+			//			try
+			//			{
+			//				// var sw = new Stopwatch();
+			//				// sw.Start();
+			//				return _service.Shoot(direction);
+			//				// sw.Stop();
+			//				// Trace.WriteLine("SW:serv:Shoot " + sw.ElapsedMilliseconds);
+			//			}
+			//			catch (Exception e)
+			//			{
+			//				FatalError(e);
+			//				return null;
+			//			}
+			return ConnectionManager.Instance.Shoot(direction);
+		}
+
+		public AGameEvent[] GetEvents()
+		{
+			// TODO в ConnectionManager через очередь
+			//			try
+			//			{
+			//				return _service.GetEvents();
+			//			}
+			//			catch (Exception e)
+			//			{
+			//				FatalError(e);
+			//				return null;
+			//			}
+			return ConnectionManager.Instance.GetEvents();
 		}
 
 		#endregion

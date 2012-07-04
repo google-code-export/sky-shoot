@@ -127,6 +127,7 @@
     <Compile Include="Client\GameObjects\GameObject.cs" />
     <Compile Include="Client\GameObjects\DrawableGameObject.cs" />
     <Compile Include="Client\GameObjects\Projectile.cs" />
+    <Compile Include="Client\Game\ConnectionManager.cs" />
     <Compile Include="Client\Game\GameController.cs" />
     <Compile Include="Client\Game\GameFactory.cs" />
     <Compile Include="Client\Game\GameLevel.cs" />

@@ -11,16 +11,13 @@ using SkyShoot.Service.Bonus;
 using SkyShoot.Service.Bonuses;
 using SkyShoot.Service.Mobs;
 using SkyShoot.XNA.Framework;
-using SkyShoot.Contracts.Weapon;
-using SkyShoot.ServProgram.Mobs;
 
 namespace SkyShoot.Service.Session
-{
-	
+{	
 	public class GameSession
 	{
 		private readonly List<AGameObject> _gameObjects;
-		private readonly List<AGameObject> _NewObjects;
+		private readonly List<AGameObject> _newObjects;
 
 		public GameDescription LocalGameDescription { get; private set; }
 
@@ -47,7 +44,7 @@ namespace SkyShoot.Service.Session
 			var playerNames = new List<string>();
 
 			_gameObjects = new List<AGameObject>();
-			_NewObjects = new List<AGameObject>();
+			_newObjects = new List<AGameObject>();
 
 			LocalGameDescription = new GameDescription(playerNames, maxPlayersAllowed, gameType, gameID, tileSet, teams);
 			_spiderFactory = new SpiderFactory(GameLevel);
@@ -92,9 +89,9 @@ namespace SkyShoot.Service.Session
 					{
 						//_projectiles.Add(b);
 						//_projectiles.GetInActive().Copy(b);
-						lock (_NewObjects)
+						lock (_newObjects)
 						{
-							_NewObjects.Add(b);// GetInActive().Copy(b);
+							_newObjects.Add(b);// GetInActive().Copy(b);
 							PushEvent(new NewObjectEvent(b, _timerCounter));
 						}
 					}
@@ -114,7 +111,7 @@ namespace SkyShoot.Service.Session
 
 		private IEnumerable<AGameEvent> NewBonusDropped(AGameObject bonus, long time)
 		{
-			_NewObjects.Add(bonus);
+			_newObjects.Add(bonus);
 			return new[] { new NewObjectEvent(bonus, time) };
 		}
 
@@ -306,7 +303,7 @@ namespace SkyShoot.Service.Session
 				var mob = _spiderFactory.CreateMob();
 				// System.Diagnostics.Trace.WriteLine("mob spawned" + mob.Id);
 				
-				_NewObjects.Add(mob);
+				_newObjects.Add(mob);
 				r.Add(new NewObjectEvent(mob, time));
 
 			}
@@ -344,9 +341,9 @@ namespace SkyShoot.Service.Session
 						continue;
 					}
 
-					lock (_NewObjects)
+					lock (_newObjects)
 					{
-						eventsCash.AddRange(activeObject.Think(_gameObjects, _NewObjects, now));
+						eventsCash.AddRange(activeObject.Think(_gameObjects, _newObjects, now));
 					}
 
 					var newCoord = activeObject.ComputeMovement(_updateDelay, GameLevel);
@@ -372,9 +369,9 @@ namespace SkyShoot.Service.Session
 						{
 							continue;
 						}
-						lock (_NewObjects)
+						lock (_newObjects)
 						{
-							eventsCash.AddRange(activeObject.Do(slaveObject, _NewObjects, now));
+							eventsCash.AddRange(activeObject.Do(slaveObject, _newObjects, now));
 						}
 						if (slaveObject.Is(AGameObject.EnumObjectType.Block)
 							&& activeObject.Is(AGameObject.EnumObjectType.Block))
@@ -415,10 +412,10 @@ namespace SkyShoot.Service.Session
 				}
 
 				_gameObjects.RemoveAll(m => !m.IsActive);
-				lock (_NewObjects)
+				lock (_newObjects)
 				{
-					_gameObjects.AddRange(_NewObjects);
-					_NewObjects.Clear();
+					_gameObjects.AddRange(_newObjects);
+					_newObjects.Clear();
 				}
 			}
 

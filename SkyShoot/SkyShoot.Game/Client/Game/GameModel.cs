@@ -157,7 +157,8 @@ namespace SkyShoot.Game.Client.Game
 
 				else
 				{
-					DrawableGameObject drawableGameObject = GetMob(gameEvent.GameObjectId);
+					// TODO check null
+					DrawableGameObject drawableGameObject = GetMob(gameEvent.GameObjectId.Value);
 					if (drawableGameObject != null)
 					{
 						gameEvent.UpdateMob(drawableGameObject);
