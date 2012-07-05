@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<model>
+  <weapon name="Pistol">
+	<property name="iCountBullets" value="1"/>
+  </weapon>
+  <weapon name="Shotgun">
+	<property name="TexturePath" value="Shotgun Texture"/>
+	<property name="iCountBullets" value="5"/>
+  </weapon>
+  <weapon name="Railgun">
+	<property name="TexturePath" value="Railgun Texture"/>
+  </weapon>
+  <weapon name="Toxicgun">
+	<property name="TexturePath" value="Toxic Gun Texture"/>
+	<property name="iCountBullets" value="10"/>
+  </weapon>
+</model>
