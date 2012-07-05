@@ -33,7 +33,7 @@ namespace SkyShoot.Service
 			get { return _exp; }
 			set
 			{
-				if (_exp >= 500 * PlayerLevel -100)
+				if (_exp >= 500 * PlayerLevel - 0)
 				{
 					_exp = value - 500 * PlayerLevel;
 					PlayerLevel++;
@@ -46,7 +46,6 @@ namespace SkyShoot.Service
 		}
 		public int PlayerFrag { get; set; }
 		public int PlayerLevel { get; set; }
-
 
 
 		//private Account.AccountManager _accountManager = new Account.AccountManager();
@@ -67,7 +66,7 @@ namespace SkyShoot.Service
 			InitStatistics();
 		}
 
-		private void InitStatistics() // Начальная статистика
+		public void InitStatistics() // Начальная статистика
 		{
 			PlayerExperience = 0;
 			PlayerFrag = 0;
@@ -277,6 +276,7 @@ namespace SkyShoot.Service
 		public GameLevel GameStart(int gameId)
 		{
 			// Trace.WriteLine("GameStarted");
+			InitStatistics(); // Обнуль
 			return _sessionManager.GameStarted(gameId);
 		}
 
