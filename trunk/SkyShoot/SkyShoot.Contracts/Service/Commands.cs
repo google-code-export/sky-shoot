@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SkyShoot.Contracts.Service
 {
-	class Commands
+	class Player
 	{
 		int command;
 		string name;
