@@ -15,6 +15,7 @@ using SkyShoot.Contracts.Weapon;
 using SkyShoot.Service.Bonuses;
 using SkyShoot.Service.Session;
 using SkyShoot.XNA.Framework;
+using SkyShoot.ServProgram.Account;
 
 namespace SkyShoot.Service
 {
@@ -48,7 +49,7 @@ namespace SkyShoot.Service
 		public int PlayerLevel { get; set; }
 
 
-		//private Account.AccountManager _accountManager = new Account.AccountManager();
+		private IAccountManager _accountManager = SimpleAccountManager.Instance;
 		private readonly SessionManager _sessionManager = SessionManager.Instance;
 
 		private static readonly List<MainSkyShootService> ClientsList = new List<MainSkyShootService>();
@@ -125,7 +126,7 @@ namespace SkyShoot.Service
 
 		public bool Register(string username, string password)
 		{
-			/*bool result = _accountManager.Register(username, password);
+			bool result = _accountManager.Register(username, password);
 			if(result)
 			{
 				Trace.WriteLine(username + "has registered");
@@ -134,15 +135,12 @@ namespace SkyShoot.Service
 			{
 				Trace.WriteLine(username + "is not registered. The name of the employing or other errors");
 			}
-			return result; */
-			return true;
+			return result;
 		}
 
 		public Guid? Login(string username, string password)
 		{
-			bool result = true; //_accountManager.Login(username, password);
-
-			if (result)
+			if (_accountManager.Login(username, password))
 			{
 				Name = username;
 				//_callback = OperationContext.Current.GetCallbackChannel<ISkyShootCallback>();

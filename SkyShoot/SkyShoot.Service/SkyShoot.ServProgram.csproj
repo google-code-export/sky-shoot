@@ -83,7 +83,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Account\AccountInfoPrg.cs" />
-    <Compile Include="Account\AccountManagerPrg.cs" />
+    <Compile Include="Account\SimpleAccountManager.cs" />
+    <Compile Include="Account\IAccountManager.cs" />
     <Compile Include="Bonus\AGameBonus.cs" />
     <Compile Include="Bonus\BonusFactory.cs" />
     <Compile Include="Bonus\DoubleDamage.cs" />
