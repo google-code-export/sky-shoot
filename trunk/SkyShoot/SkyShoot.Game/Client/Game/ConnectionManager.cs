@@ -261,6 +261,9 @@ namespace SkyShoot.Game.Client.Game
 
 		public bool Register(string username, string password)
 		{
+			// initialize connection
+			InitConnection();
+
 			try
 			{
 				return _service.Register(username, HashHelper.GetMd5Hash(password));
