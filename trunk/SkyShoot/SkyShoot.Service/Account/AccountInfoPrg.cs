@@ -5,9 +5,10 @@ using System.Text;
 
 namespace SkyShoot.Service.Account
 {
-	public class Account
+	[Serializable()]
+	public class AccountInfo
 	{
-		public Account() : base() { }
+		public AccountInfo() : base() { }
 
 		//public Account(string partitionKey, string rowKey) : base(partitionKey, rowKey) { }
 
