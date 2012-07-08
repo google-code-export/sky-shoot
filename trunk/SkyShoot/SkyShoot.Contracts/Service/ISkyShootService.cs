@@ -74,6 +74,6 @@ namespace SkyShoot.Contracts.Service
 		/// </summary>
 		/// <returns>массив имен игроков</returns>
 		[OperationContract]
-		String[] PlayerListUpdate();
+        PlayerDescription[] PlayerListUpdate();
 	}
 }

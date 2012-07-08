@@ -308,13 +308,13 @@ namespace SkyShoot.Service
 			return playerstats;
 		}
 
-		public String[] PlayerListUpdate()
+        public PlayerDescription[] PlayerListUpdate()
 		{
 			GameSession session;
 			_sessionManager.SessionTable.TryGetValue(Id, out session);
 			if (session == null)
 			{
-				return new string[] {};
+                return new PlayerDescription[] { };
 			}
 			return session.LocalGameDescription.Players.ToArray();
 		}
