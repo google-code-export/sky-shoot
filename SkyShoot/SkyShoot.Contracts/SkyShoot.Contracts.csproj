@@ -65,8 +65,10 @@
     <Compile Include="Service\Constants.cs" />
     <Compile Include="Mobs\AGameObject.cs" />
     <Compile Include="Perks\Perk.cs" />
+    <Compile Include="Session\GameDescription.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Session\TileSet.cs" />
-    <Compile Include="Session\GameDescription.cs" />
     <Compile Include="Service\ISkyShootService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Session\GameLevel.cs" />
