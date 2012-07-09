@@ -153,7 +153,7 @@ namespace SkyShoot.WinFormsClient
 				if (_activeGame != null)
 				{
 					Mode = Modes.Created;
-				}
+				} 
 				else
 				{
 					Trace.WriteLine("Cli: CreateGame: can't create");
