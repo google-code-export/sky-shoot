@@ -94,7 +94,7 @@ namespace SkyShoot.Game.Screens
             _playersList.Items.Clear();
             foreach (PlayerDescription playerName in names)
             {
-                _playersList.Items.Add(String.Format("{0}", playerName.Name));
+                _playersList.Items.Add(String.Format(playerName.Name));
             }
         }
 

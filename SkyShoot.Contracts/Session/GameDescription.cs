@@ -42,7 +42,7 @@ namespace SkyShoot.Contracts.Session
         public GameDescription(List<PlayerDescription> players, int maxPlayersAllowed, GameMode gameType, int gameId, TileSet usedTileSet, int teams)
         {
             GameId = gameId;
-			List<PlayerDescription> Players = players;
+			Players = players;
             MaximumPlayersAllowed = maxPlayersAllowed;
             GameType = gameType;
             UsedTileSet = usedTileSet;

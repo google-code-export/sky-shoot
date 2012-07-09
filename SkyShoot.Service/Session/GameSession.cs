@@ -274,7 +274,7 @@ namespace SkyShoot.Service.Session
 
 			if (_gameObjects.Count == LocalGameDescription.MaximumPlayersAllowed)
 			{
-				// Trace.WriteLine("player added"+player.Name);
+				 Trace.WriteLine("player added"+player.Name);
 				var startThread = new System.Threading.Thread(Start);
 				startThread.Start();
 			}
