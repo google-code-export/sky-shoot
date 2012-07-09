@@ -62,6 +62,7 @@ namespace SkyShoot.Game.Client.Game
 			          		Name = "ConnectionManager"
 			          	};
 			_thread.Start();
+			_service = null;
 		}
 
 		public void Run()
@@ -101,14 +102,17 @@ namespace SkyShoot.Game.Client.Game
 
 		private void InitConnection()
 		{
-			try
+			if (_service == null)
 			{
-				var channelFactory = new ChannelFactory<ISkyShootService>("SkyShootEndpoint");
-				_service = channelFactory.CreateChannel();
-			}
-			catch (Exception e)
-			{
-				FatalError(e);
+				try
+				{
+					var channelFactory = new ChannelFactory<ISkyShootService>("SkyShootEndpoint");
+					_service = channelFactory.CreateChannel();
+				}
+				catch (Exception e)
+				{
+					FatalError(e);
+				}
 			}
 		}
 
@@ -259,42 +263,39 @@ namespace SkyShoot.Game.Client.Game
 
 		#region other service methods
 
-		public bool Register(string username, string password)
+		public AccountManagerErrorCode Register(string username, string password)
 		{
 			// initialize connection
 			InitConnection();
 
+			AccountManagerErrorCode errorCode = AccountManagerErrorCode.UnknownError;
+
 			try
 			{
-				return _service.Register(username, HashHelper.GetMd5Hash(password));
+				errorCode = _service.Register(username, HashHelper.GetMd5Hash(password));
 			}
 			catch (Exception e)
 			{
 				FatalError(e);
-				return false;
+				return AccountManagerErrorCode.UnknownExceptionOccured;
 			}
+			return errorCode;
 		}
 
-		public Guid? Login(string username, string password)
+		public Guid? Login(string username, string password, out AccountManagerErrorCode errorCode)
 		{
 			// initialize connection
 			InitConnection();
 
 			Guid? login = null;
+			errorCode = AccountManagerErrorCode.UnknownError;
 			try
 			{
-				login = _service.Login(username, HashHelper.GetMd5Hash(password));
+				login = _service.Login(username, HashHelper.GetMd5Hash(password), out errorCode);
 			}
 			catch (Exception e)
 			{
 				FatalError(e);
-			}
-
-			if (!login.HasValue)
-			{
-				MessageBox.Message = "Login error!";
-				MessageBox.Next = ScreenManager.ScreenEnum.LoginScreen;
-				ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MessageBoxScreen);
 			}
 
 			return login;

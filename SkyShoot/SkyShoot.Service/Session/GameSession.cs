@@ -13,8 +13,7 @@ using SkyShoot.Service.Mobs;
 using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Service.Session
-{
-
+{	
 	public class GameSession
 	{
 		private readonly List<AGameObject> _gameObjects;
@@ -42,7 +41,7 @@ namespace SkyShoot.Service.Session
 			IsStarted = false;
 			GameLevel = new GameLevel(tileSet);
 
-            var playerNames = new List<PlayerDescription>();
+			var playerNames = new List<string>();
 
 			_gameObjects = new List<AGameObject>();
 			_newObjects = new List<AGameObject>();
@@ -147,7 +146,7 @@ namespace SkyShoot.Service.Session
 
 		public void PlayerLeave(MainSkyShootService player)
 		{
-            LocalGameDescription.Players.Remove(LocalGameDescription.Players.Find(p => p.Name.Equals(player.Name)));
+			LocalGameDescription.Players.Remove(player.Name);
 
 			player.MeMoved -= SomebodyMoved;
 			player.MeShot -= SomebodyShot;
@@ -263,14 +262,8 @@ namespace SkyShoot.Service.Session
 				return false;
 
 			_gameObjects.Add(player);
-            #region ToDo: //Переписать. Выглядит костылём.
-            var pl = new Contracts.Session.PlayerDescription(player.Name);            
-
-            //LocalGameDescription.Players.Add(player.Name);
-            LocalGameDescription.Players.Add(pl);
-            #endregion
-
-            var names = new String[_gameObjects.Count];
+			LocalGameDescription.Players.Add(player.Name);
+			var names = new String[_gameObjects.Count];
 			//UpdatePlayersList(player);
 
 			//if (NewPlayerConnected != null) NewPlayerConnected(player);

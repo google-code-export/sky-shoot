@@ -99,9 +99,6 @@
     <Compile Include="Mobs\ShootingMob.cs" />
     <Compile Include="Mobs\Spider.cs" />
     <Compile Include="Mobs\SpiderFactory.cs" />
-    <Compile Include="Statistics\ExponentialExpTracker.cs" />
-    <Compile Include="Statistics\ExpTracker.cs" />
-    <Compile Include="Statistics\LinearExpTracker.cs" />
     <Compile Include="Weapon\Bullets\Flame.cs" />
     <Compile Include="Weapon\Bullets\HeaterBullet.cs" />
     <Compile Include="Weapon\Bullets\SpiderBullet.cs" />

@@ -110,12 +110,8 @@
     <Compile Include="Data\User.generated.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Statistics\AMob.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\ISecurityService.cs" />
-    <Compile Include="Statistics\Exponential.cs" />
-    <Compile Include="Statistics\ExpTracker.cs" />
-    <Compile Include="Statistics\Linear.cs" />
     <Compile Include="Users\IUsersService.cs" />
     <Compile Include="Security\SecurityService.cs" />
     <Compile Include="Users\UsersService.cs" />
@@ -142,10 +138,6 @@
     <ProjectReference Include="..\Common\SkyShoot.Common.csproj">
       <Project>{40492004-25D3-4FF7-BFE4-0A84EC8F3AF9}</Project>
       <Name>SkyShoot.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SkyShoot.Contracts\SkyShoot.Contracts.csproj">
-      <Project>{27DFF06E-1942-47CE-8BF4-02F7CB108F6A}</Project>
-      <Name>SkyShoot.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

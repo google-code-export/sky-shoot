@@ -14,7 +14,6 @@ using SkyShoot.Contracts.Statistics;
 using SkyShoot.Contracts.Weapon;
 using SkyShoot.Service.Bonuses;
 using SkyShoot.Service.Session;
-using SkyShoot.Service.Statistics;
 using SkyShoot.XNA.Framework;
 using SkyShoot.ServProgram.Account;
 
@@ -29,8 +28,23 @@ namespace SkyShoot.Service
 		public string Name;
 		public Queue<AGameEvent> NewEvents;
 		public List<AGameBonus> Bonuses;
-		public ExpTracker Tracker;
-		public int PlayerExperience { get; set; } // Описание повышения уровня{}
+		private int _exp;
+		public int PlayerExperience // Описание повышения уровня
+		{
+			get { return _exp; }
+			set
+			{
+				if (_exp >= 500 * PlayerLevel - 0)
+				{
+					_exp = value - 500 * PlayerLevel;
+					PlayerLevel++;
+				}
+				else
+				{
+					_exp = value;
+				}
+			}
+		}
 		public int PlayerFrag { get; set; }
 		public int PlayerLevel { get; set; }
 
@@ -50,11 +64,14 @@ namespace SkyShoot.Service
 			Bonuses = new List<AGameBonus>();
 
 			InitWeapons();
+			InitStatistics();
 		}
 
 		public void InitStatistics() // Начальная статистика
 		{
-			Tracker = new LinearExpTracker();
+			PlayerExperience = 0;
+			PlayerFrag = 0;
+			PlayerLevel = 1;
 		}
 
 		private void InitWeapons()
@@ -107,23 +124,15 @@ namespace SkyShoot.Service
 			LeaveGame();
 		}
 
-		public bool Register(string username, string password)
+		public AccountManagerErrorCode Register(string username, string password)
 		{
-			bool result = _accountManager.Register(username, password);
-			if(result)
-			{
-				Trace.WriteLine(username + "has registered");
-			}
-			else
-			{
-				Trace.WriteLine(username + "is not registered. The name of the employing or other errors");
-			}
-			return result;
+			return _accountManager.Register(username, password);
 		}
 
-		public Guid? Login(string username, string password)
+		public Guid? Login(string username, string password, out AccountManagerErrorCode errorCode)
 		{
-			if (_accountManager.Login(username, password))
+			errorCode = _accountManager.Login(username, password);
+			if (errorCode == AccountManagerErrorCode.Ok)
 			{
 				Name = username;
 				//_callback = OperationContext.Current.GetCallbackChannel<ISkyShootCallback>();
@@ -282,19 +291,22 @@ namespace SkyShoot.Service
 			return null;
 		}
 
-		// Статистика
-		public Stats? GetStats() 
+		public Stats? GetStats() // Статистика
 		{
-			return Tracker.GetStats();
+			Stats playerstats;
+			playerstats.Exp = PlayerExperience;
+			playerstats.Frag = PlayerFrag;
+			playerstats.Lvl = PlayerLevel;
+			return playerstats;
 		}
 
-        public PlayerDescription[] PlayerListUpdate()
+		public String[] PlayerListUpdate()
 		{
 			GameSession session;
 			_sessionManager.SessionTable.TryGetValue(Id, out session);
 			if (session == null)
 			{
-                return new PlayerDescription[] { };
+				return new string[] {};
 			}
 			return session.LocalGameDescription.Players.ToArray();
 		}
