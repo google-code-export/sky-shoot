@@ -8,6 +8,8 @@ using SkyShoot.Service.Account;
 using System.Diagnostics;
 using System.Reflection;
 
+using SkyShoot.Contracts.Service;
+
 namespace SkyShoot.ServProgram.Account
 {
 	public class SimpleAccountManager : IAccountManager
@@ -45,14 +47,14 @@ namespace SkyShoot.ServProgram.Account
 			outputStream.Close();
 		}
 
-		public bool Register(string username, string password/*,  string email*/)
+		public AccountManagerErrorCode Register(string username, string password/*,  string email*/)
 		{
 			try
 			{
 				_localInstance.readAccounts();
 				if (_accounts.ContainsKey(username))
 				{
-					return false;
+					return AccountManagerErrorCode.UsernameTaken;
 				}
 				AccountInfo newAccount = new AccountInfo() {
 					Login = username,
@@ -65,12 +67,12 @@ namespace SkyShoot.ServProgram.Account
 			}
 			catch (Exception)
 			{
-				return false;
+				return AccountManagerErrorCode.UnknownExceptionOccured;
 			}
-			return true;
+			return AccountManagerErrorCode.Ok;
 		}
 
-		public bool Login(string username, string password)
+		public AccountManagerErrorCode Login(string username, string password)
 		{
 			try
 			{
@@ -78,17 +80,17 @@ namespace SkyShoot.ServProgram.Account
 				AccountInfo account;
 				if (!_accounts.TryGetValue(username, out account) || !account.Password.Equals(password))
 				{
-					return false;
+					return AccountManagerErrorCode.InvalidUsernameOrPassword;
 				}
 			}
 			catch (Exception)
 			{
-				return false;
+				return AccountManagerErrorCode.UnknownExceptionOccured;
 			}
-			return true;
+			return AccountManagerErrorCode.Ok;
 		}
 
-		public bool DeleteAccount(string username, string password)
+		public AccountManagerErrorCode DeleteAccount(string username, string password)
 		{
 			try
 			{
@@ -96,16 +98,16 @@ namespace SkyShoot.ServProgram.Account
 				AccountInfo account;
 				if (!_accounts.TryGetValue(username, out account) || !account.Password.Equals(password))
 				{
-					return false;
+					return AccountManagerErrorCode.InvalidUsernameOrPassword;
 				}
 				_accounts.Remove(username);
 				_localInstance.writeAccounts();
 			}
 			catch (Exception)
 			{
-				return false;
+				return AccountManagerErrorCode.UnknownExceptionOccured;
 			}
-			return true;
+			return AccountManagerErrorCode.Ok;
 		}
 
 

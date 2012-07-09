@@ -193,16 +193,20 @@ namespace SkyShoot.Game.Client.Game
 
 		#region регистрация и прочее
 
-		public bool Register(string username, string password)
+		public AccountManagerErrorCode Register(string username, string password)
 		{
 			// TODO обращаться напрямую
 			return ConnectionManager.Instance.Register(username, password);
 		}
 
-		public Guid? Login(string username, string password)
+		public Guid? Login(string username, string password, out AccountManagerErrorCode errorCode)
 		{
 			// TODO check for null
-			MyId = ConnectionManager.Instance.Login(username, password).Value;
+			Guid? id = ConnectionManager.Instance.Login(username, password, out errorCode);
+			if (id.HasValue)
+			{
+				MyId = id.Value;
+			}
 			return MyId;
 		}
 

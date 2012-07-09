@@ -8,6 +8,8 @@ using Nuclex.UserInterface.Controls.Desktop;
 using SkyShoot.Game.Client.Game;
 using SkyShoot.Game.Controls;
 
+using SkyShoot.Contracts.Service;
+
 namespace SkyShoot.Game.Screens
 {
 	internal class NewAccountScreen : GameScreen
@@ -153,17 +155,35 @@ namespace SkyShoot.Game.Screens
 				Settings.Default.password = _passwordBox.RealText;
 				Settings.Default.Save();
 
-				if (GameController.Instance.Register(_loginBox.Text, _passwordBox.RealText))
+				AccountManagerErrorCode errorCode = GameController.Instance.Register(_loginBox.Text, _passwordBox.RealText);
+
+				if (errorCode == AccountManagerErrorCode.Ok)
 				{
-					if (GameController.Instance.Login(_loginBox.Text, _passwordBox.RealText).HasValue)
+					if (GameController.Instance.Login(_loginBox.Text, _passwordBox.RealText, out errorCode).HasValue)
 					{
 						ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MainMenuScreen);
 					}
 				}
 				else
 				{
-					MessageBox.Message = "Registration failed";
-					MessageBox.Next = ScreenManager.ScreenEnum.NewAccountScreen;
+					string message = "Registration failed: ";
+					switch (errorCode)
+					{
+						case AccountManagerErrorCode.UnknownExceptionOccured:
+							message += "Unknown exception occured";
+							break;
+						case AccountManagerErrorCode.UsernameTaken:
+							message += "This username is already taken, please try another";
+							break;
+						case AccountManagerErrorCode.UnknownError:
+							message += "Unknown error occured";
+							break;
+						default:
+							message += "Unexpected error code returned";
+							break;
+					}
+					MessageBox.Message = message;
+					MessageBox.Next = ScreenManager.ScreenEnum.LoginScreen;
 					ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MessageBoxScreen);
 				}
 			}		

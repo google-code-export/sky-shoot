@@ -8,6 +8,8 @@ using Nuclex.UserInterface.Controls.Desktop;
 using SkyShoot.Game.Client.Game;
 using SkyShoot.Game.Controls;
 
+using SkyShoot.Contracts.Service;
+
 namespace SkyShoot.Game.Screens
 {
 	internal class LoginScreen : GameScreen
@@ -160,10 +162,35 @@ namespace SkyShoot.Game.Screens
 				Settings.Default.password = _passwordBox.RealText;
 				Settings.Default.Save();
 
-				if (GameController.Instance.Login(_loginBox.Text, _passwordBox.RealText).HasValue)
+				AccountManagerErrorCode errorCode = AccountManagerErrorCode.UnknownError;
+
+				if (GameController.Instance.Login(_loginBox.Text, _passwordBox.RealText, out errorCode).HasValue &&
+					errorCode == AccountManagerErrorCode.Ok)
 				{
 					ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MainMenuScreen);
-				}				
+				}
+				else
+				{
+					string message = "";
+					switch (errorCode)
+					{
+						case AccountManagerErrorCode.UnknownExceptionOccured:
+							message = "Unknown exception occured";
+							break;
+						case AccountManagerErrorCode.InvalidUsernameOrPassword:
+							message = "Invalid username or password";
+							break;
+						case AccountManagerErrorCode.UnknownError:
+							message = "Unknown error occured";
+							break;
+						default:
+							message = "Unexpected error code returned";
+							break;
+					}
+					MessageBox.Message = message;
+					MessageBox.Next = ScreenManager.ScreenEnum.LoginScreen;
+					ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MessageBoxScreen);
+				}
 			}
 		}
 

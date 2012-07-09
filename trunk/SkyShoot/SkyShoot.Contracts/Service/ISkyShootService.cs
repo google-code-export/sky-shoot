@@ -22,10 +22,10 @@ namespace SkyShoot.Contracts.Service
 	public interface ISkyShootService
 	{
 		[OperationContract(IsInitiating = true)]
-		bool Register(string username, string password);
+		AccountManagerErrorCode Register(string username, string password);
 
 		[OperationContract(IsInitiating = true)]
-		Guid? Login(string username, string password);
+		Guid? Login(string username, string password, out AccountManagerErrorCode errorCode);
 
 		[OperationContract]
 		GameDescription[] GetGameList();
@@ -74,6 +74,6 @@ namespace SkyShoot.Contracts.Service
 		/// </summary>
 		/// <returns>массив имен игроков</returns>
 		[OperationContract]
-        PlayerDescription[] PlayerListUpdate();
+		String[] PlayerListUpdate();
 	}
 }

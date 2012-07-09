@@ -8,23 +8,6 @@ namespace SkyShoot.Contracts.Session
 	 * Понятно, что во втором случае, придется создавать класс описывающий
 	 * игрока. Либо использовать, к примеру List<AMob>.
 	 */
-    public class PlayerDescription
-    {
-        public string Name { get; set; }
-        public int Team { get; set; }
-
-        public PlayerDescription(string name)
-        {
-            Name = name;
-            Team = 1;
-        }
-
-        public PlayerDescription(string name, int team)
-        {
-            Name = name;
-            Team = team;
-        }
-    }
 
 	[DataContract]
 	public class GameDescription
@@ -33,10 +16,10 @@ namespace SkyShoot.Contracts.Session
         {
         }
 
-        public GameDescription(List<PlayerDescription> players, int maxPlayersAllowed, GameMode gameType, int gameId, TileSet usedTileSet, int teams)
+        public GameDescription(List<string> players, int maxPlayersAllowed, GameMode gameType, int gameId, TileSet usedTileSet, int teams)
         {
             GameId = gameId;
-            var Players = players;
+            Players = players;
             MaximumPlayersAllowed = maxPlayersAllowed;
             GameType = gameType;
             UsedTileSet = usedTileSet;
@@ -47,7 +30,7 @@ namespace SkyShoot.Contracts.Session
 		public int GameId { get; set; }
 
 		[DataMember]
-        public List<PlayerDescription> Players { get; set; }
+		public List<string> Players { get; set; }
 
 		[DataMember]
 		public int MaximumPlayersAllowed { get; set; }

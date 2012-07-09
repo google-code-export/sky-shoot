@@ -5,8 +5,6 @@ using SkyShoot.Contracts;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Session;
-using SkyShoot.Contracts.Statistics;
-using SkyShoot.Service.Statistics;
 using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Service.Weapon.Bullets
@@ -80,10 +78,9 @@ namespace SkyShoot.Service.Weapon.Bullets
 					}
 				}
 				obj.HealthAmount -= Damage * damageMod;
-
-				// Изменяем статистику	
-				if (owner != null) owner.Tracker.AddExp(owner, obj, (int)(Damage * damageMod));
-				
+				if (obj.Is(EnumObjectType.Player) && obj.HealthAmount < 0.1) if (owner != null) owner.PlayerFrag += 1;
+				if (obj.HealthAmount < 0.1) if (owner != null) owner.PlayerExperience += 300; // Получение опыта
+				if (owner != null) owner.PlayerExperience += 50;
 				res.Add(new ObjectHealthChanged(obj.HealthAmount, obj.Id, time));
 				// убираем пулю
 				IsActive = false;
