@@ -168,7 +168,6 @@ namespace SkyShoot.Contracts.Mobs
 
 		#endregion
 
-
 		// расширить типом моба, размером, цветом, и т.д.
 		#endregion
 
