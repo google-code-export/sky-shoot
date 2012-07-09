@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+	<!-- SSDL content -->
+	<edmx:StorageModels>
+	<Schema Namespace="Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+		<EntityContainer Name="ModelStoreContainer">
+		  <EntitySet Name="Administrators" EntityType="Model.Store.Administrators" store:Type="Tables" Schema="dbo" />
+		  <EntitySet Name="Users" EntityType="Model.Store.Users" store:Type="Tables" Schema="dbo" />
+		</EntityContainer>
+		<EntityType Name="Administrators">
+		  <Key>
+			<PropertyRef Name="Login" />
+		  </Key>
+		  <Property Name="Login" Type="varchar" Nullable="false" MaxLength="100" />
+		  <Property Name="Password" Type="binary" Nullable="false" MaxLength="32" />
+		  <Property Name="Salt" Type="binary" Nullable="false" MaxLength="8" />
+		</EntityType>
+		<EntityType Name="Users">
+		  <Key>
+			<PropertyRef Name="Login" />
+		  </Key>
+		  <Property Name="Login" Type="nvarchar" Nullable="false" MaxLength="100" />
+		  <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="100" />
+		  <Property Name="Password" Type="binary" Nullable="false" MaxLength="32" />
+		  <Property Name="Salt" Type="binary" Nullable="false" MaxLength="8" />
+		  <Property Name="FirstName" Type="nvarchar" MaxLength="100" />
+		  <Property Name="LastName" Type="nvarchar" MaxLength="100" />
+		  <Property Name="AvaUrl" Type="nvarchar" MaxLength="200" />
+		  <Property Name="RegistrationDate" Type="datetime2" Nullable="false" Precision="0" />
+		  <Property Name="LastUpdateDate" Type="datetime2" Nullable="false" Precision="0" />
+		  <Property Name="Status" Type="tinyint" Nullable="false" />
+		</EntityType>
+	  </Schema></edmx:StorageModels>
+	<!-- CSDL content -->
+	<edmx:ConceptualModels>
+	  <Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+		<EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+		  <EntitySet Name="Administrators" EntityType="Model.Administrator" />
+		  <EntitySet Name="Users" EntityType="Model.User" />
+		</EntityContainer>
+		<EntityType Name="Administrator">
+		  <Key>
+			<PropertyRef Name="Login" />
+		  </Key>
+		  <Property Type="String" Name="Login" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+		  <Property Type="Binary" Name="Password" Nullable="false" MaxLength="32" FixedLength="true" />
+		  <Property Type="Binary" Name="Salt" Nullable="false" MaxLength="8" FixedLength="true" />
+		</EntityType>
+		<EntityType Name="User">
+		  <Key>
+			<PropertyRef Name="Login" />
+		  </Key>
+		  <Property Type="String" Name="Login" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+		  <Property Type="String" Name="Email" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+		  <Property Type="Binary" Name="Password" Nullable="false" MaxLength="32" FixedLength="true" />
+		  <Property Type="Binary" Name="Salt" Nullable="false" MaxLength="8" FixedLength="true" />
+		  <Property Type="String" Name="FirstName" MaxLength="100" FixedLength="false" Unicode="true" />
+		  <Property Type="String" Name="LastName" MaxLength="100" FixedLength="false" Unicode="true" />
+		  <Property Type="DateTime" Name="RegistrationDate" Nullable="false" />
+		  <Property Type="DateTime" Name="LastUpdateDate" Nullable="false" />
+		  <Property Type="String" Name="AvaUrl" MaxLength="200" FixedLength="false" Unicode="true" />
+		  <Property Type="Byte" Name="Status" Nullable="false" />
+		</EntityType>
+		</Schema>
+	</edmx:ConceptualModels>
+	<!-- C-S mapping content -->
+	<edmx:Mappings>
+	  <Mapping xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs" Space="C-S">
+		<Alias Key="Model" Value="Model" />
+		<Alias Key="Target" Value="Model.Store" />
+		<EntityContainerMapping CdmEntityContainer="Entities" StorageEntityContainer="ModelStoreContainer">
+		  <EntitySetMapping Name="Administrators">
+			<EntityTypeMapping TypeName="Model.Administrator">
+			  <MappingFragment StoreEntitySet="Administrators">
+				<ScalarProperty Name="Salt" ColumnName="Salt" />
+				<ScalarProperty Name="Password" ColumnName="Password" />
+				<ScalarProperty Name="Login" ColumnName="Login" />
+			  </MappingFragment>
+			</EntityTypeMapping>
+		  </EntitySetMapping>
+		  <EntitySetMapping Name="Users">
+			<EntityTypeMapping TypeName="Model.User">
+			  <MappingFragment StoreEntitySet="Users">
+				<ScalarProperty Name="Status" ColumnName="Status" />
+				<ScalarProperty Name="AvaUrl" ColumnName="AvaUrl" />
+				<ScalarProperty Name="LastUpdateDate" ColumnName="LastUpdateDate" />
+				<ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
+				<ScalarProperty Name="LastName" ColumnName="LastName" />
+				<ScalarProperty Name="FirstName" ColumnName="FirstName" />
+				<ScalarProperty Name="Salt" ColumnName="Salt" />
+				<ScalarProperty Name="Password" ColumnName="Password" />
+				<ScalarProperty Name="Email" ColumnName="Email" />
+				<ScalarProperty Name="Login" ColumnName="Login" />
+			  </MappingFragment>
+			</EntityTypeMapping>
+		  </EntitySetMapping>
+		</EntityContainerMapping>
+	  </Mapping>
+	</edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+	<edmx:Connection>
+	  <DesignerInfoPropertySet>
+		<DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+	  </DesignerInfoPropertySet>
+	</edmx:Connection>
+	<edmx:Options>
+	  <DesignerInfoPropertySet>
+		<DesignerProperty Name="ValidateOnBuild" Value="true" />
+		<DesignerProperty Name="EnablePluralization" Value="True" />
+		<DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+	  </DesignerInfoPropertySet>
+	</edmx:Options>
+	<!-- Diagram content (shape and connector positions) -->
+	<edmx:Diagrams>
+	  <Diagram Name="Model" >
+		<EntityTypeShape EntityType="Model.Administrator" Width="1.5" PointX="0.75" PointY="0.75" Height="1.5956835937499996" />
+		<EntityTypeShape EntityType="Model.User" Width="1.5" PointX="2.75" PointY="0.75" Height="2.5571907552083335" />
+	  </Diagram>
+	</edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

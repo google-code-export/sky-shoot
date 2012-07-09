@@ -1,0 +1,305 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="429b8543-848d-4277-a04a-d851f1760e3e"
+  name="Desktop"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="d7bdbb3b-e23b-4ab8-b8ec-5ce8907c5c29"
+      handle="viewcode://./CodeSchema_Namespace?Namespace=Nuclex.UserInterface.Controls.Desktop"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <class
+        Id="a42e8f50-d9cd-4aac-b5c4-c4fd75019483"
+        name="ButtonControl"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="ebd870ef-b825-481b-a2f6-95b4f9d573b7"
+            handle="viewcode://./CodeSchema_Class?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Game/Nuclex/Nuclex.UserInterface.dll Namespace=Nuclex.UserInterface.Controls.Desktop Type=ButtonControl"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="2bce1089-e62c-48ae-b4cc-6e98ce319b63"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="b3025893-e92d-4b9b-aa8f-0d4ef7ab9082">
+                <propertyInstance
+                  Id="7b3ddedb-9ce9-46fe-a6dd-4ed824e596b0"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="993679f0-6d74-4e66-ba50-6071e0e1cd37">
+                <propertyInstance
+                  Id="ab8146a6-ef17-4f79-a26a-0dd5204517f8"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="3f5b495e-1aa4-41e3-bc5e-1c278a20f3ba">
+                <propertyInstance
+                  Id="cfe3e113-6d5c-48cc-b06d-020a84bcb4f7"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="04c11cf1-fa1f-4f29-a751-ed181fb6bf9e">
+                <propertyInstance
+                  Id="9b7cce99-414e-4048-86b1-a00351b003da"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="e8a496ad-2fe3-4313-95f7-e4a98ec7829b">
+                <propertyInstance
+                  Id="a3c6d5bf-7e02-4ed8-8f33-8a7f1af053e5"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="eeaf2b52-e800-4f55-8086-929fada24667"
+        name="ListControl"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="dac20359-b365-4442-ab41-60df19f83acf"
+            handle="viewcode://./CodeSchema_Class?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Game/Nuclex/Nuclex.UserInterface.dll Namespace=Nuclex.UserInterface.Controls.Desktop Type=ListControl"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="d85c02a4-1fd0-4e5c-a2c2-76b55f7fb0e9"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="d0095a43-9810-4aa8-ac11-04e8fba20fa2">
+                <propertyInstance
+                  Id="30115245-687b-4395-9e5f-619b56ed3eb7"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="0146198f-a276-42b0-8fb6-6f88a68677a9">
+                <propertyInstance
+                  Id="b5810a4c-6e04-468e-8116-1775abdef066"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="bcea116d-0fb5-441f-988c-585211162e93">
+                <propertyInstance
+                  Id="1521b36e-06e3-4bb6-b974-ce63128594b3"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="25dec68b-918c-4027-861e-fd638d6953b6">
+                <propertyInstance
+                  Id="ae06afee-4bab-4af5-bbff-2777914f84dd"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="2fe13628-670a-40b9-b904-8806e99be209">
+                <propertyInstance
+                  Id="4766b170-9f72-47fe-aaf0-195881bcabdf"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="be2f3aa7-f37c-47c3-8ef9-ad477d94d6a2"
+        name="InputControl"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="cc570af2-ef30-450e-a572-1ece4a906518"
+            handle="viewcode://./CodeSchema_Class?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Game/Nuclex/Nuclex.UserInterface.dll Namespace=Nuclex.UserInterface.Controls.Desktop Type=InputControl"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="52f6a57f-3d50-4d4a-a630-14b4694fda11"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="ee08472e-8f00-427c-b13e-33c6d8c6744c">
+                <propertyInstance
+                  Id="cf3306ae-42b1-40a3-9571-4500fa4dd801"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="bb591f03-8050-430a-a900-ffad33ddc45e">
+                <propertyInstance
+                  Id="b656dda5-f062-4383-a584-eed48d48a367"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="f338f956-ba66-4b1e-b0d6-d0a354a31e9e">
+                <propertyInstance
+                  Id="91c9a37b-3c29-4cd3-a567-aa5a20d1b945"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="0ba5ee4b-334b-48c9-aca6-3a7deab76ee5">
+                <propertyInstance
+                  Id="dced69e1-4385-4da8-b7d9-8ea30911f6e1"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="f6a9ebf0-73b6-4382-a586-f73f8fabed3e">
+                <propertyInstance
+                  Id="67470b5c-c9f2-411d-a0d8-9756f578e5ee"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="7756fbec-8280-4716-ab56-4de5f84593d3"
+        name="ChoiceControl"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="d2a7fe34-46a3-43b3-94e6-3364631fd11f"
+            handle="viewcode://./CodeSchema_Class?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Game/Nuclex/Nuclex.UserInterface.dll Namespace=Nuclex.UserInterface.Controls.Desktop Type=ChoiceControl"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="323a49be-8dae-4873-bd11-4a20faefdc72"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="a0f7bdac-7ca4-45ec-b501-7b8535c03c10">
+                <propertyInstance
+                  Id="9185f25d-25bb-4ca3-811d-692f60a13e7f"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="8ad813a2-7abf-4ab6-9669-36188de7b857">
+                <propertyInstance
+                  Id="b0edf119-efd6-4973-9d96-e296170620bb"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="330e1012-30dd-482b-b586-31dd5f6b1904">
+                <propertyInstance
+                  Id="50effe76-80d2-401a-9298-b67df3d42e49"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="05c20875-94fb-4ed4-b622-7dcf633614d4">
+                <propertyInstance
+                  Id="dfeb12c2-cc56-437e-830c-6e48ebc9ee74"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="49cef1de-4e76-4caf-ba11-34e9d8edcdd4">
+                <propertyInstance
+                  Id="f53c040d-acf0-44ec-a131-74503b1eedeb"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="301d3600-b01c-436c-950d-74f373375e11"
+        name="OptionControl"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="0e4c9744-a830-4825-97fb-26171779d05f"
+            handle="viewcode://./CodeSchema_Class?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Game/Nuclex/Nuclex.UserInterface.dll Namespace=Nuclex.UserInterface.Controls.Desktop Type=OptionControl"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="96ebfeda-7b2e-4a18-8e1c-c454234082dc"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="04d390ea-f833-40ec-ba17-2db0e7df2ff7">
+                <propertyInstance
+                  Id="5719d2d4-7243-4e69-88e1-25557571d15f"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="3c85087a-63a9-4773-9db1-af9381133810">
+                <propertyInstance
+                  Id="17428619-5445-4861-b567-36863c9281d2"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="adc60039-4f9d-4510-8ec4-ef9ab80cc46b">
+                <propertyInstance
+                  Id="dadacb4a-e1d3-441a-bc0d-5defc9b66420"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="bfa9e993-43a2-4464-aa2c-1cfd01814565">
+                <propertyInstance
+                  Id="2ae15cae-b53b-4fa0-9ba7-c0cf063d8a73"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="2f293c60-e7ae-4285-be51-ebf91ac12457">
+                <propertyInstance
+                  Id="84e3136a-1224-4555-8ae8-1613afae51c7"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </class>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>
