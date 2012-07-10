@@ -60,6 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CollisionDetection\CollisionDetector.cs" />
     <Compile Include="GameEvents\AGameEvent.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="ObjectBuffer.cs" />
