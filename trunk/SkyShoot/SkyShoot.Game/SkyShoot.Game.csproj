@@ -141,7 +141,6 @@
     <Compile Include="Controls\Controller.cs" />
     <Compile Include="Controls\InputControl.cs" />
     <Compile Include="Controls\KeyboardAndMouse.cs" />
-    <Compile Include="Logger.cs" />
     <Compile Include="Screens\CreateGameScreen.cs" />
     <Compile Include="Screens\GameMenuScreen.cs" />
     <Compile Include="Screens\NewAccountScreen.cs" />

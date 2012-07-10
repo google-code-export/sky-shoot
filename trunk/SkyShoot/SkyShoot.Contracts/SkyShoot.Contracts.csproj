@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameEvents\AGameEvent.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="ObjectBuffer.cs" />
     <Compile Include="Service\AccountManagerErrorCode.cs" />
     <Compile Include="Service\Constants.cs" />
