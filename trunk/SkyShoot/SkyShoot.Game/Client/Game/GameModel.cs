@@ -2,7 +2,6 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SkyShoot.Contracts.GameEvents;
@@ -23,8 +22,6 @@ namespace SkyShoot.Game.Client.Game
 		//public ConcurrentDictionary<Guid, Projectile> Projectiles { get; private set; }
 
 		//public ConcurrentDictionary<Guid, GameBonus> GameBonuses { get; private set; }
-
-		private readonly Contracts.Logger _logger = new Contracts.Logger("model_log.txt");
 
 		public Camera2D Camera2D { get; private set; }
 
@@ -66,7 +63,6 @@ namespace SkyShoot.Game.Client.Game
 			Trace.WriteLine("DrawableGameObject with such ID does not exist", "GameModel/GetMob");
 			return null;
 		}
-
 		// todo //!! delete
 
 		//public Projectile GetProjectile(Guid id)
@@ -108,113 +104,107 @@ namespace SkyShoot.Game.Client.Game
 		//    Trace.WriteLine("GameBonus with such ID does not exist", "GameModel/RemoveGameBonus");
 		//}
 
-		public void ApplyEvents(IEnumerable<AGameEvent> gameEvents)
+		private void ApplyEvents(IEnumerable<AGameEvent> gameEvents)
 		{
-			PrintEvents(gameEvents);
 			try
 			{
-				if (gameEvents == null)
+				if(gameEvents == null)
 					return;
-				foreach (var gameEvent in gameEvents)
+			foreach (var gameEvent in gameEvents)
+			{
+				if(gameEvent == null)
+					continue;
+				//if (gameEvent.GetType() == typeof(ObjectDirectionChanged))
+				//{
+				//  Trace.WriteLine("OBJECT_DIRECTION_CHANGED", "GameModel/ApplyEvents");
+				//}
+
+				//if (gameEvent.GetType() == typeof(ObjectHealthChanged))
+				//{
+				//  Trace.WriteLine("OBJECT_HEALTH_CHANGED", "GameModel/ApplyEvents");
+				//}
+
+				//if (gameEvent.GetType() == typeof(ObjectDeleted))
+				//{
+				//  Trace.WriteLine("OBJECT_DELETED", "GameModel/ApplyEvents");
+				//}
+
+				// todo rewrite!
+				if (gameEvent.GetType() == typeof(NewObjectEvent))
 				{
-					if (gameEvent == null)
-						continue;
-					//if (gameEvent.GetType() == typeof(ObjectDirectionChanged))
-					//{
-					//  Trace.WriteLine("OBJECT_DIRECTION_CHANGED", "GameModel/ApplyEvents");
-					//}
+					//Trace.WriteLine("NEW_OBJECT_EVENT", "GameModel/ApplyEvents");
 
-					//if (gameEvent.GetType() == typeof(ObjectHealthChanged))
-					//{
-					//  Trace.WriteLine("OBJECT_HEALTH_CHANGED", "GameModel/ApplyEvents");
-					//}
+					var newGameObject = new AGameObject();
+					gameEvent.UpdateMob(newGameObject);
 
-					//if (gameEvent.GetType() == typeof(ObjectDeleted))
-					//{
-					//  Trace.WriteLine("OBJECT_DELETED", "GameModel/ApplyEvents");
-					//}
-
-					// todo rewrite!
-					if (gameEvent.GetType() == typeof (NewObjectEvent))
+					//if (newGameObject.Is(AGameObject.EnumObjectType.LivingObject))
 					{
-						//Trace.WriteLine("NEW_OBJECT_EVENT", "GameModel/ApplyEvents");
-
-						var newGameObject = new AGameObject();
-						gameEvent.UpdateMob(newGameObject);
-
-						//if (newGameObject.Is(AGameObject.EnumObjectType.LivingObject))
-						{
-							DrawableGameObject newDrawableGameObject = GameFactory.CreateClientMob(newGameObject);
-							AddMob(newDrawableGameObject);
-						}
-
-						//else if (newGameObject.Is(AGameObject.EnumObjectType.Bullet))
-						//{
-						//  Projectile newProjectile = GameFactory.CreateClientProjectile(newGameObject);
-						//  AddProjectile(newProjectile);
-						//}
-
-						//else if (newGameObject.Is(AGameObject.EnumObjectType.Bonus))
-						//{
-						//  GameBonus newGameBonus = GameFactory.CreateClientGameBonus(newGameObject);
-						//  AddGameBonus(newGameBonus);
-						//}
+						DrawableGameObject newDrawableGameObject = GameFactory.CreateClientMob(newGameObject);
+						AddMob(newDrawableGameObject);
 					}
 
-					else
+					//else if (newGameObject.Is(AGameObject.EnumObjectType.Bullet))
+					//{
+					//  Projectile newProjectile = GameFactory.CreateClientProjectile(newGameObject);
+					//  AddProjectile(newProjectile);
+					//}
+
+					//else if (newGameObject.Is(AGameObject.EnumObjectType.Bonus))
+					//{
+					//  GameBonus newGameBonus = GameFactory.CreateClientGameBonus(newGameObject);
+					//  AddGameBonus(newGameBonus);
+					//}
+				}
+
+				else
+				{
+					// TODO check null
+					DrawableGameObject drawableGameObject = GetMob(gameEvent.GameObjectId.Value);
+					if (drawableGameObject != null)
 					{
-						// TODO check null
-						DrawableGameObject drawableGameObject = GetMob(gameEvent.GameObjectId.Value);
-						if (drawableGameObject != null)
+						gameEvent.UpdateMob(drawableGameObject);
+						if (drawableGameObject.IsActive == false)
 						{
-							gameEvent.UpdateMob(drawableGameObject);
-							if (drawableGameObject.IsActive == false)
+							//if (DrawableGameObject.Is(AGameObject.EnumObjectType.Player))
 							{
-								//if (DrawableGameObject.Is(AGameObject.EnumObjectType.Player))
-								{
-									if (drawableGameObject.Is(AGameObject.EnumObjectType.LivingObject))
-									{
-										Trace.WriteLine("DELETED");
-									}
-									// todo одно и то же действие
-									// RemoveMob(drawableGameObject.Id);
-									GameController.Instance.MobDead(drawableGameObject);
-								}
+								RemoveMob(drawableGameObject.Id);
+								GameController.Instance.MobDead(drawableGameObject);
 							}
 						}
-						//else
-						//{
-						//  // is projectile?
-						//  Projectile projectile = GetProjectile(gameEvent.GameObjectId);
-						//  if (projectile != null)
-						//  {
-						//    gameEvent.UpdateMob(projectile);
-						//    if (projectile.IsActive == false)
-						//    {
-						//      RemoveProjectile(projectile.Id);
-						//    }
-						//  }
-
-						//  else
-						//  {
-						//    // is gameBonus?
-						//    GameBonus gameBonus = GetGameBonus(gameEvent.GameObjectId);
-						//    if (gameBonus != null)
-						//    {
-						//      gameEvent.UpdateMob(gameBonus);
-						//      if (gameBonus.IsActive == false)
-						//      {
-						//        RemoveGameBonus(gameBonus.Id);
-						//      }
-						//    }
-						//  }
-						//}
 					}
+					//else
+					//{
+					//  // is projectile?
+					//  Projectile projectile = GetProjectile(gameEvent.GameObjectId);
+					//  if (projectile != null)
+					//  {
+					//    gameEvent.UpdateMob(projectile);
+					//    if (projectile.IsActive == false)
+					//    {
+					//      RemoveProjectile(projectile.Id);
+					//    }
+					//  }
+
+					//  else
+					//  {
+					//    // is gameBonus?
+					//    GameBonus gameBonus = GetGameBonus(gameEvent.GameObjectId);
+					//    if (gameBonus != null)
+					//    {
+					//      gameEvent.UpdateMob(gameBonus);
+					//      if (gameBonus.IsActive == false)
+					//      {
+					//        RemoveGameBonus(gameBonus.Id);
+					//      }
+					//    }
+					//  }
+					//}
 				}
+			}
 			}
 			catch (Exception exc)
 			{
-				Trace.WriteLine("game:applayevents:" + exc);
+				Trace.WriteLine("game:applayevents:"+exc);
 			}
 
 		}
@@ -252,7 +242,7 @@ namespace SkyShoot.Game.Client.Game
 
 			if (_updateCouter % 5 == 0)
 			{
-				ApplyEvents(ConnectionManager.Instance.GetEvents());
+				ApplyEvents(GameController.Instance.GetEvents());
 			}
 
 			// var sw = new Stopwatch();
@@ -274,7 +264,7 @@ namespace SkyShoot.Game.Client.Game
 					else
 						clientMob.Copy(serverGameObject);
 				}
-			} /**/
+			}/**/
 			// sw.Stop();
 			// Trace.WriteLine("SW:sync: "+sw.ElapsedMilliseconds);
 			// sw.Restart();
@@ -329,19 +319,6 @@ namespace SkyShoot.Game.Client.Game
 			//}
 
 			spriteBatch.End();
-		}
-
-		private void PrintEvents(IEnumerable<AGameEvent> gameEvents)
-		{
-			var stringBuilder = new StringBuilder();
-			stringBuilder.Append("RECEIVE EVENTS:");
-
-			foreach (var gameEvent in gameEvents)
-			{
-				stringBuilder.Append("\n  " + gameEvent.Type);
-			}
-
-			_logger.WriteLine(stringBuilder.ToString());
 		}
 	}
 }

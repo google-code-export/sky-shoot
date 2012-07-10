@@ -21,9 +21,9 @@ namespace SkyShoot.Game.Client.Game
 {
 	public class HashHelper
 	{
-		/// <summary>
-		/// выдаёт последовательность из 32 шестнадцатеричных цифр (md5 хеш от аргумента)
-		/// </summary>
+        /// <summary>
+        /// выдаёт последовательность из 32 шестнадцатеричных цифр (md5 хеш от аргумента)
+        /// </summary>
 		public static string GetMd5Hash(string input)
 		{
 			MD5 md5Hasher = MD5.Create();
@@ -41,9 +41,9 @@ namespace SkyShoot.Game.Client.Game
 		}
 	}
 
-	public sealed class GameController
+	public sealed class GameController : ISkyShootService
 	{
-		private SoundManager _soundManager;
+		SoundManager _soundManager;
 
 		public static Guid MyId { get; private set; }
 
@@ -60,6 +60,8 @@ namespace SkyShoot.Game.Client.Game
 
 		private GameController()
 		{
+			// InitConnection();
+
 			SoundManager.Initialize();
 			_soundManager = SoundManager.Instance;
 		}
@@ -84,8 +86,15 @@ namespace SkyShoot.Game.Client.Game
 
 		#region бывший callbacks
 
+		//public void Hi777t(AGameObject mob, AProjectile projectile)
+		//{
+		//  if (projectile != null)
+		//    GameModel.RemoveProjectile(projectile.Id);
+		//  GameModel.GetMob(mob.Id).HealthAmount = mob.HealthAmount;
+		//}
+
 		public void MobDead(AGameObject mob)
-		{
+		{			
 			GameModel.RemoveMob(mob.Id);
 			// todo //!!
 			//GameModel.GameLevel.AddTexture(mob.Is(AGameObject.EnumObjectType.Player)
@@ -127,6 +136,19 @@ namespace SkyShoot.Game.Client.Game
 			if (IsGameStarted)
 				GameModel.RemoveMob(mob.Id);
 		}
+
+		//public void MobShot(AGameObject mob, AProjectile[] projectiles)
+		//{
+		//  // update ShootVector
+		//  var clientMob = GameModel.GetMob(mob.Id);
+		//  clientMob.ShootVector = projectiles[projectiles.Length - 1].RunVector;
+
+		//  // add projectiles
+		//  foreach (var aProjectile in projectiles)
+		//  {
+		//    GameModel.AddProjectile(GameFactory.CreateClientProjectile(aProjectile));
+		//  }
+		//}
 
 		#endregion
 
@@ -221,33 +243,109 @@ namespace SkyShoot.Game.Client.Game
 		#endregion
 
 		#region сама игра
-
+		
 		public AGameObject[] SynchroFrame()
 		{
 			return ConnectionManager.Instance.SynchroFrame();
 		}
 
+		//public void TakeBonus(AObtainableDamageModifier bonus)
+		//{
+		//  try
+		//  {
+		//    //_service.TakeBonus(bonus);
+		//  }
+		//  catch (Exception e)
+		//  {
+		//    FatalError(e);
+		//  }
+		//}
+
+		// TODO в ConnectionManager
+		//		public void TakePerk(Perk perk)
+		//		{
+		//			try
+		//			{
+		//				//_service.TakePerk(perk);
+		//			}
+		//			catch (Exception e)
+		//			{
+		//				FatalError(e);
+		//			}
+		//		}
+
 		public void Shoot(Vector2 direction)
 		{
-			AGameEvent[] gameEvents = ConnectionManager.Instance.Shoot(TypeConverter.Xna2XnaLite(direction));
-			GameModel.ApplyEvents(gameEvents);
+			Shoot(TypeConverter.Xna2XnaLite(direction));
 		}
 
 		public void Move(Vector2 direction)
 		{
-			AGameEvent[] gameEvents = ConnectionManager.Instance.Move(TypeConverter.Xna2XnaLite(direction));
-			GameModel.ApplyEvents(gameEvents);
+			Move(TypeConverter.Xna2XnaLite(direction));
 		}
 
-		public void ChangeWeapon(WeaponType type)
+		public AGameEvent[] Move(XNA.Framework.Vector2 direction)
 		{
-			AGameEvent[] gameEvents = ConnectionManager.Instance.ChangeWeapon(type);
-			GameModel.ApplyEvents(gameEvents);
+			return ConnectionManager.Instance.Move(direction);
+		}
+
+		public AGameEvent[] ChangeWeapon(WeaponType type)
+		{
+			// TODO в ConnectionManager
+			// do nothing
+			//			try
+			//			{
+			//				// var sw = new Stopwatch();
+			//				// sw.Start();
+			//				return _service.ChangeWeapon(type);
+			//				// sw.Stop();
+			//				// Trace.WriteLine("SW:serv:ChangeWeapon " + sw.ElapsedMilliseconds);
+			//			}
+			//			catch (Exception e)
+			//			{
+			//				FatalError(e);
+			//				return null;
+			//			}
+			return ConnectionManager.Instance.ChangeWeapon(type);
 		}
 
 		public Stats? GetStats() // Статистика
 		{
 			return ConnectionManager.Instance.GetStats();
+		}
+		
+		public AGameEvent[] Shoot(XNA.Framework.Vector2 direction)
+		{
+			// TODO в ConnectionManager через очередь
+			//			try
+			//			{
+			//				// var sw = new Stopwatch();
+			//				// sw.Start();
+			//				return _service.Shoot(direction);
+			//				// sw.Stop();
+			//				// Trace.WriteLine("SW:serv:Shoot " + sw.ElapsedMilliseconds);
+			//			}
+			//			catch (Exception e)
+			//			{
+			//				FatalError(e);
+			//				return null;
+			//			}
+			return ConnectionManager.Instance.Shoot(direction);
+		}
+
+		public AGameEvent[] GetEvents()
+		{
+			// TODO в ConnectionManager через очередь
+			//			try
+			//			{
+			//				return _service.GetEvents();
+			//			}
+			//			catch (Exception e)
+			//			{
+			//				FatalError(e);
+			//				return null;
+			//			}
+			return ConnectionManager.Instance.GetEvents();
 		}
 
 		#endregion
