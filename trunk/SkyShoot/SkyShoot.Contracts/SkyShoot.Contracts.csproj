@@ -60,8 +60,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CollisionDetection\CollisionDetector.cs" />
     <Compile Include="GameEvents\AGameEvent.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="ObjectBuffer.cs" />
     <Compile Include="Service\AccountManagerErrorCode.cs" />
     <Compile Include="Service\Constants.cs" />
@@ -109,7 +109,6 @@
       <Name>SkyShoot.Xna.Lite</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

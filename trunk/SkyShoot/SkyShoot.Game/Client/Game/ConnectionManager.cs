@@ -2,13 +2,13 @@
 
 using System.Diagnostics;
 using System.ServiceModel;
+using System.Text;
 using System.Threading;
 
 using System.Collections.Generic;
-
+using SkyShoot.Contracts;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Mobs;
-using SkyShoot.Contracts.Perks;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Session;
 using SkyShoot.Contracts.Statistics;
@@ -16,6 +16,8 @@ using SkyShoot.Contracts.Weapon;
 
 using SkyShoot.Game.Controls;
 using SkyShoot.Game.Screens;
+
+using Timer = System.Timers.Timer;
 
 namespace SkyShoot.Game.Client.Game
 {
@@ -34,7 +36,13 @@ namespace SkyShoot.Game.Client.Game
 
 		private ISkyShootService _service;
 
-		#region очередь + поток
+		private readonly Queue<AGameEvent> _lastClientGameEvents;
+
+		private const int MAX_SERVER_GAME_EVENTS = 100;
+
+		private readonly Logger _logger = new Logger("manager_log.txt");
+
+		#region local thread
 
 		private readonly EventWaitHandle _queue = new AutoResetEvent(false);
 
@@ -44,25 +52,95 @@ namespace SkyShoot.Game.Client.Game
 
 		#endregion
 
-		#region поля для работы с GameEvent'ами
+		#region server game events and synchroFrame
 
 		// received from server
-		private AGameEvent[] _lastServerEvents;
-		private bool _isNoServerGameEvents;
+		private List<AGameEvent> _lastServerGameEvents;
+		private List<AGameObject> _lastServerSynchroFrame;
 
-		private readonly Queue<AGameEvent> _lastClientEvents;
+		private readonly object _gameEventLocker = new object();
+		private readonly object _synchroFrameLocker = new object();
 
 		#endregion
 
+		#region timers and constants
+
+		private readonly Timer _eventTimer;
+		private readonly Timer _synchroFrameTimer;
+
+		private const int EVENT_TIMER_DELAY_TIME = 50;
+		private const int SYNCHRO_FRAME_DELAY_TIME = 750;
+
+		#endregion
+
+		private void InitializeTimers()
+		{
+			_thread.Start();
+
+			_eventTimer.Elapsed += (sender, args) =>
+			                       	{
+			                       		AGameEvent emptyGameEvent = new EmptyEvent(null, 0);
+			                       		AddClientGameEvent(emptyGameEvent);
+			                       	};
+			_synchroFrameTimer.Elapsed += (sender, args) => GetLatestServerSynchroFrame();
+
+			_lastServerGameEvents = new List<AGameEvent>(MAX_SERVER_GAME_EVENTS);
+			_lastServerSynchroFrame = new List<AGameObject>(MAX_SERVER_GAME_EVENTS);
+
+			// getting first synchroFrame
+			GetLatestServerSynchroFrame();
+
+			_eventTimer.Start();
+			_synchroFrameTimer.Start();
+		}
+
+		private void InitializeConnection()
+		{
+			try
+			{
+				var channelFactory = new ChannelFactory<ISkyShootService>("SkyShootEndpoint");
+				_service = channelFactory.CreateChannel();
+			}
+			catch (Exception e)
+			{
+				FatalError(e);
+			}
+		}
+
+		private void FatalError(Exception e)
+		{
+			Trace.WriteLine(e);
+
+			MessageBox.Message = "Connection error!";
+			MessageBox.Next = ScreenManager.ScreenEnum.LoginScreen;
+			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MessageBoxScreen);
+		}
+
+		private void PrintEvents(AGameEvent[] gameEvents)
+		{
+			var stringBuilder = new StringBuilder();
+			stringBuilder.Append("RECEIVE EVENTS:" + gameEvents.Length);
+
+			foreach (var gameEvent in gameEvents)
+			{
+				stringBuilder.Append("\n  " + gameEvent.Type);
+			}
+
+			_logger.WriteLine(stringBuilder.ToString());
+		}
+
+		#region constructor, run/stop thread
+
 		public ConnectionManager()
 		{
-			_lastClientEvents = new Queue<AGameEvent>();
+			_eventTimer = new Timer(EVENT_TIMER_DELAY_TIME);
+			_synchroFrameTimer = new Timer(SYNCHRO_FRAME_DELAY_TIME);
+
+			_lastClientGameEvents = new Queue<AGameEvent>();
 			_thread = new Thread(Run)
 			          	{
 			          		Name = "ConnectionManager"
 			          	};
-			_thread.Start();
-			_service = null;
 		}
 
 		public void Run()
@@ -74,9 +152,9 @@ namespace SkyShoot.Game.Client.Game
 
 				lock (_locker)
 				{
-					if (_lastClientEvents.Count > 0)
+					if (_lastClientGameEvents.Count > 0)
 					{
-						gameEvent = _lastClientEvents.Dequeue();
+						gameEvent = _lastClientGameEvents.Dequeue();
 						if (gameEvent == null)
 							return;
 					}
@@ -96,49 +174,59 @@ namespace SkyShoot.Game.Client.Game
 			_thread.Join();
 			// close EventWaitHandle
 			_queue.Close();
-		}
 
-		#region соединение с сервером
-
-		private void InitConnection()
-		{
-			if (_service == null)
-			{
-				try
-				{
-					var channelFactory = new ChannelFactory<ISkyShootService>("SkyShootEndpoint");
-					_service = channelFactory.CreateChannel();
-				}
-				catch (Exception e)
-				{
-					FatalError(e);
-				}
-			}
-		}
-
-		private void FatalError(Exception e)
-		{
-			Trace.WriteLine(e);
-
-			MessageBox.Message = "Connection error!";
-			MessageBox.Next = ScreenManager.ScreenEnum.LoginScreen;
-			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MessageBoxScreen);
+			_eventTimer.Dispose();
+			_synchroFrameTimer.Dispose();
 		}
 
 		#endregion
 
-		#region служебные методы для работы с GameEvent'ами
+		#region getting the last synchroFrame and game events from server
 
-		private AGameEvent[] GetLatestServerGameEvent()
+		public void GetLatestServerSynchroFrame()
 		{
-			_isNoServerGameEvents = true;
-			return _lastServerEvents;
+			try
+			{
+				lock (_synchroFrameLocker)
+				{
+					_lastServerSynchroFrame.Clear();
+					_lastServerSynchroFrame.AddRange(_service.SynchroFrame());
+				}
+			}
+			catch (Exception exc)
+			{
+				Trace.WriteLine("game:SynchroFrame" + exc);
+				_lastServerSynchroFrame.Clear();
+			}
 		}
+
+		public void GetLatestServerGameEvents()
+		{
+			AGameEvent[] newServerEvents;
+			try
+			{
+				newServerEvents = _service.GetEvents();
+			}
+			catch (Exception e)
+			{
+				Trace.WriteLine("game:GetEvents" + e);
+				FatalError(e);
+				return;
+			}
+			lock (_gameEventLocker)
+			{
+				_lastServerGameEvents.AddRange(newServerEvents);
+			}
+		}
+
+		#endregion
+
+		#region sending client game events
 
 		private void AddClientGameEvent(AGameEvent gameEvent)
 		{
 			lock (_locker)
-				_lastClientEvents.Enqueue(gameEvent);
+				_lastClientGameEvents.Enqueue(gameEvent);
 			_queue.Set();
 		}
 
@@ -150,7 +238,7 @@ namespace SkyShoot.Game.Client.Game
 				{
 					case EventType.ObjectShootEvent:
 						var objectShootEvent = gameEvent as ObjectShootEvent;
-						if (objectShootEvent != null) 
+						if (objectShootEvent != null)
 							_service.Shoot(objectShootEvent.ShootDirection);
 						break;
 					case EventType.ObjectDirectionChangedEvent:
@@ -159,31 +247,17 @@ namespace SkyShoot.Game.Client.Game
 							_service.Move(objectDirectionChanged.NewRunDirection);
 						break;
 					case EventType.EmptyGameEvent:
-						AGameEvent[] newServerEvents = _service.GetEvents();
-						if (_isNoServerGameEvents)
-						{
-							_lastServerEvents = newServerEvents;
-						}
-						else
-						{
-							int totalLength = _lastServerEvents.Length + newServerEvents.Length;
-							var allServerGameEvents = new AGameEvent[totalLength];
-							
-							_lastServerEvents.CopyTo(allServerGameEvents, 0);
-							newServerEvents.CopyTo(allServerGameEvents, _lastServerEvents.Length);
-
-							_lastServerEvents = allServerGameEvents;
-						}
+						GetLatestServerGameEvents();
 						break;
 					case EventType.WeaponChangedEvent:
 						var weaponChanged = gameEvent as WeaponChanged;
-						if (weaponChanged != null) 
+						if (weaponChanged != null)
 							_service.ChangeWeapon(weaponChanged.WeaponType);
 						break;
 					default:
 						throw new Exception("Invalid argument");
 				}
-			} 
+			}
 			catch (Exception e)
 			{
 				FatalError(e);
@@ -192,9 +266,37 @@ namespace SkyShoot.Game.Client.Game
 
 		#endregion
 
-		// Методы для общения с сервером во время игры
-
 		#region service implementation
+
+		/*
+		 * Возвращает последние события от сервера, которые были получены с помощью другого потока
+		 * Используется клиентом
+		 */
+
+		public AGameEvent[] GetEvents()
+		{
+			AGameEvent[] events;
+			lock (_gameEventLocker)
+			{
+				events = _lastServerGameEvents.ToArray();
+				_lastServerGameEvents.Clear();
+			}
+			PrintEvents(events);
+			return events;
+		}
+
+		public AGameObject[] SynchroFrame()
+		{
+			AGameObject[] synchroFrame;
+			lock (_synchroFrameLocker)
+			{
+				synchroFrame = _lastServerSynchroFrame.ToArray();
+				_lastServerSynchroFrame.Clear();
+
+				Trace.WriteLine("SYNCHRO_FRAME");
+			}
+			return synchroFrame;
+		}
 
 		public AGameEvent[] Move(XNA.Framework.Vector2 direction)
 		{
@@ -202,7 +304,7 @@ namespace SkyShoot.Game.Client.Game
 
 			AddClientGameEvent(moveGameEvent);
 
-			return GetLatestServerGameEvent();
+			return GetEvents();
 		}
 
 		public AGameEvent[] Shoot(XNA.Framework.Vector2 direction)
@@ -211,7 +313,7 @@ namespace SkyShoot.Game.Client.Game
 
 			AddClientGameEvent(shootGameEvent);
 
-			return GetLatestServerGameEvent();
+			return GetEvents();
 		}
 
 		public AGameEvent[] ChangeWeapon(WeaponType type)
@@ -220,30 +322,7 @@ namespace SkyShoot.Game.Client.Game
 
 			AddClientGameEvent(weaponChangedGameEvent);
 
-			return GetLatestServerGameEvent();
-		}
-
-		public AGameEvent[] GetEvents()
-		{
-			AGameEvent emptyGameEvent = new EmptyEvent(null, 0);
-
-			AddClientGameEvent(emptyGameEvent);
-
-			return GetLatestServerGameEvent();
-		}
-
-		public AGameObject[] SynchroFrame()
-		{
-			// TODO написать также, как и с GameEvent, только без слияния
-			try
-			{
-				return _service.SynchroFrame();
-			}
-			catch (Exception exc)
-			{
-				Trace.WriteLine("game:SynchroFrame" + exc);
-				return new AGameObject[] {};
-			}
+			return GetEvents();
 		}
 
 		public Stats? GetStats()
@@ -252,7 +331,7 @@ namespace SkyShoot.Game.Client.Game
 			{
 				return _service.GetStats();
 			}
-			catch(Exception e)
+			catch (Exception e)
 			{
 				FatalError(e);
 				return null;
@@ -266,38 +345,42 @@ namespace SkyShoot.Game.Client.Game
 		public AccountManagerErrorCode Register(string username, string password)
 		{
 			// initialize connection
-			InitConnection();
-
-			AccountManagerErrorCode errorCode = AccountManagerErrorCode.UnknownError;
+			InitializeConnection();
 
 			try
 			{
-				errorCode = _service.Register(username, HashHelper.GetMd5Hash(password));
+				return _service.Register(username, HashHelper.GetMd5Hash(password));
 			}
 			catch (Exception e)
 			{
 				FatalError(e);
 				return AccountManagerErrorCode.UnknownExceptionOccured;
 			}
-			return errorCode;
 		}
 
-		public Guid? Login(string username, string password, out AccountManagerErrorCode errorCode)
+		public Guid? Login(string username, string password, out AccountManagerErrorCode accountManagerErrorCode)
 		{
 			// initialize connection
-			InitConnection();
+			InitializeConnection();
+
+			accountManagerErrorCode = AccountManagerErrorCode.Ok;
 
 			Guid? login = null;
-			errorCode = AccountManagerErrorCode.UnknownError;
 			try
 			{
-				login = _service.Login(username, HashHelper.GetMd5Hash(password), out errorCode);
+				login = _service.Login(username, HashHelper.GetMd5Hash(password), out accountManagerErrorCode);
 			}
 			catch (Exception e)
 			{
 				FatalError(e);
 			}
 
+			if (!login.HasValue)
+			{
+				MessageBox.Message = "Login error!";
+				MessageBox.Next = ScreenManager.ScreenEnum.LoginScreen;
+				ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MessageBoxScreen);
+			}
 			return login;
 		}
 
@@ -340,24 +423,6 @@ namespace SkyShoot.Game.Client.Game
 			}
 		}
 
-		public AGameEvent[] Move( /*XNA.Framework.Vector2 direction*/)
-		{
-//			try
-//			{
-//				// var sw = new Stopwatch();
-//				// sw.Start();
-//				return _service.Move(direction);
-//				// sw.Stop();
-//				// Trace.WriteLine("SW:serv:Move " + sw.ElapsedMilliseconds);
-//			}
-//			catch (Exception e)
-//			{
-//				FatalError(e);
-//				return null;
-//			}
-			return null;
-		}
-
 		public void LeaveGame()
 		{
 			try
@@ -374,7 +439,12 @@ namespace SkyShoot.Game.Client.Game
 		{
 			try
 			{
-				return _service.GameStart(gameId);
+				var level = _service.GameStart(gameId);
+				if (level != null)
+				{
+					InitializeTimers();
+				}
+				return level;
 			}
 			catch (Exception e)
 			{
@@ -393,18 +463,6 @@ namespace SkyShoot.Game.Client.Game
 			{
 				Trace.WriteLine(exc);
 				return new string[] {};
-			}
-		}
-
-		public void TakePerk(Perk perk)
-		{
-			try
-			{
-				//_service.TakePerk(perk);
-			}
-			catch (Exception e)
-			{
-				FatalError(e);
 			}
 		}
 
