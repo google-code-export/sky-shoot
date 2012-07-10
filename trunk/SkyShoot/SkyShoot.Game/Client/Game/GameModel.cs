@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Mobs;
+using SkyShoot.Contracts.CollisionDetection;
 using SkyShoot.Game.Client.GameObjects;
 using SkyShoot.Game.Client.View;
 
@@ -223,9 +224,19 @@ namespace SkyShoot.Game.Client.Game
 		public void Update(GameTime gameTime)
 		{
 			// update mobs
+			//foreach (var aMob in Mobs)
+			//{
+			//    aMob.Value.Update(gameTime);
+			//}
+
 			foreach (var aMob in Mobs)
 			{
 				aMob.Value.Update(gameTime);
+				foreach (var slaver in Mobs)
+				{
+					if (aMob.Value != slaver.Value && !slaver.Value.IsBullet && aMob.Value.IsPlayer)
+						aMob.Value.Coordinates += CollisionDetector.FitObjects(aMob.Value.Coordinates, aMob.Value.Radius, slaver.Value.Coordinates, slaver.Value.Radius);
+				}
 			}
 
 			// todo //!! delete
