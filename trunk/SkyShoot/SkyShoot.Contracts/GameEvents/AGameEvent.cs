@@ -33,6 +33,7 @@ namespace SkyShoot.Contracts.GameEvents
 		[DataMember]
 		public Guid? GameObjectId { get; set; }
 
+		[DataMember] 
 		public EventType Type;
 
 		protected AGameEvent(Guid? id, long timeStamp)
@@ -146,6 +147,7 @@ namespace SkyShoot.Contracts.GameEvents
 	}
 
 	/*[DataContract]*/
+
 	public class WeaponChanged : AGameEvent
 	{
 		/*[DataMember] */
@@ -157,7 +159,7 @@ namespace SkyShoot.Contracts.GameEvents
 		{
 			Weapon = weapon;
 			WeaponType = weaponType;
-			Type = EventType.WeaponChangedEvent; 
+			Type = EventType.WeaponChangedEvent;
 		}
 
 		public override void UpdateMob(AGameObject mob)
