@@ -378,14 +378,16 @@ namespace SkyShoot.Service.Session
 						if (slaveObject.Is(AGameObject.EnumObjectType.Block)
 							&& activeObject.Is(AGameObject.EnumObjectType.Block))
 						{
+							//difference примет разницу между текущим положением и предыдущим
 							difference = activeObject.Coordinates;
 							activeObject.Coordinates += CollisionDetector.FitObjects(activeObject.Coordinates, activeObject.Radius, slaveObject.Coordinates, slaveObject.Radius);
 							difference = -(activeObject.Coordinates - difference);
-							difference = new Vector2(0f, 0f);
 						}
 					}
+
+					//Vector2.Zero добавлен для уменьшения скачков
 					if (difference.Length() > Constants.Epsilon)
-						eventsCash.Add(new ObjectDirectionChanged(difference, activeObject.Id, now));
+						eventsCash.Add(new ObjectDirectionChanged(Vector2.Zero, activeObject.Id, now));
 					//}
 					//activeObject.PrevMoveDiff = difference;
 				}

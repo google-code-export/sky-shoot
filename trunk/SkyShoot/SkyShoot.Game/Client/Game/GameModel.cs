@@ -234,6 +234,7 @@ namespace SkyShoot.Game.Client.Game
 				aMob.Value.Update(gameTime);
 				foreach (var slaver in Mobs)
 				{
+					//Очевидно, что 3е условие предусматривает выполнение 2го, но так пули не смещают персонажа при выстреле. Меньше скачков. 
 					if (aMob.Value != slaver.Value && !slaver.Value.IsBullet && aMob.Value.IsPlayer)
 						aMob.Value.Coordinates += CollisionDetector.FitObjects(aMob.Value.Coordinates, aMob.Value.Radius, slaver.Value.Coordinates, slaver.Value.Radius);
 				}
