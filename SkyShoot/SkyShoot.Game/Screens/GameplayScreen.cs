@@ -15,7 +15,7 @@ namespace SkyShoot.Game.Screens
 {
 	internal class GameplayScreen : GameScreen
 	{
-	    private static WeaponType _weapon = WeaponType.Pistol;
+		private static WeaponType _weapon = WeaponType.Pistol;
 
 		private readonly ContentManager _content;
 
@@ -28,6 +28,7 @@ namespace SkyShoot.Game.Screens
 		private LabelControl _lableLevel;
 		private LabelControl _lableExp;
 		private LabelControl _lableFrag;
+		private LabelControl _lableCreeps;
 		private int counter;
 
 		public GameplayScreen()
@@ -37,10 +38,10 @@ namespace SkyShoot.Game.Screens
 			InitializeControls();
 		}
 
-        public override bool IsMenuScreen
-        {
-            get { return false; }
-        }
+		public override bool IsMenuScreen
+		{
+			get { return false; }
+		}
 
 		public override void LoadContent()
 		{
@@ -101,29 +102,29 @@ namespace SkyShoot.Game.Screens
 			ScreenManager.Instance.Game.ResetElapsedTime();
 		}
 
-        public override void UnloadContent()
-        {
-            Textures.PlayerAnimation.Clear();
-            Textures.SpiderAnimation.Clear();
+		public override void UnloadContent()
+		{
+			Textures.PlayerAnimation.Clear();
+			Textures.SpiderAnimation.Clear();
 
-            if (_content != null)
-                _content.Unload();
-        }
+			if (_content != null)
+				_content.Unload();
+		}
 
-        public override void HandleInput(Controller controller)
-        {
-            GameController.Instance.HandleInput(controller);
-        }
+		public override void HandleInput(Controller controller)
+		{
+			GameController.Instance.HandleInput(controller);
+		}
 
-        public override void Update(GameTime gameTime)
-        {
+		public override void Update(GameTime gameTime)
+		{
 			base.Update(gameTime);
 
-            if (GameController.Instance.GameModel == null)
-                return;
+			if (GameController.Instance.GameModel == null)
+				return;
 
-            GameController.Instance.GameModel.Update(gameTime);
-			
+			GameController.Instance.GameModel.Update(gameTime);
+
 			if (counter % 60 == 0)
 			{
 				var stat = GameController.Instance.GetStats();
@@ -139,23 +140,29 @@ namespace SkyShoot.Game.Screens
 				{
 					_lableFrag.Text = "Frag " + stat.Value.Frag.ToString(CultureInfo.InvariantCulture);
 				}
+				if (stat != null)
+				{
+					_lableCreeps.Text = "Creeps " + stat.Value.Creeps.ToString(CultureInfo.InvariantCulture);
+				}
 			}
 			counter++;
 		}
 
-        public override void Draw(GameTime gameTime)
-        {
-            GraphicsDevice graphicsDevice = ScreenManager.Instance.GraphicsDevice;
-            SpriteBatch spriteBatch = ScreenManager.Instance.SpriteBatch;
-            graphicsDevice.Clear(Color.SkyBlue);
-
-            GameController.Instance.GameModel.Draw(spriteBatch);
-
-
-        }
-
-		private void CreateControls() 
+		public override void Draw(GameTime gameTime)
 		{
+			GraphicsDevice graphicsDevice = ScreenManager.Instance.GraphicsDevice;
+			SpriteBatch spriteBatch = ScreenManager.Instance.SpriteBatch;
+			graphicsDevice.Clear(Color.SkyBlue);
+
+			GameController.Instance.GameModel.Draw(spriteBatch);
+
+
+		}
+
+		private void CreateControls()
+		{
+			#region Вывод статистики на экран
+
 			_lableLevel = new LabelControl
 			{
 				Text = "Level",
@@ -173,6 +180,14 @@ namespace SkyShoot.Game.Screens
 				Text = "Frag",
 				Bounds = new UniRectangle(new UniVector(-60, 0), new UniVector(0, 0)),
 			};
+
+			_lableCreeps = new LabelControl
+			{
+				Text = "Creeps",
+				Bounds = new UniRectangle(new UniVector(-60, 20), new UniVector(0, 0)),
+			};
+
+			#endregion
 
 			_pistolButton = new ButtonControl
 			{
@@ -215,6 +230,7 @@ namespace SkyShoot.Game.Screens
 			Desktop.Children.Add(_lableLevel);
 			Desktop.Children.Add(_lableExp);
 			Desktop.Children.Add(_lableFrag);
+			Desktop.Children.Add(_lableCreeps);
 
 			_pistolButton.Pressed += PistolButtonPressed;
 			_shotgunButton.Pressed += ShotgunButtonPressed;

@@ -22,6 +22,9 @@ namespace SkyShoot.Contracts.Weapon
 		Heater,
 
 		[EnumMember]
-		FlamePistol
+		FlamePistol,
+
+		[EnumMember]
+		MobGenerator
 	}
 }

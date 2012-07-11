@@ -66,6 +66,12 @@ namespace SkyShoot.Contracts
 
 		#endregion
 
+		#region mobGenerator
+
+		public const int MOB_GENERATOR_ATTACK_RATE = 7000;
+
+		#endregion
+
 		public const int CLAW_ATTACK_RATE = 1000; // В миллисекундах.		public const float PLAYER_DEFAULT_HEALTH = 100;
 
 		#endregion
@@ -75,6 +81,9 @@ namespace SkyShoot.Contracts
 		public const float PLAYER_DEFAULT_SPEED = 0.05f;
 		public const float PLAYER_RADIUS = 15f;
 		public const float SPIDER_SPEED = 0.06f;
+		public const float PARENT_MOB_SPEED = 0.03f;
+		public const float PARENT_MOB_HEALTH = 700f;
+		public const float CHILDREN_MOB_HEALTH = 30f;
 
 		#endregion
 
