@@ -72,6 +72,25 @@ namespace SkyShoot.Contracts
 
 		#endregion
 
+		#region poisonGun
+
+		public const float POISON_BULLET_SPEED = 0.1f;
+		public const float POISON_BULLET_DAMAGE = 3f;
+		public const float POISON_BULLET_LIFE_DISTANCE = 30f;
+		public const int POISON_GUN_ATTACK_RATE = 1500;
+		public const float POISON_BULLET_RADIUS = 4f;
+
+		#endregion
+
+		#region poisonTick
+
+		public const float POISONTICK_BULLET_SPEED = 0.5f;
+		public const float POISONTICK_BULLET_DAMAGE = 10;
+		public const float POISONTICK_BULLET_LIFE_DISTANCE = 15f;
+		public const int POISONTICK_ATTACK_RATE = 1000;
+
+		#endregion
+
 		public const int CLAW_ATTACK_RATE = 1000; // В миллисекундах.		public const float PLAYER_DEFAULT_HEALTH = 100;
 
 		#endregion
