@@ -11,7 +11,7 @@ namespace SkyShoot.ServProgram.Mobs
 {
 	class ParentMob : Mob
 	{
-		private readonly int _shootingDelay = 1000;
+		private readonly int _shootingDelay = 3000;
 		private long _lastShoot;
 
 		// todo //!! move to constants
