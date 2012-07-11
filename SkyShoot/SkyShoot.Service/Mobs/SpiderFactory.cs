@@ -27,7 +27,7 @@ namespace SkyShoot.Contracts.Mobs
 		public Mob CreateMob()
 		{
 			Mob spider;
-			switch (_random.Next(4))
+			switch (_random.Next(5))
 			{
 				case 0:
 					spider = new SpiderWithSimpleMind(_health);
@@ -41,6 +41,9 @@ namespace SkyShoot.Contracts.Mobs
 					break;
 				case 3:
 					spider = new ParentMob(Constants.PARENT_MOB_HEALTH);
+					break;
+				case 4:
+					spider = new Hydra(Constants.HYDRA_HEALTH);
 					break;
 				default:
 					spider = new Spider(_health);

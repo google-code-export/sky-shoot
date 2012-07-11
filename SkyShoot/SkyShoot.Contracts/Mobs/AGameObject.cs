@@ -250,6 +250,11 @@ namespace SkyShoot.Contracts.Mobs
 				Weapon = Weapons[type];
 			}
 		}
+
+		/*public virtual IEnumerable<AGameEvent> OnDead(AGameObject obj, List<AGameObject> newObjects, long time)
+		{
+			return new AGameEvent[] { };
+		}*/
 		#endregion
 
 	}
