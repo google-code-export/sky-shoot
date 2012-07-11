@@ -95,6 +95,7 @@
     <Compile Include="Logger\TableTraceListenerProg.cs" />
     <Compile Include="MainSkyShootService.cs" />
     <Compile Include="Mobs\ChildrenMob.cs" />
+    <Compile Include="Mobs\Hydra.cs" />
     <Compile Include="Mobs\IMobFactory.cs" />
     <Compile Include="Mobs\Mob.cs" />
     <Compile Include="Mobs\ParentMob.cs" />

@@ -100,9 +100,11 @@ namespace SkyShoot.Contracts
 		public const float PLAYER_DEFAULT_SPEED = 0.05f;
 		public const float PLAYER_RADIUS = 15f;
 		public const float SPIDER_SPEED = 0.06f;
-		public const float PARENT_MOB_SPEED = 0.03f;
+		public const float PARENT_MOB_SPEED = 0.01f;
 		public const float PARENT_MOB_HEALTH = 700f;
-		public const float CHILDREN_MOB_HEALTH = 30f;
+		public const float CHILDREN_MOB_HEALTH = 25f;
+		public const float HYDRA_HEALTH = 50f;
+		public const float HYDRA_SPEED = 0.03f;
 
 		#endregion
 
