@@ -27,7 +27,7 @@ namespace SkyShoot.Contracts.Mobs
 		public Mob CreateMob()
 		{
 			Mob spider;
-			switch (_random.Next(5))
+			switch (_random.Next(6))
 			{
 				case 0:
 					spider = new SpiderWithSimpleMind(_health);
@@ -44,6 +44,10 @@ namespace SkyShoot.Contracts.Mobs
 					break;
 				case 4:
 					spider = new Hydra(Constants.HYDRA_HEALTH);
+					break;
+				case 5:
+					var wp = new PoisonGun(Guid.NewGuid());
+					spider = new Poisoner(Constants.POISONER_MOB_HEALTH, wp, 1000);
 					break;
 				default:
 					spider = new Spider(_health);

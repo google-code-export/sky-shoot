@@ -28,6 +28,9 @@ namespace SkyShoot.Contracts.Weapon
 		MobGenerator,
 
 		[EnumMember]
-		PoisonGun
+		PoisonGun,
+
+		[EnumMember]
+		PoisonTick
 	}
 }

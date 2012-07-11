@@ -92,6 +92,12 @@ namespace SkyShoot.Game.Client.GameObjects
 			case EnumObjectType.HeaterBullet:
 				OriginalRadius = Constants.DEFAULT_BULLET_RADIUS;
 				break;
+			case EnumObjectType.PoisonBullet:
+				OriginalRadius = Constants.DEFAULT_BULLET_RADIUS;
+				break;
+			case EnumObjectType.PoisonTickBullet:
+				OriginalRadius = Constants.DEFAULT_BULLET_RADIUS;
+				break;
 			default:
 				OriginalRadius = Radius;
 				break;
