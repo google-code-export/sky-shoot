@@ -94,8 +94,10 @@
     <Compile Include="Bonus\Speedup.cs" />
     <Compile Include="Logger\TableTraceListenerProg.cs" />
     <Compile Include="MainSkyShootService.cs" />
+    <Compile Include="Mobs\ChildrenMob.cs" />
     <Compile Include="Mobs\IMobFactory.cs" />
     <Compile Include="Mobs\Mob.cs" />
+    <Compile Include="Mobs\ParentMob.cs" />
     <Compile Include="Mobs\ShootingMob.cs" />
     <Compile Include="Mobs\Spider.cs" />
     <Compile Include="Mobs\SpiderFactory.cs" />
@@ -107,6 +109,7 @@
     <Compile Include="Weapon\Bullets\SpiderBullet.cs" />
     <Compile Include="Weapon\FlamePistol.cs" />
     <Compile Include="Weapon\Heater.cs" />
+    <Compile Include="Weapon\MobGenerator.cs" />
     <Compile Include="Weapon\SpiderWeapon.cs" />
     <Compile Include="Mobs\SpiderWithSimpleMind.cs" />
     <Compile Include="Program.cs" />

@@ -10,6 +10,6 @@ namespace SkyShoot.Contracts.Statistics
 		public int Exp;
 		public int Frag;
 		public int Lvl;
+		public int Creeps;
 	}
-
 }
