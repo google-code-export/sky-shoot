@@ -189,8 +189,17 @@ namespace SkyShoot.Game.Client.Game
 			{
 				lock (_synchroFrameLocker)
 				{
-					_lastServerSynchroFrame.Clear();
-					_lastServerSynchroFrame.AddRange(_service.SynchroFrame());
+					AGameObject[] serverGameObjects = _service.SynchroFrame();
+
+					if (serverGameObjects == null)
+					{
+						_lastServerSynchroFrame = null;
+					}
+					else
+					{
+						_lastServerSynchroFrame.Clear();
+						_lastServerSynchroFrame.AddRange(_service.SynchroFrame());
+					}
 				}
 			}
 			catch (Exception exc)
@@ -268,10 +277,10 @@ namespace SkyShoot.Game.Client.Game
 
 		#region service implementation
 
-		/*
-		 * Возвращает последние события от сервера, которые были получены с помощью другого потока
-		 * Используется клиентом
-		 */
+		/// <summary>
+		/// Возвращает последние события от сервера, которые были получены с помощью другого потока
+		/// Используется клиентом
+		/// </summary>
 		public AGameEvent[] GetEvents()
 		{
 			AGameEvent[] events;
@@ -289,6 +298,8 @@ namespace SkyShoot.Game.Client.Game
 			AGameObject[] synchroFrame;
 			lock (_synchroFrameLocker)
 			{
+				if (_lastServerSynchroFrame == null)
+					return null;
 				synchroFrame = _lastServerSynchroFrame.ToArray();
 				_lastServerSynchroFrame.Clear();
 

@@ -97,7 +97,6 @@ namespace SkyShoot.Game.Client.Game
 					if (drawableGameObject != null)
 					{
 						gameEvent.UpdateMob(drawableGameObject);
-						// todo работа со взрывами
 						if (drawableGameObject.IsActive == false)
 						{
 							// if object is explosion, just ignore his deletion
@@ -119,8 +118,6 @@ namespace SkyShoot.Game.Client.Game
 			// }
 		}
 
-		private int _updateCouter;
-
 		public void UpdateExplosions()
 		{
 			// todo придумать что-нибудь
@@ -136,17 +133,39 @@ namespace SkyShoot.Game.Client.Game
 				}
 			}
 		}
+		
+		/// <summary>
+		/// ќбновление позиций игровых объектов
+		/// </summary>
+		public void ApplySynchroFrame(AGameObject[] serverGameObjects)
+		{
+			if (serverGameObjects == null)
+			{
+				GameController.Instance.GameOver();
+				return;
+			}
+
+			foreach (var serverGameObject in serverGameObjects)
+			{
+				AGameObject clientMob = GetGameObject(serverGameObject.Id);
+
+				// todo временный фикс, новые (хорошо забытые старые) объекты не добавл€ютс€
+//				if (clientMob == null)
+//					GameObjects.TryAdd(serverGameObject.Id, GameFactory.CreateClientMob(serverGameObject));
+//				else
+//					clientMob.Copy(serverGameObject);
+				
+				if (clientMob != null)
+					clientMob.Copy(serverGameObject);
+			}
+		}
+
+		private int _updateCouter;
 
 		public void Update(GameTime gameTime)
 		{
 			// update explosions
  			UpdateExplosions();
-
-			// update mobs
-			//foreach (var aMob in Mobs)
-			//{
-			//    aMob.Value.Update(gameTime);
-			//}
 
 			foreach (var aMob in GameObjects)
 			{
@@ -169,32 +188,12 @@ namespace SkyShoot.Game.Client.Game
 			// sw.Start();
 			if (_updateCouter++ % 30 == 0)
 			{
-				var serverGameObjects = ConnectionManager.Instance.SynchroFrame();
-				if (serverGameObjects == null)
-				{
-					GameController.Instance.GameOver();
-					return;
-				}
+				ApplySynchroFrame(ConnectionManager.Instance.SynchroFrame());
 
-				foreach (var serverGameObject in serverGameObjects)
-				{
-					AGameObject clientMob = GetGameObject(serverGameObject.Id);
-					if (clientMob == null)
-						GameObjects.TryAdd(serverGameObject.Id, GameFactory.CreateClientMob(serverGameObject));
-					else
-						clientMob.Copy(serverGameObject);
-				}
-			} /**/
+			}
 			// sw.Stop();
 			// Trace.WriteLine("SW:sync: "+sw.ElapsedMilliseconds);
 			// sw.Restart();
-
-			// sw.Stop();
-			// Trace.WriteLine("SW:mobup: " + sw.ElapsedMilliseconds);
-			// sw.Restart();
-
-			// sw.Stop();
-			// Trace.WriteLine("SW:prjup: " + sw.ElapsedMilliseconds);
 		}
 
 		public void Draw(SpriteBatch spriteBatch)
