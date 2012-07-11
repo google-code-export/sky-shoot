@@ -3,6 +3,7 @@ using System.Runtime.Serialization;
 
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Weapon;
+
 using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Contracts.GameEvents
@@ -14,6 +15,7 @@ namespace SkyShoot.Contracts.GameEvents
 		ObjectShootEvent,
 		ObjectDeletedEvent,
 		WeaponChangedEvent,
+		ObjectHealthChanged,
 		EmptyGameEvent
 	}
 
@@ -33,7 +35,7 @@ namespace SkyShoot.Contracts.GameEvents
 		[DataMember]
 		public Guid? GameObjectId { get; set; }
 
-		[DataMember] 
+		[DataMember]
 		public EventType Type;
 
 		protected AGameEvent(Guid? id, long timeStamp)
@@ -49,6 +51,11 @@ namespace SkyShoot.Contracts.GameEvents
 		public abstract void UpdateMob(AGameObject mob);
 	}
 
+	/// <summary>
+	/// Вспомогательный класс, обозначающий пустое событие
+	/// Используется клиентом для обозначения того,
+	/// что нужно запросить с сервера GameEvent'ы
+	/// </summary>
 	public class EmptyEvent : AGameEvent
 	{
 		public EmptyEvent(Guid? id, long timeStamp) : base(id, timeStamp)
@@ -65,7 +72,8 @@ namespace SkyShoot.Contracts.GameEvents
 	[DataContract]
 	public class NewObjectEvent : AGameEvent
 	{
-		[DataMember] public AGameObject NewObj;
+		[DataMember]
+		public AGameObject NewObj;
 
 		public NewObjectEvent(AGameObject obj, long timeStamp)
 			: base(obj.Id, timeStamp)
@@ -83,7 +91,8 @@ namespace SkyShoot.Contracts.GameEvents
 	[DataContract]
 	public class ObjectDirectionChanged : AGameEvent
 	{
-		[DataMember] public Vector2 NewRunDirection;
+		[DataMember]
+		public Vector2 NewRunDirection;
 
 		public ObjectDirectionChanged(Vector2 direction, Guid? id, long timeStamp)
 			: base(id, timeStamp)
@@ -132,12 +141,14 @@ namespace SkyShoot.Contracts.GameEvents
 	[DataContract]
 	public class ObjectHealthChanged : AGameEvent
 	{
-		[DataMember] public float Health;
+		[DataMember]
+		public float Health;
 
 		public ObjectHealthChanged(float newHp, Guid? id, long timeStamp)
 			: base(id, timeStamp)
 		{
 			Health = newHp;
+			Type = EventType.ObjectHealthChanged; 
 		}
 
 		public override void UpdateMob(AGameObject mob)
@@ -147,7 +158,6 @@ namespace SkyShoot.Contracts.GameEvents
 	}
 
 	/*[DataContract]*/
-
 	public class WeaponChanged : AGameEvent
 	{
 		/*[DataMember] */
