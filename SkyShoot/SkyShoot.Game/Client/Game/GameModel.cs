@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
 using Microsoft.Xna.Framework.Graphics;
-
+using SkyShoot.Contracts;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.CollisionDetection;
@@ -25,6 +25,9 @@ namespace SkyShoot.Game.Client.Game
 
 		public ConcurrentDictionary<Guid, DrawableGameObject> GameObjects { get; private set; }
 
+		// explosions -> exploded time
+		private readonly Dictionary<DrawableGameObject, long> _explosions; 
+
 		private readonly Contracts.Logger _logger = new Contracts.Logger("model_log.txt");
 
 		public Camera2D Camera2D { get; private set; }
@@ -36,6 +39,8 @@ namespace SkyShoot.Game.Client.Game
 			Camera2D = new Camera2D(GameLevel.Width, GameLevel.Height);
 
 			GameObjects = new ConcurrentDictionary<Guid, DrawableGameObject>();
+
+			_explosions = new Dictionary<DrawableGameObject, long>();
 		}
 
 		public void AddGameObject(DrawableGameObject drawableGameObject)
@@ -44,6 +49,13 @@ namespace SkyShoot.Game.Client.Game
 				Trace.WriteLine("DrawableGameObject already exists", "GameModel/AddMob");
 		}
 
+		public void RemoveGameObject(Guid id)
+		{
+			DrawableGameObject drawableGameObject;
+			if (!GameObjects.TryRemove(id, out drawableGameObject))
+				Trace.WriteLine("DrawableGameObject with such ID does not exist", "GameModel/RemoveMob");
+		}
+		
 		public DrawableGameObject GetGameObject(Guid id)
 		{
 			DrawableGameObject drawableGameObject;
@@ -51,13 +63,6 @@ namespace SkyShoot.Game.Client.Game
 				return drawableGameObject;
 			Trace.WriteLine("DrawableGameObject with such ID does not exist", "GameModel/GetMob");
 			return null;
-		}
-
-		public void RemoveGameObject(Guid id)
-		{
-			DrawableGameObject drawableGameObject;
-			if (!GameObjects.TryRemove(id, out drawableGameObject))
-				Trace.WriteLine("DrawableGameObject with such ID does not exist", "GameModel/RemoveMob");
 		}
 
 		public void ApplyEvents(IList<AGameEvent> gameEvents)
@@ -75,6 +80,11 @@ namespace SkyShoot.Game.Client.Game
 
 					DrawableGameObject newDrawableGameObject = GameFactory.CreateClientMob(newGameObject);
 					AddGameObject(newDrawableGameObject);
+
+					if (newDrawableGameObject.Is(AGameObject.EnumObjectType.Explosion))
+					{
+						_explosions.Add(newDrawableGameObject, DateTime.Now.Ticks / 10000);
+					}
 				}
 				else
 				{
@@ -88,7 +98,15 @@ namespace SkyShoot.Game.Client.Game
 						// todo работа со взрывами
 						if (drawableGameObject.IsActive == false)
 						{
-							GameController.Instance.GameObjectDead(drawableGameObject);
+							// if object is explosion, just ignore his deletion
+							if (drawableGameObject.Is(AGameObject.EnumObjectType.Explosion))
+							{
+								drawableGameObject.IsActive = true;
+							}
+							else
+							{
+								GameController.Instance.GameObjectDead(drawableGameObject);	
+							}
 						}
 					}
 				}
@@ -101,8 +119,26 @@ namespace SkyShoot.Game.Client.Game
 
 		private int _updateCouter;
 
+		public void UpdateExplosions()
+		{
+			var keys = new DrawableGameObject[_explosions.Count];
+			_explosions.Keys.CopyTo(keys, 0);
+
+			foreach (DrawableGameObject explosion in keys)
+			{
+				if (DateTime.Now.Ticks / 10000 -  _explosions[explosion] > Constants.EXPLOSION_LIFE_DISTANCE)
+				{
+					_explosions.Remove(explosion);
+					RemoveGameObject(explosion.Id);
+				}
+			}
+		}
+
 		public void Update(GameTime gameTime)
 		{
+			// update explosions
+ 			UpdateExplosions();
+
 			// update mobs
 			//foreach (var aMob in Mobs)
 			//{
