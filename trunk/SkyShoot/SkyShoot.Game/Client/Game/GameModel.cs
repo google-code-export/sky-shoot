@@ -169,7 +169,7 @@ namespace SkyShoot.Game.Client.Game
 			// sw.Start();
 			if (_updateCouter++ % 30 == 0)
 			{
-				var serverGameObjects = GameController.Instance.SynchroFrame();
+				var serverGameObjects = ConnectionManager.Instance.SynchroFrame();
 				if (serverGameObjects == null)
 				{
 					GameController.Instance.GameOver();

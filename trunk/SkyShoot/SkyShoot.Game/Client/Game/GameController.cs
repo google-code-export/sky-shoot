@@ -8,12 +8,8 @@ using Microsoft.Xna.Framework;
 
 using Microsoft.Xna.Framework.Input;
 
-using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Service;
-using SkyShoot.Contracts.Session;
-using SkyShoot.Contracts.Statistics;
-using SkyShoot.Contracts.Weapon;
 
 using SkyShoot.Game.Controls;
 
@@ -74,7 +70,7 @@ namespace SkyShoot.Game.Client.Game
 
 			GameModel = new GameModel(GameFactory.CreateClientGameLevel(arena));
 
-			var gameObjects = SynchroFrame();
+			var gameObjects = ConnectionManager.Instance.SynchroFrame();
 
 			foreach (AGameObject mob in gameObjects)
 			{
@@ -162,31 +158,14 @@ namespace SkyShoot.Game.Client.Game
 			return MyId;
 		}
 
-		#region сама игра
-
-		public AGameObject[] SynchroFrame()
-		{
-			return ConnectionManager.Instance.SynchroFrame();
-		}
-
 		public void Shoot(Vector2 direction)
 		{
-			AGameEvent[] gameEvents = ConnectionManager.Instance.Shoot(TypeConverter.Xna2XnaLite(direction));
-			GameModel.ApplyEvents(gameEvents);
+			ConnectionManager.Instance.Shoot(TypeConverter.Xna2XnaLite(direction));
 		}
 
 		public void Move(Vector2 direction)
 		{
-			AGameEvent[] gameEvents = ConnectionManager.Instance.Move(TypeConverter.Xna2XnaLite(direction));
-			GameModel.ApplyEvents(gameEvents);
+			ConnectionManager.Instance.Move(TypeConverter.Xna2XnaLite(direction));
 		}
-
-		public void ChangeWeapon(WeaponType type)
-		{
-			AGameEvent[] gameEvents = ConnectionManager.Instance.ChangeWeapon(type);
-			GameModel.ApplyEvents(gameEvents);
-		}
-
-		#endregion
 	}
 }

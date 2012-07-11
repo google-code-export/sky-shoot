@@ -277,7 +277,7 @@ namespace SkyShoot.Game.Screens
 
 		private void UpdateWeapon()
 		{
-			GameController.Instance.ChangeWeapon(_weapon);
+			ConnectionManager.Instance.ChangeWeapon(_weapon);
 		}
 	}
 }

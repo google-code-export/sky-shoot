@@ -272,7 +272,6 @@ namespace SkyShoot.Game.Client.Game
 		 * Возвращает последние события от сервера, которые были получены с помощью другого потока
 		 * Используется клиентом
 		 */
-
 		public AGameEvent[] GetEvents()
 		{
 			AGameEvent[] events;
@@ -304,7 +303,7 @@ namespace SkyShoot.Game.Client.Game
 
 			AddClientGameEvent(moveGameEvent);
 
-			return GetEvents();
+			return new AGameEvent[] {};
 		}
 
 		public AGameEvent[] Shoot(XNA.Framework.Vector2 direction)
@@ -313,7 +312,7 @@ namespace SkyShoot.Game.Client.Game
 
 			AddClientGameEvent(shootGameEvent);
 
-			return GetEvents();
+			return new AGameEvent[] {};
 		}
 
 		public AGameEvent[] ChangeWeapon(WeaponType type)
@@ -322,7 +321,7 @@ namespace SkyShoot.Game.Client.Game
 
 			AddClientGameEvent(weaponChangedGameEvent);
 
-			return GetEvents();
+			return new AGameEvent[] {};
 		}
 
 		public Stats? GetStats()
