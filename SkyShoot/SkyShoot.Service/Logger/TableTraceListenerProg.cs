@@ -25,12 +25,12 @@ namespace SkyShoot.Service.Logger
 
 		public override void Write(string message)
 		{
-		    Console.Write(string.Format("[{0}] INFO: {1}", DateTime.Now, message));
+			Console.Write(string.Format("[INFO] [{0}] {1}", DateTime.Now, message));
 		}
 
 		public override void WriteLine(string message)
 		{
-		    message = string.Format("[{0}.{1}] INFO: {2}", DateTime.Now, DateTime.Now.Millisecond, message);
+		    message = string.Format("[INFO] [{0}:{1}] {2}", DateTime.Now, DateTime.Now.Millisecond, message);
 			ws.WriteLine(message);
 			ws.Flush();
 			//System.Console.WriteLine(message);
