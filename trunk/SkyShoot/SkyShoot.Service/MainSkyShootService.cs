@@ -14,6 +14,7 @@ using SkyShoot.Contracts.Statistics;
 using SkyShoot.Contracts.Weapon;
 using SkyShoot.Service.Bonuses;
 using SkyShoot.Service.Session;
+using SkyShoot.Service.Statistics;
 using SkyShoot.XNA.Framework;
 using SkyShoot.ServProgram.Account;
 
@@ -28,25 +29,7 @@ namespace SkyShoot.Service
 		public string Name;
 		public Queue<AGameEvent> NewEvents;
 		public List<AGameBonus> Bonuses;
-		private int _exp;
-		public int PlayerExperience // Описание повышения уровня
-		{
-			get { return _exp; }
-			set
-			{
-				if (_exp >= 500 * PlayerLevel - 0)
-				{
-					_exp = value - 500 * PlayerLevel;
-					PlayerLevel++;
-				}
-				else
-				{
-					_exp = value;
-				}
-			}
-		}
-		public int PlayerFrag { get; set; }
-		public int PlayerLevel { get; set; }
+		public ExpTracker Tracker;
 
 
 		private IAccountManager _accountManager = SimpleAccountManager.Instance;
@@ -64,14 +47,11 @@ namespace SkyShoot.Service
 			Bonuses = new List<AGameBonus>();
 
 			InitWeapons();
-			InitStatistics();
 		}
 
 		public void InitStatistics() // Начальная статистика
 		{
-			PlayerExperience = 0;
-			PlayerFrag = 0;
-			PlayerLevel = 1;
+			Tracker = new LinearExpTracker();
 		}
 
 		private void InitWeapons()
@@ -291,13 +271,10 @@ namespace SkyShoot.Service
 			return null;
 		}
 
-		public Stats? GetStats() // Статистика
+		// Статистика
+		public Stats? GetStats()
 		{
-			Stats playerstats;
-			playerstats.Exp = PlayerExperience;
-			playerstats.Frag = PlayerFrag;
-			playerstats.Lvl = PlayerLevel;
-			return playerstats;
+			return Tracker.GetStats();
 		}
 
 		public String[] PlayerListUpdate()
