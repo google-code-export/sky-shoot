@@ -75,7 +75,7 @@ namespace SkyShoot.Game.Client.Game
 			foreach (AGameObject mob in gameObjects)
 			{
 				var clientMob = GameFactory.CreateClientMob(mob);
-				GameModel.AddMob(clientMob);
+				GameModel.AddGameObject(clientMob);
 			}
 
 			// GameModel initialized, set boolean flag  
@@ -84,9 +84,9 @@ namespace SkyShoot.Game.Client.Game
 
 		#region бывший callbacks
 
-		public void MobDead(AGameObject mob)
+		public void GameObjectDead(AGameObject mob)
 		{
-			GameModel.RemoveMob(mob.Id);
+			GameModel.RemoveGameObject(mob.Id);
 			// todo //!!
 			//GameModel.GameLevel.AddTexture(mob.Is(AGameObject.EnumObjectType.Player)
 			//                                ? Textures.DeadPlayerTexture
@@ -96,7 +96,7 @@ namespace SkyShoot.Game.Client.Game
 		public void MobMoved(AGameObject mob, XNA.Framework.Vector2 direction)
 		{
 			// Trace.WriteLine("MobMoved!");
-			GameModel.GetMob(mob.Id).RunVector = direction; // TypeConverter.Vector2_m2s(direction);
+			GameModel.GetGameObject(mob.Id).RunVector = direction; // TypeConverter.Vector2_m2s(direction);
 		}
 
 		//public void BonusDropped(AObtainableDamageModifier bonus)
@@ -125,7 +125,7 @@ namespace SkyShoot.Game.Client.Game
 		public void PlayerLeft(AGameObject mob)
 		{
 			if (IsGameStarted)
-				GameModel.RemoveMob(mob.Id);
+				GameModel.RemoveGameObject(mob.Id);
 		}
 
 		#endregion
@@ -137,7 +137,7 @@ namespace SkyShoot.Game.Client.Game
 
 		public void HandleInput(Controller controller)
 		{
-			var player = GameModel.GetMob(MyId);
+			var player = GameModel.GetGameObject(MyId);
 
 			if (player == null)
 				return;
