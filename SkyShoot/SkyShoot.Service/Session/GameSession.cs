@@ -7,6 +7,7 @@ using SkyShoot.Contracts;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Session;
+using SkyShoot.Contracts.CollisionDetection;
 using SkyShoot.Service.Bonus;
 using SkyShoot.Service.Bonuses;
 using SkyShoot.Service.Mobs;
@@ -317,12 +318,12 @@ namespace SkyShoot.Service.Session
 		/// <summary>
 		/// здесь будут производится обработка всех действий
 		/// </summary>
-		private void Update() 
+		private void Update()
 		{
 			if (!System.Threading.Monitor.TryEnter(_updating)) return;
 
 			// Trace.WriteLine("update begin "+ _timerCounter);
-			 var now = DateTime.Now.Ticks / 10000;
+			var now = DateTime.Now.Ticks / 10000;
 			_updateDelay = now - _lastUpdate;
 			_lastUpdate = now;
 
@@ -347,7 +348,8 @@ namespace SkyShoot.Service.Session
 					}
 
 					var newCoord = activeObject.ComputeMovement(_updateDelay, GameLevel);
-					var canMove = true;
+					Vector2 difference = new Vector2(0f, 0f); ;
+					activeObject.Coordinates = newCoord;
 					/* <b>int j = 0</b> потому что каждый с каждым, а действия не симметричны*/
 					for (int j = 0; j < _gameObjects.Count; j++)
 					{
@@ -358,13 +360,13 @@ namespace SkyShoot.Service.Session
 						}
 						var slaveObject = _gameObjects[j];
 						// объект не существует
-						if (!slaveObject.IsActive)
+						if (!slaveObject.IsActive || slaveObject.IsBullet)
 						{
 							continue;
 						}
 						// объект далеко. не рассматриваем
 						var rR = (activeObject.Radius + slaveObject.Radius);
-						if (Vector2.DistanceSquared(newCoord, slaveObject.Coordinates) > rR*rR &&
+						if (Vector2.DistanceSquared(newCoord, slaveObject.Coordinates) > rR * rR &&
 							Vector2.DistanceSquared(activeObject.Coordinates, slaveObject.Coordinates) > rR * rR)
 						{
 							continue;
@@ -376,30 +378,19 @@ namespace SkyShoot.Service.Session
 						if (slaveObject.Is(AGameObject.EnumObjectType.Block)
 							&& activeObject.Is(AGameObject.EnumObjectType.Block))
 						{
-							//удаляемся ли мы от объекта
-							// если да, то можем двигаться
-							canMove = Vector2.DistanceSquared(activeObject.Coordinates, slaveObject.Coordinates) <
-							          Vector2.DistanceSquared(newCoord, slaveObject.Coordinates);
+							difference = activeObject.Coordinates;
+							activeObject.Coordinates += CollisionDetector.FitObjects(activeObject.Coordinates, activeObject.Radius, slaveObject.Coordinates, slaveObject.Radius);
+							difference = -(activeObject.Coordinates - difference);
+							difference = new Vector2(0f, 0f);
 						}
 					}
-					var coordDiff = activeObject.Coordinates - newCoord;
-					coordDiff.Normalize();
-					if (canMove)
-					{
-						activeObject.Coordinates = newCoord;
-					}
-					else
-					{
-						activeObject.RunVector = Vector2.Zero;
-					}
-					if ((coordDiff - activeObject.PrevMoveDiff).LengthSquared() > Constants.Epsilon)
-					{
-						eventsCash.Add(new ObjectDirectionChanged(activeObject.RunVector, activeObject.Id, now));
-					}
-					activeObject.PrevMoveDiff = coordDiff;
+					if (difference.Length() > Constants.Epsilon)
+						eventsCash.Add(new ObjectDirectionChanged(difference, activeObject.Id, now));
+					//}
+					//activeObject.PrevMoveDiff = difference;
 				}
 
-				for(int i = 0; i < _gameObjects.Count;i++)
+				for (int i = 0; i < _gameObjects.Count; i++)
 				{
 					if (!_gameObjects[i].IsActive)
 						eventsCash.AddRange(MobDead(_gameObjects[i], now));
