@@ -52,7 +52,7 @@ namespace SkyShoot.Game.Screens
 			_texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");
 
 			// ToDo: запрос списка игр с сервера и его вывод
-			_tempGameList = GameController.Instance.GetGameList();
+			_tempGameList = ConnectionManager.Instance.GetGameList();
 
 			if (_tempGameList == null)
 				return;
@@ -160,14 +160,14 @@ namespace SkyShoot.Game.Screens
 		{
 			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);
 
-			_tempGameList = GameController.Instance.GetGameList();
+			_tempGameList = ConnectionManager.Instance.GetGameList();
 
 			if (_tempGameList == null)
 				return;
 
 			if (_gameList.Items.Count != 0)
 			{
-				if (!GameController.Instance.JoinGame(_tempGameList[_gameList.SelectedItems[0]]))
+				if (!ConnectionManager.Instance.JoinGame(_tempGameList[_gameList.SelectedItems[0]]))
 				{
 					Trace.WriteLine("Join game failed");
 				}
@@ -195,7 +195,7 @@ namespace SkyShoot.Game.Screens
 			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);
 
 			_gameList.Items.Clear();
-			_tempGameList = GameController.Instance.GetGameList();
+			_tempGameList = ConnectionManager.Instance.GetGameList();
 
 			if (_tempGameList == null)
 				return;
