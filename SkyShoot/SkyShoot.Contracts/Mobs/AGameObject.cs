@@ -61,7 +61,7 @@ namespace SkyShoot.Contracts.Mobs
 			[EnumMember]
 			Poisoning = LivingObject | 0x500000000,//Правильный ли номер
 			[EnumMember]
-			PoisonTick = Bullet | 0x600, //Правильный ли номер
+			PoisonTickBullet = Bullet | 0x600, //Правильный ли номер
 			[EnumMember]
 			Bonus = 0x01000,//4096
 			[EnumMember]

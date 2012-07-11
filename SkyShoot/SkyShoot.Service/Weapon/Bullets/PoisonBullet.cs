@@ -4,6 +4,7 @@ using SkyShoot.Contracts;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.XNA.Framework;
+using SkyShoot.ServProgram.Mobs;
 
 namespace SkyShoot.Service.Weapon.Bullets
 {
@@ -24,7 +25,8 @@ namespace SkyShoot.Service.Weapon.Bullets
 			var res = new List<AGameEvent>(base.Do(obj, newObjects, time));
 			if (obj.Id != Owner.Id && obj.Is(EnumObjectType.Player) && (obj.HealthAmount >= Constants.PISTOL_BULLET_DAMAGE))
 			{
-				var Poison = new Mob(10);	//Время жизни--через здоровье
+				var wp = new PoisonTick(Guid.NewGuid());
+				var Poison = new Poisoning(40f, wp, obj);	//Время жизни--через здоровье
 				Poison.ObjectType = EnumObjectType.Poisoning;
 				Poison.Coordinates.X = obj.Coordinates.X;
 				Poison.Coordinates.Y = obj.Coordinates.Y;

@@ -85,8 +85,9 @@ namespace SkyShoot.Contracts
 		#region poisonTick
 
 		public const float POISONTICK_BULLET_SPEED = 0.5f;
-		public const float POISONTICK_BULLET_DAMAGE = 10;
+		public const float POISONTICK_BULLET_DAMAGE = 30;
 		public const float POISONTICK_BULLET_LIFE_DISTANCE = 15f;
+
 		public const int POISONTICK_ATTACK_RATE = 1000;
 
 		#endregion
@@ -105,6 +106,11 @@ namespace SkyShoot.Contracts
 		public const float CHILDREN_MOB_HEALTH = 25f;
 		public const float HYDRA_HEALTH = 50f;
 		public const float HYDRA_SPEED = 0.03f;
+		public const float POISONER_MOB_SPEED = 0.03f;
+		public const float POISONER_MOB_HEALTH = 500f;
+		public const float POISONING_MOB_SPEED = 0.12f; //Чтобы догонял даже при ускорении.
+		public const float POISONING_MOB_HEALTH= 500f;
+
 
 		#endregion
 
