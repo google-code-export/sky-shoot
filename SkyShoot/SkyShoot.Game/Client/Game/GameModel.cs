@@ -9,7 +9,9 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
 using Microsoft.Xna.Framework.Graphics;
+
 using SkyShoot.Contracts;
+
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.CollisionDetection;
@@ -28,7 +30,7 @@ namespace SkyShoot.Game.Client.Game
 		// explosions -> exploded time
 		private readonly Dictionary<DrawableGameObject, long> _explosions; 
 
-		private readonly Contracts.Logger _logger = new Contracts.Logger("model_log.txt");
+		private readonly Logger _logger = new Logger("model_log.txt");
 
 		public Camera2D Camera2D { get; private set; }
 
@@ -121,6 +123,7 @@ namespace SkyShoot.Game.Client.Game
 
 		public void UpdateExplosions()
 		{
+			// todo придумать что-нибудь
 			var keys = new DrawableGameObject[_explosions.Count];
 			_explosions.Keys.CopyTo(keys, 0);
 

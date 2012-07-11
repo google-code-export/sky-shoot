@@ -59,7 +59,7 @@ namespace SkyShoot.Game.Screens
 
             // todo rename variable
             // вывод списка игрков
-            GameDescription[] tmpGameDescriptionList = GameController.Instance.GetGameList();
+            GameDescription[] tmpGameDescriptionList = ConnectionManager.Instance.GetGameList();
 
             if (tmpGameDescriptionList == null)
                 return;
@@ -123,7 +123,7 @@ namespace SkyShoot.Game.Screens
             // обновляемся только каждый 30 апдейт (два раза в секунду)
             if (_updateCount++ % 30 != 0)
                 return;
-            var level = GameController.Instance.GameStart(GameId);
+            var level = ConnectionManager.Instance.GameStart(GameId);
             if (level != null)
             {
                 // game started
@@ -132,7 +132,7 @@ namespace SkyShoot.Game.Screens
             else
             {
                 // game has not started, update player list
-                ChangePlayerList(GameController.Instance.PlayerListUpdate());
+                ChangePlayerList(ConnectionManager.Instance.PlayerListUpdate());
             }
         }
 
@@ -167,7 +167,7 @@ namespace SkyShoot.Game.Screens
 		{
 			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);
 
-			GameController.Instance.LeaveGame();
+			ConnectionManager.Instance.LeaveGame();
 			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MultiplayerScreen);
 		}
 

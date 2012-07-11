@@ -155,7 +155,7 @@ namespace SkyShoot.Game.Screens
 				Settings.Default.password = _passwordBox.RealText;
 				Settings.Default.Save();
 
-				AccountManagerErrorCode errorCode = GameController.Instance.Register(_loginBox.Text, _passwordBox.RealText);
+				AccountManagerErrorCode errorCode = ConnectionManager.Instance.Register(_loginBox.Text, _passwordBox.RealText);
 
 				if (errorCode == AccountManagerErrorCode.Ok)
 				{

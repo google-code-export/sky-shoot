@@ -43,11 +43,7 @@ namespace SkyShoot.Game.Client.Game
 
 	public sealed class GameController
 	{
-		private SoundManager _soundManager;
-
-		public static Guid MyId { get; private set; }
-
-		public bool IsGameStarted { get; private set; }
+		#region singleton
 
 		private static GameController _localInstance;
 
@@ -56,13 +52,21 @@ namespace SkyShoot.Game.Client.Game
 			get { return _localInstance ?? (_localInstance = new GameController()); }
 		}
 
-		public GameModel GameModel { get; private set; }
-
 		private GameController()
 		{
 			SoundManager.Initialize();
 			_soundManager = SoundManager.Instance;
 		}
+
+		#endregion
+
+		private SoundManager _soundManager;
+
+		public static Guid MyId { get; private set; }
+
+		public bool IsGameStarted { get; private set; }
+
+		public GameModel GameModel { get; private set; }
 
 		public void GameStart(Contracts.Session.GameLevel arena)
 		{
@@ -93,28 +97,6 @@ namespace SkyShoot.Game.Client.Game
 			//                                : Textures.DeadSpiderTexture, TypeConverter.XnaLite2Xna(mob.Coordinates));
 		}
 
-		public void MobMoved(AGameObject mob, XNA.Framework.Vector2 direction)
-		{
-			// Trace.WriteLine("MobMoved!");
-			GameModel.GetGameObject(mob.Id).RunVector = direction; // TypeConverter.Vector2_m2s(direction);
-		}
-
-		//public void BonusDropped(AObtainableDamageModifier bonus)
-		//{
-		//  throw new NotImplementedException();
-		//}
-
-		//public void BonusExpired(AObtainableDamageModifier bonus)
-		//{
-		//  var player = GameModel.GetMob(MyId);
-		//  player.State &= ~bonus.Type;
-		//}
-
-		//public void BonusDisappeared(AObtainableDamageModifier bonus)
-		//{
-		//  throw new NotImplementedException();
-		//}
-
 		public void GameOver()
 		{
 			GameModel = null;
@@ -122,11 +104,11 @@ namespace SkyShoot.Game.Client.Game
 			IsGameStarted = false;
 		}
 
-		public void PlayerLeft(AGameObject mob)
-		{
-			if (IsGameStarted)
-				GameModel.RemoveGameObject(mob.Id);
-		}
+//		public void PlayerLeft(AGameObject mob)
+//		{
+//			if (IsGameStarted)
+//				GameModel.RemoveGameObject(mob.Id);
+//		}
 
 		#endregion
 
@@ -169,14 +151,6 @@ namespace SkyShoot.Game.Client.Game
 
 		#endregion
 
-		#region регистрация и прочее
-
-		public AccountManagerErrorCode Register(string username, string password)
-		{
-			// TODO обращаться напрямую
-			return ConnectionManager.Instance.Register(username, password);
-		}
-
 		public Guid? Login(string username, string password, out AccountManagerErrorCode errorCode)
 		{
 			// TODO check for null
@@ -187,38 +161,6 @@ namespace SkyShoot.Game.Client.Game
 			}
 			return MyId;
 		}
-
-		public GameDescription[] GetGameList()
-		{
-			return ConnectionManager.Instance.GetGameList();
-		}
-
-		public GameDescription CreateGame(GameMode mode, int maxPlayers, TileSet tile, int teams)
-		{
-			return ConnectionManager.Instance.CreateGame(mode, maxPlayers, tile, teams);
-		}
-
-		public bool JoinGame(GameDescription game)
-		{
-			return ConnectionManager.Instance.JoinGame(game);
-		}
-
-		public void LeaveGame()
-		{
-			ConnectionManager.Instance.LeaveGame();
-		}
-
-		public Contracts.Session.GameLevel GameStart(int gameId)
-		{
-			return ConnectionManager.Instance.GameStart(gameId);
-		}
-
-		public string[] PlayerListUpdate()
-		{
-			return ConnectionManager.Instance.PlayerListUpdate();
-		}
-
-		#endregion
 
 		#region сама игра
 
@@ -243,11 +185,6 @@ namespace SkyShoot.Game.Client.Game
 		{
 			AGameEvent[] gameEvents = ConnectionManager.Instance.ChangeWeapon(type);
 			GameModel.ApplyEvents(gameEvents);
-		}
-
-		public Stats? GetStats() // Статистика
-		{
-			return ConnectionManager.Instance.GetStats();
 		}
 
 		#endregion

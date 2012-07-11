@@ -127,7 +127,7 @@ namespace SkyShoot.Game.Screens
 
 			if (counter % 60 == 0)
 			{
-				var stat = GameController.Instance.GetStats();
+				var stat = ConnectionManager.Instance.GetStats();
 				if (stat != null)
 				{
 					_lableLevel.Text = "Level " + stat.Value.Lvl.ToString(CultureInfo.InvariantCulture);
