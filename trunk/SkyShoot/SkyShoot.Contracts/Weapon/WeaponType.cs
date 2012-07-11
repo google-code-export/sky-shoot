@@ -25,6 +25,9 @@ namespace SkyShoot.Contracts.Weapon
 		FlamePistol,
 
 		[EnumMember]
-		MobGenerator
+		MobGenerator,
+
+		[EnumMember]
+		PoisonGun
 	}
 }

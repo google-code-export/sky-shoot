@@ -106,10 +106,13 @@
     <Compile Include="Statistics\LinearExpTracker.cs" />
     <Compile Include="Weapon\Bullets\Flame.cs" />
     <Compile Include="Weapon\Bullets\HeaterBullet.cs" />
+    <Compile Include="Weapon\Bullets\PoisonBullet.cs" />
+    <Compile Include="Weapon\Bullets\PoisonTick.cs" />
     <Compile Include="Weapon\Bullets\SpiderBullet.cs" />
     <Compile Include="Weapon\FlamePistol.cs" />
     <Compile Include="Weapon\Heater.cs" />
     <Compile Include="Weapon\MobGenerator.cs" />
+    <Compile Include="Weapon\PoisonGun.cs" />
     <Compile Include="Weapon\SpiderWeapon.cs" />
     <Compile Include="Mobs\SpiderWithSimpleMind.cs" />
     <Compile Include="Program.cs" />
