@@ -31,7 +31,7 @@ namespace SkyShoot.Contracts.Mobs
 			Target = m.Target;
 		}
 
-		public void FindTarget(List<AGameObject> targetPlayers)
+		public virtual void FindTarget(List<AGameObject> targetPlayers)
 		{
 			float distance = 1000000;
 

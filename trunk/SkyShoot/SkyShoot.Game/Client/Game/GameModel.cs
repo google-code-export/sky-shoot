@@ -63,7 +63,7 @@ namespace SkyShoot.Game.Client.Game
 			DrawableGameObject drawableGameObject;
 			if (GameObjects.TryGetValue(id, out drawableGameObject))
 				return drawableGameObject;
-			Trace.WriteLine("DrawableGameObject with such ID does not exist", "GameModel/GetMob");
+			Trace.WriteLine("DrawableGameObject with such ID does not exist (" + id.ToString() + ")", "GameModel/GetMob");
 			return null;
 		}
 

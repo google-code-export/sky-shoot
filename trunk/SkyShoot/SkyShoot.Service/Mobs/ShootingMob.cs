@@ -8,8 +8,8 @@ namespace SkyShoot.ServProgram.Mobs
 {
     class ShootingMob: Mob
 	{
-		private readonly int _shootingDelay = 10000;
-        private long _lastShoot;
+		protected readonly int _shootingDelay = 10000;
+        protected long _lastShoot;
 
         public ShootingMob(float health, AWeapon weapon, int shootingDelay)
             : base(health)

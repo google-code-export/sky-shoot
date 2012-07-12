@@ -31,6 +31,9 @@ namespace SkyShoot.Contracts.Weapon
 		PoisonGun,
 
 		[EnumMember]
-		PoisonTick
+		PoisonTick,
+
+		[EnumMember]
+		TurretMaker
 	}
 }

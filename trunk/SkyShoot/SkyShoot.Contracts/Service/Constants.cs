@@ -44,6 +44,7 @@ namespace SkyShoot.Contracts
 		public const float FLAME_LIFE_DISTANCE = 120f;
 		public const int FLAME_ATTACK_RATE = 700;
 		public const float FLAME_RADIUS = 5f;
+		public const float TURRET_RADIUS = 10F;
 
 		#endregion
 

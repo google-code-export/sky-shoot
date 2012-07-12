@@ -107,12 +107,14 @@
     <Compile Include="Statistics\ExponentialExpTracker.cs" />
     <Compile Include="Statistics\ExpTracker.cs" />
     <Compile Include="Statistics\LinearExpTracker.cs" />
+    <Compile Include="Turrets\Turret.cs" />
     <Compile Include="Weapon\Bullets\Flame.cs" />
     <Compile Include="Weapon\Bullets\HeaterBullet.cs" />
     <Compile Include="Weapon\Bullets\PoisonBullet.cs" />
     <Compile Include="Weapon\PoisonTick.cs" />
     <Compile Include="Weapon\Bullets\PoisonTickBullet.cs" />
     <Compile Include="Weapon\Bullets\SpiderBullet.cs" />
+    <Compile Include="Weapon\TurretMaker.cs" />
     <Compile Include="Weapon\FlamePistol.cs" />
     <Compile Include="Weapon\Heater.cs" />
     <Compile Include="Weapon\MobGenerator.cs" />
