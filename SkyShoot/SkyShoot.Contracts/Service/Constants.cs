@@ -87,7 +87,7 @@ namespace SkyShoot.Contracts
 
 		public const float POISONTICK_BULLET_SPEED = 1.5f;
 		public const float POISONTICK_BULLET_DAMAGE = 1.0f;
-		public const float POISONTICK_BULLET_LIFE_DISTANCE = 15f;
+		public const float POISONTICK_BULLET_LIFE_DISTANCE = 1f;
 		public const float POISONTICK_BULLET_RADIUS = 5f;
 		public const int POISONTICK_ATTACK_RATE = 2000;
 
