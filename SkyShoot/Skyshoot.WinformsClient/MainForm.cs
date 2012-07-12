@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Security.Cryptography;
 using System.ServiceModel;
 using System.Text;
 using System.Threading;
@@ -16,6 +17,28 @@ using Color = System.Drawing.Color;
 
 namespace SkyShoot.WinFormsClient
 {
+	public class HashHelper
+	{
+		/// <summary>
+		/// выдаёт последовательность из 32 шестнадцатеричных цифр (md5 хеш от аргумента)
+		/// </summary>
+		public static string GetMd5Hash(string input)
+		{
+			MD5 md5Hasher = MD5.Create();
+
+			byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(input));
+
+			var sBuilder = new StringBuilder();
+
+			for (int i = 0; i < data.Length; i++)
+			{
+				sBuilder.Append(data[i].ToString("x2"));
+			}
+
+			return sBuilder.ToString();
+		}
+	}
+
 	public partial class MainForm : Form
 	{
 		#region переменные
@@ -94,10 +117,10 @@ namespace SkyShoot.WinFormsClient
 				{
 					Thread.Sleep(100);
 					DateTime now = DateTime.Now;
-					AGameObject[] syncObjects; 
+					AGameObject[] syncObjects;
 					lock (_service)
 					{
-						if(_prevMove != _me.RunVector)
+						if (_prevMove != _me.RunVector)
 						{
 							ApplyEvents(_service.Move(_prevMove = _me.RunVector));
 						}
@@ -109,6 +132,7 @@ namespace SkyShoot.WinFormsClient
 						if (_curWeapon != _prevWeapon)
 						{
 							_service.ChangeWeapon(_prevWeapon = _curWeapon);
+							//Thread.Sleep(100);
 						}
 						syncObjects = _service.SynchroFrame();
 						ApplyEvents(_service.GetEvents());
@@ -160,14 +184,14 @@ namespace SkyShoot.WinFormsClient
 
 		private void SetStatus(AGameObject me)
 		{
-			if(me == null)
+			if (me == null)
 				return;
 			try
 			{
 				var sb = new StringBuilder();
-				sb.AppendFormat("[pos: {0}; {1}] [dir: {2}; {3}]", 
-					_me.Coordinates.X, _me.Coordinates.Y, 
-				                _me.RunVector.X,_me.RunVector.Y);
+				sb.AppendFormat("[pos: {0}; {1}] [dir: {2}; {3}]",
+					_me.Coordinates.X, _me.Coordinates.Y,
+												_me.RunVector.X, _me.RunVector.Y);
 				toolStripStatusLabel1.Text = sb.ToString();
 				sb.Clear();
 				sb.AppendFormat("{0}/{1}", _me.HealthAmount, _me.MaxHealthAmount);
@@ -195,26 +219,46 @@ namespace SkyShoot.WinFormsClient
 			InitializeComponent();
 
 			//WeaponType
+			int i = 0;
+			/**/
+			var weapons = new List<WeaponType>();
+			weapons.Add(WeaponType.Pistol);
+			weapons.Add(WeaponType.Shotgun);
+			weapons.Add(WeaponType.FlamePistol);
+			weapons.Add(WeaponType.Heater);
+			weapons.Add(WeaponType.RocketPistol);
+			weapons.Add(WeaponType.TurretMaker);
+			_buttons = new WeaponButton[weapons.Count];
+			foreach (var weapon in weapons)
+			{
+				var b = new WeaponButton();
+				b.WeaponType = weapon;
+				b.Name = weapon.ToString();
+				b.Text = "(" + (i + 1).ToString() + ") " + weapon.ToString();
+				b.Click += BClick;
+				b.BorderStyle = BorderStyle.Fixed3D;
+				_buttons[i++] = b;
+			}
+			/*/
 			int bts = Enum.GetNames(typeof(WeaponType)).Length - 1;
 			_buttons = new WeaponButton[bts];
-			int i = 0;
 			foreach (var s in Enum.GetNames(typeof(WeaponType)))
 			{
-				if(s == WeaponType.SpiderPistol.ToString())
+				if (s == WeaponType.SpiderPistol.ToString())
 					continue;
 				var b = new WeaponButton();
 				WeaponType t;
-				if(!Enum.TryParse(s, out t))
+				if (!Enum.TryParse(s, out t))
 				{
 					MessageBox.Show(@"Can't load weapons list :(", @"Error");
 				}
 				b.WeaponType = t;
 				b.Name = s;
-				b.Text = @"("+ (i+1).ToString() + @") " + s;
+				b.Text = @"(" + (i + 1).ToString() + @") " + s;
 				b.Click += BClick;
 				b.BorderStyle = BorderStyle.Fixed3D;
 				_buttons[i++] = b;
-			}
+			}/**/
 			Controls.AddRange(_buttons);
 			MakeWeaponButtonsLayout();
 
@@ -248,7 +292,7 @@ namespace SkyShoot.WinFormsClient
 		void BClick(object sender, EventArgs e)
 		{
 			var b = sender as WeaponButton;
-			if(b == null)
+			if (b == null)
 				return;
 			_curWeapon = b.WeaponType;
 		}
@@ -289,7 +333,7 @@ namespace SkyShoot.WinFormsClient
 			case '8':
 			case '9':
 				int ind = e.KeyValue - '0' - 1;
-				if(ind < _buttons.Length)
+				if (ind < _buttons.Length)
 				{
 					BClick(_buttons[ind], null);
 				}
@@ -311,16 +355,16 @@ namespace SkyShoot.WinFormsClient
 
 		private void ApplyEvents(IEnumerable<AGameEvent> events)
 		{
-			if(events ==null)
+			if (events == null)
 				return;
 			foreach (var gameEvent in events)
 			{
 				var t = _objects.FindAll(o => o == null);
-				if(t.Count != 0)
+				if (t.Count != 0)
 				{
 					Trace.WriteLine(t);
 				}
-				var gameObject = _objects.Find(o => o!= null && o.Id == gameEvent.GameObjectId);
+				var gameObject = _objects.Find(o => o != null && o.Id == gameEvent.GameObjectId);
 				if (gameObject != null)
 				{
 					gameEvent.UpdateMob(gameObject);
@@ -383,7 +427,7 @@ namespace SkyShoot.WinFormsClient
 						}
 						x = (m.Coordinates.X) * _pnCanvas.Width / _level.levelWidth;
 						y = (m.Coordinates.Y) * _pnCanvas.Height / _level.levelHeight;
-						r = m.Radius * _pnCanvas.Width / _level.levelWidth; 
+						r = m.Radius * _pnCanvas.Width / _level.levelWidth;
 						m.ShootVector.Normalize();
 						switch (m.ObjectType)
 						{
@@ -537,15 +581,17 @@ namespace SkyShoot.WinFormsClient
 		{
 			try
 			{
-				Guid? id = _service.Login(username, password);
+				AccountManagerErrorCode errorCode;
+				Guid? id = _service.Login(username, HashHelper.GetMd5Hash(password), out errorCode);
 				if (id != null)
 				{
-					_me = new AGameObject {Coordinates = Vector2.Zero, Id = (Guid) id};
+					_me = new AGameObject { Coordinates = Vector2.Zero, Id = (Guid)id };
 
 					SetStatus("Logon successfull");
 					return true;
 				}
-				SetStatus("No such login");
+
+				SetStatus(String.Format("ERROR: {0}", errorCode));
 				return false;
 			}
 			catch (Exception)

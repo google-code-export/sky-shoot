@@ -3,7 +3,6 @@ using System.Runtime.Serialization;
 
 namespace SkyShoot.Contracts.Weapon
 {
-    [Flags]
 	public enum WeaponType
 	{
 		[EnumMember]
