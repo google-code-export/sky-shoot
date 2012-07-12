@@ -20,9 +20,10 @@ namespace SkyShoot.Contracts.Mobs
 		[Flags]
 		public enum EnumObjectType : ulong
 		{
-			/*
-			 * 64-bit 00000000 00000000
-			 *            \|/  ||||||||
+		//!! переписать на сдвиги и номера
+			/*                 10000000
+			 * 64-bit 0000000 000000000
+			 *            \|/ \||||||||
 			 *             |   ||/|/|/+-- LivingObject (something with mind and health)
 			 *             |   || | |  
 			 *             |   || | +---- Bullets
@@ -31,7 +32,7 @@ namespace SkyShoot.Contracts.Mobs
 			 *             |   ||      
 			 *             |   |+-------- Walls      
 			 *             |   |
-			 *             |   +--------- Reserved
+			 *             |   +--------- Mobs
 			 *             |
 			 *             +------------- Common attributes
 			 */
@@ -48,19 +49,17 @@ namespace SkyShoot.Contracts.Mobs
 			[EnumMember]
 			PistolBullet = Bullet | 0x040,//80
 			[EnumMember]
-			ShotgunBullet = Bullet | 0x080,//144
+			ShotgunBullet = Bullet | 0x060,//144
 			[EnumMember]
-			RocketBullet = Bullet | 0x100,//272
+			RocketBullet = Bullet | 0x080,//272
 			[EnumMember]
-			Explosion = Bullet | 0x200,//528
+			Explosion = Bullet | 0x100,//528
 			[EnumMember]
-			SpiderBullet = Bullet | 0x400,//1040
+			SpiderBullet = Bullet | 0x120,//1040
 			[EnumMember]
-			HeaterBullet = Bullet | 0x800,//
+			HeaterBullet = Bullet | 0x140,//
 			[EnumMember]
-			PoisonBullet = Bullet | 0x500,//Правильный ли номер
-			[EnumMember]
-			Poisoning = 0x0001 | 0x500000000,//Правильный ли номер? Он живой объект, но не блок
+			PoisonBullet = Bullet | 0x160,//Правильный ли номер
 			[EnumMember]
 			PoisonTickBullet = Bullet | 0x600, //Правильный ли номер
 			[EnumMember]
@@ -72,15 +71,37 @@ namespace SkyShoot.Contracts.Mobs
 			[EnumMember]
 			Remedy = Bonus | 0x08000,//36864
 			[EnumMember]
-			Speedup = Bonus | 0x10000,//69632
+			Mirror = Bonus | 0x06000,//135168
 			[EnumMember]
-			Mirror = Bonus | 0x20000,//135168
+			Speedup = Bonus | 0x10000,//69632
 			[EnumMember]
 			Wall = 0x0100000 | Block,//1125899907891200
 			[EnumMember]
-			Block = 100000000, //0x1 << CommonAttributesShift, //1125899906842624
+			Block = 0x100000000, //0x1 << CommonAttributesShift, //1125899906842624
+			// !! [EnumMember]
+			// Mob2 = 0x010000000 | Mob,
 			[EnumMember]
-			Turret = 0x8 //1 << 3
+			ChildrenMob = 0x020000000 | Mob,
+			[EnumMember]
+			Hydra = 0x040000000 | Mob,
+			[EnumMember]
+			ParentMob = 0x060000000 | Mob,
+			[EnumMember]
+			Poisoner = 0x080000000 | Mob,
+			[EnumMember]
+			Poisoning = 0x100000000 | Mob | ~Block, //!!
+			[EnumMember]
+			Spider = 0x120000000 | Mob,
+			[EnumMember]
+			ShootingSpider = 0x140000000 | Mob,
+			[EnumMember]
+			SpiderWithMind = 0x160000000 | Mob,
+			[EnumMember]
+			Turret = 0x180000000 | Mob,
+
+			// [EnumMember] //!!
+			// Poisoning = 0x0001 | 0x500000000,//Правильный ли номер? Он живой объект, но не блок
+
 		}
 
 		#region основные свойства
