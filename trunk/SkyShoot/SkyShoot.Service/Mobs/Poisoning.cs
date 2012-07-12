@@ -36,8 +36,8 @@ namespace SkyShoot.ServProgram.Mobs
 					this.IsActive = false;
 					res.Add(new ObjectDeleted(Id, time));
 				}
-				this.HealthAmount = this.HealthAmount - 10;//Са
-				if (this.HealthAmount <= 0)//TODO: Можно покрасивее переписать
+				this.HealthAmount = this.HealthAmount - 10;//Сам себя кусает
+				if (this.HealthAmount <= 0)
 				{
 					this.IsActive = false;
 					res.Add(new ObjectDeleted(Id, time));

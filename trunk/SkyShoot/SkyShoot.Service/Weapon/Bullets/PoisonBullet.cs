@@ -26,7 +26,7 @@ namespace SkyShoot.Service.Weapon.Bullets
 			if (obj.Id != Owner.Id && obj.Is(EnumObjectType.Player) && (obj.HealthAmount >= Constants.PISTOL_BULLET_DAMAGE))
 			{
 				var wp = new PoisonTick(Guid.NewGuid());
-				var Poison = new Poisoning(40f, wp, obj);	//Время жизни--через здоровье
+				var Poison = new Poisoning(Constants.POISONING_MOB_HEALTH, wp, obj);	//Время жизни--через здоровье
 				Poison.ObjectType = EnumObjectType.Poisoning;
 				Poison.Coordinates.X = obj.Coordinates.X;
 				Poison.Coordinates.Y = obj.Coordinates.Y;
