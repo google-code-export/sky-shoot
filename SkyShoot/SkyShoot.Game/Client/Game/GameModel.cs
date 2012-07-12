@@ -30,7 +30,7 @@ namespace SkyShoot.Game.Client.Game
 		// explosions -> exploded time
 		private readonly Dictionary<DrawableGameObject, long> _explosions; 
 
-		private readonly Logger _logger = new Logger("model_log.txt");
+		// private readonly Logger _logger = new Logger("model_log.txt");
 
 		public Camera2D Camera2D { get; private set; }
 
@@ -80,7 +80,7 @@ namespace SkyShoot.Game.Client.Game
 					var newGameObject = new AGameObject();
 					gameEvent.UpdateMob(newGameObject);
 
-					DrawableGameObject newDrawableGameObject = GameFactory.CreateClientMob(newGameObject);
+					DrawableGameObject newDrawableGameObject = GameFactory.CreateClientGameObject(newGameObject);
 					AddGameObject(newDrawableGameObject);
 
 					if (newDrawableGameObject.Is(AGameObject.EnumObjectType.Explosion))
@@ -253,7 +253,7 @@ namespace SkyShoot.Game.Client.Game
 				stringBuilder.Append("\n  " + gameEvent.Type);
 			}
 
-			_logger.WriteLine(stringBuilder.ToString());
+			// _logger.WriteLine(stringBuilder.ToString());
 		}
 	}
 }

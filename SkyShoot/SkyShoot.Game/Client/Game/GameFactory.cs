@@ -1,4 +1,5 @@
 using SkyShoot.Contracts.Mobs;
+
 using SkyShoot.Game.Client.GameObjects;
 using SkyShoot.Game.Client.View;
 
@@ -8,12 +9,12 @@ namespace SkyShoot.Game.Client.Game
 	{
 		private static SoundManager _soundManager;
 
-		public static DrawableGameObject CreateClientMob(AGameObject serverGameObject)
+		public static DrawableGameObject CreateClientGameObject(AGameObject serverGameObject)
 		{
 			SoundManager.Initialize();
 			_soundManager = SoundManager.Instance;
 
-			// can't uhse switch 'cause one object can have many merged EnumTypes
+			// can't use switch 'cause one object can have many merged EnumTypes
 			if (serverGameObject.Is(AGameObject.EnumObjectType.Player))
 				return new DrawableGameObject(serverGameObject, Textures.PlayerAnimation);
 
@@ -34,7 +35,7 @@ namespace SkyShoot.Game.Client.Game
 			if (serverGameObject.Is(AGameObject.EnumObjectType.PistolBullet))
 				return new DrawableGameObject(serverGameObject, Textures.LaserProjectile);
 
-			if(serverGameObject.Is(AGameObject.EnumObjectType.HeaterBullet))
+			if (serverGameObject.Is(AGameObject.EnumObjectType.HeaterBullet))
 				return new DrawableGameObject(serverGameObject, Textures.HeaterProjectile);
 
 			if (serverGameObject.Is(AGameObject.EnumObjectType.ShotgunBullet))
@@ -67,10 +68,10 @@ namespace SkyShoot.Game.Client.Game
 			if (serverGameObject.Is(AGameObject.EnumObjectType.Speedup))
 				return new DrawableGameObject(serverGameObject, Textures.Speed);
 
-			if(serverGameObject.Is(AGameObject.EnumObjectType.Mirror))
+			if (serverGameObject.Is(AGameObject.EnumObjectType.Mirror))
 				return new DrawableGameObject(serverGameObject, Textures.Mirror);
 
-			if(serverGameObject.Is(AGameObject.EnumObjectType.Wall))
+			if (serverGameObject.Is(AGameObject.EnumObjectType.Wall))
 				return new DrawableGameObject(serverGameObject, Textures.OneStone);
 
 			if (serverGameObject.Is(AGameObject.EnumObjectType.Turret))
@@ -79,16 +80,6 @@ namespace SkyShoot.Game.Client.Game
 			return null;
 			//throw new Exception();
 		}
-		
-		//public static Projectile CreateClientProjectile(AGameObject serverGameObject)
-		//{
-		//  return new Projectile(serverGameObject);
-		//}
-
-		//public static GameBonus CreateClientGameBonus(AGameObject serverGameObject)
-		//{
-		//  return new GameBonus(serverGameObject);
-		//}
 
 		public static GameLevel CreateClientGameLevel(Contracts.Session.GameLevel gameLevel)
 		{

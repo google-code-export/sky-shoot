@@ -16,7 +16,7 @@ namespace SkyShoot.Game.Screens
 	internal class GameplayScreen : GameScreen
 	{
 		private static WeaponType _weapon = WeaponType.Pistol;
-		
+
 		private readonly ContentManager _content;
 
 		private ButtonControl _pistolButton;
@@ -30,7 +30,8 @@ namespace SkyShoot.Game.Screens
 		private LabelControl _lableExp;
 		private LabelControl _lableFrag;
 		private LabelControl _lableCreeps;
-		private int counter;
+
+		private int _counter;
 
 		public GameplayScreen()
 		{
@@ -128,7 +129,7 @@ namespace SkyShoot.Game.Screens
 
 			GameController.Instance.GameModel.Update(gameTime);
 
-			if (counter % 60 == 0)
+			if (_counter % 60 == 0)
 			{
 				var stat = ConnectionManager.Instance.GetStats();
 				if (stat != null)
@@ -148,18 +149,20 @@ namespace SkyShoot.Game.Screens
 					_lableCreeps.Text = "Creeps " + stat.Value.Creeps.ToString(CultureInfo.InvariantCulture);
 				}
 			}
-			counter++;
+			_counter++;
 		}
 
 		public override void Draw(GameTime gameTime)
 		{
+			// todo remove this
+			if (GameController.Instance.GameModel == null)
+				return;
+
 			GraphicsDevice graphicsDevice = ScreenManager.Instance.GraphicsDevice;
 			SpriteBatch spriteBatch = ScreenManager.Instance.SpriteBatch;
 			graphicsDevice.Clear(Color.SkyBlue);
 
 			GameController.Instance.GameModel.Draw(spriteBatch);
-
-
 		}
 
 		private void CreateControls()
@@ -167,66 +170,66 @@ namespace SkyShoot.Game.Screens
 			#region Вывод статистики на экран
 
 			_lableLevel = new LabelControl
-			{
-				Text = "Level",
-				Bounds = new UniRectangle(new UniVector(-60, -40), new UniVector(0, 0)),
-			};
+			              	{
+			              		Text = "Level",
+			              		Bounds = new UniRectangle(new UniVector(-60, -40), new UniVector(0, 0)),
+			              	};
 
 			_lableExp = new LabelControl
-			{
-				Text = "Exp",
-				Bounds = new UniRectangle(new UniVector(-60, -20), new UniVector(0, 0)),
-			};
+			            	{
+			            		Text = "Exp",
+			            		Bounds = new UniRectangle(new UniVector(-60, -20), new UniVector(0, 0)),
+			            	};
 
 			_lableFrag = new LabelControl
-			{
-				Text = "Frag",
-				Bounds = new UniRectangle(new UniVector(-60, 0), new UniVector(0, 0)),
-			};
+			             	{
+			             		Text = "Frag",
+			             		Bounds = new UniRectangle(new UniVector(-60, 0), new UniVector(0, 0)),
+			             	};
 
 			_lableCreeps = new LabelControl
-			{
-				Text = "Creeps",
-				Bounds = new UniRectangle(new UniVector(-60, 20), new UniVector(0, 0)),
-			};
+			               	{
+			               		Text = "Creeps",
+			               		Bounds = new UniRectangle(new UniVector(-60, 20), new UniVector(0, 0)),
+			               	};
 
 			#endregion
 
 			_pistolButton = new ButtonControl
-			{
-				Text = "Pistol",
-				Bounds = new UniRectangle(new UniVector(70, 470), new UniVector(80, 40)),
-			};
+			                	{
+			                		Text = "Pistol",
+			                		Bounds = new UniRectangle(new UniVector(70, 470), new UniVector(80, 40)),
+			                	};
 
 			_shotgunButton = new ButtonControl
-			{
-				Text = "Shotgun",
-				Bounds = new UniRectangle(new UniVector(160, 470), new UniVector(80, 40)),
-			};
+			                 	{
+			                 		Text = "Shotgun",
+			                 		Bounds = new UniRectangle(new UniVector(160, 470), new UniVector(80, 40)),
+			                 	};
 
 			_flameButton = new ButtonControl
-			{
-				Text = "Flame",
-				Bounds = new UniRectangle(new UniVector(250, 470), new UniVector(80, 40)),
-			};
+			               	{
+			               		Text = "Flame",
+			               		Bounds = new UniRectangle(new UniVector(250, 470), new UniVector(80, 40)),
+			               	};
 
 			_rocketButton = new ButtonControl
-			{
-				Text = "Rocket",
-				Bounds = new UniRectangle(new UniVector(340, 470), new UniVector(80, 40)),
-			};
+			                	{
+			                		Text = "Rocket",
+			                		Bounds = new UniRectangle(new UniVector(340, 470), new UniVector(80, 40)),
+			                	};
 
 			_heaterButton = new ButtonControl
-			{
-				Text = "Heater",
-				Bounds = new UniRectangle(new UniVector(430, 470), new UniVector(80, 40)),
-			};
+			                	{
+			                		Text = "Heater",
+			                		Bounds = new UniRectangle(new UniVector(430, 470), new UniVector(80, 40)),
+			                	};
 
 			_turretButton = new ButtonControl
-			{
-				Text = "Turret",
-				Bounds = new UniRectangle(new UniVector(520, 470), new UniVector(80, 40)),
-			};
+			                	{
+			                		Text = "Turret",
+			                		Bounds = new UniRectangle(new UniVector(520, 470), new UniVector(80, 40)),
+			                	};
 		}
 
 		private void InitializeControls()
