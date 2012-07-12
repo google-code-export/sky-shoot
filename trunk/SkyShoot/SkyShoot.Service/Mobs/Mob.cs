@@ -105,6 +105,5 @@ namespace SkyShoot.Contracts.Mobs
 			}
 			return new AGameEvent[] { };
 		}
-
 	}
 }

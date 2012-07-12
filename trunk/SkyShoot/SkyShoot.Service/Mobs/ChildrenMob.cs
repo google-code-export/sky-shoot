@@ -13,7 +13,7 @@ namespace SkyShoot.ServProgram.Mobs
 		const int RADIUS_MIN = 10;
 		const int RADIUS_MAX = 13;
 
-		public ChildrenMob(float healthAmount)
+		public ChildrenMob(float healthAmount) 
 			: base(Constants.CHILDREN_MOB_HEALTH)
 		{
 			Radius = new Random().Next(RADIUS_MIN, RADIUS_MAX);
