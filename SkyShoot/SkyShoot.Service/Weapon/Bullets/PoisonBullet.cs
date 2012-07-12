@@ -13,17 +13,17 @@ namespace SkyShoot.Service.Weapon.Bullets
 		public PoisonBullet(AGameObject owner, Guid id, Vector2 direction)
 			: base(owner, id, direction)
 		{
-			Speed = Constants.PISTOL_BULLET_SPEED;
-			Damage = Constants.PISTOL_BULLET_DAMAGE;
-			HealthAmount = Constants.PISTOL_BULLET_LIFE_DISTANCE;
-			Radius = Constants.DEFAULT_BULLET_RADIUS;
+			Speed = Constants.POISON_BULLET_SPEED;
+			Damage = Constants.POISON_BULLET_DAMAGE;
+			HealthAmount = Constants.POISON_BULLET_LIFE_DISTANCE;
+			Radius = Constants.POISON_BULLET_RADIUS;
 			ObjectType = EnumObjectType.PoisonBullet;
 		}
 
 		public override IEnumerable<AGameEvent> Do(AGameObject obj, List<AGameObject> newObjects, long time)
 		{
 			var res = new List<AGameEvent>(base.Do(obj, newObjects, time));
-			if (obj.Id != Owner.Id && obj.Is(EnumObjectType.Player) && (obj.HealthAmount >= Constants.PISTOL_BULLET_DAMAGE))
+			if (obj.Id != Owner.Id && obj.Is(EnumObjectType.Player) && (obj.HealthAmount >= Constants.POISONTICK_BULLET_DAMAGE))
 			{
 				var wp = new PoisonTick(Guid.NewGuid());
 				var Poison = new Poisoning(Constants.POISONING_MOB_HEALTH, wp, obj);	//Время жизни--через здоровье
