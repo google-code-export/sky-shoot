@@ -13,11 +13,11 @@ namespace SkyShoot.Contracts.Mobs
 		protected int ThinkCounter;
 		protected int Wait;
 
-		public Mob(float healthAmount)
+		public Mob(float healthAmount) : base(Vector2.Zero, Guid.NewGuid())
 		{
 			ObjectType = EnumObjectType.Mob;
 			ThinkCounter = 0;
-			Id = Guid.NewGuid();
+			//Id = Guid.NewGuid();
 			MaxHealthAmount = HealthAmount = healthAmount;
 			Damage = 20;
 		}

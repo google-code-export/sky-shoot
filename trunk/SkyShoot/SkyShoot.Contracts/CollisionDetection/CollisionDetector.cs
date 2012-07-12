@@ -6,7 +6,9 @@ using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Contracts.CollisionDetection
 {
-	//Class for detect of collisions. Any function named FitObjects return a fit-vector
+	/// <summary>
+	/// Class for detect of collisions. Any function named FitObjects return a fit-vector
+	/// </summary>
 	public class CollisionDetector
 	{
 		protected static Vector2 ProjectRectangle(Vector2 recPosition, float recWidth, float recHeight, float recRotation, Vector2 ort)
@@ -192,5 +194,35 @@ namespace SkyShoot.Contracts.CollisionDetection
 		{
 			return -FitObjects(objPassivePosition, objPassiveWidth, objPassiveHeight, objPassiveRotation, objActivePosition, objActiveRadius);
 		}
+
+		[Obsolete("Return fit-vector for collision objects")]
+		public static Vector2 FitObjects(Vector2 objActivePos, Vector2 objActiveDir, Bounding objActiveBound, Vector2 objPassivePos, Vector2 objPassiveDir, Bounding objPassiveBound)
+		{
+			if (objActiveBound.IsRectangle)
+			{
+				if (objPassiveBound.IsRectangle)
+				{
+					return FitObjects(objActivePos, ((BoundingRectangle)objActiveBound)._width, ((BoundingRectangle)objActiveBound)._height, (float)Math.Atan2(objActiveDir.Y, objActiveDir.Y), objPassivePos, ((BoundingRectangle)objPassiveBound)._width, ((BoundingRectangle)objPassiveBound)._height, (float)Math.Atan2(objPassiveDir.Y, objPassiveDir.X));
+				}
+				else
+				{
+					return FitObjects(objActivePos, ((BoundingRectangle)objActiveBound)._width, ((BoundingRectangle)objActiveBound)._height, (float)Math.Atan2(objActiveDir.Y, objActiveDir.Y), objPassivePos, ((BoundingCircle)objPassiveBound)._radius);
+				}
+			}
+			else
+			{
+				if (objPassiveBound.IsRectangle)
+				{
+					return FitObjects(objActivePos, ((BoundingCircle)objActiveBound)._radius, objPassivePos, ((BoundingRectangle)objPassiveBound)._width, ((BoundingRectangle)objPassiveBound)._height, (float)Math.Atan2(objPassiveDir.Y, objPassiveDir.X));
+				}
+				else
+				{
+					return FitObjects(objActivePos, ((BoundingCircle)objActiveBound)._radius, objPassivePos, ((BoundingCircle)objPassiveBound)._radius);
+				}
+			}
+			return Vector2.Zero;
+		}
 	}
+
+
 }

@@ -4,6 +4,7 @@ using System.Runtime.Serialization;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Session;
 using SkyShoot.Contracts.Weapon;
+using SkyShoot.Contracts.CollisionDetection;
 using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Contracts.Mobs
@@ -167,7 +168,21 @@ namespace SkyShoot.Contracts.Mobs
 		public Vector2 PrevMoveDiff;
 
 		[DataMember]
-		public float Radius { get; set; } // размер моба
+		public float Radius
+		{
+			get
+			{
+				return Bounding.Radius;
+			}
+			set
+			{
+				Bounding.Radius = value;
+			}
+		} // размер моба
+
+		//Границы
+		[DataMember]
+		public Bounding Bounding { get; set; }
 
 		protected float _speed;
 
@@ -193,6 +208,8 @@ namespace SkyShoot.Contracts.Mobs
 			Coordinates = coordinates;
 			Id = id;
 
+			Bounding = new BoundingCircle();
+
 			Weapons = new Dictionary<WeaponType, AWeapon>();
 			//IsActive = true;
 		}
@@ -213,10 +230,13 @@ namespace SkyShoot.Contracts.Mobs
 			RunVector = other.RunVector;
 			ShootVector = other.ShootVector;
 			Speed = other.Speed;
+
+			Bounding = other.Bounding;
 		}
 
 		public AGameObject()
 		{
+			Bounding = new BoundingCircle();
 			//IsActive = true;
 		}
 		#endregion
