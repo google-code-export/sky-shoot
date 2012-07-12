@@ -16,7 +16,7 @@ namespace SkyShoot.Game.Screens
 	internal class GameplayScreen : GameScreen
 	{
 		private static WeaponType _weapon = WeaponType.Pistol;
-
+		
 		private readonly ContentManager _content;
 
 		private ButtonControl _pistolButton;
@@ -24,6 +24,7 @@ namespace SkyShoot.Game.Screens
 		private ButtonControl _rocketButton;
 		private ButtonControl _flameButton;
 		private ButtonControl _heaterButton;
+		private ButtonControl _turretButton;
 
 		private LabelControl _lableLevel;
 		private LabelControl _lableExp;
@@ -218,6 +219,12 @@ namespace SkyShoot.Game.Screens
 				Text = "Heater",
 				Bounds = new UniRectangle(new UniVector(430, 470), new UniVector(80, 40)),
 			};
+
+			_turretButton = new ButtonControl
+			{
+				Text = "Turret",
+				Bounds = new UniRectangle(new UniVector(520, 470), new UniVector(80, 40)),
+			};
 		}
 
 		private void InitializeControls()
@@ -227,6 +234,7 @@ namespace SkyShoot.Game.Screens
 			Desktop.Children.Add(_flameButton);
 			Desktop.Children.Add(_rocketButton);
 			Desktop.Children.Add(_heaterButton);
+			Desktop.Children.Add(_turretButton);
 			Desktop.Children.Add(_lableLevel);
 			Desktop.Children.Add(_lableExp);
 			Desktop.Children.Add(_lableFrag);
@@ -237,12 +245,14 @@ namespace SkyShoot.Game.Screens
 			_flameButton.Pressed += FlameButtonPressed;
 			_rocketButton.Pressed += RocketButtonPressed;
 			_heaterButton.Pressed += HeaterButtonPressed;
+			_turretButton.Pressed += TurretButtonPressed;
 
 			ScreenManager.Instance.Controller.AddListener(_pistolButton, PistolButtonPressed);
 			ScreenManager.Instance.Controller.AddListener(_shotgunButton, ShotgunButtonPressed);
 			ScreenManager.Instance.Controller.AddListener(_flameButton, FlameButtonPressed);
 			ScreenManager.Instance.Controller.AddListener(_rocketButton, RocketButtonPressed);
 			ScreenManager.Instance.Controller.AddListener(_heaterButton, HeaterButtonPressed);
+			ScreenManager.Instance.Controller.AddListener(_turretButton, TurretButtonPressed);
 		}
 
 		private void RocketButtonPressed(object sender, EventArgs e)
@@ -272,6 +282,12 @@ namespace SkyShoot.Game.Screens
 		private void HeaterButtonPressed(object sender, EventArgs e)
 		{
 			_weapon = WeaponType.Heater;
+			UpdateWeapon();
+		}
+
+		private void TurretButtonPressed(object sender, EventArgs e)
+		{
+			_weapon = WeaponType.TurretMaker;
 			UpdateWeapon();
 		}
 

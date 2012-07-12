@@ -78,7 +78,9 @@ namespace SkyShoot.Contracts.Mobs
 			[EnumMember]
 			Wall = 0x0100000 | Block,//1125899907891200
 			[EnumMember]
-			Block = 100000000//0x1 << CommonAttributesShift, //1125899906842624
+			Block = 100000000, //0x1 << CommonAttributesShift, //1125899906842624
+			[EnumMember]
+			Turret = 0x8 //1 << 3
 		}
 
 		#region основные свойства
