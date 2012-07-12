@@ -20,6 +20,8 @@ namespace SkyShoot.Service.Session
 		private readonly List<AGameObject> _gameObjects;
 		private readonly List<AGameObject> _newObjects;
 
+		public List<Team> TeamsList = new List<Team>();
+
 		public GameDescription LocalGameDescription { get; private set; }
 
 		public bool IsStarted { get; set; }
@@ -39,6 +41,10 @@ namespace SkyShoot.Service.Session
 		public GameSession(TileSet tileSet, int maxPlayersAllowed,
 			GameMode gameType, int gameID, int teams)
 		{
+			for (int i = 0; i <= teams; i++)
+			{
+				TeamsList.Add(new Team(i));
+			}
 			IsStarted = false;
 			GameLevel = new GameLevel(tileSet);
 

@@ -24,7 +24,7 @@ namespace SkyShoot.Service.Weapon.Bullets
 			ObjectType = EnumObjectType.Turret;
 			Weapon = weapon;
 			Weapon.Owner = owner;
-			SetTeam(owner.GetTeam());
+			TeamIdentity = (owner.TeamIdentity);
 			Radius = 10;
 			Speed = 0f;
 			ObjectType = EnumObjectType.LivingObject;

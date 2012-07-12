@@ -9,11 +9,28 @@ using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Contracts.Mobs
 {
+	public class Team
+	{
+		public int number { set; get; }
+
+		public List<AGameObject> members;
+
+		public Team()
+		{
+			number = 0;
+		}
+
+		public Team(int newNumber)
+		{
+			number = newNumber;
+		}
+	}
+
 	[DataContract]
 	public class AGameObject
 	{
 		const int CommonAttributesShift = 32;
-		int team = 0;//Определяет команду. Нечеловеки относятся к 0. Потом можно переписать на структуру принадлежности.
+
 		/// <summary>
 		/// основное перечисление всех возможных типов обектов игры
 		/// </summary>
@@ -147,16 +164,8 @@ namespace SkyShoot.Contracts.Mobs
 			set { if (!value) HealthAmount = -1; }
 		}
 
-		public int GetTeam()
-		{
-			return team;
-		}
-
-		public void SetTeam(int newTeam)
-		{
-			team = newTeam;
-		}
-
+		public Team TeamIdentity { set; get; }//Принадлежность команде
+		
 		#endregion
 
 		#region здоровье и урон
