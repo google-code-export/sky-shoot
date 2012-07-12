@@ -164,7 +164,7 @@ namespace SkyShoot.Service.Session
 			{
 				_gameObjects.Remove(player);
 			}
-			Trace.WriteLine(player.Name + "leaved game");
+			Trace.WriteLine(player.Name + " leaved game");
 		}
 
 		private void PushEvent(AGameEvent gameEvent)

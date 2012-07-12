@@ -8,7 +8,7 @@ namespace SkyShoot.WinFormsClient
 	{
 		#region Accessors
 
-		public TileSet Tile 
+		public TileSet Tile
 		{
 			get
 			{
@@ -19,7 +19,7 @@ namespace SkyShoot.WinFormsClient
 
 		public int MaxPlayers
 		{
-			get { return (int) nmMaxPlayers.Value; }
+			get { return (int)nmMaxPlayers.Value; }
 		}
 
 		public GameMode Mode
@@ -27,7 +27,7 @@ namespace SkyShoot.WinFormsClient
 			get
 			{
 				GameMode res;
-				return Enum.TryParse(cbMode.SelectedItem.ToString(), out res) ? res:GameMode.Coop;
+				return Enum.TryParse(cbMode.SelectedItem.ToString(), out res) ? res : GameMode.Coop;
 			}
 		}
 

@@ -49,13 +49,13 @@ namespace SkyShoot.WinFormsClient
 
 		void CloseThis()
 		{
-			if(InvokeRequired)
+			if (InvokeRequired)
 			{
 				Invoke(new MethodInvoker(CloseThis));
 				return;
 			}
 			DialogResult = DialogResult.OK;
-			_updatingThread.Abort();			
+			_updatingThread.Abort();
 			Close();
 		}
 
@@ -86,22 +86,22 @@ namespace SkyShoot.WinFormsClient
 			{
 				switch (value)
 				{
-					case Modes.Choosing:
-						btCreate.Enabled = true;
-						btRefresh.Enabled = true;
-						btJoin.Enabled = (_activeGame != null);
-						btLeave.Enabled = false;
-						lstbGames.Enabled = true;
-						lstbGames.Visible = true;
-						break;
-					case Modes.Created:
-					case Modes.Joined:
-						btCreate.Enabled = false;
-						btRefresh.Enabled = false;
-						btJoin.Enabled = false;
-						btLeave.Enabled = true;
-						lstbGames.Enabled = false;
-						break;
+				case Modes.Choosing:
+					btCreate.Enabled = true;
+					btRefresh.Enabled = true;
+					btJoin.Enabled = (_activeGame != null);
+					btLeave.Enabled = false;
+					lstbGames.Enabled = true;
+					lstbGames.Visible = true;
+					break;
+				case Modes.Created:
+				case Modes.Joined:
+					btCreate.Enabled = false;
+					btRefresh.Enabled = false;
+					btJoin.Enabled = false;
+					btLeave.Enabled = true;
+					lstbGames.Enabled = false;
+					break;
 				}
 				_mode = value;
 				lblStatus.Text = _mode.ToString();
@@ -144,12 +144,12 @@ namespace SkyShoot.WinFormsClient
 			try
 			{
 				var newGame = new CreateGameDialog();
-				if(newGame.ShowDialog() != DialogResult.OK)
+				if (newGame.ShowDialog() != DialogResult.OK)
 				{
 					return;
 				}
 				_activeGame = _service.CreateGame(newGame.Mode, newGame.MaxPlayers,
-				                                  newGame.Tile, 1);//заглушка "1" вместо получения количества команд
+																					newGame.Tile, 1);//заглушка "1" вместо получения количества команд
 				if (_activeGame != null)
 				{
 					Mode = Modes.Created;
