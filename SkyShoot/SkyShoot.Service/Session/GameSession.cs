@@ -348,7 +348,7 @@ namespace SkyShoot.Service.Session
 					}
 
 					var newCoord = activeObject.ComputeMovement(_updateDelay, GameLevel);
-					Vector2 difference = new Vector2(0f, 0f); ;
+					Vector2 difference = new Vector2(0f, 0f);
 					activeObject.Coordinates = newCoord;
 					/* <b>int j = 0</b> потому что каждый с каждым, а действия не симметричны*/
 					for (int j = 0; j < _gameObjects.Count; j++)
@@ -396,7 +396,10 @@ namespace SkyShoot.Service.Session
 				for (int i = 0; i < _gameObjects.Count; i++)
 				{
 					if (!_gameObjects[i].IsActive)
+					{
 						eventsCash.AddRange(MobDead(_gameObjects[i], now));
+						eventsCash.AddRange(_gameObjects[i].OnDead(_gameObjects[i], _gameObjects, now));
+					}
 				}
 
 				// flush of events cash

@@ -15,11 +15,10 @@ namespace SkyShoot.ServProgram.Mobs
 		private long _lastShoot;
 
 		// todo //!! move to constants
-		const int RADIUS_MIN = 40;
-		const int RADIUS_MAX = 55;
+		const int RADIUS_MIN = 30;
+		const int RADIUS_MAX = 40;
 
-		public ParentMob(float healthAmount)
-			: base(healthAmount)
+		public ParentMob(float healthAmount) : base(Constants.PARENT_MOB_HEALTH)
 		{
 			Radius = new Random().Next(RADIUS_MIN, RADIUS_MAX);
 			Speed = Constants.PARENT_MOB_SPEED;

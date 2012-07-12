@@ -22,7 +22,7 @@ namespace SkyShoot.ServProgram.Weapon
 
 		public override AGameObject[] CreateBullets(AGameObject owner, Vector2 direction)
 		{
-			var mobs = new[] { new ChildrenMob(Constants.CHILDREN_MOB_HEALTH) };
+			var mobs = new[] { new ChildrenMob(Constants.CHILDREN_MOB_HEALTH),  };
 			foreach(var mob in mobs)
 				mob.Coordinates = new Vector2(owner.Coordinates.X + mob.RunVector.X * mob.Radius, owner.Coordinates.Y + mob.RunVector.Y * mob.Radius);
 			return mobs;

@@ -73,6 +73,9 @@ namespace SkyShoot.Game.Client.Game
 
 			if (serverGameObject.Is(AGameObject.EnumObjectType.Wall))
 				return new DrawableGameObject(serverGameObject, Textures.OneStone);
+			
+			if(serverGameObject.Is(AGameObject.EnumObjectType.Wall))
+				return new DrawableGameObject(serverGameObject, Textures.OneStone);
 
 			if (serverGameObject.Is(AGameObject.EnumObjectType.Turret))
 				return new DrawableGameObject(serverGameObject, Textures.OneStone); //todo here

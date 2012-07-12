@@ -294,10 +294,10 @@ namespace SkyShoot.Contracts.Mobs
 			}
 		}
 
-		/*public virtual IEnumerable<AGameEvent> OnDead(AGameObject obj, List<AGameObject> newObjects, long time)
+		public virtual IEnumerable<AGameEvent> OnDead(AGameObject obj, List<AGameObject> newObjects, long time)
 		{
 			return new AGameEvent[] { };
-		}*/
+		}
 		#endregion
 
 	}
