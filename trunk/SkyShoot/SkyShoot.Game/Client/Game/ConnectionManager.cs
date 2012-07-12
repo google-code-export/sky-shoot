@@ -32,11 +32,17 @@ namespace SkyShoot.Game.Client.Game
 			get { return _localInstance ?? (_localInstance = new ConnectionManager()); }
 		}
 
+		private ConnectionManager()
+		{
+			_eventTimer = new Timer(EVENT_TIMER_DELAY_TIME);
+			_synchroFrameTimer = new Timer(SYNCHRO_FRAME_DELAY_TIME);
+		}
+
 		#endregion
 
 		private ISkyShootService _service;
 
-		private readonly Queue<AGameEvent> _lastClientGameEvents;
+		private Queue<AGameEvent> _lastClientGameEvents;
 
 		private const int MAX_SERVER_GAME_EVENTS = 100;
 
@@ -48,7 +54,7 @@ namespace SkyShoot.Game.Client.Game
 
 		private readonly object _locker = new object();
 
-		private readonly Thread _thread;
+		private Thread _thread;
 
 		#endregion
 
@@ -68,31 +74,10 @@ namespace SkyShoot.Game.Client.Game
 		private readonly Timer _eventTimer;
 		private readonly Timer _synchroFrameTimer;
 
-		private const int EVENT_TIMER_DELAY_TIME = 50;
-		private const int SYNCHRO_FRAME_DELAY_TIME = 750;
+		private const int EVENT_TIMER_DELAY_TIME = 25;
+		private const int SYNCHRO_FRAME_DELAY_TIME = 500;
 
 		#endregion
-
-		private void InitializeTimers()
-		{
-			_thread.Start();
-
-			_eventTimer.Elapsed += (sender, args) =>
-			                       	{
-			                       		AGameEvent emptyGameEvent = new EmptyEvent(null, 0);
-			                       		AddClientGameEvent(emptyGameEvent);
-			                       	};
-			_synchroFrameTimer.Elapsed += (sender, args) => GetLatestServerSynchroFrame();
-
-			_lastServerGameEvents = new List<AGameEvent>(MAX_SERVER_GAME_EVENTS);
-			_lastServerSynchroFrame = new List<AGameObject>(MAX_SERVER_GAME_EVENTS);
-
-			// getting first synchroFrame
-			GetLatestServerSynchroFrame();
-
-			_eventTimer.Start();
-			_synchroFrameTimer.Start();
-		}
 
 		private void InitializeConnection()
 		{
@@ -129,18 +114,33 @@ namespace SkyShoot.Game.Client.Game
 			_logger.WriteLine(stringBuilder.ToString());
 		}
 
-		#region constructor, run/stop thread
+		#region run/stop thread, initialization
 
-		public ConnectionManager()
+		private void InitializeThreadAndTimers()
 		{
-			_eventTimer = new Timer(EVENT_TIMER_DELAY_TIME);
-			_synchroFrameTimer = new Timer(SYNCHRO_FRAME_DELAY_TIME);
+			_thread = new Thread(Run)
+			{
+				Name = "ConnectionManager"
+			};
+			_thread.Start();
 
 			_lastClientGameEvents = new Queue<AGameEvent>();
-			_thread = new Thread(Run)
-			          	{
-			          		Name = "ConnectionManager"
-			          	};
+
+			_eventTimer.Elapsed += (sender, args) =>
+			{
+				AGameEvent emptyGameEvent = new EmptyEvent(null, 0);
+				AddClientGameEvent(emptyGameEvent);
+			};
+			_synchroFrameTimer.Elapsed += (sender, args) => GetLatestServerSynchroFrame();
+
+			_lastServerGameEvents = new List<AGameEvent>(MAX_SERVER_GAME_EVENTS);
+			_lastServerSynchroFrame = new List<AGameObject>(MAX_SERVER_GAME_EVENTS);
+
+			// getting first synchroFrame
+			GetLatestServerSynchroFrame();
+
+			_eventTimer.Start();
+			_synchroFrameTimer.Start();
 		}
 
 		public void Run()
@@ -172,6 +172,18 @@ namespace SkyShoot.Game.Client.Game
 			// stopping thread
 			AddClientGameEvent(null);
 			_thread.Join();
+
+			_eventTimer.Stop();
+			_synchroFrameTimer.Stop();
+
+		}
+
+		public void Dispose()
+		{
+			// stopping thread
+			AddClientGameEvent(null);
+			_thread.Join();
+
 			// close EventWaitHandle
 			_queue.Close();
 
@@ -303,7 +315,7 @@ namespace SkyShoot.Game.Client.Game
 				synchroFrame = _lastServerSynchroFrame.ToArray();
 				_lastServerSynchroFrame.Clear();
 
-				Trace.WriteLine("SYNCHRO_FRAME");
+				// Trace.WriteLine("SYNCHRO_FRAME");
 			}
 			return synchroFrame;
 		}
@@ -452,7 +464,7 @@ namespace SkyShoot.Game.Client.Game
 				var level = _service.GameStart(gameId);
 				if (level != null)
 				{
-					InitializeTimers();
+					InitializeThreadAndTimers();
 				}
 				return level;
 			}

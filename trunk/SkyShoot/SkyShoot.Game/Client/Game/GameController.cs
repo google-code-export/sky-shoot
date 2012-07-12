@@ -72,10 +72,10 @@ namespace SkyShoot.Game.Client.Game
 
 			var gameObjects = ConnectionManager.Instance.SynchroFrame();
 
-			foreach (AGameObject mob in gameObjects)
+			foreach (AGameObject gameObject in gameObjects)
 			{
-				var clientMob = GameFactory.CreateClientMob(mob);
-				GameModel.AddGameObject(clientMob);
+				var clientGameObject = GameFactory.CreateClientGameObject(gameObject);
+				GameModel.AddGameObject(clientGameObject);
 			}
 
 			// GameModel initialized, set boolean flag  
@@ -95,16 +95,11 @@ namespace SkyShoot.Game.Client.Game
 
 		public void GameOver()
 		{
+			ConnectionManager.Instance.Stop();
 			GameModel = null;
 			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MainMenuScreen);
 			IsGameStarted = false;
 		}
-
-//		public void PlayerLeft(AGameObject mob)
-//		{
-//			if (IsGameStarted)
-//				GameModel.RemoveGameObject(mob.Id);
-//		}
 
 		#endregion
 
