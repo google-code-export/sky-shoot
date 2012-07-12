@@ -167,7 +167,7 @@ namespace SkyShoot.Game.Client.Game
 			// update explosions
  			UpdateExplosions();
 
-			foreach (var aMob in GameObjects)
+			/*foreach (var aMob in GameObjects)
 			{
 				aMob.Value.Update(gameTime);
 				foreach (var slaver in GameObjects)
@@ -176,6 +176,18 @@ namespace SkyShoot.Game.Client.Game
 					if (aMob.Value != slaver.Value && !slaver.Value.IsBullet && aMob.Value.IsPlayer)
 						aMob.Value.Coordinates += CollisionDetector.FitObjects(aMob.Value.Coordinates, aMob.Value.Radius,
 						                                                       slaver.Value.Coordinates, slaver.Value.Radius);
+				}
+			}*/
+
+			foreach (var aMob in GameObjects)
+			{
+				aMob.Value.Update(gameTime);
+				foreach (var slaver in GameObjects)
+				{
+					//Очевидно, что 3е условие предусматривает выполнение 2го, но так пули не смещают персонажа при выстреле. Меньше скачков. 
+					if (aMob.Value != slaver.Value && !slaver.Value.IsBullet && aMob.Value.IsPlayer)
+						if (aMob.Value.Radius * aMob.Value.Radius + slaver.Value.Radius * slaver.Value.Radius <= (aMob.Value.Coordinates - slaver.Value.Coordinates).LengthSquared())
+							aMob.Value.Coordinates += CollisionDetector.FitObjects(aMob.Value.Coordinates, aMob.Value.RunVector, aMob.Value.Bounding, slaver.Value.Coordinates, slaver.Value.RunVector, slaver.Value.Bounding);
 				}
 			}
 

@@ -380,7 +380,8 @@ namespace SkyShoot.Service.Session
 						{
 							//difference примет разницу между текущим положением и предыдущим
 							difference = activeObject.Coordinates;
-							activeObject.Coordinates += CollisionDetector.FitObjects(activeObject.Coordinates, activeObject.Radius, slaveObject.Coordinates, slaveObject.Radius);
+							//activeObject.Coordinates += CollisionDetector.FitObjects(activeObject.Coordinates, activeObject.Radius, slaveObject.Coordinates, slaveObject.Radius);
+							activeObject.Coordinates += CollisionDetector.FitObjects(activeObject.Coordinates, activeObject.RunVector, activeObject.Bounding, slaveObject.Coordinates, slaveObject.RunVector, slaveObject.Bounding);
 							difference = -(activeObject.Coordinates - difference);
 						}
 					}
