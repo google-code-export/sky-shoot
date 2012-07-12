@@ -11,6 +11,7 @@ namespace SkyShoot.Service.Weapon.Bullets
 			: base(owner, id, direction)
 		{
 			Speed = Constants.POISONTICK_BULLET_SPEED;
+			Radius = Constants.POISONTICK_BULLET_RADIUS;
 			Damage = Constants.POISONTICK_BULLET_DAMAGE;
 			HealthAmount = Constants.POISONTICK_BULLET_LIFE_DISTANCE;
 			ObjectType = EnumObjectType.PoisonTickBullet;
