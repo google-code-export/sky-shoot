@@ -22,6 +22,12 @@ namespace SkyShoot.Service.Session
 
 		public List<Team> TeamsList = new List<Team>();
 
+		public Team GetTeamByNymber(int number)
+		{
+			Team team = TeamsList.Find(t => t.number == number);
+			return team;
+		}
+		
 		public GameDescription LocalGameDescription { get; private set; }
 
 		public bool IsStarted { get; set; }
@@ -45,6 +51,7 @@ namespace SkyShoot.Service.Session
 			{
 				TeamsList.Add(new Team(i));
 			}
+			
 			IsStarted = false;
 			GameLevel = new GameLevel(tileSet);
 
@@ -271,6 +278,9 @@ namespace SkyShoot.Service.Session
 			_gameObjects.Add(player);
 			LocalGameDescription.Players.Add(player.Name);
 			var names = new String[_gameObjects.Count];
+
+			player.TeamIdentity = GetTeamByNymber(1);//Игроки в первую команду.
+
 			//UpdatePlayersList(player);
 
 			//if (NewPlayerConnected != null) NewPlayerConnected(player);
