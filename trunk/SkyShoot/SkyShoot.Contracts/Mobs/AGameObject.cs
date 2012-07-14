@@ -61,8 +61,6 @@ namespace SkyShoot.Contracts.Mobs
 			[EnumMember]
 			PoisonBullet = Bullet | 0x160UL,//Правильный ли номер
 			[EnumMember]
-			PoisonTickBullet = Bullet | 0x600UL, //Правильный ли номер
-			[EnumMember]
 			Bonus = 0x01000UL,//4096
 			[EnumMember]
 			DoubleDamage = Bonus | 0x02000UL,//12288
