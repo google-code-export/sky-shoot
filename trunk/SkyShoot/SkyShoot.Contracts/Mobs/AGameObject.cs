@@ -9,23 +9,6 @@ using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Contracts.Mobs
 {
-	public class Team
-	{
-		public int number { set; get; }
-
-		public List<AGameObject> members;
-
-		public Team()
-		{
-			number = 0;
-		}
-
-		public Team(int newNumber)
-		{
-			number = newNumber;
-		}
-	}
-
 	[DataContract]
 	public class AGameObject
 	{
