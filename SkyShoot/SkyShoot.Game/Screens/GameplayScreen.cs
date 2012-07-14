@@ -61,7 +61,6 @@ namespace SkyShoot.Game.Screens
 			Textures.ShotgunProjectile = _content.Load<Texture2D>("Textures/Weapon/ShotProjectile");
 			Textures.RocketProjectile = _content.Load<Texture2D>("Textures/Weapon/RocketProjectile");
 			Textures.PoisonProjectile = _content.Load<Texture2D>("Textures/Weapon/PoisonProjectile");
-			Textures.PoisonTickProjectile = _content.Load<Texture2D>("Textures/Weapon/PoisonTickProjectile");
 			Textures.SpiderProjectile = _content.Load<Texture2D>("Textures/Weapon/SpiderProjectile");
 			Textures.Explosion = _content.Load<Texture2D>("Textures/Weapon/Explosion");
 			Textures.DoubleDamage = _content.Load<Texture2D>("Textures/BonusesIcons/DoubleDamage");

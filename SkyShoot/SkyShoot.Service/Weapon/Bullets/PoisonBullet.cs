@@ -23,16 +23,20 @@ namespace SkyShoot.Service.Weapon.Bullets
 		public override IEnumerable<AGameEvent> Do(AGameObject obj, List<AGameObject> newObjects, long time)
 		{
 			var res = new List<AGameEvent>(base.Do(obj, newObjects, time));
-			if (obj.Id != Owner.Id && obj.Is(EnumObjectType.Player) && (obj.HealthAmount >= Constants.POISONTICK_BULLET_DAMAGE))
+			var player = obj as MainSkyShootService;//Ради проверки на наличие зеркала
+			if (player != null)
 			{
-				var wp = new PoisonTick(Guid.NewGuid());
-				var Poison = new Poisoning(Constants.POISONING_MOB_HEALTH, wp, obj);	//Время жизни--через здоровье
-				Poison.ObjectType = EnumObjectType.Poisoning;
-				Poison.Coordinates.X = obj.Coordinates.X;
-				Poison.Coordinates.Y = obj.Coordinates.Y;
-				newObjects.Add(Poison);
-			}
+				var mirror = player.GetBonus(EnumObjectType.Mirror);
 
+				if (obj.Id != Owner.Id && obj.Is(EnumObjectType.Player) && (obj.HealthAmount >= Constants.POISON_BULLET_DAMAGE) && (mirror == null))
+				{
+					var wp = new PoisonTick(Guid.NewGuid());
+					var Poison = new Poisoning(Constants.POISONING_MOB_HEALTH, wp, obj);	//Время жизни--через здоровье
+					Poison.ObjectType = EnumObjectType.Poisoning;
+					Poison.Coordinates = obj.Coordinates;
+					newObjects.Add(Poison);
+				}
+			}
 			return res;
 		}
 	}
