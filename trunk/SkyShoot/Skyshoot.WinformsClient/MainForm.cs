@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Security.Cryptography;
 using System.ServiceModel;
 using System.Text;
 using System.Threading;
@@ -17,28 +16,6 @@ using Color = System.Drawing.Color;
 
 namespace SkyShoot.WinFormsClient
 {
-	public class HashHelper
-	{
-		/// <summary>
-		/// выдаёт последовательность из 32 шестнадцатеричных цифр (md5 хеш от аргумента)
-		/// </summary>
-		public static string GetMd5Hash(string input)
-		{
-			MD5 md5Hasher = MD5.Create();
-
-			byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(input));
-
-			var sBuilder = new StringBuilder();
-
-			for (int i = 0; i < data.Length; i++)
-			{
-				sBuilder.Append(data[i].ToString("x2"));
-			}
-
-			return sBuilder.ToString();
-		}
-	}
-
 	public partial class MainForm : Form
 	{
 		#region переменные
@@ -431,17 +408,26 @@ namespace SkyShoot.WinFormsClient
 						m.ShootVector.Normalize();
 						switch (m.ObjectType)
 						{
+						case AGameObject.EnumObjectType.ChildrenMob:
+						case AGameObject.EnumObjectType.ParentMob:
+						case AGameObject.EnumObjectType.Hydra:
+						case AGameObject.EnumObjectType.Spider:
+						case AGameObject.EnumObjectType.ShootingSpider:
+						case AGameObject.EnumObjectType.Poisoner:
+						case AGameObject.EnumObjectType.Poisoning:
 						case AGameObject.EnumObjectType.Mob:
 						case AGameObject.EnumObjectType.Player:
-							g.FillEllipse(m.Is(AGameObject.EnumObjectType.Player) ? Brushes.Black : Brushes.Green,
+							Color c;
+							var br = m.Is(AGameObject.EnumObjectType.Player) ? Brushes.Black : Brushes.Green;
+							g.FillEllipse(br,
 														new RectangleF(
 															new PointF(x - r, y - r),
 															new SizeF(2 * r, 2 * r)));
-							g.DrawLine(new Pen(m.Is(AGameObject.EnumObjectType.Player) ? Color.Red : Color.Green, 3),
-												 new PointF(x, y),
-												 new PointF(x + m.ShootVector.X * 2 * r, y + m.ShootVector.Y * 2 * r));
+							c = m.Is(AGameObject.EnumObjectType.Player) ? Color.Red : Color.Green;
+							g.DrawLine(new Pen(c, 3),
+																			 new PointF(x, y),
+																			 new PointF(x + m.ShootVector.X * 2 * r, y + m.ShootVector.Y * 2 * r));
 
-							Color c;
 							r--;
 							if (m.HealthAmount > 0.60f * m.MaxHealthAmount)
 							{
@@ -475,6 +461,13 @@ namespace SkyShoot.WinFormsClient
 															new SizeF(2 * r, 2 * r)));
 							break;
 						case AGameObject.EnumObjectType.SpiderBullet:
+							g.FillEllipse(Brushes.DarkRed,
+														new RectangleF(
+															new PointF(x - r, y - r),
+															new SizeF(2 * r, 2 * r)));
+							break;
+						case AGameObject.EnumObjectType.PoisonBullet:
+						case AGameObject.EnumObjectType.PoisonTickBullet:
 							g.FillEllipse(Brushes.Lime,
 														new RectangleF(
 															new PointF(x - r, y - r),
@@ -585,7 +578,7 @@ namespace SkyShoot.WinFormsClient
 				Guid? id = _service.Login(username, HashHelper.GetMd5Hash(password), out errorCode);
 				if (id != null)
 				{
-					_me = new AGameObject { Coordinates = Vector2.Zero, Id = (Guid)id };
+					_me = new AGameObject() { Coordinates = Vector2.Zero, Id = (Guid)id };
 
 					SetStatus("Logon successfull");
 					return true;
