@@ -78,6 +78,7 @@
     <Compile Include="Session\GameLevel.cs" />
     <Compile Include="Session\GameMode.cs" />
     <Compile Include="Statistics\Stats.cs" />
+    <Compile Include="TeamsList.cs" />
     <Compile Include="TypeConverter.cs" />
     <Compile Include="Weapon\AWeapon.cs" />
     <Compile Include="Weapon\WeaponType.cs" />

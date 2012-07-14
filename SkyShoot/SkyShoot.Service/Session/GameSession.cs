@@ -20,13 +20,7 @@ namespace SkyShoot.Service.Session
 		private readonly List<AGameObject> _gameObjects;
 		private readonly List<AGameObject> _newObjects;
 
-		public List<Team> TeamsList = new List<Team>();
-
-		public Team GetTeamByNymber(int number)
-		{
-			Team team = TeamsList.Find(t => t.number == number);
-			return team;
-		}
+		public TeamsList SessionTeamsList;
 		
 		public GameDescription LocalGameDescription { get; private set; }
 
@@ -47,9 +41,11 @@ namespace SkyShoot.Service.Session
 		public GameSession(TileSet tileSet, int maxPlayersAllowed,
 			GameMode gameType, int gameID, int teams)
 		{
+			TeamsList SessionTeamsList = new TeamsList();
+
 			for (int i = 0; i <= teams; i++)
 			{
-				TeamsList.Add(new Team(i));
+				SessionTeamsList.Teams.Add(new Team(i));
 			}
 			
 			IsStarted = false;
@@ -278,8 +274,6 @@ namespace SkyShoot.Service.Session
 			_gameObjects.Add(player);
 			LocalGameDescription.Players.Add(player.Name);
 			var names = new String[_gameObjects.Count];
-
-			player.TeamIdentity = GetTeamByNymber(1);//Игроки в первую команду.
 
 			//UpdatePlayersList(player);
 
