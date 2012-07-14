@@ -467,7 +467,6 @@ namespace SkyShoot.WinFormsClient
 															new SizeF(2 * r, 2 * r)));
 							break;
 						case AGameObject.EnumObjectType.PoisonBullet:
-						case AGameObject.EnumObjectType.PoisonTickBullet:
 							g.FillEllipse(Brushes.Lime,
 														new RectangleF(
 															new PointF(x - r, y - r),
