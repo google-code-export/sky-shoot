@@ -59,13 +59,28 @@ namespace SkyShoot.Contracts.CollisionDetection
 				return -(point - begin);
 		}
 
-		[Obsolete("Return false if X or Y component not equal zero")]
+		/// <summary>
+		/// Return false if X or Y component not equal zero
+		/// </summary>
+		/// <param name="vector"></param>
+		/// <returns></returns>
 		public static bool Collision(Vector2 vector)
 		{
 			return vector.X != 0f || vector.Y != 0f;
 		}
 
-		[Obsolete("Return fit-vector for collision rectangles")]
+		/// <summary>
+		/// Return fit-vector for collision rectangles
+		/// </summary>
+		/// <param name="objActivePosition"></param>
+		/// <param name="objActiveWidth"></param>
+		/// <param name="objActiveHeight"></param>
+		/// <param name="objActiveRotation"></param>
+		/// <param name="objPassivePosition"></param>
+		/// <param name="objPassiveWidth"></param>
+		/// <param name="objPassiveHeight"></param>
+		/// <param name="objPassiveRotation"></param>
+		/// <returns></returns>
 		public static Vector2 FitObjects(Vector2 objActivePosition, float objActiveWidth, float objActiveHeight, float objActiveRotation, Vector2 objPassivePosition, float objPassiveWidth, float objPassiveHeight, float objPassiveRotation)
 		{
 			Vector2[] objActivePoints = new Vector2[2];
@@ -130,7 +145,14 @@ namespace SkyShoot.Contracts.CollisionDetection
 			return new Vector2(0, 0);
 		}
 
-		[Obsolete("Return fit-vector for collision circles")]
+		/// <summary>
+		/// Return fit-vector for collision circles
+		/// </summary>
+		/// <param name="objActivePosition"></param>
+		/// <param name="objActiveRadius"></param>
+		/// <param name="objPassivePosition"></param>
+		/// <param name="objPassiveRadius"></param>
+		/// <returns></returns>
 		public static Vector2 FitObjects(Vector2 objActivePosition, float objActiveRadius, Vector2 objPassivePosition, float objPassiveRadius)
 		{
 			float length;
@@ -148,7 +170,16 @@ namespace SkyShoot.Contracts.CollisionDetection
 			return new Vector2(0, 0);
 		}
 
-		[Obsolete("Return fit-vector for collision rectangle and circle")]
+		/// <summary>
+		/// Return fit-vector for collision rectangle and circle
+		/// </summary>
+		/// <param name="objActivePosition"></param>
+		/// <param name="objActiveWidth"></param>
+		/// <param name="objActiveHeight"></param>
+		/// <param name="objActiveRotation"></param>
+		/// <param name="objPassivePosition"></param>
+		/// <param name="objPassiveRadius"></param>
+		/// <returns></returns>
 		public static Vector2 FitObjects(Vector2 objActivePosition, float objActiveWidth, float objActiveHeight, float objActiveRotation, Vector2 objPassivePosition, float objPassiveRadius)
 		{
 			Vector2[] objActivePoints = new Vector2[4];
@@ -189,13 +220,31 @@ namespace SkyShoot.Contracts.CollisionDetection
 			return new Vector2(0, 0);
 		}
 
-		[Obsolete("Return fit-vector for collision corcle and rectangle")]
+		/// <summary>
+		/// Return fit-vector for collision corcle and rectangle
+		/// </summary>
+		/// <param name="objActivePosition"></param>
+		/// <param name="objActiveRadius"></param>
+		/// <param name="objPassivePosition"></param>
+		/// <param name="objPassiveWidth"></param>
+		/// <param name="objPassiveHeight"></param>
+		/// <param name="objPassiveRotation"></param>
+		/// <returns></returns>
 		public static Vector2 FitObjects(Vector2 objActivePosition, float objActiveRadius, Vector2 objPassivePosition, float objPassiveWidth, float objPassiveHeight, float objPassiveRotation)
 		{
 			return -FitObjects(objPassivePosition, objPassiveWidth, objPassiveHeight, objPassiveRotation, objActivePosition, objActiveRadius);
 		}
 
-		[Obsolete("Return fit-vector for collision objects")]
+		/// <summary>
+		/// Return fit-vector for collision objects
+		/// </summary>
+		/// <param name="objActivePos"></param>
+		/// <param name="objActiveDir"></param>
+		/// <param name="objActiveBound"></param>
+		/// <param name="objPassivePos"></param>
+		/// <param name="objPassiveDir"></param>
+		/// <param name="objPassiveBound"></param>
+		/// <returns></returns>
 		public static Vector2 FitObjects(Vector2 objActivePos, Vector2 objActiveDir, Bounding objActiveBound, Vector2 objPassivePos, Vector2 objPassiveDir, Bounding objPassiveBound)
 		{
 			if (objActiveBound.IsRectangle)
