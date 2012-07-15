@@ -406,7 +406,7 @@ namespace SkyShoot.Service.Session
 					//}
 					if ((coordDiff - activeObject.PrevMoveDiff).LengthSquared() > Constants.Epsilon)
 					{
-						eventsCash.Add(new ObjectDirectionChanged(coordDiff, activeObject.Id, now));
+						eventsCash.Add(new ObjectDirectionChanged(activeObject.RunVector, activeObject.Id, now));
 					}
 					activeObject.PrevMoveDiff = coordDiff;
 				}
