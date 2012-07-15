@@ -358,8 +358,7 @@ namespace SkyShoot.Service.Session
 					}
 
 					var newCoord = activeObject.ComputeMovement(_updateDelay, GameLevel);
-					Vector2 difference = new Vector2(0f, 0f);
-					activeObject.Coordinates = newCoord;
+					var canMove = true;
 					/* <b>int j = 0</b> потому что каждый с каждым, а действия не симметричны*/
 					for (int j = 0; j < _gameObjects.Count; j++)
 					{
@@ -370,7 +369,7 @@ namespace SkyShoot.Service.Session
 						}
 						var slaveObject = _gameObjects[j];
 						// объект не существует
-						if (!slaveObject.IsActive || slaveObject.IsBullet)
+						if (!slaveObject.IsActive)
 						{
 							continue;
 						}
@@ -388,28 +387,33 @@ namespace SkyShoot.Service.Session
 						if (slaveObject.Is(AGameObject.EnumObjectType.Block)
 							&& activeObject.Is(AGameObject.EnumObjectType.Block))
 						{
-							//difference примет разницу между текущим положением и предыдущим
-							difference = activeObject.Coordinates;
-							//activeObject.Coordinates += CollisionDetector.FitObjects(activeObject.Coordinates, activeObject.Radius, slaveObject.Coordinates, slaveObject.Radius);
-							activeObject.Coordinates += CollisionDetector.FitObjects(activeObject.Coordinates, activeObject.RunVector, activeObject.Bounding, slaveObject.Coordinates, slaveObject.RunVector, slaveObject.Bounding);
-							difference = -(activeObject.Coordinates - difference);
+							//удаляемся ли мы от объекта
+							// если да, то можем двигаться
+							canMove = Vector2.DistanceSquared(activeObject.Coordinates, slaveObject.Coordinates) <
+									  Vector2.DistanceSquared(newCoord, slaveObject.Coordinates);
 						}
 					}
-
-					//Vector2.Zero добавлен для уменьшения скачков
-					if (difference.Length() > Constants.Epsilon)
-						eventsCash.Add(new ObjectDirectionChanged(Vector2.Zero, activeObject.Id, now));
-					//}
-					//activeObject.PrevMoveDiff = difference;
+					var coordDiff = activeObject.Coordinates - newCoord;
+					coordDiff.Normalize();
+					if (canMove)
+					{
+						activeObject.Coordinates = newCoord;
+					}
+					else
+					{
+						activeObject.RunVector = Vector2.Zero;
+					}
+					if ((coordDiff - activeObject.PrevMoveDiff).LengthSquared() > Constants.Epsilon)
+					{
+						eventsCash.Add(new ObjectDirectionChanged(activeObject.RunVector, activeObject.Id, now));
+					}
+					activeObject.PrevMoveDiff = coordDiff;
 				}
 
 				for (int i = 0; i < _gameObjects.Count; i++)
 				{
 					if (!_gameObjects[i].IsActive)
-					{
 						eventsCash.AddRange(MobDead(_gameObjects[i], now));
-						eventsCash.AddRange(_gameObjects[i].OnDead(_gameObjects[i], _gameObjects, now));
-					}
 				}
 
 				// flush of events cash
