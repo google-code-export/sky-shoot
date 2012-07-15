@@ -358,7 +358,7 @@ namespace SkyShoot.Service.Session
 					}
 
 					var newCoord = activeObject.ComputeMovement(_updateDelay, GameLevel);
-					var canMove = true;
+					//var canMove = true;
 					/* <b>int j = 0</b> потому что каждый с каждым, а действия не симметричны*/
 					for (int j = 0; j < _gameObjects.Count; j++)
 					{
@@ -389,23 +389,24 @@ namespace SkyShoot.Service.Session
 						{
 							//удаляемся ли мы от объекта
 							// если да, то можем двигаться
-							canMove = Vector2.DistanceSquared(activeObject.Coordinates, slaveObject.Coordinates) <
-									  Vector2.DistanceSquared(newCoord, slaveObject.Coordinates);
+							//canMove = Vector2.DistanceSquared(activeObject.Coordinates, slaveObject.Coordinates) <
+							//		  Vector2.DistanceSquared(newCoord, slaveObject.Coordinates);
+							newCoord += CollisionDetector.FitObjects(newCoord, activeObject.RunVector, activeObject.Bounding, slaveObject.Coordinates, slaveObject.RunVector, slaveObject.Bounding);
 						}
 					}
-					var coordDiff = activeObject.Coordinates - newCoord;
-					coordDiff.Normalize();
-					if (canMove)
-					{
+					var coordDiff = newCoord - activeObject.Coordinates;
+					//coordDiff.Normalize();
+					//if (canMove)
+					//{
 						activeObject.Coordinates = newCoord;
-					}
-					else
-					{
-						activeObject.RunVector = Vector2.Zero;
-					}
+					//}
+					//else
+					//{
+					//	activeObject.RunVector = Vector2.Zero;
+					//}
 					if ((coordDiff - activeObject.PrevMoveDiff).LengthSquared() > Constants.Epsilon)
 					{
-						eventsCash.Add(new ObjectDirectionChanged(activeObject.RunVector, activeObject.Id, now));
+						eventsCash.Add(new ObjectDirectionChanged(coordDiff, activeObject.Id, now));
 					}
 					activeObject.PrevMoveDiff = coordDiff;
 				}
@@ -413,7 +414,10 @@ namespace SkyShoot.Service.Session
 				for (int i = 0; i < _gameObjects.Count; i++)
 				{
 					if (!_gameObjects[i].IsActive)
+					{
 						eventsCash.AddRange(MobDead(_gameObjects[i], now));
+						eventsCash.AddRange(_gameObjects[i].OnDead(_gameObjects[i], _gameObjects, now));
+					}
 				}
 
 				// flush of events cash

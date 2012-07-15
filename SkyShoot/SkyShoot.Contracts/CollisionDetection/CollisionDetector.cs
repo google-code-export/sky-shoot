@@ -142,7 +142,7 @@ namespace SkyShoot.Contracts.CollisionDetection
 					return orts[index] * length;
 			}
 
-			return new Vector2(0, 0);
+			return Vector2.Zero;
 		}
 
 		/// <summary>
@@ -167,7 +167,7 @@ namespace SkyShoot.Contracts.CollisionDetection
 				else
 					return -ort * length;
 			}
-			return new Vector2(0, 0);
+			return Vector2.Zero;
 		}
 
 		/// <summary>
@@ -217,7 +217,7 @@ namespace SkyShoot.Contracts.CollisionDetection
 				else
 					return ort * length;
 			}
-			return new Vector2(0, 0);
+			return Vector2.Zero;
 		}
 
 		/// <summary>
