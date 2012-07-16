@@ -1,16 +1,10 @@
 using System;
-
-using System.Text;
-
 using System.Security.Cryptography;
-
+using System.Text;
 using Microsoft.Xna.Framework;
-
 using Microsoft.Xna.Framework.Input;
-
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Service;
-
 using SkyShoot.Game.Controls;
 
 namespace SkyShoot.Game.Client.Game
@@ -51,12 +45,9 @@ namespace SkyShoot.Game.Client.Game
 		private GameController()
 		{
 			SoundManager.Initialize();
-			_soundManager = SoundManager.Instance;
 		}
 
 		#endregion
-
-		private SoundManager _soundManager;
 
 		public static Guid MyId { get; private set; }
 

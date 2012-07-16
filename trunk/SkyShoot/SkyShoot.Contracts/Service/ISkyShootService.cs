@@ -48,9 +48,6 @@ namespace SkyShoot.Contracts.Service
 		[OperationContract]
 		AGameEvent[] GetEvents();
 
-		//[OperationContract]
-		//void TakePerk(Perk perk);
-
 		[OperationContract]
 		void LeaveGame();
 

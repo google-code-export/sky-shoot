@@ -6,7 +6,6 @@ namespace SkyShoot.Contracts.Session
 	[DataContract]
 	public class GameLevel
 	{
-		//public const int MOVEMENTTIME = 100; //in milliseconds
 		[DataMember]
 		public float LevelHeight;
 

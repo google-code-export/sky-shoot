@@ -89,7 +89,7 @@ namespace SkyShoot.Game.Client.Game
 
 			//if (serverGameObject.Is(AGameObject.EnumObjectType.RocketBullet))
 			//	return new DrawableGameObject(serverGameObject, Textures.RocketProjectile);
-			
+
 			//if (serverGameObject.Is(AGameObject.EnumObjectType.Explosion))
 			//	return new DrawableGameObject(serverGameObject, Textures.Explosion);
 

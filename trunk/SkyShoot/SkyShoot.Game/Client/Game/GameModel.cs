@@ -1,20 +1,13 @@
 using System;
-
-using System.Diagnostics;
-using System.Text;
-
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-
+using System.Diagnostics;
+using System.Text;
 using Microsoft.Xna.Framework;
-
 using Microsoft.Xna.Framework.Graphics;
-
-using SkyShoot.Contracts;
-
+using SkyShoot.Contracts.CollisionDetection;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Mobs;
-using SkyShoot.Contracts.CollisionDetection;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Game.Client.GameObjects;
 using SkyShoot.Game.Client.View;
@@ -28,7 +21,7 @@ namespace SkyShoot.Game.Client.Game
 		public ConcurrentDictionary<Guid, DrawableGameObject> GameObjects { get; private set; }
 
 		// explosions -> exploded time
-		private readonly Dictionary<DrawableGameObject, long> _explosions; 
+		private readonly Dictionary<DrawableGameObject, long> _explosions;
 
 		// private readonly Logger _logger = new Logger("model_log.txt");
 
@@ -57,7 +50,7 @@ namespace SkyShoot.Game.Client.Game
 			if (!GameObjects.TryRemove(id, out drawableGameObject))
 				Trace.WriteLine("DrawableGameObject with such ID does not exist", "GameModel/RemoveMob");
 		}
-		
+
 		public DrawableGameObject GetGameObject(Guid id)
 		{
 			DrawableGameObject drawableGameObject;
@@ -106,7 +99,7 @@ namespace SkyShoot.Game.Client.Game
 							}
 							else
 							{
-								GameController.Instance.GameObjectDead(drawableGameObject);	
+								GameController.Instance.GameObjectDead(drawableGameObject);
 							}
 						}
 					}
@@ -126,14 +119,14 @@ namespace SkyShoot.Game.Client.Game
 
 			foreach (DrawableGameObject explosion in keys)
 			{
-				if (DateTime.Now.Ticks / 10000 -  _explosions[explosion] > Constants.EXPLOSION_LIFE_DISTANCE)
+				if (DateTime.Now.Ticks / 10000 - _explosions[explosion] > Constants.EXPLOSION_LIFE_DISTANCE)
 				{
 					_explosions.Remove(explosion);
 					RemoveGameObject(explosion.Id);
 				}
 			}
 		}
-		
+
 		/// <summary>
 		/// ќбновление позиций игровых объектов
 		/// </summary>
@@ -150,11 +143,11 @@ namespace SkyShoot.Game.Client.Game
 				AGameObject clientMob = GetGameObject(serverGameObject.Id);
 
 				// todo временный фикс, новые (хорошо забытые старые) объекты не добавл€ютс€
-//				if (clientMob == null)
-//					GameObjects.TryAdd(serverGameObject.Id, GameFactory.CreateClientMob(serverGameObject));
-//				else
-//					clientMob.Copy(serverGameObject);
-				
+				//				if (clientMob == null)
+				//					GameObjects.TryAdd(serverGameObject.Id, GameFactory.CreateClientMob(serverGameObject));
+				//				else
+				//					clientMob.Copy(serverGameObject);
+
 				if (clientMob != null)
 					clientMob.Copy(serverGameObject);
 			}
@@ -165,7 +158,7 @@ namespace SkyShoot.Game.Client.Game
 		public void Update(GameTime gameTime)
 		{
 			// update explosions
- 			UpdateExplosions();
+			UpdateExplosions();
 
 			/*foreach (var aMob in GameObjects)
 			{
@@ -223,12 +216,12 @@ namespace SkyShoot.Game.Client.Game
 			Camera2D.Position = myPosition;
 
 			spriteBatch.Begin(SpriteSortMode.Immediate,
-			                  BlendState.AlphaBlend,
-			                  null,
-			                  null,
-			                  null,
-			                  null,
-			                  Camera2D.GetTransformation(Textures.GraphicsDevice));
+							  BlendState.AlphaBlend,
+							  null,
+							  null,
+							  null,
+							  null,
+							  Camera2D.GetTransformation(Textures.GraphicsDevice));
 
 			// draw background
 			GameLevel.Draw(spriteBatch);
