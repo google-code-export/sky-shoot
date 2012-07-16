@@ -5,18 +5,17 @@ using Microsoft.Xna.Framework.Graphics;
 using Nuclex.UserInterface;
 using Nuclex.UserInterface.Controls;
 using Nuclex.UserInterface.Controls.Desktop;
+using SkyShoot.Contracts.Service;
 using SkyShoot.Game.Client.Game;
 using SkyShoot.Game.Controls;
-
-using SkyShoot.Contracts.Service;
 
 namespace SkyShoot.Game.Screens
 {
 	internal class LoginScreen : GameScreen
 	{
-        private static Texture2D _texture;
+		private static Texture2D _texture;
 
-        private readonly ContentManager _content;
+		private readonly ContentManager _content;
 		private readonly SoundManager _soundManager;
 
 		private LabelControl _loginLabel;
@@ -41,36 +40,36 @@ namespace SkyShoot.Game.Screens
 			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 		}
 
-        public override bool IsMenuScreen
-        {
-            get { return true; }
-        }
+		public override bool IsMenuScreen
+		{
+			get { return true; }
+		}
 
-        public override void LoadContent()
-        {
-            _texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");
-        }
+		public override void LoadContent()
+		{
+			_texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");
+		}
 
-        public override void UnloadContent()
-        {
-            _content.Unload();
-        }
+		public override void UnloadContent()
+		{
+			_content.Unload();
+		}
 
-        public override void Draw(GameTime gameTime)
-        {
-            _spriteBatch = ScreenManager.Instance.SpriteBatch;
+		public override void Draw(GameTime gameTime)
+		{
+			_spriteBatch = ScreenManager.Instance.SpriteBatch;
 
-            _spriteBatch.Begin();
-            _spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
-            _spriteBatch.End();
-        }
+			_spriteBatch.Begin();
+			_spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
+			_spriteBatch.End();
+		}
 
 		private void CreateControls()
 		{
 			// Login Input
 			_loginBox = new Controls.InputControl
-			            	{											
-								IsHidden = false,
+			            	{
+			            		IsHidden = false,
 			            		Bounds = new UniRectangle(new UniScalar(0.5f, -100f), new UniScalar(0.4f, -30), 200, 30),
 			            		Text = Settings.Default.login
 			            	};
@@ -78,10 +77,10 @@ namespace SkyShoot.Game.Screens
 			// Password Input
 			_passwordBox = new Controls.InputControl
 			               	{
-								IsHidden = true,
+			               		IsHidden = true,
 			               		Bounds = new UniRectangle(new UniScalar(0.5f, -100f), new UniScalar(0.4f, 30), 200, 30),
-								RealText = Settings.Default.password,
-			               		Text = Controls.InputControl.HiddenText(Settings.Default.password)												
+			               		RealText = Settings.Default.password,
+			               		Text = Controls.InputControl.HiddenText(Settings.Default.password)
 			               	};
 
 			// Login Label
@@ -107,15 +106,15 @@ namespace SkyShoot.Game.Screens
 			_exitButton = new ButtonControl
 			              	{
 			              		Text = "Exit",
-			              		Bounds = new UniRectangle(new UniScalar(0.5f, -210f), new UniScalar(0.4f, 70), 100, 32),												
+			              		Bounds = new UniRectangle(new UniScalar(0.5f, -210f), new UniScalar(0.4f, 70), 100, 32),
 			              	};
 
 			// New Account Button
 			_newAccountButton = new ButtonControl
-			                {
-			                    Text = "Create new account",
-			                    Bounds = new UniRectangle(new UniScalar(0.5f, -75f), new UniScalar(0.4f, 70), 150, 32)
-			                };
+			                    	{
+			                    		Text = "Create new account",
+			                    		Bounds = new UniRectangle(new UniScalar(0.5f, -75f), new UniScalar(0.4f, 70), 150, 32)
+			                    	};
 		}
 
 		private void InitializeControls()
@@ -162,16 +161,16 @@ namespace SkyShoot.Game.Screens
 				Settings.Default.password = _passwordBox.RealText;
 				Settings.Default.Save();
 
-				AccountManagerErrorCode errorCode = AccountManagerErrorCode.UnknownError;
+				AccountManagerErrorCode errorCode;
 
 				if (GameController.Instance.Login(_loginBox.Text, _passwordBox.RealText, out errorCode).HasValue &&
-					errorCode == AccountManagerErrorCode.Ok)
+				    errorCode == AccountManagerErrorCode.Ok)
 				{
 					ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MainMenuScreen);
 				}
 				else
 				{
-					string message = "";
+					string message;
 					switch (errorCode)
 					{
 						case AccountManagerErrorCode.UnknownExceptionOccured:
@@ -196,9 +195,9 @@ namespace SkyShoot.Game.Screens
 
 		private void NewAccountButtonPressed(object sender, EventArgs args)
 		{
-			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);			
-			
-			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.NewAccountScreen);		
+			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);
+
+			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.NewAccountScreen);
 		}
 	}
 }

@@ -11,12 +11,12 @@ using SkyShoot.Game.Controls;
 
 namespace SkyShoot.Game.Screens
 {
-    internal class CreateGameScreen : GameScreen
+	internal class CreateGameScreen : GameScreen
 	{
-	    private static Texture2D _texture;
+		private static Texture2D _texture;
 
 		private readonly SoundManager _soundManager;
-        private readonly ContentManager _content;
+		private readonly ContentManager _content;
 
 		private ListControl _maxPlayersList;
 		private ListControl _tileList;
@@ -34,15 +34,15 @@ namespace SkyShoot.Game.Screens
 
 		private SpriteBatch _spriteBatch;
 
-        public CreateGameScreen()
-        {
-            CreateControls();
-            InitializeControls();
+		public CreateGameScreen()
+		{
+			CreateControls();
+			InitializeControls();
 
-            SoundManager.Initialize();
-            _soundManager = SoundManager.Instance;
-            _content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
-        }
+			SoundManager.Initialize();
+			_soundManager = SoundManager.Instance;
+			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
+		}
 
 		public override bool IsMenuScreen
 		{
@@ -77,147 +77,147 @@ namespace SkyShoot.Game.Screens
 			_gameMode.Text = _gameModList.Items[_gameModList.SelectedItems[0]];
 		}
 
-        public override void Draw(GameTime gameTime)
-        {
-            _spriteBatch = ScreenManager.Instance.SpriteBatch;
+		public override void Draw(GameTime gameTime)
+		{
+			_spriteBatch = ScreenManager.Instance.SpriteBatch;
 
-            _spriteBatch.Begin();
-            _spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
-            _spriteBatch.End();
-        }
+			_spriteBatch.Begin();
+			_spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
+			_spriteBatch.End();
+		}
 
-        private void CreateControls()
-        {
-            // выбора максимального кол-ва игроков
-            _maxPlayersLabel = new LabelControl
-            {
-                Bounds = new UniRectangle(-60f, -34f, 100f, 24f),
-                Text = "Max Players"
-            };
+		private void CreateControls()
+		{
+			// выбора максимального кол-ва игроков
+			_maxPlayersLabel = new LabelControl
+			                   	{
+			                   		Bounds = new UniRectangle(-60f, -34f, 100f, 24f),
+			                   		Text = "Max Players"
+			                   	};
 
-            // выбор карты
-            _tileLabel = new LabelControl
-            {
-                Bounds = new UniRectangle(60f, -34f, 150f, 24f),
-                Text = "Map"
-            };
+			// выбор карты
+			_tileLabel = new LabelControl
+			             	{
+			             		Bounds = new UniRectangle(60f, -34f, 150f, 24f),
+			             		Text = "Map"
+			             	};
 
-            _tileList = new ListControl
-            {
-                Bounds = new UniRectangle(60f, -4f, 150f, 300f)
-            };
-            _tileList.Items.Add("Snow");
-            _tileList.Items.Add("Desert");
-            _tileList.Items.Add("Grass");
-            _tileList.Items.Add("Sand");
-            _tileList.Items.Add("Volcanic");
-            _tileList.Slider.Bounds.Location.X.Offset -= 1.0f;
-            _tileList.Slider.Bounds.Location.Y.Offset += 1.0f;
-            _tileList.Slider.Bounds.Size.Y.Offset -= 2.0f;
-            _tileList.SelectionMode = ListSelectionMode.Single;
-            _tileList.SelectedItems.Add(4);
+			_tileList = new ListControl
+			            	{
+			            		Bounds = new UniRectangle(60f, -4f, 150f, 300f)
+			            	};
+			_tileList.Items.Add("Snow");
+			_tileList.Items.Add("Desert");
+			_tileList.Items.Add("Grass");
+			_tileList.Items.Add("Sand");
+			_tileList.Items.Add("Volcanic");
+			_tileList.Slider.Bounds.Location.X.Offset -= 1.0f;
+			_tileList.Slider.Bounds.Location.Y.Offset += 1.0f;
+			_tileList.Slider.Bounds.Size.Y.Offset -= 2.0f;
+			_tileList.SelectionMode = ListSelectionMode.Single;
+			_tileList.SelectedItems.Add(4);
 
-            // выбор режима игры
-            _gameModeLabel = new LabelControl
-            {
-                Bounds = new UniRectangle(230f, -34f, 150f, 24f),
-                Text = "Mode"
-            };
+			// выбор режима игры
+			_gameModeLabel = new LabelControl
+			                 	{
+			                 		Bounds = new UniRectangle(230f, -34f, 150f, 24f),
+			                 		Text = "Mode"
+			                 	};
 
-            _maxPlayersList = new ListControl
-            {
-                Bounds = new UniRectangle(-60f, -4f, 100f, 300f)
-            };
-            _maxPlayersList.Slider.Bounds.Location.X.Offset -= 1.0f;
-            _maxPlayersList.Slider.Bounds.Location.Y.Offset += 1.0f;
-            _maxPlayersList.Slider.Bounds.Size.Y.Offset -= 2.0f;
-            _maxPlayersList.SelectionMode = ListSelectionMode.Single;
-            _maxPlayersList.SelectedItems.Add(4);
+			_maxPlayersList = new ListControl
+			                  	{
+			                  		Bounds = new UniRectangle(-60f, -4f, 100f, 300f)
+			                  	};
+			_maxPlayersList.Slider.Bounds.Location.X.Offset -= 1.0f;
+			_maxPlayersList.Slider.Bounds.Location.Y.Offset += 1.0f;
+			_maxPlayersList.Slider.Bounds.Size.Y.Offset -= 2.0f;
+			_maxPlayersList.SelectionMode = ListSelectionMode.Single;
+			_maxPlayersList.SelectedItems.Add(4);
 
-            for (int i = 1; i < 11; i++)
-            {
-                _maxPlayersList.Items.Add(i + string.Empty);
-            }
+			for (int i = 1; i < 11; i++)
+			{
+				_maxPlayersList.Items.Add(i + string.Empty);
+			}
 
-            _maxPlayers = new LabelControl
-            {
-                Bounds = new UniRectangle(500f, 50f, 150f, 24f),
-                Text = _maxPlayersList.Items[_maxPlayersList.SelectedItems[0]] + string.Empty
-            };
+			_maxPlayers = new LabelControl
+			              	{
+			              		Bounds = new UniRectangle(500f, 50f, 150f, 24f),
+			              		Text = _maxPlayersList.Items[_maxPlayersList.SelectedItems[0]] + string.Empty
+			              	};
 
-            _tile = new LabelControl
-            {
-                Bounds = new UniRectangle(500f, 80f, 150f, 24f),
-                Text = _tileList.Items[_tileList.SelectedItems[0]] + string.Empty
-            };
+			_tile = new LabelControl
+			        	{
+			        		Bounds = new UniRectangle(500f, 80f, 150f, 24f),
+			        		Text = _tileList.Items[_tileList.SelectedItems[0]] + string.Empty
+			        	};
 
-            _gameModList = new ListControl
-            {
-                Bounds = new UniRectangle(230f, -4f, 150f, 300f)
-            };
-            _gameModList.Items.Add("Coop");
-            _gameModList.Items.Add("Deathmatch");
-            _gameModList.Items.Add("Campaign");
-            _gameModList.Slider.Bounds.Location.X.Offset -= 1.0f;
-            _gameModList.Slider.Bounds.Location.Y.Offset += 1.0f;
-            _gameModList.Slider.Bounds.Size.Y.Offset -= 2.0f;
-            _gameModList.SelectionMode = ListSelectionMode.Single;
-            _gameModList.SelectedItems.Add(4);
+			_gameModList = new ListControl
+			               	{
+			               		Bounds = new UniRectangle(230f, -4f, 150f, 300f)
+			               	};
+			_gameModList.Items.Add("Coop");
+			_gameModList.Items.Add("Deathmatch");
+			_gameModList.Items.Add("Campaign");
+			_gameModList.Slider.Bounds.Location.X.Offset -= 1.0f;
+			_gameModList.Slider.Bounds.Location.Y.Offset += 1.0f;
+			_gameModList.Slider.Bounds.Size.Y.Offset -= 2.0f;
+			_gameModList.SelectionMode = ListSelectionMode.Single;
+			_gameModList.SelectedItems.Add(4);
 
-            // кол-во игроков
-            _maxPlayersList.SelectedItems[0] = 0;
+			// кол-во игроков
+			_maxPlayersList.SelectedItems[0] = 0;
 
-            // карта
-            _tileList.SelectedItems[0] = 0;
+			// карта
+			_tileList.SelectedItems[0] = 0;
 
-            // мод
-            _gameModList.SelectedItems[0] = 0;
+			// мод
+			_gameModList.SelectedItems[0] = 0;
 
-            _gameMode = new LabelControl
-            {
-                Bounds = new UniRectangle(500f, 110f, 150f, 24f),
-                Text = _gameModList.Items[_gameModList.SelectedItems[0]] + string.Empty
-            };
+			_gameMode = new LabelControl
+			            	{
+			            		Bounds = new UniRectangle(500f, 110f, 150f, 24f),
+			            		Text = _gameModList.Items[_gameModList.SelectedItems[0]] + string.Empty
+			            	};
 
-            // Create Button
-            _createButton = new ButtonControl
-            {
-                Text = "Create",
-                Bounds =
-                    new UniRectangle(new UniScalar(0.5f, 178f), new UniScalar(0.4f, -15f), 110, 32)
-            };
+			// Create Button
+			_createButton = new ButtonControl
+			                	{
+			                		Text = "Create",
+			                		Bounds =
+			                			new UniRectangle(new UniScalar(0.5f, 178f), new UniScalar(0.4f, -15f), 110, 32)
+			                	};
 
-            // Back Button
-            _backButton = new ButtonControl
-            {
-                Text = "Back",
-                Bounds =
-                    new UniRectangle(new UniScalar(0.5f, -380f), new UniScalar(0.4f, 170f), 120, 32)
-            };
+			// Back Button
+			_backButton = new ButtonControl
+			              	{
+			              		Text = "Back",
+			              		Bounds =
+			              			new UniRectangle(new UniScalar(0.5f, -380f), new UniScalar(0.4f, 170f), 120, 32)
+			              	};
 
-            // todo !?
-            _gameModList.Bounds = new UniRectangle(new UniVector(-1000, -1000), new UniVector(100, 100));
-            _gameModeLabel.Bounds = new UniRectangle(new UniVector(-1000, -1000), new UniVector(100, 100));
-            _gameMode.Bounds = new UniRectangle(new UniVector(-1000, -1000), new UniVector(100, 100));
-        }
+			// todo !?
+			_gameModList.Bounds = new UniRectangle(new UniVector(-1000, -1000), new UniVector(100, 100));
+			_gameModeLabel.Bounds = new UniRectangle(new UniVector(-1000, -1000), new UniVector(100, 100));
+			_gameMode.Bounds = new UniRectangle(new UniVector(-1000, -1000), new UniVector(100, 100));
+		}
 
-        private void InitializeControls()
-        {
-            Desktop.Children.Add(_maxPlayersList);
-            Desktop.Children.Add(_maxPlayersLabel);
-            Desktop.Children.Add(_tileLabel);
-            Desktop.Children.Add(_tileList);
-            Desktop.Children.Add(_gameModeLabel);
-            Desktop.Children.Add(_gameModList);
-            Desktop.Children.Add(_maxPlayers);
-            Desktop.Children.Add(_createButton);
-            Desktop.Children.Add(_gameMode);
-            Desktop.Children.Add(_backButton);
-            Desktop.Children.Add(_tile);
+		private void InitializeControls()
+		{
+			Desktop.Children.Add(_maxPlayersList);
+			Desktop.Children.Add(_maxPlayersLabel);
+			Desktop.Children.Add(_tileLabel);
+			Desktop.Children.Add(_tileList);
+			Desktop.Children.Add(_gameModeLabel);
+			Desktop.Children.Add(_gameModList);
+			Desktop.Children.Add(_maxPlayers);
+			Desktop.Children.Add(_createButton);
+			Desktop.Children.Add(_gameMode);
+			Desktop.Children.Add(_backButton);
+			Desktop.Children.Add(_tile);
 
-            ScreenManager.Instance.Controller.AddListener(_createButton, CreateButtonPressed);
-            ScreenManager.Instance.Controller.AddListener(_backButton, BackButtonPressed);
-        }
+			ScreenManager.Instance.Controller.AddListener(_createButton, CreateButtonPressed);
+			ScreenManager.Instance.Controller.AddListener(_backButton, BackButtonPressed);
+		}
 
 		private void BackButtonPressed(object sender, EventArgs args)
 		{
@@ -269,8 +269,8 @@ namespace SkyShoot.Game.Screens
 					break;
 			}
 
-			GameDescription gameDescription = 
-                ConnectionManager.Instance.CreateGame(m, Convert.ToInt32(_maxPlayers.Text), ts, 1);//Заглушка "1"
+			GameDescription gameDescription =
+				ConnectionManager.Instance.CreateGame(m, Convert.ToInt32(_maxPlayers.Text), ts, 1); //Заглушка "1"
 			if (gameDescription == null)
 				return;
 			WaitScreen.Tile = _tile.Text;
