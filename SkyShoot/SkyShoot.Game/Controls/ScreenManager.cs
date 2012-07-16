@@ -43,7 +43,7 @@ namespace SkyShoot.Game.Controls
 		private ScreenManager(Microsoft.Xna.Framework.Game game)
 			: base(game)
 		{
-			_gui = new GuiManager(Game.Services) {Visible = false};
+			_gui = new GuiManager(Game.Services) { Visible = false };
 			_inputManager = new InputManager(Game.Services, Game.Window.Handle);
 
 			Game.Components.Add(_gui);
