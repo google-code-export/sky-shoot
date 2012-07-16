@@ -165,7 +165,7 @@ namespace SkyShoot.Service.Session
 			//Players.Remove(player);
 			lock (_gameObjects)
 			{
-				player.TeamIdentity.members.Remove(player);
+			//	player.TeamIdentity.members.Remove(player);
 				_gameObjects.Remove(player);
 			}
 			Trace.WriteLine(player.Name + " leaved game");
@@ -193,6 +193,7 @@ namespace SkyShoot.Service.Session
 
 			//SomebodyDied(player);			
 			player.Disconnect();//временно
+			player.TeamIdentity.members.Remove(player);
 		}
 
 		public void Stop()
