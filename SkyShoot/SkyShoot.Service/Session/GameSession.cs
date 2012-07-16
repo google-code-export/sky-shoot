@@ -222,16 +222,15 @@ namespace SkyShoot.Service.Session
 			for(int i = 0; i < _gameObjects.Count; i++)
 			{
 				if (!_gameObjects[i].Is(AGameObject.EnumObjectType.Player))
-				{
-					_gameObjects[i].TeamIdentity.Members.Add(_gameObjects[i]);
-					_gameObjects[i].TeamIdentity = SessionTeamsList.GetTeamByNymber(1);
-				}
+					continue;
 				var player = _gameObjects[i] as MainSkyShootService;
 				if (player == null)
 				{
 					Trace.WriteLine("Error: !!! IsPlayer true for non player object");
 					continue;
 				}
+				_gameObjects[i].TeamIdentity = SessionTeamsList.GetTeamByNymber(1);
+				_gameObjects[i].TeamIdentity.Members.Add(_gameObjects[i]);
 				//this.SomebodyMoves += player.MobMoved;
 				player.MeMoved += SomebodyMoved;
 				//this.SomebodyShoots += player.MobShot;
@@ -276,8 +275,9 @@ namespace SkyShoot.Service.Session
 		{
 			if (_gameObjects.Count >= LocalGameDescription.MaximumPlayersAllowed || IsStarted)
 				return false;
-			
+
 			_gameObjects.Add(player);
+
 			LocalGameDescription.Players.Add(player.Name);
 			var names = new String[_gameObjects.Count];
 

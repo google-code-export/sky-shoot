@@ -13,11 +13,13 @@ namespace SkyShoot.Contracts
 		public Team()
 		{
 			Number = 0;
+			Members = new List<AGameObject>();
 		}
 
 		public Team(int newNumber)
 		{
 			Number = newNumber;
+			Members = new List<AGameObject>();
 		}
 	}
 
