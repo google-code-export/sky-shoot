@@ -5,7 +5,7 @@ using Nuclex.Input;
 
 namespace SkyShoot.Game.Controls
 {
-	class Gamepad : Controller
+	internal class Gamepad : Controller
 	{
 		private GamePadState _currentGamePadState;
 		private GamePadState _lastGamePadState;

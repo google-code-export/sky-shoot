@@ -2,40 +2,31 @@ namespace SkyShoot.Game.Controls
 {
 	internal class InputControl : Nuclex.UserInterface.Controls.Desktop.InputControl
 	{
-		private int n = Settings.Default.password.Length;
+		private int _passwordLength = Settings.Default.password.Length;
 
-		public bool IsHidden
+		public bool IsHidden { get; set; }
+
+		public string RealText { get; set; }
+
+		public static string HiddenText(string text)
 		{
-			get;
-			set;
-		}
-
-		public string RealText
-		{
-			get;
-			set;
-		}
-
-	    public static string HiddenText(string text)
-	    {
-            return new string('*', text.Length);
+			return new string('*', text.Length);
 		}
 
 		protected override void OnCharacterEntered(char character)
 		{
 			if (character == '\b')
 			{
-				RealText = RealText.Substring(0, n - 1);
-				n--;
+				RealText = RealText.Substring(0, _passwordLength - 1);
+				_passwordLength--;
 			}
-			else
-				if (char.IsLetter(character) || char.IsDigit(character) || (character == '_'))
-				{
-					n++;
-					RealText += character;
-					Text += IsHidden ? '*' : character;
-					CaretPosition++;
-				}
+			else if (char.IsLetter(character) || char.IsDigit(character) || (character == '_'))
+			{
+				_passwordLength++;
+				RealText += character;
+				Text += IsHidden ? '*' : character;
+				CaretPosition++;
+			}
 		}
 	}
 }
