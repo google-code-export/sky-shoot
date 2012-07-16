@@ -9,6 +9,7 @@ using SkyShoot.Contracts.Session;
 using SkyShoot.XNA.Framework;
 using SkyShoot.ServProgram.Mobs;
 using SkyShoot.Contracts.Weapon;
+using SkyShoot.Contracts.Service;
 
 namespace SkyShoot.Service.Weapon.Bullets
 {
@@ -37,7 +38,7 @@ namespace SkyShoot.Service.Weapon.Bullets
 
 		public override void FindTarget(List<AGameObject> targetObjects)
 		{
-			float distance = 500000;
+			float distance = Constants.TURRET_TARGET_SEARCHING_RANGE;
 
 			foreach (var obj in targetObjects)
 			{
@@ -61,6 +62,16 @@ namespace SkyShoot.Service.Weapon.Bullets
 		public override IEnumerable<AGameEvent> Do(AGameObject obj, List<AGameObject> newObjects, long time)
 		{
 			return new AGameEvent[] { };
+		}
+
+		public override IEnumerable<AGameEvent> Think(List<AGameObject> gameObjects, List<AGameObject> newGameObjects, long time)
+		{
+			if (Target != null && (!Target.IsActive ||
+									Vector2.Distance(Coordinates, Target.Coordinates) > Constants.TURRET_TARGET_SEARCHING_RANGE))
+			{
+				Target = null;
+			}
+			return base.Think(gameObjects, newGameObjects, time);
 		}
 	}
 }

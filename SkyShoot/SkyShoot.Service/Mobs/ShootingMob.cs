@@ -26,7 +26,7 @@ namespace SkyShoot.ServProgram.Mobs
 			var res = new List<AGameEvent>(base.Think(gameObjects, newGameObjects, time));
 			ShootVector = RunVector;
 			ShootVector.Normalize();
-			if (time - _lastShoot > _shootingDelay && Weapon != null && Weapon.IsReload(time))
+			if (time - _lastShoot > _shootingDelay && Weapon != null && Weapon.IsReload(time) && Target != null)
 			{
 				_lastShoot = time;
 			    var bullets = Weapon.CreateBullets(ShootVector);
