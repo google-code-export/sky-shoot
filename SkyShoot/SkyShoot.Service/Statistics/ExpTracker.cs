@@ -25,6 +25,7 @@ namespace SkyShoot.Service.Statistics
 			return Value;
 		}
 
-		public abstract void AddExp(AGameObject owner, AGameObject wounded, int damage);
+		public abstract void AddExpPlayer(AGameObject owner, AGameObject wounded, int damage);
+		public abstract void AddExpTeam(AGameObject player, AGameObject wounded, int damage);
 	}
 }

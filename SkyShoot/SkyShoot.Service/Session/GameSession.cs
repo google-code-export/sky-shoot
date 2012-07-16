@@ -291,6 +291,7 @@ namespace SkyShoot.Service.Session
 				var startThread = new System.Threading.Thread(Start);
 				startThread.Start();
 			}
+
 			return true;
 		}
 
