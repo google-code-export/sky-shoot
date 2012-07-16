@@ -1,32 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using SkyShoot.Service.Account;
-using System.Diagnostics;
-using System.Reflection;
-
 using SkyShoot.Contracts.Service;
+using SkyShoot.Service.Account;
 
 namespace SkyShoot.ServProgram.Account
 {
 	public class SimpleAccountManager : IAccountManager
 	{
-		private const string _fileName = "./accounts";
+		private const string FILE_NAME = "./accounts";
 		private IDictionary<string, AccountInfo> _accounts;
 
-		private static SimpleAccountManager _localInstance = new SimpleAccountManager();
+		private static readonly SimpleAccountManager LocalInstance = new SimpleAccountManager();
 
 		public static SimpleAccountManager Instance
-        {
-            get { return _localInstance; }
-        }
-
-		private void readAccounts()
 		{
-			Stream inputStream = System.IO.File.Exists(_fileName) ? File.OpenRead(_fileName) : File.Create(_fileName);
+			get { return LocalInstance; }
+		}
+
+		private void ReadAccounts()
+		{
+			Stream inputStream = File.Exists(FILE_NAME) ? File.OpenRead(FILE_NAME) : File.Create(FILE_NAME);
 			if (inputStream.Length > 0)
 			{
 				var deserializer = new BinaryFormatter();
@@ -39,10 +34,10 @@ namespace SkyShoot.ServProgram.Account
 			inputStream.Close();
 		}
 
-		private void writeAccounts()
+		private void WriteAccounts()
 		{
 			var serializer = new BinaryFormatter();
-			Stream outputStream = File.OpenWrite(_fileName);
+			Stream outputStream = File.OpenWrite(FILE_NAME);
 			serializer.Serialize(outputStream, _accounts);
 			outputStream.Close();
 		}
@@ -51,19 +46,20 @@ namespace SkyShoot.ServProgram.Account
 		{
 			try
 			{
-				_localInstance.readAccounts();
+				LocalInstance.ReadAccounts();
 				if (_accounts.ContainsKey(username))
 				{
 					return AccountManagerErrorCode.UsernameTaken;
 				}
-				AccountInfo newAccount = new AccountInfo() {
-					Login = username,
-					Password = password,
-					Email = "--",
-					Info = "--"
-				};
+				var newAccount = new AccountInfo
+								 {
+									 Login = username,
+									 Password = password,
+									 Email = "--",
+									 Info = "--"
+								 };
 				_accounts.Add(username, newAccount);
-				_localInstance.writeAccounts();
+				LocalInstance.WriteAccounts();
 			}
 			catch (Exception)
 			{
@@ -76,7 +72,7 @@ namespace SkyShoot.ServProgram.Account
 		{
 			try
 			{
-				_localInstance.readAccounts();
+				LocalInstance.ReadAccounts();
 				AccountInfo account;
 				if (!_accounts.TryGetValue(username, out account) || !account.Password.Equals(password))
 				{
@@ -94,14 +90,14 @@ namespace SkyShoot.ServProgram.Account
 		{
 			try
 			{
-				_localInstance.readAccounts();
+				LocalInstance.ReadAccounts();
 				AccountInfo account;
 				if (!_accounts.TryGetValue(username, out account) || !account.Password.Equals(password))
 				{
 					return AccountManagerErrorCode.InvalidUsernameOrPassword;
 				}
 				_accounts.Remove(username);
-				_localInstance.writeAccounts();
+				LocalInstance.WriteAccounts();
 			}
 			catch (Exception)
 			{
@@ -109,7 +105,5 @@ namespace SkyShoot.ServProgram.Account
 			}
 			return AccountManagerErrorCode.Ok;
 		}
-
-
 	}
 }
