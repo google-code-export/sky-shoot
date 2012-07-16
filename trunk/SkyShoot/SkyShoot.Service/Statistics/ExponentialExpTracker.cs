@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SkyShoot.Contracts.GameObject;
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Statistics;
 using SkyShoot.Service.Statistics;

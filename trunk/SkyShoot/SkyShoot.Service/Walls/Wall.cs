@@ -1,4 +1,5 @@
 ﻿using System;
+using SkyShoot.Contracts.GameObject;
 using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Contracts.Mobs

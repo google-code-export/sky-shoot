@@ -1,6 +1,6 @@
 using System;
 using System.Runtime.Serialization;
-using SkyShoot.Contracts.Mobs;
+using SkyShoot.Contracts.GameObject;
 
 namespace SkyShoot.Contracts.Perks
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ServiceModel;
 using SkyShoot.Contracts.GameEvents;
-using SkyShoot.Contracts.Mobs;
+using SkyShoot.Contracts.GameObject;
 using SkyShoot.Contracts.Session;
 using SkyShoot.Contracts.Statistics;
 using SkyShoot.XNA.Framework;

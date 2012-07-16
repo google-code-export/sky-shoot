@@ -1,22 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using SkyShoot.Contracts.GameEvents;
-using SkyShoot.Contracts.Mobs;
+using SkyShoot.Contracts.GameObject;
 using SkyShoot.Contracts.Weapon;
 
 namespace SkyShoot.ServProgram.Mobs
 {
-    class ShootingMob: Mob
+	class ShootingMob : Mob
 	{
-		protected readonly int _shootingDelay = 10000;
-        protected long _lastShoot;
+		protected readonly int ShootingDelay = 10000;
+		protected long LastShoot;
 
-        public ShootingMob(float health, AWeapon weapon, int shootingDelay)
-            : base(health)
+		public ShootingMob(float health, AWeapon weapon, int shootingDelay)
+			: base(health)
 		{
 			Weapon = weapon;
 			Weapon.Owner = this;
-			_shootingDelay = shootingDelay;
+			ShootingDelay = shootingDelay;
 			Radius = 10;
 			Speed = 0.03f;
 		}
@@ -26,12 +26,12 @@ namespace SkyShoot.ServProgram.Mobs
 			var res = new List<AGameEvent>(base.Think(gameObjects, newGameObjects, time));
 			ShootVector = RunVector;
 			ShootVector.Normalize();
-			if (time - _lastShoot > _shootingDelay && Weapon != null && Weapon.IsReload(time) && Target != null)
+			if (time - LastShoot > ShootingDelay && Weapon != null && Weapon.IsReload(time) && Target != null)
 			{
-				_lastShoot = time;
-			    var bullets = Weapon.CreateBullets(ShootVector);
-			    res.AddRange(bullets.Select(bullet => new NewObjectEvent(bullet, time)));
-			    newGameObjects.AddRange(bullets);
+				LastShoot = time;
+				var bullets = Weapon.CreateBullets(ShootVector);
+				res.AddRange(bullets.Select(bullet => new NewObjectEvent(bullet, time)));
+				newGameObjects.AddRange(bullets);
 			}
 			return res;
 		}

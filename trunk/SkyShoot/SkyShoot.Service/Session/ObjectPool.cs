@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SkyShoot.Contracts.GameObject;
 using SkyShoot.Contracts.Mobs;
 
 namespace SkyShoot.ServProgram.Session

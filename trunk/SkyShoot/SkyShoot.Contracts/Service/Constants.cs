@@ -120,11 +120,19 @@
 		public const float PLAYER_RADIUS = 15f;
 		public const float PLAYER_HEALTH = 100f;
 		public const float SPIDER_SPEED = 0.06f;
+		public const int SPIDER_RADIUS_MIN = 15;
+		public const int SPIDER_RADIUS_MAX = 20;
 		public const float PARENT_MOB_SPEED = 0.01f;
 		public const float PARENT_MOB_HEALTH = 700f;
+		public const int PARENT_MOB_RADIUS_MIN = 30;
+		public const int PARENT_MOB_RADIUS_MAX = 40;
 		public const float CHILDREN_MOB_HEALTH = 25f;
+		public const int CHILDREN_MOB_RADIUS_MIN = 10;
+		public const int CHILDREN_MOB_RADIUS_MAX = 13;
 		public const float HYDRA_HEALTH = 50f;
 		public const float HYDRA_SPEED = 0.03f;
+		public const int HYDRA_RADIUS_MIN = 15;
+		public const int HYDRA_RADIUS_MAX = 20;
 		public const float POISONER_MOB_SPEED = 0.03f;
 		public const float POISONER_MOB_HEALTH = 500f;
 
