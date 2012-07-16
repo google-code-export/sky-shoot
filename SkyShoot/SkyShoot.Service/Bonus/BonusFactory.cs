@@ -1,5 +1,4 @@
 ﻿using System;
-using SkyShoot.Contracts;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Service.Bonuses;
 using SkyShoot.XNA.Framework;
@@ -11,7 +10,7 @@ namespace SkyShoot.Service.Bonus
 		private readonly Random _random = new Random();
 
 		public AGameBonus CreateBonus(Vector2 coordinates)
-		{ 
+		{
 			int r = _random.Next(Constants.BONUS_TYPE_COUNT);
 			if (r == 0)
 			{
@@ -29,10 +28,7 @@ namespace SkyShoot.Service.Bonus
 			{
 				return new Mirror(coordinates);
 			}
-			else
-			{
-				return new Speedup(coordinates);
-			}
+			return new Speedup(coordinates);
 		}
 	}
 }
