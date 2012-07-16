@@ -34,7 +34,7 @@ namespace SkyShoot.ServProgram.Mobs
 			if (time - _lastShoot > _shootingDelay)
 			{
 				_lastShoot = time;
-				HealthAmount = HealthAmount - 10;//Сам себя кусает
+				HealthAmount = HealthAmount - 1;//Сам себя кусает--обратный отсчёт.
 
 				if ((Target == null) || (Target.IsActive == false) || (HealthAmount <= 0))
 				{
