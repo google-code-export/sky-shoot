@@ -10,6 +10,8 @@ namespace SkyShoot.Game.Client.Game
 		private AudioEngine _engine;
 		private SoundBank _soundBank;
 
+		private WaveBank _waveBank;
+
 		public enum SoundEnum
 		{
 			Click,
@@ -39,7 +41,6 @@ namespace SkyShoot.Game.Client.Game
 		{
 			//Initialize();	
 			LoadSounds();
-
 		}
 
 		public static void Initialize()
@@ -56,7 +57,7 @@ namespace SkyShoot.Game.Client.Game
 		{
 			_engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
 			_soundBank = new SoundBank(_engine, "Content\\Sounds\\Sound Bank.xsb");
-			new WaveBank(_engine, "Content\\Sounds\\Wave Bank.xwb");
+			_waveBank = new WaveBank(_engine, "Content\\Sounds\\Wave Bank.xwb");
 			_engine.GetCategory("Music");
 
 			/*sounds[0] = _soundBank.GetCue("RICOCHET");
