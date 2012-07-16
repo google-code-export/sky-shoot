@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using SkyShoot.Contracts;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Mobs;
+using SkyShoot.Contracts.Service;
 
 namespace SkyShoot.Service.Mobs
 {
@@ -16,7 +17,7 @@ namespace SkyShoot.Service.Mobs
 		public override IEnumerable<AGameEvent> Think(List<AGameObject> gameObjects, List<AGameObject> newGameObjects, long time)
 		{
 			var r = new List<AGameEvent>(base.Think(gameObjects, newGameObjects, time));
-			if (RunVector.LengthSquared() < Constants.Epsilon && Wait < 1)//&& PrevMoveDiff.LengthSquared() < Constants.Epsilon)
+			if (RunVector.LengthSquared() < Constants.EPSILON && Wait < 1)//&& PrevMoveDiff.LengthSquared() < Constants.Epsilon)
 			{
 				//the object is trying to move, but it can't
 				// i.e a wall or another mob exist on the path to <b>Target</b>

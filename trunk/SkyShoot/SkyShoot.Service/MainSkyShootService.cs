@@ -220,7 +220,9 @@ namespace SkyShoot.Service
 				foreach (var e in events)
 				{
 					sb.Append(":");
-					sb.Append(e);
+					// sb.Append(e);
+					// todo replce
+					sb.Append("\n  " + e.Type);
 				}
 				Trace.WriteLine(sb);
 			}

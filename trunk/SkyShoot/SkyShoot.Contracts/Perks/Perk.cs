@@ -7,7 +7,6 @@ namespace SkyShoot.Contracts.Perks
 	[DataContract]
 	public abstract class Perk
 	{
-		
 		[Flags]
 		public enum Perks
 		{
@@ -23,19 +22,15 @@ namespace SkyShoot.Contracts.Perks
 		public Guid Id { get; set; }
 
 		public AGameObject Owner { get; set; }
-	 
-
 
 		protected Perk(Guid id)
 		{
-			Id = id;	
+			Id = id;
 		}
 
-		public Perk()
+		protected Perk()
 		{
-			
-		}
 
+		}
 	}
-   
 }

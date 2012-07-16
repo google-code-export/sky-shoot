@@ -1,5 +1,6 @@
 ﻿using System;
 using SkyShoot.Contracts;
+using SkyShoot.Contracts.Service;
 using SkyShoot.Service.Bonuses;
 using SkyShoot.XNA.Framework;
 

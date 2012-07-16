@@ -4,6 +4,7 @@ using System.Diagnostics;
 using SkyShoot.Contracts;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Mobs;
+using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Session;
 using SkyShoot.XNA.Framework;
 
@@ -125,8 +126,8 @@ namespace SkyShoot.Service.Weapon.Bullets
 			var y = MathHelper.Clamp(newCoord.Y, 0, gameLevel.levelWidth);
 
 			// убрать пулю, которая вышла за экран
-			if (!((Math.Abs(newCoord.X - x) < Constants.Epsilon)
-			   && (Math.Abs(newCoord.Y - y) < Constants.Epsilon)))
+			if (!((Math.Abs(newCoord.X - x) < Constants.EPSILON)
+			   && (Math.Abs(newCoord.Y - y) < Constants.EPSILON)))
 			{
 				IsActive = false;
 			}

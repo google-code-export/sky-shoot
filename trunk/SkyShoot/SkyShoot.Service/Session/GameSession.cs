@@ -6,6 +6,7 @@ using System.Timers;
 using SkyShoot.Contracts;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Mobs;
+using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Session;
 using SkyShoot.Contracts.CollisionDetection;
 using SkyShoot.Service.Bonus;
@@ -410,7 +411,7 @@ namespace SkyShoot.Service.Session
 					//{
 					//	activeObject.RunVector = Vector2.Zero;
 					//}
-					if ((coordDiff - activeObject.PrevMoveDiff).LengthSquared() > Constants.Epsilon)
+					if ((coordDiff - activeObject.PrevMoveDiff).LengthSquared() > Constants.EPSILON)
 					{
 						eventsCash.Add(new ObjectDirectionChanged(activeObject.RunVector, activeObject.Id, now));
 					}

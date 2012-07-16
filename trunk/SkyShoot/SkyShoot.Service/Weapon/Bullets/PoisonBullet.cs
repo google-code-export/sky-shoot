@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using SkyShoot.Contracts;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Mobs;
+using SkyShoot.Contracts.Service;
 using SkyShoot.XNA.Framework;
 using SkyShoot.ServProgram.Mobs;
 
