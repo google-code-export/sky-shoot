@@ -52,7 +52,8 @@ namespace SkyShoot.Game.Client.Game
 					return new DrawableGameObject(serverGameObject, Textures.OneStone);
 				case AGameObject.EnumObjectType.PoisonBullet:
 					return new DrawableGameObject(serverGameObject, Textures.PoisonProjectile);
-
+			default:
+				return new DrawableGameObject(serverGameObject, Textures.Cross);
 			}
 			// can't use switch 'cause one object can have many merged EnumTypes
 			//if (serverGameObject.Is(AGameObject.EnumObjectType.Player))
