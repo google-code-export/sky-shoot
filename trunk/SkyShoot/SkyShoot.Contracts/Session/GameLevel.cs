@@ -8,27 +8,26 @@ namespace SkyShoot.Contracts.Session
 	{
 		//public const int MOVEMENTTIME = 100; //in milliseconds
 		[DataMember]
-		public float levelHeight; 
+		public float LevelHeight;
 
 		[DataMember]
-		public float levelWidth;
+		public float LevelWidth;
 
-		public float LEVELBORDER;
+		public float LevelBorder;
 
-        public GameLevel()
-        {
-        }
+		public GameLevel()
+		{
+		}
 
 		public GameLevel(TileSet usedTileSet)
 		{
-			levelHeight = 1000;
-			levelWidth = 1000;
-			LEVELBORDER = Constants.LEVELBORDER;
+			LevelHeight = 1000;
+			LevelWidth = 1000;
+			LevelBorder = Constants.LEVELBORDER;
 			UsedTileSet = usedTileSet;
 		}
 
 		[DataMember]
 		public TileSet UsedTileSet { get; set; }
-
 	}
 }

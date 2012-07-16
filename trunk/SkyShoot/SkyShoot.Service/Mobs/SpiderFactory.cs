@@ -19,8 +19,8 @@ namespace SkyShoot.Contracts.Mobs
 		public SpiderFactory(GameLevel gameLevel)
 		{
 			_random = new Random();
-			_width = gameLevel.levelWidth;
-			_height = gameLevel.levelHeight;
+			_width = gameLevel.LevelWidth;
+			_height = gameLevel.LevelHeight;
 			_border = Constants.LEVELBORDER;
 			_health = 10; //change to real value
 		}

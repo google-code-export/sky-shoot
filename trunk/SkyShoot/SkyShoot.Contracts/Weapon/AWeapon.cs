@@ -6,21 +6,21 @@ namespace SkyShoot.Contracts.Weapon
 {
 	public abstract class AWeapon
 	{
-        protected int ReloadSpeed;
+		protected int ReloadSpeed;
 
-        protected long Reload;		
+		protected long Reload;
 
-        protected AWeapon(Guid id, AGameObject owner = null)
-        {
-            Id = id;
-            Owner = owner;
-        }
+		protected AWeapon(Guid id, AGameObject owner = null)
+		{
+			Id = id;
+			Owner = owner;
+		}
 
-        public Guid Id { get; set; }
+		public Guid Id { get; set; }
 
-        public WeaponType WeaponType { get; set; }
+		public WeaponType WeaponType { get; set; }
 
-        public AGameObject Owner { get; set; }
+		public AGameObject Owner { get; set; }
 
 		public abstract AGameObject[] CreateBullets(Vector2 direction);
 
@@ -39,11 +39,11 @@ namespace SkyShoot.Contracts.Weapon
 		{
 			foreach (AGameObject projectile in projectiles)
 			{
-			    if (projectile != null)
-			    {
-			        projectile.Damage *= damage;
-			        projectile.Radius *= damage;
-			    }
+				if (projectile != null)
+				{
+					projectile.Damage *= damage;
+					projectile.Radius *= damage;
+				}
 			}
 		}
 	}

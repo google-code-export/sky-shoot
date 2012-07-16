@@ -143,7 +143,7 @@ namespace SkyShoot.WinFormsClient
 									(m.Speed * (float)((now - _prev).TotalMilliseconds));
 								if (m.Is(AGameObject.EnumObjectType.Player))
 								{
-									m.Coordinates = Vector2.Clamp(m.Coordinates, new Vector2(0, 0), new Vector2(_level.levelWidth, _level.levelHeight)); /**/
+									m.Coordinates = Vector2.Clamp(m.Coordinates, new Vector2(0, 0), new Vector2(_level.LevelWidth, _level.LevelHeight)); /**/
 								}
 							}
 						}
@@ -402,9 +402,9 @@ namespace SkyShoot.WinFormsClient
 						{
 							continue;
 						}
-						x = (m.Coordinates.X) * _pnCanvas.Width / _level.levelWidth;
-						y = (m.Coordinates.Y) * _pnCanvas.Height / _level.levelHeight;
-						r = m.Radius * _pnCanvas.Width / _level.levelWidth;
+						x = (m.Coordinates.X) * _pnCanvas.Width / _level.LevelWidth;
+						y = (m.Coordinates.Y) * _pnCanvas.Height / _level.LevelHeight;
+						r = m.Radius * _pnCanvas.Width / _level.LevelWidth;
 						m.ShootVector.Normalize();
 						switch (m.ObjectType)
 						{
@@ -480,7 +480,7 @@ namespace SkyShoot.WinFormsClient
 							break;
 						case AGameObject.EnumObjectType.Wall:
 							//r = m.Radius * _pnCanvas.Width / _level.levelWidth;
-							var rh = m.Radius * _pnCanvas.Height / _level.levelHeight;
+							var rh = m.Radius * _pnCanvas.Height / _level.LevelHeight;
 							g.FillRectangle(Brushes.Black,
 								new RectangleF(
 									new PointF(x - r, y - rh),
@@ -540,8 +540,8 @@ namespace SkyShoot.WinFormsClient
 			if (!GameRuning)
 				return;
 			var v = (new Vector2(
-								((float)e.X) / ((float)_pnCanvas.Width) * _level.levelWidth,
-								((float)e.Y) / ((float)_pnCanvas.Height) * _level.levelHeight))
+								((float)e.X) / ((float)_pnCanvas.Width) * _level.LevelWidth,
+								((float)e.Y) / ((float)_pnCanvas.Height) * _level.LevelHeight))
 							- _me.Coordinates;
 			v.Normalize();
 			_me.ShootVector = v;
@@ -552,8 +552,8 @@ namespace SkyShoot.WinFormsClient
 			if (!GameRuning)
 				return;
 			var v = (new Vector2(
-								((float)e.X) / ((float)_pnCanvas.Width) * _level.levelWidth,
-								((float)e.Y) / ((float)_pnCanvas.Height) * _level.levelHeight))
+								((float)e.X) / ((float)_pnCanvas.Width) * _level.LevelWidth,
+								((float)e.Y) / ((float)_pnCanvas.Height) * _level.LevelHeight))
 							- _me.Coordinates;
 			v.Normalize();
 			_me.ShootVector = v;

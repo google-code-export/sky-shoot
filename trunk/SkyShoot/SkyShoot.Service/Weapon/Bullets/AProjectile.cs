@@ -122,8 +122,8 @@ namespace SkyShoot.Service.Weapon.Bullets
 		{
 			// Todo //!! rewrite
 			var newCoord = base.ComputeMovement(updateDelay, gameLevel);
-			var x = MathHelper.Clamp(newCoord.X, 0, gameLevel.levelHeight);
-			var y = MathHelper.Clamp(newCoord.Y, 0, gameLevel.levelWidth);
+			var x = MathHelper.Clamp(newCoord.X, 0, gameLevel.LevelHeight);
+			var y = MathHelper.Clamp(newCoord.Y, 0, gameLevel.LevelWidth);
 
 			// убрать пулю, которая вышла за экран
 			if (!((Math.Abs(newCoord.X - x) < Constants.EPSILON)
