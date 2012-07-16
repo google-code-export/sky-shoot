@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using SkyShoot.Contracts.Service;
+﻿using SkyShoot.Contracts.Service;
 
 namespace SkyShoot.ServProgram.Account
 {
@@ -14,6 +9,5 @@ namespace SkyShoot.ServProgram.Account
 		AccountManagerErrorCode Login(string username, string password);
 
 		AccountManagerErrorCode DeleteAccount(string username, string password);
-
 	}
 }
