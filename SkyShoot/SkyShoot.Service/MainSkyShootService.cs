@@ -24,6 +24,8 @@ namespace SkyShoot.Service
 		InstanceContextMode = InstanceContextMode.PerSession)]
 	public class MainSkyShootService : AGameObject, ISkyShootService
 	{
+		private float _speed;
+
 		public static int GlobalID;
 		public int LocalID;
 		public string Name;

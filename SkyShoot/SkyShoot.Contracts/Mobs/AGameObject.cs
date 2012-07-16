@@ -6,14 +6,13 @@ using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Session;
 using SkyShoot.Contracts.Weapon;
 using SkyShoot.XNA.Framework;
-using System.Diagnostics;
 
 namespace SkyShoot.Contracts.Mobs
 {
 	[DataContract]
 	public class AGameObject
 	{
-		const int COMMON_ATTRIBUTES_SHIFT = 32;
+		private const int COMMON_ATTRIBUTES_SHIFT = 32;
 
 		/// <summary>
 		/// основное перечисление всех возможных типов обектов игры
@@ -37,64 +36,72 @@ namespace SkyShoot.Contracts.Mobs
 			 *             |
 			 *             +------------- Common attributes
 			 */
+
 			[EnumMember]
 			LivingObject = 0x0001UL | Block, //1125899906842625
 			[EnumMember]
-			Player = LivingObject | 0x2UL,//1125899906842626
+			Player = LivingObject | 0x2UL, //1125899906842626
 			[EnumMember]
-			Mob = LivingObject | 0x4UL,//1125899906842628
+			Mob = LivingObject | 0x4UL, //1125899906842628
 			[EnumMember]
-			Bullet = 0x010UL,//16
+			Bullet = 0x010UL, //16
 			[EnumMember]
-			Flame = Bullet | 0x020UL,//48
+			Flame = Bullet | 0x020UL, //48
 			[EnumMember]
-			PistolBullet = Bullet | 0x040UL,//80
+			PistolBullet = Bullet | 0x040UL, //80
 			[EnumMember]
-			ShotgunBullet = Bullet | 0x060UL,//144
+			ShotgunBullet = Bullet | 0x060UL, //144
 			[EnumMember]
-			RocketBullet = Bullet | 0x080UL,//272
+			RocketBullet = Bullet | 0x080UL, //272
 			[EnumMember]
-			Explosion = Bullet | 0x100UL,//528
+			Explosion = Bullet | 0x100UL, //528
 			[EnumMember]
-			SpiderBullet = Bullet | 0x120UL,//1040
+			SpiderBullet = Bullet | 0x120UL, //1040
 			[EnumMember]
-			HeaterBullet = Bullet | 0x140UL,//
+			HeaterBullet = Bullet | 0x140UL, //
 			[EnumMember]
-			PoisonBullet = Bullet | 0x160UL,//Правильный ли номер
+			PoisonBullet = Bullet | 0x160UL, //Правильный ли номер
 			[EnumMember]
-			TurretGunBullet = Bullet | 0x180UL,//Правильный ли номер
+			TurretGunBullet = Bullet | 0x180UL, //Правильный ли номер
 			[EnumMember]
-			Bonus = 0x01000UL,//4096
+			Bonus = 0x01000UL, //4096
 			[EnumMember]
-			DoubleDamage = Bonus | 0x02000UL,//12288
+			DoubleDamage = Bonus | 0x02000UL, //12288
 			[EnumMember]
-			Shield = Bonus | 0x04000UL,//20480
+			Shield = Bonus | 0x04000UL, //20480
 			[EnumMember]
-			Remedy = Bonus | 0x08000UL,//36864
+			Remedy = Bonus | 0x08000UL, //36864
 			[EnumMember]
-			Mirror = Bonus | 0x06000UL,//135168
+			Mirror = Bonus | 0x06000UL, //135168
 			[EnumMember]
-			Speedup = Bonus | 0x10000UL,//69632
+			Speedup = Bonus | 0x10000UL, //69632
 			[EnumMember]
-			Wall = 0x100000UL | Block,//1125899907891200
+			Wall = 0x100000UL | Block, //1125899907891200
 			[EnumMember]
 			Block = 0x100000000L, //0x1 << CommonAttributesShift, //1125899906842624
 			[EnumMember]
 			ChildrenMob = 0x02000000UL | Mob,
+
 			[EnumMember]
 			Hydra = 0x04000000UL | Mob,
+
 			[EnumMember]
 			ParentMob = 0x06000000UL | Mob,
+
 			[EnumMember]
 			Poisoner = 0x08000000UL | Mob,
+
 			[EnumMember]
-			Poisoning = 0x10000000UL | Mob,// | ~Block, //!!
+			Poisoning = 0x10000000UL | Mob, // | ~Block, //!!
 			[EnumMember]
 			Spider = 0x12000000UL | Mob,
+
 			[EnumMember]
 			ShootingSpider = 0x14000000UL | Mob,
+
 			[EnumMember]
 			SpiderWithMind = 0x16000000UL | Mob,
+
 			[EnumMember]
 			Turret = 0x18000000UL | Mob,
 
@@ -104,7 +111,9 @@ namespace SkyShoot.Contracts.Mobs
 		}
 
 		#region основные свойства
+
 		#region административные
+
 		/// <summary>
 		/// проверка вида объекта
 		/// </summary>
@@ -123,21 +132,14 @@ namespace SkyShoot.Contracts.Mobs
 		[Obsolete("This prorepty is deprecated. Use Is funciton.")]
 		public bool IsBullet
 		{
-			get
-			{
-				return Is(EnumObjectType.Bullet);
-			}
+			get { return Is(EnumObjectType.Bullet); }
 		}
 
 		[DataMember]
 		public Guid Id { get; set; }
 
 		[DataMember]
-		public EnumObjectType ObjectType
-		{
-			get;
-			set;
-		}
+		public EnumObjectType ObjectType { get; set; }
 
 		//[DataMember]
 		public bool IsActive
@@ -146,11 +148,12 @@ namespace SkyShoot.Contracts.Mobs
 			set { if (!value) HealthAmount = -1; }
 		}
 
-		public Team TeamIdentity { set; get; }//Принадлежность команде
+		public Team TeamIdentity { set; get; } //Принадлежность команде
 
 		#endregion
 
 		#region здоровье и урон
+
 		[DataMember]
 		public float Damage { get; set; }
 
@@ -170,11 +173,12 @@ namespace SkyShoot.Contracts.Mobs
 		#endregion
 
 		#region перемещение и геометрия
-		[DataMember]
-		public Vector2 RunVector;// { get; set; }
 
 		[DataMember]
-		public Vector2 ShootVector;// { get; set; }
+		public Vector2 RunVector; // { get; set; }
+
+		[DataMember]
+		public Vector2 ShootVector; // { get; set; }
 
 		[DataMember]
 		public Vector2 Coordinates;
@@ -184,28 +188,18 @@ namespace SkyShoot.Contracts.Mobs
 		[DataMember]
 		public float Radius
 		{
-			get
-			{
-				return Bounding.Radius;
-			}
-			set
-			{
-				Bounding.Radius = value;
-			}
-		} // размер моба
+			get { return Bounding.Radius; }
+			set { Bounding.Radius = value; }
+		}
+
+		// размер моба
 
 		//Границы
 		[DataMember]
 		public Bounding Bounding { get; set; }
 
-		protected float _speed;
-
 		[DataMember]
-		virtual public float Speed
-		{
-			get { return _speed; }
-			set { _speed = value; }
-		}
+		public virtual float Speed { get; set; }
 
 		//скорость: пикселы в миллисекунду
 
@@ -213,9 +207,11 @@ namespace SkyShoot.Contracts.Mobs
 
 
 		// расширить типом моба, размером, цветом, и т.д.
+
 		#endregion
 
 		#region служебные функции (конструкторы)
+
 		public AGameObject(Vector2 coordinates, Guid id)
 		{
 			RunVector = ShootVector = new Vector2(0, 1);
@@ -253,17 +249,20 @@ namespace SkyShoot.Contracts.Mobs
 			Bounding = new BoundingCircle();
 			//IsActive = true;
 		}
+
 		#endregion
 
 		#region основные функции
-		public virtual IEnumerable<AGameEvent> Think(List<AGameObject> gameObjects, List<AGameObject> newGameObjects, long time)
+
+		public virtual IEnumerable<AGameEvent> Think(List<AGameObject> gameObjects, List<AGameObject> newGameObjects,
+		                                             long time)
 		{
-			return new AGameEvent[] { };
+			return new AGameEvent[] {};
 		}
 
 		public virtual IEnumerable<AGameEvent> Do(AGameObject obj, List<AGameObject> newObjects, long time)
 		{
-			return new AGameEvent[] { };
+			return new AGameEvent[] {};
 		}
 
 		public virtual Vector2 ComputeMovement(long updateDelay, GameLevel gameLevel)
@@ -274,7 +273,7 @@ namespace SkyShoot.Contracts.Mobs
 				RunVector = Vector2.Normalize(RunVector);
 			}
 			var newCoord = RunVector * Speed * updateDelay + Coordinates;
-			
+
 			return newCoord;
 		}
 
@@ -288,9 +287,9 @@ namespace SkyShoot.Contracts.Mobs
 
 		public virtual IEnumerable<AGameEvent> OnDead(AGameObject obj, List<AGameObject> newObjects, long time)
 		{
-			return new AGameEvent[] { };
+			return new AGameEvent[] {};
 		}
-		#endregion
 
+		#endregion
 	}
 }
