@@ -3,21 +3,21 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace SkyShoot.Game.Client.View
 {
-    public static class Textures
+	public static class Textures
 	{
-        public static class LandscapeTextures
-        {
-        }
+		public static class LandscapeTextures
+		{
+		}
 
-		public const int StonesAmount = 4;
-		public const int MobsAmount = 2;
+		public const int STONES_AMOUNT = 4;
+		public const int MOBS_AMOUNT = 2;
 
-		public const int PlayerAnimationFrameCount = 2;
-		public const int SpiderAnimationFrameCount = 9;
+		public const int PLAYER_ANIMATION_FRAME_COUNT = 2;
+		public const int SPIDER_ANIMATION_FRAME_COUNT = 9;
 
-        /// <summary>
-        /// current graphic device
-        /// </summary>
+		/// <summary>
+		/// current graphic device
+		/// </summary>
 		public static GraphicsDevice GraphicsDevice;
 
 		// Landscape textures
@@ -53,7 +53,7 @@ namespace SkyShoot.Game.Client.View
 		public static Texture2D Speed;
 
 		// stone textures
-		public static Texture2D[] Stones = new Texture2D[StonesAmount];
+		public static Texture2D[] Stones = new Texture2D[STONES_AMOUNT];
 		public static Texture2D OneStone;
 
 		// player animation textures
@@ -70,7 +70,7 @@ namespace SkyShoot.Game.Client.View
 
 		// mob textures
 		public static Texture2D PlayerTexture;
-		public static Texture2D[] MobTextures = new Texture2D[MobsAmount];
+		public static Texture2D[] MobTextures = new Texture2D[MOBS_AMOUNT];
 
 		public static Texture2D HealthRect(int width, int heigth, Color c)
 		{
@@ -87,9 +87,9 @@ namespace SkyShoot.Game.Client.View
 			get { return Create(2, 5, Color.Red); }
 		}
 
-        /// <summary>
-        /// create a colored rectangle
-        /// </summary>
+		/// <summary>
+		/// create a colored rectangle
+		/// </summary>
 		public static Texture2D Create(int width, int height, Color color)
 		{
 			// create the rectangle texture without colors
@@ -97,7 +97,7 @@ namespace SkyShoot.Game.Client.View
 
 			// create a color array for the pixels
 			var colors = new Color[width * height];
-            var newColor = new Color(color.ToVector3());
+			var newColor = new Color(color.ToVector3());
 			for (int i = 0; i < colors.Length; i++)
 			{
 				colors[i] = newColor;
@@ -109,9 +109,9 @@ namespace SkyShoot.Game.Client.View
 			return texture;
 		}
 
-        /// <summary>
-        /// copy a texture
-        /// </summary>
+		/// <summary>
+		/// copy a texture
+		/// </summary>
 		public static Texture2D Clone(Texture2D texture)
 		{
 			// get pixels from texture
@@ -125,9 +125,9 @@ namespace SkyShoot.Game.Client.View
 			return clone;
 		}
 
-        /// <summary>
-        /// add small texture into big texture at Vector2D position
-        /// </summary>
+		/// <summary>
+		/// add small texture into big texture at Vector2D position
+		/// </summary>
 		public static void Merge(Texture2D big, Texture2D small, Vector2 position)
 		{
 			// get pixels from big texture
@@ -159,16 +159,16 @@ namespace SkyShoot.Game.Client.View
 			{
 				switch (Settings.Default.Cursor)
 				{
-				case 1:
-					return Arrow;
-				case 2:
-					return Plus;
-				case 3:
-					return Cross;
-				case 4:
-					return Target;
-				default:
-					return Arrow;
+					case 1:
+						return Arrow;
+					case 2:
+						return Plus;
+					case 3:
+						return Cross;
+					case 4:
+						return Target;
+					default:
+						return Arrow;
 				}
 			}
 		}
@@ -177,16 +177,16 @@ namespace SkyShoot.Game.Client.View
 		{
 			switch (Settings.Default.Cursor)
 			{
-			case 1:
-				return new Vector2(x - 11f, y - 2.5f);
-			case 2:
-				return new Vector2(x - 23f, y - 23f);
-			case 3:
-				return new Vector2(x - 23f, y - 23f);
-			case 4:
-				return new Vector2(x - 24f, y - 23f);
-			default:
-				return new Vector2(x - 11f, y - 2.5f);
+				case 1:
+					return new Vector2(x - 11f, y - 2.5f);
+				case 2:
+					return new Vector2(x - 23f, y - 23f);
+				case 3:
+					return new Vector2(x - 23f, y - 23f);
+				case 4:
+					return new Vector2(x - 24f, y - 23f);
+				default:
+					return new Vector2(x - 11f, y - 2.5f);
 			}
 		}
 	}

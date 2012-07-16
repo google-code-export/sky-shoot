@@ -107,7 +107,6 @@ namespace SkyShoot.Contracts.Mobs
 
 			// [EnumMember] //!!
 			// Poisoning = 0x0001 | 0x500000000,//Правильный ли номер? Он живой объект, но не блок
-
 		}
 
 		#region основные свойства
@@ -205,7 +204,6 @@ namespace SkyShoot.Contracts.Mobs
 
 		#endregion
 
-
 		// расширить типом моба, размером, цветом, и т.д.
 
 		#endregion
@@ -255,14 +253,14 @@ namespace SkyShoot.Contracts.Mobs
 		#region основные функции
 
 		public virtual IEnumerable<AGameEvent> Think(List<AGameObject> gameObjects, List<AGameObject> newGameObjects,
-		                                             long time)
+													 long time)
 		{
-			return new AGameEvent[] {};
+			return new AGameEvent[] { };
 		}
 
 		public virtual IEnumerable<AGameEvent> Do(AGameObject obj, List<AGameObject> newObjects, long time)
 		{
-			return new AGameEvent[] {};
+			return new AGameEvent[] { };
 		}
 
 		public virtual Vector2 ComputeMovement(long updateDelay, GameLevel gameLevel)
@@ -287,7 +285,7 @@ namespace SkyShoot.Contracts.Mobs
 
 		public virtual IEnumerable<AGameEvent> OnDead(AGameObject obj, List<AGameObject> newObjects, long time)
 		{
-			return new AGameEvent[] {};
+			return new AGameEvent[] { };
 		}
 
 		#endregion

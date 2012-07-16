@@ -72,7 +72,7 @@ namespace SkyShoot.Game.Screens
 			Textures.Speed = _content.Load<Texture2D>("Textures/BonusesIcons/Speed");
 
 			// load stones
-			for (int i = 1; i <= Textures.StonesAmount; i++)
+			for (int i = 1; i <= Textures.STONES_AMOUNT; i++)
 				Textures.Stones[i - 1] = _content.Load<Texture2D>("Textures/Landscapes/Stone" + i);
 			Textures.OneStone = _content.Load<Texture2D>("Textures/Landscapes/Stone" + 1);
 
@@ -80,7 +80,7 @@ namespace SkyShoot.Game.Screens
 			Textures.PlayerTexture = _content.Load<Texture2D>("Textures/Mobs/Man");
 
 			// load mobs
-			for (int i = 1; i <= Textures.MobsAmount; i++)
+			for (int i = 1; i <= Textures.MOBS_AMOUNT; i++)
 				Textures.MobTextures[i - 1] = _content.Load<Texture2D>("Textures/Mobs/Spider" + i);
 
 			// load dead player
@@ -93,12 +93,12 @@ namespace SkyShoot.Game.Screens
 					"Textures/Mobs/mob_animation(v.2)/paukan_death_animation/paukan_death_animation_03");
 
 			// load mob animation
-			for (int i = 1; i <= Textures.SpiderAnimationFrameCount; i++)
+			for (int i = 1; i <= Textures.SPIDER_ANIMATION_FRAME_COUNT; i++)
 				Textures.SpiderAnimation.AddFrame(
 					_content.Load<Texture2D>("Textures/Mobs/spider_animation(uncomplete)/spider_" + i.ToString("D2")));
 
 			// load player animation
-			for (int i = 1; i <= Textures.PlayerAnimationFrameCount; i++)
+			for (int i = 1; i <= Textures.PLAYER_ANIMATION_FRAME_COUNT; i++)
 				Textures.PlayerAnimation.AddFrame(
 					_content.Load<Texture2D>("Textures/Mobs/man_animation(new man)/run/run_" + i.ToString("D2")));
 

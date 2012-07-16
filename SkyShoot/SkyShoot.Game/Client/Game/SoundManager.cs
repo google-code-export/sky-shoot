@@ -5,15 +5,13 @@ namespace SkyShoot.Game.Client.Game
 {
 	class SoundManager
 	{
-        public const int CueAmount = 11;
-        private static SoundManager _instance;
-	    private AudioEngine _engine;
-	    private SoundBank _soundBank;
-	    private WaveBank _waveBank;
-	    private AudioCategory _musicCategory;
+		public const int CUE_AMOUNT = 11;
+		private static SoundManager _instance;
+		private AudioEngine _engine;
+		private SoundBank _soundBank;
 
 		public enum SoundEnum
-		{			
+		{
 			Click,
 			Desert,
 			DeadSpider,
@@ -24,47 +22,42 @@ namespace SkyShoot.Game.Client.Game
 			Lava,
 			Lava2,
 			MainTheme,
-			Spider,					
+			Spider,
 			Snow,
 			Sand
 		}
 
-		public static Dictionary<SoundEnum, Cue> sounds = new Dictionary<SoundEnum, Cue>();
+		public static Dictionary<SoundEnum, Cue> Sounds = new Dictionary<SoundEnum, Cue>();
 		//public static Cue[] sounds = new Cue [CueAmount];
 
 		public static SoundManager Instance
 		{
-			get 
-			{
-				if (_instance == null)
-					_instance = new SoundManager();
-				return _instance; 
-			}
+			get { return _instance ?? (_instance = new SoundManager()); }
 		}
 
 		public SoundManager()
 		{
 			//Initialize();	
 			LoadSounds();
-			
+
 		}
 
 		public static void Initialize()
-		{				
-				if (_instance == null)
-					_instance = new SoundManager();
-				//else
-				//{
-				//  throw new Exception("Already initialized");
-				//}
+		{
+			if (_instance == null)
+				_instance = new SoundManager();
+			//else
+			//{
+			//  throw new Exception("Already initialized");
+			//}
 		}
 
 		public void LoadSounds()
 		{
 			_engine = new AudioEngine("Content\\Sounds\\BackSounds.xgs");
 			_soundBank = new SoundBank(_engine, "Content\\Sounds\\Sound Bank.xsb");
-			_waveBank = new WaveBank(_engine, "Content\\Sounds\\Wave Bank.xwb");
-			_musicCategory = _engine.GetCategory("Music");
+			new WaveBank(_engine, "Content\\Sounds\\Wave Bank.xwb");
+			_engine.GetCategory("Music");
 
 			/*sounds[0] = _soundBank.GetCue("RICOCHET");
 			sounds[1] = _soundBank.GetCue("wind03");
@@ -78,19 +71,19 @@ namespace SkyShoot.Game.Client.Game
 			sounds[9] = _soundBank.GetCue("wind01b");
 			sounds[10] = _soundBank.GetCue("angry");*/
 
-			sounds.Add(SoundEnum.Click, _soundBank.GetCue("RICOCHET"));
-			sounds.Add(SoundEnum.Desert, _soundBank.GetCue("wind03"));
-			sounds.Add(SoundEnum.DeadSpider, _soundBank.GetCue("guts04a"));
-			sounds.Add(SoundEnum.Grass, _soundBank.GetCue("cricket00"));
-			sounds.Add(SoundEnum.Gunshot, _soundBank.GetCue("GUNSHOT"));
-			sounds.Add(SoundEnum.Heartbeat, _soundBank.GetCue("heartbeat"));
-			sounds.Add(SoundEnum.Laser, _soundBank.GetCue("LASER"));
-			sounds.Add(SoundEnum.Lava, _soundBank.GetCue("lava_burn1"));
-			sounds.Add(SoundEnum.Lava2, _soundBank.GetCue("lava"));
-			sounds.Add(SoundEnum.MainTheme, _soundBank.GetCue("STARWARS"));
-			sounds.Add(SoundEnum.Sand, _soundBank.GetCue("wind03"));
-			sounds.Add(SoundEnum.Snow, _soundBank.GetCue("wind01b"));
-			sounds.Add(SoundEnum.Spider, _soundBank.GetCue("angry"));
+			Sounds.Add(SoundEnum.Click, _soundBank.GetCue("RICOCHET"));
+			Sounds.Add(SoundEnum.Desert, _soundBank.GetCue("wind03"));
+			Sounds.Add(SoundEnum.DeadSpider, _soundBank.GetCue("guts04a"));
+			Sounds.Add(SoundEnum.Grass, _soundBank.GetCue("cricket00"));
+			Sounds.Add(SoundEnum.Gunshot, _soundBank.GetCue("GUNSHOT"));
+			Sounds.Add(SoundEnum.Heartbeat, _soundBank.GetCue("heartbeat"));
+			Sounds.Add(SoundEnum.Laser, _soundBank.GetCue("LASER"));
+			Sounds.Add(SoundEnum.Lava, _soundBank.GetCue("lava_burn1"));
+			Sounds.Add(SoundEnum.Lava2, _soundBank.GetCue("lava"));
+			Sounds.Add(SoundEnum.MainTheme, _soundBank.GetCue("STARWARS"));
+			Sounds.Add(SoundEnum.Sand, _soundBank.GetCue("wind03"));
+			Sounds.Add(SoundEnum.Snow, _soundBank.GetCue("wind01b"));
+			Sounds.Add(SoundEnum.Spider, _soundBank.GetCue("angry"));
 		}
 
 		/*private void RenewSound(SoundEnum sound)
@@ -108,84 +101,84 @@ namespace SkyShoot.Game.Client.Game
 			sounds[SoundEnum.Spider] = _soundBank.GetCue("angry");
 		}*/
 
-		public void SoundPlay(SoundEnum Sound)
+		public void SoundPlay(SoundEnum sound)
 		{
-			switch (Sound)
+			switch (sound)
 			{
 				case SoundEnum.Click:
-					sounds[SoundEnum.Click] = _soundBank.GetCue("RICOCHET");
-					sounds[SoundEnum.Click].Play();
+					Sounds[SoundEnum.Click] = _soundBank.GetCue("RICOCHET");
+					Sounds[SoundEnum.Click].Play();
 					break;
 				case SoundEnum.Desert:
-					sounds[SoundEnum.Desert] = _soundBank.GetCue("wind03");
-					sounds[SoundEnum.Desert].Play();
+					Sounds[SoundEnum.Desert] = _soundBank.GetCue("wind03");
+					Sounds[SoundEnum.Desert].Play();
 					break;
 				case SoundEnum.DeadSpider:
-					sounds[SoundEnum.Desert] = _soundBank.GetCue("guts04a");
-					sounds[SoundEnum.Desert].Play();
+					Sounds[SoundEnum.Desert] = _soundBank.GetCue("guts04a");
+					Sounds[SoundEnum.Desert].Play();
 					break;
 				case SoundEnum.Grass:
-					sounds[SoundEnum.Grass] = _soundBank.GetCue("cricket00");
-					sounds[SoundEnum.Grass].Play();
+					Sounds[SoundEnum.Grass] = _soundBank.GetCue("cricket00");
+					Sounds[SoundEnum.Grass].Play();
 					break;
 				case SoundEnum.Gunshot:
-					sounds[SoundEnum.Gunshot] = _soundBank.GetCue("GUNSHOT");
-					sounds[SoundEnum.Gunshot].Play();
+					Sounds[SoundEnum.Gunshot] = _soundBank.GetCue("GUNSHOT");
+					Sounds[SoundEnum.Gunshot].Play();
 					break;
 				case SoundEnum.Heartbeat:
-					sounds[SoundEnum.Gunshot] = _soundBank.GetCue("heartbeat");
-					sounds[SoundEnum.Gunshot].Play();
+					Sounds[SoundEnum.Gunshot] = _soundBank.GetCue("heartbeat");
+					Sounds[SoundEnum.Gunshot].Play();
 					break;
 				case SoundEnum.Laser:
-					sounds[SoundEnum.Gunshot] = _soundBank.GetCue("LASER");
-					sounds[SoundEnum.Laser].Play();
+					Sounds[SoundEnum.Gunshot] = _soundBank.GetCue("LASER");
+					Sounds[SoundEnum.Laser].Play();
 					break;
 				case SoundEnum.Lava:
-					sounds[SoundEnum.Lava] = _soundBank.GetCue("lava_burn1");
-					sounds[SoundEnum.Lava].Play();
+					Sounds[SoundEnum.Lava] = _soundBank.GetCue("lava_burn1");
+					Sounds[SoundEnum.Lava].Play();
 					break;
 				case SoundEnum.Lava2:
-					sounds[SoundEnum.Lava2] = _soundBank.GetCue("lava");
-					sounds[SoundEnum.Lava2].Play();
+					Sounds[SoundEnum.Lava2] = _soundBank.GetCue("lava");
+					Sounds[SoundEnum.Lava2].Play();
 					break;
 				case SoundEnum.MainTheme:
-					sounds[SoundEnum.MainTheme] = _soundBank.GetCue("STARWARS");
-					sounds[SoundEnum.MainTheme].Play();
+					Sounds[SoundEnum.MainTheme] = _soundBank.GetCue("STARWARS");
+					Sounds[SoundEnum.MainTheme].Play();
 					break;
 				case SoundEnum.Sand:
-					sounds[SoundEnum.Sand] = _soundBank.GetCue("wind03");
-					sounds[SoundEnum.Sand].Play();
+					Sounds[SoundEnum.Sand] = _soundBank.GetCue("wind03");
+					Sounds[SoundEnum.Sand].Play();
 					break;
 				case SoundEnum.Snow:
-					sounds[SoundEnum.Snow] = _soundBank.GetCue("wind01b");
-					sounds[SoundEnum.Snow].Play();
+					Sounds[SoundEnum.Snow] = _soundBank.GetCue("wind01b");
+					Sounds[SoundEnum.Snow].Play();
 					break;
 				case SoundEnum.Spider:
-					sounds[SoundEnum.Spider] = _soundBank.GetCue("angry");
-					sounds[SoundEnum.Spider].Play();
+					Sounds[SoundEnum.Spider] = _soundBank.GetCue("angry");
+					Sounds[SoundEnum.Spider].Play();
 					break;
 				default:
-					sounds[SoundEnum.MainTheme] = _soundBank.GetCue("STARWARS");
-					sounds[SoundEnum.MainTheme].Play();
+					Sounds[SoundEnum.MainTheme] = _soundBank.GetCue("STARWARS");
+					Sounds[SoundEnum.MainTheme].Play();
 					break;
 			}
 
 			//sounds[Sound].Play();
 		}
 
-		public void CuePause(SoundEnum Sound)
+		public void CuePause(SoundEnum sound)
 		{
-			sounds[Sound].Pause();
+			Sounds[sound].Pause();
 		}
 
-		public void CueResume(SoundEnum Sound)
+		public void CueResume(SoundEnum sound)
 		{
-			sounds[Sound].Resume();
+			Sounds[sound].Resume();
 		}
 
-		public void CueStop(SoundEnum Sound)
+		public void CueStop(SoundEnum sound)
 		{
-			sounds[Sound].Stop(AudioStopOptions.AsAuthored);
+			Sounds[sound].Stop(AudioStopOptions.AsAuthored);
 		}
 	}
 }

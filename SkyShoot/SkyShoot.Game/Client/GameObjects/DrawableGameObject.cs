@@ -1,7 +1,6 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SkyShoot.Contracts;
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Game.Client.Game;
@@ -13,8 +12,6 @@ namespace SkyShoot.Game.Client.GameObjects
 {
 	public class DrawableGameObject : AGameObject, IDrawable
 	{
-		private SoundManager _soundManager;
-
 		public Vector2 CoordinatesM
 		{
 			get { return TypeConverter.XnaLite2Xna(Coordinates); }
@@ -45,21 +42,20 @@ namespace SkyShoot.Game.Client.GameObjects
 		private readonly int _healthTextureHeight;
 
 		private Color _healthTextureColor;
-		private float OriginalRadius;
+		private float _originalRadius;
 
-		private const int FrameTime = 500;
-		private const bool Looping = true;
+		private const int FRAME_TIME = 500;
+		private const bool LOOPING = true;
 
 		public DrawableGameObject(AGameObject other, Animation2D animation)
 		//: base(other)
 		{
 			SoundManager.Initialize();
-			_soundManager = SoundManager.Instance;
 
 			_healthTextureHeight = 5;
 
 			Animation = animation;
-			Animation.Initialize(FrameTime, Looping);
+			Animation.Initialize(FRAME_TIME, LOOPING);
 			Copy(other);
 			MakeOroginalRadius();
 		}
@@ -78,27 +74,27 @@ namespace SkyShoot.Game.Client.GameObjects
 		{
 			switch (ObjectType)
 			{
-			case EnumObjectType.PistolBullet:
-				OriginalRadius = Constants.DEFAULT_BULLET_RADIUS;
-				break;
-			case EnumObjectType.RocketBullet:
-				OriginalRadius = Constants.ROCKET_BULLET_RADIUS;
-				break;
-			case EnumObjectType.Flame:
-				OriginalRadius = Constants.FLAME_RADIUS;
-				break;
-			case EnumObjectType.Explosion:
-				OriginalRadius = Constants.EXPLOSION_RADIUS;
-				break;
-			case EnumObjectType.HeaterBullet:
-				OriginalRadius = Constants.DEFAULT_BULLET_RADIUS;
-				break;
-			case EnumObjectType.PoisonBullet:
-				OriginalRadius = Constants.POISON_BULLET_RADIUS;
-				break;
-			default:
-				OriginalRadius = Radius;
-				break;
+				case EnumObjectType.PistolBullet:
+					_originalRadius = Constants.DEFAULT_BULLET_RADIUS;
+					break;
+				case EnumObjectType.RocketBullet:
+					_originalRadius = Constants.ROCKET_BULLET_RADIUS;
+					break;
+				case EnumObjectType.Flame:
+					_originalRadius = Constants.FLAME_RADIUS;
+					break;
+				case EnumObjectType.Explosion:
+					_originalRadius = Constants.EXPLOSION_RADIUS;
+					break;
+				case EnumObjectType.HeaterBullet:
+					_originalRadius = Constants.DEFAULT_BULLET_RADIUS;
+					break;
+				case EnumObjectType.PoisonBullet:
+					_originalRadius = Constants.POISON_BULLET_RADIUS;
+					break;
+				default:
+					_originalRadius = Radius;
+					break;
 			}
 		}
 
@@ -154,14 +150,14 @@ namespace SkyShoot.Game.Client.GameObjects
 			}
 			else
 			{
-			    if (Is(EnumObjectType.Wall))
-			    {
-			        scale = Radius / (StaticTexture.Width / 2f);
-			    }
-			    if (Is(EnumObjectType.Bullet))
-			    {
-			        scale *= Radius / OriginalRadius;
-			        if (Is(EnumObjectType.PistolBullet) || Is(EnumObjectType.HeaterBullet)) scale *= 2f;
+				if (Is(EnumObjectType.Wall))
+				{
+					scale = Radius / (StaticTexture.Width / 2f);
+				}
+				if (Is(EnumObjectType.Bullet))
+				{
+					scale *= Radius / _originalRadius;
+					if (Is(EnumObjectType.PistolBullet) || Is(EnumObjectType.HeaterBullet)) scale *= 2f;
 				}
 				spriteBatch.Draw(StaticTexture,
 												 CoordinatesM,

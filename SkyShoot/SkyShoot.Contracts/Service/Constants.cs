@@ -86,7 +86,7 @@
 		public const int POISONTICK_ATTACK_RATE = 2000;
 		#endregion
 
-		#region turretGun 
+		#region turretGun
 
 		//TODO: new turretGun constants
 

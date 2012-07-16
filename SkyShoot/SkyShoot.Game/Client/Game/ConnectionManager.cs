@@ -1,11 +1,9 @@
 ﻿using System;
-
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.ServiceModel;
 using System.Text;
 using System.Threading;
-
-using System.Collections.Generic;
 using SkyShoot.Contracts;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Mobs;
@@ -13,10 +11,8 @@ using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Session;
 using SkyShoot.Contracts.Statistics;
 using SkyShoot.Contracts.Weapon;
-
 using SkyShoot.Game.Controls;
 using SkyShoot.Game.Screens;
-
 using Timer = System.Timers.Timer;
 
 namespace SkyShoot.Game.Client.Game
@@ -217,6 +213,8 @@ namespace SkyShoot.Game.Client.Game
 			catch (Exception exc)
 			{
 				Trace.WriteLine("game:SynchroFrame" + exc);
+				// todo rewrite
+				Debug.Assert(_lastServerSynchroFrame != null, "_lastServerSynchroFrame != null");
 				_lastServerSynchroFrame.Clear();
 			}
 		}
@@ -326,7 +324,7 @@ namespace SkyShoot.Game.Client.Game
 
 			AddClientGameEvent(moveGameEvent);
 
-			return new AGameEvent[] {};
+			return new AGameEvent[] { };
 		}
 
 		public AGameEvent[] Shoot(XNA.Framework.Vector2 direction)
@@ -335,7 +333,7 @@ namespace SkyShoot.Game.Client.Game
 
 			AddClientGameEvent(shootGameEvent);
 
-			return new AGameEvent[] {};
+			return new AGameEvent[] { };
 		}
 
 		public AGameEvent[] ChangeWeapon(WeaponType type)
@@ -344,7 +342,7 @@ namespace SkyShoot.Game.Client.Game
 
 			AddClientGameEvent(weaponChangedGameEvent);
 
-			return new AGameEvent[] {};
+			return new AGameEvent[] { };
 		}
 
 		public Stats? GetStats()
@@ -484,7 +482,7 @@ namespace SkyShoot.Game.Client.Game
 			catch (Exception exc)
 			{
 				Trace.WriteLine(exc);
-				return new string[] {};
+				return new string[] { };
 			}
 		}
 

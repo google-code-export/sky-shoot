@@ -5,23 +5,23 @@ namespace SkyShoot.Game.Client.View
 {
 	public class Camera2D
 	{
-        private readonly int _width;
-        private readonly int _height;
+		private readonly int _width;
+		private readonly int _height;
 
-        /// <summary>
-        /// Camera Rotation
-        /// </summary>
-        private readonly float _rotation;
-        
-        /// <summary>
-        /// Camera Zoom
-        /// </summary>
+		/// <summary>
+		/// Camera Rotation
+		/// </summary>
+		private readonly float _rotation;
+
+		/// <summary>
+		/// Camera Zoom
+		/// </summary>
 		private float _zoom;
 
-        /// <summary>
-        /// Matrix Transform
-        /// </summary>
-        private Matrix _transform;
+		/// <summary>
+		/// Matrix Transform
+		/// </summary>
+		private Matrix _transform;
 
 		public Camera2D(int width, int height)
 		{
@@ -34,30 +34,30 @@ namespace SkyShoot.Game.Client.View
 			_height = height;
 		}
 
-        /// <summary>
-        /// Camera Position
-        /// </summary>
-        public Vector2 Position { get; set; }
+		/// <summary>
+		/// Camera Position
+		/// </summary>
+		public Vector2 Position { get; set; }
 
-        public float Zoom
-        {
-            get
-            {
-                return _zoom;
-            }
-            set
-            {
-                _zoom = value;
+		public float Zoom
+		{
+			get
+			{
+				return _zoom;
+			}
+			set
+			{
+				_zoom = value;
 
-                // Negative zoom will flip image
-                if (_zoom < 0.1f) _zoom = 0.1f;
-            }
-        }
+				// Negative zoom will flip image
+				if (_zoom < 0.1f) _zoom = 0.1f;
+			}
+		}
 
-        /// <summary>
-        /// Auxiliary function to move the camera
-        /// </summary>
-        /// <param name="amount">The amount.</param>
+		/// <summary>
+		/// Auxiliary function to move the camera
+		/// </summary>
+		/// <param name="amount">The amount.</param>
 		public void Move(Vector2 amount)
 		{
 			Position += amount;
@@ -78,8 +78,8 @@ namespace SkyShoot.Game.Client.View
 			transformY = MathHelper.Clamp(transformY, 0, _height - 2 * viewHeightOver2);
 
 			_transform = Matrix.CreateTranslation(new Vector3(-transformX, -transformY, 0)) *
-			             Matrix.CreateRotationZ(_rotation) *
-			             Matrix.CreateScale(new Vector3(Zoom, Zoom, 1));
+						 Matrix.CreateRotationZ(_rotation) *
+						 Matrix.CreateScale(new Vector3(Zoom, Zoom, 1));
 
 			return _transform;
 		}
@@ -87,7 +87,7 @@ namespace SkyShoot.Game.Client.View
 		public Vector2 ConvertToLocal(Vector2 coordinates)
 		{
 			return new Vector2(_transform.Translation.X + coordinates.X,
-			                   _transform.Translation.Y + coordinates.Y);
+							   _transform.Translation.Y + coordinates.Y);
 		}
 	}
 }

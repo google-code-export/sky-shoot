@@ -14,18 +14,12 @@ namespace SkyShoot.Game.Client.Game
 
 		private static Texture2D _texture;
 
-		private static Texture2D _gunTexture;
-		private static Texture2D _laserTexture;
-
-		private SoundManager _soundManager;
+		private readonly SoundManager _soundManager;
 
 		public GameLevel(Contracts.Session.GameLevel gameLevel)
 		{
-			Width = (int) gameLevel.LevelWidth;
-			Height = (int) gameLevel.LevelHeight;
-
-			//_gunTexture = Textures.Clone(Textures.Gun);
-			//_laserTexture = Textures.Clone(Textures.Laser);
+			Width = (int)gameLevel.LevelWidth;
+			Height = (int)gameLevel.LevelHeight;
 
 			SoundManager.Initialize();
 			_soundManager = SoundManager.Instance;
@@ -64,8 +58,6 @@ namespace SkyShoot.Game.Client.Game
 		public void Draw(SpriteBatch spriteBatch)
 		{
 			spriteBatch.Draw(_texture, Vector2.Zero, new Rectangle(0, 0, Width, Height), Color.White);
-			//spriteBatch.Draw(_gunTexture, new Rectangle(Width + 5, Height + 29, Width + 45, Height + 5), Color.White);
-			//spriteBatch.Draw(_laserTexture, new Rectangle(Width + 50, Height + 29, Width + 90, Height + 5), Color.White);
 		}
 	}
 }
