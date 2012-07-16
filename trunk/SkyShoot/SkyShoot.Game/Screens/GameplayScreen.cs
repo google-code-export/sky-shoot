@@ -71,6 +71,10 @@ namespace SkyShoot.Game.Screens
 			Textures.Protection = _content.Load<Texture2D>("Textures/BonusesIcons/Protection");
 			Textures.Speed = _content.Load<Texture2D>("Textures/BonusesIcons/Speed");
 
+			//load minions
+
+			Textures.Turret = _content.Load<Texture2D>("Textures/Mobs/Turret");
+
 			// load stones
 			for (int i = 1; i <= Textures.STONES_AMOUNT; i++)
 				Textures.Stones[i - 1] = _content.Load<Texture2D>("Textures/Landscapes/Stone" + i);
