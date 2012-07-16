@@ -12,8 +12,6 @@ namespace SkyShoot.Contracts.Mobs
 	[DataContract]
 	public class AGameObject
 	{
-		private const int COMMON_ATTRIBUTES_SHIFT = 32;
-
 		/// <summary>
 		/// основное перечисление всех возможных типов обектов игры
 		/// </summary>
@@ -22,88 +20,94 @@ namespace SkyShoot.Contracts.Mobs
 		{
 			//!! переписать на сдвиги и номера
 			/*                 76543210
-			 * 64-bit xxxxxxx  00000000
-			 *            \|/  ||||||||
-			 *             |   |/||/|/+-- LivingObject (something with mind and health)
-			 *             |   | || |  
-			 *             |   | || +---- Bullets
-			 *             |   | ||    
-			 *             |   | ||+----- Bonuses
-			 *             |   | |      
-			 *             |   | +-------- Walls      
-			 *             |   |
-			 *             |   +--------- Mobs
-			 *             |
-			 *             +------------- Common attributes
+			 * 64-bit  0000000 00000000
+			 *         |/\\|/\ /|||||||
+			 *         |  \|  | \|/\|/+-- LivingObject (something with mind and health)
+			 *         |   |  |  |  |  
+			 *         |   |  |  |  +---- Bullets
+			 *         |   |  |  |    
+			 *         |   |  |  |
+			 *         |   |  |  +------- Bonuses
+			 *         |   |  |        
+			 *         |   |  +---------- Walls      
+			 *         |   | 
+			 *         |   |
+			 *         |   +------------- Mobs
+			 *         |    
+			 *         +----------------- Common attributes
 			 */
 
+			[EnumMember]//!!
+			Block = 0x020000000000000L, //0x1 << CommonAttributesShift, //1125899906842624
 			[EnumMember]
 			LivingObject = 0x0001UL | Block, //1125899906842625
 			[EnumMember]
 			Player = LivingObject | 0x2UL, //1125899906842626
 			[EnumMember]
 			Mob = LivingObject | 0x4UL, //1125899906842628
+			
 			[EnumMember]
-			Bullet = 0x010UL, //16
+			Bullet = 0x0010UL, //16
 			[EnumMember]
-			Flame = Bullet | 0x020UL, //48
+			Flame = Bullet | 0x0020UL, //48
 			[EnumMember]
-			PistolBullet = Bullet | 0x040UL, //80
+			PistolBullet = Bullet | 0x0040UL, //80
 			[EnumMember]
-			ShotgunBullet = Bullet | 0x060UL, //144
+			ShotgunBullet = Bullet | 0x0080UL, //144
 			[EnumMember]
-			RocketBullet = Bullet | 0x080UL, //272
+			RocketBullet = Bullet | 0x0100UL, //272
 			[EnumMember]
-			Explosion = Bullet | 0x100UL, //528
+			Explosion = Bullet | 0x0200UL, //528
 			[EnumMember]
-			SpiderBullet = Bullet | 0x120UL, //1040
+			SpiderBullet = Bullet | 0x0400UL, //1040
 			[EnumMember]
-			HeaterBullet = Bullet | 0x140UL, //
+			HeaterBullet = Bullet | 0x0800UL, //
 			[EnumMember]
-			PoisonBullet = Bullet | 0x160UL, //Правильный ли номер
+			PoisonBullet = Bullet | 0x1000UL, //Правильный ли номер
 			[EnumMember]
-			TurretGunBullet = Bullet | 0x180UL, //Правильный ли номер
-			[EnumMember]
-			Bonus = 0x01000UL, //4096
-			[EnumMember]
-			DoubleDamage = Bonus | 0x02000UL, //12288
-			[EnumMember]
-			Shield = Bonus | 0x04000UL, //20480
-			[EnumMember]
-			Remedy = Bonus | 0x08000UL, //36864
-			[EnumMember]
-			Mirror = Bonus | 0x06000UL, //135168
-			[EnumMember]
-			Speedup = Bonus | 0x10000UL, //69632
-			[EnumMember]
-			Wall = 0x100000UL | Block, //1125899907891200
-			[EnumMember]
-			Block = 0x100000000L, //0x1 << CommonAttributesShift, //1125899906842624
-			[EnumMember]
-			ChildrenMob = 0x02000000UL | Mob,
+			TurretGunBullet = Bullet | 0x2000UL, //Правильный ли номер
 
 			[EnumMember]
-			Hydra = 0x04000000UL | Mob,
+			Bonus = 0x0010000UL, //4096
+			[EnumMember]
+			DoubleDamage = Bonus | 0x0020000UL, //12288
+			[EnumMember]
+			Shield = Bonus | 0x0040000UL, //20480
+			[EnumMember]
+			Remedy = Bonus | 0x0080000UL, //36864
+			[EnumMember]
+			Mirror = Bonus | 0x0100000UL, //135168
+			[EnumMember]
+			Speedup = Bonus | 0x0200000UL, //69632
 
 			[EnumMember]
-			ParentMob = 0x06000000UL | Mob,
+			Wall = 0x01000000UL | Block, //1125899907891200
+			
+			[EnumMember]
+			ChildrenMob = 0x0002000000000UL | Mob,
 
 			[EnumMember]
-			Poisoner = 0x08000000UL | Mob,
+			Hydra = 0x0004000000000UL | Mob,
 
 			[EnumMember]
-			Poisoning = 0x10000000UL | Mob, // | ~Block, //!!
-			[EnumMember]
-			Spider = 0x12000000UL | Mob,
+			ParentMob = 0x0008000000000UL | Mob,
 
 			[EnumMember]
-			ShootingSpider = 0x14000000UL | Mob,
+			Poisoner = 0x0010000000000UL | Mob,
 
 			[EnumMember]
-			SpiderWithMind = 0x16000000UL | Mob,
+			Poisoning = 0x0020000000000UL | Mob, // | ~Block, //!!
+			[EnumMember]
+			Spider = 0x0040000000000UL | Mob,
 
 			[EnumMember]
-			Turret = 0x18000000UL | Mob,
+			ShootingSpider = 0x0080000000000UL | Mob,
+
+			[EnumMember]
+			SpiderWithMind = 0x0100000000000UL | Mob,
+
+			[EnumMember]
+			Turret = 0x0200000000000UL | Mob,
 
 			// [EnumMember] //!!
 			// Poisoning = 0x0001 | 0x500000000,//Правильный ли номер? Он живой объект, но не блок
