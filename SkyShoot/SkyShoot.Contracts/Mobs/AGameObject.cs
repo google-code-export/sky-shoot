@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using SkyShoot.Contracts.CollisionDetection;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Session;
 using SkyShoot.Contracts.Weapon;
-using SkyShoot.Contracts.CollisionDetection;
 using SkyShoot.XNA.Framework;
 using System.Diagnostics;
 
@@ -13,7 +13,7 @@ namespace SkyShoot.Contracts.Mobs
 	[DataContract]
 	public class AGameObject
 	{
-		const int CommonAttributesShift = 32;
+		const int COMMON_ATTRIBUTES_SHIFT = 32;
 
 		/// <summary>
 		/// основное перечисление всех возможных типов обектов игры
@@ -21,7 +21,7 @@ namespace SkyShoot.Contracts.Mobs
 		[Flags]
 		public enum EnumObjectType : ulong
 		{
-		//!! переписать на сдвиги и номера
+			//!! переписать на сдвиги и номера
 			/*                 76543210
 			 * 64-bit xxxxxxx  00000000
 			 *            \|/  ||||||||
@@ -86,11 +86,11 @@ namespace SkyShoot.Contracts.Mobs
 			[EnumMember]
 			ParentMob = 0x06000000UL | Mob,
 			[EnumMember]
-			Poisoner =  0x08000000UL | Mob,
+			Poisoner = 0x08000000UL | Mob,
 			[EnumMember]
 			Poisoning = 0x10000000UL | Mob,// | ~Block, //!!
 			[EnumMember]
-			Spider =    0x12000000UL | Mob,
+			Spider = 0x12000000UL | Mob,
 			[EnumMember]
 			ShootingSpider = 0x14000000UL | Mob,
 			[EnumMember]
@@ -147,7 +147,7 @@ namespace SkyShoot.Contracts.Mobs
 		}
 
 		public Team TeamIdentity { set; get; }//Принадлежность команде
-		
+
 		#endregion
 
 		#region здоровье и урон

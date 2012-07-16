@@ -54,7 +54,6 @@ namespace SkyShoot.Contracts.Service
 		[OperationContract]
 		void LeaveGame();
 
-
 		/// <summary>
 		/// проверка началась ли игра
 		/// </summary>
@@ -66,10 +65,10 @@ namespace SkyShoot.Contracts.Service
 		[OperationContract]
 		AGameObject[] SynchroFrame();
 
-	    [OperationContract] // Выдает таблицу данных о уровне, опыте, фрагах
+		[OperationContract] // Выдает таблицу данных о уровне, опыте, фрагах
 		Stats? GetStats();
 
-        /// <summary>
+		/// <summary>
 		/// возвращает список игроков
 		/// </summary>
 		/// <returns>массив имен игроков</returns>

@@ -1,6 +1,7 @@
 ﻿using System;
 using SkyShoot.Contracts;
 using SkyShoot.Contracts.Mobs;
+using SkyShoot.Contracts.Service;
 
 namespace SkyShoot.Service.Mobs
 {

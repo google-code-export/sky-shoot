@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using SkyShoot.Contracts.Service;
 
 namespace SkyShoot.Contracts.Session
 {

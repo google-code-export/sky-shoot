@@ -20,12 +20,12 @@ namespace SkyShoot.Contracts.GameEvents
 	}
 
 	[DataContract]
-	[KnownType(typeof (NewObjectEvent))]
-	[KnownType(typeof (ObjectDirectionChanged))]
-	[KnownType(typeof (ObjectDeleted))]
-	[KnownType(typeof (ObjectHealthChanged))]
+	[KnownType(typeof(NewObjectEvent))]
+	[KnownType(typeof(ObjectDirectionChanged))]
+	[KnownType(typeof(ObjectDeleted))]
+	[KnownType(typeof(ObjectHealthChanged))]
 	//[KnownType(typeof(BonusesChanged))]
-		//[KnownType(typeof(WeaponChanged))]
+	//[KnownType(typeof(WeaponChanged))]
 	public abstract class AGameEvent
 	{
 		// now = DateTime.Now.Ticks/10000; //время в миллисекундах с начала игры
@@ -55,10 +55,12 @@ namespace SkyShoot.Contracts.GameEvents
 	/// Вспомогательный класс, обозначающий пустое событие
 	/// Используется клиентом для обозначения того,
 	/// что нужно запросить с сервера GameEvent'ы
+	/// // todo rename
 	/// </summary>
 	public class EmptyEvent : AGameEvent
 	{
-		public EmptyEvent(Guid? id, long timeStamp) : base(id, timeStamp)
+		public EmptyEvent(Guid? id, long timeStamp)
+			: base(id, timeStamp)
 		{
 			Type = EventType.EmptyGameEvent;
 		}
@@ -111,7 +113,8 @@ namespace SkyShoot.Contracts.GameEvents
 	{
 		public Vector2 ShootDirection;
 
-		public ObjectShootEvent(Vector2 shootDirection, Guid? id, long timeStamp) : base(id, timeStamp)
+		public ObjectShootEvent(Vector2 shootDirection, Guid? id, long timeStamp)
+			: base(id, timeStamp)
 		{
 			ShootDirection = shootDirection;
 			Type = EventType.ObjectShootEvent;
@@ -148,7 +151,7 @@ namespace SkyShoot.Contracts.GameEvents
 			: base(id, timeStamp)
 		{
 			Health = newHp;
-			Type = EventType.ObjectHealthChanged; 
+			Type = EventType.ObjectHealthChanged;
 		}
 
 		public override void UpdateMob(AGameObject mob)

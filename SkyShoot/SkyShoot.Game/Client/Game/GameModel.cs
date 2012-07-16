@@ -15,7 +15,7 @@ using SkyShoot.Contracts;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.CollisionDetection;
-
+using SkyShoot.Contracts.Service;
 using SkyShoot.Game.Client.GameObjects;
 using SkyShoot.Game.Client.View;
 

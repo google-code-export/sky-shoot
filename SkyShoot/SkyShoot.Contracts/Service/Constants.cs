@@ -1,9 +1,7 @@
-﻿
-namespace SkyShoot.Contracts
+﻿namespace SkyShoot.Contracts.Service
 {
 	public static class Constants
 	{
-
 		#region weapons
 
 		public const float DEFAULT_BULLET_RADIUS = 5f;
@@ -116,13 +114,13 @@ namespace SkyShoot.Contracts
 		public const float POISONER_MOB_SPEED = 0.03f;
 		public const float POISONER_MOB_HEALTH = 500f;
 		public const float POISONING_MOB_SPEED = 0.12f; //Чтобы догонял даже при ускорении.
-		public const float POISONING_MOB_HEALTH= 40f;
+		public const float POISONING_MOB_HEALTH = 40f;
 
 
 		#endregion
 
 		#region common
-		public const float Epsilon = 0.01f;
+		public const float EPSILON = 0.01f;
 
 		public const int FPS = 1000 / 60;
 		public const float LEVELBORDER = 50;

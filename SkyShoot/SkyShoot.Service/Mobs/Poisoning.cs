@@ -3,6 +3,7 @@ using System.Linq;
 using SkyShoot.Contracts;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Mobs;
+using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Weapon;
 
 namespace SkyShoot.ServProgram.Mobs

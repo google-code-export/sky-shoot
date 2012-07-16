@@ -1,6 +1,7 @@
 using System;
 using SkyShoot.Contracts;
 using SkyShoot.Contracts.Mobs;
+using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Weapon;
 using SkyShoot.XNA.Framework;
 

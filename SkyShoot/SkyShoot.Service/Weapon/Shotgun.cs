@@ -1,5 +1,6 @@
 ﻿using System;
 using SkyShoot.Contracts.Mobs;
+using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Weapon;
 using SkyShoot.Service.Weapon.Bullets;
 using SkyShoot.XNA.Framework;
@@ -14,7 +15,7 @@ namespace SkyShoot.Service.Weapon
 		{
             _rand = new Random();
             WeaponType = WeaponType.Shotgun;
-            ReloadSpeed = SkyShoot.Contracts.Constants.SHOTGUN_ATTACK_RATE;
+            ReloadSpeed = Constants.SHOTGUN_ATTACK_RATE;
 		}
 
 		public override AGameObject[] CreateBullets(Vector2 direction)

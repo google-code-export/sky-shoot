@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using SkyShoot.Contracts;
 using SkyShoot.Contracts.Mobs;
+using SkyShoot.Contracts.Service;
 
 namespace SkyShoot.ServProgram.Mobs
 {

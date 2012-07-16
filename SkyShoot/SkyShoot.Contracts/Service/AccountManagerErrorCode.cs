@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace SkyShoot.Contracts.Service
+﻿namespace SkyShoot.Contracts.Service
 {
 	public enum AccountManagerErrorCode
 	{

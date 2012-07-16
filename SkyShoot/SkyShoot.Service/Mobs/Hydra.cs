@@ -5,6 +5,7 @@ using System.Text;
 using SkyShoot.Contracts;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.Mobs;
+using SkyShoot.Contracts.Service;
 using SkyShoot.Service.Weapon;
 using SkyShoot.XNA.Framework;
 
