@@ -92,8 +92,26 @@
 
 		public const float TURRET_GUN_BULLET_SPEED = 0.1f;
 		public const float TURRET_GUN_BULLET_DAMAGE = 10;
-		public const float TURRET_GUN_BULLET_LIFE_DISTANCE = 3000;
+		public const float TURRET_GUN_BULLET_LIFE_DISTANCE = 300;
 		public const int TURRET_GUN_ATTACK_RATE = 1000;
+
+		#endregion
+
+		#region turretMaker
+
+		//TODO: new turretMaker constants
+
+		public const float TURRET_MAKER_ATTACK_RATE = 1000;
+
+		#endregion
+
+		#region turret
+
+		//TODO: new turret constants
+
+		public const float TURRET_HEALTH = 50;
+		public const int TURRET_SHOOTING_DELAY = 1000;
+		public const float TURRET_TARGET_SEARCHING_RANGE = 200;
 
 		#endregion
 
@@ -105,6 +123,7 @@
 
 		public const float PLAYER_DEFAULT_SPEED = 0.05f;
 		public const float PLAYER_RADIUS = 15f;
+		public const float PLAYER_HEALTH = 100f;
 		public const float SPIDER_SPEED = 0.06f;
 		public const float PARENT_MOB_SPEED = 0.01f;
 		public const float PARENT_MOB_HEALTH = 700f;
