@@ -43,6 +43,10 @@ namespace SkyShoot.Game.Client.View
 		public static Texture2D PoisonProjectile;
 		public static Texture2D Explosion;
 
+		//minions textures
+
+		public static Texture2D Turret;
+
 		// bonuses textures
 		public static Texture2D DoubleDamage;
 		public static Texture2D Fire;
