@@ -74,16 +74,11 @@
 		#region poisonGun
 
 		public const float POISON_BULLET_SPEED = 0.1f;
-		public const float POISON_BULLET_DAMAGE = 5f;
-		public const float POISON_BULLET_LIFE_DISTANCE = 30f;
+		public const float POISON_BULLET_DAMAGE = 10f;
+		public const float POISON_BULLET_LIFE_DISTANCE = 3000f;
 		public const int POISON_GUN_ATTACK_RATE = 3000;
 		public const float POISON_BULLET_RADIUS = 4f;
 
-		#endregion
-
-		#region poisonTick
-		public const float POISONTICK_DAMAGE = 10f;
-		public const int POISONTICK_ATTACK_RATE = 2000;
 		#endregion
 
 		#region turretGun
@@ -132,8 +127,13 @@
 		public const float HYDRA_SPEED = 0.03f;
 		public const float POISONER_MOB_SPEED = 0.03f;
 		public const float POISONER_MOB_HEALTH = 500f;
+
+		#region poisoning
+		public const float POISONTICK_DAMAGE = 7f;
+		public const int POISONTICK_ATTACK_RATE = 2000;
+		public const float POISONING_TICK_TIMES = 4f; //Сколько раз потравит
 		public const float POISONING_MOB_SPEED = 0.12f; //Чтобы догонял даже при ускорении.
-		public const float POISONING_MOB_HEALTH = 40f;
+		#endregion
 
 
 		#endregion
