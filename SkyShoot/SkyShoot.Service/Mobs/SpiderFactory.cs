@@ -54,6 +54,7 @@ namespace SkyShoot.Contracts.Mobs
 					break;
 			}
 
+			spider.TeamIdentity = null;//Мобам зануляем
 			_health *= 1.05f;
 			spider.Coordinates = GetRandomCoord();
 			//spider.Weapon = new Claw(Guid.NewGuid(), spider);
