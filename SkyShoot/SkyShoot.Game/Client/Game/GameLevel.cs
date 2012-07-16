@@ -21,8 +21,8 @@ namespace SkyShoot.Game.Client.Game
 
 		public GameLevel(Contracts.Session.GameLevel gameLevel)
 		{
-			Width = (int) gameLevel.levelWidth;
-			Height = (int) gameLevel.levelHeight;
+			Width = (int) gameLevel.LevelWidth;
+			Height = (int) gameLevel.LevelHeight;
 
 			//_gunTexture = Textures.Clone(Textures.Gun);
 			//_laserTexture = Textures.Clone(Textures.Laser);

@@ -194,7 +194,7 @@ namespace SkyShoot.Service.Session
 
 			//SomebodyDied(player);			
 			player.Disconnect();//временно
-			player.TeamIdentity.members.Remove(player);
+			player.TeamIdentity.Members.Remove(player);
 		}
 
 		public void Stop()
@@ -223,7 +223,7 @@ namespace SkyShoot.Service.Session
 			{
 				if (!_gameObjects[i].Is(AGameObject.EnumObjectType.Player))
 				{
-					_gameObjects[i].TeamIdentity.members.Add(_gameObjects[i]);
+					_gameObjects[i].TeamIdentity.Members.Add(_gameObjects[i]);
 					_gameObjects[i].TeamIdentity = SessionTeamsList.GetTeamByNymber(1);
 				}
 				var player = _gameObjects[i] as MainSkyShootService;
