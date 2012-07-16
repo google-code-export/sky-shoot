@@ -10,7 +10,8 @@ namespace SkyShoot.Game.Controls
 		private GamePadState _currentGamePadState;
 		private GamePadState _lastGamePadState;
 
-		public Gamepad(InputManager inputManager) : base(inputManager)
+		public Gamepad(InputManager inputManager)
+			: base(inputManager)
 		{
 			// todo windows | XBOX
 			_currentGamePadState = InputManager.GetGamePad(ExtendedPlayerIndex.Five).GetState();
@@ -24,10 +25,10 @@ namespace SkyShoot.Game.Controls
 
 		public override Vector2 SightPosition
 		{
-		    get { return new Vector2(); }
+			get { return new Vector2(); }
 		}
 
-	    public override ButtonState ShootButton
+		public override ButtonState ShootButton
 		{
 			get { return _currentGamePadState.Buttons.X; }
 		}
@@ -37,46 +38,46 @@ namespace SkyShoot.Game.Controls
 			return (_currentGamePadState.IsButtonUp(button) && _lastGamePadState.IsButtonDown(button));
 		}
 
-        public override void Update()
-        {
-            // todo wrong, 10%
-            _lastGamePadState = _currentGamePadState;
+		public override void Update()
+		{
+			// todo wrong, 10%
+			_lastGamePadState = _currentGamePadState;
 
-            _currentGamePadState = InputManager.GetGamePad(ExtendedPlayerIndex.Five).GetState();
+			_currentGamePadState = InputManager.GetGamePad(ExtendedPlayerIndex.Five).GetState();
 
-            if (IsNewButtonPressed(Buttons.DPadDown))
-            {
-                Index++;
-                Index %= Length;
-                Console.WriteLine("DOWN" + Index);
-                FocusChanged();
-            }
-            if (IsNewButtonPressed(Buttons.DPadUp))
-            {
-                Index--;
-                if (Index == -1)
-                    Index = Length - 1;
-                Console.WriteLine("UP" + Index);
-                FocusChanged();
-            }
+			if (IsNewButtonPressed(Buttons.DPadDown))
+			{
+				Index++;
+				Index %= Length;
+				Console.WriteLine("DOWN" + Index);
+				FocusChanged();
+			}
+			if (IsNewButtonPressed(Buttons.DPadUp))
+			{
+				Index--;
+				if (Index == -1)
+					Index = Length - 1;
+				Console.WriteLine("UP" + Index);
+				FocusChanged();
+			}
 
-            if (IsNewButtonPressed(Buttons.X))
-            {
-                Console.WriteLine("Pressed");
-                NotifyListeners(Index);
-            }
-        }
+			if (IsNewButtonPressed(Buttons.X))
+			{
+				Console.WriteLine("Pressed");
+				NotifyListeners(Index);
+			}
+		}
 
-        private Vector2 GetRunVector(GamePadState gamePadState)
-        {
-            Vector2 runVector = Vector2.Zero;
-            if (gamePadState.IsConnected)
-            {
-                runVector = gamePadState.ThumbSticks.Left;
-                runVector.Y = -runVector.Y;
-            }
-            Console.WriteLine(runVector);
-            return runVector;
-        }
+		private Vector2 GetRunVector(GamePadState gamePadState)
+		{
+			Vector2 runVector = Vector2.Zero;
+			if (gamePadState.IsConnected)
+			{
+				runVector = gamePadState.ThumbSticks.Left;
+				runVector.Y = -runVector.Y;
+			}
+			Console.WriteLine(runVector);
+			return runVector;
+		}
 	}
 }

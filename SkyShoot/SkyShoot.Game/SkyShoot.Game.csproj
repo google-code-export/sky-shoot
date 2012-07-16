@@ -126,9 +126,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Client\GameObjects\GameBonus.cs" />
     <Compile Include="Client\GameObjects\DrawableGameObject.cs" />
-    <Compile Include="Client\GameObjects\Projectile.cs" />
     <Compile Include="Client\Game\ConnectionManager.cs" />
     <Compile Include="Client\Game\GameController.cs" />
     <Compile Include="Client\Game\GameFactory.cs" />

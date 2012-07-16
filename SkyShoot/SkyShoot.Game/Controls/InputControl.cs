@@ -1,10 +1,7 @@
-using Microsoft.Xna.Framework.Input;
-
 namespace SkyShoot.Game.Controls
 {
 	internal class InputControl : Nuclex.UserInterface.Controls.Desktop.InputControl
 	{
-		KeyboardState _keyboardState;
 		private int n = Settings.Default.password.Length;
 
 		public bool IsHidden

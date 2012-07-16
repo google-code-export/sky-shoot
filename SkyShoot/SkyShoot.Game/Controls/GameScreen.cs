@@ -11,17 +11,17 @@ namespace SkyShoot.Game.Controls
 		{
 			Desktop.Bounds = new UniRectangle(
 				new UniScalar(0.1f, 0.0f),
-                new UniScalar(0.1f, 0.0f),
+				new UniScalar(0.1f, 0.0f),
 				new UniScalar(0.8f, 0.0f),
-                new UniScalar(0.8f, 0.0f));
+				new UniScalar(0.8f, 0.0f));
 
 			Height = ScreenManager.Instance.Height;
-			Width = ScreenManager.Instance.Width;			
+			Width = ScreenManager.Instance.Width;
 		}
 
-        public bool IsActive { get; set; }
+		public bool IsActive { get; set; }
 
-        public abstract bool IsMenuScreen { get; }
+		public abstract bool IsMenuScreen { get; }
 
 		public virtual void LoadContent()
 		{
