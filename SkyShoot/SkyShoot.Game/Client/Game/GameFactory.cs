@@ -50,6 +50,8 @@ namespace SkyShoot.Game.Client.Game
 					return new DrawableGameObject(serverGameObject, Textures.Mirror);
 				case AGameObject.EnumObjectType.Wall:
 					return new DrawableGameObject(serverGameObject, Textures.OneStone);
+				case AGameObject.EnumObjectType.PoisonBullet:
+					return new DrawableGameObject(serverGameObject, Textures.PoisonProjectile);
 
 			}
 			// can't use switch 'cause one object can have many merged EnumTypes
