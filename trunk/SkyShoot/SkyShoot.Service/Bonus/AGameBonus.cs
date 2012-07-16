@@ -11,7 +11,8 @@ namespace SkyShoot.Service.Bonuses
 
 		public float DamageFactor;
 
-		public AGameBonus(Vector2 coordinates) : base(coordinates, Guid.NewGuid())
+		public AGameBonus(Vector2 coordinates)
+			: base(coordinates, Guid.NewGuid())
 		{
 			// the object is alive
 			HealthAmount = MaxHealthAmount = 1;
@@ -44,5 +45,5 @@ namespace SkyShoot.Service.Bonuses
 		{
 			StartTime = startTime;
 		}
-	}               
+	}
 }
