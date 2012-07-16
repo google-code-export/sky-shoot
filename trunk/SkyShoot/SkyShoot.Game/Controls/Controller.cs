@@ -10,13 +10,11 @@ namespace SkyShoot.Game.Controls
 {
 	public abstract class Controller
 	{
-		//public delegate void EventHandler(object sender, EventArgs e);
+		protected readonly InputManager InputManager;
 
-        protected readonly InputManager InputManager;
+		protected readonly IDictionary<Control, List<EventHandler>> Listeners = new Dictionary<Control, List<EventHandler>>();
 
-        protected readonly IDictionary<Control, List<EventHandler>> Listeners = new Dictionary<Control, List<EventHandler>>();
-
-        protected int Index = 0;
+		protected int Index;
 
 		protected Controller(InputManager inputManager)
 		{
@@ -29,33 +27,33 @@ namespace SkyShoot.Game.Controls
 
 		public abstract ButtonState ShootButton { get; }
 
-        protected GameScreen ActiveScreen
-        {
-            get { return ScreenManager.Instance.GetActiveScreen(); }
-        }
+		protected GameScreen ActiveScreen
+		{
+			get { return ScreenManager.Instance.GetActiveScreen(); }
+		}
 
-        protected int Length
-        {
-            get { return Controls.Count; }
-        }
+		protected int Length
+		{
+			get { return Controls.Count; }
+		}
 
-        private Collection<Control> Controls
-        {
-            get
-            {
-                var controls = new Collection<Control>();
-                foreach (Control control in ActiveScreen.Desktop.Children)
-                {
-                    if (control is IFocusable)
-                    {
-                        controls.Add(control);
-                    }
-                }
-                return controls;
-            }
-        }
+		private Collection<Control> Controls
+		{
+			get
+			{
+				var controls = new Collection<Control>();
+				foreach (Control control in ActiveScreen.Desktop.Children)
+				{
+					if (control is IFocusable)
+					{
+						controls.Add(control);
+					}
+				}
+				return controls;
+			}
+		}
 
-        public abstract void Update();
+		public abstract void Update();
 
 		public virtual void AddListener(Control control, EventHandler eventHandler)
 		{
@@ -86,10 +84,10 @@ namespace SkyShoot.Game.Controls
 
 		protected void NotifyListeners(Control control)
 		{
-		    if (!Listeners.ContainsKey(control))
-		        return;
+			if (!Listeners.ContainsKey(control))
+				return;
 
-		    foreach (var listener in Listeners[control])
+			foreach (var listener in Listeners[control])
 			{
 				listener(control, null);
 			}
