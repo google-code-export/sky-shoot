@@ -7,7 +7,7 @@ using Nuclex.UserInterface.Controls.Desktop;
 
 namespace SkyShoot.Game.Controls
 {
-	class KeyboardAndMouse : Controller
+	internal class KeyboardAndMouse : Controller
 	{
 		private KeyboardState _currentKeyboardState;
 		private KeyboardState _lastKeyState;
@@ -15,75 +15,72 @@ namespace SkyShoot.Game.Controls
 		private MouseState _currentMouseState;
 		private MouseState _lastMouseState;
 
-	    private Vector2 _oldRunVector;
+		private Vector2 _oldRunVector;
 
-        public KeyboardAndMouse(InputManager inputManager)
-            : base(inputManager)
-        {
-            _currentKeyboardState = InputManager.GetKeyboard().GetState();
-            _currentMouseState = InputManager.GetMouse().GetState();
-        }
+		public KeyboardAndMouse(InputManager inputManager)
+			: base(inputManager)
+		{
+			_currentKeyboardState = InputManager.GetKeyboard().GetState();
+			_currentMouseState = InputManager.GetMouse().GetState();
+		}
 
-        public override Vector2? RunVector
-        {
-            get
-            {
-                Vector2 currentRunVector = GetRunVector(_currentKeyboardState);
-                if (!currentRunVector.Equals(_oldRunVector))
-                {
-                    _oldRunVector = currentRunVector;
-                    return currentRunVector;
-                }
+		public override Vector2? RunVector
+		{
+			get
+			{
+				Vector2 currentRunVector = GetRunVector(_currentKeyboardState);
+				if (!currentRunVector.Equals(_oldRunVector))
+				{
+					_oldRunVector = currentRunVector;
+					return currentRunVector;
+				}
 
-                return null;
-            }
-        }
+				return null;
+			}
+		}
 
-        public override Vector2 SightPosition
-        {
-            get
-            {
-                return new Vector2(_currentMouseState.X, _currentMouseState.Y);
-            }
-        }
+		public override Vector2 SightPosition
+		{
+			get { return new Vector2(_currentMouseState.X, _currentMouseState.Y); }
+		}
 
-        public override ButtonState ShootButton
-        {
-            get { return _currentMouseState.LeftButton; }
-        }
+		public override ButtonState ShootButton
+		{
+			get { return _currentMouseState.LeftButton; }
+		}
 
-        public override void Update()
-        {
-            _lastKeyState = _currentKeyboardState;
-            _lastMouseState = _currentMouseState;
+		public override void Update()
+		{
+			_lastKeyState = _currentKeyboardState;
+			_lastMouseState = _currentMouseState;
 
-            _currentKeyboardState = InputManager.GetKeyboard().GetState();
-            _currentMouseState = InputManager.GetMouse().GetState();
+			_currentKeyboardState = InputManager.GetKeyboard().GetState();
+			_currentMouseState = InputManager.GetMouse().GetState();
 
-            if (IsNewKeyPressed(Keys.Down) || IsNewKeyPressed(Keys.Tab))
-            {
-                Index++;
-                Index %= Length;
-                // FocusChanged();
-            }
-            if (IsNewKeyPressed(Keys.Up))
-            {
-                Index--;
-                if (Index == -1)
-                    Index = Length - 1;
-                // FocusChanged();
-            }
+			if (IsNewKeyPressed(Keys.Down) || IsNewKeyPressed(Keys.Tab))
+			{
+				Index++;
+				Index %= Length;
+				// FocusChanged();
+			}
+			if (IsNewKeyPressed(Keys.Up))
+			{
+				Index--;
+				if (Index == -1)
+					Index = Length - 1;
+				// FocusChanged();
+			}
 
-            if (IsNewKeyPressed(Keys.Enter))
-            {
-                NotifyListeners(Index);
-            }
+			if (IsNewKeyPressed(Keys.Enter))
+			{
+				NotifyListeners(Index);
+			}
 
-            if (IsNewKeyPressed(Keys.Escape))
-            {
-                ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.GameMenuScreen);
-            }
-        }
+			if (IsNewKeyPressed(Keys.Escape))
+			{
+				ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.GameMenuScreen);
+			}
+		}
 
 		public override void AddListener(Control control, EventHandler buttonPressed)
 		{
@@ -91,10 +88,10 @@ namespace SkyShoot.Game.Controls
 			(control as ButtonControl).Pressed += buttonPressed;
 		}
 
-        public bool IsNewKeyPressed(Keys key)
-        {
-            return _currentKeyboardState.IsKeyUp(key) && _lastKeyState.IsKeyDown(key);
-        }
+		public bool IsNewKeyPressed(Keys key)
+		{
+			return _currentKeyboardState.IsKeyUp(key) && _lastKeyState.IsKeyDown(key);
+		}
 
 		private Vector2 GetRunVector(KeyboardState keyboardState)
 		{

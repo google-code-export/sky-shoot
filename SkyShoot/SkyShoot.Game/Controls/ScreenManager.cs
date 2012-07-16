@@ -11,26 +11,26 @@ namespace SkyShoot.Game.Controls
 {
 	public class ScreenManager : DrawableGameComponent
 	{
-        public enum ScreenEnum
-        {
-            CreateGameScreen,
-            GameMenuScreen,
-            GameplayScreen,
-            LoadingScreen,
-            LoginScreen,
-            MainMenuScreen,
-            MessageBoxScreen,
-            MultiplayerScreen,
-            NewAccountScreen,
-            OptionsMenuScreen,
-            WaitScreen
-        }
+		public enum ScreenEnum
+		{
+			CreateGameScreen,
+			GameMenuScreen,
+			GameplayScreen,
+			LoadingScreen,
+			LoginScreen,
+			MainMenuScreen,
+			MessageBoxScreen,
+			MultiplayerScreen,
+			NewAccountScreen,
+			OptionsMenuScreen,
+			WaitScreen
+		}
 
-        private static ScreenManager _instance;
+		private static ScreenManager _instance;
 
 		private readonly GuiManager _gui;
 		private readonly InputManager _inputManager;
-        private readonly Dictionary<ScreenEnum, GameScreen> _screens = new Dictionary<ScreenEnum, GameScreen>();
+		private readonly Dictionary<ScreenEnum, GameScreen> _screens = new Dictionary<ScreenEnum, GameScreen>();
 
 		private readonly Controller _controller;
 
@@ -40,60 +40,60 @@ namespace SkyShoot.Game.Controls
 
 		private GameScreen _activeScreen;
 
-        private ScreenManager(Microsoft.Xna.Framework.Game game)
-            : base(game)
-        {
-            _gui = new GuiManager(Game.Services) { Visible = false };
-            _inputManager = new InputManager(Game.Services, Game.Window.Handle);
+		private ScreenManager(Microsoft.Xna.Framework.Game game)
+			: base(game)
+		{
+			_gui = new GuiManager(Game.Services) {Visible = false};
+			_inputManager = new InputManager(Game.Services, Game.Window.Handle);
 
-            Game.Components.Add(_gui);
-            Game.Components.Add(_inputManager);
+			Game.Components.Add(_gui);
+			Game.Components.Add(_inputManager);
 
-            if (Settings.Default.IsGamepad)
-                _controller = new Gamepad(_inputManager);
-            else
-                _controller = new KeyboardAndMouse(_inputManager);
-        }
+			if (Settings.Default.IsGamepad)
+				_controller = new Gamepad(_inputManager);
+			else
+				_controller = new KeyboardAndMouse(_inputManager);
+		}
 
-        public static ScreenManager Instance
-        {
-            get { return _instance; }
-        }
+		public static ScreenManager Instance
+		{
+			get { return _instance; }
+		}
 
-        public Controller Controller
-        {
-            get { return _controller; }
-        }
+		public Controller Controller
+		{
+			get { return _controller; }
+		}
 
-        public SpriteBatch SpriteBatch
-        {
-            get { return _spriteBatch; }
-        }
+		public SpriteBatch SpriteBatch
+		{
+			get { return _spriteBatch; }
+		}
 
-        public SpriteFont Font
-        {
-            get { return _font; }
-        }
+		public SpriteFont Font
+		{
+			get { return _font; }
+		}
 
-        public int Height
-        {
-            get { return GraphicsDevice.Viewport.Height; }
-        }
+		public int Height
+		{
+			get { return GraphicsDevice.Viewport.Height; }
+		}
 
-        public int Width
-        {
-            get { return GraphicsDevice.Viewport.Width; }
-        }
+		public int Width
+		{
+			get { return GraphicsDevice.Viewport.Width; }
+		}
 
-        public static void Init(Microsoft.Xna.Framework.Game game)
-        {
-            if (_instance == null)
-                _instance = new ScreenManager(game);
-            else
-            {
-                throw new Exception("Already initialized");
-            }
-        }
+		public static void Init(Microsoft.Xna.Framework.Game game)
+		{
+			if (_instance == null)
+				_instance = new ScreenManager(game);
+			else
+			{
+				throw new Exception("Already initialized");
+			}
+		}
 
 		public void SetActiveScreen(ScreenEnum screenName)
 		{
@@ -109,17 +109,17 @@ namespace SkyShoot.Game.Controls
 			}
 		}
 
-        public void RegisterScreen(ScreenEnum screenName, GameScreen gameScreen)
-        {
-            if (!_screens.ContainsKey(screenName))
-            {
-                _screens.Add(screenName, gameScreen);
-            }
-            else
-            {
-                throw new Exception("game screen is already initialized");
-            }
-        }
+		public void RegisterScreen(ScreenEnum screenName, GameScreen gameScreen)
+		{
+			if (!_screens.ContainsKey(screenName))
+			{
+				_screens.Add(screenName, gameScreen);
+			}
+			else
+			{
+				throw new Exception("game screen is already initialized");
+			}
+		}
 
 		public GameScreen GetActiveScreen()
 		{
@@ -146,32 +146,32 @@ namespace SkyShoot.Game.Controls
 			return _controller.SightPosition;
 		}
 
-        // todo rewrite!
-        protected override void LoadContent()
-        {
-            ContentManager content = Game.Content;
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
-            _font = content.Load<SpriteFont>("menufont");
+		// todo rewrite!
+		protected override void LoadContent()
+		{
+			ContentManager content = Game.Content;
+			_spriteBatch = new SpriteBatch(GraphicsDevice);
+			_font = content.Load<SpriteFont>("menufont");
 
-            RegisterScreen(ScreenEnum.LoginScreen, new LoginScreen());
-            RegisterScreen(ScreenEnum.MessageBoxScreen, new MessageBox());
-            RegisterScreen(ScreenEnum.MainMenuScreen, new MainMenuScreen());
-            RegisterScreen(ScreenEnum.OptionsMenuScreen, new OptionsMenuScreen());
-            RegisterScreen(ScreenEnum.NewAccountScreen, new NewAccountScreen());
-            RegisterScreen(ScreenEnum.MultiplayerScreen, new MultiplayerScreen());
-            RegisterScreen(ScreenEnum.CreateGameScreen, new CreateGameScreen());
-            RegisterScreen(ScreenEnum.WaitScreen, new WaitScreen());
-            RegisterScreen(ScreenEnum.LoadingScreen, new LoadingScreen());
-            RegisterScreen(ScreenEnum.GameplayScreen, new GameplayScreen());
-            RegisterScreen(ScreenEnum.GameMenuScreen, new GameMenuScreen());
-        }
+			RegisterScreen(ScreenEnum.LoginScreen, new LoginScreen());
+			RegisterScreen(ScreenEnum.MessageBoxScreen, new MessageBox());
+			RegisterScreen(ScreenEnum.MainMenuScreen, new MainMenuScreen());
+			RegisterScreen(ScreenEnum.OptionsMenuScreen, new OptionsMenuScreen());
+			RegisterScreen(ScreenEnum.NewAccountScreen, new NewAccountScreen());
+			RegisterScreen(ScreenEnum.MultiplayerScreen, new MultiplayerScreen());
+			RegisterScreen(ScreenEnum.CreateGameScreen, new CreateGameScreen());
+			RegisterScreen(ScreenEnum.WaitScreen, new WaitScreen());
+			RegisterScreen(ScreenEnum.LoadingScreen, new LoadingScreen());
+			RegisterScreen(ScreenEnum.GameplayScreen, new GameplayScreen());
+			RegisterScreen(ScreenEnum.GameMenuScreen, new GameMenuScreen());
+		}
 
-        protected override void UnloadContent()
-        {
-            foreach (GameScreen screen in _screens.Values)
-            {
-                screen.UnloadContent();
-            }
-        }
+		protected override void UnloadContent()
+		{
+			foreach (GameScreen screen in _screens.Values)
+			{
+				screen.UnloadContent();
+			}
+		}
 	}
 }
