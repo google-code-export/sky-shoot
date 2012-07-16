@@ -16,9 +16,9 @@ namespace SkyShoot.Service.Weapon
 			ReloadSpeed = Constants.POISON_GUN_ATTACK_RATE;
 		}
 
-		public override AGameObject[] CreateBullets(AGameObject owner, Vector2 direction)
+		public override AGameObject[] CreateBullets(Vector2 direction)
 		{
-			var bullets = new[] { new PoisonBullet(owner, Guid.NewGuid(), direction) };
+			var bullets = new[] { new PoisonBullet(Owner, Guid.NewGuid(), direction) };
 			return bullets;
 		}
 	}

@@ -17,14 +17,14 @@ namespace SkyShoot.Service.Weapon
             ReloadSpeed = SkyShoot.Contracts.Constants.SHOTGUN_ATTACK_RATE;
 		}
 
-		public override AGameObject[] CreateBullets(AGameObject owner, Vector2 direction)
+		public override AGameObject[] CreateBullets(Vector2 direction)
 		{
 			var bullets = new ShotgunBullet[8];
 
 			for (int i = 0; i < 8; i++)
 			{
 				bullets[i] = new ShotgunBullet(
-                    owner,
+                    Owner,
                     Guid.NewGuid(),
                     Vector2.Transform(direction, Matrix.CreateRotationZ((float) (-Math.PI/6f + _rand.NextDouble()*Math.PI/3f))));
 			}

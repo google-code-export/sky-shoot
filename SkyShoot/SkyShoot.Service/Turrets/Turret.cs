@@ -14,20 +14,21 @@ namespace SkyShoot.Service.Weapon.Bullets
 {
 	class Turret : ShootingMob
 	{
+		public AGameObject Owner;
+
 		public Turret(float health, AWeapon weapon, int shootingDelay, AGameObject owner, Vector2 coordinates)
 			: base(health, weapon, shootingDelay)
 		{
+			
 			Weapon = weapon;
 			Weapon.Owner = owner;
+			this.Owner = owner;
 			Target = null;
 			Coordinates = coordinates;
 			ObjectType = EnumObjectType.Turret;
-			Weapon = weapon;
-			Weapon.Owner = owner;
 			TeamIdentity = (owner.TeamIdentity);
 			Radius = 10;
 			Speed = 0f;
-			ObjectType = EnumObjectType.LivingObject;
 			ThinkCounter = 0;
 			Id = Guid.NewGuid();
 			MaxHealthAmount = HealthAmount = health;
@@ -36,11 +37,14 @@ namespace SkyShoot.Service.Weapon.Bullets
 
 		public override void FindTarget(List<AGameObject> targetObjects)
 		{
-			float distance = 1000000;
+			float distance = 500000;
 
 			foreach (var obj in targetObjects)
 			{
-				if (obj.Id == Weapon.Owner.Id || !obj.Is(EnumObjectType.LivingObject) || obj.Id == Id) //todo: teams
+				if (obj.Id == Weapon.Owner.Id ||
+					!obj.Is(EnumObjectType.LivingObject) ||
+					obj.Is(EnumObjectType.Turret) ||
+					obj.Id == Id) //todo: teams
 				{
 					continue;
 				}
@@ -52,6 +56,11 @@ namespace SkyShoot.Service.Weapon.Bullets
 					Target = obj;
 				}
 			}
+		}
+
+		public override IEnumerable<AGameEvent> Do(AGameObject obj, List<AGameObject> newObjects, long time)
+		{
+			return new AGameEvent[] { };
 		}
 	}
 }

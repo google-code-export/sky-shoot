@@ -30,6 +30,16 @@ namespace SkyShoot.Service.Weapon.Bullets
 			_mirrored = false;
 		}
 
+		protected AProjectile(AGameObject owner, Guid id, Vector2 direction, Vector2 birthPlace) //TODO: make uniform constructor?
+		{
+			Owner = owner;
+			Id = id;
+			ShootVector = RunVector = direction;
+			Coordinates = birthPlace;
+			Radius = Constants.DEFAULT_BULLET_RADIUS;
+			_mirrored = false;
+		}
+
 		public override void Copy(AGameObject other)
 		{
 			if (!(other is AProjectile))
@@ -51,7 +61,7 @@ namespace SkyShoot.Service.Weapon.Bullets
 		public override IEnumerable<AGameEvent> Do(AGameObject obj, List<AGameObject> newObjects, long time)
 		{
 			var res = new List<AGameEvent>(base.Do(obj, newObjects, time));
-			if (Owner.Id == obj.Id) // не трогать создателя пули
+			if (Owner.Id == obj.Id || obj.ObjectType == EnumObjectType.Turret) // не трогать создателя пули TODO: убрать костыль с турельками
 				return res;
 
 			if (obj.Is(EnumObjectType.LivingObject))

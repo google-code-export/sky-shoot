@@ -15,14 +15,14 @@ namespace SkyShoot.Service.Weapon
 			ReloadSpeed = Constants.FLAME_ATTACK_RATE;
 		}
 
-		public override AGameObject[] CreateBullets(AGameObject owner, Vector2 direction)
+		public override AGameObject[] CreateBullets(Vector2 direction)
 		{
-			var step = owner.ShootVector * Constants.FLAME_RADIUS / 2; // / Constants.FLAME_BULLETS_COUNT;
+			var step = Owner.ShootVector * Constants.FLAME_RADIUS / 2; // / Constants.FLAME_BULLETS_COUNT;
 			var bullets = new Flame[Constants.FLAME_BULLETS_COUNT];
 			for (var i = 0; i < Constants.FLAME_BULLETS_COUNT; i++)
 			{
-				var bulletCoordinates = owner.Coordinates + i * step;
-				bullets[i] = new Flame(owner, Guid.NewGuid(), direction, bulletCoordinates);
+				var bulletCoordinates = Owner.Coordinates + i * step;
+				bullets[i] = new Flame(Owner, Guid.NewGuid(), direction, bulletCoordinates);
 			}
 			return bullets;
 		}

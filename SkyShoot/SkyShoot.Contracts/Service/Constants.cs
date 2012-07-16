@@ -88,6 +88,17 @@ namespace SkyShoot.Contracts
 		public const int POISONTICK_ATTACK_RATE = 2000;
 		#endregion
 
+		#region turretGun 
+
+		//TODO: new turretGun constants
+
+		public const float TURRET_GUN_BULLET_SPEED = 0.1f;
+		public const float TURRET_GUN_BULLET_DAMAGE = 10;
+		public const float TURRET_GUN_BULLET_LIFE_DISTANCE = 3000;
+		public const int TURRET_GUN_ATTACK_RATE = 1000;
+
+		#endregion
+
 		public const int CLAW_ATTACK_RATE = 1000; // В миллисекундах.		public const float PLAYER_DEFAULT_HEALTH = 100;
 
 		#endregion
