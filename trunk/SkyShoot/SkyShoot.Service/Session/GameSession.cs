@@ -20,7 +20,7 @@ namespace SkyShoot.Service.Session
 		private readonly List<AGameObject> _gameObjects;
 		private readonly List<AGameObject> _newObjects;
 
-		public TeamsList SessionTeamsList;
+		public TeamsList SessionTeamsList = new TeamsList();
 		
 		public GameDescription LocalGameDescription { get; private set; }
 
@@ -41,9 +41,9 @@ namespace SkyShoot.Service.Session
 		public GameSession(TileSet tileSet, int maxPlayersAllowed,
 			GameMode gameType, int gameID, int teams)
 		{
-			TeamsList SessionTeamsList = new TeamsList();
+		//	SessionTeamsList = new TeamsList();
 
-			for (int i = 0; i <= teams; i++)
+			for (int i = 1; i <= teams; i++)
 			{
 				SessionTeamsList.Teams.Add(new Team(i));
 			}
@@ -165,6 +165,7 @@ namespace SkyShoot.Service.Session
 			//Players.Remove(player);
 			lock (_gameObjects)
 			{
+				player.TeamIdentity.members.Remove(player);
 				_gameObjects.Remove(player);
 			}
 			Trace.WriteLine(player.Name + " leaved game");
@@ -218,8 +219,11 @@ namespace SkyShoot.Service.Session
 		{
 			for(int i = 0; i < _gameObjects.Count; i++)
 			{
-				if(!_gameObjects[i].Is(AGameObject.EnumObjectType.Player))
-					continue;
+				if (!_gameObjects[i].Is(AGameObject.EnumObjectType.Player))
+				{
+					_gameObjects[i].TeamIdentity.members.Add(_gameObjects[i]);
+					_gameObjects[i].TeamIdentity = SessionTeamsList.GetTeamByNymber(1);
+				}
 				var player = _gameObjects[i] as MainSkyShootService;
 				if (player == null)
 				{
@@ -270,7 +274,7 @@ namespace SkyShoot.Service.Session
 		{
 			if (_gameObjects.Count >= LocalGameDescription.MaximumPlayersAllowed || IsStarted)
 				return false;
-
+			
 			_gameObjects.Add(player);
 			LocalGameDescription.Players.Add(player.Name);
 			var names = new String[_gameObjects.Count];
