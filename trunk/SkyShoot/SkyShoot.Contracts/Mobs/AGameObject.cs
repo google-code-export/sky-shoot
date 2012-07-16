@@ -6,6 +6,7 @@ using SkyShoot.Contracts.Session;
 using SkyShoot.Contracts.Weapon;
 using SkyShoot.Contracts.CollisionDetection;
 using SkyShoot.XNA.Framework;
+using System.Diagnostics;
 
 namespace SkyShoot.Contracts.Mobs
 {
@@ -60,6 +61,8 @@ namespace SkyShoot.Contracts.Mobs
 			HeaterBullet = Bullet | 0x140UL,//
 			[EnumMember]
 			PoisonBullet = Bullet | 0x160UL,//Правильный ли номер
+			[EnumMember]
+			TurretGunBullet = Bullet | 0x180UL,//Правильный ли номер
 			[EnumMember]
 			Bonus = 0x01000UL,//4096
 			[EnumMember]
@@ -271,6 +274,7 @@ namespace SkyShoot.Contracts.Mobs
 				RunVector = Vector2.Normalize(RunVector);
 			}
 			var newCoord = RunVector * Speed * updateDelay + Coordinates;
+			
 			return newCoord;
 		}
 

@@ -15,15 +15,14 @@ namespace SkyShoot.Service.Weapon
 		{
 			WeaponType = WeaponType.TurretMaker;
 			//TODO: set reload speed
-			ReloadSpeed = 1;
+			ReloadSpeed = 10;
 		}
 
-		public override AGameObject[] CreateBullets(AGameObject owner, Vector2 direction)
+		public override AGameObject[] CreateBullets(Vector2 direction)
 		{
-			AWeapon weapon = new Pistol(Guid.NewGuid());
-			var turret = new Turret(100, weapon, 10, owner, Vector2.Add(owner.Coordinates, new Vector2(0, 20)));
-			Trace.WriteLine(turret.Id.ToString(), "turret id");
-			Trace.WriteLine(owner.Id.ToString(), "turret owner id");
+			Vector2 turretPosition = Vector2.Add(Owner.Coordinates, new Vector2(0, 45));
+			AWeapon weapon = new TurretGun(Guid.NewGuid(), turretPosition, Owner);
+			var turret = new Turret(100, weapon, 10, Owner, turretPosition);
 			return new AGameObject[] { turret };
 		}
 	}

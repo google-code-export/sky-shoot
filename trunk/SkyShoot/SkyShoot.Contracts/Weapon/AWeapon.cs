@@ -22,7 +22,7 @@ namespace SkyShoot.Contracts.Weapon
 
         public AGameObject Owner { get; set; }
 
-		public abstract AGameObject[] CreateBullets(AGameObject owner, Vector2 direction);
+		public abstract AGameObject[] CreateBullets(Vector2 direction);
 
 		public bool IsReload(long shotTime)
 		{

@@ -15,9 +15,9 @@ namespace SkyShoot.Service.Weapon
 			ReloadSpeed = Constants.HEATER_ATTACK_RATE;
 		}
 
-		public override AGameObject[] CreateBullets(AGameObject owner, Vector2 direction)
+		public override AGameObject[] CreateBullets(Vector2 direction)
 		{
-			return new AGameObject[] { new HeaterBullet(owner, Guid.NewGuid(), direction) };
+			return new AGameObject[] { new HeaterBullet(Owner, Guid.NewGuid(), direction) };
 		}
 	}
 }

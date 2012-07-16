@@ -33,7 +33,7 @@ namespace SkyShoot.ServProgram.Mobs
 			if (time - _lastShoot > _shootingDelay && Weapon != null && Weapon.IsReload(time))
 			{
 				_lastShoot = time;
-				var bullets = Weapon.CreateBullets(this, ShootVector);
+				var bullets = Weapon.CreateBullets(ShootVector);
 				res.AddRange(bullets.Select(bullet => new NewObjectEvent(bullet, time)));
 				newGameObjects.AddRange(bullets);
 			}

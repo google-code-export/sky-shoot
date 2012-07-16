@@ -15,9 +15,9 @@ namespace SkyShoot.Service.Weapon
 			ReloadSpeed = Constants.PISTOL_ATTACK_RATE;
 		}
 
-		public override AGameObject[] CreateBullets(AGameObject owner, Vector2 direction)
+		public override AGameObject[] CreateBullets(Vector2 direction)
 		{
-			var bullets = new[] { new PistolBullet(owner, Guid.NewGuid(), direction) };
+			var bullets = new[] { new PistolBullet(Owner, Guid.NewGuid(), direction) };
 			return bullets;
 		}
 	}

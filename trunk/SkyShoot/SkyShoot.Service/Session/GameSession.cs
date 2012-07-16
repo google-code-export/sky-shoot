@@ -87,7 +87,7 @@ namespace SkyShoot.Service.Session
 			{
 				if (sender.Weapon.IsReload(DateTime.Now.Ticks / 10000))
 				{
-					var a = sender.Weapon.CreateBullets(sender, direction);
+					var a = sender.Weapon.CreateBullets(direction);
 					var player = sender as MainSkyShootService;
 					if (player != null)
 					{
