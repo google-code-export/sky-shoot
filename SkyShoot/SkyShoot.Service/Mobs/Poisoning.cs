@@ -23,6 +23,7 @@ namespace SkyShoot.ServProgram.Mobs
 			Speed = 0.12f;//Чтобы наверняка догнал.
 			_shootingDelay = Constants.POISONTICK_ATTACK_RATE;
 			Damage = Constants.POISONTICK_DAMAGE;
+			TeamIdentity = null;
 		}
 
 		public override IEnumerable<AGameEvent> Think(List<AGameObject> gameObjects, List<AGameObject> newGameObjects, long time)

@@ -17,6 +17,7 @@ namespace SkyShoot.ServProgram.Mobs
 		public ChildrenMob(float healthAmount) 
 			: base(Constants.CHILDREN_MOB_HEALTH)
 		{
+			TeamIdentity = null;
 			Radius = new Random().Next(RADIUS_MIN, RADIUS_MAX);
 			Speed = Constants.SPIDER_SPEED;
 		}
