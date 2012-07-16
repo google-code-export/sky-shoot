@@ -15,11 +15,10 @@ namespace SkyShoot.Game
 		private readonly GraphicsDeviceManager _graphics;
 		private SoundManager _soundManager;
 
-
 		public SkyShootGame()
 		{
 			_graphics = new GraphicsDeviceManager(this);
-			Content.RootDirectory = "Content";			
+			Content.RootDirectory = "Content";
 			bool fscreen = Settings.Default.FullScreenSelected;
 			switch (fscreen)
 			{
@@ -34,7 +33,6 @@ namespace SkyShoot.Game
 					break;
 			}
 			IsMouseVisible = false;
-
 		}
 
 		protected override void Initialize()
@@ -75,7 +73,7 @@ namespace SkyShoot.Game
 			}
 			catch (Exception e)
 			{
-				Trace.WriteLine("Update:"+e);
+				Trace.WriteLine("Update:" + e);
 			}
 		}
 
