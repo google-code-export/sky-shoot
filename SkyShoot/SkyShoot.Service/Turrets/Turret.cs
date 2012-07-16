@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using SkyShoot.Contracts;
 using SkyShoot.Contracts.GameEvents;
+using SkyShoot.Contracts.GameObject;
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Session;
 using SkyShoot.XNA.Framework;

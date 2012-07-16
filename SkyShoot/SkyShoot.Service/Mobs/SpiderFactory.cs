@@ -1,12 +1,12 @@
 ﻿using System;
+using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Session;
 using SkyShoot.Service.Mobs;
 using SkyShoot.Service.Weapon;
-using SkyShoot.ServProgram.Mobs;
 using SkyShoot.XNA.Framework;
 
-namespace SkyShoot.Contracts.Mobs
+namespace SkyShoot.ServProgram.Mobs
 {
 	public class SpiderFactory : IMobFactory
 	{
@@ -41,10 +41,10 @@ namespace SkyShoot.Contracts.Mobs
 					spider = new ShootingMob(_health, w, 1000);
 					break;
 				case 3:
-					spider = new ParentMob(Constants.PARENT_MOB_HEALTH);
+					spider = new ParentMob();
 					break;
 				case 4:
-					spider = new Hydra(Constants.HYDRA_HEALTH);
+					spider = new Hydra();
 					break;
 				case 5:
 					var wp = new PoisonGun(Guid.NewGuid());
@@ -73,27 +73,17 @@ namespace SkyShoot.Contracts.Mobs
 			{
 				x = _random.Next(0, (int)(_width + _border * 2));
 
-				if (_random.Next(2) == 0) // верх
-				{
-					y = _random.Next(0, (int)_border);
-				}
-				else //низ
-				{
-					y = _random.Next((int)(_height + _border), (int)(_height + _border * 2));
-				}
+				y = _random.Next(2) == 0
+						? _random.Next(0, (int)_border)
+						: _random.Next((int)(_height + _border), (int)(_height + _border * 2));
 			}
 			else // высота
 			{
 				y = _random.Next(0, (int)(_height + _border * 2));
 
-				if (_random.Next(2) == 0) // левая
-				{
-					x = _random.Next(0, (int)_border);
-				}
-				else // правая
-				{
-					x = _random.Next((int)(_width + _border), (int)(_width + _border * 2));
-				}
+				x = _random.Next(2) == 0
+						? _random.Next(0, (int)_border)
+						: _random.Next((int)(_width + _border), (int)(_width + _border * 2));
 			}
 
 			return new Vector2(x, y);

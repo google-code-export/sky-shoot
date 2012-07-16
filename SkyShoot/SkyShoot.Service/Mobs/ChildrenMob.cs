@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using SkyShoot.Contracts;
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Service;
 
@@ -10,15 +6,11 @@ namespace SkyShoot.ServProgram.Mobs
 {
 	class ChildrenMob : Mob
 	{
-		// todo //!! move to constants
-		const int RADIUS_MIN = 10;
-		const int RADIUS_MAX = 13;
-
-		public ChildrenMob(float healthAmount) 
+		public ChildrenMob()
 			: base(Constants.CHILDREN_MOB_HEALTH)
 		{
 			TeamIdentity = null;
-			Radius = new Random().Next(RADIUS_MIN, RADIUS_MAX);
+			Radius = new Random().Next(Constants.CHILDREN_MOB_RADIUS_MIN, Constants.CHILDREN_MOB_RADIUS_MAX);
 			Speed = Constants.SPIDER_SPEED;
 		}
 	}

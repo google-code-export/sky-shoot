@@ -1,4 +1,5 @@
 ﻿using System;
+using SkyShoot.Contracts.GameObject;
 using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Weapon;

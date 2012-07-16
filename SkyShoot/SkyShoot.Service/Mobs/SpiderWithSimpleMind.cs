@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using SkyShoot.Contracts;
 using SkyShoot.Contracts.GameEvents;
-using SkyShoot.Contracts.Mobs;
+using SkyShoot.Contracts.GameObject;
 using SkyShoot.Contracts.Service;
 
 namespace SkyShoot.Service.Mobs
@@ -24,18 +23,17 @@ namespace SkyShoot.Service.Mobs
 				var l = new List<AGameObject>();
 				AGameObject nearest = null;
 				// set to the max distance on the game
-				float minLen = Constants.LEVELBORDER * Constants.LEVELBORDER,
-					len;
+				float minLen = Constants.LEVELBORDER * Constants.LEVELBORDER;
 				for (int i = 0; i < gameObjects.Count; i++)
 				{
 					var p = gameObjects[i];
 					// myself
 					if (Id == p.Id || p.Is(EnumObjectType.Bonus) || p.Is(EnumObjectType.Bullet))
 						continue;
-				    len = (p.Coordinates - Coordinates).Length();
-				    if (len < 4 * (p.Radius + Radius))
-				    {
-				        l.Add(p);
+					float len = (p.Coordinates - Coordinates).Length();
+					if (len < 4 * (p.Radius + Radius))
+					{
+						l.Add(p);
 					}
 					else
 					{

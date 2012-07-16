@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using SkyShoot.Contracts.GameEvents;
-using SkyShoot.Contracts.Mobs;
+using SkyShoot.Contracts.GameObject;
 using SkyShoot.Contracts.Weapon;
 
 namespace SkyShoot.ServProgram.Mobs

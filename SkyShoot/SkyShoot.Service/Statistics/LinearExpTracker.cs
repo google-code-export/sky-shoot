@@ -1,4 +1,5 @@
-﻿using SkyShoot.Contracts.Mobs;
+﻿using SkyShoot.Contracts.GameObject;
+using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Statistics;
 
 namespace SkyShoot.Service.Statistics

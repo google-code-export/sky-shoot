@@ -1,5 +1,4 @@
-using SkyShoot.Contracts.Mobs;
-
+using SkyShoot.Contracts.GameObject;
 using SkyShoot.Game.Client.GameObjects;
 using SkyShoot.Game.Client.View;
 

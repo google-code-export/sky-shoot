@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using SkyShoot.Contracts.GameEvents;
+using SkyShoot.Contracts.GameObject;
 using SkyShoot.Service;
 using SkyShoot.XNA.Framework;
 
-namespace SkyShoot.Contracts.Mobs
+namespace SkyShoot.ServProgram.Mobs
 {
 	public class Mob : AGameObject
 	{
@@ -13,7 +14,8 @@ namespace SkyShoot.Contracts.Mobs
 		protected int ThinkCounter;
 		protected int Wait;
 
-		public Mob(float healthAmount) : base(Vector2.Zero, Guid.NewGuid())
+		public Mob(float healthAmount)
+			: base(Vector2.Zero, Guid.NewGuid())
 		{
 			ObjectType = EnumObjectType.Mob;
 			ThinkCounter = 0;

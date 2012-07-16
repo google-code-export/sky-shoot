@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Runtime.Serialization;
-
-using SkyShoot.Contracts.Mobs;
+using SkyShoot.Contracts.GameObject;
 using SkyShoot.Contracts.Weapon;
 
 using SkyShoot.XNA.Framework;

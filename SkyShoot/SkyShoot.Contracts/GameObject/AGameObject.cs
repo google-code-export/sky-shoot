@@ -7,7 +7,7 @@ using SkyShoot.Contracts.Session;
 using SkyShoot.Contracts.Weapon;
 using SkyShoot.XNA.Framework;
 
-namespace SkyShoot.Contracts.Mobs
+namespace SkyShoot.Contracts.GameObject
 {
 	[DataContract]
 	public class AGameObject
@@ -45,7 +45,7 @@ namespace SkyShoot.Contracts.Mobs
 			Player = LivingObject | 0x2UL, //1125899906842626
 			[EnumMember]
 			Mob = LivingObject | 0x4UL, //1125899906842628
-			
+
 			[EnumMember]
 			Bullet = 0x0010UL, //16
 			[EnumMember]
@@ -82,7 +82,7 @@ namespace SkyShoot.Contracts.Mobs
 
 			[EnumMember]
 			Wall = 0x01000000UL | Block, //1125899907891200
-			
+
 			[EnumMember]
 			ChildrenMob = 0x0002000000000UL | Mob,
 

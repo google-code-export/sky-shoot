@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using SkyShoot.Contracts;
 using SkyShoot.Contracts.GameEvents;
-using SkyShoot.Contracts.Mobs;
+using SkyShoot.Contracts.GameObject;
 using SkyShoot.Contracts.Service;
 using SkyShoot.ServProgram.Weapon;
 
@@ -12,16 +10,13 @@ namespace SkyShoot.ServProgram.Mobs
 {
 	class ParentMob : Mob
 	{
-		private readonly int _shootingDelay = 3000;
+		private const int SHOOTING_DELAY = 3000;
 		private long _lastShoot;
 
-		// todo //!! move to constants
-		const int RADIUS_MIN = 30;
-		const int RADIUS_MAX = 40;
-
-		public ParentMob(float healthAmount) : base(Constants.PARENT_MOB_HEALTH)
+		public ParentMob()
+			: base(Constants.PARENT_MOB_HEALTH)
 		{
-			Radius = new Random().Next(RADIUS_MIN, RADIUS_MAX);
+			Radius = new Random().Next(Constants.PARENT_MOB_RADIUS_MIN, Constants.PARENT_MOB_RADIUS_MAX);
 			Speed = Constants.PARENT_MOB_SPEED;
 			Weapon = new MobGenerator(Guid.NewGuid(), this);
 		}
@@ -31,7 +26,7 @@ namespace SkyShoot.ServProgram.Mobs
 			var res = new List<AGameEvent>(base.Think(gameObjects, newGameObjects, time));
 			ShootVector = RunVector;
 			ShootVector.Normalize();
-			if (time - _lastShoot > _shootingDelay && Weapon != null && Weapon.IsReload(time))
+			if (time - _lastShoot > SHOOTING_DELAY && Weapon != null && Weapon.IsReload(time))
 			{
 				_lastShoot = time;
 				var bullets = Weapon.CreateBullets(ShootVector);

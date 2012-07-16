@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
+using SkyShoot.Contracts.GameObject;
 
 namespace SkyShoot.Contracts
 {
-	using Mobs;
-
 	public class Team
 	{
 		public int Number { set; get; }

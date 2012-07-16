@@ -1,4 +1,4 @@
-﻿using SkyShoot.Contracts.Mobs;
+﻿using SkyShoot.Contracts.GameObject;
 
 namespace SkyShoot.Contracts
 {

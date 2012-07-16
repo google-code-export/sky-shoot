@@ -1,4 +1,6 @@
-﻿namespace SkyShoot.Contracts.Mobs
+﻿using SkyShoot.ServProgram.Mobs;
+
+namespace SkyShoot.Contracts.Mobs
 {
 	public interface IMobFactory
 	{

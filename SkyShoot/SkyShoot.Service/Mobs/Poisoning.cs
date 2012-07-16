@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using SkyShoot.Contracts;
 using SkyShoot.Contracts.GameEvents;
-using SkyShoot.Contracts.Mobs;
+using SkyShoot.Contracts.GameObject;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Weapon;
 
@@ -18,7 +16,7 @@ namespace SkyShoot.ServProgram.Mobs
 		{
 			Weapon = weapon;
 			Weapon.Owner = this;
-			this.Target = afflicted;//Только один будет жертвой.
+			Target = afflicted;//Только один будет жертвой.
 			Radius = 1; //Должен помещаться в игрока, и не взаимодействовать ни с чем.
 			Speed = 0.12f;//Чтобы наверняка догнал.
 			_shootingDelay = Constants.POISONTICK_ATTACK_RATE;

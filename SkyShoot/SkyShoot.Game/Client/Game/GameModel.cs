@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SkyShoot.Contracts.CollisionDetection;
 using SkyShoot.Contracts.GameEvents;
-using SkyShoot.Contracts.Mobs;
+using SkyShoot.Contracts.GameObject;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Game.Client.GameObjects;
 using SkyShoot.Game.Client.View;

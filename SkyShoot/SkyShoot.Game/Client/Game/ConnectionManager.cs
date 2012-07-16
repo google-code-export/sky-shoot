@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using SkyShoot.Contracts;
 using SkyShoot.Contracts.GameEvents;
-using SkyShoot.Contracts.Mobs;
+using SkyShoot.Contracts.GameObject;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Session;
 using SkyShoot.Contracts.Statistics;

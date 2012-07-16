@@ -1,5 +1,5 @@
 ﻿using System;
-using SkyShoot.Contracts.Mobs;
+using SkyShoot.Contracts.GameObject;
 using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Contracts.Weapon
