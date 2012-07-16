@@ -14,7 +14,7 @@ namespace SkyShoot.Game.Screens
 		private readonly SoundManager _soundManager;
 		private readonly ContentManager _content;
 
-        private Texture2D _texture;
+		private Texture2D _texture;
 
 		private ButtonControl _okButton;
 
@@ -28,14 +28,14 @@ namespace SkyShoot.Game.Screens
 			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 		}
 
-        public static ScreenManager.ScreenEnum Next { get; set; }
+		public static ScreenManager.ScreenEnum Next { get; set; }
 
-        public static string Message { get; set; }
+		public static string Message { get; set; }
 
-        public override bool IsMenuScreen
-        {
-            get { return false; }
-        }
+		public override bool IsMenuScreen
+		{
+			get { return false; }
+		}
 
 		public override void LoadContent()
 		{
@@ -62,29 +62,29 @@ namespace SkyShoot.Game.Screens
 			Viewport viewport = ScreenManager.Instance.GraphicsDevice.Viewport;
 			var viewportSize = new Vector2(viewport.Width, viewport.Height);
 			Vector2 textSize = font.MeasureString(Message);
-		    Vector2 textPosition = (viewportSize - textSize) / 2;
-		    var backgroundRectangle = new Rectangle(0, 0, (int)viewportSize.X, (int)viewportSize.Y);
+			Vector2 textPosition = (viewportSize - textSize) / 2;
+			var backgroundRectangle = new Rectangle(0, 0, (int)viewportSize.X, (int)viewportSize.Y);
 
-		    spriteBatch.Begin();
+			spriteBatch.Begin();
 			spriteBatch.Draw(_texture, backgroundRectangle, Color.White);
 			spriteBatch.DrawString(font, Message, textPosition, Color.White);
 			spriteBatch.End();
 		}
 
-        private void CreateControls()
-        {
-            _okButton = new ButtonControl
-            {
-                Text = "Ok",
-                Bounds = new UniRectangle(new UniScalar(0.5f, -50), new UniScalar(0.8f, -70), 100, 30)
-            };
-        }
+		private void CreateControls()
+		{
+			_okButton = new ButtonControl
+							{
+								Text = "Ok",
+								Bounds = new UniRectangle(new UniScalar(0.5f, -50), new UniScalar(0.8f, -70), 100, 30)
+							};
+		}
 
-        private void InitializeControls()
-        {
-            Desktop.Children.Add(_okButton);
+		private void InitializeControls()
+		{
+			Desktop.Children.Add(_okButton);
 
-            ScreenManager.Instance.Controller.AddListener(_okButton, OkButtonPressed);
-        }
+			ScreenManager.Instance.Controller.AddListener(_okButton, OkButtonPressed);
+		}
 	}
 }

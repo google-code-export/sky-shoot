@@ -11,7 +11,7 @@ namespace SkyShoot.Game.Screens
 {
 	internal class MainMenuScreen : GameScreen
 	{
-        private static Texture2D _texture;
+		private static Texture2D _texture;
 
 		private readonly SoundManager _soundManager;
 		private readonly ContentManager _content;
@@ -32,10 +32,10 @@ namespace SkyShoot.Game.Screens
 			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 		}
 
-        public override bool IsMenuScreen
-        {
-            get { return true; }
-        }
+		public override bool IsMenuScreen
+		{
+			get { return true; }
+		}
 
 		public override void LoadContent()
 		{
@@ -47,61 +47,61 @@ namespace SkyShoot.Game.Screens
 			_content.Unload();
 		}
 
-        public override void Draw(GameTime gameTime)
-        {
-            _spriteBatch = ScreenManager.Instance.SpriteBatch;
+		public override void Draw(GameTime gameTime)
+		{
+			_spriteBatch = ScreenManager.Instance.SpriteBatch;
 
-            _spriteBatch.Begin();
-            _spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
-            _spriteBatch.End();
-        }
+			_spriteBatch.Begin();
+			_spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
+			_spriteBatch.End();
+		}
 
-        private void CreateControls()
-        {
-            _playGameButton = new ButtonControl
-            {
-                Text = "Multiplayer",
-                Bounds =
-                    new UniRectangle(
-                        new UniScalar(0.30f, 0),
-                        new UniScalar(0.2f, 0),
-                        new UniScalar(0.4f, 0),
-                        new UniScalar(0.1f, 0)),
-            };
+		private void CreateControls()
+		{
+			_playGameButton = new ButtonControl
+			{
+				Text = "Multiplayer",
+				Bounds =
+					new UniRectangle(
+						new UniScalar(0.30f, 0),
+						new UniScalar(0.2f, 0),
+						new UniScalar(0.4f, 0),
+						new UniScalar(0.1f, 0)),
+			};
 
-            _optionsButton = new ButtonControl
-            {
-                Text = "Options",
-                Bounds =
-                    new UniRectangle(
-                        new UniScalar(0.30f, 0),
-                        new UniScalar(0.35f, 0),
-                        new UniScalar(0.4f, 0),
-                        new UniScalar(0.1f, 0)),
-            };
+			_optionsButton = new ButtonControl
+			{
+				Text = "Options",
+				Bounds =
+					new UniRectangle(
+						new UniScalar(0.30f, 0),
+						new UniScalar(0.35f, 0),
+						new UniScalar(0.4f, 0),
+						new UniScalar(0.1f, 0)),
+			};
 
-            _logoffButton = new ButtonControl
-            {
-                Text = "Logoff",
-                Bounds =
-                    new UniRectangle(
-                        new UniScalar(0.30f, 0),
-                        new UniScalar(0.5f, 0),
-                        new UniScalar(0.4f, 0),
-                        new UniScalar(0.1f, 0)),
-            };
-        }
+			_logoffButton = new ButtonControl
+			{
+				Text = "Logoff",
+				Bounds =
+					new UniRectangle(
+						new UniScalar(0.30f, 0),
+						new UniScalar(0.5f, 0),
+						new UniScalar(0.4f, 0),
+						new UniScalar(0.1f, 0)),
+			};
+		}
 
-        private void InitializeControls()
-        {
-            Desktop.Children.Add(_playGameButton);
-            Desktop.Children.Add(_optionsButton);
-            Desktop.Children.Add(_logoffButton);
+		private void InitializeControls()
+		{
+			Desktop.Children.Add(_playGameButton);
+			Desktop.Children.Add(_optionsButton);
+			Desktop.Children.Add(_logoffButton);
 
-            ScreenManager.Instance.Controller.AddListener(_playGameButton, PlayGameButtonPressed);
-            ScreenManager.Instance.Controller.AddListener(_optionsButton, OptionsButtonPressed);
-            ScreenManager.Instance.Controller.AddListener(_logoffButton, LogoffMenuButtonPressed);
-        }
+			ScreenManager.Instance.Controller.AddListener(_playGameButton, PlayGameButtonPressed);
+			ScreenManager.Instance.Controller.AddListener(_optionsButton, OptionsButtonPressed);
+			ScreenManager.Instance.Controller.AddListener(_logoffButton, LogoffMenuButtonPressed);
+		}
 
 		private void PlayGameButtonPressed(object sender, EventArgs e)
 		{
