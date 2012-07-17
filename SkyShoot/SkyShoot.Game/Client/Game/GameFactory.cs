@@ -55,6 +55,9 @@ namespace SkyShoot.Game.Client.Game
 					return new DrawableGameObject(serverGameObject, Textures.Poisoner);
 				case AGameObject.EnumObjectType.Hydra:
 					return new DrawableGameObject(serverGameObject, Textures.Hydra);
+				case AGameObject.EnumObjectType.ParentMob:
+					return new DrawableGameObject(serverGameObject, Textures.ParentMob);
+
 			default:
 				return new DrawableGameObject(serverGameObject, Textures.Cross);
 			}

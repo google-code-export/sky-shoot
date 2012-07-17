@@ -72,6 +72,7 @@ namespace SkyShoot.Game.Screens
 			Textures.Speed = _content.Load<Texture2D>("Textures/BonusesIcons/Speed");
 			Textures.Poisoner = _content.Load<Texture2D>("Textures/Mobs/Spider1");
 			Textures.Hydra = _content.Load<Texture2D>("Textures/Mobs/Spider2");
+			Textures.ParentMob = _content.Load<Texture2D>("Textures/Mobs/Spider3");
 			//load minions
 
 			Textures.Turret = _content.Load<Texture2D>("Textures/Mobs/Turret");
