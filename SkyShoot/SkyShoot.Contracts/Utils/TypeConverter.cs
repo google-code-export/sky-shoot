@@ -1,6 +1,6 @@
-﻿using SkyShoot.Contracts.GameObject;
+using SkyShoot.Contracts.GameObject;
 
-namespace SkyShoot.Contracts
+namespace SkyShoot.Contracts.Utils
 {
 	public static class GameObjectConverter
 	{

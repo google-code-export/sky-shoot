@@ -1,15 +1,14 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using SkyShoot.Contracts.GameObject;
-using SkyShoot.Contracts.Mobs;
 
-namespace SkyShoot.ServProgram.Session
+namespace SkyShoot.Contracts.Utils
 {
-	class ObjectPool<T> : IEnumerable<T> where T: AGameObject, new()
-	//class ObjectPool<T> where T : AGameObject, new()// : IEnumerable<T>//
+	class ObjectPool<T> : IEnumerable<T> where T : AGameObject, new()
 	{
-		public ObjectPoolNode FirstActive;
 		private ObjectPoolNode _firstInActive;
+
+		public ObjectPoolNode FirstActive;
 		public int Size;
 
 		public ObjectPool()
@@ -19,7 +18,7 @@ namespace SkyShoot.ServProgram.Session
 
 		public int Count
 		{
-			get 
+			get
 			{
 				return Size;
 			}
@@ -39,26 +38,26 @@ namespace SkyShoot.ServProgram.Session
 				Size++;
 				t = new T();
 			}
-			ObjectPoolNode newFirst = new ObjectPoolNode(t, true);
+			var newFirst = new ObjectPoolNode(t, true);
 			newFirst.Next = FirstActive;
 			FirstActive = newFirst;
-			
+
 			return t;
 		}
 
 		public ObjectPoolNode Next(ObjectPoolNode value)
 		{
 			if (value == null) return null;
-			if (value.Next != null )
-			if (value.Next.isActive == false)
-			{
-				var newInActive = value.Next;
-				value.Next = newInActive.Next;
-				newInActive.Next = _firstInActive;
-				_firstInActive = newInActive;
-				//size--;
-				return Next(value.Next);
-			}
+			if (value.Next != null)
+				if (value.Next.IsActive == false)
+				{
+					var newInActive = value.Next;
+					value.Next = newInActive.Next;
+					newInActive.Next = _firstInActive;
+					_firstInActive = newInActive;
+					//size--;
+					return Next(value.Next);
+				}
 			return value.Next;
 		}
 
@@ -66,12 +65,12 @@ namespace SkyShoot.ServProgram.Session
 		{
 			public T Item;
 			public ObjectPoolNode Next;
-			public bool isActive;
+			public bool IsActive;
 
-			public ObjectPoolNode(T mob,bool isActive)
+			public ObjectPoolNode(T mob, bool isActive)
 			{
 				Item = mob;
-				this.isActive = isActive;
+				IsActive = isActive;
 			}
 		}
 

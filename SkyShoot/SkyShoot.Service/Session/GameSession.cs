@@ -4,34 +4,30 @@ using System.Diagnostics;
 using System.Linq;
 using System.Timers;
 using SkyShoot.Contracts;
+using SkyShoot.Contracts.CollisionDetection;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.GameObject;
-using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Session;
-using SkyShoot.Contracts.CollisionDetection;
-using SkyShoot.ServProgram.Mobs;
 using SkyShoot.Service.Bonus;
 using SkyShoot.Service.Bonuses;
 using SkyShoot.Service.Mobs;
+using SkyShoot.ServProgram.Mobs;
 using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Service.Session
-{	
+{
 	public class GameSession
 	{
+		#region private fields
+
 		private readonly List<AGameObject> _gameObjects;
 		private readonly List<AGameObject> _newObjects;
 
-		public TeamsList SessionTeamsList = new TeamsList();
-		
-		public GameDescription LocalGameDescription { get; private set; }
-
-		public bool IsStarted { get; set; }
-		public GameLevel GameLevel { get; private set; }
 		private readonly SpiderFactory _spiderFactory;
 		private readonly BonusFactory _bonusFactory;
 		private readonly WallFactory _wallFactory;
+
 		private long _timerCounter;
 		private long _intervalToSpawn;
 
@@ -41,16 +37,25 @@ namespace SkyShoot.Service.Session
 		private Timer _gameTimer;
 		private object _updating;
 
+		#endregion
+
+		public TeamsList SessionTeamsList = new TeamsList();
+
+		public GameDescription LocalGameDescription { get; private set; }
+
+		public bool IsStarted { get; set; }
+		public GameLevel GameLevel { get; private set; }
+
 		public GameSession(TileSet tileSet, int maxPlayersAllowed,
 			GameMode gameType, int gameID, int teams)
 		{
-		//	SessionTeamsList = new TeamsList();
+			//	SessionTeamsList = new TeamsList();
 
 			for (int i = 1; i <= teams; i++)
 			{
 				SessionTeamsList.Teams.Add(new Team(i));
 			}
-			
+
 			IsStarted = false;
 			GameLevel = new GameLevel(tileSet);
 
@@ -60,14 +65,15 @@ namespace SkyShoot.Service.Session
 			_newObjects = new List<AGameObject>();
 
 			LocalGameDescription = new GameDescription(playerNames, maxPlayersAllowed, gameType, gameID, tileSet, teams);
+			
 			_spiderFactory = new SpiderFactory(GameLevel);
 			_bonusFactory = new BonusFactory();
-
-			// создание стенок
 			_wallFactory = new WallFactory(GameLevel);
 		}
 
-		private void SomebodyChangedWeapon(AGameObject sender, SkyShoot.Contracts.Weapon.WeaponType type)
+		#region private methods
+
+		private void SomebodyChangedWeapon(AGameObject sender, Contracts.Weapon.WeaponType type)
 		{
 			sender.ChangeWaponTo(type);
 		}
@@ -85,7 +91,7 @@ namespace SkyShoot.Service.Session
 		{
 			sender.ShootVector = direction;
 			sender.ShootVector.Normalize();
-			
+
 			if (sender.Weapon != null)
 			{
 				if (sender.Weapon.IsReload(DateTime.Now.Ticks / 10000))
@@ -113,65 +119,10 @@ namespace SkyShoot.Service.Session
 			}
 		}
 
-		//public void SomebodyDied(AGameObject sender)
-		//{
-		//  PushEvent(new ObjectDeleted(sender.Id, _timerCounter));
-		//}
-
-		//public void SomebodySpawned(AGameObject sender) 
-		//{			
-		//}
-
 		private IEnumerable<AGameEvent> NewBonusDropped(AGameObject bonus, long time)
 		{
 			_newObjects.Add(bonus);
 			return new[] { new NewObjectEvent(bonus, time) };
-		}
-
-		public IEnumerable<AGameEvent> MobDead(AGameObject mob, long time)
-		{
-			// result = 
-			var r = new List<AGameEvent>();
-			//SomebodyDied(mob);
-			//mob.MeMoved -= SomebodyMoved;
-			if ((mob.Is(AGameObject.EnumObjectType.LivingObject)) && (mob.Is(AGameObject.EnumObjectType.Poisoning) == false))
-			{
-				AGameBonus b = _bonusFactory.CreateBonus(mob.Coordinates);
-				b.IsActive = true;
-				//_NewObjects.Add(b);
-				r.AddRange(NewBonusDropped(b, time));
-			}
-
-			if(mob.Is(AGameObject.EnumObjectType.Player))
-			{
-				PlayerDead(mob as MainSkyShootService);
-			}
-			r.Add(new ObjectDeleted(mob.Id, _timerCounter));
-			// will be delete later
-			//_gameObjects.Remove(mob);
-			return r;
-		}
-
-		//public void SomebodyHitted(AGameObject mob, AProjectile projectile)
-		//{
-		//  PushEvent(new ObjectHealthChanged(mob.HealthAmount, mob.Id, _timerCounter));
-		//}
-
-		public void PlayerLeave(MainSkyShootService player)
-		{
-			LocalGameDescription.Players.Remove(player.Name);
-
-			player.MeMoved -= SomebodyMoved;
-			player.MeShot -= SomebodyShot;
-			player.MeChangeWeapon -= SomebodyChangedWeapon;
-
-			//Players.Remove(player);
-			lock (_gameObjects)
-			{
-			//	player.TeamIdentity.members.Remove(player);
-				_gameObjects.Remove(player);
-			}
-			Trace.WriteLine(player.Name + " leaved game");
 		}
 
 		private void PushEvent(AGameEvent gameEvent)
@@ -185,153 +136,9 @@ namespace SkyShoot.Service.Session
 			}
 		}
 
-		public void PlayerDead(MainSkyShootService player)
-		{
-			if(player == null)
-			{
-				Trace.WriteLine("strange error");
-				return;
-			}
-			//player.GameOver();
-
-			//SomebodyDied(player);			
-			player.Disconnect();//временно
-			player.TeamIdentity.Members.Remove(player);
-		}
-
-		public void Stop()
-		{
-			if (_gameTimer != null)
-			{
-				_gameTimer.Enabled = false;
-				_gameTimer.AutoReset = false;
-				_gameTimer.Elapsed -= TimerElapsedListener;
-			}
-			IsStarted = false;
-		}
-
-		public AGameObject[] GetSynchroFrame()
-		{
-			var allObjects = new List<AGameObject>(_gameObjects.ToArray());
-			//allObjects.AddRange(Players);
-			// Trace.WriteLine("SynchroFrame");
-			return allObjects.ToArray();
-
-		}
-
-		public void Start()
-		{
-			for(int i = 0; i < _gameObjects.Count; i++)
-			{
-				if (!_gameObjects[i].Is(AGameObject.EnumObjectType.Player))
-					continue;
-				var player = _gameObjects[i] as MainSkyShootService;
-				if (player == null)
-				{
-					Trace.WriteLine("Error: !!! IsPlayer true for non player object");
-					continue;
-				}
-				_gameObjects[i].TeamIdentity = SessionTeamsList.GetTeamByNymber(1);
-				_gameObjects[i].TeamIdentity.Members.Add(_gameObjects[i]);
-				//this.SomebodyMoves += player.MobMoved;
-				player.MeMoved += SomebodyMoved;
-				//this.SomebodyShoots += player.MobShot;
-				player.MeShot += SomebodyShot;
-
-				player.MeChangeWeapon += SomebodyChangedWeapon;
-				//this.SomebodySpawns += player.SpawnMob;
-
-				//this.SomebodyDies += player.MobDead;
-				
-				//this.SomebodyHit += player.Hit;
-
-				player.Coordinates = new Vector2(500,500);
-				player.Speed = Constants.PLAYER_DEFAULT_SPEED;
-				player.Radius = Constants.PLAYER_RADIUS;
-				player.Weapon = new Weapon.Pistol(Guid.NewGuid(), player);
-				player.RunVector = new Vector2(0, 0);
-				player.MaxHealthAmount = player.HealthAmount = Constants.PLAYER_HEALTH;
-				
-			}
-
-			_gameObjects.AddRange(_wallFactory.CreateWalls());
-
-			System.Threading.Thread.Sleep(1000);
-			if (!IsStarted)
-			{
-				IsStarted = true;
-			}
-			_timerCounter = 0;
-			_updating = false;
-
-			_lastUpdate = DateTime.Now.Ticks/10000;
-			_updateDelay = 0;
-			_gameTimer = new Timer(Constants.FPS);
-			_gameTimer.AutoReset = true;
-			_gameTimer.Elapsed += TimerElapsedListener;
-			_gameTimer.Start();
-			Trace.WriteLine("Game Started");
-		}
-
-		public bool AddPlayer(MainSkyShootService player)
-		{
-			if (_gameObjects.Count >= LocalGameDescription.MaximumPlayersAllowed || IsStarted)
-				return false;
-
-			_gameObjects.Add(player);
-
-			LocalGameDescription.Players.Add(player.Name);
-			var names = new String[_gameObjects.Count];
-
-			//UpdatePlayersList(player);
-
-			//if (NewPlayerConnected != null) NewPlayerConnected(player);
-
-			//StartGame += player.GameStart;
-
-			if (_gameObjects.Count == LocalGameDescription.MaximumPlayersAllowed)
-			{
-				// Trace.WriteLine("player added"+player.Name);
-				var startThread = new System.Threading.Thread(Start);
-				startThread.Start();
-			}
-
-			return true;
-		}
-
 		private void TimerElapsedListener(object sender, EventArgs e)
-		{			
-			Update();
-		}
-
-	#region local functions
-		public IEnumerable<AGameEvent> SpawnMob(long time)
 		{
-			var r = new List<AGameEvent>();
-#if false
-			// DEBUG 
-			//!! debug
-			var t = _gameObjects.FindAll(m => m.ObjectType == AGameObject.EnumObjectType.Mob);
-			if(t != null && t.Count > 1)
-				return new AGameEvent[]{};
-#endif
-			if (_intervalToSpawn < 1)
-			{
-				// todo //!! rewrite!!
-				_intervalToSpawn = 3 * (long) Math.Exp(4.8f - _timerCounter/4000f);
-				
-				var mob = _spiderFactory.CreateMob();
-				// System.Diagnostics.Trace.WriteLine("mob spawned" + mob.Id);
-				
-				_newObjects.Add(mob);
-				r.Add(new NewObjectEvent(mob, time));
-
-			}
-			else
-			{
-				_intervalToSpawn--;
-			}
-			return r;
+			Update();
 		}
 
 		/// <summary>
@@ -407,7 +214,7 @@ namespace SkyShoot.Service.Session
 					//coordDiff.Normalize();
 					//if (canMove)
 					//{
-						activeObject.Coordinates = newCoord;
+					activeObject.Coordinates = newCoord;
 					//}
 					//else
 					//{
@@ -451,11 +258,196 @@ namespace SkyShoot.Service.Session
 			System.Threading.Monitor.Exit(_updating);
 		}
 
+		private IEnumerable<AGameEvent> SpawnMob(long time)
+		{
+			var r = new List<AGameEvent>();
+#if false
+			// DEBUG 
+			//!! debug
+			var t = _gameObjects.FindAll(m => m.ObjectType == AGameObject.EnumObjectType.Mob);
+			if(t != null && t.Count > 1)
+				return new AGameEvent[]{};
+#endif
+			if (_intervalToSpawn < 1)
+			{
+				// todo //!! rewrite!!
+				_intervalToSpawn = 3 * (long)Math.Exp(4.8f - _timerCounter / 4000f);
+
+				var mob = _spiderFactory.CreateMob();
+				// System.Diagnostics.Trace.WriteLine("mob spawned" + mob.Id);
+
+				_newObjects.Add(mob);
+				r.Add(new NewObjectEvent(mob, time));
+
+			}
+			else
+			{
+				_intervalToSpawn--;
+			}
+			return r;
+		}
+
+		private IEnumerable<AGameEvent> MobDead(AGameObject mob, long time)
+		{
+			// result = 
+			var r = new List<AGameEvent>();
+			//SomebodyDied(mob);
+			//mob.MeMoved -= SomebodyMoved;
+			if ((mob.Is(AGameObject.EnumObjectType.LivingObject)) && (mob.Is(AGameObject.EnumObjectType.Poisoning) == false))
+			{
+				AGameBonus b = _bonusFactory.CreateBonus(mob.Coordinates);
+				b.IsActive = true;
+				//_NewObjects.Add(b);
+				r.AddRange(NewBonusDropped(b, time));
+			}
+
+			if (mob.Is(AGameObject.EnumObjectType.Player))
+			{
+				PlayerDead(mob as MainSkyShootService);
+			}
+			r.Add(new ObjectDeleted(mob.Id, _timerCounter));
+			// will be delete later
+			//_gameObjects.Remove(mob);
+			return r;
+		}
+
+		private void PlayerDead(MainSkyShootService player)
+		{
+			if (player == null)
+			{
+				Trace.WriteLine("strange error");
+				return;
+			}
+			//player.GameOver();
+
+			//SomebodyDied(player);			
+			player.Disconnect();//временно
+			player.TeamIdentity.Members.Remove(player);
+		}
+
+		#endregion
+
+		#region public methods
+
+		public void PlayerLeave(MainSkyShootService player)
+		{
+			LocalGameDescription.Players.Remove(player.Name);
+
+			player.MeMoved -= SomebodyMoved;
+			player.MeShot -= SomebodyShot;
+			player.MeChangeWeapon -= SomebodyChangedWeapon;
+
+			//Players.Remove(player);
+			lock (_gameObjects)
+			{
+				//	player.TeamIdentity.members.Remove(player);
+				_gameObjects.Remove(player);
+			}
+			Trace.WriteLine(player.Name + " leaved game");
+		}
+
+		public void Start()
+		{
+			for (int i = 0; i < _gameObjects.Count; i++)
+			{
+				if (!_gameObjects[i].Is(AGameObject.EnumObjectType.Player))
+					continue;
+				var player = _gameObjects[i] as MainSkyShootService;
+				if (player == null)
+				{
+					Trace.WriteLine("Error: !!! IsPlayer true for non player object");
+					continue;
+				}
+				_gameObjects[i].TeamIdentity = SessionTeamsList.GetTeamByNymber(1);
+				_gameObjects[i].TeamIdentity.Members.Add(_gameObjects[i]);
+				//this.SomebodyMoves += player.MobMoved;
+				player.MeMoved += SomebodyMoved;
+				//this.SomebodyShoots += player.MobShot;
+				player.MeShot += SomebodyShot;
+
+				player.MeChangeWeapon += SomebodyChangedWeapon;
+				//this.SomebodySpawns += player.SpawnMob;
+
+				//this.SomebodyDies += player.MobDead;
+
+				//this.SomebodyHit += player.Hit;
+
+				player.Coordinates = new Vector2(500, 500);
+				player.Speed = Constants.PLAYER_DEFAULT_SPEED;
+				player.Radius = Constants.PLAYER_RADIUS;
+				player.Weapon = new Weapon.Pistol(Guid.NewGuid(), player);
+				player.RunVector = new Vector2(0, 0);
+				player.MaxHealthAmount = player.HealthAmount = Constants.PLAYER_HEALTH;
+
+			}
+
+			_gameObjects.AddRange(_wallFactory.CreateWalls());
+
+			System.Threading.Thread.Sleep(1000);
+			if (!IsStarted)
+			{
+				IsStarted = true;
+			}
+			_timerCounter = 0;
+			_updating = false;
+
+			_lastUpdate = DateTime.Now.Ticks / 10000;
+			_updateDelay = 0;
+			_gameTimer = new Timer(Constants.FPS) { AutoReset = true };
+			_gameTimer.Elapsed += TimerElapsedListener;
+			_gameTimer.Start();
+			Trace.WriteLine("Game Started");
+		}
+
+		public void Stop()
+		{
+			if (_gameTimer != null)
+			{
+				_gameTimer.Enabled = false;
+				_gameTimer.AutoReset = false;
+				_gameTimer.Elapsed -= TimerElapsedListener;
+			}
+			IsStarted = false;
+		}
+
+		public AGameObject[] GetSynchroFrame()
+		{
+			var allObjects = new List<AGameObject>(_gameObjects.ToArray());
+			//allObjects.AddRange(Players);
+			// Trace.WriteLine("SynchroFrame");
+			return allObjects.ToArray();
+		}
+
+		public bool AddPlayer(MainSkyShootService player)
+		{
+			if (_gameObjects.Count >= LocalGameDescription.MaximumPlayersAllowed || IsStarted)
+				return false;
+
+			_gameObjects.Add(player);
+
+			LocalGameDescription.Players.Add(player.Name);
+
+			//UpdatePlayersList(player);
+
+			//if (NewPlayerConnected != null) NewPlayerConnected(player);
+
+			//StartGame += player.GameStart;
+
+			if (_gameObjects.Count == LocalGameDescription.MaximumPlayersAllowed)
+			{
+				// Trace.WriteLine("player added"+player.Name);
+				var startThread = new System.Threading.Thread(Start);
+				startThread.Start();
+			}
+
+			return true;
+		}
+
 		public int PlayersCount()
 		{
 			return _gameObjects.FindAll(o => o.Is(AGameObject.EnumObjectType.Player)).Count;
 		}
 
-	#endregion
+		#endregion
 	}
 }
