@@ -28,7 +28,6 @@ namespace SkyShoot.Contracts.GameEvents
 	//[KnownType(typeof(WeaponChanged))]
 	public abstract class AGameEvent
 	{
-		// now = DateTime.Now.Ticks/10000; //время в миллисекундах с начала игры
 		[DataMember]
 		public long TimeStamp { get; set; }
 

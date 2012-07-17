@@ -45,6 +45,10 @@ namespace SkyShoot.Service
 		public List<AGameBonus> Bonuses;
 		public ExpTracker Tracker;
 
+		public delegate void SomebodyMovesHandler(AGameObject sender, Vector2 direction);
+		public delegate void ClientShootsHandler(AGameObject sender, Vector2 direction);
+		public delegate void ClientChangeWeaponHandler(AGameObject sender, WeaponType type);
+
 		public event SomebodyMovesHandler MeMoved;
 		public event ClientShootsHandler MeShot;
 		public event ClientChangeWeaponHandler MeChangeWeapon;
