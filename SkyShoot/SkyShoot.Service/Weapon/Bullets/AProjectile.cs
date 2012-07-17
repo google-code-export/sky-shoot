@@ -58,8 +58,7 @@ namespace SkyShoot.Service.Weapon.Bullets
 		public override IEnumerable<AGameEvent> Do(AGameObject obj, List<AGameObject> newObjects, long time)
 		{
 			var res = new List<AGameEvent>(base.Do(obj, newObjects, time));
-			// не трогать создателя пули TODO: убрать костыль с турельками
-			if (Owner.Id == obj.Id || obj.ObjectType == EnumObjectType.Turret)
+			if (Owner.TeamIdentity == obj.TeamIdentity)
 				return res;
 
 			if (obj.Is(EnumObjectType.LivingObject))
