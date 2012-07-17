@@ -4,11 +4,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
-using System.Threading;
-using SkyShoot.Contracts;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.GameObject;
-using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Session;
 using SkyShoot.Contracts.Statistics;
@@ -17,8 +14,8 @@ using SkyShoot.Contracts.Weapon;
 using SkyShoot.Service.Bonuses;
 using SkyShoot.Service.Session;
 using SkyShoot.Service.Statistics;
-using SkyShoot.XNA.Framework;
 using SkyShoot.ServProgram.Account;
+using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Service
 {
@@ -26,34 +23,62 @@ namespace SkyShoot.Service
 		InstanceContextMode = InstanceContextMode.PerSession)]
 	public class MainSkyShootService : AGameObject, ISkyShootService
 	{
+		#region private fields
+
+		private static readonly List<MainSkyShootService> ClientsList = new List<MainSkyShootService>();
+
+		private static int _globalID;
+
+		private int _localID;
+
 		private float _speed;
 
-		public static int GlobalID;
-		public int LocalID;
+		private readonly IAccountManager _accountManager = SimpleAccountManager.Instance;
+		private readonly SessionManager _sessionManager = SessionManager.Instance;
+
+		#endregion
+
+		#region public fields
+
 		public string Name;
 		public Queue<AGameEvent> NewEvents;
 		public List<AGameBonus> Bonuses;
 		public ExpTracker Tracker;
 
+		public event SomebodyMovesHandler MeMoved;
+		public event ClientShootsHandler MeShot;
+		public event ClientChangeWeaponHandler MeChangeWeapon;
 
-		private IAccountManager _accountManager = SimpleAccountManager.Instance;
-		private readonly SessionManager _sessionManager = SessionManager.Instance;
+		#endregion
 
-		private static readonly List<MainSkyShootService> ClientsList = new List<MainSkyShootService>();
+		public override float Speed
+		{
+			get
+			{
+				AGameBonus speedUpBonus = GetBonus(EnumObjectType.Speedup);
+				float speedUp = speedUpBonus == null ? 1f : speedUpBonus.DamageFactor;
+				var speed = _speed * speedUp;
+				return speed;
+			}
+			set { _speed = value; }
+		}
 
 		public MainSkyShootService()
 			: base(new Vector2(0, 0), Guid.NewGuid())
 		{
 			ObjectType = EnumObjectType.Player;
 			NewEvents = new Queue<AGameEvent>();
-			LocalID = GlobalID;
-			GlobalID++;
+			_localID = _globalID;
+			_globalID++;
 			Bonuses = new List<AGameBonus>();
 
 			InitWeapons();
 		}
 
-		public void InitStatistics() // Начальная статистика
+		#region private methods
+
+		// Начальная статистика
+		private void InitStatistics()
 		{
 			Tracker = new LinearExpTracker();
 		}
@@ -70,34 +95,44 @@ namespace SkyShoot.Service
 			ChangeWaponTo(WeaponType.Pistol);
 		}
 
-		public AGameEvent[] AddBonus(AGameBonus bonus, long time)
+		private IEnumerable<AGameEvent> AddBonus(AGameBonus bonus, long time)
 		{
-			AGameEvent t;
 			if (bonus.Is(EnumObjectType.Remedy))
 			{
 				var health = HealthAmount;
 				var potentialHealth = health + health * bonus.DamageFactor;
 				HealthAmount = potentialHealth > MaxHealthAmount ? MaxHealthAmount : potentialHealth;
-				t = new ObjectHealthChanged(HealthAmount, Id, time);
+				AGameEvent gameEvent = new ObjectHealthChanged(HealthAmount, Id, time);
 				return new[]
-				       	{
-				       		new ObjectDeleted(bonus.Id, time),
-				       		t
-				       	};
+				       {
+				       	new ObjectDeleted(bonus.Id, time),
+				       	gameEvent
+				       };
 			}
-			else
-			{
-				Bonuses.RemoveAll(b => b.ObjectType == bonus.ObjectType);
-				Bonuses.Add(bonus);
-				bonus.Taken(time);
-				//t = new BonusesChanged(Id, time, MergeBonuses());
-				return new[]
-				       	{
-				       		new ObjectDeleted(bonus.Id, time),
-				       		//t
-				       	};
-			}
+			Bonuses.RemoveAll(b => b.ObjectType == bonus.ObjectType);
+			Bonuses.Add(bonus);
+			bonus.Taken(time);
+			//t = new BonusesChanged(Id, time, MergeBonuses());
+			return new AGameEvent[]
+			       {
+			       	new ObjectDeleted(bonus.Id, time)
+			       	//t
+			       };
 		}
+
+		private void DeleteExpiredBonuses(long time)
+		{
+			Bonuses.RemoveAll(b => b.IsExpired(time));
+		}
+
+		private EnumObjectType MergeBonuses()
+		{
+			return Bonuses.Aggregate((EnumObjectType)0, (current, bonus) => current | bonus.ObjectType);
+		}
+
+		#endregion
+
+		#region public methods
 
 		public AGameBonus GetBonus(EnumObjectType bonusType)
 		{
@@ -108,6 +143,8 @@ namespace SkyShoot.Service
 		{
 			LeaveGame();
 		}
+
+		#region service implementation
 
 		public AccountManagerErrorCode Register(string username, string password)
 		{
@@ -174,20 +211,7 @@ namespace SkyShoot.Service
 			}
 		}
 
-		public event SomebodyMovesHandler MeMoved;
-		public event ClientShootsHandler MeShot;
-		public event ClientChangeWeaponHandler MeChangeWeapon;
-
-		public AGameEvent[] ChangeWeapon(WeaponType type)
-		{
-			if (MeChangeWeapon != null)
-			{
-				MeChangeWeapon(this, type);
-			}
-			return null; // GetEvents();
-		}
-
-		public AGameEvent[] Move(Vector2 direction) // приходит снаружи от клиента
+		public AGameEvent[] Move(Vector2 direction)
 		{
 			if (MeMoved != null)
 			{
@@ -201,6 +225,15 @@ namespace SkyShoot.Service
 			if (MeShot != null)
 			{
 				MeShot(this, direction);
+			}
+			return null; // GetEvents();
+		}
+
+		public AGameEvent[] ChangeWeapon(WeaponType type)
+		{
+			if (MeChangeWeapon != null)
+			{
+				MeChangeWeapon(this, type);
 			}
 			return null; // GetEvents();
 		}
@@ -257,7 +290,6 @@ namespace SkyShoot.Service
 			return _sessionManager.GameStarted(gameId);
 		}
 
-
 		public AGameObject[] SynchroFrame()
 		{
 			try
@@ -278,7 +310,6 @@ namespace SkyShoot.Service
 			return null;
 		}
 
-		// Статистика
 		public Stats? GetStats()
 		{
 			return Tracker.GetStats();
@@ -290,30 +321,14 @@ namespace SkyShoot.Service
 			_sessionManager.SessionTable.TryGetValue(Id, out session);
 			if (session == null)
 			{
-				return new string[] {};
+				return new string[] { };
 			}
 			return session.LocalGameDescription.Players.ToArray();
 		}
 
-		//public override Vector2 ComputeMovement(long updateDelay, GameLevel gameLevel)
-		//{
-		//  AGameBonus speedUpBonus = GetBonus(EnumObjectType.Speedup);
-		//  float speedUp = speedUpBonus == null ? 1f : speedUpBonus.DamageFactor;
-		//  float oldSpeed = _speed;
-		//  _speed *= speedUp;
-		//  var newCoord = base.ComputeMovement(updateDelay, gameLevel);
-		//  _speed = oldSpeed;
+		#endregion
 
-		//  newCoord.X = MathHelper.Clamp(newCoord.X, 0, gameLevel.levelHeight);
-		//  newCoord.Y = MathHelper.Clamp(newCoord.Y, 0, gameLevel.levelWidth);
-
-		//  return newCoord;
-		//}
-
-		private EnumObjectType MergeBonuses()
-		{
-			return Bonuses.Aggregate((EnumObjectType) 0, (current, bonus) => current | bonus.ObjectType);
-		}
+		#region GameObject behavior
 
 		public override IEnumerable<AGameEvent> Do(AGameObject obj, List<AGameObject> newObjects, long time)
 		{
@@ -330,31 +345,17 @@ namespace SkyShoot.Service
 			return res;
 		}
 
-		public void DeleteExpiredBonuses(long time)
-		{
-			Bonuses.RemoveAll(b => b.IsExpired(time));
-		}
-
 		public override IEnumerable<AGameEvent> Think(List<AGameObject> players, List<AGameObject> newGameObjects,
-		                                              long time)
+													  long time)
 		{
 			// empty list
 			var res = base.Think(players, newGameObjects, time);
-			var l = Bonuses.Count;
 			DeleteExpiredBonuses(time);
+			// var l = Bonuses.Count;
 			return res; // l != Bonuses.Count ? new AGameEvent[] { new BonusesChanged(Id, time, MergeBonuses()) } : res;
 		}
+		#endregion
 
-		public override float Speed
-		{
-			get
-			{
-				AGameBonus speedUpBonus = GetBonus(EnumObjectType.Speedup);
-				float speedUp = speedUpBonus == null ? 1f : speedUpBonus.DamageFactor;
-				var speed = _speed * speedUp;
-				return speed;
-			}
-			set { _speed = value; }
-		}
+		#endregion
 	}
 }

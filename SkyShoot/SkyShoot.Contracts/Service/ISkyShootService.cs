@@ -54,7 +54,7 @@ namespace SkyShoot.Contracts.Service
 		/// <summary>
 		/// проверка началась ли игра
 		/// </summary>
-		/// <param name="gameId">идетификатор игры</param>
+		/// <param name="gameId">идентификатор игры</param>
 		/// <returns>если игра не началась возвращает null</returns>
 		[OperationContract]
 		GameLevel GameStart(int gameId);
