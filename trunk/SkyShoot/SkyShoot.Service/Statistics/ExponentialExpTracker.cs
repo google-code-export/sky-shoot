@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using SkyShoot.Contracts.GameObject;
-using SkyShoot.Contracts.Mobs;
-using SkyShoot.Contracts.Statistics;
-using SkyShoot.Service.Statistics;
+﻿using SkyShoot.Contracts.GameObject;
 
 namespace SkyShoot.Service.Statistics
 {
@@ -26,11 +19,11 @@ namespace SkyShoot.Service.Statistics
 
 		public override void AddExpTeam(AGameObject player, AGameObject wounded, int damage, int teamMembers)
 		{
-			if (player != null) Value.Exp += damage/teamMembers;
+			if (player != null) Value.Exp += damage / teamMembers;
 
 			if (wounded.HealthAmount < 0.1) if (player != null)
 				{
-					Value.Exp += (int)wounded.MaxHealthAmount/teamMembers;
+					Value.Exp += (int)wounded.MaxHealthAmount / teamMembers;
 				}
 
 			if (Value.Exp >= (100 * Value.Lvl + 2 ^ Value.Lvl))

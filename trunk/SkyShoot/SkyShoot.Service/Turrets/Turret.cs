@@ -1,16 +1,11 @@
-﻿using System.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using SkyShoot.Contracts;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.GameObject;
-using SkyShoot.Contracts.Mobs;
-using SkyShoot.Contracts.Session;
-using SkyShoot.XNA.Framework;
-using SkyShoot.ServProgram.Mobs;
-using SkyShoot.Contracts.Weapon;
 using SkyShoot.Contracts.Service;
+using SkyShoot.Contracts.Weapon;
+using SkyShoot.ServProgram.Mobs;
+using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Service.Weapon.Bullets
 {
@@ -21,10 +16,9 @@ namespace SkyShoot.Service.Weapon.Bullets
 		public Turret(float health, AWeapon weapon, int shootingDelay, AGameObject owner, Vector2 coordinates)
 			: base(health, weapon, shootingDelay)
 		{
-			
 			Weapon = weapon;
 			Weapon.Owner = owner;
-			this.Owner = owner;
+			Owner = owner;
 			Target = null;
 			Coordinates = coordinates;
 			ObjectType = EnumObjectType.Turret;

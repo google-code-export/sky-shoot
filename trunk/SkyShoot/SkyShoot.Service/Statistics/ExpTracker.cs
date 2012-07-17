@@ -1,5 +1,4 @@
 ﻿using SkyShoot.Contracts.GameObject;
-using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Statistics;
 
 namespace SkyShoot.Service.Statistics
@@ -10,10 +9,7 @@ namespace SkyShoot.Service.Statistics
 
 		protected ExpTracker()
 		{
-			Value = new Stats();
-			Value.Exp = 0;
-			Value.Frag = 0;
-			Value.Lvl = 1;
+			Value = new Stats { Exp = 0, Frag = 0, Lvl = 1 };
 		}
 
 		protected ExpTracker(Stats st)
