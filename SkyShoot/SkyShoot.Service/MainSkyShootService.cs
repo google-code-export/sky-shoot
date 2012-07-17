@@ -211,31 +211,28 @@ namespace SkyShoot.Service
 			}
 		}
 
-		public AGameEvent[] Move(Vector2 direction)
+		public void Move(Vector2 direction)
 		{
 			if (MeMoved != null)
 			{
 				MeMoved(this, direction);
 			}
-			return null; // GetEvents();
 		}
 
-		public AGameEvent[] Shoot(Vector2 direction)
+		public void Shoot(Vector2 direction)
 		{
 			if (MeShot != null)
 			{
 				MeShot(this, direction);
 			}
-			return null; // GetEvents();
 		}
 
-		public AGameEvent[] ChangeWeapon(WeaponType type)
+		public void ChangeWeapon(WeaponType type)
 		{
 			if (MeChangeWeapon != null)
 			{
 				MeChangeWeapon(this, type);
 			}
-			return null; // GetEvents();
 		}
 
 		public AGameEvent[] GetEvents()
