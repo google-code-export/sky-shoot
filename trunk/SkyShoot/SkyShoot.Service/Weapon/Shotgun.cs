@@ -1,6 +1,5 @@
 ﻿using System;
 using SkyShoot.Contracts.GameObject;
-using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Weapon;
 using SkyShoot.Service.Weapon.Bullets;
@@ -12,23 +11,24 @@ namespace SkyShoot.Service.Weapon
 	{
 		private readonly Random _rand;
 
-		public Shotgun(Guid id, AGameObject owner = null) : base(id, owner)
+		public Shotgun(Guid id, AGameObject owner = null)
+			: base(id, owner)
 		{
-            _rand = new Random();
-            WeaponType = WeaponType.Shotgun;
-            ReloadSpeed = Constants.SHOTGUN_ATTACK_RATE;
+			_rand = new Random();
+			WeaponType = WeaponType.Shotgun;
+			ReloadSpeed = Constants.SHOTGUN_ATTACK_RATE;
 		}
 
 		public override AGameObject[] CreateBullets(Vector2 direction)
 		{
-			var bullets = new ShotgunBullet[8];
+			var bullets = new AGameObject[8];
 
 			for (int i = 0; i < 8; i++)
 			{
 				bullets[i] = new ShotgunBullet(
-                    Owner,
-                    Guid.NewGuid(),
-                    Vector2.Transform(direction, Matrix.CreateRotationZ((float) (-Math.PI/6f + _rand.NextDouble()*Math.PI/3f))));
+					Owner,
+					Guid.NewGuid(),
+					Vector2.Transform(direction, Matrix.CreateRotationZ((float)(-Math.PI / 6f + _rand.NextDouble() * Math.PI / 3f))));
 			}
 
 			return bullets;

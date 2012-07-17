@@ -1,7 +1,5 @@
 ﻿using System;
-using SkyShoot.Contracts;
 using SkyShoot.Contracts.GameObject;
-using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Weapon;
 using SkyShoot.Service.Weapon.Bullets;
@@ -11,7 +9,8 @@ namespace SkyShoot.Service.Weapon
 {
 	public class Pistol : AWeapon
 	{
-		public Pistol(Guid id, AGameObject owner = null) : base(id, owner)
+		public Pistol(Guid id, AGameObject owner = null)
+			: base(id, owner)
 		{
 			WeaponType = WeaponType.Pistol;
 			ReloadSpeed = Constants.PISTOL_ATTACK_RATE;
@@ -19,7 +18,7 @@ namespace SkyShoot.Service.Weapon
 
 		public override AGameObject[] CreateBullets(Vector2 direction)
 		{
-			var bullets = new[] { new PistolBullet(Owner, Guid.NewGuid(), direction) };
+			var bullets = new AGameObject[] { new PistolBullet(Owner, Guid.NewGuid(), direction) };
 			return bullets;
 		}
 	}

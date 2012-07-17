@@ -1,10 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using SkyShoot.Contracts;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.GameObject;
-using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Session;
 using SkyShoot.XNA.Framework;
@@ -15,12 +12,12 @@ namespace SkyShoot.Service.Weapon.Bullets
 	{
 		private bool _mirrored;
 
-        public AProjectile()
-        {
-            Owner = null;
-            Radius = Constants.DEFAULT_BULLET_RADIUS;
-            _mirrored = false;
-        }
+		public AProjectile()
+		{
+			Owner = null;
+			Radius = Constants.DEFAULT_BULLET_RADIUS;
+			_mirrored = false;
+		}
 
 		protected AProjectile(AGameObject owner, Guid id, Vector2 direction)
 		{
@@ -32,7 +29,8 @@ namespace SkyShoot.Service.Weapon.Bullets
 			_mirrored = false;
 		}
 
-		protected AProjectile(AGameObject owner, Guid id, Vector2 direction, Vector2 birthPlace) //TODO: make uniform constructor?
+		//TODO: make uniform constructor?
+		protected AProjectile(AGameObject owner, Guid id, Vector2 direction, Vector2 birthPlace)
 		{
 			Owner = owner;
 			Id = id;
@@ -57,19 +55,17 @@ namespace SkyShoot.Service.Weapon.Bullets
 
 		public AGameObject Owner { get; set; }
 
-		//[Obsolete("Use health")]
-		//public float LifeDistance { get; set; }
-
 		public override IEnumerable<AGameEvent> Do(AGameObject obj, List<AGameObject> newObjects, long time)
 		{
 			var res = new List<AGameEvent>(base.Do(obj, newObjects, time));
-			if (Owner.Id == obj.Id || obj.ObjectType == EnumObjectType.Turret) // не трогать создателя пули TODO: убрать костыль с турельками
+			// не трогать создателя пули TODO: убрать костыль с турельками
+			if (Owner.Id == obj.Id || obj.ObjectType == EnumObjectType.Turret)
 				return res;
 
 			if (obj.Is(EnumObjectType.LivingObject))
 			{
-                var owner = this.Owner as MainSkyShootService;
-                var damageMod = 1f;
+				var owner = this.Owner as MainSkyShootService;
+				var damageMod = 1f;
 				if (obj.Is(EnumObjectType.Player))
 				{
 					var player = obj as MainSkyShootService;
@@ -97,27 +93,27 @@ namespace SkyShoot.Service.Weapon.Bullets
 				if (owner != null) teamMembers = owner.TeamIdentity.Members.Count;
 
 				if (owner != null) owner.Tracker.AddExpPlayer(owner, obj, (int)(Damage * damageMod));
-				
+
 				if (owner != null) foreach (AGameObject member in owner.TeamIdentity.Members)
-				{
-					var player = member as MainSkyShootService;
-					if (player != null) player.Tracker.AddExpTeam(player, obj, (int)(Damage * damageMod), teamMembers);
-				}
+					{
+						var player = member as MainSkyShootService;
+						if (player != null) player.Tracker.AddExpTeam(player, obj, (int)(Damage * damageMod), teamMembers);
+					}
 				#endregion
-				
+
 				res.Add(new ObjectHealthChanged(obj.HealthAmount, obj.Id, time));
 				// убираем пулю
 				IsActive = false;
 			}
 
-		    if (obj.Is(EnumObjectType.Wall))
-		    {
-		        IsActive = false;
+			if (obj.Is(EnumObjectType.Wall))
+			{
+				IsActive = false;
 			}
 
-		    if (!IsActive)
-		    {
-		        res.Add(new ObjectDeleted(Id, time));
+			if (!IsActive)
+			{
+				res.Add(new ObjectDeleted(Id, time));
 			}
 
 			return res;

@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using SkyShoot.Contracts;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.GameObject;
-using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Service;
-using SkyShoot.XNA.Framework;
 using SkyShoot.ServProgram.Mobs;
+using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Service.Weapon.Bullets
 {
@@ -25,18 +23,21 @@ namespace SkyShoot.Service.Weapon.Bullets
 		public override IEnumerable<AGameEvent> Do(AGameObject obj, List<AGameObject> newObjects, long time)
 		{
 			var res = new List<AGameEvent>(base.Do(obj, newObjects, time));
-			var player = obj as MainSkyShootService;//Ради проверки на наличие зеркала
+			var player = obj as MainSkyShootService; //Ради проверки на наличие зеркала
 			if (player != null)
 			{
 				var mirror = player.GetBonus(EnumObjectType.Mirror);
 
-				if (obj.Id != Owner.Id && obj.Is(EnumObjectType.Player) && (obj.HealthAmount >= Constants.POISON_BULLET_DAMAGE) && (mirror == null))
+				if (obj.Id != Owner.Id && obj.Is(EnumObjectType.Player) && (obj.HealthAmount >= Constants.POISON_BULLET_DAMAGE) &&
+					(mirror == null))
 				{
 					var wp = new PoisonTick(Guid.NewGuid());
-					var Poison = new Poisoning(Constants.POISONING_TICK_TIMES, wp, obj);	//Время жизни--через здоровье
-					Poison.ObjectType = EnumObjectType.Poisoning;
-					Poison.Coordinates = obj.Coordinates;
-					newObjects.Add(Poison);
+					var poison = new Poisoning(Constants.POISONING_TICK_TIMES, wp, obj)
+								 {
+									 ObjectType = EnumObjectType.Poisoning,
+									 Coordinates = obj.Coordinates
+								 }; //Время жизни--через здоровье
+					newObjects.Add(poison);
 				}
 			}
 			return res;

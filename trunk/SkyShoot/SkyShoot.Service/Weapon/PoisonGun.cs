@@ -1,7 +1,5 @@
 ﻿using System;
-using SkyShoot.Contracts;
 using SkyShoot.Contracts.GameObject;
-using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Weapon;
 using SkyShoot.Service.Weapon.Bullets;
@@ -20,7 +18,7 @@ namespace SkyShoot.Service.Weapon
 
 		public override AGameObject[] CreateBullets(Vector2 direction)
 		{
-			var bullets = new[] { new PoisonBullet(Owner, Guid.NewGuid(), direction) };
+			var bullets = new AGameObject[] { new PoisonBullet(Owner, Guid.NewGuid(), direction) };
 			return bullets;
 		}
 	}

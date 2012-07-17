@@ -1,7 +1,5 @@
 ﻿using System;
-using SkyShoot.Contracts;
 using SkyShoot.Contracts.GameObject;
-using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Service;
 using SkyShoot.XNA.Framework;
 
@@ -10,7 +8,7 @@ namespace SkyShoot.Service.Weapon.Bullets
 	public class Flame : AProjectile
 	{
 		public Flame(AGameObject owner, Guid id, Vector2 direction, Vector2 coordinates)
-			: base(owner, id, direction) 
+			: base(owner, id, direction)
 		{
 			Coordinates = coordinates;
 			Speed = Constants.FLAME_SPEED;

@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using SkyShoot.Contracts;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.GameObject;
-using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Service;
 using SkyShoot.XNA.Framework;
 
