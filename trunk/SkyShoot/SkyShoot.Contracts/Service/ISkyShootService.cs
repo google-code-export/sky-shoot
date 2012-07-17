@@ -21,6 +21,8 @@ namespace SkyShoot.Contracts.Service
 	[ServiceContract]
 	public interface ISkyShootService
 	{
+		#region регистрация, логин и создание игры
+
 		[OperationContract(IsInitiating = true)]
 		AccountManagerErrorCode Register(string username, string password);
 
@@ -37,18 +39,6 @@ namespace SkyShoot.Contracts.Service
 		bool JoinGame(GameDescription game);
 
 		[OperationContract]
-		AGameEvent[] Move(Vector2 direction);
-
-		[OperationContract]
-		AGameEvent[] Shoot(Vector2 direction);
-
-		[OperationContract]
-		AGameEvent[] ChangeWeapon(Weapon.WeaponType type);
-
-		[OperationContract]
-		AGameEvent[] GetEvents();
-
-		[OperationContract]
 		void LeaveGame();
 
 		/// <summary>
@@ -59,17 +49,35 @@ namespace SkyShoot.Contracts.Service
 		[OperationContract]
 		GameLevel GameStart(int gameId);
 
-		[OperationContract]
-		AGameObject[] SynchroFrame();
-
-		[OperationContract] // Выдает таблицу данных о уровне, опыте, фрагах
-		Stats? GetStats();
-
 		/// <summary>
 		/// возвращает список игроков
 		/// </summary>
 		/// <returns>массив имен игроков</returns>
 		[OperationContract]
 		String[] PlayerListUpdate();
+
+		#endregion
+
+		#region процесс игры
+
+		[OperationContract]
+		void Move(Vector2 direction);
+
+		[OperationContract]
+		void Shoot(Vector2 direction);
+
+		[OperationContract]
+		void ChangeWeapon(Weapon.WeaponType type);
+
+		[OperationContract]
+		AGameEvent[] GetEvents();
+
+		[OperationContract]
+		AGameObject[] SynchroFrame();
+
+		[OperationContract] // Выдает таблицу данных о уровне, опыте, фрагах
+		Stats? GetStats();
+
+		#endregion
 	}
 }

@@ -99,11 +99,13 @@ namespace SkyShoot.WinFormsClient
 					{
 						if (_prevMove != _me.RunVector)
 						{
-							ApplyEvents(_service.Move(_prevMove = _me.RunVector));
+							_service.Move(_prevMove = _me.RunVector);
+							// ApplyEvents(_service.Move(_prevMove = _me.RunVector));
 						}
 						if (_shoot != Vector2.Zero)
 						{
-							ApplyEvents(_service.Shoot(_shoot));
+							_service.Shoot(_shoot);
+							// ApplyEvents(_service.Shoot(_shoot));
 							_shoot = Vector2.Zero;
 						}
 						if (_curWeapon != _prevWeapon)
