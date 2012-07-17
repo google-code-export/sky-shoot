@@ -65,8 +65,6 @@
     <Compile Include="CollisionDetection\BoundingRectangle.cs" />
     <Compile Include="CollisionDetection\CollisionDetector.cs" />
     <Compile Include="GameEvents\AGameEvent.cs" />
-    <Compile Include="Logger.cs" />
-    <Compile Include="ObjectBuffer.cs" />
     <Compile Include="Service\AccountManagerErrorCode.cs" />
     <Compile Include="Service\Constants.cs" />
     <Compile Include="GameObject\AGameObject.cs" />
@@ -79,7 +77,10 @@
     <Compile Include="Session\GameMode.cs" />
     <Compile Include="Statistics\Stats.cs" />
     <Compile Include="TeamsList.cs" />
-    <Compile Include="TypeConverter.cs" />
+    <Compile Include="Utils\Logger.cs" />
+    <Compile Include="Utils\ObjectBuffer.cs" />
+    <Compile Include="Utils\ObjectPool.cs" />
+    <Compile Include="Utils\TypeConverter.cs" />
     <Compile Include="Weapon\AWeapon.cs" />
     <Compile Include="Weapon\WeaponType.cs" />
   </ItemGroup>

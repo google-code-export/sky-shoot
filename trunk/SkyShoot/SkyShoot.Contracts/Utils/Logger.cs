@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace SkyShoot.Contracts
+namespace SkyShoot.Contracts.Utils
 {
 	public class Logger
 	{

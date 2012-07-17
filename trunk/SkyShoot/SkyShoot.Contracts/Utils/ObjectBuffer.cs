@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
-namespace SkyShoot.Contracts
+namespace SkyShoot.Contracts.Utils
 {
 	public class ObjectBuffer<T>
 	{
