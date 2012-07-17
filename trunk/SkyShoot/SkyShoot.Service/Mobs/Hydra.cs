@@ -16,6 +16,7 @@ namespace SkyShoot.ServProgram.Mobs
 		{
 			Radius = new Random().Next(Constants.HYDRA_RADIUS_MIN, Constants.HYDRA_RADIUS_MAX);
 			Speed = Constants.HYDRA_SPEED;
+			this.ObjectType = EnumObjectType.Hydra;
 		}
 
 		public override IEnumerable<AGameEvent> OnDead(AGameObject obj, List<AGameObject> newObjects, long time)

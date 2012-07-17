@@ -19,6 +19,7 @@ namespace SkyShoot.ServProgram.Mobs
 			_shootingDelay = shootingDelay;
 			Radius = 10;
 			Speed = 0.03f;
+			this.ObjectType = EnumObjectType.Poisoner;
 		}
 
 		public override IEnumerable<AGameEvent> Think(List<AGameObject> gameObjects, List<AGameObject> newGameObjects, long time)
