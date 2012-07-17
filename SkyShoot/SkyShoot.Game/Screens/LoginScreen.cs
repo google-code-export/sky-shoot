@@ -6,8 +6,8 @@ using Nuclex.UserInterface;
 using Nuclex.UserInterface.Controls;
 using Nuclex.UserInterface.Controls.Desktop;
 using SkyShoot.Contracts.Service;
-using SkyShoot.Game.Client.Game;
-using SkyShoot.Game.Controls;
+using SkyShoot.Game.Game;
+using InputControl = SkyShoot.Game.Input.InputControl;
 
 namespace SkyShoot.Game.Screens
 {
@@ -21,8 +21,8 @@ namespace SkyShoot.Game.Screens
 		private LabelControl _loginLabel;
 		private LabelControl _passwordLabel;
 
-		private Controls.InputControl _loginBox;
-		private Controls.InputControl _passwordBox;
+		private InputControl _loginBox;
+		private InputControl _passwordBox;
 
 		private ButtonControl _exitButton;
 		private ButtonControl _loginButton;
@@ -67,54 +67,54 @@ namespace SkyShoot.Game.Screens
 		private void CreateControls()
 		{
 			// Login Input
-			_loginBox = new Controls.InputControl
-			            	{
-			            		IsHidden = false,
-			            		Bounds = new UniRectangle(new UniScalar(0.5f, -100f), new UniScalar(0.4f, -30), 200, 30),
-			            		Text = Settings.Default.login
-			            	};
+			_loginBox = new InputControl
+							{
+								IsHidden = false,
+								Bounds = new UniRectangle(new UniScalar(0.5f, -100f), new UniScalar(0.4f, -30), 200, 30),
+								Text = Settings.Default.login
+							};
 
 			// Password Input
-			_passwordBox = new Controls.InputControl
-			               	{
-			               		IsHidden = true,
-			               		Bounds = new UniRectangle(new UniScalar(0.5f, -100f), new UniScalar(0.4f, 30), 200, 30),
-			               		RealText = Settings.Default.password,
-			               		Text = Controls.InputControl.HiddenText(Settings.Default.password)
-			               	};
+			_passwordBox = new InputControl
+							{
+								IsHidden = true,
+								Bounds = new UniRectangle(new UniScalar(0.5f, -100f), new UniScalar(0.4f, 30), 200, 30),
+								RealText = Settings.Default.password,
+								Text = InputControl.HiddenText(Settings.Default.password)
+							};
 
 			// Login Label
 			_loginLabel = new LabelControl("Username")
-			              	{
-			              		Bounds = new UniRectangle(new UniScalar(0.5f, -32), new UniScalar(0.4f, -70), 100, 30)
-			              	};
+							{
+								Bounds = new UniRectangle(new UniScalar(0.5f, -32), new UniScalar(0.4f, -70), 100, 30)
+							};
 
 			// Password Label
 			_passwordLabel = new LabelControl("Password")
-			                 	{
-			                 		Bounds = new UniRectangle(new UniScalar(0.5f, -32), new UniScalar(0.4f, 0), 100, 30)
-			                 	};
+								{
+									Bounds = new UniRectangle(new UniScalar(0.5f, -32), new UniScalar(0.4f, 0), 100, 30)
+								};
 
 			// Login Button
 			_loginButton = new ButtonControl
-			               	{
-			               		Text = "Login",
-			               		Bounds = new UniRectangle(new UniScalar(0.5f, 110), new UniScalar(0.4f, 70), 100, 32)
-			               	};
+							{
+								Text = "Login",
+								Bounds = new UniRectangle(new UniScalar(0.5f, 110), new UniScalar(0.4f, 70), 100, 32)
+							};
 
 			// Back Button
 			_exitButton = new ButtonControl
-			              	{
-			              		Text = "Exit",
-			              		Bounds = new UniRectangle(new UniScalar(0.5f, -210f), new UniScalar(0.4f, 70), 100, 32),
-			              	};
+							{
+								Text = "Exit",
+								Bounds = new UniRectangle(new UniScalar(0.5f, -210f), new UniScalar(0.4f, 70), 100, 32),
+							};
 
 			// New Account Button
 			_newAccountButton = new ButtonControl
-			                    	{
-			                    		Text = "Create new account",
-			                    		Bounds = new UniRectangle(new UniScalar(0.5f, -75f), new UniScalar(0.4f, 70), 150, 32)
-			                    	};
+									{
+										Text = "Create new account",
+										Bounds = new UniRectangle(new UniScalar(0.5f, -75f), new UniScalar(0.4f, 70), 150, 32)
+									};
 		}
 
 		private void InitializeControls()
@@ -164,7 +164,7 @@ namespace SkyShoot.Game.Screens
 				AccountManagerErrorCode errorCode;
 
 				if (GameController.Instance.Login(_loginBox.Text, _passwordBox.RealText, out errorCode).HasValue &&
-				    errorCode == AccountManagerErrorCode.Ok)
+					errorCode == AccountManagerErrorCode.Ok)
 				{
 					ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MainMenuScreen);
 				}

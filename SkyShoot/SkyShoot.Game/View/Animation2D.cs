@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace SkyShoot.Game.Client.View
+namespace SkyShoot.Game.View
 {
 	public class Animation2D
 	{

@@ -4,8 +4,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Nuclex.UserInterface;
 using Nuclex.UserInterface.Controls.Desktop;
-using SkyShoot.Game.Client.Game;
-using SkyShoot.Game.Controls;
+using SkyShoot.Game.Game;
 
 namespace SkyShoot.Game.Screens
 {
@@ -58,37 +57,37 @@ namespace SkyShoot.Game.Screens
 		private void CreateControls()
 		{
 			_continueButton = new ButtonControl
-			                  	{
-			                  		Text = "Continue",
-			                  		Bounds =
-			                  			new UniRectangle(
-			                  			new UniScalar(0.30f, 0),
-			                  			new UniScalar(0.2f, 0),
-			                  			new UniScalar(0.4f, 0),
-			                  			new UniScalar(0.1f, 0)),
-			                  	};
+								{
+									Text = "Continue",
+									Bounds =
+										new UniRectangle(
+										new UniScalar(0.30f, 0),
+										new UniScalar(0.2f, 0),
+										new UniScalar(0.4f, 0),
+										new UniScalar(0.1f, 0)),
+								};
 
 			_optionsButton = new ButtonControl
-			                 	{
-			                 		Text = "Options",
-			                 		Bounds =
-			                 			new UniRectangle(
-			                 			new UniScalar(0.30f, 0),
-			                 			new UniScalar(0.35f, 0),
-			                 			new UniScalar(0.4f, 0),
-			                 			new UniScalar(0.1f, 0)),
-			                 	};
+								{
+									Text = "Options",
+									Bounds =
+										new UniRectangle(
+										new UniScalar(0.30f, 0),
+										new UniScalar(0.35f, 0),
+										new UniScalar(0.4f, 0),
+										new UniScalar(0.1f, 0)),
+								};
 
 			_exitButton = new ButtonControl
-			              	{
-			              		Text = "Exit",
-			              		Bounds =
-			              			new UniRectangle(
-			              			new UniScalar(0.30f, 0),
-			              			new UniScalar(0.5f, 0),
-			              			new UniScalar(0.4f, 0),
-			              			new UniScalar(0.1f, 0)),
-			              	};
+							{
+								Text = "Exit",
+								Bounds =
+									new UniRectangle(
+									new UniScalar(0.30f, 0),
+									new UniScalar(0.5f, 0),
+									new UniScalar(0.4f, 0),
+									new UniScalar(0.1f, 0)),
+							};
 		}
 
 		private void InitializeControls()

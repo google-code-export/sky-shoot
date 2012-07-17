@@ -1,36 +1,15 @@
 using System;
-using System.Security.Cryptography;
-using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using SkyShoot.Contracts.GameObject;
 using SkyShoot.Contracts.Service;
-using SkyShoot.Game.Controls;
+using SkyShoot.Game.Input;
+using SkyShoot.Game.Network;
+using SkyShoot.Game.Screens;
+using SkyShoot.Game.Utils;
 
-namespace SkyShoot.Game.Client.Game
+namespace SkyShoot.Game.Game
 {
-	public class HashHelper
-	{
-		/// <summary>
-		/// выдаёт последовательность из 32 шестнадцатеричных цифр (md5 хеш от аргумента)
-		/// </summary>
-		public static string GetMd5Hash(string input)
-		{
-			MD5 md5Hasher = MD5.Create();
-
-			byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(input));
-
-			var sBuilder = new StringBuilder();
-
-			for (int i = 0; i < data.Length; i++)
-			{
-				sBuilder.Append(data[i].ToString("x2"));
-			}
-
-			return sBuilder.ToString();
-		}
-	}
-
 	public sealed class GameController
 	{
 		#region singleton

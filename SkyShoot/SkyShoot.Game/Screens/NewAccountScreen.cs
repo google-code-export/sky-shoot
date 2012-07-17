@@ -6,8 +6,9 @@ using Nuclex.UserInterface;
 using Nuclex.UserInterface.Controls;
 using Nuclex.UserInterface.Controls.Desktop;
 using SkyShoot.Contracts.Service;
-using SkyShoot.Game.Client.Game;
-using SkyShoot.Game.Controls;
+using SkyShoot.Game.Game;
+using SkyShoot.Game.Network;
+using InputControl = SkyShoot.Game.Input.InputControl;
 
 namespace SkyShoot.Game.Screens
 {
@@ -21,8 +22,8 @@ namespace SkyShoot.Game.Screens
 		private LabelControl _loginLabel;
 		private LabelControl _passwordLabel;
 
-		private Controls.InputControl _loginBox;
-		private Controls.InputControl _passwordBox;
+		private InputControl _loginBox;
+		private InputControl _passwordBox;
 
 		private ButtonControl _backButton;
 		private ButtonControl _okButton;
@@ -66,7 +67,7 @@ namespace SkyShoot.Game.Screens
 		private void CreateControls()
 		{
 			// Login Input
-			_loginBox = new Controls.InputControl
+			_loginBox = new InputControl
 			{
 				IsHidden = false,
 				Bounds = new UniRectangle(new UniScalar(0.5f, -100f), new UniScalar(0.4f, -30), 200, 30),
@@ -74,7 +75,7 @@ namespace SkyShoot.Game.Screens
 			};
 
 			// Password Input
-			_passwordBox = new Controls.InputControl
+			_passwordBox = new InputControl
 			{
 				IsHidden = true,
 				Bounds =

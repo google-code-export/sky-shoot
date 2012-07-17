@@ -1,10 +1,9 @@
-п»їusing System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.ServiceModel;
 using System.Text;
 using System.Threading;
-using SkyShoot.Contracts;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.GameObject;
 using SkyShoot.Contracts.Service;
@@ -12,11 +11,11 @@ using SkyShoot.Contracts.Session;
 using SkyShoot.Contracts.Statistics;
 using SkyShoot.Contracts.Utils;
 using SkyShoot.Contracts.Weapon;
-using SkyShoot.Game.Controls;
 using SkyShoot.Game.Screens;
+using SkyShoot.Game.Utils;
 using Timer = System.Timers.Timer;
 
-namespace SkyShoot.Game.Client.Game
+namespace SkyShoot.Game.Network
 {
 	internal class ConnectionManager : ISkyShootService
 	{
@@ -289,8 +288,8 @@ namespace SkyShoot.Game.Client.Game
 		#region service implementation
 
 		/// <summary>
-		/// Р’РѕР·РІСЂР°С‰Р°РµС‚ РїРѕСЃР»РµРґРЅРёРµ СЃРѕР±С‹С‚РёСЏ РѕС‚ СЃРµСЂРІРµСЂР°, РєРѕС‚РѕСЂС‹Рµ Р±С‹Р»Рё РїРѕР»СѓС‡РµРЅС‹ СЃ РїРѕРјРѕС‰СЊСЋ РґСЂСѓРіРѕРіРѕ РїРѕС‚РѕРєР°
-		/// РСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РєР»РёРµРЅС‚РѕРј
+		/// Возвращает последние события от сервера, которые были получены с помощью другого потока
+		/// Используется клиентом
 		/// </summary>
 		public AGameEvent[] GetEvents()
 		{
@@ -456,7 +455,7 @@ namespace SkyShoot.Game.Client.Game
 			}
 		}
 
-		public Contracts.Session.GameLevel GameStart(int gameId)
+		public GameLevel GameStart(int gameId)
 		{
 			try
 			{

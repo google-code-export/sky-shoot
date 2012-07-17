@@ -1,7 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Nuclex.UserInterface;
+using SkyShoot.Game.Input;
 
-namespace SkyShoot.Game.Controls
+namespace SkyShoot.Game.Screens
 {
 	public abstract class GameScreen : Screen
 	{

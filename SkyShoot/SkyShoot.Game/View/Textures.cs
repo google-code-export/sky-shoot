@@ -1,14 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace SkyShoot.Game.Client.View
+namespace SkyShoot.Game.View
 {
 	public static class Textures
 	{
-		public static class LandscapeTextures
-		{
-		}
-
 		public const int STONES_AMOUNT = 4;
 		public const int MOBS_AMOUNT = 2;
 

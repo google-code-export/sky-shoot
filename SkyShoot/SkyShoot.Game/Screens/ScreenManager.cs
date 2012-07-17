@@ -1,13 +1,13 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Nuclex.Input;
 using Nuclex.UserInterface;
-using SkyShoot.Game.Screens;
+using SkyShoot.Game.Input;
 
-namespace SkyShoot.Game.Controls
+namespace SkyShoot.Game.Screens
 {
 	public class ScreenManager : DrawableGameComponent
 	{

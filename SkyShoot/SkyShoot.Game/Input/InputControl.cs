@@ -1,4 +1,4 @@
-namespace SkyShoot.Game.Controls
+namespace SkyShoot.Game.Input
 {
 	internal class InputControl : Nuclex.UserInterface.Controls.Desktop.InputControl
 	{

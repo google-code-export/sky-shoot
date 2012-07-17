@@ -1,7 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace SkyShoot.Game.Client.View
+namespace SkyShoot.Game.View
 {
 	public class Camera2D
 	{

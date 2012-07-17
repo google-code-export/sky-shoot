@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework.Audio;
 
-namespace SkyShoot.Game.Client.Game
+namespace SkyShoot.Game.Game
 {
 	class SoundManager
 	{

@@ -18,7 +18,8 @@
     <XnaCrossPlatformGroupID>6d3e551e-e375-47d2-b99b-4632d94e2866</XnaCrossPlatformGroupID>
     <XnaOutputType>Game</XnaOutputType>
     <ApplicationIcon>Game.ico</ApplicationIcon>
-    <Thumbnail>GameThumbnail.png</Thumbnail>
+    <Thumbnail>
+    </Thumbnail>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <XnaUpgrade />
     <PublishUrl>publish\</PublishUrl>
@@ -126,25 +127,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Client\GameObjects\DrawableGameObject.cs" />
-    <Compile Include="Client\Game\ConnectionManager.cs" />
-    <Compile Include="Client\Game\GameController.cs" />
-    <Compile Include="Client\Game\GameFactory.cs" />
-    <Compile Include="Client\Game\GameLevel.cs" />
-    <Compile Include="Client\Game\GameModel.cs" />
-    <Compile Include="Client\Game\SoundManager.cs" />
-    <Compile Include="Client\View\Animation2D.cs" />
-    <Compile Include="Client\View\Camera2D.cs" />
-    <Compile Include="Client\View\IDrawable.cs" />
-    <Compile Include="Client\View\Textures.cs" />
-    <Compile Include="Controls\Gamepad.cs" />
-    <Compile Include="Controls\Controller.cs" />
-    <Compile Include="Controls\InputControl.cs" />
-    <Compile Include="Controls\KeyboardAndMouse.cs" />
+    <Compile Include="Input\Gamepad.cs" />
+    <Compile Include="Input\Controller.cs" />
+    <Compile Include="Input\InputControl.cs" />
+    <Compile Include="Input\KeyboardAndMouse.cs" />
+    <Compile Include="Game\GameController.cs" />
+    <Compile Include="Game\GameFactory.cs" />
+    <Compile Include="Game\GameLevel.cs" />
+    <Compile Include="Game\GameModel.cs" />
+    <Compile Include="Game\SoundManager.cs" />
+    <Compile Include="Network\ConnectionManager.cs" />
     <Compile Include="Screens\CreateGameScreen.cs" />
     <Compile Include="Screens\GameMenuScreen.cs" />
+    <Compile Include="Screens\GameScreen.cs" />
     <Compile Include="Screens\NewAccountScreen.cs" />
     <Compile Include="Screens\OptionsMenuScreen.cs" />
+    <Compile Include="Screens\ScreenManager.cs" />
     <Compile Include="Screens\WaitScreen.cs" />
     <Compile Include="Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -153,8 +151,6 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Controls\GameScreen.cs" />
-    <Compile Include="Controls\ScreenManager.cs" />
     <Compile Include="Screens\GameplayScreen.cs" />
     <Compile Include="Screens\LoadingScreen.cs" />
     <Compile Include="Screens\LoginScreen.cs" />
@@ -162,11 +158,16 @@
     <Compile Include="Screens\MessageBox.cs" />
     <Compile Include="Screens\MultiplayerScreen.cs" />
     <Compile Include="SkyShootGame.cs" />
-    <Compile Include="TypeConverter.cs" />
+    <Compile Include="Utils\HashHelper.cs" />
+    <Compile Include="Utils\TypeConverter.cs" />
+    <Compile Include="View\Animation2D.cs" />
+    <Compile Include="View\Camera2D.cs" />
+    <Compile Include="View\DrawableGameObject.cs" />
+    <Compile Include="View\IDrawable.cs" />
+    <Compile Include="View\Textures.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
-    <Content Include="GameThumbnail.png" />
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
