@@ -51,6 +51,10 @@ namespace SkyShoot.Game.Client.Game
 					return new DrawableGameObject(serverGameObject, Textures.OneStone);
 				case AGameObject.EnumObjectType.PoisonBullet:
 					return new DrawableGameObject(serverGameObject, Textures.PoisonProjectile);
+				case AGameObject.EnumObjectType.Poisoner:
+					return new DrawableGameObject(serverGameObject, Textures.Poisoner);
+				case AGameObject.EnumObjectType.Hydra:
+					return new DrawableGameObject(serverGameObject, Textures.Hydra);
 			default:
 				return new DrawableGameObject(serverGameObject, Textures.Cross);
 			}
