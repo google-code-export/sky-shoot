@@ -80,7 +80,7 @@
     <Compile Include="Utils\Logger.cs" />
     <Compile Include="Utils\ObjectBuffer.cs" />
     <Compile Include="Utils\ObjectPool.cs" />
-    <Compile Include="Utils\TypeConverter.cs" />
+    <Compile Include="Utils\GameObjectConverter.cs" />
     <Compile Include="Weapon\AWeapon.cs" />
     <Compile Include="Weapon\WeaponType.cs" />
   </ItemGroup>

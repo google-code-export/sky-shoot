@@ -3,7 +3,7 @@ namespace SkyShoot.Game
 #if WINDOWS || XBOX
 	internal static class Program
 	{
-		private static void Main(string[] args)
+		private static void Main()
 		{
 			using (var game = new SkyShootGame())
 			{

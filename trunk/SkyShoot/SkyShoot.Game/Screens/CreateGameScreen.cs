@@ -6,8 +6,8 @@ using Nuclex.UserInterface;
 using Nuclex.UserInterface.Controls;
 using Nuclex.UserInterface.Controls.Desktop;
 using SkyShoot.Contracts.Session;
-using SkyShoot.Game.Client.Game;
-using SkyShoot.Game.Controls;
+using SkyShoot.Game.Game;
+using SkyShoot.Game.Network;
 
 namespace SkyShoot.Game.Screens
 {
@@ -90,22 +90,22 @@ namespace SkyShoot.Game.Screens
 		{
 			// выбора максимального кол-ва игроков
 			_maxPlayersLabel = new LabelControl
-			                   	{
-			                   		Bounds = new UniRectangle(-60f, -34f, 100f, 24f),
-			                   		Text = "Max Players"
-			                   	};
+								{
+									Bounds = new UniRectangle(-60f, -34f, 100f, 24f),
+									Text = "Max Players"
+								};
 
 			// выбор карты
 			_tileLabel = new LabelControl
-			             	{
-			             		Bounds = new UniRectangle(60f, -34f, 150f, 24f),
-			             		Text = "Map"
-			             	};
+							{
+								Bounds = new UniRectangle(60f, -34f, 150f, 24f),
+								Text = "Map"
+							};
 
 			_tileList = new ListControl
-			            	{
-			            		Bounds = new UniRectangle(60f, -4f, 150f, 300f)
-			            	};
+							{
+								Bounds = new UniRectangle(60f, -4f, 150f, 300f)
+							};
 			_tileList.Items.Add("Snow");
 			_tileList.Items.Add("Desert");
 			_tileList.Items.Add("Grass");
@@ -119,15 +119,15 @@ namespace SkyShoot.Game.Screens
 
 			// выбор режима игры
 			_gameModeLabel = new LabelControl
-			                 	{
-			                 		Bounds = new UniRectangle(230f, -34f, 150f, 24f),
-			                 		Text = "Mode"
-			                 	};
+								{
+									Bounds = new UniRectangle(230f, -34f, 150f, 24f),
+									Text = "Mode"
+								};
 
 			_maxPlayersList = new ListControl
-			                  	{
-			                  		Bounds = new UniRectangle(-60f, -4f, 100f, 300f)
-			                  	};
+								{
+									Bounds = new UniRectangle(-60f, -4f, 100f, 300f)
+								};
 			_maxPlayersList.Slider.Bounds.Location.X.Offset -= 1.0f;
 			_maxPlayersList.Slider.Bounds.Location.Y.Offset += 1.0f;
 			_maxPlayersList.Slider.Bounds.Size.Y.Offset -= 2.0f;
@@ -140,21 +140,21 @@ namespace SkyShoot.Game.Screens
 			}
 
 			_maxPlayers = new LabelControl
-			              	{
-			              		Bounds = new UniRectangle(500f, 50f, 150f, 24f),
-			              		Text = _maxPlayersList.Items[_maxPlayersList.SelectedItems[0]] + string.Empty
-			              	};
+							{
+								Bounds = new UniRectangle(500f, 50f, 150f, 24f),
+								Text = _maxPlayersList.Items[_maxPlayersList.SelectedItems[0]] + string.Empty
+							};
 
 			_tile = new LabelControl
-			        	{
-			        		Bounds = new UniRectangle(500f, 80f, 150f, 24f),
-			        		Text = _tileList.Items[_tileList.SelectedItems[0]] + string.Empty
-			        	};
+						{
+							Bounds = new UniRectangle(500f, 80f, 150f, 24f),
+							Text = _tileList.Items[_tileList.SelectedItems[0]] + string.Empty
+						};
 
 			_gameModList = new ListControl
-			               	{
-			               		Bounds = new UniRectangle(230f, -4f, 150f, 300f)
-			               	};
+							{
+								Bounds = new UniRectangle(230f, -4f, 150f, 300f)
+							};
 			_gameModList.Items.Add("Coop");
 			_gameModList.Items.Add("Deathmatch");
 			_gameModList.Items.Add("Campaign");
@@ -174,26 +174,26 @@ namespace SkyShoot.Game.Screens
 			_gameModList.SelectedItems[0] = 0;
 
 			_gameMode = new LabelControl
-			            	{
-			            		Bounds = new UniRectangle(500f, 110f, 150f, 24f),
-			            		Text = _gameModList.Items[_gameModList.SelectedItems[0]] + string.Empty
-			            	};
+							{
+								Bounds = new UniRectangle(500f, 110f, 150f, 24f),
+								Text = _gameModList.Items[_gameModList.SelectedItems[0]] + string.Empty
+							};
 
 			// Create Button
 			_createButton = new ButtonControl
-			                	{
-			                		Text = "Create",
-			                		Bounds =
-			                			new UniRectangle(new UniScalar(0.5f, 178f), new UniScalar(0.4f, -15f), 110, 32)
-			                	};
+								{
+									Text = "Create",
+									Bounds =
+										new UniRectangle(new UniScalar(0.5f, 178f), new UniScalar(0.4f, -15f), 110, 32)
+								};
 
 			// Back Button
 			_backButton = new ButtonControl
-			              	{
-			              		Text = "Back",
-			              		Bounds =
-			              			new UniRectangle(new UniScalar(0.5f, -380f), new UniScalar(0.4f, 170f), 120, 32)
-			              	};
+							{
+								Text = "Back",
+								Bounds =
+									new UniRectangle(new UniScalar(0.5f, -380f), new UniScalar(0.4f, 170f), 120, 32)
+							};
 
 			// todo !?
 			_gameModList.Bounds = new UniRectangle(new UniVector(-1000, -1000), new UniVector(100, 100));

@@ -6,9 +6,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Nuclex.UserInterface;
 using Nuclex.UserInterface.Controls;
 using Nuclex.UserInterface.Controls.Desktop;
-using SkyShoot.Game.Client.Game;
-using SkyShoot.Game.Client.View;
-using SkyShoot.Game.Controls;
+using SkyShoot.Game.Game;
+using SkyShoot.Game.View;
 
 namespace SkyShoot.Game.Screens
 {

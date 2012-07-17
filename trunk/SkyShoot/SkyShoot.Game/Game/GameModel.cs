@@ -9,10 +9,10 @@ using SkyShoot.Contracts.CollisionDetection;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.GameObject;
 using SkyShoot.Contracts.Service;
-using SkyShoot.Game.Client.GameObjects;
-using SkyShoot.Game.Client.View;
+using SkyShoot.Game.Network;
+using SkyShoot.Game.View;
 
-namespace SkyShoot.Game.Client.Game
+namespace SkyShoot.Game.Game
 {
 	public class GameModel
 	{

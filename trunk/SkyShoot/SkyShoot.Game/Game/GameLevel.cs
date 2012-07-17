@@ -1,12 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SkyShoot.Contracts.Session;
-using SkyShoot.Game.Client.View;
-using IDrawable = SkyShoot.Game.Client.View.IDrawable;
+using SkyShoot.Game.View;
 
-namespace SkyShoot.Game.Client.Game
+namespace SkyShoot.Game.Game
 {
-	public class GameLevel : IDrawable
+	public class GameLevel : View.IDrawable
 	{
 		public static int Width { get; private set; }
 

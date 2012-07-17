@@ -3,12 +3,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SkyShoot.Contracts.GameObject;
 using SkyShoot.Contracts.Service;
-using SkyShoot.Game.Client.Game;
-using SkyShoot.Game.Client.View;
+using SkyShoot.Game.Game;
+using SkyShoot.Game.Utils;
 
-using IDrawable = SkyShoot.Game.Client.View.IDrawable;
-
-namespace SkyShoot.Game.Client.GameObjects
+namespace SkyShoot.Game.View
 {
 	public class DrawableGameObject : AGameObject, IDrawable
 	{

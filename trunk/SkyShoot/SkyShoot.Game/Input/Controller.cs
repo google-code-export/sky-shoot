@@ -5,8 +5,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Nuclex.Input;
 using Nuclex.UserInterface.Controls;
+using SkyShoot.Game.Screens;
 
-namespace SkyShoot.Game.Controls
+namespace SkyShoot.Game.Input
 {
 	public abstract class Controller
 	{

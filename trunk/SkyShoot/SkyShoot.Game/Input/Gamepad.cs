@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Nuclex.Input;
 
-namespace SkyShoot.Game.Controls
+namespace SkyShoot.Game.Input
 {
 	internal class Gamepad : Controller
 	{

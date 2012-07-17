@@ -1,4 +1,4 @@
-﻿namespace SkyShoot.Game
+namespace SkyShoot.Game.Utils
 {
 	static class TypeConverter
 	{

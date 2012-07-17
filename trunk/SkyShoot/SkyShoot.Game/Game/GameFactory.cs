@@ -1,8 +1,7 @@
 using SkyShoot.Contracts.GameObject;
-using SkyShoot.Game.Client.GameObjects;
-using SkyShoot.Game.Client.View;
+using SkyShoot.Game.View;
 
-namespace SkyShoot.Game.Client.Game
+namespace SkyShoot.Game.Game
 {
 	internal class GameFactory
 	{
@@ -58,8 +57,8 @@ namespace SkyShoot.Game.Client.Game
 				case AGameObject.EnumObjectType.ParentMob:
 					return new DrawableGameObject(serverGameObject, Textures.ParentMob);
 
-			default:
-				return new DrawableGameObject(serverGameObject, Textures.Cross);
+				default:
+					return new DrawableGameObject(serverGameObject, Textures.Cross);
 			}
 			// can't use switch 'cause one object can have many merged EnumTypes
 			//if (serverGameObject.Is(AGameObject.EnumObjectType.Player))
