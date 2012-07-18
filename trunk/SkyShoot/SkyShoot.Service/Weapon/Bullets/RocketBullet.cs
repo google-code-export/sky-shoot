@@ -24,7 +24,7 @@ namespace SkyShoot.Service.Weapon.Bullets
 			var res = new List<AGameEvent>(base.Do(obj, newObjects, time));
 			if (obj.TeamIdentity!= Owner.TeamIdentity && obj.Is(EnumObjectType.Block))
 			{
-				var explosion = new Explosion(Owner, Guid.NewGuid(), Coordinates, time);
+				var explosion = new Explosion(Owner, Guid.NewGuid(), Coordinates);
 				res.Add(new NewObjectEvent(explosion, time));
 				newObjects.Add(explosion);
 			}

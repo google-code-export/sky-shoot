@@ -92,7 +92,7 @@ namespace SkyShoot.ServProgram.Mobs
 			//  return;
 
 			// ничего не кусаем окромя игроков злобных
-			var afflicted = obj as AGameObject;
+			var afflicted = obj;
 			if (Wait < 1 && (obj.Is(EnumObjectType.Player) || obj.Is(EnumObjectType.Turret)) && (afflicted != null)) //Кусать игроков и турели
 			{
 				if (obj.Is(EnumObjectType.Player))
