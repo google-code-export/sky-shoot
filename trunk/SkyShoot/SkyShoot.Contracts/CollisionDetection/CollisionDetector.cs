@@ -240,6 +240,8 @@ namespace SkyShoot.Contracts.CollisionDetection
 		public static Vector2 FitObjects(Vector2 objActivePos, Vector2 objActiveDir, Bounding objActiveBound,
 										 Vector2 objPassivePos, Vector2 objPassiveDir, Bounding objPassiveBound)
 		{
+			if ((objActivePos - objPassivePos).X < 10e-6 && (objActivePos - objPassivePos).Y < 10e-6)
+				objActivePos += new Vector2((float)10e-5, 0f);
 			if (objActiveBound.IsRectangle)
 			{
 				if (objPassiveBound.IsRectangle)
