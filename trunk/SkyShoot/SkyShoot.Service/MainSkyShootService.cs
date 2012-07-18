@@ -33,6 +33,8 @@ namespace SkyShoot.Service
 
 		private float _speed;
 
+		private Queue<AGameEvent> _filteredEvents = new Queue<AGameEvent>(); 
+
 		private readonly IAccountManager _accountManager = SimpleAccountManager.Instance;
 		private readonly SessionManager _sessionManager = SessionManager.Instance;
 
@@ -252,6 +254,25 @@ namespace SkyShoot.Service
 					events = NewEvents.ToArray();//new Queue<AGameEvent>(NewEvents);
 					NewEvents.Clear();
 				}
+
+				#region Фильтрация эвентов
+				_filteredEvents.Clear();
+				for (int i = 0; i < events.Count(); i++)
+				{
+					bool mismatch = true;
+					for (int j = i+1; j < events.Count(); j++)
+					{
+						if ((events[i].GameObjectId == events[j].GameObjectId) & (events[i].Type == events[j].Type))
+						{
+							mismatch = false;
+							break;
+						}
+					}
+					if (mismatch) _filteredEvents.Enqueue(events[i]);
+				}
+				events = _filteredEvents.ToArray();
+				#endregion
+
 				var sb = new StringBuilder();
 				sb.Append("GetEvents:");
 				sb.Append(events.Length);
