@@ -38,8 +38,7 @@ namespace SkyShoot.Service.Weapon.Bullets
 			foreach (var obj in targetObjects)
 			{
 				if (obj.TeamIdentity == TeamIdentity ||
-					!obj.Is(EnumObjectType.LivingObject) ||
-					obj.Is(EnumObjectType.Turret)
+					!obj.Is(EnumObjectType.LivingObject)
 					)
 				{
 					continue;
