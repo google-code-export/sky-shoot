@@ -23,10 +23,10 @@ namespace SkyShoot.Service.Weapon.Bullets
 		public override IEnumerable<AGameEvent> Do(AGameObject obj, List<AGameObject> newObjects, long time)
 		{
 			var res = new List<AGameEvent>(base.Do(obj, newObjects, time));
-			var player = obj as MainSkyShootService; //Ради проверки на наличие зеркала
-			if (player != null)
+			var afflicted = obj as MainSkyShootService; //Ради проверки на наличие зеркала
+			if (afflicted != null)
 			{
-				var mirror = player.GetBonus(EnumObjectType.Mirror);
+				var mirror = afflicted.GetBonus(EnumObjectType.Mirror);
 
 				if (obj.Is(EnumObjectType.Player) && (obj.HealthAmount >= Constants.POISON_BULLET_DAMAGE) &&
 					(mirror == null) && (obj.TeamIdentity != Owner.TeamIdentity))
