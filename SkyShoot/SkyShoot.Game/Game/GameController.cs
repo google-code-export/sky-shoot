@@ -36,25 +36,31 @@ namespace SkyShoot.Game.Game
 
 		public GameModel GameModel { get; private set; }
 
+		// todo temporary
+		public static long StartTime { get; set; }
+
 		public void GameStart(Contracts.Session.GameLevel arena)
 		{
 			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.GameplayScreen);
 
-			var logger = new Logger(Logger.SolutionPath + "\\logs\\client_game.txt", new TimeHelper(TimeHelper.NowMilliseconds));
+			var logger = new Logger(Logger.SolutionPath + "\\logs\\client_game.txt", new TimeHelper(StartTime));
 
 			GameModel = new GameModel(GameFactory.CreateClientGameLevel(arena), logger);
 
-			var gameObjects = ConnectionManager.Instance.SynchroFrame();
+			var serverGameObjects = ConnectionManager.Instance.SynchroFrame();
 
-			foreach (AGameObject gameObject in gameObjects)
+			// todo remove
+			foreach (AGameObject gameObject in serverGameObjects)
 			{
 				var clientGameObject = GameFactory.CreateClientGameObject(gameObject);
 				GameModel.AddGameObject(clientGameObject);
 			}
+			// todo uncomment
+			// GameModel.ApplySynchroFrame(serverGameObjects);
 
 			Trace.Listeners.Add(logger);
 
-			Trace.Write("Game started");
+			Trace.WriteLine("Game initialized (model created, first synchroframe applied)");
 
 			Trace.Listeners.Remove(Logger.ClientLogger);
 

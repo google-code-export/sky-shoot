@@ -123,7 +123,7 @@ namespace SkyShoot.Service.Session
 			_gameTimer.Start();
 
 			// todo номер игры
-			Trace.Listeners.Add(new Logger(Logger.SolutionPath + "\\logs\\game.txt", _timeHelper) {Name = "game logger"});
+			Trace.Listeners.Add(new Logger(Logger.SolutionPath + "\\logs\\server_game.txt", _timeHelper) {Name = "game logger"});
 
 			Trace.WriteLine("Game Started");
 			
