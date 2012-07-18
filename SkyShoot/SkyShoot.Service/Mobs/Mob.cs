@@ -92,16 +92,24 @@ namespace SkyShoot.ServProgram.Mobs
 			//  return;
 
 			// ничего не кусаем окромя игроков злобных
-			var player = obj as MainSkyShootService;
-			if (Wait < 1 && obj.Is(EnumObjectType.Player) && (player != null))
+			var afflicted = obj as AGameObject;
+			if (Wait < 1 && (obj.Is(EnumObjectType.Player) || obj.Is(EnumObjectType.Turret)) && (afflicted != null)) //Кусать игроков и турели
 			{
-				var shield = player.GetBonus(EnumObjectType.Shield);
-				var damage = shield == null ? 1f : shield.DamageFactor;
-				player.HealthAmount -= damage * Damage;
+				if (obj.Is(EnumObjectType.Player))
+				{
+					var player = obj as MainSkyShootService;
+					var shield = player.GetBonus(EnumObjectType.Shield);
+					var damage = shield == null ? 1f : shield.DamageFactor;
+					afflicted.HealthAmount -= damage * Damage;
+				}
+				else
+				{
+					afflicted.HealthAmount -= Damage;
+				}
 				Stop();
 				return new AGameEvent[]
 								{
-									new ObjectHealthChanged(player.HealthAmount, player.Id, time), 
+									new ObjectHealthChanged(afflicted.HealthAmount, afflicted.Id, time), 
 									new ObjectDirectionChanged(RunVector, Id, time)
 								};
 			}

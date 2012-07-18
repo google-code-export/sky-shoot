@@ -293,7 +293,7 @@ namespace SkyShoot.Service.Session
 			var r = new List<AGameEvent>();
 			//SomebodyDied(mob);
 			//mob.MeMoved -= SomebodyMoved;
-			if ((mob.Is(AGameObject.EnumObjectType.LivingObject)) && (mob.Is(AGameObject.EnumObjectType.Poisoning) == false))
+			if ((mob.Is(AGameObject.EnumObjectType.LivingObject)) && !mob.Is(AGameObject.EnumObjectType.Poisoning) && !mob.Is(AGameObject.EnumObjectType.Turret))
 			{
 				AGameBonus b = _bonusFactory.CreateBonus(mob.Coordinates);
 				b.IsActive = true;
