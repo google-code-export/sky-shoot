@@ -52,6 +52,7 @@
 		public const float EXPLOSION_LIFE_DISTANCE = 200f;
 		public const int EXPLOSION_ATTACK_RATE = 1;
 		public const float EXPLOSION_RADIUS = 50f;
+		public const long EXPLODED_TIME = 1;
 
 		#endregion
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.GameObject;
 using SkyShoot.Contracts.Service;
+using SkyShoot.ServProgram.Mobs;
 using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Service.Weapon.Bullets
@@ -12,14 +13,14 @@ namespace SkyShoot.Service.Weapon.Bullets
 		private const int TIME_TO_LEAVE = (int)Constants.EXPLOSION_LIFE_DISTANCE;
 		private const int TIME_TO_DAMAGE = (int)(Constants.EXPLOSION_LIFE_DISTANCE / 45f);
 
-		private readonly long _explodedTime;
+		private long _explodedTime;
 
 		private bool _isExploded;
 
-		public Explosion(AGameObject owner, Guid id, Vector2 coordinates, long explodedTime)
+		public Explosion(AGameObject owner, Guid id, Vector2 coordinates)
 			: base(owner, id, Vector2.Zero)
 		{
-			_explodedTime = explodedTime;
+			_explodedTime = -1;
 			Speed = Constants.EXPLOSION_SPEED;
 			Damage = Constants.EXPLOSION_DAMAGE;
 			HealthAmount = Constants.EXPLOSION_LIFE_DISTANCE;
@@ -31,7 +32,12 @@ namespace SkyShoot.Service.Weapon.Bullets
 
 		public override IEnumerable<AGameEvent> Do(AGameObject obj, List<AGameObject> newObjects, long time)
 		{
-			if (_isExploded && _explodedTime + TIME_TO_DAMAGE < time)
+			if (_explodedTime == -1)
+			{
+				_explodedTime = time;
+			}
+			
+			if (time > _explodedTime)
 			{
 				return new AGameEvent[] { };
 			}
@@ -46,7 +52,7 @@ namespace SkyShoot.Service.Weapon.Bullets
 
 		public override IEnumerable<AGameEvent> Think(List<AGameObject> players, List<AGameObject> newGameObjects, long time)
 		{
-			if (_explodedTime + TIME_TO_LEAVE < time)
+			if (time > _explodedTime)
 			{
 				IsActive = false;
 				return new AGameEvent[] { new ObjectDeleted(Id, time) };
