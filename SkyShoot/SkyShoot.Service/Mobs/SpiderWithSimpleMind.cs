@@ -28,7 +28,7 @@ namespace SkyShoot.Service.Mobs
 				{
 					var p = gameObjects[i];
 					// myself
-					if (Id == p.Id || p.Is(EnumObjectType.Bonus) || p.Is(EnumObjectType.Bullet))
+					if (TeamIdentity == p.TeamIdentity || p.Is(EnumObjectType.Bonus) || p.Is(EnumObjectType.Bullet))
 						continue;
 					float len = (p.Coordinates - Coordinates).Length();
 					if (len < 4 * (p.Radius + Radius))

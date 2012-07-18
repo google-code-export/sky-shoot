@@ -39,7 +39,7 @@ namespace SkyShoot.ServProgram.Mobs
 
 			foreach (var pl in targetPlayers)
 			{
-				if (!pl.Is(EnumObjectType.Player))
+				if (!pl.Is(EnumObjectType.Player) && !pl.Is(EnumObjectType.Turret))
 				{
 					continue;
 				}
