@@ -1,5 +1,3 @@
-// #define LOG_ENABLED
-
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -34,49 +32,38 @@ namespace SkyShoot.Contracts.Utils
 		public Logger(string filename)
 			: this(filename, new TimeHelper())
 		{
-
 		}
 
 		public Logger(string filename, TimeHelper timeHelper)
 		{
-#if LOG_ENABLED
 			_streamWriter = File.CreateText(filename);
-#endif
 			_timeHelper = timeHelper;
 		}
 
 		public override void WriteLine(string message, string category)
 		{
-#if LOG_ENABLED
 			message = string.Format("[{0}] [{1}]: {2}", category, _timeHelper, message);
 			_streamWriter.WriteLine(message);
 			_streamWriter.Flush();
-#endif
 		}
 
 		public override void Write(string message)
 		{
-#if LOG_ENABLED
 			_streamWriter.Write(string.Format("[{0}] {1}", _timeHelper, message));
 			_streamWriter.Flush();
-#endif
 		}
 
 		public override void WriteLine(string message)
 		{
-#if LOG_ENABLED
 			message = string.Format("[{0}] {1}", _timeHelper, message);
 			_streamWriter.WriteLine(message);
 			_streamWriter.Flush();
-#endif
 		}
 
 		public override void Fail(string message)
 		{
-#if LOG_ENABLED
 			_streamWriter.WriteLine(string.Format("{0}", message));
 			_streamWriter.Flush();
-#endif
 		}
 
 		public static void PrintEvents(AGameEvent[] gameEvents)
