@@ -118,7 +118,7 @@
 
 		#region mobs
 
-		public const float PLAYER_DEFAULT_SPEED = 0.05f;
+		public const float PLAYER_DEFAULT_SPEED = 0.07f;
 		public const float PLAYER_RADIUS = 15f;
 		public const float PLAYER_HEALTH = 100f;
 		public const float SPIDER_SPEED = 0.06f;
@@ -135,7 +135,7 @@
 		public const float HYDRA_SPEED = 0.03f;
 		public const int HYDRA_RADIUS_MIN = 15;
 		public const int HYDRA_RADIUS_MAX = 20;
-		public const float POISONER_MOB_SPEED = 0.03f;
+		public const float POISONER_MOB_SPEED = PLAYER_DEFAULT_SPEED * 3;
 		public const float POISONER_MOB_HEALTH = 100f;
 
 		#region poisoning

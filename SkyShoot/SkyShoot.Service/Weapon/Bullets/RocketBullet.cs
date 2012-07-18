@@ -22,7 +22,7 @@ namespace SkyShoot.Service.Weapon.Bullets
 		public override IEnumerable<AGameEvent> Do(AGameObject obj, List<AGameObject> newObjects, long time)
 		{
 			var res = new List<AGameEvent>(base.Do(obj, newObjects, time));
-			if (obj.TeamIdentity!= Owner.TeamIdentity && obj.Is(EnumObjectType.Block))
+			if (obj.TeamIdentity!= Owner.TeamIdentity && obj.Is(EnumObjectType.Block) && !obj.Is(EnumObjectType.Poisoning))
 			{
 				var explosion = new Explosion(Owner, Guid.NewGuid(), Coordinates);
 				res.Add(new NewObjectEvent(explosion, time));
