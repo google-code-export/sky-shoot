@@ -28,10 +28,10 @@ namespace SkyShoot.Service.Weapon.Bullets
 			{
 				var mirror = player.GetBonus(EnumObjectType.Mirror);
 
-				if (obj.Id != Owner.Id && obj.Is(EnumObjectType.Player) && (obj.HealthAmount >= Constants.POISON_BULLET_DAMAGE) &&
-					(mirror == null))
+				if (obj.Is(EnumObjectType.Player) && (obj.HealthAmount >= Constants.POISON_BULLET_DAMAGE) &&
+					(mirror == null) && (obj.TeamIdentity != Owner.TeamIdentity))
 				{
-					var wp = new PoisonTick(Guid.NewGuid());
+					var wp = new Pistol(Guid.NewGuid());//Просто для конструктора. Заглушка.
 					var poison = new Poisoning(Constants.POISONING_TICK_TIMES, wp, obj)
 								 {
 									 ObjectType = EnumObjectType.Poisoning,
