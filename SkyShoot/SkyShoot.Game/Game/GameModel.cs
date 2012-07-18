@@ -11,6 +11,7 @@ using SkyShoot.Contracts.GameObject;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Game.Network;
 using SkyShoot.Game.View;
+using SkyShoot.Contracts.Utils;
 
 namespace SkyShoot.Game.Game
 {
@@ -23,12 +24,14 @@ namespace SkyShoot.Game.Game
 		// explosions -> exploded time
 		private readonly Dictionary<DrawableGameObject, long> _explosions;
 
-		// private readonly Logger _logger = new Logger("model_log.txt");
+		private readonly Logger _logger;
 
 		public Camera2D Camera2D { get; private set; }
 
-		public GameModel(GameLevel gameLevel)
+		public GameModel(GameLevel gameLevel, Logger logger)
 		{
+			_logger = logger;
+
 			GameLevel = gameLevel;
 
 			Camera2D = new Camera2D(GameLevel.Width, GameLevel.Height);
@@ -60,9 +63,9 @@ namespace SkyShoot.Game.Game
 			return null;
 		}
 
-		public void ApplyEvents(IList<AGameEvent> gameEvents)
+		public void ApplyEvents(AGameEvent[] gameEvents)
 		{
-			PrintEvents(gameEvents);
+			Logger.PrintEvents(gameEvents);
 			foreach (var gameEvent in gameEvents)
 			{
 				// todo проверить, выполняется ли
@@ -105,10 +108,6 @@ namespace SkyShoot.Game.Game
 					}
 				}
 			}
-			// catch (Exception exc)
-			// {
-			//		Trace.WriteLine("game:apply events:" + exc);
-			// }
 		}
 
 		public void UpdateExplosions()
@@ -234,19 +233,6 @@ namespace SkyShoot.Game.Game
 			}
 
 			spriteBatch.End();
-		}
-
-		private void PrintEvents(IEnumerable<AGameEvent> gameEvents)
-		{
-			var stringBuilder = new StringBuilder();
-			stringBuilder.Append("RECEIVE EVENTS:");
-
-			foreach (var gameEvent in gameEvents)
-			{
-				stringBuilder.Append("\n  " + gameEvent.Type);
-			}
-
-			// _logger.WriteLine(stringBuilder.ToString());
 		}
 	}
 }

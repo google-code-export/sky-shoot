@@ -110,12 +110,12 @@ namespace SkyShoot.Service.Session
 
 			#endregion
 
-			_timeHelper = new TimeHelper(DateTime.Now.Ticks / 10000);
+			_timeHelper = new TimeHelper(TimeHelper.NowMilliseconds);
 
 			_timerCounter = 0;
 			_updating = false;
 
-			_lastUpdate = 0;// DateTime.Now.Ticks / 10000;
+			_lastUpdate = 0;
 			_updateDelay = 0;
 
 			_gameTimer = new Timer(Constants.FPS) { AutoReset = true };
@@ -208,7 +208,7 @@ namespace SkyShoot.Service.Session
 			if (!System.Threading.Monitor.TryEnter(_updating)) return;
 
 			// Trace.WriteLine("update begin "+ _timerCounter);
-			var now = _timeHelper.GetTime();// DateTime.Now.Ticks / 10000;
+			var now = _timeHelper.GetTime();
 
 			_updateDelay = now - _lastUpdate;
 			_lastUpdate = now;

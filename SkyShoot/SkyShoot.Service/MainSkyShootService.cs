@@ -136,18 +136,6 @@ namespace SkyShoot.Service
 			return Bonuses.Aggregate((EnumObjectType)0, (current, bonus) => current | bonus.ObjectType);
 		}
 
-		private void PrintEvents(AGameEvent[] gameEvents)
-		{
-			var eventsString = new StringBuilder();
-			eventsString.Append("GetEvents, count = ");
-			eventsString.Append(gameEvents.Length);
-			foreach (var gameEvent in gameEvents)
-			{
-				eventsString.Append("\n  " + gameEvent);
-			}
-			Trace.WriteLine(eventsString);
-		}
-
 		#endregion
 
 		#region public methods
@@ -287,7 +275,7 @@ namespace SkyShoot.Service
 
 				#endregion
 
-				PrintEvents(events);
+				Logger.PrintEvents(events);
 			}
 			catch (Exception exc)
 			{

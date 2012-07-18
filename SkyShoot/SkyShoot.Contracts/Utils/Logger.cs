@@ -1,6 +1,8 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
+using SkyShoot.Contracts.GameEvents;
 
 namespace SkyShoot.Contracts.Utils
 {
@@ -69,6 +71,18 @@ namespace SkyShoot.Contracts.Utils
 		{
 			_streamWriter.WriteLine(string.Format("{0}", message));
 			_streamWriter.Flush();
+		}
+
+		public static void PrintEvents(AGameEvent[] gameEvents)
+		{
+			var eventsString = new StringBuilder();
+			eventsString.Append("Events, count = ");
+			eventsString.Append(gameEvents.Length);
+			foreach (var gameEvent in gameEvents)
+			{
+				eventsString.Append("\n  " + gameEvent);
+			}
+			Trace.WriteLine(eventsString);
 		}
 	}
 }

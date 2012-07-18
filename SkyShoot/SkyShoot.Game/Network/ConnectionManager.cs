@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.ServiceModel;
-using System.Text;
 using System.Threading;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.GameObject;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Session;
 using SkyShoot.Contracts.Statistics;
+using SkyShoot.Contracts.Utils;
 using SkyShoot.Contracts.Weapon;
 using SkyShoot.Game.Screens;
 using SkyShoot.Game.Utils;
@@ -92,19 +92,6 @@ namespace SkyShoot.Game.Network
 			MessageBox.Message = "Connection error!";
 			MessageBox.Next = ScreenManager.ScreenEnum.LoginScreen;
 			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MessageBoxScreen);
-		}
-
-		private void PrintEvents(AGameEvent[] gameEvents)
-		{
-			var stringBuilder = new StringBuilder();
-			stringBuilder.Append("RECEIVE EVENTS:" + gameEvents.Length);
-
-			foreach (var gameEvent in gameEvents)
-			{
-				stringBuilder.Append("\n  " + gameEvent.Type);
-			}
-
-			Trace.WriteLine(stringBuilder.ToString());
 		}
 
 		#region run/stop thread, initialization
@@ -296,7 +283,7 @@ namespace SkyShoot.Game.Network
 				events = _lastServerGameEvents.ToArray();
 				_lastServerGameEvents.Clear();
 			}
-			PrintEvents(events);
+			// Logger.PrintEvents(events);
 			return events;
 		}
 
