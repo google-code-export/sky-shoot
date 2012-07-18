@@ -134,7 +134,7 @@
 		public const int HYDRA_RADIUS_MIN = 15;
 		public const int HYDRA_RADIUS_MAX = 20;
 		public const float POISONER_MOB_SPEED = 0.03f;
-		public const float POISONER_MOB_HEALTH = 500f;
+		public const float POISONER_MOB_HEALTH = 100f;
 
 		#region poisoning
 		public const float POISONTICK_DAMAGE = 7f;
