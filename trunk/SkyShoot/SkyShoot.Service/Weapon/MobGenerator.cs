@@ -20,7 +20,7 @@ namespace SkyShoot.ServProgram.Weapon
 		{
 			var mobs = new AGameObject[] { new ChildrenMob() };
 			foreach (var mob in mobs)
-				mob.Coordinates = new Vector2(Owner.Coordinates.X + mob.RunVector.X * mob.Radius, Owner.Coordinates.Y + mob.RunVector.Y * mob.Radius);
+				mob.Coordinates = new Vector2(Owner.Coordinates.X + Owner.RunVector.X * Owner.Radius * 1.5f, Owner.Coordinates.Y + Owner.RunVector.Y * Owner.Radius * 1.5f);
 			return mobs;
 		}
 	}
