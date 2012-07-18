@@ -4,22 +4,22 @@ namespace SkyShoot.Contracts.Utils
 {
 	public static class GameObjectConverter
 	{
-		public static AGameObject OneObject(AGameObject m)
+		public static AGameObject OneObject(AGameObject gameObject)
 		{
-			var o = new AGameObject();
-			o.Copy(m);
-			return o;
+			var gameObjectCopy = new AGameObject();
+			gameObjectCopy.Copy(gameObject);
+			return gameObjectCopy;
 		}
 
-		public static AGameObject[] ArrayedObjects(AGameObject[] ms)
+		public static AGameObject[] ArrayedObjects(AGameObject[] gameObjects)
 		{
-			var rs = new AGameObject[ms.Length];
-			for (int i = 0; i < ms.Length; i++)
+			var result = new AGameObject[gameObjects.Length];
+			for (int i = 0; i < gameObjects.Length; i++)
 			{
-				rs[i] = new AGameObject();
-				rs[i].Copy(ms[i]);
+				result[i] = new AGameObject();
+				result[i].Copy(gameObjects[i]);
 			}
-			return rs;
+			return result;
 		}
 	}
 }

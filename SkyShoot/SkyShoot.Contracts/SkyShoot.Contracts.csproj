@@ -33,7 +33,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
@@ -76,6 +76,7 @@
     <Compile Include="Session\GameLevel.cs" />
     <Compile Include="Session\GameMode.cs" />
     <Compile Include="Statistics\Stats.cs" />
+    <Compile Include="SynchroFrames\SynchroFrame.cs" />
     <Compile Include="TeamsList.cs" />
     <Compile Include="Utils\Logger.cs" />
     <Compile Include="Utils\ObjectBuffer.cs" />

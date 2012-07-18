@@ -4,10 +4,10 @@ using System.Diagnostics;
 using System.ServiceModel;
 using System.Threading;
 using SkyShoot.Contracts.GameEvents;
-using SkyShoot.Contracts.GameObject;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Session;
 using SkyShoot.Contracts.Statistics;
+using SkyShoot.Contracts.SynchroFrames;
 using SkyShoot.Contracts.Utils;
 using SkyShoot.Contracts.Weapon;
 using SkyShoot.Game.Game;
@@ -57,7 +57,7 @@ namespace SkyShoot.Game.Network
 
 		// received from server
 		private List<AGameEvent> _lastServerGameEvents;
-		private List<AGameObject> _lastServerSynchroFrame;
+		private SynchroFrame _lastServerSynchroFrame;
 
 		private readonly object _gameEventLocker = new object();
 		private readonly object _synchroFrameLocker = new object();
@@ -115,8 +115,8 @@ namespace SkyShoot.Game.Network
 			};
 			_synchroFrameTimer.Elapsed += (sender, args) => GetLatestServerSynchroFrame();
 
+			// todo зачем инициализация?
 			_lastServerGameEvents = new List<AGameEvent>(MAX_SERVER_GAME_EVENTS);
-			_lastServerSynchroFrame = new List<AGameObject>(MAX_SERVER_GAME_EVENTS);
 
 			// getting first synchroFrame
 			GetLatestServerSynchroFrame();
@@ -182,17 +182,7 @@ namespace SkyShoot.Game.Network
 			{
 				lock (_synchroFrameLocker)
 				{
-					AGameObject[] serverGameObjects = _service.SynchroFrame();
-
-					if (serverGameObjects == null)
-					{
-						_lastServerSynchroFrame = null;
-					}
-					else
-					{
-						_lastServerSynchroFrame.Clear();
-						_lastServerSynchroFrame.AddRange(_service.SynchroFrame());
-					}
+					_lastServerSynchroFrame = _service.SynchroFrame();
 				}
 			}
 			catch (Exception exc)
@@ -200,7 +190,6 @@ namespace SkyShoot.Game.Network
 				Trace.WriteLine("game:SynchroFrame" + exc);
 				// todo rewrite
 				Debug.Assert(_lastServerSynchroFrame != null, "_lastServerSynchroFrame != null");
-				_lastServerSynchroFrame.Clear();
 			}
 		}
 
@@ -288,19 +277,13 @@ namespace SkyShoot.Game.Network
 			return events;
 		}
 
-		public AGameObject[] SynchroFrame()
+		public SynchroFrame SynchroFrame()
 		{
-			AGameObject[] synchroFrame;
 			lock (_synchroFrameLocker)
 			{
-				if (_lastServerSynchroFrame == null)
-					return null;
-				synchroFrame = _lastServerSynchroFrame.ToArray();
-				_lastServerSynchroFrame.Clear();
-
+				return _lastServerSynchroFrame;
 				// Trace.WriteLine("SYNCHRO_FRAME");
 			}
-			return synchroFrame;
 		}
 
 		public void Move(XNA.Framework.Vector2 direction)

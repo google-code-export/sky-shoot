@@ -447,6 +447,11 @@ namespace SkyShoot.Service.Session
 			return _gameObjects.FindAll(o => o.Is(AGameObject.EnumObjectType.Player)).Count;
 		}
 
+		public long GetTime()
+		{
+			return _timeHelper.GetTime();
+		}
+
 		#endregion
 	}
 }

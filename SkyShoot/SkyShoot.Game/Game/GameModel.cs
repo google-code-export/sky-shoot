@@ -9,6 +9,7 @@ using SkyShoot.Contracts.CollisionDetection;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.GameObject;
 using SkyShoot.Contracts.Service;
+using SkyShoot.Contracts.SynchroFrames;
 using SkyShoot.Game.Network;
 using SkyShoot.Game.View;
 using SkyShoot.Contracts.Utils;
@@ -129,15 +130,15 @@ namespace SkyShoot.Game.Game
 		/// <summary>
 		/// Обновление позиций игровых объектов
 		/// </summary>
-		public void ApplySynchroFrame(AGameObject[] serverGameObjects)
+		public void ApplySynchroFrame(SynchroFrame synchroFrame)
 		{
-			if (serverGameObjects == null)
+			if (synchroFrame == null)
 			{
 				GameController.Instance.GameOver();
 				return;
 			}
 
-			foreach (var serverGameObject in serverGameObjects)
+			foreach (AGameObject serverGameObject in synchroFrame)
 			{
 				AGameObject clientMob = GetGameObject(serverGameObject.Id);
 
