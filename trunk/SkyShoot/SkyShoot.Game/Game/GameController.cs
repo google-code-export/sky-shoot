@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using SkyShoot.Contracts.GameObject;
@@ -7,6 +8,7 @@ using SkyShoot.Game.Input;
 using SkyShoot.Game.Network;
 using SkyShoot.Game.Screens;
 using SkyShoot.Game.Utils;
+using SkyShoot.Contracts.Utils;
 
 namespace SkyShoot.Game.Game
 {
@@ -38,7 +40,9 @@ namespace SkyShoot.Game.Game
 		{
 			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.GameplayScreen);
 
-			GameModel = new GameModel(GameFactory.CreateClientGameLevel(arena));
+			var logger = new Logger(Logger.SolutionPath + "\\logs\\client_game.txt", new TimeHelper(TimeHelper.NowMilliseconds));
+
+			GameModel = new GameModel(GameFactory.CreateClientGameLevel(arena), logger);
 
 			var gameObjects = ConnectionManager.Instance.SynchroFrame();
 
@@ -47,6 +51,12 @@ namespace SkyShoot.Game.Game
 				var clientGameObject = GameFactory.CreateClientGameObject(gameObject);
 				GameModel.AddGameObject(clientGameObject);
 			}
+
+			Trace.Listeners.Add(logger);
+
+			Trace.Write("Game started");
+
+			Trace.Listeners.Remove(Logger.ClientLogger);
 
 			// GameModel initialized, set boolean flag  
 			IsGameStarted = true;

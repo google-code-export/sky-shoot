@@ -30,5 +30,10 @@ namespace SkyShoot.Contracts.Utils
 			var dateTime = new DateTime(GetTime() * 10000);
 			return String.Format("{0:H:m:s:fff}", dateTime);
 		}
+
+		public static long NowMilliseconds
+		{
+			get { return DateTime.Now.Ticks / 10000; }
+		}
 	}
 }
