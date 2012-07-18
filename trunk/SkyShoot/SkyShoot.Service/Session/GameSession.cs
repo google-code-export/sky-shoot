@@ -352,33 +352,27 @@ namespace SkyShoot.Service.Session
 			{
 				if (!_gameObjects[i].Is(AGameObject.EnumObjectType.Player))
 					continue;
+
 				var player = _gameObjects[i] as MainSkyShootService;
 				if (player == null)
 				{
 					Trace.WriteLine("Error: !!! IsPlayer true for non player object");
 					continue;
 				}
+
 				_gameObjects[i].TeamIdentity = SessionTeamsList.GetTeamByNymber(1);
 				_gameObjects[i].TeamIdentity.Members.Add(_gameObjects[i]);
-				//this.SomebodyMoves += player.MobMoved;
+				
 				player.MeMoved += SomebodyMoved;
-				//this.SomebodyShoots += player.MobShot;
 				player.MeShot += SomebodyShot;
-
 				player.MeChangeWeapon += SomebodyChangedWeapon;
-				//this.SomebodySpawns += player.SpawnMob;
-
-				//this.SomebodyDies += player.MobDead;
-
-				//this.SomebodyHit += player.Hit;
-
+				
 				player.Coordinates = new Vector2(500, 500);
 				player.Speed = Constants.PLAYER_DEFAULT_SPEED;
 				player.Radius = Constants.PLAYER_RADIUS;
 				player.Weapon = new Weapon.Pistol(Guid.NewGuid(), player);
 				player.RunVector = new Vector2(0, 0);
 				player.MaxHealthAmount = player.HealthAmount = Constants.PLAYER_HEALTH;
-
 			}
 
 			_gameObjects.AddRange(_wallFactory.CreateWalls());
@@ -388,14 +382,17 @@ namespace SkyShoot.Service.Session
 			{
 				IsStarted = true;
 			}
+
 			_timerCounter = 0;
 			_updating = false;
 
 			_lastUpdate = DateTime.Now.Ticks / 10000;
 			_updateDelay = 0;
+			
 			_gameTimer = new Timer(Constants.FPS) { AutoReset = true };
 			_gameTimer.Elapsed += TimerElapsedListener;
 			_gameTimer.Start();
+			
 			Trace.WriteLine("Game Started");
 		}
 
@@ -427,19 +424,12 @@ namespace SkyShoot.Service.Session
 
 			LocalGameDescription.Players.Add(player.Name);
 
-			//UpdatePlayersList(player);
-
-			//if (NewPlayerConnected != null) NewPlayerConnected(player);
-
-			//StartGame += player.GameStart;
-
 			if (_gameObjects.Count == LocalGameDescription.MaximumPlayersAllowed)
 			{
 				// Trace.WriteLine("player added"+player.Name);
 				var startThread = new System.Threading.Thread(Start);
 				startThread.Start();
 			}
-
 			return true;
 		}
 

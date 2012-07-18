@@ -9,7 +9,6 @@ using SkyShoot.Contracts.GameObject;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Session;
 using SkyShoot.Contracts.Statistics;
-using SkyShoot.Contracts.Utils;
 using SkyShoot.Contracts.Weapon;
 using SkyShoot.Game.Screens;
 using SkyShoot.Game.Utils;
@@ -41,8 +40,6 @@ namespace SkyShoot.Game.Network
 		private Queue<AGameEvent> _lastClientGameEvents;
 
 		private const int MAX_SERVER_GAME_EVENTS = 100;
-
-		private readonly Logger _logger = new Logger("manager_log.txt");
 
 		#region local thread
 
@@ -107,7 +104,7 @@ namespace SkyShoot.Game.Network
 				stringBuilder.Append("\n  " + gameEvent.Type);
 			}
 
-			_logger.WriteLine(stringBuilder.ToString());
+			Trace.WriteLine(stringBuilder.ToString());
 		}
 
 		#region run/stop thread, initialization

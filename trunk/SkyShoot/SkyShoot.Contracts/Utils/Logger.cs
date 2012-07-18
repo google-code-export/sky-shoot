@@ -1,27 +1,34 @@
-using System;
+using System.Diagnostics;
 using System.IO;
 
 namespace SkyShoot.Contracts.Utils
 {
-	public class Logger
+	public class Logger : TraceListener
 	{
 		private readonly StreamWriter _streamWriter;
+		private readonly TimeHelper _timeHelper;
 
 		public Logger(string filename)
+			: this(filename, new TimeHelper())
 		{
-			_streamWriter = File.CreateText(filename);
 		}
 
-		public void WriteLine(string message, string category)
+		public Logger(string filename, TimeHelper timeHelper)
 		{
-			message = string.Format("[{0}.{1}] {2}: {3}", DateTime.Now, DateTime.Now.Millisecond, category, message);
+			_streamWriter = File.CreateText(filename);
+			_timeHelper = timeHelper;
+		}
+
+		public override void WriteLine(string message, string category)
+		{
+			message = string.Format("[{0}] [{1}]: {2}", category, _timeHelper, message);
 			_streamWriter.WriteLine(message);
 			_streamWriter.Flush();
 		}
 
-		public void Write(string message)
+		public override void Write(string message)
 		{
-			_streamWriter.Write(string.Format("[{0}] INFO: {1}", DateTime.Now, message));
+			_streamWriter.Write(string.Format("[{0}] {1}", _timeHelper, message));
 			_streamWriter.Flush();
 		}
 
@@ -31,16 +38,16 @@ namespace SkyShoot.Contracts.Utils
 			_streamWriter.Flush();
 		}
 
-		public void WriteLine(string message)
+		public override void WriteLine(string message)
 		{
-			message = string.Format("[INFO] [{0}:{1}] {2}", DateTime.Now, DateTime.Now.Millisecond, message);
+			message = string.Format("[{0}] {1}", _timeHelper, message);
 			_streamWriter.WriteLine(message);
 			_streamWriter.Flush();
 		}
 
-		public void Fail(string message)
+		public override void Fail(string message)
 		{
-			_streamWriter.WriteLine(string.Format("[{0}] ERROR: {1}", DateTime.Now, message));
+			_streamWriter.WriteLine(string.Format("{0}", message));
 			_streamWriter.Flush();
 		}
 	}
