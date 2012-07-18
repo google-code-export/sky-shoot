@@ -16,7 +16,7 @@ namespace SkyShoot.Contracts.GameEvents
 		ObjectDeletedEvent,
 		WeaponChangedEvent,
 		ObjectHealthChanged,
-		EmptyGameEvent
+		RequestForEvents
 	}
 
 	[DataContract]
@@ -59,14 +59,13 @@ namespace SkyShoot.Contracts.GameEvents
 	/// Вспомогательный класс, обозначающий пустое событие
 	/// Используется клиентом для обозначения того,
 	/// что нужно запросить с сервера GameEvent'ы
-	/// // todo rename
 	/// </summary>
-	public class EmptyEvent : AGameEvent
+	public class RequestForEvents : AGameEvent
 	{
-		public EmptyEvent(Guid? id, long timeStamp)
+		public RequestForEvents(Guid? id, long timeStamp)
 			: base(id, timeStamp)
 		{
-			Type = EventType.EmptyGameEvent;
+			Type = EventType.RequestForEvents;
 		}
 
 		public override void UpdateMob(AGameObject mob)

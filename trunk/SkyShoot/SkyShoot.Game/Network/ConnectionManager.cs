@@ -10,8 +10,10 @@ using SkyShoot.Contracts.Session;
 using SkyShoot.Contracts.Statistics;
 using SkyShoot.Contracts.Utils;
 using SkyShoot.Contracts.Weapon;
+using SkyShoot.Game.Game;
 using SkyShoot.Game.Screens;
 using SkyShoot.Game.Utils;
+using GameLevel = SkyShoot.Contracts.Session.GameLevel;
 using Timer = System.Timers.Timer;
 
 namespace SkyShoot.Game.Network
@@ -108,8 +110,8 @@ namespace SkyShoot.Game.Network
 
 			_eventTimer.Elapsed += (sender, args) =>
 			{
-				AGameEvent emptyGameEvent = new EmptyEvent(null, 0);
-				AddClientGameEvent(emptyGameEvent);
+				AGameEvent requestForEvents = new RequestForEvents(null, 0);
+				AddClientGameEvent(requestForEvents);
 			};
 			_synchroFrameTimer.Elapsed += (sender, args) => GetLatestServerSynchroFrame();
 
@@ -128,7 +130,6 @@ namespace SkyShoot.Game.Network
 			while (true)
 			{
 				AGameEvent gameEvent = null;
-				// Trace.WriteLine("Working", "Information");
 
 				lock (_locker)
 				{
@@ -249,7 +250,7 @@ namespace SkyShoot.Game.Network
 						if (objectDirectionChanged != null)
 							_service.Move(objectDirectionChanged.NewRunDirection);
 						break;
-					case EventType.EmptyGameEvent:
+					case EventType.RequestForEvents:
 						GetLatestServerGameEvents();
 						break;
 					case EventType.WeaponChangedEvent:
@@ -440,7 +441,15 @@ namespace SkyShoot.Game.Network
 				var level = _service.GameStart(gameId);
 				if (level != null)
 				{
+					// todo change
+					GameController.StartTime = TimeHelper.NowMilliseconds;
+
+					Trace.WriteLine("Game started on server");
+
+					// todo долго выполняется (~40 мс), нужно как-то изменить
 					InitializeThreadAndTimers();
+
+					Trace.WriteLine("ConnectionManager: Thread and timers initialized");
 				}
 				return level;
 			}

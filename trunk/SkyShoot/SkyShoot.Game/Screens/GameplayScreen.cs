@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Globalization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -131,8 +132,7 @@ namespace SkyShoot.Game.Screens
 		{
 			base.Update(gameTime);
 
-			if (GameController.Instance.GameModel == null)
-				return;
+			Debug.Assert(GameController.Instance.IsGameStarted);
 
 			GameController.Instance.GameModel.Update(gameTime);
 
@@ -161,9 +161,8 @@ namespace SkyShoot.Game.Screens
 
 		public override void Draw(GameTime gameTime)
 		{
-			// todo remove this
-			if (GameController.Instance.GameModel == null)
-				return;
+			// todo remove this?
+			Debug.Assert(GameController.Instance.IsGameStarted);
 
 			GraphicsDevice graphicsDevice = ScreenManager.Instance.GraphicsDevice;
 			SpriteBatch spriteBatch = ScreenManager.Instance.SpriteBatch;

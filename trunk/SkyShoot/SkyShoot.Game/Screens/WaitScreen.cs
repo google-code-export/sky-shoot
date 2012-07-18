@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -21,7 +22,7 @@ namespace SkyShoot.Game.Screens
 		private ListControl _playersList;
 		private ButtonControl _leaveButton;
 
-		private List<string> _tmpPlayersList;
+		private List<string> _players;
 
 		private SpriteBatch _spriteBatch;
 		private SpriteFont _spriteFont;
@@ -57,25 +58,23 @@ namespace SkyShoot.Game.Screens
 			_texture = _content.Load<Texture2D>("Textures/screens/screen_02_fix");
 			_spriteFont = _content.Load<SpriteFont>("Times New Roman");
 
-			// todo rename variable
-			// вывод списка игрков
-			GameDescription[] tmpGameDescriptionList = ConnectionManager.Instance.GetGameList();
+			// вывод списка игроков
+			GameDescription[] gameDescriptions = ConnectionManager.Instance.GetGameList();
 
-			if (tmpGameDescriptionList == null)
+			if (gameDescriptions == null)
 				return;
 
-			foreach (GameDescription gameDescription in tmpGameDescriptionList)
-			{
-				if (GameId == gameDescription.GameId)
-				{
-					_tmpPlayersList = gameDescription.Players;
-				}
-			}
+			GameDescription gameDescription = gameDescriptions.FirstOrDefault(description => GameId == description.GameId);
 
-			if (_tmpPlayersList == null)
+			// todo переписать
+			if (gameDescription != null) 
+				_players = gameDescription.Players;
+
+			// todo ?
+			if (_players == null)
 				return;
 
-			foreach (string player in _tmpPlayersList)
+			foreach (string player in _players)
 			{
 				_playersList.Items.Add(player);
 			}
@@ -120,9 +119,10 @@ namespace SkyShoot.Game.Screens
 		{
 			base.Update(gameTime);
 
-			// обновляемся только каждый 30 апдейт (два раза в секунду)
-			if (_updateCount++ % 30 != 0)
+			// обновляемся только каждый 6-ой апдейт (через каждые 100 мс)
+			if (_updateCount++ % 6 != 0)
 				return;
+
 			var level = ConnectionManager.Instance.GameStart(GameId);
 			if (level != null)
 			{
