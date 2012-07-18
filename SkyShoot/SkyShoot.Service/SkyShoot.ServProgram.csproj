@@ -109,7 +109,6 @@
     <Compile Include="Bonus\Remedy.cs" />
     <Compile Include="Bonus\Shield.cs" />
     <Compile Include="Bonus\Speedup.cs" />
-    <Compile Include="Logger\TableTraceListenerProg.cs" />
     <Compile Include="MainSkyShootService.cs" />
     <Compile Include="Mobs\ChildrenMob.cs" />
     <Compile Include="Mobs\Hydra.cs" />

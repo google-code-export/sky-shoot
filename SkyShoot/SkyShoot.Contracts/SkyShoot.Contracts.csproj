@@ -81,6 +81,7 @@
     <Compile Include="Utils\ObjectBuffer.cs" />
     <Compile Include="Utils\ObjectPool.cs" />
     <Compile Include="Utils\GameObjectConverter.cs" />
+    <Compile Include="Utils\TimeHelper.cs" />
     <Compile Include="Weapon\AWeapon.cs" />
     <Compile Include="Weapon\WeaponType.cs" />
   </ItemGroup>

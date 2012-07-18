@@ -3,8 +3,8 @@ using System.Diagnostics;
 using System.ServiceModel;
 using System.ServiceModel.Description;
 using SkyShoot.Contracts.Service;
+using SkyShoot.Contracts.Utils;
 using SkyShoot.Service;
-using SkyShoot.Service.Logger;
 
 namespace SkyShoot.ServProgram
 {
@@ -14,7 +14,11 @@ namespace SkyShoot.ServProgram
 		{
 			try
 			{
-				Trace.Listeners.Add(new TableTraceListener());
+#if DEBUG
+				Trace.Listeners.Add(new Logger(@"..\..\..\logs\server_log.txt"));
+#else
+				Trace.Listeners.Add(new Logger(@"server_log.txt"));
+#endif
 				Trace.WriteLine(args);
 
 				var host = new ServiceHost(typeof(MainSkyShootService), new Uri("net.tcp://localhost:555"));
