@@ -16,9 +16,9 @@ namespace SkyShoot.Game.Game
 				case AGameObject.EnumObjectType.Player:
 					return new DrawableGameObject(serverGameObject, Textures.PlayerAnimation);
 				case AGameObject.EnumObjectType.Turret:
-					return new DrawableGameObject(serverGameObject, Textures.Turret); //TODO: draw new texture
+					return new DrawableGameObject(serverGameObject, Textures.Turret);
 				case AGameObject.EnumObjectType.TurretGunBullet:
-					return new DrawableGameObject(serverGameObject, Textures.RocketProjectile); //TODO: draw new texture
+					return new DrawableGameObject(serverGameObject, Textures.TurretProjectile);
 				case AGameObject.EnumObjectType.Mob:
 					_soundManager.SoundPlay(SoundManager.SoundEnum.Spider);
 					return new DrawableGameObject(serverGameObject, Textures.SpiderAnimation);
