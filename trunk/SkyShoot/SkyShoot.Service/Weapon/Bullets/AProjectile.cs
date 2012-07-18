@@ -58,7 +58,7 @@ namespace SkyShoot.Service.Weapon.Bullets
 		public override IEnumerable<AGameEvent> Do(AGameObject obj, List<AGameObject> newObjects, long time)
 		{
 			var res = new List<AGameEvent>(base.Do(obj, newObjects, time));
-			if (Owner.TeamIdentity == obj.TeamIdentity && obj.Is(EnumObjectType.LivingObject))//Препятствия не должны пролетаться насквозь
+			if (Owner.TeamIdentity == obj.TeamIdentity && obj.Is(EnumObjectType.LivingObject) && !obj.Is(EnumObjectType.Poisoning))//Препятствия не должны пролетаться насквозь
 				return res;
 
 			if (obj.Is(EnumObjectType.LivingObject))
