@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.ServiceModel;
-using System.Text;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.GameObject;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Session;
 using SkyShoot.Contracts.Statistics;
+using SkyShoot.Contracts.SynchroFrames;
 using SkyShoot.Contracts.Utils;
 using SkyShoot.Contracts.Weapon;
 using SkyShoot.Service.Bonuses;
@@ -152,6 +152,8 @@ namespace SkyShoot.Service
 
 		#region service implementation
 
+		#region регистрация, логин и создание игры
+
 		public AccountManagerErrorCode Register(string username, string password)
 		{
 			return _accountManager.Register(username, password);
@@ -216,6 +218,41 @@ namespace SkyShoot.Service
 				return false;
 			}
 		}
+
+
+		public void LeaveGame()
+		{
+			bool result = _sessionManager.LeaveGame(this);
+			if (!result)
+			{
+				Trace.WriteLine(Name + "left the game");
+				return;
+			}
+
+			ClientsList.Remove(this);
+		}
+
+		public GameLevel GameStart(int gameId)
+		{
+			// Обнуление
+			InitStatistics();
+			return _sessionManager.GameStarted(gameId);
+		}
+
+		public String[] PlayerListUpdate()
+		{
+			GameSession session;
+			_sessionManager.SessionTable.TryGetValue(Id, out session);
+			if (session == null)
+			{
+				return new string[] { };
+			}
+			return session.LocalGameDescription.Players.ToArray();
+		}
+
+		#endregion
+
+		#region процесс игры
 
 		public void Move(Vector2 direction)
 		{
@@ -285,26 +322,7 @@ namespace SkyShoot.Service
 			return events;
 		}
 
-		public void LeaveGame()
-		{
-			bool result = _sessionManager.LeaveGame(this);
-			if (!result)
-			{
-				Trace.WriteLine(Name + "left the game");
-				return;
-			}
-
-			ClientsList.Remove(this);
-		}
-
-		public GameLevel GameStart(int gameId)
-		{
-			// Trace.WriteLine("GameStarted");
-			InitStatistics(); // Обнуль
-			return _sessionManager.GameStarted(gameId);
-		}
-
-		public AGameObject[] SynchroFrame()
+		public SynchroFrame SynchroFrame()
 		{
 			try
 			{
@@ -314,8 +332,10 @@ namespace SkyShoot.Service
 				{
 					return null;
 				}
-				return GameObjectConverter.ArrayedObjects(session.GetSynchroFrame());
 
+				AGameObject[] gameObjects = GameObjectConverter.ArrayedObjects(session.GetSynchroFrame());
+
+				return new SynchroFrame(gameObjects, session.GetTime());
 			}
 			catch (Exception exc)
 			{
@@ -329,16 +349,7 @@ namespace SkyShoot.Service
 			return Tracker.GetStats();
 		}
 
-		public String[] PlayerListUpdate()
-		{
-			GameSession session;
-			_sessionManager.SessionTable.TryGetValue(Id, out session);
-			if (session == null)
-			{
-				return new string[] { };
-			}
-			return session.LocalGameDescription.Players.ToArray();
-		}
+		#endregion
 
 		#endregion
 

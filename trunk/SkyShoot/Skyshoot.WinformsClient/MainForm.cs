@@ -10,6 +10,7 @@ using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.GameObject;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Session;
+using SkyShoot.Contracts.SynchroFrames;
 using SkyShoot.Contracts.Weapon;
 using SkyShoot.XNA.Framework;
 using Color = System.Drawing.Color;
@@ -94,7 +95,7 @@ namespace SkyShoot.WinFormsClient
 				{
 					Thread.Sleep(100);
 					DateTime now = DateTime.Now;
-					AGameObject[] syncObjects;
+					SynchroFrame syncObjects;
 					lock (_service)
 					{
 						if (_prevMove != _me.RunVector)

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ServiceModel;
 using SkyShoot.Contracts.GameEvents;
-using SkyShoot.Contracts.GameObject;
 using SkyShoot.Contracts.Session;
 using SkyShoot.Contracts.Statistics;
+using SkyShoot.Contracts.SynchroFrames;
 using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Contracts.Service
@@ -62,8 +62,12 @@ namespace SkyShoot.Contracts.Service
 		[OperationContract]
 		AGameEvent[] GetEvents();
 
+		/// <summary>
+		/// Получение синхрокадра от сервера
+		/// </summary>
+		/// <returns>Синхрокадр или null, если игра закончилась</returns>
 		[OperationContract]
-		AGameObject[] SynchroFrame();
+		SynchroFrame SynchroFrame();
 
 		[OperationContract] // Выдает таблицу данных о уровне, опыте, фрагах
 		Stats? GetStats();
