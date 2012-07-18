@@ -145,7 +145,7 @@ namespace SkyShoot.Contracts.GameObject
 		public EnumObjectType ObjectType { get; set; }
 
 		//[DataMember]
-		public bool IsActive
+		public virtual bool IsActive
 		{
 			get { return HealthAmount > 0; }
 			set { if (!value) HealthAmount = -1; }
