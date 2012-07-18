@@ -15,10 +15,12 @@ namespace SkyShoot.ServProgram
 			try
 			{
 #if DEBUG
-				Trace.Listeners.Add(new Logger(@"..\..\..\logs\server_log.txt"));
+				Logger.ServerLogger = new Logger(Logger.SolutionPath + "\\logs\\server_log.txt");
 #else
-				Trace.Listeners.Add(new Logger(@"server_log.txt"));
+				Logger.ServerLogger = new Logger("@server_log.txt");
 #endif
+				Trace.Listeners.Add(Logger.ServerLogger);
+
 				Trace.WriteLine(args);
 
 				var host = new ServiceHost(typeof(MainSkyShootService), new Uri("net.tcp://localhost:555"));

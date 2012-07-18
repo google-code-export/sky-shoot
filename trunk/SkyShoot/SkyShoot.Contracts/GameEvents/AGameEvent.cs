@@ -48,6 +48,11 @@ namespace SkyShoot.Contracts.GameEvents
 		/// </summary>
 		/// <param name="mob"></param>
 		public abstract void UpdateMob(AGameObject mob);
+
+		public override string ToString()
+		{
+			return String.Format("Time = {0}, Type = {1}", TimeStamp, Type);
+		}
 	}
 
 	/// <summary>

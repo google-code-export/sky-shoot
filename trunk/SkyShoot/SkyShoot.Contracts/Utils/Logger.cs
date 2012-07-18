@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using System.IO;
 
@@ -5,12 +6,31 @@ namespace SkyShoot.Contracts.Utils
 {
 	public class Logger : TraceListener
 	{
+		public static Logger ServerLogger;
+		public static Logger ClientLogger;
+
+		public static string SolutionPath;
+
+		static Logger()
+		{
+#if DEBUG
+			string currentPath = Environment.CurrentDirectory;
+			
+			currentPath = currentPath.Replace("\\anyCPU", "");
+			currentPath = currentPath.Replace("\\Debug", ""); 
+			currentPath = currentPath.Replace("\\bin", "\\..");
+
+			SolutionPath = currentPath;
+#endif
+		}
+
 		private readonly StreamWriter _streamWriter;
 		private readonly TimeHelper _timeHelper;
 
 		public Logger(string filename)
 			: this(filename, new TimeHelper())
 		{
+
 		}
 
 		public Logger(string filename, TimeHelper timeHelper)

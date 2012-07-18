@@ -28,7 +28,7 @@ namespace SkyShoot.Contracts.Utils
 		public override string ToString()
 		{
 			var dateTime = new DateTime(GetTime() * 10000);
-			return String.Format("{0:H:m:s:FFF}", dateTime);
+			return String.Format("{0:H:m:s:fff}", dateTime);
 		}
 	}
 }

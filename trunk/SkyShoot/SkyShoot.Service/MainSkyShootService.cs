@@ -33,7 +33,7 @@ namespace SkyShoot.Service
 
 		private float _speed;
 
-		private Queue<AGameEvent> _filteredEvents = new Queue<AGameEvent>(); 
+		private readonly Queue<AGameEvent> _filteredEvents = new Queue<AGameEvent>();
 
 		private readonly IAccountManager _accountManager = SimpleAccountManager.Instance;
 		private readonly SessionManager _sessionManager = SessionManager.Instance;
@@ -134,6 +134,18 @@ namespace SkyShoot.Service
 		private EnumObjectType MergeBonuses()
 		{
 			return Bonuses.Aggregate((EnumObjectType)0, (current, bonus) => current | bonus.ObjectType);
+		}
+
+		private void PrintEvents(AGameEvent[] gameEvents)
+		{
+			var eventsString = new StringBuilder();
+			eventsString.Append("GetEvents, count = ");
+			eventsString.Append(gameEvents.Length);
+			foreach (var gameEvent in gameEvents)
+			{
+				eventsString.Append("\n  " + gameEvent);
+			}
+			Trace.WriteLine(eventsString);
 		}
 
 		#endregion
@@ -256,11 +268,12 @@ namespace SkyShoot.Service
 				}
 
 				#region Фильтрация эвентов
+
 				_filteredEvents.Clear();
 				for (int i = 0; i < events.Count(); i++)
 				{
 					bool mismatch = true;
-					for (int j = i+1; j < events.Count(); j++)
+					for (int j = i + 1; j < events.Count(); j++)
 					{
 						if ((events[i].GameObjectId == events[j].GameObjectId) & (events[i].Type == events[j].Type))
 						{
@@ -271,19 +284,10 @@ namespace SkyShoot.Service
 					if (mismatch) _filteredEvents.Enqueue(events[i]);
 				}
 				events = _filteredEvents.ToArray();
+
 				#endregion
 
-				var sb = new StringBuilder();
-				sb.Append("GetEvents:");
-				sb.Append(events.Length);
-				foreach (var e in events)
-				{
-					sb.Append(":");
-					// sb.Append(e);
-					// todo replce
-					sb.Append("\n  " + e.Type);
-				}
-				Trace.WriteLine(sb);
+				PrintEvents(events);
 			}
 			catch (Exception exc)
 			{
