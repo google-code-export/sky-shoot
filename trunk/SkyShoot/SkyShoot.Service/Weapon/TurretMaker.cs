@@ -13,12 +13,13 @@ namespace SkyShoot.Service.Weapon
 			: base(id, owner)
 		{
 			WeaponType = WeaponType.TurretMaker;
-			ReloadSpeed = Constants.TURRET_GUN_ATTACK_RATE;
+			ReloadSpeed = Constants.TURRET_MAKER_ATTACK_RATE;
 		}
 
 		public override AGameObject[] CreateBullets(Vector2 direction)
 		{
-			Vector2 turretPosition = Vector2.Add(Owner.Coordinates, new Vector2(0, 45));
+			Vector2 indent = Vector2.Multiply(Vector2.Normalize(Owner.ShootVector), Owner.Radius + Constants.TURRET_RADIUS);
+			Vector2 turretPosition = Vector2.Add(Owner.Coordinates, indent);
 			AWeapon weapon = new TurretGun(Guid.NewGuid(), turretPosition, Owner);
 			var turret = new Turret(Constants.TURRET_HEALTH, weapon, Constants.TURRET_SHOOTING_DELAY, Owner, turretPosition);
 			return new AGameObject[] { turret };

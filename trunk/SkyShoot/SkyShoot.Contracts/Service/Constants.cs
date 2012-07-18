@@ -42,7 +42,6 @@
 		public const float FLAME_LIFE_DISTANCE = 120f;
 		public const int FLAME_ATTACK_RATE = 700;
 		public const float FLAME_RADIUS = 5f;
-		public const float TURRET_RADIUS = 10F;
 
 		#endregion
 
@@ -96,7 +95,7 @@
 
 		//TODO: new turretMaker constants
 
-		public const float TURRET_MAKER_ATTACK_RATE = 1000;
+		public const int TURRET_MAKER_ATTACK_RATE = 25000;
 
 		#endregion
 
@@ -107,6 +106,8 @@
 		public const float TURRET_HEALTH = 50;
 		public const int TURRET_SHOOTING_DELAY = 1000;
 		public const float TURRET_TARGET_SEARCHING_RANGE = 200;
+		public const int TURRET_LIFETIME = 900;
+		public const float TURRET_RADIUS = 10F;
 
 		#endregion
 

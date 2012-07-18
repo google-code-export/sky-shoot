@@ -12,10 +12,17 @@ namespace SkyShoot.Service.Weapon.Bullets
 	class Turret : ShootingMob
 	{
 		public AGameObject Owner;
+		private int lifeTime;
+
+		public override bool IsActive
+		{
+			get { return base.IsActive && lifeTime > 0; }
+		}
 
 		public Turret(float health, AWeapon weapon, int shootingDelay, AGameObject owner, Vector2 coordinates)
 			: base(health, weapon, shootingDelay)
 		{
+			lifeTime = Constants.TURRET_LIFETIME;
 			Weapon = weapon;
 			Weapon.Owner = owner;
 			Owner = owner;
@@ -23,7 +30,8 @@ namespace SkyShoot.Service.Weapon.Bullets
 			Coordinates = coordinates;
 			ObjectType = EnumObjectType.Turret;
 			TeamIdentity = (owner.TeamIdentity);
-			Radius = 10;
+			Radius = Constants.TURRET_RADIUS;
+;
 			Speed = 0f;
 			ThinkCounter = 0;
 			Id = Guid.NewGuid();
@@ -60,6 +68,7 @@ namespace SkyShoot.Service.Weapon.Bullets
 
 		public override IEnumerable<AGameEvent> Think(List<AGameObject> gameObjects, List<AGameObject> newGameObjects, long time)
 		{
+			lifeTime--;
 			if (Target != null && (!Target.IsActive ||
 									Vector2.Distance(Coordinates, Target.Coordinates) > Constants.TURRET_TARGET_SEARCHING_RANGE))
 			{
