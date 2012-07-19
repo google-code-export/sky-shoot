@@ -248,13 +248,13 @@ namespace SkyShoot.Contracts.CollisionDetection
 				if (objPassiveBound.IsRectangle)
 				{
 					return FitObjects(objActivePos, ((BoundingRectangle)objActiveBound).Width,
-									  ((BoundingRectangle)objActiveBound).Height, (float)Math.Atan2(objActiveDir.Y, objActiveDir.Y),
+									  ((BoundingRectangle)objActiveBound).Height, (float)Math.Atan2(objActiveDir.Y, objActiveDir.X),
 									  objPassivePos, ((BoundingRectangle)objPassiveBound).Width,
 									  ((BoundingRectangle)objPassiveBound).Height,
 									  (float)Math.Atan2(objPassiveDir.Y, objPassiveDir.X));
 				}
 				return FitObjects(objActivePos, ((BoundingRectangle)objActiveBound).Width,
-								  ((BoundingRectangle)objActiveBound).Height, (float)Math.Atan2(objActiveDir.Y, objActiveDir.Y),
+								  ((BoundingRectangle)objActiveBound).Height, (float)Math.Atan2(objActiveDir.Y, objActiveDir.X),
 								  objPassivePos, objPassiveBound.Radius);
 			}
 			if (objPassiveBound.IsRectangle)
