@@ -17,12 +17,13 @@ namespace SkyShoot.Contracts.Utils
 		}
 
 		/// <summary>
-		/// Определение текущего времени в миллисекундах
+		/// Определение времени в миллисекундах,
+		/// прошедшего с start time
 		/// </summary>
 		/// <returns>количество миллисекунд, прошедшее с _startTime</returns>
 		public long GetTime()
 		{
-			return DateTime.Now.Ticks / 10000 - _startTime;
+			return NowMilliseconds - _startTime;
 		}
 
 		public override string ToString()
@@ -31,6 +32,9 @@ namespace SkyShoot.Contracts.Utils
 			return String.Format("{0:H:m:s:fff}", dateTime);
 		}
 
+		/// <summary>
+		/// Текущее количество миллисекунд
+		/// </summary>
 		public static long NowMilliseconds
 		{
 			get { return DateTime.Now.Ticks / 10000; }

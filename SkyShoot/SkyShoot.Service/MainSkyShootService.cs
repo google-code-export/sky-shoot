@@ -288,7 +288,7 @@ namespace SkyShoot.Service
 			{
 				lock (NewEvents)
 				{
-					events = NewEvents.ToArray();//new Queue<AGameEvent>(NewEvents);
+					events = NewEvents.ToArray();
 					NewEvents.Clear();
 				}
 
@@ -335,7 +335,11 @@ namespace SkyShoot.Service
 
 				AGameObject[] gameObjects = GameObjectConverter.ArrayedObjects(session.GetSynchroFrame());
 
-				return new SynchroFrame(gameObjects, session.GetTime());
+				var synchroFrame = new SynchroFrame(gameObjects, session.GetTime());
+
+				Trace.WriteLine(synchroFrame);
+
+				return synchroFrame;
 			}
 			catch (Exception exc)
 			{

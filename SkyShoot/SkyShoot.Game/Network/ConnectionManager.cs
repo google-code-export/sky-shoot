@@ -432,7 +432,7 @@ namespace SkyShoot.Game.Network
 					// todo долго выполняется (~40 мс), нужно как-то изменить
 					InitializeThreadAndTimers();
 
-					Trace.WriteLine("ConnectionManager: Thread and timers initialized");
+					Trace.WriteLine("ConnectionManager: thread and timers initialized");
 				}
 				return level;
 			}

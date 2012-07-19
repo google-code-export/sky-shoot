@@ -2,7 +2,6 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SkyShoot.Contracts.CollisionDetection;
@@ -10,24 +9,32 @@ using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.GameObject;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.SynchroFrames;
+using SkyShoot.Contracts.Utils;
 using SkyShoot.Game.Network;
 using SkyShoot.Game.View;
-using SkyShoot.Contracts.Utils;
 
 namespace SkyShoot.Game.Game
 {
 	public class GameModel
 	{
-		public GameLevel GameLevel { get; private set; }
-
-		public ConcurrentDictionary<Guid, DrawableGameObject> GameObjects { get; private set; }
-
 		// explosions -> exploded time
 		private readonly Dictionary<DrawableGameObject, long> _explosions;
 
 		private readonly Logger _logger;
 
+		private SynchroFrame _localSynchroFrame;
+
+		/// <summary>
+		/// Все GameEvent'ы с момента последнего синхрокадра,
+		/// нужно хранить их! 
+		/// </summary>
+		private readonly List<AGameEvent> _serverGameEvents = new List<AGameEvent>();
+
 		public Camera2D Camera2D { get; private set; }
+
+		public GameLevel GameLevel { get; private set; }
+
+		public ConcurrentDictionary<Guid, DrawableGameObject> GameObjects { get; private set; }
 
 		public GameModel(GameLevel gameLevel, Logger logger)
 		{
@@ -62,6 +69,22 @@ namespace SkyShoot.Game.Game
 				return drawableGameObject;
 			Trace.WriteLine("DrawableGameObject with such ID does not exist (" + id.ToString() + ")", "GameModel/GetMob");
 			return null;
+		}
+
+		public void UpdateExplosions()
+		{
+			// todo придумать что-нибудь
+			var keys = new DrawableGameObject[_explosions.Count];
+			_explosions.Keys.CopyTo(keys, 0);
+
+			foreach (DrawableGameObject explosion in keys)
+			{
+				if (DateTime.Now.Ticks / 10000 - _explosions[explosion] > Constants.EXPLOSION_LIFE_DISTANCE)
+				{
+					_explosions.Remove(explosion);
+					RemoveGameObject(explosion.Id);
+				}
+			}
 		}
 
 		public void ApplyEvents(AGameEvent[] gameEvents)
@@ -111,45 +134,31 @@ namespace SkyShoot.Game.Game
 			}
 		}
 
-		public void UpdateExplosions()
-		{
-			// todo придумать что-нибудь
-			var keys = new DrawableGameObject[_explosions.Count];
-			_explosions.Keys.CopyTo(keys, 0);
-
-			foreach (DrawableGameObject explosion in keys)
-			{
-				if (DateTime.Now.Ticks / 10000 - _explosions[explosion] > Constants.EXPLOSION_LIFE_DISTANCE)
-				{
-					_explosions.Remove(explosion);
-					RemoveGameObject(explosion.Id);
-				}
-			}
-		}
-
 		/// <summary>
 		/// Обновление позиций игровых объектов
 		/// </summary>
 		public void ApplySynchroFrame(SynchroFrame synchroFrame)
 		{
-			if (synchroFrame == null)
-			{
-				GameController.Instance.GameOver();
-				return;
-			}
+			_localSynchroFrame = synchroFrame;
 
+			Trace.WriteLine(synchroFrame);
+
+			// это уже не нужно
+			//			foreach (AGameObject serverGameObject in synchroFrame)
+			//			{
+			//				AGameObject clientGameObject = GetGameObject(serverGameObject.Id);
+			//
+			//				if (clientGameObject == null)
+			//					GameObjects.TryAdd(serverGameObject.Id, GameFactory.CreateClientGameObject(serverGameObject));
+			//				else
+			//					clientGameObject.Copy(serverGameObject);
+			//			}
 			foreach (AGameObject serverGameObject in synchroFrame)
 			{
-				AGameObject clientMob = GetGameObject(serverGameObject.Id);
+				AGameObject clientGameObject = GetGameObject(serverGameObject.Id);
 
-				// todo временный фикс, новые (хорошо забытые старые) объекты не добавляются
-				//				if (clientMob == null)
-				//					GameObjects.TryAdd(serverGameObject.Id, GameFactory.CreateClientMob(serverGameObject));
-				//				else
-				//					clientMob.Copy(serverGameObject);
-
-				if (clientMob != null)
-					clientMob.Copy(serverGameObject);
+				if (clientGameObject != null)
+					clientGameObject.Copy(serverGameObject);
 			}
 		}
 
@@ -160,45 +169,63 @@ namespace SkyShoot.Game.Game
 			// update explosions
 			UpdateExplosions();
 
-			/*foreach (var aMob in GameObjects)
-			{
-				aMob.Value.Update(gameTime);
-				foreach (var slaver in GameObjects)
-				{
-					//Очевидно, что 3е условие предусматривает выполнение 2го, но так пули не смещают персонажа при выстреле. Меньше скачков. 
-					if (aMob.Value != slaver.Value && !slaver.Value.IsBullet && aMob.Value.IsPlayer)
-						aMob.Value.Coordinates += CollisionDetector.FitObjects(aMob.Value.Coordinates, aMob.Value.Radius,
-						                                                       slaver.Value.Coordinates, slaver.Value.Radius);
-				}
-			}*/
-
-			foreach (var aMob in GameObjects)
-			{
-				aMob.Value.Update(gameTime);
-				foreach (var slaver in GameObjects)
-				{
-					//Очевидно, что 3е условие предусматривает выполнение 2го, но так пули не смещают персонажа при выстреле. Меньше скачков. 
-					if (aMob.Value != slaver.Value && slaver.Value.Is(AGameObject.EnumObjectType.Block) && aMob.Value.Is(AGameObject.EnumObjectType.Block) && aMob.Value.IsActive && aMob.Value.ObjectType != AGameObject.EnumObjectType.Wall)
-						if (aMob.Value.Radius * aMob.Value.Radius + slaver.Value.Radius * slaver.Value.Radius <= (aMob.Value.Coordinates - slaver.Value.Coordinates).LengthSquared())
-							aMob.Value.Coordinates += CollisionDetector.FitObjects(aMob.Value.Coordinates, aMob.Value.RunVector, aMob.Value.Bounding, slaver.Value.Coordinates, slaver.Value.RunVector, slaver.Value.Bounding);
-				}
-			}
-
-			if (_updateCouter % 5 == 0)
-			{
-				ApplyEvents(ConnectionManager.Instance.GetEvents());
-			}
+			#region применение синхрокадра
 
 			// var sw = new Stopwatch();
 			// sw.Start();
 			if (_updateCouter++ % 30 == 0)
 			{
-				ApplySynchroFrame(ConnectionManager.Instance.SynchroFrame());
+				SynchroFrame serverSynchroFrame = ConnectionManager.Instance.SynchroFrame();
 
+				if (serverSynchroFrame == null)
+				{
+					GameController.Instance.GameOver();
+					return;
+				}
+				ApplySynchroFrame(serverSynchroFrame);
+
+				// todo учесть Event'ы с последнего синхрокадра
+
+				// очистка списка GameEvent'ов c последнего синхрокадра
+				_serverGameEvents.Clear();
 			}
 			// sw.Stop();
 			// Trace.WriteLine("SW:sync: "+sw.ElapsedMilliseconds);
 			// sw.Restart();
+
+			#endregion
+
+			#region применение игровых событий
+
+			if (_updateCouter % 5 == 0)
+			{
+				AGameEvent[] serverGameEvents = ConnectionManager.Instance.GetEvents();
+
+				_serverGameEvents.AddRange(serverGameEvents);
+				ApplyEvents(serverGameEvents);
+			}
+
+			#endregion
+
+			#region обнаружение столкновений
+
+			foreach (var gameObject in GameObjects)
+			{
+				gameObject.Value.Update(gameTime);
+				foreach (var slaver in GameObjects)
+				{
+					//Очевидно, что 3е условие предусматривает выполнение 2го, но так пули не смещают персонажа при выстреле. Меньше скачков. 
+					if (gameObject.Value != slaver.Value && !slaver.Value.IsBullet && gameObject.Value.IsPlayer)
+						if (gameObject.Value.Radius * gameObject.Value.Radius + slaver.Value.Radius * slaver.Value.Radius <=
+							(gameObject.Value.Coordinates - slaver.Value.Coordinates).LengthSquared())
+							gameObject.Value.Coordinates += CollisionDetector.FitObjects(gameObject.Value.Coordinates,
+																						 gameObject.Value.RunVector,
+																						 gameObject.Value.Bounding, slaver.Value.Coordinates,
+																						 slaver.Value.RunVector, slaver.Value.Bounding);
+				}
+			}
+
+			#endregion
 		}
 
 		public void Draw(SpriteBatch spriteBatch)
