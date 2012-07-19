@@ -144,7 +144,7 @@ namespace SkyShoot.Service.Session
 			sender.RunVector = direction;
 			lock (_gameObjects)
 			{
-				PushEvent(new ObjectDirectionChanged(direction, sender.Id, _timerCounter));
+				PushEvent(new ObjectDirectionChanged(direction, sender.Id, _timeHelper.GetTime()));
 			}
 		}
 
@@ -157,22 +157,20 @@ namespace SkyShoot.Service.Session
 			{
 				if (sender.Weapon.IsReload(DateTime.Now.Ticks / 10000))
 				{
-					var a = sender.Weapon.CreateBullets(direction);
+					var bullets = sender.Weapon.CreateBullets(direction);
 					var player = sender as MainSkyShootService;
 					if (player != null)
 					{
 						AGameBonus doubleDamage = player.GetBonus(AGameObject.EnumObjectType.DoubleDamage);
 						float damage = doubleDamage == null ? 1f : doubleDamage.DamageFactor;
-						player.Weapon.ApplyModifier(a, damage);
+						player.Weapon.ApplyModifier(bullets, damage);
 					}
-					foreach (var b in a)
+					foreach (var bullet in bullets)
 					{
-						//_projectiles.Add(b);
-						//_projectiles.GetInActive().Copy(b);
 						lock (_newObjects)
 						{
-							_newObjects.Add(b);// GetInActive().Copy(b);
-							PushEvent(new NewObjectEvent(b, _timerCounter));
+							_newObjects.Add(bullet);
+							PushEvent(new NewObjectEvent(bullet, _timeHelper.GetTime()));
 						}
 					}
 					//Trace.WriteLine("projectile added", "GameSession");
@@ -363,7 +361,7 @@ namespace SkyShoot.Service.Session
 			{
 				PlayerDead(mob as MainSkyShootService);
 			}
-			events.Add(new ObjectDeleted(mob.Id, _timerCounter));
+			events.Add(new ObjectDeleted(mob.Id, _timeHelper.GetTime()));
 			// will be delete later
 			//_gameObjects.Remove(mob);
 			return events;

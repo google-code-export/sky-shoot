@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using SkyShoot.Contracts.GameObject;
@@ -41,5 +42,15 @@ namespace SkyShoot.Contracts.SynchroFrames
 		{
 			return _gameObjects.GetEnumerator();
 		}
+
+		public override string ToString()
+		{
+			return String.Format("SynchroFrame, Time = {0}", Time);
+		}
+
+//		public AGameObject[] ExtrapolateTo(GameTime gameTime)
+//		{
+//			
+//		}
 	}
 }

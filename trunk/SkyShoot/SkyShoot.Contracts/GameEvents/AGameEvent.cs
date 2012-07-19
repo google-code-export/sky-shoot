@@ -29,10 +29,10 @@ namespace SkyShoot.Contracts.GameEvents
 	public abstract class AGameEvent
 	{
 		[DataMember]
-		public long TimeStamp { get; set; }
+		public long TimeStamp { get; private set; }
 
 		[DataMember]
-		public Guid? GameObjectId { get; set; }
+		public Guid? GameObjectId { get; private set; }
 
 		[DataMember]
 		public EventType Type;
