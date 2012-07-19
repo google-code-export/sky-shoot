@@ -9,6 +9,7 @@ namespace SkyShoot.Contracts.CollisionDetection
 	{
 		[DataMember]
 		public float Radius { get; set; }
+		[DataMember]
 		public bool IsRectangle { get; protected set; }
 	}
 }
