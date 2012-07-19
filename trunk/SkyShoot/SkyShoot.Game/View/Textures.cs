@@ -57,6 +57,9 @@ namespace SkyShoot.Game.View
 		public static Texture2D[] Stones = new Texture2D[STONES_AMOUNT];
 		public static Texture2D OneStone;
 
+		// brick textures
+		public static Texture2D Brick;
+
 		// player animation textures
 		public static Animation2D PlayerAnimation = new Animation2D();
 
