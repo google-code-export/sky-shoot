@@ -39,11 +39,11 @@ namespace SkyShoot.Game.Game
 		// todo temporary
 		public static long StartTime { get; set; }
 
-		public void GameStart(Contracts.Session.GameLevel arena)
+		public void GameStart(Contracts.Session.GameLevel arena, int gameId)
 		{
 			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.GameplayScreen);
 
-			var logger = new Logger(Logger.SolutionPath + "\\logs\\client_game.txt", new TimeHelper(StartTime));
+			var logger = new Logger(Logger.SolutionPath + "\\logs\\client_game_" + gameId + ".txt", new TimeHelper(StartTime));
 
 			GameModel = new GameModel(GameFactory.CreateClientGameLevel(arena), logger);
 

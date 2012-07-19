@@ -79,6 +79,8 @@ namespace SkyShoot.Service.Session
 		{
 			#region инициализация объектов
 
+			Random random_number_generator = new Random();
+
 			for (int i = 0; i < _gameObjects.Count; i++)
 			{
 				if (!_gameObjects[i].Is(AGameObject.EnumObjectType.Player))
@@ -98,7 +100,7 @@ namespace SkyShoot.Service.Session
 				player.MeShot += SomebodyShot;
 				player.MeChangeWeapon += SomebodyChangedWeapon;
 
-				player.Coordinates = new Vector2(500, 500);
+				player.Coordinates = new Vector2(500 + (random_number_generator.Next() % 200 - 100), 500 + (random_number_generator.Next() % 200 - 100));
 				player.Speed = Constants.PLAYER_DEFAULT_SPEED;
 				player.Radius = Constants.PLAYER_RADIUS;
 				player.Weapon = new Weapon.Pistol(Guid.NewGuid(), player);
@@ -123,7 +125,7 @@ namespace SkyShoot.Service.Session
 			_gameTimer.Start();
 
 			// todo номер игры
-			Trace.Listeners.Add(new Logger(Logger.SolutionPath + "\\logs\\server_game.txt", _timeHelper) {Name = "game logger"});
+			//Trace.Listeners.Add(new Logger(Logger.SolutionPath + "\\logs\\server_game_" + LocalGameDescription.GameId + ".txt", _timeHelper) {Name = "game logger"});
 
 			Trace.WriteLine("Game Started");
 			
