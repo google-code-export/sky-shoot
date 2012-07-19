@@ -22,9 +22,9 @@
 		public const float ROCKET_BULLET_LIFE_DISTANCE = 3000f;
 		public const int ROCKET_PISTOL_ATTACK_RATE = 1500;
 		public const float ROCKET_BULLET_RADIUS = 4f;
-		public const int ROCKET_EXPLOSION_CIRCLES = 3;
-		public const float ROCKET_EXPLOSION_RADIUS = 25f;
-		public const float ROCKET_EXPLOSION_DAMAGE = 10f;
+		public const int ROCKET_EXPLOSION_CIRCLES = 20;
+		public const float ROCKET_EXPLOSION_RADIUS = 3f;
+		public const float ROCKET_EXPLOSION_DAMAGE = 2f;
 
 		#endregion
 

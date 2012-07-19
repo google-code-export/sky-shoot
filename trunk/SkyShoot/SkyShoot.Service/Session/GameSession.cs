@@ -428,7 +428,7 @@ namespace SkyShoot.Service.Session
 		{
 			if (_gameObjects.Count >= LocalGameDescription.MaximumPlayersAllowed || IsStarted)
 				return false;
-
+			
 			_gameObjects.Add(player);
 
 			LocalGameDescription.Players.Add(player.Name);
@@ -439,6 +439,7 @@ namespace SkyShoot.Service.Session
 				var startThread = new System.Threading.Thread(Start);
 				startThread.Start();
 			}
+
 			return true;
 		}
 

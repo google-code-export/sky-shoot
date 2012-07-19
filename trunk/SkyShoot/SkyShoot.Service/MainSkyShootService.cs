@@ -225,9 +225,12 @@ namespace SkyShoot.Service
 			bool result = _sessionManager.LeaveGame(this);
 			if (!result)
 			{
-				Trace.WriteLine(Name + "left the game");
+				Trace.WriteLine(Name + "has left the game.");
 				return;
 			}
+
+			System.Console.WriteLine(Name + "has left the game.");
+			Trace.WriteLine(Name + "has left the game.");
 
 			ClientsList.Remove(this);
 		}
@@ -289,6 +292,7 @@ namespace SkyShoot.Service
 				lock (NewEvents)
 				{
 					events = NewEvents.ToArray();
+					//System.Console.WriteLine(NewEvents.Count);
 					NewEvents.Clear();
 				}
 
@@ -309,6 +313,7 @@ namespace SkyShoot.Service
 					if (mismatch) _filteredEvents.Enqueue(events[i]);
 				}
 				events = _filteredEvents.ToArray();
+				//System.Console.WriteLine(_filteredEvents.Count);
 
 				#endregion
 
