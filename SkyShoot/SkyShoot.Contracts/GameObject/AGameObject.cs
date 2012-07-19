@@ -82,6 +82,8 @@ namespace SkyShoot.Contracts.GameObject
 
 			[EnumMember]
 			Wall = 0x01000000UL | Block, //1125899907891200
+			[EnumMember]
+			Brick = 0x02000000UL | Wall, 
 
 			[EnumMember]
 			ChildrenMob = 0x0002000000000UL | Mob,

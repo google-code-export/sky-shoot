@@ -31,5 +31,20 @@ namespace SkyShoot.Service.Mobs
 			}
 			return res;
 		}
+
+		public Wall[] CreateBricks()
+		{
+			var res = new Brick[STONES_NUMBER];
+			var random = new Random();
+			for (var i = 0; i < STONES_NUMBER; i++)
+			{
+				float w = random.Next(10, 60);
+				res[i] = new Brick(
+					new Vector2(random.Next((int)_levelWidth), random.Next((int)_levelHeight)),
+					w, w/4f, new Vector2((float)random.NextDouble()-0.5f, (float)random.NextDouble()-0.5f),
+					Guid.NewGuid());
+			}
+			return res;
+		}
 	}
 }

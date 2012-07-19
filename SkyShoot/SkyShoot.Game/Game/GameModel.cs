@@ -178,7 +178,7 @@ namespace SkyShoot.Game.Game
 				foreach (var slaver in GameObjects)
 				{
 					//Очевидно, что 3е условие предусматривает выполнение 2го, но так пули не смещают персонажа при выстреле. Меньше скачков. 
-					if (aMob.Value != slaver.Value && !slaver.Value.IsBullet && aMob.Value.IsPlayer)
+					if (aMob.Value != slaver.Value && slaver.Value.Is(AGameObject.EnumObjectType.Block) && aMob.Value.Is(AGameObject.EnumObjectType.Block) && aMob.Value.IsActive && aMob.Value.ObjectType != AGameObject.EnumObjectType.Wall)
 						if (aMob.Value.Radius * aMob.Value.Radius + slaver.Value.Radius * slaver.Value.Radius <= (aMob.Value.Coordinates - slaver.Value.Coordinates).LengthSquared())
 							aMob.Value.Coordinates += CollisionDetector.FitObjects(aMob.Value.Coordinates, aMob.Value.RunVector, aMob.Value.Bounding, slaver.Value.Coordinates, slaver.Value.RunVector, slaver.Value.Bounding);
 				}

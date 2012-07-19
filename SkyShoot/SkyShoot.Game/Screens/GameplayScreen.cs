@@ -85,6 +85,9 @@ namespace SkyShoot.Game.Screens
 				Textures.Stones[i - 1] = _content.Load<Texture2D>("Textures/Landscapes/Stone" + i);
 			Textures.OneStone = _content.Load<Texture2D>("Textures/Landscapes/Stone" + 1);
 
+			// load bricks
+			Textures.Brick = _content.Load<Texture2D>("Textures/Landscapes/Brick");
+
 			// load player
 			Textures.PlayerTexture = _content.Load<Texture2D>("Textures/Mobs/Man");
 

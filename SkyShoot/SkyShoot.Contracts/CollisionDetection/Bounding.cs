@@ -7,6 +7,7 @@ namespace SkyShoot.Contracts.CollisionDetection
 	[KnownType(typeof(BoundingRectangle))]
 	public class Bounding
 	{
+		[DataMember]
 		public float Radius { get; set; }
 		public bool IsRectangle { get; protected set; }
 	}

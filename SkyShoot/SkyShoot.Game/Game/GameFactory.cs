@@ -48,6 +48,8 @@ namespace SkyShoot.Game.Game
 					return new DrawableGameObject(serverGameObject, Textures.Mirror);
 				case AGameObject.EnumObjectType.Wall:
 					return new DrawableGameObject(serverGameObject, Textures.OneStone);
+				case AGameObject.EnumObjectType.Brick:
+					return new DrawableGameObject(serverGameObject, Textures.Brick);
 				case AGameObject.EnumObjectType.PoisonBullet:
 					return new DrawableGameObject(serverGameObject, Textures.PoisonProjectile);
 				case AGameObject.EnumObjectType.Poisoner:

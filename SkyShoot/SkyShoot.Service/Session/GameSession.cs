@@ -224,7 +224,7 @@ namespace SkyShoot.Service.Session
 				{
 					var activeObject = _gameObjects[i];
 					// объект не существует
-					if (!activeObject.IsActive)
+					if (!activeObject.IsActive || activeObject.ObjectType == AGameObject.EnumObjectType.Wall)
 					{
 						continue;
 					}
