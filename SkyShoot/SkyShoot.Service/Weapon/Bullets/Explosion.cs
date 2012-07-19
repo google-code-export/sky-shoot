@@ -16,10 +16,12 @@ namespace SkyShoot.Service.Weapon.Bullets
 		private long _explodedTime;
 		private int _number;
 		private int _maxCircles;
+		private AGameObject _owner;
 
 		public Explosion(AGameObject owner, Guid id, Vector2 coordinates,int maxCircles, int number)
 			: base(owner, id, Vector2.Zero)
 		{
+			_owner = owner;
 			_number = number;
 			_maxCircles = maxCircles;
 			_explodedTime = -1;
@@ -55,7 +57,7 @@ namespace SkyShoot.Service.Weapon.Bullets
 			{
 				if (_number < _maxCircles)
 				{
-					var explos = new Explosion(Owner, Guid.NewGuid(), Coordinates, _maxCircles, _number + 1)
+					var explos = new Explosion(_owner, Guid.NewGuid(), Coordinates, _maxCircles, _number + 1)
 					{
 						Radius = this.Radius * (_number + 1) / _number,
 						Damage = this.Damage,
