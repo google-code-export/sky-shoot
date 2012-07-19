@@ -1,5 +1,6 @@
 ﻿using System;
 using SkyShoot.XNA.Framework;
+using SkyShoot.Contracts.Service;
 
 namespace SkyShoot.Contracts.CollisionDetection
 {
@@ -8,7 +9,6 @@ namespace SkyShoot.Contracts.CollisionDetection
 	/// </summary>
 	public class CollisionDetector
 	{
-		private static float Epsilon = (float)10e-6;
 		protected static Vector2 ProjectRectangle(Vector2 recPosition, float recWidth, float recHeight, float recRotation,
 												  Vector2 ort)
 		{
@@ -241,8 +241,8 @@ namespace SkyShoot.Contracts.CollisionDetection
 		public static Vector2 FitObjects(Vector2 objActivePos, Vector2 objActiveDir, Bounding objActiveBound,
 										 Vector2 objPassivePos, Vector2 objPassiveDir, Bounding objPassiveBound)
 		{
-			if (Math.Abs(objActivePos.X - objPassivePos.X) < Epsilon && Math.Abs(objActivePos.Y - objPassivePos.Y) < Epsilon)
-				objActivePos += new Vector2(Epsilon, 0f);
+			if (Math.Abs(objActivePos.X - objPassivePos.X) < Constants.EPSILON && Math.Abs(objActivePos.Y - objPassivePos.Y) < Constants.EPSILON)
+				objActivePos += new Vector2(Constants.EPSILON*2f, 0f);
 			if (objActiveBound.IsRectangle)
 			{
 				if (objPassiveBound.IsRectangle)
