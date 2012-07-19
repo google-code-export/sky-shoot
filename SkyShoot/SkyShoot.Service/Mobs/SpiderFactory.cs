@@ -28,7 +28,7 @@ namespace SkyShoot.ServProgram.Mobs
 		public Mob CreateMob()
 		{
 			Mob spider;
-			switch (_random.Next(6))
+			switch (_random.Next(100) % 10)//Обычные пауки генерируются чаще остальных.
 			{
 				case 0:
 					spider = new SpiderWithSimpleMind(_health);
