@@ -1,0 +1,3303 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="e74ca29f-0631-4d53-9f19-236948debc05"
+  name="Mobs"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="1d4c6066-d5ef-4007-b6c0-03ae76a0abb3"
+      handle="viewcode://./CodeSchema_Namespace?Namespace=SkyShoot.Contracts.Mobs"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <class
+        Id="777a2727-f6d1-49c2-ad29-49581593ca5e"
+        name="AMob"
+        visibility="Private"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="019d9701-5ea1-43c0-9b3e-4824bfb11927"
+            handle="viewcode://./CodeSchema_Class?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=(Name=AMob ArrayRank=1 ParentType=AMob)"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="e3985b24-5c99-4e1b-9db0-1414afe653c3"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="65fb759a-4505-4172-855d-77d70a8134a4">
+                <propertyInstance
+                  Id="b452bfee-5974-4f08-8a63-ec9768f24388"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="8ad83832-9176-4a9b-be8e-4f6d053647bf">
+                <propertyInstance
+                  Id="0c1254b4-b60b-45ca-8371-627492d63831"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="d26f4382-0082-4a8c-a320-58f8ee7d0ae4">
+                <propertyInstance
+                  Id="8cb1f717-47a2-4e74-b1c9-5304f86758a0"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="d2187547-1290-426b-8b6f-ff514e830213">
+                <propertyInstance
+                  Id="f8b78f23-4722-49c5-8be9-dcc23f1d7710"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="4ea05162-c493-4e14-9fe7-04cba66d347d">
+                <propertyInstance
+                  Id="fdc4f62c-cdf2-4bf6-8c1e-260be343e79d"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <targetEnds>
+          <association
+            Id="2361e3bb-cc4f-42d6-9661-d1edca64a77a"
+            isDerived="false"
+            sourceEndRoleName="AMob"
+            targetEndRoleName="Id"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="56dd06e7-f4d3-41c7-95a1-69d42f4b72cf"
+              LastKnownName="Guid"
+              LastKnownLocation="Package4_2202.uml" />
+            <description>Property Id references type Guid.</description>
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="a0d8f2b7-d77a-42cb-b106-ac0effa714b6"
+                  name="AMob"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="83b42b9a-9696-44ce-bfb4-e9ef828272c7"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="8e98ea29-3614-4293-bcb2-cc627e29add5"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="20dddf8d-bf86-42f2-ab56-f2e6b1a923b4"
+                  name="Id"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="40f88e0b-0ed7-4e5e-b5f0-237503ee10c1"
+                      name="Lower"
+                      value="1" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="b15b0437-90b5-43df-b1c1-49be76169c96"
+                      name="Upper"
+                      value="1" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="a1c89ae0-445e-4842-a86e-8bf4a6630b20"
+            isDerived="false"
+            sourceEndRoleName="AMob"
+            targetEndRoleName="HealthAmount"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="7333dc39-ed37-4127-aff5-8e77f748e4f6"
+              LastKnownName="Single"
+              LastKnownLocation="Package4_2202.uml" />
+            <description>Property HealthAmount references type Single.</description>
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="55e49396-a8b3-4a3d-afd9-4ef0ae41ba10"
+                  name="AMob"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="adde0fab-c811-4bc2-b34e-44508ab92e61"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="b0cec49b-de72-4808-b315-07c9a9489400"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="55e2ed38-f3c3-4688-9e9f-9d356b658ef4"
+                  name="HealthAmount"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="245f7c8b-f20c-4042-a8d3-85c892fbf4a1"
+                      name="Lower"
+                      value="1" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="553070e4-12c9-4c69-a28d-47c4d869e8e0"
+                      name="Upper"
+                      value="1" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="144ecdfb-4504-43ab-b177-c71e17b6d548"
+            isDerived="false"
+            sourceEndRoleName="AMob"
+            targetEndRoleName="MaxHealthAmount"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="7333dc39-ed37-4127-aff5-8e77f748e4f6"
+              LastKnownName="Single"
+              LastKnownLocation="Package4_2202.uml" />
+            <description>Property MaxHealthAmount references type Single.</description>
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="ba90bc5c-4112-46fb-8a9b-9c2937b0df2a"
+                  name="AMob"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="cba2d4ff-a5ba-4bb2-967e-54e6da6afe18"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="9907c9a2-89c0-4611-aff6-3e15e833e4e2"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="72d06653-7478-4421-be4f-b7f56420cf53"
+                  name="MaxHealthAmount"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="0c3b6c23-8d60-4aa8-867a-a4743b795caa"
+                      name="Lower"
+                      value="1" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="aba3b8e0-ecbf-41af-b1bd-917dbef54a13"
+                      name="Upper"
+                      value="1" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="b6f7b26b-e66e-4805-880b-0aafa2dabb04"
+            isDerived="false"
+            sourceEndRoleName="AMob"
+            targetEndRoleName="Radius"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="7333dc39-ed37-4127-aff5-8e77f748e4f6"
+              LastKnownName="Single"
+              LastKnownLocation="Package4_2202.uml" />
+            <description>Property Radius references type Single.</description>
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="56de4844-078f-4d65-b3d3-7f8d455766ac"
+                  name="AMob"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="fe8c656c-299a-424a-a3e7-d29e8668434a"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="70bb80cc-e982-4ba4-a7fa-44b79eca9bae"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="f5a65f25-d138-4abf-9ee8-e0ccb437386d"
+                  name="Radius"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="faf54cb2-4830-4dbd-9951-f94f9b5b8c24"
+                      name="Lower"
+                      value="1" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="b263cf63-e49c-46da-a4d3-f3340d7ad841"
+                      name="Upper"
+                      value="1" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="077746d6-76bb-4a9e-943f-3dbc55568a54"
+            isDerived="false"
+            sourceEndRoleName="AMob"
+            targetEndRoleName="Speed"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="7333dc39-ed37-4127-aff5-8e77f748e4f6"
+              LastKnownName="Single"
+              LastKnownLocation="Package4_2202.uml" />
+            <description>Property Speed references type Single.</description>
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="73846a0d-1278-40a5-bd19-4a2aa63e1b9c"
+                  name="AMob"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="39967ee7-c244-4ff7-9d9e-203566c1f8c5"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="ec4d7a25-dded-4774-bce6-4c809d3c9f67"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="88792632-b598-4a15-887f-f51a93844c15"
+                  name="Speed"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="8153fe09-cd75-409c-ac1c-f42a6dd9c1cb"
+                      name="Lower"
+                      value="1" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="9b11806d-600c-40d9-b149-871a956fdd9d"
+                      name="Upper"
+                      value="1" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="65cf67ac-4e14-4e8c-a69d-9deed0711309"
+            isDerived="false"
+            sourceEndRoleName="AMob"
+            targetEndRoleName="State"
+            isLeaf="false"
+            isAbstract="false">
+            <enumerationMoniker
+              Id="522235cf-e71a-46f7-86bb-c47d1be129fa"
+              LastKnownName="AObtainableDamageModifiers"
+              LastKnownLocation="Package11_2202.uml" />
+            <description>Property State references type AObtainableDamageModifiers.</description>
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="3271ef10-022c-4236-85df-2a6ecf1671cf"
+                  name="AMob"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="91de9974-65b4-41cd-9c3a-93cb93bfd63f"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="35b7d892-f656-4340-bfea-d0f90a102235"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="11ff03d4-a92d-4dc6-9f24-6ac14dfd5518"
+                  name="State"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="92f143ff-f987-423d-b22f-4818a715178d"
+                      name="Lower"
+                      value="1" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="eab21339-3511-4972-8f68-c7614e5eebf0"
+                      name="Upper"
+                      value="1" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="d73249e3-c35b-4f35-894a-34ef55a9d8a6"
+            isDerived="false"
+            sourceEndRoleName="AMob"
+            targetEndRoleName="Weapon"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="ce66964e-75de-411e-b87e-72e703810859"
+              LastKnownName="AWeapon"
+              LastKnownLocation="Package7_2203.uml" />
+            <description>Property Weapon references type AWeapon.</description>
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="949f045c-0111-4147-8535-cde012534714"
+                  name="AMob"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="0a8416c8-fa78-41b9-87fe-77173981684b"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="b9d16d42-e634-48b1-8282-c80d15837253"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="1c22e2bc-2b58-4a51-9179-40874f6f71ff"
+                  name="Weapon"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="ecfd8ce0-0406-4964-a3e5-49eb46232bd2"
+                      name="Lower"
+                      value="1" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="a62f9e65-01dc-4366-abad-4eb11a29a9fc"
+                      name="Upper"
+                      value="1" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <ownedAttributesInternal>
+          <property
+            Id="1b5c8667-79ba-4f9e-8a18-975b1a149bc2"
+            name="Id"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="7158f6c8-6899-42c2-990f-a4ef044a0408"
+                handle="viewcode://./CodeSchema_Property?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=AMob Member=Id"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="39cb9643-bfa2-494f-b6a2-cf0507ce264e"
+                name="property"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d3dc8466-5a4f-4be4-a7df-2c3ad6cbc0dc">
+                    <propertyInstance
+                      Id="7e3b2d88-2669-4f63-8217-e536394abe6b"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="79ce7da3-3e5f-4c52-ab4c-d3ec6fa978c8">
+                    <propertyInstance
+                      Id="0a255629-b217-499a-8983-3f36eca7968f"
+                      name="Get"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="3b6bf092-aaa8-4f96-a1a9-c3b59dc89267">
+                    <propertyInstance
+                      Id="709f5e58-235e-4a27-b2e6-f68f24a9ffba"
+                      name="HasBody"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f16fe205-8ef4-40e3-b402-8554b5eab79d">
+                    <propertyInstance
+                      Id="9f663332-1b2c-4f96-9a1d-47f4e07e9aef"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="df8fba14-baa0-46aa-a3f2-68f496b4537a">
+                    <propertyInstance
+                      Id="49601adf-ea54-42cf-97e7-ff7133bcc822"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="54a6d0ab-de5b-4bd2-a8dc-9b7c6e74bc3b">
+                    <propertyInstance
+                      Id="dd871bbb-9908-48a3-a2a9-fb13a4264f08"
+                      name="Set"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="56dd06e7-f4d3-41c7-95a1-69d42f4b72cf"
+                LastKnownName="Guid"
+                LastKnownLocation="Package4_2202.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="db6f011a-bdf1-47dc-96b7-23aa965a1813"
+            name="HealthAmount"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="be7d26fd-1553-4c53-aed4-d3fab41519a6"
+                handle="viewcode://./CodeSchema_Property?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=AMob Member=HealthAmount"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="5c2f8fc0-b31c-4030-baa5-76e8f8cf7e0c"
+                name="property"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b51b8783-5235-43a9-a678-c36d57f44aa1">
+                    <propertyInstance
+                      Id="377439b6-c836-408b-9bc6-572b749a7e71"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="561d7f81-66df-4332-a5c5-94436180e86a">
+                    <propertyInstance
+                      Id="90289b20-3137-48bb-856d-9690a928af39"
+                      name="Get"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="80cdf4ab-f81f-4dfe-8f4f-c60a426b257a">
+                    <propertyInstance
+                      Id="a3780cec-2112-4f02-bcaa-d0e2e04470cd"
+                      name="HasBody"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="39db4caa-5e96-475f-a184-39506b60154d">
+                    <propertyInstance
+                      Id="1c61141f-658d-4910-917a-bdbed2d3fa80"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="94822c50-cf53-4083-a849-55d6b80c149b">
+                    <propertyInstance
+                      Id="fcd835df-da5d-4545-a05a-b0b800ea51de"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="8fa1f7a5-d3cf-4d8b-bf98-a867a1698b32">
+                    <propertyInstance
+                      Id="979327ae-6cd6-4279-85f0-921dac6e10a6"
+                      name="Set"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="7333dc39-ed37-4127-aff5-8e77f748e4f6"
+                LastKnownName="Single"
+                LastKnownLocation="Package4_2202.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="07ebe810-6704-4475-9964-715c6c63f5a6"
+            name="IsPlayer"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="005977de-57aa-41bc-862d-3d8533a0862c"
+                handle="viewcode://./CodeSchema_Property?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=AMob Member=IsPlayer"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="a296cc05-f95b-4613-84ed-8bb0fbff627f"
+                name="property"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6c6a3f08-79b7-48bb-91af-c4d575063282">
+                    <propertyInstance
+                      Id="4129ae37-867d-474d-80e5-1dce3a6dfd34"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="a6d744c7-7406-4f9b-a7d8-bbe05ac34189">
+                    <propertyInstance
+                      Id="5107b36e-f9b0-4586-a3bb-c714768e57e0"
+                      name="Get"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="4a4edd7b-533c-46f0-bbac-df4918cc43e9">
+                    <propertyInstance
+                      Id="9d9265fa-ab83-4541-ba3c-e7dde5339d46"
+                      name="HasBody"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="221cb433-c549-4bf0-9c8d-451054d1923c">
+                    <propertyInstance
+                      Id="a2bd7716-9662-49c6-9fe9-b4b4409982fa"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="43eaf325-e43d-4a7b-826e-18177ff55f1f">
+                    <propertyInstance
+                      Id="94aecc5d-3b97-4520-8d22-e6e336f192a0"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1eb5ae80-c8c6-4811-bdf2-266ef4c8e7d5">
+                    <propertyInstance
+                      Id="ab73fa29-2e8f-46ad-af0e-e49e33e854f2"
+                      name="Set"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <primitiveTypeMoniker
+                Id="8943dc84-709e-4f62-b15a-a3273aa6f165"
+                LastKnownName="Boolean"
+                LastKnownLocation="SkyshootModels.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="4d6cf0ab-c4be-4a29-aedb-0f5cb4e034b8"
+            name="MaxHealthAmount"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="24b34871-b902-4bc7-b4cf-6c4b28b1ae1e"
+                handle="viewcode://./CodeSchema_Property?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=AMob Member=MaxHealthAmount"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="ffdd95d5-b5aa-4fa2-8bf2-832006ff6090"
+                name="property"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="560907a9-d771-4cb0-b7a8-89bb43e6bdc3">
+                    <propertyInstance
+                      Id="32dd7595-03e3-4385-bfcf-a7c3b7ef641e"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b1d3e68a-1bb8-4514-9229-393b7367954e">
+                    <propertyInstance
+                      Id="0e0261f4-cbb2-4792-bbf1-d1b4663430c5"
+                      name="Get"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="a2e501cb-7659-4aa9-b969-272c06fa2183">
+                    <propertyInstance
+                      Id="b350e182-074b-4f30-aac0-963c8c479d43"
+                      name="HasBody"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="10c5fd8d-09fb-4bf8-b145-657bfd562198">
+                    <propertyInstance
+                      Id="adf89fe3-1b0b-4640-ad24-e153f326a910"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1d2282a6-a727-48a7-b4f4-0fc5872bbab2">
+                    <propertyInstance
+                      Id="8fa586b6-ad8b-4199-bfbe-2376483f218a"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="888b96ca-4fbc-4780-904d-020aa762c8ac">
+                    <propertyInstance
+                      Id="3b39a6fd-4c8e-41ce-ba9f-ca7ccf4c2407"
+                      name="Set"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="7333dc39-ed37-4127-aff5-8e77f748e4f6"
+                LastKnownName="Single"
+                LastKnownLocation="Package4_2202.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="5b784dd0-a14f-4500-96d9-b82f2be6764f"
+            name="Radius"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="1d0b129d-422b-4573-ab88-0d831e6a52e6"
+                handle="viewcode://./CodeSchema_Property?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=AMob Member=Radius"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="c91d6261-ff05-43ab-be16-0855dcf9f57a"
+                name="property"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c615d1b8-f23e-44dd-bb6b-bb4265f04586">
+                    <propertyInstance
+                      Id="531907a8-a85c-4fbd-a92b-4ddaafa6b983"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9fe56b2c-35d8-4377-84ad-98c2476df945">
+                    <propertyInstance
+                      Id="5de842fe-c230-47bd-8d03-2392236758de"
+                      name="Get"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6d556bd7-4d69-4c24-b42b-70c3720135eb">
+                    <propertyInstance
+                      Id="496fb98d-9ea0-439b-a0a4-122df5ac875a"
+                      name="HasBody"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ebff165c-9c3d-4d3f-b4f1-1605b6537178">
+                    <propertyInstance
+                      Id="43362749-960b-4a55-9322-a2a6ad5352a9"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="41d191d6-21b8-4400-a469-1eca72494e94">
+                    <propertyInstance
+                      Id="6f2dfa6d-51d8-403e-9659-eee274c49677"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c27ea9d0-7c99-4504-8bbb-227c3fbcb940">
+                    <propertyInstance
+                      Id="8b6147d7-f2e7-446a-9f90-cf258cdc1946"
+                      name="Set"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="7333dc39-ed37-4127-aff5-8e77f748e4f6"
+                LastKnownName="Single"
+                LastKnownLocation="Package4_2202.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="c6e5c0ee-a050-4933-a178-cbf68858b851"
+            name="Speed"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="26b2819c-7d51-4fd3-aae0-68d76ca48a5a"
+                handle="viewcode://./CodeSchema_Property?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=AMob Member=Speed"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="adb6e157-f20b-48ce-b78b-db76ca2b2872"
+                name="property"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6bf4adc2-98bd-4d98-aef8-c36870b6e1c4">
+                    <propertyInstance
+                      Id="c8e2a46a-e6c1-448c-a2dd-dff445b3d2f1"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="812a5440-b736-4c79-a85b-5f6e9f3a8830">
+                    <propertyInstance
+                      Id="82272e68-e272-4fad-9222-e5e699dc8826"
+                      name="Get"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="258144ea-e9e3-4f44-917f-377367d34c86">
+                    <propertyInstance
+                      Id="6be6cea8-cdd1-4fac-8bbf-4360a9cf5be9"
+                      name="HasBody"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b25bebb5-8261-477c-9231-a5a4dd6abff8">
+                    <propertyInstance
+                      Id="676d7567-aece-4a1c-9116-b61d258856ba"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="97004268-4d68-430c-8e1a-95ed43b835c8">
+                    <propertyInstance
+                      Id="d1110976-a0a9-4721-b693-31ef72371a95"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="53c5e051-4a9e-4b37-b8c2-4230c419b75e">
+                    <propertyInstance
+                      Id="b12b1d1b-5fb7-4c72-ba05-640ad63de237"
+                      name="Set"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="7333dc39-ed37-4127-aff5-8e77f748e4f6"
+                LastKnownName="Single"
+                LastKnownLocation="Package4_2202.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="732e6af0-48b3-44fb-9f6d-d6de1a74140c"
+            name="State"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="c1bef925-f1d9-47f1-81d6-49892eb62de1"
+                handle="viewcode://./CodeSchema_Property?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=AMob Member=State"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="07a3b591-397f-4e42-b095-506179406fa3"
+                name="property"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="dad76f47-b99a-440c-b183-1155dec155d3">
+                    <propertyInstance
+                      Id="905ded9b-c98d-4355-9f8a-95f3110b47c1"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d6d28693-35cf-4b99-b640-e3419096859c">
+                    <propertyInstance
+                      Id="49b904ed-7203-406f-8b43-f7d5699ca85b"
+                      name="Get"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="7bdd46a7-613d-451e-8e64-ccc6a520db80">
+                    <propertyInstance
+                      Id="f7d238c6-a3e8-4ac4-af42-f63d0f383df4"
+                      name="HasBody"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="aa67f94c-d6a9-4f6d-9b80-5d80713fceec">
+                    <propertyInstance
+                      Id="17602bd4-fc33-45e4-ad14-bb46522d31e6"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6f5469d8-6085-4272-86d7-108a28d100f0">
+                    <propertyInstance
+                      Id="1f2149ae-5415-40ee-8ac9-89b70870d00d"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="671edffa-cbdd-4ddc-9da5-a08ceaa1b243">
+                    <propertyInstance
+                      Id="f79235aa-ad48-4054-99fd-25d2b4eff33a"
+                      name="Set"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <enumerationMoniker
+                Id="522235cf-e71a-46f7-86bb-c47d1be129fa"
+                LastKnownName="AObtainableDamageModifiers"
+                LastKnownLocation="Package11_2202.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="bb341b10-bbca-4659-888c-ab0038a55f85"
+            name="Weapon"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="8e18530e-625e-404a-8d61-c16952a467f8"
+                handle="viewcode://./CodeSchema_Property?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=AMob Member=Weapon"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="0e524419-d3b1-4bf7-b5d9-ccb352726d83"
+                name="property"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="dd9754b5-241b-43d1-8fb4-8726f2c39b90">
+                    <propertyInstance
+                      Id="9be915d1-9251-4feb-a561-0182caa98183"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f80f7c11-5124-4df8-bb23-63a5a18a414a">
+                    <propertyInstance
+                      Id="55112f34-44fc-4cad-af7d-c8edcf50abdb"
+                      name="Get"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6ced4c3f-18e3-48b3-958a-dd81d3b4af0a">
+                    <propertyInstance
+                      Id="7b266f67-e14f-4748-9f79-0e8a83b9d96c"
+                      name="HasBody"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="430b9758-cd20-494b-85ba-da2a0b3cde75">
+                    <propertyInstance
+                      Id="9aa7b073-0761-40a5-b827-ed7e3d0c7d69"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="15ca7e20-6d29-43cc-ad75-918be57424e0">
+                    <propertyInstance
+                      Id="67cc0021-848f-4f2c-920c-09f3184d6702"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="47657fd5-c8f6-4067-b0ec-6f1eb53c640f">
+                    <propertyInstance
+                      Id="d684f3ee-a6c1-4af0-b543-a62afcffa13d"
+                      name="Set"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="ce66964e-75de-411e-b87e-72e703810859"
+                LastKnownName="AWeapon"
+                LastKnownLocation="Package7_2203.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="b9d3b81b-fda4-41e6-a527-dd9f38237bc6"
+            name="Coordinates"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="f87c2d7a-6b7b-4618-8735-15ceac4e14c1"
+                handle="viewcode://./CodeSchema_Field?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=AMob Member=Coordinates"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="03baff10-97a6-42d4-89d4-6526bb694506"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e11b841c-5205-47d9-ba7f-a707ee206b84">
+                    <propertyInstance
+                      Id="3e1d6e39-5802-4e9f-9bb0-a34010b41cd3"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6cdbe969-520f-4775-942d-d11e2fcbf5e8">
+                    <propertyInstance
+                      Id="0a66aad1-ce33-414f-8366-499c7995d406"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ca111909-15ea-4ea4-99fc-05b4236bd423">
+                    <propertyInstance
+                      Id="570f107e-792c-47d9-9f58-78d44e611cbb"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="08e0d34e-383d-459f-b45e-6422fa4f62a8">
+                    <propertyInstance
+                      Id="472b0986-8c52-4136-bed8-1c742c147b4a"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6eab73fc-ba6c-49d8-bfe3-72cc5fe24118">
+                    <propertyInstance
+                      Id="4ea3d128-6f3c-4dcc-aed6-7b6a069a58b8"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="fb073131-b68c-4afa-ad94-bd98fff1b907"
+                LastKnownName="Vector2"
+                LastKnownLocation="Package7_2202.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="092a79a0-7ae3-48d9-9423-4a553a9cf57c"
+            name="RunVector"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="4208ea0c-218a-4757-bb6b-1f74b6bcdc02"
+                handle="viewcode://./CodeSchema_Field?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=AMob Member=RunVector"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="8d5ddf07-06bf-4faf-b0d7-1dae44858d89"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d861a881-17b3-492d-b8bc-bf02a8c592ea">
+                    <propertyInstance
+                      Id="9cbcd03d-3674-45f0-b675-ac4418d38d60"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="13373485-2eed-48e5-87f0-e74c514b629e">
+                    <propertyInstance
+                      Id="2721d09a-9084-4cb9-8824-aaf7ebe5c7b8"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="88d16e69-6aeb-4dba-8b49-c2b7849d57de">
+                    <propertyInstance
+                      Id="8e0143f1-199a-43fe-9afc-59a6b40b7f0d"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6fdb7b41-0257-4704-ad41-07eafb350b03">
+                    <propertyInstance
+                      Id="8a38bebc-0751-4bda-9e70-479ba560508a"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0fbf7708-e91a-4d70-b2b9-e03c1dd9457b">
+                    <propertyInstance
+                      Id="d8dd5e58-a436-4ecf-98d4-f5760b43fbba"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="fb073131-b68c-4afa-ad94-bd98fff1b907"
+                LastKnownName="Vector2"
+                LastKnownLocation="Package7_2202.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="7e8faa80-ee99-4811-b9c4-df10c4058e70"
+            name="ShootVector"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="9b001ea5-8e1e-47c9-9348-05fd5b90a8de"
+                handle="viewcode://./CodeSchema_Field?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=AMob Member=ShootVector"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="6f738d4a-8478-484e-ad5f-221dcf4b080a"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="a30d3e1a-4e55-49b1-afd4-9b1dc51962f5">
+                    <propertyInstance
+                      Id="6723ebc8-f454-43e3-a90a-9973ebf3434e"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b74fa6f2-1422-401f-9b82-dc7f126ddc7e">
+                    <propertyInstance
+                      Id="fb6bf0ed-e7fa-49e0-8927-9c0608628c2d"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="04e15e0f-065c-4ab2-8590-fdae0efd577e">
+                    <propertyInstance
+                      Id="bd29f3a2-c56d-42ac-8685-3a2b92193b56"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="abbccc59-d55c-49dc-b3ac-4fe729a8c201">
+                    <propertyInstance
+                      Id="79642899-827e-4b9f-9023-ef78937a9e13"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="4a20601e-f91e-415a-abdd-6de62d50380f">
+                    <propertyInstance
+                      Id="f13e3e1e-0b5a-45da-8423-a9520b131c7a"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="fb073131-b68c-4afa-ad94-bd98fff1b907"
+                LastKnownName="Vector2"
+                LastKnownLocation="Package7_2202.uml" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="46b5ce39-f271-4eff-b154-135505e2973b"
+            name="AMob"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="350f674e-644d-428b-92cc-ec81f7898018"
+                handle="viewcode://./CodeSchema_Method?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=AMob Member=.ctor"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="147084ba-2da1-4ecd-832f-c54cf4041c4c"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c414c324-7d5d-4487-858b-740b494d4ba6">
+                    <propertyInstance
+                      Id="b2f09d81-a322-4150-bfeb-64c23e074a1a"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="08ee9ffb-f467-4c55-9b5a-d863ab7414f6">
+                    <propertyInstance
+                      Id="1fd8756d-1cb7-4be9-8dfd-6d1aa97308ed"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="69903f7b-1345-48bd-87fe-37f092f589df">
+                    <propertyInstance
+                      Id="f6c28297-0852-467b-a5d4-28b3a8d4448a"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="041399e9-cedc-4b79-9fa9-6b0af7cda9b0">
+                    <propertyInstance
+                      Id="0ff02630-5871-456a-b5a5-d0f0a4d8bbdf"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="3c7a03a7-e3aa-4a0d-9ba9-6c5523e08064">
+                    <propertyInstance
+                      Id="1a39a9c9-b4d4-4d18-85ca-3d6a5585d2e6"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+          <operation
+            Id="03cce12f-9a12-4622-8b69-5dd4e5dda462"
+            name="AMob"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="afc01e7b-9ee0-476c-9ea2-95e888cd70b1"
+                handle="viewcode://./CodeSchema_Method?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=AMob Member=(Name=.ctor OverloadingParameters=[(Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=AMob)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="2d6b01f2-6892-4d26-b651-851b0e78d5d9"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="506bc5d2-8a0a-4b93-8efb-038d7dd711b0">
+                    <propertyInstance
+                      Id="175322c8-18cb-4e3a-932e-50ef71185975"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="3039eeed-7508-4979-a629-2702c64c8bdb">
+                    <propertyInstance
+                      Id="2c55f742-8975-4df4-b2ff-577f3f18446c"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="534ba25c-53ab-4850-9b46-cee6ae344117">
+                    <propertyInstance
+                      Id="ac348373-3ab2-4d35-94a3-1be1fc948d00"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="91e038fc-8fb3-4523-b3fa-6d5a8e48db85">
+                    <propertyInstance
+                      Id="53cb51bd-9834-4620-ad14-0aee5f18f74e"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c4123175-3b5a-4061-9186-59a59cbc44be">
+                    <propertyInstance
+                      Id="bf2b1fbd-48d1-4b74-a2f1-45ff4a1a7126"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="972f44e9-73fd-41c4-814e-cfe8fd226ceb"
+                  name="other"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="393302ff-7b78-4b5b-8308-47cf9a77e9e4"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=AMob Member=(Name=.ctor OverloadingParameters=[(Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=AMob)]) ParameterIdentifier=other"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="777a2727-f6d1-49c2-ad29-49581593ca5e"
+                      LastKnownName="AMob"
+                      LastKnownLocation="Package6_2203.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="8fbf472f-d369-48ba-8325-ea39af338eb8"
+            name="AMob"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="ee0ede30-8363-4fa3-9f64-9de7e7be258e"
+                handle="viewcode://./CodeSchema_Method?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=AMob Member=(Name=.ctor OverloadingParameters=[(Assembly=&quot;file:///C:/Program Files/Microsoft XNA/XNA Game Studio/v4.0/References/Windows/x86/SkyShoot.XNA.dll&quot; Namespace=SkyShoot.XNA Type=Vector2),(Assembly=&quot;file:///C:/Program Files/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.0/mscorlib.dll&quot; Namespace=System Type=Guid)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="f89974c4-17f4-4051-a1be-9e34e5334884"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="fd23bbc9-32f5-477b-a3ea-3b84f931c8ba">
+                    <propertyInstance
+                      Id="cfef92f2-ebea-4f73-a197-19a59176c82e"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="3673f9ba-e269-498a-93dd-eca4adee500b">
+                    <propertyInstance
+                      Id="bad75549-b4da-41f2-b534-13a90ea88a6f"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c70ded10-d18b-42d0-98a1-c5006834855c">
+                    <propertyInstance
+                      Id="66aed733-151d-45cf-8383-5533d2aa9b57"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1d2524b7-7063-4647-9556-1db17119bd61">
+                    <propertyInstance
+                      Id="6ee049e4-5697-493f-9d71-1ad2ce7e87db"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="7c623f19-0826-449b-bc53-26da5fb6a5c5">
+                    <propertyInstance
+                      Id="306adaf7-d783-479d-864a-2e0ad25cb78f"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="8638bcbe-975b-49ec-80f0-01eadfbc68a2"
+                  name="coordinates"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="9dd900ad-a649-45c1-8f9a-f44f43e73d4d"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=AMob Member=(Name=.ctor OverloadingParameters=[(Assembly=&quot;file:///C:/Program Files/Microsoft XNA/XNA Game Studio/v4.0/References/Windows/x86/SkyShoot.XNA.dll&quot; Namespace=SkyShoot.XNA Type=Vector2),(Assembly=&quot;file:///C:/Program Files/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.0/mscorlib.dll&quot; Namespace=System Type=Guid)]) ParameterIdentifier=coordinates"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="fb073131-b68c-4afa-ad94-bd98fff1b907"
+                      LastKnownName="Vector2"
+                      LastKnownLocation="Package7_2202.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="bf94dc27-c06f-4b8e-98f5-5374241ac4fb"
+                  name="id"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="183c8127-1dc9-47cd-a24d-f37bdc818e2f"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=AMob Member=(Name=.ctor OverloadingParameters=[(Assembly=&quot;file:///C:/Program Files/Microsoft XNA/XNA Game Studio/v4.0/References/Windows/x86/SkyShoot.XNA.dll&quot; Namespace=SkyShoot.XNA Type=Vector2),(Assembly=&quot;file:///C:/Program Files/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.0/mscorlib.dll&quot; Namespace=System Type=Guid)]) ParameterIdentifier=id"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="56dd06e7-f4d3-41c7-95a1-69d42f4b72cf"
+                      LastKnownName="Guid"
+                      LastKnownLocation="Package4_2202.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="88da8a4c-029f-4cbc-8a8a-5bd074766e38"
+            name="Copy"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="f77eee5f-d3fe-4055-b992-6f4ac2c89d2b"
+                handle="viewcode://./CodeSchema_Method?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=AMob Member=(Name=Copy OverloadingParameters=[(Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=AMob)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="95d5f9bc-b6e5-4cc3-8e51-54851c5b0c92"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e94976c4-5965-4a80-a105-457ad2fefc5e">
+                    <propertyInstance
+                      Id="3b35613d-71bb-49a3-bee0-e5a3064c8baa"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b2dcb36c-8ed2-498b-8e09-daded1b2c204">
+                    <propertyInstance
+                      Id="26ee3bb0-d888-4417-b9ed-3a5601a49f75"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="bdec7c84-3e5f-4c41-9027-f3902812044d">
+                    <propertyInstance
+                      Id="06b6328f-59ca-41d2-ab1c-4c6f123fff49"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="de813f3a-95dd-4483-913f-6c6b071c6173">
+                    <propertyInstance
+                      Id="4d751dc3-bb5e-4b9b-b3cf-84f307fc8575"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="92542780-0805-4f91-a84d-1585d7f49658">
+                    <propertyInstance
+                      Id="e3f20c84-b07c-4262-a87b-74f15967ab2e"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="065520a3-e271-4589-877a-d703cc09f5d8"
+                  name="other"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="7bdf4ee3-6b7d-42da-a9a8-76a5e012843a"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=AMob Member=(Name=Copy OverloadingParameters=[(Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=AMob)]) ParameterIdentifier=other"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="777a2727-f6d1-49c2-ad29-49581593ca5e"
+                      LastKnownName="AMob"
+                      LastKnownLocation="Package6_2203.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="27627984-5cd8-4caf-a2f1-abbadf40e805"
+        name="Mob"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="b81ce183-58cc-4996-a209-9fdbb79c8aab"
+            handle="viewcode://./CodeSchema_Class?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Contracts.Mobs Type=Mob"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="ace8c63e-0b0a-4da6-ab31-13bbb45de2c5"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="4238d0fe-0c0f-44bb-80fb-50c7a26f4b5a">
+                <propertyInstance
+                  Id="acfab783-138c-47f9-9b3b-be9e41231b26"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="040b8e84-d007-420a-aab6-3aa39e8d2b6a">
+                <propertyInstance
+                  Id="19aeb8ac-6537-4010-8f9a-51a8350f028f"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="83948a77-8eba-4a2f-9802-c72164a766dd">
+                <propertyInstance
+                  Id="d347e10e-141e-4b5e-9d85-5981a27e8c29"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="9869d3e7-a494-4b9e-8b02-1c5d483706e8">
+                <propertyInstance
+                  Id="16f5e759-4aa3-4131-8198-bc1e61329d78"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="d0239ea2-7fd7-4c62-9ea2-5c6f4034c24d">
+                <propertyInstance
+                  Id="61c2e8f9-953b-45db-9724-d9c2564bc3f6"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <generalsInternal>
+          <generalization
+            Id="4705554f-8bdc-4748-930e-303d96e66feb"
+            isSubstitutable="false">
+            <classMoniker
+              Id="777a2727-f6d1-49c2-ad29-49581593ca5e"
+              LastKnownName="AMob"
+              LastKnownLocation="Package6_2203.uml" />
+          </generalization>
+        </generalsInternal>
+        <targetEnds>
+          <association
+            Id="e69eec2c-2036-4f85-bcb8-f234630ebdca"
+            isDerived="false"
+            sourceEndRoleName="Mob"
+            targetEndRoleName="Damage"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="7333dc39-ed37-4127-aff5-8e77f748e4f6"
+              LastKnownName="Single"
+              LastKnownLocation="Package4_2202.uml" />
+            <description>Property Damage references type Single.</description>
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="1e2963a1-53ff-4705-9aae-78a59962f9c8"
+                  name="Mob"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="d2958c03-fb2c-48da-899c-28db05292a8f"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="943eac47-1ff2-4ccc-a145-146f32714960"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="5c89d2ea-d8bb-4f25-a476-ad80b6373a09"
+                  name="Damage"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="2893ec00-23e7-4231-bea9-14f6ff330629"
+                      name="Lower"
+                      value="1" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="861aad5f-3a39-43c0-9894-8404120de877"
+                      name="Upper"
+                      value="1" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="fd7e657f-0593-4a98-b787-3fdb243f110c"
+            isDerived="false"
+            sourceEndRoleName="Mob"
+            targetEndRoleName="targetPlayer"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="d2d65ef2-1d03-434c-9feb-7e21011f47d8"
+              LastKnownName="MainSkyShootService"
+              LastKnownLocation="Package_2227.uml" />
+            <description>Property targetPlayer references type MainSkyShootService.</description>
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="f9f0b79e-0393-42d9-8e6f-9aedae0b7a2b"
+                  name="Mob"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="8f486dd7-f62f-474c-b99a-dbde7422a904"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="725372a8-e114-47cd-a54f-001f02ae1b55"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="610458d4-5e00-415c-8fb8-0f7d2993839c"
+                  name="targetPlayer"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="d5a28f8e-c4d0-4d76-9395-a4ee9ee9e679"
+                      name="Lower"
+                      value="1" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="ee375ba0-0a4f-4fbe-a027-f9f7ad769ee1"
+                      name="Upper"
+                      value="1" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <ownedAttributesInternal>
+          <property
+            Id="d2cbc98a-8012-4ee7-bb2d-6e7c5197f877"
+            name="Damage"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="e749bf33-94b3-4606-aadb-1921d744d8e0"
+                handle="viewcode://./CodeSchema_Property?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Contracts.Mobs Type=Mob Member=Damage"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="3d5488fb-b1e5-42ee-8d56-71aa930ff762"
+                name="property"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d79f963b-fb2a-40ea-9058-59ea2c14ec9e">
+                    <propertyInstance
+                      Id="100f1440-fab9-452f-8e4d-22343fed0d5e"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="49259a68-1d18-41e5-aa82-60baeefabcab">
+                    <propertyInstance
+                      Id="d432e7f5-f1ea-4bd5-8632-b8e13bc4a64c"
+                      name="Get"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="448a337b-1cd4-4328-8a77-b895e3b2c20f">
+                    <propertyInstance
+                      Id="b96494e1-0dfc-43e5-9654-2c4d17dce7d6"
+                      name="HasBody"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="8698727c-4a5a-4fb5-b4f9-7983f462133a">
+                    <propertyInstance
+                      Id="6184d0e5-3d9d-4143-96dd-1916e86e7088"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="dfffeb6c-e77a-419d-97c8-605f7cb241c3">
+                    <propertyInstance
+                      Id="e1504ddf-4c4a-4f04-9e75-cbb71c3fcc19"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e8507dcf-a0a6-4574-b426-7715a6a64366">
+                    <propertyInstance
+                      Id="96fbfbe6-37aa-49c6-9975-ff4e9595de70"
+                      name="Set"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="7333dc39-ed37-4127-aff5-8e77f748e4f6"
+                LastKnownName="Single"
+                LastKnownLocation="Package4_2202.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="1bfc09c8-796c-4973-a101-f68e59581b09"
+            name="targetPlayer"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="bd5b8ff0-4e94-48e6-9d76-c7d369c66dcb"
+                handle="viewcode://./CodeSchema_Property?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Contracts.Mobs Type=Mob Member=targetPlayer"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="e91be2aa-27db-4a42-bd09-cc651f9dcd3e"
+                name="property"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0fedbfec-77bd-4908-b2df-f8f048a75fa2">
+                    <propertyInstance
+                      Id="8ec76885-f656-48be-8c24-51a57a26d1e1"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e9debd83-0e75-4e2c-8fb2-9be56c24699b">
+                    <propertyInstance
+                      Id="a0f5df00-d11c-407f-a299-08492e16a960"
+                      name="Get"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="353a82af-fcef-45f2-a77b-a3c7413f4c2a">
+                    <propertyInstance
+                      Id="e7ba8e0a-f7b8-42e3-959d-9a020c551ae5"
+                      name="HasBody"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6fd10d7f-344a-4ac8-b2f1-fe3124f1a6cb">
+                    <propertyInstance
+                      Id="d5bc2e61-0ff1-4801-97b2-7e7a88de6d30"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="64234de0-2796-413f-a71d-c691d1c636ef">
+                    <propertyInstance
+                      Id="da07e9c2-dcbd-462f-ac32-153e36071c3c"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="7f9845fd-3978-452b-b6e3-4be3029533ab">
+                    <propertyInstance
+                      Id="b9cf9fcf-af8b-4154-bb27-5d11e0354223"
+                      name="Set"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="d2d65ef2-1d03-434c-9feb-7e21011f47d8"
+                LastKnownName="MainSkyShootService"
+                LastKnownLocation="Package_2227.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="796a4f53-c633-4cc6-82d9-771ca73b85e7"
+            name="MeMoved"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="c7a8cbeb-ff9d-4e74-bb6f-c4660e77357d"
+                handle="viewcode://./CodeSchema_Event?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Contracts.Mobs Type=Mob Member=MeMoved"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="e0a4e263-6c54-4688-971c-90aa1833642b"
+                name="event"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="a1c3ee1a-caa8-4511-b3f2-eb79a14bc7c5">
+                    <propertyInstance
+                      Id="ef8b0354-664a-444e-9d51-94d0bfcd1051"
+                      name="Add"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="64432476-54f2-4d4d-a0b3-424ff81727b0">
+                    <propertyInstance
+                      Id="eaea64b9-f3ed-487d-9071-ec491c527aec"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2b1e0da6-4150-48e7-a41b-35cab6ae4e88">
+                    <propertyInstance
+                      Id="61a3474e-0277-4838-9e2f-397d4e0c0985"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="640273ff-267f-48a5-a16a-b1745b5f28b0">
+                    <propertyInstance
+                      Id="2dd284a7-6d5c-4d69-a373-235b30652b1c"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="83039f6d-8de0-4b3a-802f-aeadc730aceb">
+                    <propertyInstance
+                      Id="84c7666b-cc11-451f-89c3-b442a25caf39"
+                      name="Remove"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="4dd95dff-a4c8-497f-9aec-d26d3d0dc140"
+                LastKnownName="SomebodyMovesHandler"
+                LastKnownLocation="Package10_2203.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="76523181-105d-4e7f-9ae2-5a6c3ecdc450"
+            name="_counter"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="876e8ae8-aa35-4c78-a8f8-e4223d3893ee"
+                handle="viewcode://./CodeSchema_Field?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Contracts.Mobs Type=Mob Member=_counter"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="b8c758e9-b547-45ff-8f65-98b0c6989daf"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="931eecfd-b77d-4f48-ba0a-2fe4f5da10e3">
+                    <propertyInstance
+                      Id="25753a25-7bae-4dc8-b2e9-685c5d868290"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2af013eb-1e54-4f3c-9b7b-058c20875a45">
+                    <propertyInstance
+                      Id="177fe90a-a907-457b-b96f-7bb08d5540a6"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="01c3fcc8-7ecb-401e-a4eb-12cd60d17adc">
+                    <propertyInstance
+                      Id="08376ad0-a916-4945-855e-af2dfdc6eb1b"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="47b74904-7446-44d9-aab3-50536e6cc15e">
+                    <propertyInstance
+                      Id="47d613a8-8dc6-4b30-a398-6a93ae33b4ba"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f6c661fa-fb05-4c7c-a4c1-edc345bc7edb">
+                    <propertyInstance
+                      Id="1191e31c-bdc9-45fa-bc99-c386c7037b06"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <primitiveTypeMoniker
+                Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                LastKnownName="Integer"
+                LastKnownLocation="SkyshootModels.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="08ec1296-3a6e-4830-af3f-4bb76cfae82b"
+            name="wait"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="f9106a37-c738-4733-a3be-abc9fefadf05"
+                handle="viewcode://./CodeSchema_Field?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Contracts.Mobs Type=Mob Member=wait"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="7be72823-29ae-4a7f-b7b2-f2dd23a92981"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="412a5e16-cd8d-4fad-9cbf-a25e92e91bc1">
+                    <propertyInstance
+                      Id="f36e6ff7-efc5-4e33-9c96-f0449091153b"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ee231c9d-c5dc-40c5-9785-09cf849fcb3e">
+                    <propertyInstance
+                      Id="a7e55c1f-29e8-4a5b-8171-602ce74da164"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6a3baad5-72e2-418b-8303-db5914e293bc">
+                    <propertyInstance
+                      Id="242d4f94-9591-4b81-9eae-c17d65b7c6b6"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2edbbd2c-57c6-4ac1-8562-3496764b3d52">
+                    <propertyInstance
+                      Id="f9b1d314-b088-42b4-8031-4d5ef806d790"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="639d14e3-e6b3-477c-b4f0-a2376a2dcc9f">
+                    <propertyInstance
+                      Id="19d80f2c-d7fd-4fe7-8a89-6b8189fdc0ac"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <primitiveTypeMoniker
+                Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                LastKnownName="Integer"
+                LastKnownLocation="SkyshootModels.uml" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="913fad65-ee63-4eb4-9a25-3f4a60b91481"
+            name="Stop"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="376705d5-8ac5-4b8c-a3fe-ffd6de7c6a60"
+                handle="viewcode://./CodeSchema_Method?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Contracts.Mobs Type=Mob Member=Stop"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="17b0f1ed-e339-499a-a062-5186629b8b90"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="88d3b0cc-b57b-4e66-9475-3291ed1ba07e">
+                    <propertyInstance
+                      Id="152a02da-f055-43d7-b900-64dd8b4ecc3f"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="884d8d36-cd3e-474c-8bf9-ad13542d4fd1">
+                    <propertyInstance
+                      Id="6ff4bc0a-1422-45a2-b007-0327620a7060"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="beb4d6a3-1fd0-45c8-b81e-4e2ab80b4d28">
+                    <propertyInstance
+                      Id="204e5541-15d9-4cd1-989b-286e0df3f2e7"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="866a508a-fd35-404d-83fd-c8215f6a0a25">
+                    <propertyInstance
+                      Id="9be26e9d-af90-4032-a996-5adaf9cb3767"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="fc242255-658b-4d1b-853c-4a2bec302e41">
+                    <propertyInstance
+                      Id="3d392f90-eb2c-4a1c-9e54-4bf354085e19"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+          <operation
+            Id="2a8427bf-3e07-403e-ab97-716ae60729a7"
+            name="Mob"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="53fe19f0-ab65-49da-8337-ccedc009edf7"
+                handle="viewcode://./CodeSchema_Method?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Contracts.Mobs Type=Mob Member=(Name=.ctor OverloadingParameters=[(Assembly=&quot;file:///C:/Program Files/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.0/mscorlib.dll&quot; Namespace=System Type=Single)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="022d954d-6ef2-41bc-8641-7dacfa3be518"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="7bd0b774-9eff-4d89-9f63-a2febdc7c507">
+                    <propertyInstance
+                      Id="565ee1e4-5987-4427-bdb0-a0bf5b17d0d5"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9fae3f91-6a48-4df4-a5ed-4ab8af911c42">
+                    <propertyInstance
+                      Id="7fedcd19-4cca-4796-bcb9-8577ec4f14a6"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="34211358-91bd-4901-a489-9f81d6362921">
+                    <propertyInstance
+                      Id="37e64c40-644a-495e-9b4e-d6d0246dff06"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="15290e49-fa98-4028-b906-9d7fd406d4ea">
+                    <propertyInstance
+                      Id="61cd4fed-c572-4437-a83a-00926caa1b8e"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="095d8458-8223-4c61-8955-9e4281c243a5">
+                    <propertyInstance
+                      Id="7f3a5a48-2d51-493a-981d-5c6722788e8f"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="e3f8e805-3a2d-4999-935a-bec0a0946313"
+                  name="healthAmount"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="260b3bdd-c71b-465d-989f-b59f8d37f7fe"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Contracts.Mobs Type=Mob Member=(Name=.ctor OverloadingParameters=[(Assembly=&quot;file:///C:/Program Files/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.0/mscorlib.dll&quot; Namespace=System Type=Single)]) ParameterIdentifier=healthAmount"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="7333dc39-ed37-4127-aff5-8e77f748e4f6"
+                      LastKnownName="Single"
+                      LastKnownLocation="Package4_2202.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="f275c4b1-6a2b-4c0b-a7e3-08542120d5bf"
+            name="DamageTaken"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="3072fc03-3b4f-4a19-8ebc-738c916a214b"
+                handle="viewcode://./CodeSchema_Method?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Contracts.Mobs Type=Mob Member=(Name=DamageTaken OverloadingParameters=[(Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Weapon.Projectiles Type=AProjectile)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="887e8e55-b7cc-4287-9ded-a3d1898c6813"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f5891d81-bf2c-4ba5-a25d-7a6b6c422a3b">
+                    <propertyInstance
+                      Id="0b7919ae-70a2-4ec0-aa97-ca9d60aa3b3a"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="20335895-aee3-49dd-a4f8-8624199670b6">
+                    <propertyInstance
+                      Id="ef52bbe1-8846-4af4-8cf7-8e9f97719fe9"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="a015598e-332d-4a85-9015-94def434ba60">
+                    <propertyInstance
+                      Id="f0c10031-d560-47de-bd99-91630e689dcf"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d98044ac-2191-4c48-9529-c413118ae65f">
+                    <propertyInstance
+                      Id="e86f555c-4580-4902-8c89-dc1e792af623"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="4154edd8-9415-4e34-a3bf-cd9b00f2ae09">
+                    <propertyInstance
+                      Id="c3aa13c5-356d-4800-b9e4-b49d07f1d938"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="16cd0981-cd17-492f-8b70-2d967403fe1d"
+                  name="bullet"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="5bbf4366-96ff-4109-bb14-c39f0864a24f"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Contracts.Mobs Type=Mob Member=(Name=DamageTaken OverloadingParameters=[(Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Weapon.Projectiles Type=AProjectile)]) ParameterIdentifier=bullet"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="ee583f98-3cd0-4801-b8c2-a8f18c0f94a0"
+                      LastKnownName="AProjectile"
+                      LastKnownLocation="Package8_2203.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="5cb96c76-2a0c-4c9f-9033-a3d2ba5193bd"
+            name="Move"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="8b389c58-eb2a-4678-902a-c55df9fec069"
+                handle="viewcode://./CodeSchema_Method?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Contracts.Mobs Type=Mob Member=Move"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="351eaa98-32f4-434e-943c-3fd1f9d1f00a"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="633cb551-b603-4377-a8b6-46f4ed263fb0">
+                    <propertyInstance
+                      Id="bc4c0d48-03de-480c-9d34-40217d9bcbb0"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="bd94e4da-1d61-4bc7-912f-2c1774d0093b">
+                    <propertyInstance
+                      Id="dcc5afbe-e0e6-4523-b592-23d4eb55d569"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="cd238139-9284-4c51-8d11-04cd039cdeb3">
+                    <propertyInstance
+                      Id="fc9327cd-a6e0-4915-a5c5-d22fa606a736"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e24bf53a-d033-42e7-9b3b-458dcb1971cd">
+                    <propertyInstance
+                      Id="63dc7046-8fb9-42a5-9ae6-285b48d4ffc1"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="72f914f7-2a38-449d-92b5-424e283f1ce8">
+                    <propertyInstance
+                      Id="9114e2a8-4a33-4507-bea3-164b2148b5d6"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+          <operation
+            Id="3c701556-413c-4681-a1b6-06f545fb3800"
+            name="FindTarget"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="fbba2dab-6c99-4b7a-a8aa-ea8de6d22f2d"
+                handle="viewcode://./CodeSchema_Method?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Contracts.Mobs Type=Mob Member=(Name=FindTarget OverloadingParameters=[(Assembly=&quot;file:///C:/Program Files/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.0/mscorlib.dll&quot; Namespace=System.Collections.Generic Type=(Name=List GenericParameterCount=1 GenericArguments=[(Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Service Type=MainSkyShootService)]))])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="17d74b20-c91f-4708-8b51-1df5834f979a"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="43add323-6a2c-4120-a849-44ea1367216e">
+                    <propertyInstance
+                      Id="48121b73-8c61-4159-9f34-51b226e7073d"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d5442a4f-4166-4b43-a9e7-22c51df2ef82">
+                    <propertyInstance
+                      Id="ef834cc2-074c-480b-8c57-7c2dcfec51d8"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d0a25a4c-ab56-42fc-9f39-91dc172bfe80">
+                    <propertyInstance
+                      Id="8f68dd44-9d6a-44c0-8e65-89e3e954b494"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="71ad5da3-fdc2-4a30-8c1f-1b802efda2a6">
+                    <propertyInstance
+                      Id="aa8ffd3b-daa6-469d-afb3-b2646dd353ed"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="26b18c0d-9f1d-479b-9dec-8d562f8ee81a">
+                    <propertyInstance
+                      Id="c17d90d4-a9d7-45d4-aa59-812b327e17a2"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="9c4ab315-3cc7-4753-a87a-4d4c182faf67"
+                  name="targetPlayers"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="1c3115dd-47df-4bcf-a69d-2b9118262423"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Contracts.Mobs Type=Mob Member=(Name=FindTarget OverloadingParameters=[(Assembly=&quot;file:///C:/Program Files/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.0/mscorlib.dll&quot; Namespace=System.Collections.Generic Type=(Name=List GenericParameterCount=1 GenericArguments=[(Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Service Type=MainSkyShootService)]))]) ParameterIdentifier=targetPlayers"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="59d5c0cf-1966-4faf-b433-d22e3faa4e32"
+                      LastKnownName="List&lt;MainSkyShootService&gt;"
+                      LastKnownLocation="Package14_2202.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="54c97e58-8961-46f1-afba-ed55be66f7e0"
+            name="Think"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="43492f71-f516-4d24-b603-2a97e131c7b9"
+                handle="viewcode://./CodeSchema_Method?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Contracts.Mobs Type=Mob Member=(Name=Think OverloadingParameters=[(Assembly=&quot;file:///C:/Program Files/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.0/mscorlib.dll&quot; Namespace=System.Collections.Generic Type=(Name=List GenericParameterCount=1 GenericArguments=[(Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Service Type=MainSkyShootService)]))])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="05b18968-a2d0-4aa6-9999-d9707225423a"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="433ac371-414c-4d8b-b1da-03f632e07cac">
+                    <propertyInstance
+                      Id="d891d8a7-9ca1-4923-96d5-1eea9d8eb02e"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="138870fc-b728-4ce4-8366-e2a4d2f05e9b">
+                    <propertyInstance
+                      Id="9214dfb3-ca6f-44e3-a24f-5b2d685fdbc3"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="a9a37f52-867f-42c4-b97b-4c95802e5244">
+                    <propertyInstance
+                      Id="96b9e292-2612-4ac3-8076-6fee1eac5ee1"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0e809597-37e2-4ec1-acc7-a84c6af675b9">
+                    <propertyInstance
+                      Id="13c3f526-5480-45ef-8dd3-9fb733c068c0"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="a1d67b9b-068c-4a13-ba24-0b0685f60904">
+                    <propertyInstance
+                      Id="cd5f3220-7a7f-4ba2-8ddf-d2cafa601d25"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="28543e83-9afb-4ba6-a9f9-c00aca6df05a"
+                  name="players"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="e5e0e717-4a84-4508-92d8-baeb922ef7d0"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Contracts.Mobs Type=Mob Member=(Name=Think OverloadingParameters=[(Assembly=&quot;file:///C:/Program Files/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.0/mscorlib.dll&quot; Namespace=System.Collections.Generic Type=(Name=List GenericParameterCount=1 GenericArguments=[(Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Service Type=MainSkyShootService)]))]) ParameterIdentifier=players"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="59d5c0cf-1966-4faf-b433-d22e3faa4e32"
+                      LastKnownName="List&lt;MainSkyShootService&gt;"
+                      LastKnownLocation="Package14_2202.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="5ec9ae5a-40c3-4aae-80ae-2cd80fc039c7"
+        name="SpiderFactory"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="228240b3-6596-49b9-b468-fadee8924ad6"
+            handle="viewcode://./CodeSchema_Class?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Contracts.Mobs Type=SpiderFactory"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="ef9cebae-e682-46ac-9ab9-5442712cb959"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="a469debc-6177-4836-b101-02fb8fa34744">
+                <propertyInstance
+                  Id="0983c6e0-af09-4f92-b4e5-756c17464f0d"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="4c3a8b58-b2ce-4ebb-9115-bd3c5750f90f">
+                <propertyInstance
+                  Id="d3b8861e-25bc-40d2-bcef-a7868b912366"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="a4b74adc-d95c-43d1-a157-ecbe4334af20">
+                <propertyInstance
+                  Id="60351afc-89e7-4860-aa65-f57fa5d303d2"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="2a77c32d-bffa-47b0-92e1-fd4d5fb9b377">
+                <propertyInstance
+                  Id="cfa65703-db3b-497a-8adf-8734683b619f"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="438e947f-2c6b-4aa9-9a66-a41c526055ec">
+                <propertyInstance
+                  Id="7e43087c-ef91-422f-907b-4de1f2f2c928"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <suppliersInternal>
+          <interfaceRealization
+            Id="0099f4b1-b0ae-4373-ab62-4a2b2896805c">
+            <interfaceMoniker
+              Id="3bed9b2b-330b-4169-891d-4da856017f93"
+              LastKnownName="IMobFactory"
+              LastKnownLocation="Package6_2203.uml" />
+          </interfaceRealization>
+        </suppliersInternal>
+        <ownedAttributesInternal>
+          <property
+            Id="f5334062-0a65-4221-a70e-e9f5f4e2de8d"
+            name="_border"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="a55a593f-d65d-4e41-9587-b20a61a2e74f"
+                handle="viewcode://./CodeSchema_Field?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Contracts.Mobs Type=SpiderFactory Member=_border"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="5d3930d5-eb2b-418d-b500-485071e8b968"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="21584e34-f8dd-4e60-a024-977ca304d36c">
+                    <propertyInstance
+                      Id="8eea89c0-1f67-45b5-a934-f5ec7b7079ab"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="734987dc-2205-4cb6-a7f6-72d0a06e5f7a">
+                    <propertyInstance
+                      Id="2eacbf2d-c3cb-4304-aae0-e79c944a8127"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f9ab07e3-4898-480b-ba38-81277fdabe7d">
+                    <propertyInstance
+                      Id="cf673ec4-287d-42ca-8464-162ab4deb69f"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="5c826890-cf07-4e57-a8d6-ce75375cb30c">
+                    <propertyInstance
+                      Id="ec3e30f3-b24b-4eec-b9c8-fd706a978601"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0743d858-3f16-40ea-91d3-124169ae78e8">
+                    <propertyInstance
+                      Id="ee8ce2a1-7417-4678-b5a1-91e10d3f9b48"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="7333dc39-ed37-4127-aff5-8e77f748e4f6"
+                LastKnownName="Single"
+                LastKnownLocation="Package4_2202.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="29cd5187-1f14-441e-ac41-7b9acc76f8a9"
+            name="_health"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="dfec18d3-cf20-45d5-b043-4be338683937"
+                handle="viewcode://./CodeSchema_Field?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Contracts.Mobs Type=SpiderFactory Member=_health"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="f2859edb-114d-4364-8db0-7e309a462345"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c2d55b90-b717-4d5b-afc4-36c5f5afebca">
+                    <propertyInstance
+                      Id="4974300a-6090-4f33-950d-516079bb52f9"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ac8c433a-6ce6-4165-834e-c772e8c70bc8">
+                    <propertyInstance
+                      Id="22f4f105-af6e-4d27-875d-f5bba74707df"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="15fddac9-cb2d-4486-9987-5874fd1eaa56">
+                    <propertyInstance
+                      Id="3d7faf12-8258-43a5-99ab-dd0ed945f9c1"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="21099108-40fe-48da-8ab8-22b5f34db265">
+                    <propertyInstance
+                      Id="5112ba7c-633d-400b-8329-d7b2553c3dba"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="a5940421-e269-4c21-9971-908c5c83a161">
+                    <propertyInstance
+                      Id="6bd01a60-4ba7-477b-a8bb-553b2a8248db"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="7333dc39-ed37-4127-aff5-8e77f748e4f6"
+                LastKnownName="Single"
+                LastKnownLocation="Package4_2202.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="a6b106d9-f81f-4a5e-9275-8491212ca71b"
+            name="_height"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="17a635a3-12c5-4bcd-a7f5-07744800e844"
+                handle="viewcode://./CodeSchema_Field?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Contracts.Mobs Type=SpiderFactory Member=_height"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="8d681a0f-af66-4641-a06c-a0f6f8fdd27f"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2d7ce08f-a629-4a6a-ae6c-fc663fe74a3c">
+                    <propertyInstance
+                      Id="9237a425-b07c-4361-9cdb-ba065a323631"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="cce58508-3f8b-4ce4-bc36-6982c020e0ad">
+                    <propertyInstance
+                      Id="a0404fc4-dc07-4789-813a-5d8b9b965c73"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ac2a1a11-14ff-48f2-99fd-cb51b9eff597">
+                    <propertyInstance
+                      Id="3424d485-85a4-4a75-80f1-d0c569a04f99"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1d7cb05d-6cdf-450f-979f-1615b5161fa4">
+                    <propertyInstance
+                      Id="26246034-d40c-4f0d-a21f-e4cd93d19c30"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d51c4132-722b-4377-8e77-798e36f9cec9">
+                    <propertyInstance
+                      Id="968c7efd-ee30-452f-ba14-91d62a6dba66"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="7333dc39-ed37-4127-aff5-8e77f748e4f6"
+                LastKnownName="Single"
+                LastKnownLocation="Package4_2202.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="609859cf-2ec2-4da5-aff5-11395c2dc733"
+            name="_random"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="cfc3f488-1d74-4e83-bd15-3bffa7033da2"
+                handle="viewcode://./CodeSchema_Field?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Contracts.Mobs Type=SpiderFactory Member=_random"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="442d3b37-36a2-4772-bc16-0293ea8adee6"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="fb95f31e-08b3-451e-8dbe-476003b9ce1e">
+                    <propertyInstance
+                      Id="de46d7f6-866b-470b-a334-80c57329ec88"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="770ed762-7d54-4bf7-8369-c886f8f890b5">
+                    <propertyInstance
+                      Id="e90161e1-8d89-4c85-9984-e865e29d0078"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="042a446f-efff-4f35-a877-564ee3d15796">
+                    <propertyInstance
+                      Id="630e01e5-47dc-457f-9dc4-6b9f4b1f65be"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="777fad1b-b5a7-45c1-b98e-66f6a1dd3462">
+                    <propertyInstance
+                      Id="a6dc5bee-e817-44c1-9473-22da85f1926f"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="048ea1ee-04b2-4c36-8329-c04c8bc5d9aa">
+                    <propertyInstance
+                      Id="7417354d-1b9f-4845-8f98-341b53fd8950"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="e83a2527-6db1-4b3e-983d-890dec7d04be"
+                LastKnownName="Random"
+                LastKnownLocation="Package4_2202.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="2bd15bfb-2526-49ce-9f69-c1c51044e0d7"
+            name="_width"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="ab65981d-5e0f-4d11-b1f8-41efe8930fec"
+                handle="viewcode://./CodeSchema_Field?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Contracts.Mobs Type=SpiderFactory Member=_width"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="22d47258-a890-4309-8524-1aa3813d7361"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="01dbe3b5-fd48-4ffc-93a0-f1b7675c3b7f">
+                    <propertyInstance
+                      Id="98a758c8-828a-485d-a86a-b792d42648b0"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e83594d7-da6a-4ad1-9fbc-cf93babb5a82">
+                    <propertyInstance
+                      Id="12bc6152-2911-4a92-bb1b-ec17f54a2e20"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e8882735-e2c6-4013-b9dc-8765bb251a01">
+                    <propertyInstance
+                      Id="60dd84cd-31dd-4606-b6f6-5deffa0d8187"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ffcec3fe-2f47-40a0-840a-641eb1b79f42">
+                    <propertyInstance
+                      Id="84fb0214-4840-4e0e-b507-698a1a65d42c"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="7e186e2b-5568-4573-8ba9-35f0ea4cb6ed">
+                    <propertyInstance
+                      Id="0c1c18dc-d4f4-4344-ab28-fe78b9f6fe25"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="7333dc39-ed37-4127-aff5-8e77f748e4f6"
+                LastKnownName="Single"
+                LastKnownLocation="Package4_2202.uml" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="8cae2b3d-ed9d-4787-92f9-44ffec58f05f"
+            name="CreateMob"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="17b340af-28f8-4116-acf3-c124b0e53f5f"
+                handle="viewcode://./CodeSchema_Method?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Contracts.Mobs Type=SpiderFactory Member=CreateMob"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="d0ce1f34-b4ab-4a83-b8c0-bee4de1d4f71"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ff69bcee-87dc-499e-8238-8c46c3925df0">
+                    <propertyInstance
+                      Id="92317798-1746-4241-b8ba-ef37c444eb71"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9a5a0c15-e3fb-4483-9618-da4f572342f7">
+                    <propertyInstance
+                      Id="808989ac-41b3-4e18-826b-21c72f689d73"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="baa7b658-b4cf-4978-b702-9b15540c2df2">
+                    <propertyInstance
+                      Id="47f14db6-76a7-4aaf-bd00-24e5a75dcf01"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="327eb378-36a8-4075-8269-50e87e59b39d">
+                    <propertyInstance
+                      Id="3c20bdf7-d12f-4c08-b5b8-876a965071e1"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1e406fb0-6131-4f29-8e2e-2220c191a83a">
+                    <propertyInstance
+                      Id="6dba9c23-6748-4817-869d-2a58e8deed80"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="8e00773c-00d7-40db-853a-a52326bd2415"
+                  direction="Return">
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="27627984-5cd8-4caf-a2f1-abbadf40e805"
+                      LastKnownName="Mob"
+                      LastKnownLocation="Package6_2203.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="7c608e57-1d58-4f05-ab84-d264a2367c3d"
+            name="SpiderFactory"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="97f84690-0491-4f86-88cf-824c5f49986a"
+                handle="viewcode://./CodeSchema_Method?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Contracts.Mobs Type=SpiderFactory Member=(Name=.ctor OverloadingParameters=[(Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Session Type=GameLevel)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="47abc061-0918-4f15-b23c-5dd9be08d195"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="87202a83-779a-4455-8f38-7567a87369ab">
+                    <propertyInstance
+                      Id="ae9e5074-b578-4725-b273-e9f572ec94a8"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="a8e48344-0fe9-44b6-9ad5-09197f3bfea8">
+                    <propertyInstance
+                      Id="582a05c0-162b-4218-b6d8-d4e9b929d31a"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="3d123c1c-1ee5-496b-8762-f80ce12c7314">
+                    <propertyInstance
+                      Id="42f4079c-3d63-4e5f-80bf-f7e240a7fbc9"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="515a91f9-eb93-40af-8011-8072d52c55e3">
+                    <propertyInstance
+                      Id="9d4e4372-3b22-49cb-8f74-08192bfb0adb"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="df9063aa-8eb7-4c20-be56-fa9ebd848a89">
+                    <propertyInstance
+                      Id="0f126d9d-cd50-4e65-932d-9547effb6132"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="d8d6d121-2b18-486f-99a8-44f5e8a0bd40"
+                  name="gameLevel"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="55f0a0a8-a85f-4b79-ba7e-3cb9d5a084ef"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Contracts.Mobs Type=SpiderFactory Member=(Name=.ctor OverloadingParameters=[(Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Session Type=GameLevel)]) ParameterIdentifier=gameLevel"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="99733ea5-f6f9-4c6f-8cc5-62e75547dc61"
+                      LastKnownName="GameLevel"
+                      LastKnownLocation="Package5_2203.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="3bed9b2b-330b-4169-891d-4da856017f93"
+        name="IMobFactory"
+        isAbstract="false"
+        isLeaf="false">
+        <referencesInternal>
+          <reference
+            Id="009e6975-bb73-4896-b9bf-fff113e0b690"
+            handle="viewcode://./CodeSchema_Interface?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Contracts.Mobs Type=IMobFactory"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="50f0f0d2-e03a-4252-af47-fcd9c7f507f1"
+            name="interface"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="deec3597-6c4b-4bf7-be8d-544e68db4e02">
+                <propertyInstance
+                  Id="9abb79f3-9201-4760-86c7-7e7e96d12d2e"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="2f5fd02e-e029-4f25-a7e0-03f55f996418">
+                <propertyInstance
+                  Id="b1b8ee1b-094a-478e-9b39-084e804ba044"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="2871f8d0-55fe-4403-9107-916116933f26">
+                <propertyInstance
+                  Id="2b347c75-aff7-40d4-b31c-f676d8b99840"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="90311c0d-515d-48cf-8e08-9cdbe0b82fec">
+                <propertyInstance
+                  Id="58ceba32-123a-4453-9d11-7eb5fe71b26a"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <ownedOperations>
+          <operation
+            Id="c0b258ec-92bc-4910-8dba-306bad8bd1ae"
+            name="CreateMob"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="true"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="cb52ca40-6bf7-41a6-8f30-a7c526d1fc61"
+                handle="viewcode://./CodeSchema_Method?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Contracts.Mobs Type=IMobFactory Member=CreateMob"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="dc5387c2-0c6c-4ee4-ad22-d39d5e15dba2"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="97f6ca70-afba-435d-a050-b4fd65f3b709">
+                    <propertyInstance
+                      Id="049957b1-d050-4955-b1e8-0a8924d580d6"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d4ca4131-608e-49a2-9bd1-b00c14059693">
+                    <propertyInstance
+                      Id="7da34930-2925-49fd-ae32-887ed1114015"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="8fb8422b-da65-414a-b7cf-8101a243a9cc">
+                    <propertyInstance
+                      Id="455fb8ff-df2e-49ba-9e94-c26e2e657b8c"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0c603cda-6850-431d-af97-fd8adb856895">
+                    <propertyInstance
+                      Id="da6b62b0-58f3-435c-b0c2-e5bc3dabc692"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="4a56de1d-c1df-4dd7-bf4b-70731eefe56e">
+                    <propertyInstance
+                      Id="32e823b5-d1a1-4b38-bcec-6d8123d3b7ec"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="709fa689-7db9-4ed9-b434-3fbfc4293cc0"
+                  direction="Return">
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="27627984-5cd8-4caf-a2f1-abbadf40e805"
+                      LastKnownName="Mob"
+                      LastKnownLocation="Package6_2203.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperations>
+      </Interface>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

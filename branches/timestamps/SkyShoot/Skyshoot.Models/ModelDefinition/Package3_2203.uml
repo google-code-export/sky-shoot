@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="e94f833f-fd66-498f-b3b2-3ca522172689"
+  name="Content"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="15c444df-5827-4b91-80ff-27af5b41bed2"
+      handle="viewcode://./CodeSchema_Namespace?Namespace=SkyShoot.XNA.Content"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <class
+        Id="e1b639bf-8893-478e-9732-c933a5374665"
+        name="ContentManager"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="f693160f-49fc-420a-991b-906f31965dd7"
+            handle="viewcode://./CodeSchema_Class?Assembly=&quot;file:///C:/Program Files/Microsoft XNA/XNA Game Studio/v4.0/References/Windows/x86/SkyShoot.XNA.dll&quot; Namespace=SkyShoot.XNA.Content Type=ContentManager"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="1fb05ee6-f747-497c-951a-255e612d3fc1"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="c4712fd0-5750-4e2b-b5fd-135b20f5923b">
+                <propertyInstance
+                  Id="e3785681-dcb3-4d4e-92fc-c9549ebc312d"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="1bbc24e2-8ec5-4d46-b8aa-def7cfa65d49">
+                <propertyInstance
+                  Id="319f373c-9a5f-4777-b8e3-83461dd6d80f"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="11ca47d9-8b47-4143-bcb4-467fc2db5a67">
+                <propertyInstance
+                  Id="4c37e04b-dbc2-4822-b43c-3cac24e39eab"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="d91b0e75-890e-4948-811b-5c3f27b33e64">
+                <propertyInstance
+                  Id="3fe093c1-81cc-4d0a-8755-1100d697da7b"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="3fc41307-5220-43d4-86fa-010466f35ed9">
+                <propertyInstance
+                  Id="46edaae1-6726-46eb-bcf6-278fb84ce120"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </class>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

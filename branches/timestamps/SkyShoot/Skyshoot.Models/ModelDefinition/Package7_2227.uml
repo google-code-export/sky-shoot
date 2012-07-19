@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="06e604ed-8270-4c70-a9e7-1e91259b69b4"
+  name="WindowsAzure"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="0da51b11-8546-4639-8b60-2d8f47fe3959"
+      handle="viewcode://./CodeSchema_Namespace?Namespace=Microsoft.WindowsAzure"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <class
+        Id="05e67443-2a18-4e54-9274-41b9815a6176"
+        name="CloudStorageAccount"
+        isAbstract="false"
+        isLeaf="true"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="bee6845d-6eca-403d-8605-e26919d4eb7f"
+            handle="viewcode://./CodeSchema_Class?Assembly=&quot;file:///C:/Program Files/Windows Azure SDK/v1.6/ref/Microsoft.WindowsAzure.StorageClient.dll&quot; Namespace=Microsoft.WindowsAzure Type=CloudStorageAccount"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="90ff5e8e-a8b0-4d65-ba0d-0374b720af9b"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="20a6e98d-057f-48ff-ad5e-f0ae0c634859">
+                <propertyInstance
+                  Id="0a4a8841-4a41-413b-88bc-85e4677d7518"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="c783eb81-8724-4584-a35e-2cd4fe8ee1b2">
+                <propertyInstance
+                  Id="b10774b6-f1cf-477b-bc5a-b74fb606f8f1"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="e227d47a-4ece-4b3a-9695-c4d93952c04a">
+                <propertyInstance
+                  Id="68cc4812-bf09-4893-9b14-dd77033940a5"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="c9f64700-d118-4246-b940-f4f8a5a8e3c1">
+                <propertyInstance
+                  Id="f3be1398-c109-4108-9dfa-d14070528e33"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="42d49bbd-18c0-4229-94a9-52426f9ca5e0">
+                <propertyInstance
+                  Id="e833a05b-484d-4dd3-acc1-9b347d4f1d7a"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="3391fc14-a865-4bda-a73c-197b467dbecc"
+        LastKnownName="ServiceRuntime"
+        LastKnownLocation="Package11_2227.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="879a85e3-e087-4212-a55e-0cb66907dd9f"
+        name="StorageCredentials"
+        isAbstract="true"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="f1fe91af-9cae-494b-930c-0a4a2e4c2aef"
+            handle="viewcode://./CodeSchema_Class?Assembly=&quot;file:///C:/Program Files/Windows Azure SDK/v1.6/ref/Microsoft.WindowsAzure.StorageClient.dll&quot; Namespace=Microsoft.WindowsAzure Type=StorageCredentials"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="e11adf38-be0b-46c5-bf6f-3f5b756175a8"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="1f946a8e-f392-4a6a-adb1-4d83f07aebb4">
+                <propertyInstance
+                  Id="33062e86-6e1b-4774-bfad-b1209c13d8e1"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="6cb62362-2e30-4789-b4c4-ccbde048d275">
+                <propertyInstance
+                  Id="229b7576-2e4f-477c-bab6-f99dab3b11bd"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="e7fd3f8f-11d5-40e7-ac78-2e7af8b1e3dd">
+                <propertyInstance
+                  Id="66cad3b7-b0d7-4044-9e65-305070fe3af5"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="f6b6729f-6fbb-4bed-8740-1b87ae14ab41">
+                <propertyInstance
+                  Id="346db3ff-9387-438a-a7bd-25855404f492"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="96a85e4f-d3ca-4d74-a172-ae9ff7941c02">
+                <propertyInstance
+                  Id="fecb76dd-86a0-4d57-a995-e35d396cc7a9"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="136c3ced-1824-4bb3-9060-27f2fac0180b"
+        LastKnownName="StorageClient"
+        LastKnownLocation="Package13_2227.uml" />
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

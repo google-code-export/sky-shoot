@@ -1,0 +1,289 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="438a9eff-7235-4538-bb80-09b9aa5b461e"
+  name="Mobs"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="83741cca-2f73-4715-98e1-656db451d3fe"
+      handle="viewcode://./CodeSchema_Namespace?Namespace=SkyShoot.Service.Mobs"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <class
+        Id="33f0cb18-079c-4d80-9a3e-82d3f5a3f1ea"
+        name="Spider"
+        visibility="Package"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="bce14746-4c39-4d84-af9c-997f3620aacc"
+            handle="viewcode://./CodeSchema_Class?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Service.Mobs Type=Spider"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="d51a7c88-bf20-4a66-98b7-5d5c6235c9c6"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="fa63b7e3-df4e-4af8-a20d-d2ff26d33a54">
+                <propertyInstance
+                  Id="dd2a45c4-83ef-40b0-8af4-bb9ae4fa9114"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="5ab9cb7b-1478-49e0-8203-fe72dd738564">
+                <propertyInstance
+                  Id="17793216-ed02-487e-97b8-a7c6f453833f"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="be0bf269-62d5-402c-8f94-598eb178f23d">
+                <propertyInstance
+                  Id="88c6a828-35f5-4629-9ad0-da9e9c3444da"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="28aa43a7-2b46-4202-9b8e-2dd907199168">
+                <propertyInstance
+                  Id="b759b5e8-824d-4964-afff-08788810dcd6"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="7f2f839d-172c-428a-9c6d-166e19588f20">
+                <propertyInstance
+                  Id="d6957ed5-92f3-4de4-880f-5533245fe309"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <generalsInternal>
+          <generalization
+            Id="d8323088-dbfe-4c77-87df-359a275e0df0"
+            isSubstitutable="false">
+            <classMoniker
+              Id="27627984-5cd8-4caf-a2f1-abbadf40e805"
+              LastKnownName="Mob"
+              LastKnownLocation="Package6_2203.uml" />
+          </generalization>
+        </generalsInternal>
+        <ownedAttributesInternal>
+          <property
+            Id="7ec23fda-5099-4209-a6a1-a0516124f98b"
+            name="RADIUS_MIN"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="true"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="4fed28d9-93cd-479a-b970-0b0b73f12d35"
+                handle="viewcode://./CodeSchema_Field?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Service.Mobs Type=Spider Member=RADIUS_MIN"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="659fb8f4-9d3c-4cde-a32d-ba6b379738b7"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ad2c7515-14cc-417b-96a3-047ea0fece3e">
+                    <propertyInstance
+                      Id="25eb5fc7-86ef-4705-a9c9-8ce61150ea0c"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2fefd7a5-bc2c-4687-b447-3f8cfc97251c">
+                    <propertyInstance
+                      Id="56dedcdd-5197-4c94-87c2-8e59be06e1be"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="597de444-3ea4-4152-acb6-d0c366e8b260">
+                    <propertyInstance
+                      Id="d7599eba-e153-4b8e-8f86-331223559bb1"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b93b13a6-9cd6-4e29-9ab7-0fb4e9b553b3">
+                    <propertyInstance
+                      Id="a4d657aa-d286-4c03-bec0-d3ada84780e5"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d38f569e-2bf5-4a11-9e59-b863d3f85bb2">
+                    <propertyInstance
+                      Id="c38a7128-c83d-4518-87a3-20f0fefec24b"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </property>
+          <property
+            Id="2b8ccfda-46d2-499c-aae3-bcf0f4dea053"
+            name="RADIUS_MAX"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="true"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="08773808-a056-405d-ad0a-5aa98e0ecdee"
+                handle="viewcode://./CodeSchema_Field?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Service.Mobs Type=Spider Member=RADIUS_MAX"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="693f828d-0a23-4bc8-a4ac-2e80ba1613b5"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2c893d26-7a6f-4d2f-9aa0-d2addd4d101a">
+                    <propertyInstance
+                      Id="6c150fcd-fc1d-4fba-89e3-1a29c910762b"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="671b0507-0f56-4acd-a5c1-2dae2650d5c2">
+                    <propertyInstance
+                      Id="a75c7e58-6649-434c-b8ef-7c2c124c5bdf"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="4c795866-4911-4e55-b5d6-b2a22677d3d4">
+                    <propertyInstance
+                      Id="13c20224-9002-4925-a521-08c2f8f941c1"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ce10a85f-a604-418b-b235-4d720e23013f">
+                    <propertyInstance
+                      Id="e79d6a5a-8885-457b-9e8f-02af7a3255db"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="5a2bcc6e-de7b-409d-8393-845016b41ee8">
+                    <propertyInstance
+                      Id="4f7aa3b4-21af-41bd-8e00-20323e46514d"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="cb026d54-e060-469a-b826-d666665b9fe0"
+            name="Spider"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="f25aca99-918a-40a6-8108-8d0b0929eff3"
+                handle="viewcode://./CodeSchema_Method?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Service.Mobs Type=Spider Member=(Name=.ctor OverloadingParameters=[(Assembly=&quot;file:///C:/Program Files/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.0/mscorlib.dll&quot; Namespace=System Type=Single)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="ce03d6de-a793-41f9-a447-a2ab0fec0809"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="a37edf0c-5bb7-472a-a329-50189cd02fe5">
+                    <propertyInstance
+                      Id="9748588a-0338-4eb1-9d95-02404d4a8f20"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="42eeab2b-f10d-459e-9000-c789f6ae300f">
+                    <propertyInstance
+                      Id="90ae2065-a810-481a-862f-5a481aeb4bbe"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="97d32e4b-0625-41bb-b0e9-5cd4c9d55e4f">
+                    <propertyInstance
+                      Id="009571f9-9706-4468-82d2-04798bf22da4"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c1a59e87-3db2-4022-8c2c-e02c35c2361c">
+                    <propertyInstance
+                      Id="46a20685-dc9d-4aa4-8c27-1dfd12b07059"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e10af4a3-add2-4ed6-bfdc-10893bb3927d">
+                    <propertyInstance
+                      Id="55b14250-109c-4bf3-9160-04becc38d62f"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="6311b5f1-d354-4cec-9568-d5c21b436524"
+                  name="healthAmount"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="e3e98540-51f2-4a21-b45e-b6c369d90cad"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Service.Mobs Type=Spider Member=(Name=.ctor OverloadingParameters=[(Assembly=&quot;file:///C:/Program Files/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.0/mscorlib.dll&quot; Namespace=System Type=Single)]) ParameterIdentifier=healthAmount"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="7333dc39-ed37-4127-aff5-8e77f748e4f6"
+                      LastKnownName="Single"
+                      LastKnownLocation="Package4_2202.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

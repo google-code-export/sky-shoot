@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrimeNumbers", "PrimeNumbers\PrimeNumbers.csproj", "{1E8E0CB8-A18E-4611-845F-80C3D41CE007}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1E8E0CB8-A18E-4611-845F-80C3D41CE007}.Debug|x86.ActiveCfg = Debug|x86
+		{1E8E0CB8-A18E-4611-845F-80C3D41CE007}.Debug|x86.Build.0 = Debug|x86
+		{1E8E0CB8-A18E-4611-845F-80C3D41CE007}.Release|x86.ActiveCfg = Release|x86
+		{1E8E0CB8-A18E-4611-845F-80C3D41CE007}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

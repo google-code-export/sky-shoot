@@ -1,0 +1,515 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="c016060d-49ef-4d6e-a7a4-708f449ebd06"
+  name="Bullets"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="ccf7058b-2920-4a62-93dc-17dee51815e8"
+      handle="viewcode://./CodeSchema_Namespace?Namespace=SkyShoot.Service.Weapon.Bullets"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <class
+        Id="f0bd1bfe-da8c-47a0-9997-8cafa89df58c"
+        name="ShotgunBullet"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="870ba38c-2f18-4baf-b0b3-420e60cd8cb3"
+            handle="viewcode://./CodeSchema_Class?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Service.Weapon.Bullets Type=ShotgunBullet"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="0eed5959-ae18-4028-ac03-7a0a03dcc231"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="89c5943c-06a3-463a-86a0-64fa509da85c">
+                <propertyInstance
+                  Id="e81a111c-871e-4ab3-8cf0-d978e465f174"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="3f8d12b4-0df0-4bdf-98b6-f5cbae5e6138">
+                <propertyInstance
+                  Id="bf069551-25f1-4972-9f5a-836ccf58a07e"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="37084a2e-82b3-46b2-b6d2-50d00eff7113">
+                <propertyInstance
+                  Id="d02a0e91-9f5b-4953-bdae-be2e0352cc43"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="43edbd5f-2ff9-4b49-9aa3-89abc3c809f7">
+                <propertyInstance
+                  Id="e672cf3a-e67c-45ef-afa7-d98754b3fdab"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="5487828d-5888-40fb-ac89-72dc44f8a933">
+                <propertyInstance
+                  Id="2260dad9-dfb2-4cd9-a8d0-f0384094f60e"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <generalsInternal>
+          <generalization
+            Id="73bcb99e-9891-43ce-8689-32c1db0eda96"
+            isSubstitutable="false">
+            <classMoniker
+              Id="ee583f98-3cd0-4801-b8c2-a8f18c0f94a0"
+              LastKnownName="AProjectile"
+              LastKnownLocation="Package8_2203.uml" />
+          </generalization>
+        </generalsInternal>
+        <ownedAttributesInternal>
+          <property
+            Id="c6eb3ad9-47a9-48b4-942c-a038002bd543"
+            name="TYPE"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="true"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="11650409-11ba-403b-a5fc-4ea3e7271b3c"
+                handle="viewcode://./CodeSchema_Field?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Service.Weapon.Bullets Type=ShotgunBullet Member=TYPE"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="99a1a71b-5476-4189-9aec-3b5ed3f031d5"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2deb904b-6f79-4505-abf9-5861e8eb865e">
+                    <propertyInstance
+                      Id="a47610c4-b68d-4c70-b90a-a1bc9cf62303"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f5f002de-10a0-4ba7-8bf4-08ddba586f8e">
+                    <propertyInstance
+                      Id="93c7c627-03c8-4de1-b2b2-f53be72117c4"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="42db1847-8435-4666-b883-f6c2cacacfb4">
+                    <propertyInstance
+                      Id="8097dac1-3257-4f10-ab91-fe8241ba4c76"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="aeb3b219-c869-4573-b02a-f30268696105">
+                    <propertyInstance
+                      Id="b01b0244-3b91-469a-8afc-6fbdce938103"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e491d8b1-30f6-4c7c-b3ab-c525788f1e6f">
+                    <propertyInstance
+                      Id="488e117e-8bc7-42df-af0d-8b628dceaf9d"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="ca333084-3317-4d89-ae22-7013ae5d7094"
+            name="ShotgunBullet"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="7d3db6cc-4168-4ef9-b1ca-1c39577183fd"
+                handle="viewcode://./CodeSchema_Method?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Service.Weapon.Bullets Type=ShotgunBullet Member=(Name=.ctor OverloadingParameters=[(Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=AMob),(Assembly=&quot;file:///C:/Program Files/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.0/mscorlib.dll&quot; Namespace=System Type=Guid),(Assembly=&quot;file:///C:/Program Files/Microsoft XNA/XNA Game Studio/v4.0/References/Windows/x86/SkyShoot.XNA.dll&quot; Namespace=SkyShoot.XNA Type=Vector2)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="f83b1182-cd7d-481c-8020-92add8f238d0"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="dc22ff80-042f-4109-a634-ba2986d3acfa">
+                    <propertyInstance
+                      Id="196ff3ba-6de8-4d20-92fd-6b692d356a8b"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ff8ebe02-2644-4ce9-9b7d-7880bff89a72">
+                    <propertyInstance
+                      Id="142d6a63-961e-41ed-9c18-fbaf989b5a2b"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="56759738-72ff-41c8-a46f-0ed62dae68b2">
+                    <propertyInstance
+                      Id="ca029392-4763-43ed-9ecc-c55826ca890d"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="31c6b2fd-8fca-42ef-9de0-1001ae65aba4">
+                    <propertyInstance
+                      Id="7de77010-b1e1-49bf-bd5c-f6a18957ad05"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="90505ad4-0ad4-4e6b-bd6b-1dae9e5b90d5">
+                    <propertyInstance
+                      Id="c9732183-1bfe-4cea-8239-9ea98f10f18f"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="d18706b1-8e1d-49ea-bb85-8aeaf971c61c"
+                  name="owner"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="3db1ef12-8fbc-48ce-a2a3-9f8b524e919c"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Service.Weapon.Bullets Type=ShotgunBullet Member=(Name=.ctor OverloadingParameters=[(Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=AMob),(Assembly=&quot;file:///C:/Program Files/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.0/mscorlib.dll&quot; Namespace=System Type=Guid),(Assembly=&quot;file:///C:/Program Files/Microsoft XNA/XNA Game Studio/v4.0/References/Windows/x86/SkyShoot.XNA.dll&quot; Namespace=SkyShoot.XNA Type=Vector2)]) ParameterIdentifier=owner"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="777a2727-f6d1-49c2-ad29-49581593ca5e"
+                      LastKnownName="AMob"
+                      LastKnownLocation="Package6_2203.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="e9f3307a-6100-461d-9a7b-590896245252"
+                  name="id"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="51844183-8df9-4cc3-b427-6a77f28891bb"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Service.Weapon.Bullets Type=ShotgunBullet Member=(Name=.ctor OverloadingParameters=[(Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=AMob),(Assembly=&quot;file:///C:/Program Files/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.0/mscorlib.dll&quot; Namespace=System Type=Guid),(Assembly=&quot;file:///C:/Program Files/Microsoft XNA/XNA Game Studio/v4.0/References/Windows/x86/SkyShoot.XNA.dll&quot; Namespace=SkyShoot.XNA Type=Vector2)]) ParameterIdentifier=id"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="56dd06e7-f4d3-41c7-95a1-69d42f4b72cf"
+                      LastKnownName="Guid"
+                      LastKnownLocation="Package4_2202.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="92dde463-c353-41d8-b949-02648b27c60e"
+                  name="direction"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="e8e5007b-fa37-4b67-8dd0-8b50b5bcff7a"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Service.Weapon.Bullets Type=ShotgunBullet Member=(Name=.ctor OverloadingParameters=[(Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=AMob),(Assembly=&quot;file:///C:/Program Files/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.0/mscorlib.dll&quot; Namespace=System Type=Guid),(Assembly=&quot;file:///C:/Program Files/Microsoft XNA/XNA Game Studio/v4.0/References/Windows/x86/SkyShoot.XNA.dll&quot; Namespace=SkyShoot.XNA Type=Vector2)]) ParameterIdentifier=direction"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="fb073131-b68c-4afa-ad94-bd98fff1b907"
+                      LastKnownName="Vector2"
+                      LastKnownLocation="Package7_2202.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="f5dfae23-d30e-4def-9b85-65264bc58b22"
+        name="PistolBullet"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="c97b5b40-3f35-4df2-ab5a-895e72ad7942"
+            handle="viewcode://./CodeSchema_Class?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Service.Weapon.Bullets Type=PistolBullet"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="3cf6d241-eac1-401c-85e2-8afd910012b5"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="d0211ec6-b47e-4ede-97f5-225d079290b8">
+                <propertyInstance
+                  Id="7649b7ff-06d8-4911-a0ba-e8e4dd4a4dd8"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="130c1a5a-aeda-4db9-ad9f-2f3ed3d48aa5">
+                <propertyInstance
+                  Id="1f4865e8-d295-4743-a4a1-03e4d63cdd13"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="acc3bdfa-2c79-4e06-9619-62f89127daad">
+                <propertyInstance
+                  Id="ccf61220-df8d-4ce0-abfc-1f73a57e7adc"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="bac1d5af-1ff2-4bd6-af59-d891bfddabfc">
+                <propertyInstance
+                  Id="cb023c7a-2baa-4ad5-84ee-1295136fdb50"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="94a8fa89-8694-4c9f-84a7-4ffdb3310ff1">
+                <propertyInstance
+                  Id="27597565-484b-4fb6-a3c4-86e945c59f6a"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <generalsInternal>
+          <generalization
+            Id="6a57c465-70c1-4c73-b929-414400abe42e"
+            isSubstitutable="false">
+            <classMoniker
+              Id="ee583f98-3cd0-4801-b8c2-a8f18c0f94a0"
+              LastKnownName="AProjectile"
+              LastKnownLocation="Package8_2203.uml" />
+          </generalization>
+        </generalsInternal>
+        <ownedAttributesInternal>
+          <property
+            Id="7643106a-41cc-49ce-9c57-8aa2184c2ac2"
+            name="TYPE"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="true"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="1427820e-f33d-4c9d-b922-c063821cc7d9"
+                handle="viewcode://./CodeSchema_Field?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Service.Weapon.Bullets Type=PistolBullet Member=TYPE"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="237fee0d-320e-4480-aa35-93749ba62434"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f0f9811a-dd3b-4139-b9f5-34282e5650f8">
+                    <propertyInstance
+                      Id="b52b5cd2-09fd-45df-b9f3-250ec3b924fb"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="92305dda-81f6-41a2-ade4-74105e1eaa84">
+                    <propertyInstance
+                      Id="159670af-5a80-4103-83d7-111757a5dc54"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="943e52d7-ddcc-44d2-8095-def5bc7b0b28">
+                    <propertyInstance
+                      Id="7befccf6-f0af-4834-a003-dc9b4f27bc24"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d8e2ccef-c1cb-4596-9969-9d1be786ec92">
+                    <propertyInstance
+                      Id="26aa0072-4593-4b30-ad05-d615e666fc50"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1f25114d-f9ab-4491-ba05-7ed79cab14eb">
+                    <propertyInstance
+                      Id="7d5e558d-7a06-4c87-8c06-901189bb33dd"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="b47dbb84-6fc4-4fa2-96a7-f42a133a10fd"
+            name="PistolBullet"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="2a57c797-8863-44fc-8ffa-0890ddb81b4c"
+                handle="viewcode://./CodeSchema_Method?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Service.Weapon.Bullets Type=PistolBullet Member=(Name=.ctor OverloadingParameters=[(Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=AMob),(Assembly=&quot;file:///C:/Program Files/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.0/mscorlib.dll&quot; Namespace=System Type=Guid),(Assembly=&quot;file:///C:/Program Files/Microsoft XNA/XNA Game Studio/v4.0/References/Windows/x86/SkyShoot.XNA.dll&quot; Namespace=SkyShoot.XNA Type=Vector2)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="73f0feb4-8530-4b13-a6b1-df1c3a4fa8a4"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="fcace7a1-93e8-4fc4-98d2-652cabd1b292">
+                    <propertyInstance
+                      Id="ef56d9e9-68a9-4866-9afe-1701e0fa0c22"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="94912b9c-618a-4bff-930d-a00229261485">
+                    <propertyInstance
+                      Id="1e46fb03-e74e-4f9b-91ff-ac308d0066f4"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="57406da0-adc5-44a1-8453-017264ab0c6b">
+                    <propertyInstance
+                      Id="64da676d-9ba3-4749-a48d-fdca515cebbb"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="be515111-f84c-4486-963a-44a4f9e39e89">
+                    <propertyInstance
+                      Id="ea11e344-587a-4fd9-a7d4-fc85ba23842b"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="267e083e-0971-4bd1-9165-9d1c27384f5d">
+                    <propertyInstance
+                      Id="ba8676a5-9baf-433b-ac0f-e7a5301815ed"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="5aba7afe-beab-4ca4-9c14-ffd2cb3da232"
+                  name="owner"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="9dac5fbe-ea9c-44e1-95fb-ff2a0536eca6"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Service.Weapon.Bullets Type=PistolBullet Member=(Name=.ctor OverloadingParameters=[(Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=AMob),(Assembly=&quot;file:///C:/Program Files/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.0/mscorlib.dll&quot; Namespace=System Type=Guid),(Assembly=&quot;file:///C:/Program Files/Microsoft XNA/XNA Game Studio/v4.0/References/Windows/x86/SkyShoot.XNA.dll&quot; Namespace=SkyShoot.XNA Type=Vector2)]) ParameterIdentifier=owner"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="777a2727-f6d1-49c2-ad29-49581593ca5e"
+                      LastKnownName="AMob"
+                      LastKnownLocation="Package6_2203.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="5b832a88-abc2-4d98-a717-8fdcc4cc13a3"
+                  name="id"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="833b0c3f-f989-4ffa-9a0f-0db7a968377d"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Service.Weapon.Bullets Type=PistolBullet Member=(Name=.ctor OverloadingParameters=[(Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=AMob),(Assembly=&quot;file:///C:/Program Files/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.0/mscorlib.dll&quot; Namespace=System Type=Guid),(Assembly=&quot;file:///C:/Program Files/Microsoft XNA/XNA Game Studio/v4.0/References/Windows/x86/SkyShoot.XNA.dll&quot; Namespace=SkyShoot.XNA Type=Vector2)]) ParameterIdentifier=id"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="56dd06e7-f4d3-41c7-95a1-69d42f4b72cf"
+                      LastKnownName="Guid"
+                      LastKnownLocation="Package4_2202.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="022ec807-7bd8-4f79-842d-48bca4238c3b"
+                  name="direction"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="9ecf41c5-48b7-44a4-8834-f9a53bb3cb0d"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Service/bin/Debug/SkyShoot.Service.dll Namespace=SkyShoot.Service.Weapon.Bullets Type=PistolBullet Member=(Name=.ctor OverloadingParameters=[(Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=AMob),(Assembly=&quot;file:///C:/Program Files/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.0/mscorlib.dll&quot; Namespace=System Type=Guid),(Assembly=&quot;file:///C:/Program Files/Microsoft XNA/XNA Game Studio/v4.0/References/Windows/x86/SkyShoot.XNA.dll&quot; Namespace=SkyShoot.XNA Type=Vector2)]) ParameterIdentifier=direction"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="fb073131-b68c-4afa-ad94-bd98fff1b907"
+                      LastKnownName="Vector2"
+                      LastKnownLocation="Package7_2202.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>
