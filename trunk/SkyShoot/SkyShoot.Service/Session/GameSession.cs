@@ -25,7 +25,7 @@ namespace SkyShoot.Service.Session
 		private readonly List<AGameObject> _gameObjects;
 		private readonly List<AGameObject> _newObjects;
 
-		private readonly SpiderFactory _spiderFactory;
+		private readonly DefaultSpiderFactory _spiderFactory;
 		private readonly BonusFactory _bonusFactory;
 		private readonly WallFactory _wallFactory;
 
@@ -68,7 +68,7 @@ namespace SkyShoot.Service.Session
 
 			LocalGameDescription = new GameDescription(playerNames, maxPlayersAllowed, gameType, gameID, tileSet, teams);
 
-			_spiderFactory = new SpiderFactory(GameLevel);
+			_spiderFactory = new DefaultSpiderFactory(GameLevel);
 			_bonusFactory = new BonusFactory();
 			_wallFactory = new WallFactory(GameLevel);
 		}
