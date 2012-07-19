@@ -5,6 +5,8 @@ using Nuclex.Input;
 using Nuclex.UserInterface.Controls;
 using Nuclex.UserInterface.Controls.Desktop;
 using SkyShoot.Game.Screens;
+using SkyShoot.Game.Network;
+using SkyShoot.Contracts.Weapon;
 
 namespace SkyShoot.Game.Input
 {
@@ -112,6 +114,12 @@ namespace SkyShoot.Game.Input
 					if (keyboardState.IsKeyDown(Keys.Right)) runVector += Vector2.UnitX;
 					break;
 			}
+			if (keyboardState.IsKeyDown(Keys.D1)) ConnectionManager.Instance.ChangeWeapon(WeaponType.Pistol);
+			if (keyboardState.IsKeyDown(Keys.D2)) ConnectionManager.Instance.ChangeWeapon(WeaponType.Shotgun);
+			if (keyboardState.IsKeyDown(Keys.D3)) ConnectionManager.Instance.ChangeWeapon(WeaponType.FlamePistol);
+			if (keyboardState.IsKeyDown(Keys.D4)) ConnectionManager.Instance.ChangeWeapon(WeaponType.RocketPistol);
+			if (keyboardState.IsKeyDown(Keys.D5)) ConnectionManager.Instance.ChangeWeapon(WeaponType.Heater);
+			if (keyboardState.IsKeyDown(Keys.D6)) ConnectionManager.Instance.ChangeWeapon(WeaponType.TurretMaker);
 			if (runVector.Length() > 0)
 				runVector.Normalize();
 			return runVector;
