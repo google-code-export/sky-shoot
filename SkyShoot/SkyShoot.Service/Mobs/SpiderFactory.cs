@@ -8,7 +8,7 @@ using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.ServProgram.Mobs
 {
-	public class SpiderFactory : IMobFactory
+	public class DefaultSpiderFactory : IMobFactory
 	{
 		private readonly float _width;
 		private readonly float _height;
@@ -16,7 +16,7 @@ namespace SkyShoot.ServProgram.Mobs
 		private readonly Random _random;
 		private float _health;
 
-		public SpiderFactory(GameLevel gameLevel)
+		public DefaultSpiderFactory(GameLevel gameLevel)
 		{
 			_random = new Random();
 			_width = gameLevel.LevelWidth;
