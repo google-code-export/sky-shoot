@@ -14,20 +14,19 @@ namespace SkyShoot.Service.Weapon.Bullets
 		private const int TIME_TO_DAMAGE = (int)(Constants.EXPLOSION_LIFE_DISTANCE / 45f);
 
 		private long _explodedTime;
+		private int _number;
+		private int _maxCircles;
 
-		private bool _isExploded;
-
-		public Explosion(AGameObject owner, Guid id, Vector2 coordinates)
+		public Explosion(AGameObject owner, Guid id, Vector2 coordinates,int maxCircles, int number)
 			: base(owner, id, Vector2.Zero)
 		{
+			_number = number;
+			_maxCircles = maxCircles;
 			_explodedTime = -1;
-			Speed = Constants.EXPLOSION_SPEED;
-			Damage = Constants.EXPLOSION_DAMAGE;
+			Speed = Constants.EXPLOSION_SPEED;			
 			HealthAmount = Constants.EXPLOSION_LIFE_DISTANCE;
 			ObjectType = EnumObjectType.Explosion;
-			Radius = Constants.EXPLOSION_RADIUS;
 			Coordinates = coordinates;
-			_isExploded = false;
 		}
 
 		public override IEnumerable<AGameEvent> Do(AGameObject obj, List<AGameObject> newObjects, long time)
@@ -42,7 +41,6 @@ namespace SkyShoot.Service.Weapon.Bullets
 				return new AGameEvent[] { };
 			}
 			var res = new List<AGameEvent>(base.Do(obj, newObjects, time));
-			_isExploded = true;
 			// надо удалять сообщение objectdeleted 
 			// потому что на самом деле взрыв этот не должен удаляться
 			IsActive = true;
@@ -52,12 +50,28 @@ namespace SkyShoot.Service.Weapon.Bullets
 
 		public override IEnumerable<AGameEvent> Think(List<AGameObject> players, List<AGameObject> newGameObjects, long time)
 		{
+			List<AGameEvent> res = new List<AGameEvent>();
 			if (time > _explodedTime)
 			{
+				if (_number < _maxCircles)
+				{
+					var explos = new Explosion(Owner, Guid.NewGuid(), Coordinates, _maxCircles, _number + 1)
+					{
+						Radius = this.Radius * (_number + 1) / _number,
+						Damage = this.Damage,
+					};
+					newGameObjects.Add(explos);
+					res.Add(new NewObjectEvent(explos, time));
+				}
 				IsActive = false;
-				return new AGameEvent[] { new ObjectDeleted(Id, time) };
+				res.Add(new ObjectDeleted(Id, time));
 			}
-			return new AGameEvent[] { };
+			return res;
+		}
+
+		public override IEnumerable<AGameEvent> OnDead(AGameObject obj, List<AGameObject> newObjects, long time)
+		{
+			return base.OnDead(obj, newObjects, time);
 		}
 	}
 }

@@ -22,6 +22,9 @@
 		public const float ROCKET_BULLET_LIFE_DISTANCE = 3000f;
 		public const int ROCKET_PISTOL_ATTACK_RATE = 1500;
 		public const float ROCKET_BULLET_RADIUS = 4f;
+		public const int ROCKET_EXPLOSION_CIRCLES = 3;
+		public const float ROCKET_EXPLOSION_RADIUS = 25f;
+		public const float ROCKET_EXPLOSION_DAMAGE = 10f;
 
 		#endregion
 
@@ -48,10 +51,10 @@
 		#region explosion
 
 		public const float EXPLOSION_SPEED = 0f;
-		public const float EXPLOSION_DAMAGE = 40f;
+		public const float EXPLOSION_DAMAGE = 15f;
 		public const float EXPLOSION_LIFE_DISTANCE = 200f;
 		public const int EXPLOSION_ATTACK_RATE = 1;
-		public const float EXPLOSION_RADIUS = 50f;
+		public const float EXPLOSION_RADIUS = 25f;
 		public const long EXPLODED_TIME = 1;
 
 		#endregion
