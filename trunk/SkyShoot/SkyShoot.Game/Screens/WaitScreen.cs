@@ -127,7 +127,7 @@ namespace SkyShoot.Game.Screens
 			if (level != null)
 			{
 				// game started
-				GameController.Instance.GameStart(level);
+				GameController.Instance.GameStart(level, GameId);
 			}
 			else
 			{
