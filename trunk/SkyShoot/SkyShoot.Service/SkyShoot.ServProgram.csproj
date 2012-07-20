@@ -111,6 +111,7 @@
     <Compile Include="Bonus\Speedup.cs" />
     <Compile Include="MainSkyShootService.cs" />
     <Compile Include="Mobs\ChildrenMob.cs" />
+    <Compile Include="Mobs\DeathmatchSpiderFactory.cs" />
     <Compile Include="Mobs\Hydra.cs" />
     <Compile Include="Mobs\IMobFactory.cs" />
     <Compile Include="Mobs\Mob.cs" />
@@ -119,6 +120,7 @@
     <Compile Include="Mobs\Poisoning.cs" />
     <Compile Include="Mobs\ShootingMob.cs" />
     <Compile Include="Mobs\Spider.cs" />
+    <Compile Include="Mobs\DefaultSpiderFactory.cs" />
     <Compile Include="Mobs\SpiderFactory.cs" />
     <Compile Include="Statistics\ExponentialExpTracker.cs" />
     <Compile Include="Statistics\ExpTracker.cs" />
