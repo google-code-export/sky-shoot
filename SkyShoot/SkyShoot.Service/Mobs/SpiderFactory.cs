@@ -8,7 +8,17 @@ using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.ServProgram.Mobs
 {
-	public class DefaultSpiderFactory : IMobFactory
+	public enum MobType: int
+	{
+		Spider = 0,
+		ShootingMob = 1,
+		ParentMob = 2,
+		Hydra = 3,
+		Poisoner = 4,
+		SpiderWithSimpleMind = 5
+	};
+
+	public class SpiderFactory : IMobFactory
 	{
 		private readonly float _width;
 		private readonly float _height;
@@ -16,7 +26,14 @@ namespace SkyShoot.ServProgram.Mobs
 		private readonly Random _random;
 		private float _health;
 
-		public DefaultSpiderFactory(GameLevel gameLevel)
+		public SpiderFactory() 	
+		{
+			_random = new Random();
+			_border = Constants.LEVELBORDER;
+			_health = 10; //change to real value
+		}
+
+		public SpiderFactory(GameLevel gameLevel)
 		{
 			_random = new Random();
 			_width = gameLevel.LevelWidth;
@@ -25,33 +42,33 @@ namespace SkyShoot.ServProgram.Mobs
 			_health = 10; //change to real value
 		}
 
-		public Mob CreateMob()
+		public virtual Mob CreateMob() { Mob spider = new SpiderWithSimpleMind(Constants.CHILDREN_MOB_HEALTH); return spider; }
+
+		public Mob CreateMob(int newMob)
 		{
 			Mob spider;
-			switch (_random.Next(100) % 10)//Обычные пауки генерируются чаще остальных.
+			switch (newMob)//Обычные пауки генерируются чаще остальных.
 			{
 				case 0:
-					spider = new SpiderWithSimpleMind(_health);
+					spider = new Spider(_health);
 					break;
 				case 1:
-					spider = new SpiderWithSimpleMind(_health);
-					break;
-				case 2:
 					var w = new SpiderWeapon(Guid.NewGuid());
 					spider = new ShootingMob(_health, w, 1000);
 					break;
-				case 3:
+				case 2:
 					spider = new ParentMob();
 					break;
-				case 4:
+				case 3:
 					spider = new Hydra();
 					break;
-				case 5:
+				case 4:
 					var wp = new PoisonGun(Guid.NewGuid());
 					spider = new Poisoner(Constants.POISONER_MOB_HEALTH, wp, 1000);
 					break;
+				case 5:
 				default:
-					spider = new Spider(_health);
+					spider = new SpiderWithSimpleMind(_health);
 					break;
 			}
 
@@ -61,11 +78,11 @@ namespace SkyShoot.ServProgram.Mobs
 			//spider.Weapon = new Claw(Guid.NewGuid(), spider);
 			return spider;
 		}
-
+		
 		/// <summary>
 		/// присваивание случайных координат созданному мобу
 		/// </summary>
-		private Vector2 GetRandomCoord()
+		protected virtual Vector2 GetRandomCoord()
 		{
 			int x;
 			int y;

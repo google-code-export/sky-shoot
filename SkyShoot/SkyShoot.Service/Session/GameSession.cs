@@ -25,7 +25,7 @@ namespace SkyShoot.Service.Session
 		private readonly List<AGameObject> _gameObjects;
 		private readonly List<AGameObject> _newObjects;
 
-		private readonly DefaultSpiderFactory _spiderFactory;
+		private readonly SpiderFactory _spiderFactory;
 		private readonly BonusFactory _bonusFactory;
 		private readonly WallFactory _wallFactory;
 
@@ -67,8 +67,14 @@ namespace SkyShoot.Service.Session
 			_newObjects = new List<AGameObject>();
 
 			LocalGameDescription = new GameDescription(playerNames, maxPlayersAllowed, gameType, gameID, tileSet, teams);
-
-			_spiderFactory = new DefaultSpiderFactory(GameLevel);
+			if (gameType == GameMode.Deathmatch)
+			{
+				_spiderFactory = new DeathmatchSpiderFactory(GameLevel);
+			}
+			else
+			{
+				_spiderFactory = new DefaultSpiderFactory(GameLevel);
+			}
 			_bonusFactory = new BonusFactory();
 			_wallFactory = new WallFactory(GameLevel);
 		}

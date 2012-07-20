@@ -129,6 +129,7 @@
 		public const int SPIDER_RADIUS_MAX = 20;
 		public const float PARENT_MOB_SPEED = 0.01f;
 		public const float PARENT_MOB_HEALTH = 700f;
+		public const int PARENT_MOB_RESPAWN_PER_SIMPLE = 10;//сколько мобов минимально должно родиться перед его появлением 
 		public const int PARENT_MOB_RADIUS_MIN = 30;
 		public const int PARENT_MOB_RADIUS_MAX = 40;
 		public const float CHILDREN_MOB_HEALTH = 25f;
