@@ -225,12 +225,12 @@ namespace SkyShoot.Service
 			bool result = _sessionManager.LeaveGame(this);
 			if (!result)
 			{
-				Trace.WriteLine(Name + "has left the game.");
+				Trace.WriteLine(Name + " has left the game.");
 				return;
 			}
 
-			System.Console.WriteLine(Name + "has left the game.");
-			Trace.WriteLine(Name + "has left the game.");
+			System.Console.WriteLine(Name + " has left the game.");
+			Trace.WriteLine(Name + " has left the game.");
 
 			ClientsList.Remove(this);
 		}

@@ -168,9 +168,6 @@ namespace SkyShoot.Game.Screens
 			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);
 
 			ConnectionManager.Instance.LeaveGame();
-			/// <summary>
-			/// Вставить проверку на количество игроков в игре
-			/// </summary>
 			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MultiplayerScreen);
 		}
 
