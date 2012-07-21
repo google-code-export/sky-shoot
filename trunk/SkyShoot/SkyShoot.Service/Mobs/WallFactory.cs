@@ -14,8 +14,8 @@ namespace SkyShoot.Service.Mobs
 
 		public WallFactory(GameLevel gameLevel)
 		{
-			_levelHeight = gameLevel.LevelHeight;
-			_levelWidth = gameLevel.LevelWidth;
+			_levelHeight = gameLevel.Height;
+			_levelWidth = gameLevel.Width;
 		}
 
 		public Wall[] CreateWalls()

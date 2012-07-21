@@ -17,8 +17,8 @@ namespace SkyShoot.Game.Game
 
 		public GameLevel(Contracts.Session.GameLevel gameLevel)
 		{
-			Width = (int)gameLevel.LevelWidth;
-			Height = (int)gameLevel.LevelHeight;
+			Width = (int)gameLevel.Width;
+			Height = (int)gameLevel.Height;
 
 			SoundManager.Initialize();
 			_soundManager = SoundManager.Instance;
