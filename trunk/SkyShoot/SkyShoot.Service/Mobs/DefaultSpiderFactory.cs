@@ -27,7 +27,7 @@ namespace SkyShoot.ServProgram.Mobs
 
 		public override Mob CreateMob()
 		{
-			return CreateMob(_random.Next(100) % 10);//Простые паучки генерируются чаще других.
+			return base.CreateMob(_random.Next(100) % 10);//Простые паучки генерируются чаще других.
 		}
 
 		protected override Vector2 GetRandomCoord()
