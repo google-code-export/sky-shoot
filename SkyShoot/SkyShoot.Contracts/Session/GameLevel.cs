@@ -7,10 +7,10 @@ namespace SkyShoot.Contracts.Session
 	public class GameLevel
 	{
 		[DataMember]
-		public float LevelHeight;
+		public float Height;
 
 		[DataMember]
-		public float LevelWidth;
+		public float Width;
 
 		public float LevelBorder;
 
@@ -20,8 +20,8 @@ namespace SkyShoot.Contracts.Session
 
 		public GameLevel(TileSet usedTileSet)
 		{
-			LevelHeight = 1000;
-			LevelWidth = 1000;
+			Height = 1000;
+			Width = 1000;
 			LevelBorder = Constants.LEVELBORDER;
 			UsedTileSet = usedTileSet;
 		}
