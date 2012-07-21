@@ -110,6 +110,8 @@ namespace SkyShoot.Contracts.GameObject
 
 			[EnumMember]
 			Turret = 0x0200000000000UL | Mob,
+			[EnumMember]
+			Caterpillar = 0x0400000000000UL | Mob,
 
 			// [EnumMember] //!!
 			// Poisoning = 0x0001 | 0x500000000,//Правильный ли номер? Он живой объект, но не блок
@@ -146,7 +148,7 @@ namespace SkyShoot.Contracts.GameObject
 		[DataMember]
 		public EnumObjectType ObjectType { get; set; }
 
-		//[DataMember]
+		//[DataMember] //!! переименовать в IsAlive, ввести в енум IsActive. может ли объект быть аквтиным
 		public virtual bool IsActive
 		{
 			get { return HealthAmount > 0; }
@@ -283,9 +285,12 @@ namespace SkyShoot.Contracts.GameObject
 
 		public void ChangeWaponTo(WeaponType type)
 		{
-			if (Weapons.ContainsKey(type))
+			//lock (Weapon)
 			{
-				Weapon = Weapons[type];
+				if (Weapons.ContainsKey(type))
+				{
+					Weapon = Weapons[type];
+				}
 			}
 		}
 

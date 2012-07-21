@@ -14,12 +14,16 @@ namespace SkyShoot.Service.Weapon.Bullets
 		private const int TIME_TO_DAMAGE = (int)(Constants.EXPLOSION_LIFE_DISTANCE / 45f);
 
 		private long _explodedTime;
+		private AGameObject _owner;
 
 		private bool _isExploded;
 
 		public Explosion(AGameObject owner, Guid id, Vector2 coordinates)
 			: base(owner, id, Vector2.Zero)
 		{
+			_owner = owner;
+			_number = number;
+			_maxCircles = maxCircles;
 			_explodedTime = -1;
 			Speed = Constants.EXPLOSION_SPEED;
 			Damage = Constants.EXPLOSION_DAMAGE;
@@ -54,6 +58,16 @@ namespace SkyShoot.Service.Weapon.Bullets
 		{
 			if (time > _explodedTime)
 			{
+				if (_number < _maxCircles)
+				{
+					var explos = new Explosion(_owner, Guid.NewGuid(), Coordinates, _maxCircles, _number + 1)
+					{
+						Radius = this.Radius * (_number + 1) / _number,
+						Damage = this.Damage,
+					};
+					newGameObjects.Add(explos);
+					res.Add(new NewObjectEvent(explos, time));
+				}
 				IsActive = false;
 				return new AGameEvent[] { new ObjectDeleted(Id, time) };
 			}

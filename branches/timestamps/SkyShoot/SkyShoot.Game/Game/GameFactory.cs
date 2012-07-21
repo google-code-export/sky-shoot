@@ -58,6 +58,8 @@ namespace SkyShoot.Game.Game
 					return new DrawableGameObject(serverGameObject, Textures.Hydra);
 				case AGameObject.EnumObjectType.ParentMob:
 					return new DrawableGameObject(serverGameObject, Textures.ParentMob);
+				case AGameObject.EnumObjectType.Caterpillar:
+					return new DrawableGameObject(serverGameObject, Textures.Caterpillar);
 
 				default:
 					return new DrawableGameObject(serverGameObject, Textures.Cross);

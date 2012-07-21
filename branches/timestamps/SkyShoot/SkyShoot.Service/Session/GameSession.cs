@@ -67,8 +67,14 @@ namespace SkyShoot.Service.Session
 			_newObjects = new List<AGameObject>();
 
 			LocalGameDescription = new GameDescription(playerNames, maxPlayersAllowed, gameType, gameID, tileSet, teams);
-
-			_spiderFactory = new SpiderFactory(GameLevel);
+			if (gameType == GameMode.Deathmatch)
+			{
+				_spiderFactory = new DeathmatchSpiderFactory(GameLevel);
+			}
+			else
+			{
+				_spiderFactory = new DefaultSpiderFactory(GameLevel);
+			}
 			_bonusFactory = new BonusFactory();
 			_wallFactory = new WallFactory(GameLevel);
 		}
@@ -428,7 +434,7 @@ namespace SkyShoot.Service.Session
 		{
 			if (_gameObjects.Count >= LocalGameDescription.MaximumPlayersAllowed || IsStarted)
 				return false;
-
+			
 			_gameObjects.Add(player);
 
 			LocalGameDescription.Players.Add(player.Name);
@@ -439,6 +445,7 @@ namespace SkyShoot.Service.Session
 				var startThread = new System.Threading.Thread(Start);
 				startThread.Start();
 			}
+
 			return true;
 		}
 

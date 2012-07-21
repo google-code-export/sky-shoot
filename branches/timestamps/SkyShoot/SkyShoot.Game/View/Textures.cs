@@ -78,6 +78,7 @@ namespace SkyShoot.Game.View
 		public static Texture2D Poisoner;
 		public static Texture2D Hydra;
 		public static Texture2D ParentMob;
+		public static Texture2D Caterpillar;
 
 		public static Texture2D HealthRect(int width, int heigth, Color c)
 		{

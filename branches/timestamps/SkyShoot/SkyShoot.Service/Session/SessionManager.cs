@@ -83,7 +83,6 @@ namespace SkyShoot.Service.Session
 				{
 					game.Stop();
 					_gameSessions.Remove(game);
-
 				}
 				SessionTable.Remove(player.Id);
 				return true;

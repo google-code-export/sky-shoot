@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Nuclex.UserInterface;
 using Nuclex.UserInterface.Controls.Desktop;
 using SkyShoot.Game.Game;
+using SkyShoot.Game.Network;
 
 namespace SkyShoot.Game.Screens
 {
@@ -120,6 +121,7 @@ namespace SkyShoot.Game.Screens
 			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);
 
 			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.LoginScreen);
+			ConnectionManager.Instance.LeaveGame();
 		}
 	}
 }
