@@ -22,8 +22,8 @@ namespace SkyShoot.ServProgram.Mobs
 		public DeathmatchSpiderFactory(GameLevel gameLevel)
 		{
 			_random = new Random();
-			_width = gameLevel.LevelWidth;
-			_height = gameLevel.LevelHeight;
+			_width = gameLevel.Width;
+			_height = gameLevel.Height;
 			_border = Constants.LEVELBORDER;
 			_health = 10; //change to real value
 
