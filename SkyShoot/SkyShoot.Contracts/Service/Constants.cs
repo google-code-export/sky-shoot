@@ -2,6 +2,7 @@
 {
 	public static class Constants
 	{
+
 		#region weapons
 
 		public const float DEFAULT_BULLET_RADIUS = 5f;
@@ -141,6 +142,14 @@
 		public const int HYDRA_RADIUS_MAX = 20;
 		public const float POISONER_MOB_SPEED = PLAYER_DEFAULT_SPEED * 3;
 		public const float POISONER_MOB_HEALTH = 100f;
+
+		#region  CATERPILLAR
+		public const float CATERPILLAR_SPEED = 0.06f;
+		public const float CATERPILLAR_RADIUS = 3f;
+		public const long CATERPILLAR_ChildBornInterval = 1000;
+		public const float CATERPILLAR_START_HEALTH = .7f;
+		public const float CATERPILLAR_DAMAGE = 0.12f;
+		#endregion
 
 		#region poisoning
 		public const float POISONTICK_DAMAGE = 7f;

@@ -67,6 +67,8 @@ namespace SkyShoot.ServProgram.Mobs
 					spider = new Poisoner(Constants.POISONER_MOB_HEALTH, wp, 1000);
 					break;
 				case 5:
+					spider = new Caterpillar(Constants.CATERPILLAR_START_HEALTH);
+					break;
 				default:
 					spider = new SpiderWithSimpleMind(_health);
 					break;

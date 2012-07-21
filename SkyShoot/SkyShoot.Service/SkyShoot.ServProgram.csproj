@@ -110,6 +110,7 @@
     <Compile Include="Bonus\Shield.cs" />
     <Compile Include="Bonus\Speedup.cs" />
     <Compile Include="MainSkyShootService.cs" />
+    <Compile Include="Mobs\Caterpillar.cs" />
     <Compile Include="Mobs\ChildrenMob.cs" />
     <Compile Include="Mobs\DeathmatchSpiderFactory.cs" />
     <Compile Include="Mobs\Hydra.cs" />
