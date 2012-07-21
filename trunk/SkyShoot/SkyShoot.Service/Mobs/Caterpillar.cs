@@ -13,7 +13,7 @@ namespace SkyShoot.Service.Mobs
 			: base(healthAmount)
 		{
 			_parent = parent;
-			Speed = Constants.Caterpillar_SPEED;
+			Speed = Constants.CATERPILLAR_SPEED;
 			Radius = Constants.CATERPILLAR_RADIUS;
 			Damage = Constants.CATERPILLAR_DAMAGE;
 			childBornTime = -1;
