@@ -82,6 +82,7 @@ namespace SkyShoot.Service.Session
 				if (game.PlayersCount() == 0)
 				{
 					game.Stop();
+					System.Console.WriteLine("Game over.");
 					_gameSessions.Remove(game);
 				}
 				SessionTable.Remove(player.Id);
