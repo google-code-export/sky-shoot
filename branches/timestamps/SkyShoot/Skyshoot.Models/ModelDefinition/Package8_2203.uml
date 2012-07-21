@@ -1,0 +1,1522 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="3f4d706b-48a6-470e-94a4-d55251c971d9"
+  name="Projectiles"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="cec8d846-2647-4f9c-9e5f-c5b88eaca3fd"
+      handle="viewcode://./CodeSchema_Namespace?Namespace=SkyShoot.Contracts.Weapon.Projectiles"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <class
+        Id="ee583f98-3cd0-4801-b8c2-a8f18c0f94a0"
+        name="AProjectile"
+        visibility="Private"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="fc8b9c86-1292-40e7-a414-3da3811f4a4e"
+            handle="viewcode://./CodeSchema_Class?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Weapon.Projectiles Type=(Name=AProjectile ArrayRank=1 ParentType=AProjectile)"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="2056579a-7c10-436e-83ee-e09c750570a6"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="08ffc142-6c84-4156-8e58-29ad415461d8">
+                <propertyInstance
+                  Id="1ee8f559-eba9-4100-bedb-bb8ef40bb1a6"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="3e26e5ef-1c84-4db3-9e7f-f2e83ebb4f11">
+                <propertyInstance
+                  Id="b37505de-e3bf-4922-9390-db76999f4a67"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="91ae7bc5-6902-46c9-838c-4565d1a062fa">
+                <propertyInstance
+                  Id="a5406f35-0e41-40c8-85c1-2b37cf861f24"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="eb002090-74dc-4bb0-a257-14a606167a30">
+                <propertyInstance
+                  Id="aa5b60e9-cf28-4dac-a504-8bb7541be400"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="43b4b900-90fd-49ec-b3bf-244b92d400c4">
+                <propertyInstance
+                  Id="522f3ca4-79de-4f90-935a-4fb1178660ee"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <targetEnds>
+          <association
+            Id="c8b9f93d-df8c-47a4-9845-0f73cbbf295c"
+            isDerived="false"
+            sourceEndRoleName="AProjectile"
+            targetEndRoleName="Damage"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="7333dc39-ed37-4127-aff5-8e77f748e4f6"
+              LastKnownName="Single"
+              LastKnownLocation="Package4_2202.uml" />
+            <description>Property Damage references type Single.</description>
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="e7d3dc58-f4d9-494d-b066-7c1f787cc6cd"
+                  name="AProjectile"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="e14dc3e8-ee76-4d1f-8772-f977d45ec5e2"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="1f40eb12-ee4c-44c1-a09c-23703d8920b2"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="aeec42a3-9300-484f-8e08-a820fda08a18"
+                  name="Damage"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="a2d9b1ac-75c2-4209-81ad-d9a5d5268b8b"
+                      name="Lower"
+                      value="1" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="64bfbb55-ecca-4794-a90c-936f1179d0e2"
+                      name="Upper"
+                      value="1" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="f93b681b-db5d-48fc-b10a-bdb53f049bc9"
+            isDerived="false"
+            sourceEndRoleName="AProjectile"
+            targetEndRoleName="Id"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="56dd06e7-f4d3-41c7-95a1-69d42f4b72cf"
+              LastKnownName="Guid"
+              LastKnownLocation="Package4_2202.uml" />
+            <description>Property Id references type Guid.</description>
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="ed3bcc5e-fd4d-44d6-845a-e7b3f1c58f36"
+                  name="AProjectile"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="7776e03a-f02d-421e-a1f1-fa7bb330731b"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="b8f89579-78f0-461a-9051-d975838cdfa6"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="c0c4559e-fa1f-4657-b361-f54b618c8220"
+                  name="Id"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="1761da39-33a5-408d-b54c-37a2d566d0dc"
+                      name="Lower"
+                      value="1" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="e0d7724f-9ed6-46da-b27b-1a78f2f4affa"
+                      name="Upper"
+                      value="1" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="5000bad3-acba-4149-b087-932a46288c83"
+            isDerived="false"
+            sourceEndRoleName="AProjectile"
+            targetEndRoleName="LifeDistance"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="7333dc39-ed37-4127-aff5-8e77f748e4f6"
+              LastKnownName="Single"
+              LastKnownLocation="Package4_2202.uml" />
+            <description>Property LifeDistance references type Single.</description>
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="e1316cb5-c20a-4183-a2dc-878baa114e09"
+                  name="AProjectile"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="72750dea-c305-486b-a22a-c00b3ff245c1"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="c3e520f0-4c6e-4030-933b-96d860add923"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="bfa7835a-582b-4981-8b72-9ada503da8cb"
+                  name="LifeDistance"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="b76d67de-e077-4c53-a237-1bcf6bf7d026"
+                      name="Lower"
+                      value="1" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="037c2da6-9d89-4665-a2d8-02caa4edf500"
+                      name="Upper"
+                      value="1" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="e827fb4f-ba47-49cc-9ce1-759c9d027ee7"
+            isDerived="false"
+            sourceEndRoleName="AProjectile"
+            targetEndRoleName="Owner"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="777a2727-f6d1-49c2-ad29-49581593ca5e"
+              LastKnownName="AMob"
+              LastKnownLocation="Package6_2203.uml" />
+            <description>Property Owner references type AMob.</description>
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="7367e88a-a575-4c59-8360-5ac039cbfd34"
+                  name="AProjectile"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="0f2518d6-bb4c-4743-9ba7-4fd3852c89a3"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="57fe3c93-6756-4a80-ac6e-36474707413e"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="4fdd4101-13cf-4564-96c8-18e6d73f6813"
+                  name="Owner"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="6bd5a30a-2d16-49a3-9c3a-85889f85a2c2"
+                      name="Lower"
+                      value="1" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="018bdbb9-7328-490c-b87a-0f415409895a"
+                      name="Upper"
+                      value="1" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="7480f891-aa26-4a43-9a5e-55d748145b2f"
+            isDerived="false"
+            sourceEndRoleName="AProjectile"
+            targetEndRoleName="Speed"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="7333dc39-ed37-4127-aff5-8e77f748e4f6"
+              LastKnownName="Single"
+              LastKnownLocation="Package4_2202.uml" />
+            <description>Property Speed references type Single.</description>
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="dc049d1d-5073-4bc9-a0fd-89bd58ca85c1"
+                  name="AProjectile"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="d1fb728f-68a9-4eb3-8fa9-03cc594e0b81"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="65b027ba-5d18-4a2d-8b29-6defbe3a7170"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="a298d078-a918-4a6e-815e-5ccf3fabae66"
+                  name="Speed"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="0e75e274-accc-45b2-88aa-2cfec1888cf4"
+                      name="Lower"
+                      value="1" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="8d8d60f8-b4a8-438e-981f-566d95625c00"
+                      name="Upper"
+                      value="1" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="2b624c72-1055-463c-933f-e6ae2e0c9304"
+            isDerived="false"
+            sourceEndRoleName="AProjectile"
+            targetEndRoleName="Type"
+            isLeaf="false"
+            isAbstract="false">
+            <enumerationMoniker
+              Id="a545d76f-78f1-4847-bf68-cc46ec994f42"
+              LastKnownName="EnumBulletType"
+              LastKnownLocation="Package8_2203.uml" />
+            <description>Property Type references type EnumBulletType.</description>
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="75b34190-9943-4474-b98c-1297ec355959"
+                  name="AProjectile"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="f20013ad-e3f2-4dab-a2de-53cf3aa211c0"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="0eba41d6-ea01-4355-9560-3fa3bffdc842"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="3b1f613a-6792-4dcd-9095-da9228622339"
+                  name="Type"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="330d6c5c-a119-4100-aafe-84a811150e85"
+                      name="Lower"
+                      value="1" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="41618cdc-5c8b-491e-bb85-e89ff443e97f"
+                      name="Upper"
+                      value="1" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <ownedAttributesInternal>
+          <property
+            Id="7be1610e-99f2-4ead-9781-b45ea5252317"
+            name="Damage"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="38d9ce3d-2b09-4c8f-a926-650086a66a4e"
+                handle="viewcode://./CodeSchema_Property?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Weapon.Projectiles Type=AProjectile Member=Damage"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="9e20c4ff-b512-4f78-bed2-c5ac3d189cd8"
+                name="property"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="915ef271-f855-4581-b0e0-f91fc731ddf6">
+                    <propertyInstance
+                      Id="cf670617-e899-4b52-b4a0-5e8390a2829a"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="5a61a319-9cd3-4eaf-8cd3-8f2720dd54b5">
+                    <propertyInstance
+                      Id="3672098e-5c07-4089-8190-d2b64d5aad00"
+                      name="Get"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9302caf7-062e-40d7-9868-cbd98678f4f5">
+                    <propertyInstance
+                      Id="99b97af4-360d-4a30-8177-c250d00d7072"
+                      name="HasBody"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0214cf86-db6f-4605-85a8-258009921fa1">
+                    <propertyInstance
+                      Id="f7ef13a9-1dd6-4a5e-b835-d266a8247975"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="97a85986-8e3d-43bb-9795-cb6907091c53">
+                    <propertyInstance
+                      Id="f6500b45-3c8e-4533-ada3-43d09647ce1e"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="95002be7-dd35-4c38-9fad-91fea1ad3f81">
+                    <propertyInstance
+                      Id="6e3d33b8-64f9-49a3-a2a1-50ff24bc53c0"
+                      name="Set"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="7333dc39-ed37-4127-aff5-8e77f748e4f6"
+                LastKnownName="Single"
+                LastKnownLocation="Package4_2202.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="cf0cdae5-ad43-46ad-97cb-36a5d623d4a3"
+            name="Id"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="78cfbbad-167c-469f-80dd-52473ebe54de"
+                handle="viewcode://./CodeSchema_Property?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Weapon.Projectiles Type=AProjectile Member=Id"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="7e4f339b-d37d-4c87-a009-f158a3d566a5"
+                name="property"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="5240db11-338a-4a90-a892-0fca4237f6cf">
+                    <propertyInstance
+                      Id="c509cda6-85fc-4615-ac99-88e52f49c20c"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="553045dd-ec6a-4947-8d05-25aa613c4493">
+                    <propertyInstance
+                      Id="35fd5268-2d3e-41af-945a-99da4767276c"
+                      name="Get"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2d09323c-77e4-47d7-95dd-ba9505286b6e">
+                    <propertyInstance
+                      Id="3f3135a1-db3d-4363-bf95-725c1d79c363"
+                      name="HasBody"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e7a80d3c-e8f5-4395-9a26-b9f756c89c87">
+                    <propertyInstance
+                      Id="495ad485-6d3c-40dc-a405-bcb428485bc9"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="3f8ea9fc-628b-4470-9e18-88182660ce56">
+                    <propertyInstance
+                      Id="ff242c8f-42e5-4737-8c79-11dab381ba5b"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c66e7d80-945c-4e9c-a1f7-5674094b4ddc">
+                    <propertyInstance
+                      Id="243ff40e-2f9b-4bae-9976-13a1d8e22284"
+                      name="Set"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="56dd06e7-f4d3-41c7-95a1-69d42f4b72cf"
+                LastKnownName="Guid"
+                LastKnownLocation="Package4_2202.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="24292b77-e195-414c-b9e9-87fa1c231feb"
+            name="LifeDistance"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="7cf8686e-08b3-443f-a90e-1f7e4db0b0e8"
+                handle="viewcode://./CodeSchema_Property?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Weapon.Projectiles Type=AProjectile Member=LifeDistance"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="46582765-65da-40ac-bca9-3177aa0fd730"
+                name="property"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="84b1eada-3355-4cd2-850f-0177e9a12446">
+                    <propertyInstance
+                      Id="e8852dcd-d060-4b1e-9c1a-fb12f2280ab2"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1bd2a975-9c69-4558-a29a-b5abe081b87a">
+                    <propertyInstance
+                      Id="c91bdde2-8710-4d59-83f0-8091eb244ae3"
+                      name="Get"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="fbd124cc-09fe-40a2-b603-bdf6dec90591">
+                    <propertyInstance
+                      Id="3ddbbece-478f-406f-85ec-3d0f417e9ed8"
+                      name="HasBody"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="79ee5d16-c315-4ae0-8d7d-fb2ed4a6216e">
+                    <propertyInstance
+                      Id="e6427f25-9a49-4820-97ff-5f49f38c6990"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="a8d756c9-a0eb-40bb-8608-0409cd944404">
+                    <propertyInstance
+                      Id="b306b92a-8e08-4ef3-918c-65f46472fa04"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d5e59753-72a3-4c67-9ea9-f3efdb8163b9">
+                    <propertyInstance
+                      Id="1c171c36-16fc-44f7-877b-94542196812e"
+                      name="Set"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="7333dc39-ed37-4127-aff5-8e77f748e4f6"
+                LastKnownName="Single"
+                LastKnownLocation="Package4_2202.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="3060d062-968e-475c-b9cb-d4c09c5f0741"
+            name="Owner"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="7a7ee6e5-1cf2-464d-a419-8cf8d7659b52"
+                handle="viewcode://./CodeSchema_Property?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Weapon.Projectiles Type=AProjectile Member=Owner"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="6ff9f563-9e9f-4c46-a426-23ee979d7297"
+                name="property"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="27e185cd-a75f-41ce-a37f-ac645722123c">
+                    <propertyInstance
+                      Id="844294b5-c060-48f4-a5c3-fc16f4ce197c"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="082bf95d-7379-45cb-a41e-816d9bd5424f">
+                    <propertyInstance
+                      Id="809f5575-2c3d-4105-978d-00af82530c39"
+                      name="Get"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9506cdb7-e762-4083-b1c0-b227f03f7ebd">
+                    <propertyInstance
+                      Id="ff3cb4c2-06b3-4cda-b613-6019c18610e6"
+                      name="HasBody"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0e942d55-3939-4728-b1a9-153f9f2f1aff">
+                    <propertyInstance
+                      Id="ef6bd34e-0b5c-4910-9049-1b531ed17531"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="14224aca-e131-4de2-8ced-dccea4cb5242">
+                    <propertyInstance
+                      Id="9a0fe197-5ddd-467e-9ee6-503185051f8e"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="78d9ac55-2e5b-403a-8288-b626c161d2c6">
+                    <propertyInstance
+                      Id="9e2a2d80-91ab-43fd-92a2-e523d33095f6"
+                      name="Set"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="777a2727-f6d1-49c2-ad29-49581593ca5e"
+                LastKnownName="AMob"
+                LastKnownLocation="Package6_2203.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="bd903647-4b86-4f45-8009-f89ccf3ca51e"
+            name="Speed"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="50189e57-14ad-4a2f-ba57-428165781f1f"
+                handle="viewcode://./CodeSchema_Property?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Weapon.Projectiles Type=AProjectile Member=Speed"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="a79db981-ebe4-479a-b543-dd3010ae64dd"
+                name="property"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="8af6b866-6803-444f-aa1c-1cbc28e8d6e2">
+                    <propertyInstance
+                      Id="0667df77-10f1-43b1-872c-d044cd87fa42"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9473858c-49a4-40f4-ad14-0fd37545b44d">
+                    <propertyInstance
+                      Id="f6443f66-0f58-4643-88fc-5a2be5949cb5"
+                      name="Get"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="a2370c3d-82bf-41f1-84f5-85fcda2aa1e3">
+                    <propertyInstance
+                      Id="685ac2e8-3391-4475-92d5-0420291ecaa8"
+                      name="HasBody"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="a9aae063-6c27-4a86-9792-d8f50be88a70">
+                    <propertyInstance
+                      Id="983c31de-42eb-4a1e-bef5-db044a4115b0"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b1d0b804-6d30-4c1b-b5a6-9448a0b9a5d4">
+                    <propertyInstance
+                      Id="e52899cc-7474-45ff-b91a-2ae6a011d53e"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="62ba735e-0484-4ebe-b6d1-a4164c102301">
+                    <propertyInstance
+                      Id="870269bb-09ee-48d8-b958-a9ed5cb03624"
+                      name="Set"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="7333dc39-ed37-4127-aff5-8e77f748e4f6"
+                LastKnownName="Single"
+                LastKnownLocation="Package4_2202.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="6b773b12-ffdb-4472-96e7-11c5801c4282"
+            name="Type"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="bde0cefa-05e3-40b8-959d-e676a8dd33f7"
+                handle="viewcode://./CodeSchema_Property?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Weapon.Projectiles Type=AProjectile Member=Type"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="1926c1a4-5b59-4b1a-8276-d7f2ee9ee5ad"
+                name="property"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="47431d4a-2a3b-47e3-adec-e2f3032cf45a">
+                    <propertyInstance
+                      Id="02a68a86-5ebf-4863-be88-cefe27e9849d"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="06d8a601-182d-4dfc-b94a-800f478f0cb7">
+                    <propertyInstance
+                      Id="9f3222b4-99fe-4fd5-8655-7d260e4d01fb"
+                      name="Get"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="4918dac5-69e7-458d-b180-fd937b8011e5">
+                    <propertyInstance
+                      Id="17a6968b-ce24-4f91-bfce-1f1fdbe62b3d"
+                      name="HasBody"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e2e521e9-7cfd-445a-8d98-936e03b6e34d">
+                    <propertyInstance
+                      Id="642ece85-bfaa-408f-9eda-626fbdc3d535"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e605275e-b4f3-45ca-bca7-36c88846d8ed">
+                    <propertyInstance
+                      Id="188fc0f4-5f59-4747-9613-e2e3ee09ccdf"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ad94aba9-e174-450a-a836-fc3a6df8c46b">
+                    <propertyInstance
+                      Id="5ee09052-e94d-402e-af88-3c651cec123a"
+                      name="Set"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <enumerationMoniker
+                Id="a545d76f-78f1-4847-bf68-cc46ec994f42"
+                LastKnownName="EnumBulletType"
+                LastKnownLocation="Package8_2203.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="55b2e539-f4d9-49fe-b208-01f4f0476984"
+            name="Coordinates"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="ba36bc9f-ce4c-48f3-b4d7-edb9bbdc7f9b"
+                handle="viewcode://./CodeSchema_Field?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Weapon.Projectiles Type=AProjectile Member=Coordinates"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="d58511c0-acb1-42fb-a657-89c07a205755"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6e98dd0c-e2bf-4809-a72d-abed82306746">
+                    <propertyInstance
+                      Id="f042ce2f-91d8-498a-8b6a-66c4fe729fd1"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9126c702-4e48-4f97-b7c1-2b84f978d210">
+                    <propertyInstance
+                      Id="3fad67c8-c253-4e28-b226-42c638ceca9e"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="a74c866c-5a14-4b0d-84ce-02283b3b1cb1">
+                    <propertyInstance
+                      Id="867178eb-04d9-4b13-aefa-97760d8e59bd"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6d0b4058-ea4b-4d51-9478-643460d71645">
+                    <propertyInstance
+                      Id="1d2e90ac-7e6e-40f0-bf56-e75430b777e3"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="39b4dbce-ad82-48df-a30e-78336b037d3f">
+                    <propertyInstance
+                      Id="f5c86ed3-6828-4287-b91c-86d091f4712f"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="fb073131-b68c-4afa-ad94-bd98fff1b907"
+                LastKnownName="Vector2"
+                LastKnownLocation="Package7_2202.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="df0d9dd5-680e-4249-979e-06d4d5b6f878"
+            name="Direction"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="570faa33-bedc-46a8-9a95-6d217dece0e5"
+                handle="viewcode://./CodeSchema_Field?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Weapon.Projectiles Type=AProjectile Member=Direction"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="9b89291d-98f1-461f-8907-09ea1b51a1b6"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9492b0ef-3715-428e-a95c-f1ca7a1c0953">
+                    <propertyInstance
+                      Id="315ccc42-a10a-4ab6-9561-78014b6d8d70"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0dd6896b-7ce2-439a-a66d-679bc09ba932">
+                    <propertyInstance
+                      Id="c70f1b66-9d98-48e7-894f-84ad84414414"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="a08a6935-8a42-4c12-b784-f115df7127a2">
+                    <propertyInstance
+                      Id="f14f079b-92f9-4e99-8354-66437e4363e0"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2af726c9-9f65-4dd7-ba4c-974a0ad6711a">
+                    <propertyInstance
+                      Id="2f369175-9e63-4847-ab3b-56911ae1ed8b"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9287daa9-fe3d-42e1-9c28-083477df79ff">
+                    <propertyInstance
+                      Id="7117c674-06c7-4f15-a17e-9012a2fbc7d7"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="fb073131-b68c-4afa-ad94-bd98fff1b907"
+                LastKnownName="Vector2"
+                LastKnownLocation="Package7_2202.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="5c64c9d6-ec05-4fe3-be12-42ec1e173e7b"
+            name="OldCoordinates"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="57780d52-4448-4397-b3a2-9b29a48e5176"
+                handle="viewcode://./CodeSchema_Field?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Weapon.Projectiles Type=AProjectile Member=OldCoordinates"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="697ae8aa-afdf-440a-9265-ac3dffacf24d"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2a1d97ea-324c-4046-bc60-d79c27ce2893">
+                    <propertyInstance
+                      Id="0438f011-1616-4e84-9c0d-13512a0bb97e"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="163e0122-4ead-4fba-beed-79f58e9165d4">
+                    <propertyInstance
+                      Id="e62d7bf4-87c9-4ebe-9874-f0d4817ae631"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="978f1ae4-d6f1-4882-9cd7-baef44411f4d">
+                    <propertyInstance
+                      Id="e2e46cf3-dee5-4d87-b8fd-653482431b00"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="cf105078-b28b-497a-9058-a87e1938e33f">
+                    <propertyInstance
+                      Id="6b721053-8887-4ac2-9eb1-7b40932e4b38"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d4291334-0aa1-4fa9-800c-b91eecd4e50a">
+                    <propertyInstance
+                      Id="1b8f6c32-617c-4156-a5e3-5f1c7b042f51"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="fb073131-b68c-4afa-ad94-bd98fff1b907"
+                LastKnownName="Vector2"
+                LastKnownLocation="Package7_2202.uml" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="1ae50fb7-feeb-48e4-a528-f60465b309a4"
+            name="AProjectile"
+            visibility="Protected"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="588809b0-efef-4f78-bd5a-9299ef386d6f"
+                handle="viewcode://./CodeSchema_Method?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Weapon.Projectiles Type=AProjectile Member=(Name=.ctor OverloadingParameters=[(Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=AMob),(Assembly=&quot;file:///C:/Program Files/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.0/mscorlib.dll&quot; Namespace=System Type=Guid),(Assembly=&quot;file:///C:/Program Files/Microsoft XNA/XNA Game Studio/v4.0/References/Windows/x86/SkyShoot.XNA.dll&quot; Namespace=SkyShoot.XNA Type=Vector2)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="50850539-c8e1-4643-a4c3-2cf93769b8c9"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="718a52cf-d804-41b8-883c-05ed2f5932c8">
+                    <propertyInstance
+                      Id="0d637e66-6c9d-49e7-83e5-0eba06a33dd3"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="11c29b1b-5575-4b49-80eb-72df6e79860c">
+                    <propertyInstance
+                      Id="532f57f5-9075-4bec-af0b-10bef47cdce3"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="286212a4-f365-464f-aab2-814b86b696de">
+                    <propertyInstance
+                      Id="c73f23f2-eb67-46ab-a072-69b3060d1f6e"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="5b8279e0-e7c1-4c38-973c-2c04c158262d">
+                    <propertyInstance
+                      Id="6cd3ee0b-51a7-491d-a341-cdf3d5f69c3d"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="a38d8c20-898a-4163-90ab-d896e155ee07">
+                    <propertyInstance
+                      Id="4581ff6e-8897-479b-9a12-07580ffdbdd0"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="6e93ca26-cb6a-4116-b441-64c26355f95c"
+                  name="owner"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="6f76b3d0-749a-489e-98c5-8d1b3beb8cbd"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Weapon.Projectiles Type=AProjectile Member=(Name=.ctor OverloadingParameters=[(Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=AMob),(Assembly=&quot;file:///C:/Program Files/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.0/mscorlib.dll&quot; Namespace=System Type=Guid),(Assembly=&quot;file:///C:/Program Files/Microsoft XNA/XNA Game Studio/v4.0/References/Windows/x86/SkyShoot.XNA.dll&quot; Namespace=SkyShoot.XNA Type=Vector2)]) ParameterIdentifier=owner"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="777a2727-f6d1-49c2-ad29-49581593ca5e"
+                      LastKnownName="AMob"
+                      LastKnownLocation="Package6_2203.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="98aa4707-7187-4bf8-94a9-2bf953f611cd"
+                  name="id"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="aadc2249-3f6f-4a10-9fab-21b0f3028406"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Weapon.Projectiles Type=AProjectile Member=(Name=.ctor OverloadingParameters=[(Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=AMob),(Assembly=&quot;file:///C:/Program Files/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.0/mscorlib.dll&quot; Namespace=System Type=Guid),(Assembly=&quot;file:///C:/Program Files/Microsoft XNA/XNA Game Studio/v4.0/References/Windows/x86/SkyShoot.XNA.dll&quot; Namespace=SkyShoot.XNA Type=Vector2)]) ParameterIdentifier=id"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="56dd06e7-f4d3-41c7-95a1-69d42f4b72cf"
+                      LastKnownName="Guid"
+                      LastKnownLocation="Package4_2202.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="9c7cfc55-c480-494d-8ff0-e07275b4153d"
+                  name="direction"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="99af08c1-9156-4f4c-875d-3f2c1693578b"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Weapon.Projectiles Type=AProjectile Member=(Name=.ctor OverloadingParameters=[(Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=AMob),(Assembly=&quot;file:///C:/Program Files/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.0/mscorlib.dll&quot; Namespace=System Type=Guid),(Assembly=&quot;file:///C:/Program Files/Microsoft XNA/XNA Game Studio/v4.0/References/Windows/x86/SkyShoot.XNA.dll&quot; Namespace=SkyShoot.XNA Type=Vector2)]) ParameterIdentifier=direction"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="fb073131-b68c-4afa-ad94-bd98fff1b907"
+                      LastKnownName="Vector2"
+                      LastKnownLocation="Package7_2202.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="282b3daa-0d03-4c31-a229-9736dc3b943d"
+            name="AProjectile"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="fddfea8b-f508-45d7-966e-3cff42889d0f"
+                handle="viewcode://./CodeSchema_Method?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Weapon.Projectiles Type=AProjectile Member=(Name=.ctor OverloadingParameters=[(Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Weapon.Projectiles Type=AProjectile)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="34f69046-ea0c-4bea-b038-582a26a256f6"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b3bc39cc-c0e5-43cc-9d10-aa2ae66086e2">
+                    <propertyInstance
+                      Id="e47d32cc-75da-4aff-90e6-01b153ede970"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9702717d-ed4e-4791-8f95-e145f31f031a">
+                    <propertyInstance
+                      Id="34693c21-3d8b-486d-9e01-d2f1f9d059ec"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="56eeadf4-e8bc-4f26-b115-f05f6fefb126">
+                    <propertyInstance
+                      Id="e3ebde0d-2dbe-4443-ac3c-2547247704bd"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="5536bcb4-9c38-4451-9b3b-70dd9b9df288">
+                    <propertyInstance
+                      Id="b45d9fc0-e441-4f55-bc8e-0be3223f1d11"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e9493d80-f68f-4ab5-8a65-8094f4574d5c">
+                    <propertyInstance
+                      Id="2cf01b68-cd1c-44ce-a12f-a3af29e62384"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="1a956383-eb64-410d-bcf6-8b6966ad292b"
+                  name="other"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="c3c55782-67fe-4970-8b0a-5d51e9e1eed1"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Weapon.Projectiles Type=AProjectile Member=(Name=.ctor OverloadingParameters=[(Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Weapon.Projectiles Type=AProjectile)]) ParameterIdentifier=other"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="ee583f98-3cd0-4801-b8c2-a8f18c0f94a0"
+                      LastKnownName="AProjectile"
+                      LastKnownLocation="Package8_2203.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="ee1a7f21-247a-4976-a09f-3e138acc11a1"
+            name="Copy"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="45f27876-b769-4c35-a296-d57c24f0e867"
+                handle="viewcode://./CodeSchema_Method?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Weapon.Projectiles Type=AProjectile Member=(Name=Copy OverloadingParameters=[(Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Weapon.Projectiles Type=AProjectile)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="f1255bc1-e990-41e4-82d6-d8e4ea67d097"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="312c1442-554f-402b-85d8-52c90a7163a8">
+                    <propertyInstance
+                      Id="17092366-682b-43bf-abf9-8ac27d15ec3c"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0ab82d77-f0d3-413a-88a3-6b78ff037962">
+                    <propertyInstance
+                      Id="1d587613-d91e-4de2-af2d-530dd9862549"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ad067751-7429-4c8c-b158-27a784d1db9e">
+                    <propertyInstance
+                      Id="1072f4db-050d-4989-819e-55df8174ea64"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2b20b6b1-d68f-4cbb-a4a6-a3ef550a66ca">
+                    <propertyInstance
+                      Id="b0f5d84d-d45e-4ee4-bf04-dd8bea04cde2"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1f444166-c796-4044-bd37-6de866df4c6d">
+                    <propertyInstance
+                      Id="acdd7c8d-470b-47fb-b817-c114d046cfc9"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="a38e0151-d4c4-4716-a961-c2f13b52c516"
+                  name="other"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="dc65699c-8606-4ff5-b94b-07c1fbec9e34"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Weapon.Projectiles Type=AProjectile Member=(Name=Copy OverloadingParameters=[(Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Weapon.Projectiles Type=AProjectile)]) ParameterIdentifier=other"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="ee583f98-3cd0-4801-b8c2-a8f18c0f94a0"
+                      LastKnownName="AProjectile"
+                      LastKnownLocation="Package8_2203.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="77380458-f9f0-4bb1-bf25-8fde81196d40"
+            name="AProjectile"
+            visibility="Protected"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="23bce3a8-b5b5-48b7-b08c-e3d3dee53f76"
+                handle="viewcode://./CodeSchema_Method?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Weapon.Projectiles Type=AProjectile Member=.ctor"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="5b05b589-16e1-40ae-8d43-26e8d15611e3"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="deda545b-2c6d-44ee-84c5-02dce1765ba9">
+                    <propertyInstance
+                      Id="a184be44-7e88-4234-8337-e541e4bd3c0c"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9207aa6b-e17e-44a7-9d25-4d6d3eca61ff">
+                    <propertyInstance
+                      Id="ce7c4244-ec46-41f9-ba62-b9e9c7d49821"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="fc3286ed-df45-4f7a-bd45-f1a2f942fadb">
+                    <propertyInstance
+                      Id="33259042-c6fc-4750-a3e9-8b5b64abb966"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2357c5d5-c6be-4694-aa6b-745eb528bd92">
+                    <propertyInstance
+                      Id="4ae1cb55-7013-4293-86d8-201ace8d7f9f"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e469edba-b7ec-4d18-8d43-7dc2a2c2168e">
+                    <propertyInstance
+                      Id="82932f81-acc4-4486-a8ff-03a530f4ce86"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <enumeration
+        Id="a545d76f-78f1-4847-bf68-cc46ec994f42"
+        name="EnumBulletType"
+        isAbstract="false"
+        isLeaf="false">
+        <referencesInternal>
+          <reference
+            Id="2f50c092-b010-4258-8816-116d676334cb"
+            handle="viewcode://./CodeSchema_Enum?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Weapon.Projectiles Type=(Name=EnumBulletType ParentType=AProjectile)"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="10b699be-b1c5-4e37-a997-fc5c1ec7ff90"
+            name="enum"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="17c01039-9340-4bdf-bbf8-9d359c1a51f8">
+                <propertyInstance
+                  Id="0cc468c1-3c15-4b41-9665-e643c0960676"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="fd8566a9-2695-4d44-a27e-b507d7ec8ecb">
+                <propertyInstance
+                  Id="def787f6-f5f8-49fa-a9ce-c0845219b4d8"
+                  name="BaseType"
+                  value="int" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="c5684fc4-bddd-48c7-876e-64e1b8d5eec5">
+                <propertyInstance
+                  Id="0d2bf626-a038-4f82-9078-87661e293255"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <ownedLiterals>
+          <enumerationLiteral
+            Id="2fce7e6f-c1d0-4a4c-a4a6-f2a1a027ebd6"
+            name="Bullet">
+            <referencesInternal>
+              <reference
+                Id="6f74b58d-b315-4d37-a976-f6d88df994d1"
+                handle="viewcode://./CodeSchema_Field?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Weapon.Projectiles Type=(Name=EnumBulletType ParentType=AProjectile) Member=Bullet"
+                tag="ViewCode" />
+            </referencesInternal>
+          </enumerationLiteral>
+          <enumerationLiteral
+            Id="53300e75-21b9-4a51-bff0-90bab73566c7"
+            name="Flame">
+            <referencesInternal>
+              <reference
+                Id="765924e6-9812-4c81-8013-eb620b2be805"
+                handle="viewcode://./CodeSchema_Field?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Weapon.Projectiles Type=(Name=EnumBulletType ParentType=AProjectile) Member=Flame"
+                tag="ViewCode" />
+            </referencesInternal>
+          </enumerationLiteral>
+          <enumerationLiteral
+            Id="4c1053aa-65cd-4e53-9785-ac8ddd7c56a4"
+            name="Rocket">
+            <referencesInternal>
+              <reference
+                Id="dbefb578-1abc-4f60-a5d3-7587f4b31545"
+                handle="viewcode://./CodeSchema_Field?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Weapon.Projectiles Type=(Name=EnumBulletType ParentType=AProjectile) Member=Rocket"
+                tag="ViewCode" />
+            </referencesInternal>
+          </enumerationLiteral>
+        </ownedLiterals>
+      </enumeration>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

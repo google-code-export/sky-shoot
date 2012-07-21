@@ -1,0 +1,1021 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="4a5571f0-3a67-4c79-a52c-cc5f3658247b"
+  name="Players"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="836eb74c-72c9-4c63-b604-6cd799575a0e"
+      handle="viewcode://./CodeSchema_Namespace?Namespace=SkyShoot.Game.Client.Players"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <class
+        Id="ca2605a4-70b6-4953-9ffa-cf82874a83d2"
+        name="Mob"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="8953b7f4-b92c-44b4-a481-5d9e1106bc00"
+            handle="viewcode://./CodeSchema_Class?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Game/bin/anyCPU/Debug/SkyShoot.Game.exe Namespace=SkyShoot.Game.Client.Players Type=Mob"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="b112971e-aeb5-4c79-b2cd-2ec48eac9b66"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="28f4ee3e-6d04-4933-b4be-391002088441">
+                <propertyInstance
+                  Id="77bb3894-98b6-4f5b-ad3e-eae7020d6c39"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="bddb12d1-ba29-4197-8fd1-ae99385e712c">
+                <propertyInstance
+                  Id="fe1647a7-227f-4a16-839f-b2483e536dd9"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="65f88907-4907-4a4c-8b0a-e5390c35e8d2">
+                <propertyInstance
+                  Id="e4e0f2ee-b018-4b5e-8345-2edc46bd7f63"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="872a94c1-81f0-4403-b6c6-74f175b9a130">
+                <propertyInstance
+                  Id="b2439d1b-7240-4178-8852-9d23b74b167c"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="c78f3642-b07c-4df2-ab33-4b79807e6b45">
+                <propertyInstance
+                  Id="39bc4154-b4ba-4906-910e-a08bf4d07ea2"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <suppliersInternal>
+          <interfaceRealization
+            Id="673851f4-897b-40f4-a660-262c858259b8">
+            <interfaceMoniker
+              Id="78cf4a87-3798-47ca-8bb7-1930dcc645aa"
+              LastKnownName="IDrawable"
+              LastKnownLocation="Package9_2202.uml" />
+          </interfaceRealization>
+        </suppliersInternal>
+        <generalsInternal>
+          <generalization
+            Id="b688f95f-4d34-46c6-b203-bba416800c37"
+            isSubstitutable="false">
+            <classMoniker
+              Id="777a2727-f6d1-49c2-ad29-49581593ca5e"
+              LastKnownName="AMob"
+              LastKnownLocation="Package6_2203.uml" />
+          </generalization>
+        </generalsInternal>
+        <targetEnds>
+          <association
+            Id="6075ee64-5388-470e-a904-e23cd22f31cc"
+            isDerived="false"
+            sourceEndRoleName="Mob"
+            targetEndRoleName="Animation"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="7ce4a095-9106-463f-bdec-5280ee179bf5"
+              LastKnownName="Animation2D"
+              LastKnownLocation="Package9_2202.uml" />
+            <description>Property Animation references type Animation2D.</description>
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="32ea0fe5-e2b1-45ea-bc78-05f997b62b33"
+                  name="Mob"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="d610504c-d921-4dcf-8ce9-07f104eadb58"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="4143c68d-f594-41ce-914d-ca8c423dcf75"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="97fb21e2-39b6-4c4b-a050-ce82e0217621"
+                  name="Animation"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="53d312e1-fa92-45b3-a752-111100dee596"
+                      name="Lower"
+                      value="1" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="658d1c1a-f88e-4b4b-a269-962e11273c7a"
+                      name="Upper"
+                      value="1" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="48b41af2-d2d4-4c47-a4e1-e32abefa61ed"
+            isDerived="false"
+            sourceEndRoleName="Mob"
+            targetEndRoleName="HealthTexture"
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="8205d33f-e17a-4546-9ef6-05d2652ec9f8"
+              LastKnownName="Texture2D"
+              LastKnownLocation="Package8_2202.uml" />
+            <description>Property HealthTexture references type Texture2D.</description>
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="aec8d9d7-0f12-4e1b-b5ea-b8a4876c18b3"
+                  name="Mob"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="8e150f28-6974-42a6-8506-ba082a57e946"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="556bf40f-1111-4c34-a5f8-fcf3bd6e1dcd"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="328e978a-a93b-460c-997e-6e588396a881"
+                  name="HealthTexture"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="0a87a9d2-8fda-4da3-a0c0-7a0c5a2a6e4b"
+                      name="Lower"
+                      value="1" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="d4029580-d01b-4c45-8d58-48e1c857d7dc"
+                      name="Upper"
+                      value="1" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+        <ownedAttributesInternal>
+          <property
+            Id="5240cbc4-5371-40e0-8700-da60fc9fbbd1"
+            name="Animation"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="f2a098f9-b5e8-448d-9ab8-1f7fb246029f"
+                handle="viewcode://./CodeSchema_Property?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Game/bin/anyCPU/Debug/SkyShoot.Game.exe Namespace=SkyShoot.Game.Client.Players Type=Mob Member=Animation"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="dcfa4836-0bdf-4d65-b7f6-ac2baf822416"
+                name="property"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f63abc88-d4ef-4004-bac4-6c0ec3c004aa">
+                    <propertyInstance
+                      Id="5b8a9d55-f173-43b1-820c-3ea0e8d947b2"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="676bd491-4f84-45b9-86d3-119a4b363e75">
+                    <propertyInstance
+                      Id="e8db96b7-bcfe-4124-80f7-b3dfe3d6bf4c"
+                      name="Get"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="cb24f1b5-b15e-4cc6-b760-ebebe37d827b">
+                    <propertyInstance
+                      Id="99a175fc-fb67-483e-92cb-d89aa17fd88f"
+                      name="HasBody"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="537e2d62-7c32-4806-be48-5d8264291308">
+                    <propertyInstance
+                      Id="d2a1f0e4-a118-420c-8189-b0c3e1fd3ee2"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f35ac224-11f8-4b66-9c91-401c0201d720">
+                    <propertyInstance
+                      Id="8f04258f-a67d-4ac9-92d3-f14802e1be3a"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="659de0de-dc97-43d5-802c-4cabc91352b9">
+                    <propertyInstance
+                      Id="dde64c3b-b48f-4792-95be-8e9559061069"
+                      name="Set"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="7ce4a095-9106-463f-bdec-5280ee179bf5"
+                LastKnownName="Animation2D"
+                LastKnownLocation="Package9_2202.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="4b9e3e13-eba0-4d5c-9902-fce173f57f38"
+            name="HealthTexture"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="901dc62d-7ef7-4d46-9367-b1ee4c9697f1"
+                handle="viewcode://./CodeSchema_Property?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Game/bin/anyCPU/Debug/SkyShoot.Game.exe Namespace=SkyShoot.Game.Client.Players Type=Mob Member=HealthTexture"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="5467739e-ab17-423e-b030-a9e502d60709"
+                name="property"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="bd07931d-2fd9-4a8a-ab65-1f9d8c072d49">
+                    <propertyInstance
+                      Id="f054e583-53d8-4d4b-945c-6ea0291fd28b"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="82b9550d-6701-4f89-9c82-6d28cff82970">
+                    <propertyInstance
+                      Id="37de9126-1b99-480f-ba80-a011bb4050cc"
+                      name="Get"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="51c21e22-11a9-4fce-a2b6-997b9fdbc402">
+                    <propertyInstance
+                      Id="417cb652-698e-432b-bc60-581a813c0f43"
+                      name="HasBody"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="908ad1bc-2449-4387-88e6-6c74e7d95e50">
+                    <propertyInstance
+                      Id="da5dda10-afda-4951-97c8-137778bc52d2"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="626c4b42-cc10-4890-a8ea-d702000cdf86">
+                    <propertyInstance
+                      Id="804b65f4-532c-4f01-ba05-bda601b6ac74"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b75efa08-d8c5-4eab-b4ec-86b6ce04b296">
+                    <propertyInstance
+                      Id="b783596d-7095-44bc-9c86-04e5eb69b5b9"
+                      name="Set"
+                      value="public" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="8205d33f-e17a-4546-9ef6-05d2652ec9f8"
+                LastKnownName="Texture2D"
+                LastKnownLocation="Package8_2202.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="12e467fc-11cc-4611-bae0-bccdc3339087"
+            name="HealthPosition"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="32f09f03-6f1e-41bc-bdc6-522ac7fea71b"
+                handle="viewcode://./CodeSchema_Field?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Game/bin/anyCPU/Debug/SkyShoot.Game.exe Namespace=SkyShoot.Game.Client.Players Type=Mob Member=HealthPosition"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="9a775791-14ac-424b-b0c8-8cee8c092fa4"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="434971c2-d642-47e0-bc60-5cb3fb2bb2a0">
+                    <propertyInstance
+                      Id="abc186e4-16ff-4fe4-9ecb-9c782ad1a302"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="3c844a7f-a2af-4793-aad8-6b546768b698">
+                    <propertyInstance
+                      Id="ea60bdc1-3b3c-4a90-a1d4-e938abc6a212"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="08b5d570-e6df-40fc-9736-1b035da81fa7">
+                    <propertyInstance
+                      Id="5c7ef6c2-3a45-4ac2-aa3c-50d48400f168"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="63e7de98-fc28-4462-a38b-f342fe325769">
+                    <propertyInstance
+                      Id="1e93dcc5-6bae-44df-b458-9cec72fb7be8"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="91d08179-dcc9-4a41-af31-3d882e692797">
+                    <propertyInstance
+                      Id="42073ee0-c33f-463f-815b-078b960f18f3"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="fb073131-b68c-4afa-ad94-bd98fff1b907"
+                LastKnownName="Vector2"
+                LastKnownLocation="Package7_2202.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="191e57e3-0e33-4c4a-b727-08296de7e2dc"
+            name="_healthTextureColor"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="8f9114ec-f55a-4aa6-8b7d-8a083dc3fb90"
+                handle="viewcode://./CodeSchema_Field?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Game/bin/anyCPU/Debug/SkyShoot.Game.exe Namespace=SkyShoot.Game.Client.Players Type=Mob Member=_healthTextureColor"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="a65571ff-3bcb-4668-8b8c-d8164ccf7b91"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ac209432-2e53-43dd-a26f-58bc8d8216f2">
+                    <propertyInstance
+                      Id="438d7683-7cb5-4521-be90-49640c5921d8"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9745b558-154a-41d5-9d80-83b319727dfc">
+                    <propertyInstance
+                      Id="ff5f019f-2f46-49b4-ab26-c063457be833"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c913e670-7620-4da5-a3d6-7afbc3ca03cb">
+                    <propertyInstance
+                      Id="337c4b4d-5720-4544-b83c-1d6c64e1f6c7"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e68af808-f600-4dac-9507-ce354a902c8f">
+                    <propertyInstance
+                      Id="8a0d218d-5473-49fe-955b-148866cc63f0"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="03fc2cea-485e-49b4-bcd8-f90fe26e2901">
+                    <propertyInstance
+                      Id="f47f9a78-5100-42ce-a89c-f22ea931a52f"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="77ef854e-b893-44c2-9708-7aa21c533753"
+                LastKnownName="Color"
+                LastKnownLocation="Package7_2202.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="72f89c67-3145-4ddb-a24e-97d321aa0600"
+            name="_healthTextureHeight"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="c2f64daf-bcfa-47ad-97ea-edf4ef504de7"
+                handle="viewcode://./CodeSchema_Field?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Game/bin/anyCPU/Debug/SkyShoot.Game.exe Namespace=SkyShoot.Game.Client.Players Type=Mob Member=_healthTextureHeight"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="4bfa9e68-fae5-41e3-8882-15fd6b995d98"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="dc0235e3-3d2d-4165-a0ed-4e04de8e4e42">
+                    <propertyInstance
+                      Id="b73481a4-0c57-4f09-8e9d-c796dacfe941"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2eb81ac7-d153-4ff6-a6c8-27b37a520a17">
+                    <propertyInstance
+                      Id="37e28c6a-8b9e-4143-a051-2e186679a461"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="7a98e128-4cf3-4130-8ce4-ed517fa2a1ed">
+                    <propertyInstance
+                      Id="c5aa2487-af99-4089-993f-ef7d07a5fcd7"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e476aa75-f59d-4c23-a63a-48e2b88b79d7">
+                    <propertyInstance
+                      Id="a5f0bdad-b04a-433c-be1b-0497560b03ab"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="dc3e0c36-c121-41dc-be4c-a650bf01bd39">
+                    <propertyInstance
+                      Id="7898c1f5-bdc2-4814-8fdd-a58506e9b69e"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <primitiveTypeMoniker
+                Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                LastKnownName="Integer"
+                LastKnownLocation="SkyshootModels.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="be8cc3dc-b791-4417-ad2d-c285e927e97c"
+            name="_healthTextureWidth"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="650abe02-a9e8-4daa-bc91-5df4cdbf732d"
+                handle="viewcode://./CodeSchema_Field?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Game/bin/anyCPU/Debug/SkyShoot.Game.exe Namespace=SkyShoot.Game.Client.Players Type=Mob Member=_healthTextureWidth"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="b9ca5b6c-b8df-4ee9-96be-9c099bcce062"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="489ed294-bd2a-42c3-b14b-ccb65ba0b47e">
+                    <propertyInstance
+                      Id="184d85d6-f4f0-4906-bbba-f2d53fb19dff"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ec675ea0-9015-4235-828d-0248efd3ff0e">
+                    <propertyInstance
+                      Id="a4ca7bd0-8f39-4003-9987-22d802749c4a"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="559f292e-02aa-46f8-a982-2a1e271d73ec">
+                    <propertyInstance
+                      Id="0f9b17b7-bf11-48a0-8793-0e83550cc09c"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="eab73114-d2b0-46e7-a1e1-08d789640351">
+                    <propertyInstance
+                      Id="96eb8d88-3587-45bb-9b1f-854609f23095"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="999ca05f-9c8f-4062-9061-ab568136aea4">
+                    <propertyInstance
+                      Id="72c671eb-a1c6-48cc-aa32-62f9c8130815"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <primitiveTypeMoniker
+                Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                LastKnownName="Integer"
+                LastKnownLocation="SkyshootModels.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="5a13a731-0892-465c-99f5-1619717d3554"
+            name="FrameTime"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="true"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="49d5ec7e-2bd1-4b87-b003-30687d97fcd3"
+                handle="viewcode://./CodeSchema_Field?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Game/bin/anyCPU/Debug/SkyShoot.Game.exe Namespace=SkyShoot.Game.Client.Players Type=Mob Member=FrameTime"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="d998a70e-ac26-4402-a08a-906bc69d2cee"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="95ec1447-e8f9-410c-b96d-9cc5af9a011d">
+                    <propertyInstance
+                      Id="a3ed8ba0-2d3d-485c-ad82-28c68570978e"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="7490495f-6bda-4f49-86f3-b359cc923a53">
+                    <propertyInstance
+                      Id="0aff40ab-5884-4b1c-8294-e7257f04c0cd"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="aa4950b1-df8e-47f2-9add-a354c6bd77df">
+                    <propertyInstance
+                      Id="b86f0c94-4782-4a06-a18b-d89959b87ac2"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c660bd60-499b-412e-8095-5623a23ad6f8">
+                    <propertyInstance
+                      Id="081d4b93-d9e8-4c75-82be-55597f4e9471"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="3880b8b0-c6f2-472a-bc39-2f95c6752c8d">
+                    <propertyInstance
+                      Id="2f184a20-30a7-47e7-b6c8-a3068f50cac3"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </property>
+          <property
+            Id="629d8554-66c0-4702-8a2c-8db5808cc37c"
+            name="Looping"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="true"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="59afed6d-0d68-48fd-a86c-83806e6b6c1e"
+                handle="viewcode://./CodeSchema_Field?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Game/bin/anyCPU/Debug/SkyShoot.Game.exe Namespace=SkyShoot.Game.Client.Players Type=Mob Member=Looping"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="b321b16b-cea5-4466-bf15-baa3c548d185"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f24772db-47ec-4f41-9d67-e0a326ec45e9">
+                    <propertyInstance
+                      Id="b80952db-8149-4f71-a171-d9994cf7e322"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0894dabf-1477-433c-b564-3571b9953b8b">
+                    <propertyInstance
+                      Id="db5732e3-5613-40b9-9e02-df6527794daa"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="bfb750e6-df26-414d-9c5f-73c7919926ab">
+                    <propertyInstance
+                      Id="ccd5d6ba-83e3-4c37-ba79-a5e9ecdc5663"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="fa19ad13-c0f4-42a0-9226-7ef47acf609a">
+                    <propertyInstance
+                      Id="443307e7-bb1c-47a9-948c-6fa1ced0c629"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f8a98356-4516-4966-8f06-99ff6f171876">
+                    <propertyInstance
+                      Id="f0b9f3f6-6b10-401f-a251-ae956778db2d"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="e9728d30-a5ca-474c-a59c-eca39ff949ec"
+            name="Update"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="8e584f21-4de0-4e34-ac14-0b059f27613e"
+                handle="viewcode://./CodeSchema_Method?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Game/bin/anyCPU/Debug/SkyShoot.Game.exe Namespace=SkyShoot.Game.Client.Players Type=Mob Member=(Name=Update OverloadingParameters=[(Assembly=&quot;file:///C:/Program Files/Microsoft XNA/XNA Game Studio/v4.0/References/Windows/x86/SkyShoot.XNA.Game.dll&quot; Namespace=SkyShoot.XNA Type=GameTime)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="01c626ce-59f3-47f1-8241-e51d00b84138"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="05c56c37-b970-4122-aa71-08e27d5fcbd4">
+                    <propertyInstance
+                      Id="f12e79a8-ce68-4a08-a21a-7730cc6d61ad"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d25c74db-d474-420e-a199-33d0edb31111">
+                    <propertyInstance
+                      Id="0ca61372-c3cd-4545-b80a-82a46f1bbe1f"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b04ed48f-7d79-424b-a831-22eab5130097">
+                    <propertyInstance
+                      Id="2f2dceb0-d0fe-4bc5-9d23-973989109649"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9b80e330-b193-40c0-9cc9-d5bee1027fb1">
+                    <propertyInstance
+                      Id="e16ae705-1ecc-4a1d-a39d-c552aae76d7b"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d2edc669-bdd6-4fcc-9d86-9ca592160b98">
+                    <propertyInstance
+                      Id="44966804-c3ed-449f-a8f3-dc53aa957435"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="237a3a0e-5432-45bd-b3d6-5cbc243c1227"
+                  name="gameTime"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="32508d6d-8dc2-4dd7-bb74-d26808ebd75f"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Game/bin/anyCPU/Debug/SkyShoot.Game.exe Namespace=SkyShoot.Game.Client.Players Type=Mob Member=(Name=Update OverloadingParameters=[(Assembly=&quot;file:///C:/Program Files/Microsoft XNA/XNA Game Studio/v4.0/References/Windows/x86/SkyShoot.XNA.Game.dll&quot; Namespace=SkyShoot.XNA Type=GameTime)]) ParameterIdentifier=gameTime"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="b70daa0c-0acc-4b2d-a1ab-7919f54eb133"
+                      LastKnownName="GameTime"
+                      LastKnownLocation="Package7_2202.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="83819c31-addd-4818-b712-826cd963da65"
+            name="Draw"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="b1128f9c-567e-40d8-9a06-93b660a89ee0"
+                handle="viewcode://./CodeSchema_Method?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Game/bin/anyCPU/Debug/SkyShoot.Game.exe Namespace=SkyShoot.Game.Client.Players Type=Mob Member=(Name=Draw OverloadingParameters=[(Assembly=&quot;file:///C:/Program Files/Microsoft XNA/XNA Game Studio/v4.0/References/Windows/x86/SkyShoot.XNA.Graphics.dll&quot; Namespace=SkyShoot.XNA.Graphics Type=SpriteBatch)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="bbdc1ed1-a20e-4b47-b456-e0e068da8d6f"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e48b96b1-36cb-4ccc-b851-40ffc44309ec">
+                    <propertyInstance
+                      Id="9252d9a3-6956-4eeb-8759-f56606dcb514"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="3e78002b-fda3-4df7-ba9a-d9b8a252df39">
+                    <propertyInstance
+                      Id="799e2764-1312-4964-a88b-6aff35a6be6f"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b5d44ff2-c7e4-42ee-9afc-869e136a53a5">
+                    <propertyInstance
+                      Id="919d9543-e2bc-4851-89ec-a3a5bc9248c9"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="77625bba-d6d1-4e8c-8922-b8e35999498a">
+                    <propertyInstance
+                      Id="fdcdd571-b2ce-485a-b8f9-4bf776a8351c"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="4b0f8392-c6d3-4da3-a0fa-de4037114255">
+                    <propertyInstance
+                      Id="977e0a5f-fb55-49f7-8bb9-baafc5bb4485"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="19e76c77-26f9-412c-8c56-d248aea666b5"
+                  name="spriteBatch"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="685dee76-cc11-4199-8acb-1bad73c87ed6"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Game/bin/anyCPU/Debug/SkyShoot.Game.exe Namespace=SkyShoot.Game.Client.Players Type=Mob Member=(Name=Draw OverloadingParameters=[(Assembly=&quot;file:///C:/Program Files/Microsoft XNA/XNA Game Studio/v4.0/References/Windows/x86/SkyShoot.XNA.Graphics.dll&quot; Namespace=SkyShoot.XNA.Graphics Type=SpriteBatch)]) ParameterIdentifier=spriteBatch"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="8c52ac72-4b6f-42d9-b182-fb8d635b9910"
+                      LastKnownName="SpriteBatch"
+                      LastKnownLocation="Package8_2202.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="377338dc-06ef-4b6e-9a50-c5194c6e8d74"
+            name="Mob"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="54224bda-b35f-47dc-b24b-597c3ac05603"
+                handle="viewcode://./CodeSchema_Method?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Game/bin/anyCPU/Debug/SkyShoot.Game.exe Namespace=SkyShoot.Game.Client.Players Type=Mob Member=(Name=.ctor OverloadingParameters=[(Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=AMob),(Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Game/bin/anyCPU/Debug/SkyShoot.Game.exe Namespace=SkyShoot.Game.Client.View Type=Animation2D)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="445c0746-f3bd-422a-a1be-421678a02403"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="3bb1b5fd-e411-4477-8dd2-1c75b085c0aa">
+                    <propertyInstance
+                      Id="d9f4596b-345a-4ed8-b435-4de54288b2af"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b71e8d1a-3fc3-4476-8730-8219b4a156ee">
+                    <propertyInstance
+                      Id="1bd25ae2-5cb4-4918-8eaa-bf5a2112aaaf"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="5abc5cfe-557e-41d5-a36b-de8c5e5de64e">
+                    <propertyInstance
+                      Id="40357f28-e657-495c-a38e-e6f4477cdfe1"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2c46b980-1b20-4241-b2ca-004a7c97509f">
+                    <propertyInstance
+                      Id="92491ca7-4e3b-4ca4-8109-ada7e6a395b5"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="aad89391-e072-4154-b405-c2b4dfc10918">
+                    <propertyInstance
+                      Id="6d01321e-16c8-493d-bf3f-218544cc63a0"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="1fe1e85c-60ee-414b-9340-e41f2930dbb8"
+                  name="other"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="ae7c522a-b375-4154-a144-1f666554a3f6"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Game/bin/anyCPU/Debug/SkyShoot.Game.exe Namespace=SkyShoot.Game.Client.Players Type=Mob Member=(Name=.ctor OverloadingParameters=[(Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=AMob),(Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Game/bin/anyCPU/Debug/SkyShoot.Game.exe Namespace=SkyShoot.Game.Client.View Type=Animation2D)]) ParameterIdentifier=other"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="777a2727-f6d1-49c2-ad29-49581593ca5e"
+                      LastKnownName="AMob"
+                      LastKnownLocation="Package6_2203.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="4b5d0ba3-4c13-47d3-822e-a10e4adcda29"
+                  name="animation"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="3063372a-940c-4eeb-8946-9e02e1fd8ea3"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Game/bin/anyCPU/Debug/SkyShoot.Game.exe Namespace=SkyShoot.Game.Client.Players Type=Mob Member=(Name=.ctor OverloadingParameters=[(Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Contracts/bin/Debug/SkyShoot.Contracts.dll Namespace=SkyShoot.Contracts.Mobs Type=AMob),(Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Game/bin/anyCPU/Debug/SkyShoot.Game.exe Namespace=SkyShoot.Game.Client.View Type=Animation2D)]) ParameterIdentifier=animation"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="7ce4a095-9106-463f-bdec-5280ee179bf5"
+                      LastKnownName="Animation2D"
+                      LastKnownLocation="Package9_2202.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="692a6675-8ab1-4795-8c5a-acd9c71448c5"
+  name="Controls"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="709ffcfd-c841-4427-94d7-aef83f84a354"
+      handle="viewcode://./CodeSchema_Namespace?Namespace=Nuclex.UserInterface.Controls"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="429b8543-848d-4277-a04a-d851f1760e3e"
+        LastKnownName="Desktop"
+        LastKnownLocation="Package2_2203.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <class
+        Id="3462d67a-a912-4be2-aa1f-36f27740645b"
+        name="LabelControl"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="974acbed-3636-481c-acc0-4209dd1567fc"
+            handle="viewcode://./CodeSchema_Class?Assembly=file:///C:/Users/deem/Documents/prog/sky-shoot/SkyShoot/SkyShoot.Game/Nuclex/Nuclex.UserInterface.dll Namespace=Nuclex.UserInterface.Controls Type=LabelControl"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="72d24e24-2da8-481f-8dcb-b0af1005d342"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="9b2a0347-deaa-40dc-9e8e-f758e1e40a54">
+                <propertyInstance
+                  Id="7cc81fa9-2250-47a8-af61-9802afda03ef"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="abdd5665-49c0-480d-88bd-431622112113">
+                <propertyInstance
+                  Id="623b442c-d477-449f-b406-8353df447427"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="2c5afb87-87b9-49d8-8685-64d72a0eafcf">
+                <propertyInstance
+                  Id="5259b1e6-e600-46f3-94ec-fc557e509f52"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="1c847073-2610-406c-a32c-963716fbbe9c">
+                <propertyInstance
+                  Id="3447dfd2-9bee-457d-bc7f-d9c82377801c"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="d928061b-d800-413e-ba1e-5bfb35ae32dd">
+                <propertyInstance
+                  Id="a63031cc-238f-4813-b4f5-d3cfcdfd5fa5"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </class>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>
