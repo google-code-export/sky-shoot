@@ -46,8 +46,6 @@ namespace SkyShoot.Game.View
 
 		public DrawableGameObject(AGameObject other, Animation2D animation)
 		{
-			SoundManager.Initialize();
-
 			Animation = animation;
 			Animation.Initialize(FRAME_TIME, LOOPING);
 			Copy(other);

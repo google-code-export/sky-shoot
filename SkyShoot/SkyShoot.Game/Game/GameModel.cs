@@ -63,22 +63,19 @@ namespace SkyShoot.Game.Game
 		//			}
 		//		}
 
-		private void ApplyEvents(AGameEvent[] gameEvents)
+		private void ApplyEvents(IEnumerable<AGameEvent> gameEvents)
 		{
-			Logger.PrintEvents(gameEvents);
 			_gameSnapshot.ApplyEvents(gameEvents.Where(x => x.TimeStamp >= _gameSnapshot.Time));
 		}
 
 		/// <summary>
 		/// Обновление позиций игровых объектов
 		/// </summary>
-		public void ApplySynchroFrame(SynchroFrame synchroFrame)
+		private void ApplySynchroFrame(SynchroFrame synchroFrame)
 		{
 			_gameSnapshot = new GameSnapshot(synchroFrame, _gameLevel);
 
 			_gameSnapshot.ApplyEvents(_serverGameEvents.Where(x => x.TimeStamp >= _gameSnapshot.Time));
-
-			Trace.WriteLine(synchroFrame);
 		}
 
 		public void Update(GameTime gameTime)
@@ -89,7 +86,7 @@ namespace SkyShoot.Game.Game
 
 			#region применение синхрокадра
 
-			if (_updateCouter++ % 30 == 0)
+			if (_updateCouter % 30 == 0)
 			{
 				SynchroFrame serverSynchroFrame = ConnectionManager.Instance.SynchroFrame();
 
@@ -98,6 +95,7 @@ namespace SkyShoot.Game.Game
 					GameController.Instance.GameOver();
 					return;
 				}
+				Trace.WriteLine(serverSynchroFrame);
 				ApplySynchroFrame(serverSynchroFrame);
 
 				// очистка списка GameEvent'ов c последнего синхрокадра
@@ -111,8 +109,9 @@ namespace SkyShoot.Game.Game
 			if (_updateCouter % 5 == 0)
 			{
 				AGameEvent[] serverGameEvents = ConnectionManager.Instance.GetEvents();
-
 				_serverGameEvents.AddRange(serverGameEvents);
+
+				Logger.PrintEvents(serverGameEvents);
 				ApplyEvents(serverGameEvents);
 			}
 
@@ -120,7 +119,8 @@ namespace SkyShoot.Game.Game
 
 			#region экстраполяция
 
-			_drawableGameObjects = _gameSnapshot.ExtrapolateTo(_timeHelper.GetTime());
+			long serverTime = _timeHelper.GetTime() + ConnectionManager.DifferenceTime;
+			_drawableGameObjects = _gameSnapshot.ExtrapolateTo(serverTime);
 
 			#endregion
 
@@ -151,6 +151,8 @@ namespace SkyShoot.Game.Game
 			}
 
 			#endregion
+
+			_updateCouter++;
 		}
 
 		public void Draw(SpriteBatch spriteBatch)

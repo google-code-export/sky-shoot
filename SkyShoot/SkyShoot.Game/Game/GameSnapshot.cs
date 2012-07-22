@@ -14,16 +14,16 @@ namespace SkyShoot.Game.Game
 	internal class GameSnapshot
 	{
 		/// <summary>
-		/// Коллекция всех игровых объектов, присутсвующих в
-		/// момент времени Time
-		/// </summary>
-		private readonly IDictionary<Guid, DrawableGameObject> _gameObjects;
-
-		/// <summary>
 		/// Момент времени на сервере с начала игры, к
 		/// которому относится данный снимок 
 		/// </summary>
 		public long Time { get; private set; }
+
+		/// <summary>
+		/// Коллекция всех игровых объектов, присутсвующих в
+		/// момент времени Time
+		/// </summary>
+		private readonly IDictionary<Guid, DrawableGameObject> _gameObjects;
 
 		/// <summary>
 		/// Игровой уровень
@@ -106,6 +106,8 @@ namespace SkyShoot.Game.Game
 
 		public DrawableGameObject[] ExtrapolateTo(long gameTime)
 		{
+			Trace.WriteLine("Extrapolation time = " + (gameTime - Time));
+
 			var result = new DrawableGameObject[_gameObjects.Count];
 			int index = 0;
 			foreach (DrawableGameObject gameObject in _gameObjects.Values)
