@@ -2,9 +2,9 @@
 {
 	public struct Stats
 	{
-		public int Exp;
+		public int Experience;
 		public int Frag;
-		public int Lvl;
+		public int Level;
 		public int Creeps;
 	}
 }

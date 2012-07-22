@@ -12,30 +12,30 @@ namespace SkyShoot.Service.Statistics
 			if (wounded.HealthAmount < 0.1) if (owner != null)
 				{
 					Value.Creeps += 1;
-					Value.Exp += (int)wounded.MaxHealthAmount;
+					Value.Experience += (int)wounded.MaxHealthAmount;
 				}
 
-			if (owner != null) Value.Exp += damage;
+			if (owner != null) Value.Experience += damage;
 			// Получение уровня
-			if (Value.Exp >= 100 * Value.Lvl)
+			if (Value.Experience >= 100 * Value.Level)
 			{
-				Value.Exp = Value.Exp - 100 * Value.Lvl;
-				Value.Lvl++;
+				Value.Experience = Value.Experience - 100 * Value.Level;
+				Value.Level++;
 			}
 		}
 		public override void AddExpTeam(AGameObject player, AGameObject wounded, int damage, int teamMembers)
 		{
-			if (player != null) Value.Exp += damage / teamMembers;
+			if (player != null) Value.Experience += damage / teamMembers;
 
 			if (wounded.HealthAmount < 0.1) if (player != null)
 				{
-					Value.Exp += (int)wounded.MaxHealthAmount / teamMembers;
+					Value.Experience += (int)wounded.MaxHealthAmount / teamMembers;
 				}
 
-			if (Value.Exp >= 100 * Value.Lvl)
+			if (Value.Experience >= 100 * Value.Level)
 			{
-				Value.Exp = Value.Exp - 100 * Value.Lvl;
-				Value.Lvl++;
+				Value.Experience = Value.Experience - 100 * Value.Level;
+				Value.Level++;
 			}
 		}
 	}

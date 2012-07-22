@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Utils;
+using SkyShoot.Contracts.Weapon;
 using SkyShoot.Game.Input;
 using SkyShoot.Game.Network;
 using SkyShoot.Game.Screens;
@@ -80,7 +81,6 @@ namespace SkyShoot.Game.Game
 		#region обработка ввода
 
 		private DateTime _dateTime;
-		private const int RATE = 1000 / 10;
 
 		public void HandleInput(Controller controller)
 		{
@@ -95,6 +95,18 @@ namespace SkyShoot.Game.Game
 				player.RunVectorM = currentRunVector.Value;
 			}
 
+			// переключение оружия на цифры и колесико мыши(todo)
+			if (controller is KeyboardAndMouse)
+			{
+				var keyboardAndMouse = controller as KeyboardAndMouse;
+				if (keyboardAndMouse.IsNewKeyPressed(Keys.D1)) ConnectionManager.Instance.ChangeWeapon(WeaponType.Pistol);
+				if (keyboardAndMouse.IsNewKeyPressed(Keys.D2)) ConnectionManager.Instance.ChangeWeapon(WeaponType.Shotgun);
+				if (keyboardAndMouse.IsNewKeyPressed(Keys.D3)) ConnectionManager.Instance.ChangeWeapon(WeaponType.FlamePistol);
+				if (keyboardAndMouse.IsNewKeyPressed(Keys.D4)) ConnectionManager.Instance.ChangeWeapon(WeaponType.RocketPistol);
+				if (keyboardAndMouse.IsNewKeyPressed(Keys.D5)) ConnectionManager.Instance.ChangeWeapon(WeaponType.Heater);
+				if (keyboardAndMouse.IsNewKeyPressed(Keys.D6)) ConnectionManager.Instance.ChangeWeapon(WeaponType.TurretMaker);
+			}
+
 			Vector2 mouseCoordinates = controller.SightPosition;
 
 			player.ShootVectorM = mouseCoordinates - GameModel.Camera2D.ConvertToLocal(player.CoordinatesM);
@@ -103,7 +115,7 @@ namespace SkyShoot.Game.Game
 
 			if (controller.ShootButton == ButtonState.Pressed)
 			{
-				if ((DateTime.Now - _dateTime).Milliseconds > RATE)
+				if ((DateTime.Now - _dateTime).Milliseconds > Constants.SHOOT_RATE)
 				{
 					_dateTime = DateTime.Now;
 					Shoot(player.ShootVectorM);
