@@ -7,11 +7,6 @@ namespace SkyShoot.Game.Screens
 	{
 		public static bool ShowLoadingMessage { get; set; }
 
-		public override bool IsMenuScreen
-		{
-			get { return false; }
-		}
-
 		public override void Update(GameTime gameTime)
 		{
 		}

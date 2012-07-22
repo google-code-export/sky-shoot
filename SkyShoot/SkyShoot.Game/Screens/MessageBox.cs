@@ -31,11 +31,6 @@ namespace SkyShoot.Game.Screens
 
 		public static string Message { get; set; }
 
-		public override bool IsMenuScreen
-		{
-			get { return false; }
-		}
-
 		public override void LoadContent()
 		{
 			_texture = _content.Load<Texture2D>("Textures/screens/message_box");

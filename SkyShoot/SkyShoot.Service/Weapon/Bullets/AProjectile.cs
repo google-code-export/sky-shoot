@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.GameObject;
 using SkyShoot.Contracts.Service;
-using SkyShoot.Contracts.Session;
 using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.Service.Weapon.Bullets
@@ -63,7 +62,7 @@ namespace SkyShoot.Service.Weapon.Bullets
 
 			if (obj.Is(EnumObjectType.LivingObject))
 			{
-				var owner = this.Owner as MainSkyShootService;
+				var owner = Owner as MainSkyShootService;
 				var damageMod = 1f;
 				if (obj.Is(EnumObjectType.Player))
 				{
@@ -116,23 +115,6 @@ namespace SkyShoot.Service.Weapon.Bullets
 			}
 
 			return res;
-		}
-
-		public override Vector2 ComputeMovement(long updateDelay, GameLevel gameLevel)
-		{
-			// Todo //!! rewrite
-			var newCoord = base.ComputeMovement(updateDelay, gameLevel);
-			var x = MathHelper.Clamp(newCoord.X, 0, gameLevel.Height);
-			var y = MathHelper.Clamp(newCoord.Y, 0, gameLevel.Width);
-
-			// убрать пулю, которая вышла за экран
-			if (!((Math.Abs(newCoord.X - x) < Constants.EPSILON)
-			   && (Math.Abs(newCoord.Y - y) < Constants.EPSILON)))
-			{
-				IsActive = false;
-			}
-
-			return newCoord;
 		}
 
 		public override IEnumerable<AGameEvent> Think(List<AGameObject> players, List<AGameObject> newGameObjects, long time)

@@ -42,11 +42,6 @@ namespace SkyShoot.Game.Screens
 			InitializeControls();
 		}
 
-		public override bool IsMenuScreen
-		{
-			get { return false; }
-		}
-
 		public override void LoadContent()
 		{
 			// load landscapes

@@ -289,21 +289,18 @@ namespace SkyShoot.Game.Network
 		public void Move(XNA.Framework.Vector2 direction)
 		{
 			AGameEvent moveGameEvent = new ObjectDirectionChanged(direction, null, 0);
-
 			AddClientGameEvent(moveGameEvent);
 		}
 
 		public void Shoot(XNA.Framework.Vector2 direction)
 		{
 			AGameEvent shootGameEvent = new ObjectShootEvent(direction, null, 0);
-
 			AddClientGameEvent(shootGameEvent);
 		}
 
 		public void ChangeWeapon(WeaponType type)
 		{
 			AGameEvent weaponChangedGameEvent = new WeaponChanged(null, type, null, 0);
-
 			AddClientGameEvent(weaponChangedGameEvent);
 		}
 
