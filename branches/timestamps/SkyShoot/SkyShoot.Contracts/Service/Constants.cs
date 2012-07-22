@@ -145,7 +145,7 @@
 		#region  CATERPILLAR
 		public const float CATERPILLAR_SPEED = 0.06f;
 		public const float CATERPILLAR_RADIUS = 3f;
-		public const long CATERPILLAR_ChildBornInterval = 100000;
+		public const long CATERPILLAR_CHILD_BORN_INTERVAL = 100000;
 		public const float CATERPILLAR_START_HEALTH = .7f;
 		public const float CATERPILLAR_DAMAGE = 0.12f;
 		#endregion

@@ -13,7 +13,6 @@ namespace SkyShoot.Game.Game
 
 		public GameLevel(int width, int height, TileSet tileSet) :base(width, height, tileSet)
 		{
-			SoundManager.Initialize();
 			_soundManager = SoundManager.Instance;
 
 			switch (tileSet)

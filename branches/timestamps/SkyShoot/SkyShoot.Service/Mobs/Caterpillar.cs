@@ -8,7 +8,7 @@ namespace SkyShoot.Service.Mobs
 	class Caterpillar : SpiderWithSimpleMind
 	{
 		private Caterpillar _parent, _child;
-		private long childBornTime;
+		private long _childBornTime;
 		public Caterpillar(float healthAmount, Caterpillar parent = null)
 			: base(healthAmount)
 		{
@@ -16,39 +16,39 @@ namespace SkyShoot.Service.Mobs
 			Speed = Constants.CATERPILLAR_SPEED;
 			Radius = Constants.CATERPILLAR_RADIUS;
 			Damage = Constants.CATERPILLAR_DAMAGE;
-			childBornTime = -1;
+			_childBornTime = -1;
 			ObjectType = EnumObjectType.Caterpillar;
 		}
 
 		public override IEnumerable<AGameEvent> Think(List<Contracts.GameObject.AGameObject> gameObjects, System.Collections.Generic.List<Contracts.GameObject.AGameObject> newGameObjects, long time)
 		{
 			var res = new List<AGameEvent>();
-			if(_parent != null && !_parent.IsActive)
+			if (_parent != null && !_parent.IsActive)
 			{
 				_parent = null;
 			}
-			if(childBornTime == -1)
+			if (_childBornTime == -1)
 			{
-				childBornTime = time;
+				_childBornTime = time;
 			}
-			if ((_child == null || !_child.IsActive) && time - childBornTime > Constants.CATERPILLAR_ChildBornInterval)
+			if ((_child == null || !_child.IsActive) && time - _childBornTime > Constants.CATERPILLAR_CHILD_BORN_INTERVAL)
 			{
 				_child = new Caterpillar(MaxHealthAmount, this);
 				MaxHealthAmount *= 1.05f;
 				HealthAmount *= 1.05f;
 				Radius *= 1.05f;
-				_child.Coordinates = Coordinates + (-RunVector)*(_child.Radius+Radius);
+				_child.Coordinates = Coordinates + (-RunVector) * (_child.Radius + Radius);
 				newGameObjects.Add(_child);
 				res.Add(new NewObjectEvent(_child, time));
 			}
-			if(_parent == null)
+			if (_parent == null)
 			{
-				res.AddRange(base.Think(gameObjects, newGameObjects, time)); 
-				if(Target != null)
+				res.AddRange(base.Think(gameObjects, newGameObjects, time));
+				if (Target != null)
 				{
 					//if(Vector2.DistanceSquared())
 					{
-						RunVector = (Target.Coordinates + (new Vector2(RunVector.Y, -RunVector.X))*(Target.Radius + Radius)) - Coordinates;
+						RunVector = (Target.Coordinates + (new Vector2(RunVector.Y, -RunVector.X)) * (Target.Radius + Radius)) - Coordinates;
 					}
 					//else
 					//{
@@ -75,7 +75,7 @@ namespace SkyShoot.Service.Mobs
 
 		public override IEnumerable<AGameEvent> OnDead(Contracts.GameObject.AGameObject obj, List<Contracts.GameObject.AGameObject> newObjects, long time)
 		{
-			if(_parent != null && _parent.IsActive)
+			if (_parent != null && _parent.IsActive)
 			{
 				_parent._child = null;
 			}

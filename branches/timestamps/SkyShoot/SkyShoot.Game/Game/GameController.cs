@@ -3,11 +3,11 @@ using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using SkyShoot.Contracts.Service;
+using SkyShoot.Contracts.Utils;
 using SkyShoot.Game.Input;
 using SkyShoot.Game.Network;
 using SkyShoot.Game.Screens;
 using SkyShoot.Game.Utils;
-using SkyShoot.Contracts.Utils;
 using SkyShoot.Game.View;
 
 namespace SkyShoot.Game.Game
@@ -25,7 +25,7 @@ namespace SkyShoot.Game.Game
 
 		private GameController()
 		{
-			SoundManager.Initialize();
+
 		}
 
 		#endregion

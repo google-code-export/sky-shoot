@@ -5,12 +5,8 @@ namespace SkyShoot.Game.Game
 {
 	internal class GameFactory
 	{
-		private static SoundManager _soundManager;
-
 		public static DrawableGameObject CreateClientGameObject(AGameObject serverGameObject)
 		{
-			SoundManager.Initialize();
-			_soundManager = SoundManager.Instance;
 			switch (serverGameObject.ObjectType)
 			{
 				case AGameObject.EnumObjectType.Player:
@@ -20,7 +16,6 @@ namespace SkyShoot.Game.Game
 				case AGameObject.EnumObjectType.TurretGunBullet:
 					return new DrawableGameObject(serverGameObject, Textures.TurretProjectile);
 				case AGameObject.EnumObjectType.Mob:
-					_soundManager.SoundPlay(SoundManager.SoundEnum.Spider);
 					return new DrawableGameObject(serverGameObject, Textures.SpiderAnimation);
 				case AGameObject.EnumObjectType.Flame:
 					return new DrawableGameObject(serverGameObject, Textures.FlameProjectile);
