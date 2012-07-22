@@ -43,6 +43,11 @@ namespace SkyShoot.Game.Network
 
 		private const int MAX_SERVER_GAME_EVENTS = 100;
 
+		/// <summary>
+		/// Разница времени между клиентом и сервером
+		/// </summary>
+		public static long DifferenceTime { get; private set; }
+
 		#region local thread
 
 		private readonly EventWaitHandle _queue = new AutoResetEvent(false);
@@ -183,6 +188,9 @@ namespace SkyShoot.Game.Network
 				lock (_synchroFrameLocker)
 				{
 					_lastServerSynchroFrame = _service.SynchroFrame();
+					// todo!!! Придумать!!!
+					DifferenceTime = _lastServerSynchroFrame.Time - (TimeHelper.NowMilliseconds - GameController.StartTime);
+					Trace.Write("Diff time = " + DifferenceTime);
 				}
 			}
 			catch (Exception exc)
@@ -289,21 +297,18 @@ namespace SkyShoot.Game.Network
 		public void Move(XNA.Framework.Vector2 direction)
 		{
 			AGameEvent moveGameEvent = new ObjectDirectionChanged(direction, null, 0);
-
 			AddClientGameEvent(moveGameEvent);
 		}
 
 		public void Shoot(XNA.Framework.Vector2 direction)
 		{
 			AGameEvent shootGameEvent = new ObjectShootEvent(direction, null, 0);
-
 			AddClientGameEvent(shootGameEvent);
 		}
 
 		public void ChangeWeapon(WeaponType type)
 		{
 			AGameEvent weaponChangedGameEvent = new WeaponChanged(null, type, null, 0);
-
 			AddClientGameEvent(weaponChangedGameEvent);
 		}
 

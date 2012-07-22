@@ -10,6 +10,22 @@ namespace SkyShoot.Game.View
 {
 	public class DrawableGameObject : AGameObject, IDrawable
 	{
+		private int _healthTextureWidth;
+
+		private Color _healthTextureColor;
+		private float _originalRadius;
+
+		private const int FRAME_TIME = 500;
+		private const bool LOOPING = true;
+
+		public Animation2D Animation { get; set; }
+
+		protected Texture2D StaticTexture { get; set; }
+
+		public Texture2D HealthTexture { get; private set; }
+
+		public Vector2 HealthPosition;
+
 		public Vector2 CoordinatesM
 		{
 			get { return TypeConverter.XnaLite2Xna(Coordinates); }
@@ -28,47 +44,35 @@ namespace SkyShoot.Game.View
 			set { ShootVector = TypeConverter.Xna2XnaLite(value); }
 		}
 
-		public Animation2D Animation { get; set; }
-
-		protected Texture2D StaticTexture { get; set; }
-
-		public Texture2D HealthTexture { get; private set; }
-
-		public Vector2 HealthPosition;
-
-		private int _healthTextureWidth;
-		private readonly int _healthTextureHeight;
-
-		private Color _healthTextureColor;
-		private float _originalRadius;
-
-		private const int FRAME_TIME = 500;
-		private const bool LOOPING = true;
-
 		public DrawableGameObject(AGameObject other, Animation2D animation)
-		//: base(other)
 		{
-			SoundManager.Initialize();
-
-			_healthTextureHeight = 5;
-
 			Animation = animation;
 			Animation.Initialize(FRAME_TIME, LOOPING);
 			Copy(other);
-			MakeOroginalRadius();
+			MakeOriginalRadius();
 		}
 
 		public DrawableGameObject(AGameObject other, Texture2D staticTexture)
 		{
-			_healthTextureHeight = 5;
-
 			Animation = null;
 			StaticTexture = staticTexture;
 			Copy(other);
-			MakeOroginalRadius();
+			MakeOriginalRadius();
 		}
 
-		void MakeOroginalRadius()
+		public DrawableGameObject()
+		{
+		}
+
+		public void Copy(DrawableGameObject other)
+		{
+			base.Copy(other);
+			Animation = other.Animation;
+			StaticTexture = other.StaticTexture;
+			_originalRadius = other._originalRadius;
+		}
+
+		void MakeOriginalRadius()
 		{
 			switch (ObjectType)
 			{
@@ -106,17 +110,14 @@ namespace SkyShoot.Game.View
 			{
 				if (HealthAmount >= 0.6f * MaxHealthAmount)
 				{
-					//if (Is(EnumObjectType.Player)) _soundManager.CueStop(SoundManager.SoundEnum.Heartbeat);
 					_healthTextureColor = Color.Lime;
 				}
 				else if (HealthAmount >= 0.3f * MaxHealthAmount)
 				{
-					//if (Is(EnumObjectType.Player)) _soundManager.CueStop(SoundManager.SoundEnum.Heartbeat);
 					_healthTextureColor = Color.Yellow;
 				}
 				else
 				{
-					//if (Is(EnumObjectType.Player)) _soundManager.SoundPlay(SoundManager.SoundEnum.Heartbeat);
 					_healthTextureColor = Color.Red;
 				}
 
@@ -127,7 +128,7 @@ namespace SkyShoot.Game.View
 
 				if (_healthTextureWidth > 0)
 				{
-					HealthTexture = Textures.HealthRect(_healthTextureWidth, _healthTextureHeight, _healthTextureColor);
+					HealthTexture = Textures.HealthRect(_healthTextureWidth, Constants.HEALTH_TEXTURE_HEIGHT, _healthTextureColor);
 					spriteBatch.Draw(HealthTexture, HealthPosition, null, Color.White);
 				}
 			}
@@ -137,14 +138,14 @@ namespace SkyShoot.Game.View
 			if (Animation != null)
 			{
 				spriteBatch.Draw(Animation.CurrentTexture,
-												 CoordinatesM,
-												 null,
-												 Color.White,
-												 rotation,
-												 new Vector2(Animation.CurrentTexture.Width / 2f, Animation.CurrentTexture.Height / 2f),
-												 scale,
-												 SpriteEffects.None,
-												 0);
+								 CoordinatesM,
+								 null,
+								 Color.White,
+								 rotation,
+								 new Vector2(Animation.CurrentTexture.Width / 2f, Animation.CurrentTexture.Height / 2f),
+								 scale,
+								 SpriteEffects.None,
+								 0);
 			}
 			else
 			{
@@ -158,14 +159,14 @@ namespace SkyShoot.Game.View
 					if (Is(EnumObjectType.PistolBullet) || Is(EnumObjectType.HeaterBullet)) scale *= 2f;
 				}
 				spriteBatch.Draw(StaticTexture,
-												 CoordinatesM,
-												 null,
-												 Color.White,
-												 rotation,
-												 new Vector2(StaticTexture.Width / 2f, StaticTexture.Height / 2f),
-												 scale,
-												 SpriteEffects.None,
-												 0);
+								 CoordinatesM,
+								 null,
+								 Color.White,
+								 rotation,
+								 new Vector2(StaticTexture.Width / 2f, StaticTexture.Height / 2f),
+								 scale,
+								 SpriteEffects.None,
+								 0);
 
 			}
 		}
@@ -175,24 +176,6 @@ namespace SkyShoot.Game.View
 			if (!RunVector.Equals(Vector2.Zero) && Animation != null)
 			{
 				Animation.Update(gameTime);
-			}
-
-			int milliseconds = gameTime.ElapsedGameTime.Milliseconds;
-			Coordinates += RunVector * Speed * milliseconds;
-
-			if (Is(EnumObjectType.Player))
-			{
-				Coordinates.X = MathHelper.Clamp(Coordinates.X, 0, GameLevel.Width);
-				Coordinates.Y = MathHelper.Clamp(Coordinates.Y, 0, GameLevel.Height);
-			}
-
-			if (Is(EnumObjectType.Mob))
-			{
-				// todo //!! rewrite !!!!!!!!!!!!
-				//Cue cue = _soundBank.GetCue("angry");
-				//var random = new Random();
-				//int k = random.Next(1000);
-				//if (k <= 5) Scream(cue);
 			}
 		}
 	}

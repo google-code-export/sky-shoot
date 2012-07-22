@@ -39,18 +39,7 @@ namespace SkyShoot.Game.Game
 
 		public SoundManager()
 		{
-			//Initialize();	
 			LoadSounds();
-		}
-
-		public static void Initialize()
-		{
-			if (_instance == null)
-				_instance = new SoundManager();
-			//else
-			//{
-			//  throw new Exception("Already initialized");
-			//}
 		}
 
 		public void LoadSounds()
@@ -59,18 +48,6 @@ namespace SkyShoot.Game.Game
 			_soundBank = new SoundBank(_engine, "Content\\Sounds\\Sound Bank.xsb");
 			_waveBank = new WaveBank(_engine, "Content\\Sounds\\Wave Bank.xwb");
 			_engine.GetCategory("Music");
-
-			/*sounds[0] = _soundBank.GetCue("RICOCHET");
-			sounds[1] = _soundBank.GetCue("wind03");
-			sounds[2] = _soundBank.GetCue("cricket00");
-			sounds[3] = _soundBank.GetCue("GUNSHOT");
-			sounds[4] = _soundBank.GetCue("LASER");
-			sounds[5] = _soundBank.GetCue("lava_burn1");
-			sounds[6] = _soundBank.GetCue("lava");
-			sounds[7] = _soundBank.GetCue("STARWARS");
-			sounds[8] = _soundBank.GetCue("wind03");
-			sounds[9] = _soundBank.GetCue("wind01b");
-			sounds[10] = _soundBank.GetCue("angry");*/
 
 			Sounds.Add(SoundEnum.Click, _soundBank.GetCue("RICOCHET"));
 			Sounds.Add(SoundEnum.Desert, _soundBank.GetCue("wind03"));

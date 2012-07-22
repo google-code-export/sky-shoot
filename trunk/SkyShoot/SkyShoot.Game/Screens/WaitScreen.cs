@@ -34,7 +34,6 @@ namespace SkyShoot.Game.Screens
 			CreateControls();
 			InititalizeControls();
 
-			SoundManager.Initialize();
 			_soundManager = SoundManager.Instance;
 			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 			_updateCount = 0;
@@ -47,11 +46,6 @@ namespace SkyShoot.Game.Screens
 		public static string MaxPlayers { get; set; }
 
 		public static int GameId { get; set; }
-
-		public override bool IsMenuScreen
-		{
-			get { return false; }
-		}
 
 		public override void LoadContent()
 		{

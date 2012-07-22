@@ -128,10 +128,10 @@ namespace SkyShoot.Game.Screens
 
 		public override void Update(GameTime gameTime)
 		{
-			_controller.Update();
-
-			_activeScreen.HandleInput(_controller);
 			_activeScreen.Update(gameTime);
+
+			_controller.Update();
+			_activeScreen.HandleInput(_controller);
 		}
 
 		public override void Draw(GameTime gameTime)

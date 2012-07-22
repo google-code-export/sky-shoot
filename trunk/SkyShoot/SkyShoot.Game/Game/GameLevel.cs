@@ -5,25 +5,17 @@ using SkyShoot.Game.View;
 
 namespace SkyShoot.Game.Game
 {
-	public class GameLevel : View.IDrawable
+	public class GameLevel : Contracts.Session.GameLevel, View.IDrawable
 	{
-		public static int Width { get; private set; }
-
-		public static int Height { get; private set; }
-
 		private static Texture2D _texture;
 
 		private readonly SoundManager _soundManager;
 
-		public GameLevel(Contracts.Session.GameLevel gameLevel)
+		public GameLevel(int width, int height, TileSet tileSet) :base(width, height, tileSet)
 		{
-			Width = (int)gameLevel.Width;
-			Height = (int)gameLevel.Height;
-
-			SoundManager.Initialize();
 			_soundManager = SoundManager.Instance;
 
-			switch (gameLevel.UsedTileSet)
+			switch (tileSet)
 			{
 				case TileSet.Grass:
 					_soundManager.SoundPlay(SoundManager.SoundEnum.Grass);
