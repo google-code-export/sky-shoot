@@ -22,8 +22,6 @@ namespace SkyShoot.Game.Screens
 
 		public bool IsActive { get; set; }
 
-		public abstract bool IsMenuScreen { get; }
-
 		public virtual void LoadContent()
 		{
 		}

@@ -78,18 +78,18 @@ namespace SkyShoot.Contracts.GameEvents
 	public class NewObjectEvent : AGameEvent
 	{
 		[DataMember]
-		public AGameObject NewObj;
+		public AGameObject NewGameObject { get; private set; }
 
 		public NewObjectEvent(AGameObject obj, long timeStamp)
 			: base(obj.Id, timeStamp)
 		{
-			NewObj = GameObjectConverter.OneObject(obj);
+			NewGameObject = GameObjectConverter.OneObject(obj);
 			Type = EventType.NewObjectEvent;
 		}
 
 		public override void UpdateMob(AGameObject mob)
 		{
-			mob.Copy(NewObj);
+			mob.Copy(NewGameObject);
 		}
 	}
 

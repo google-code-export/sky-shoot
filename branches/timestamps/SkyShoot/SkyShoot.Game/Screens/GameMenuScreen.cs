@@ -31,11 +31,6 @@ namespace SkyShoot.Game.Screens
 			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 		}
 
-		public override bool IsMenuScreen
-		{
-			get { return true; }
-		}
-
 		public override void Draw(GameTime gameTime)
 		{
 			_spriteBatch = ScreenManager.Instance.SpriteBatch;

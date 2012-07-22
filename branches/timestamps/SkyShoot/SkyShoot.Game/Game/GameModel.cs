@@ -1,13 +1,12 @@
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SkyShoot.Contracts.CollisionDetection;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.GameObject;
-using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.SynchroFrames;
 using SkyShoot.Contracts.Utils;
 using SkyShoot.Game.Network;
@@ -17,12 +16,16 @@ namespace SkyShoot.Game.Game
 {
 	public class GameModel
 	{
+		public Camera2D Camera2D { get; private set; }
+
 		// explosions -> exploded time
-		private readonly Dictionary<DrawableGameObject, long> _explosions;
+		// private readonly Dictionary<DrawableGameObject, long> _explosions;
 
-		private readonly Logger _logger;
+		private int _updateCouter;
 
-		private SynchroFrame _localSynchroFrame;
+		private GameSnapshot _gameSnapshot;
+
+		private readonly TimeHelper _timeHelper;
 
 		/// <summary>
 		/// Все GameEvent'ы с момента последнего синхрокадра,
@@ -30,108 +33,40 @@ namespace SkyShoot.Game.Game
 		/// </summary>
 		private readonly List<AGameEvent> _serverGameEvents = new List<AGameEvent>();
 
-		public Camera2D Camera2D { get; private set; }
+		private readonly GameLevel _gameLevel;
 
-		public GameLevel GameLevel { get; private set; }
+		private DrawableGameObject[] _drawableGameObjects;
 
-		public ConcurrentDictionary<Guid, DrawableGameObject> GameObjects { get; private set; }
-
-		public GameModel(GameLevel gameLevel, Logger logger)
+		public GameModel(GameLevel gameLevel, TimeHelper timeHelper)
 		{
-			_logger = logger;
+			_gameLevel = gameLevel;
+			_timeHelper = timeHelper;
 
-			GameLevel = gameLevel;
+			Camera2D = new Camera2D(gameLevel.Width, gameLevel.Height);
 
-			Camera2D = new Camera2D(GameLevel.Width, GameLevel.Height);
-
-			GameObjects = new ConcurrentDictionary<Guid, DrawableGameObject>();
-
-			_explosions = new Dictionary<DrawableGameObject, long>();
+			// _explosions = new Dictionary<DrawableGameObject, long>();
 		}
 
-		public void AddGameObject(DrawableGameObject drawableGameObject)
-		{
-			if (!GameObjects.TryAdd(drawableGameObject.Id, drawableGameObject))
-				Trace.WriteLine("DrawableGameObject already exists", "GameModel/AddMob");
-		}
+		// todo придумать что-нибудь
+		//		public void UpdateExplosions()
+		//		{
+		//			var keys = new DrawableGameObject[_explosions.Count];
+		//			_explosions.Keys.CopyTo(keys, 0);
+		//
+		//			foreach (DrawableGameObject explosion in keys)
+		//			{
+		//				if (DateTime.Now.Ticks / 10000 - _explosions[explosion] > Constants.EXPLOSION_LIFE_DISTANCE)
+		//				{
+		//					_explosions.Remove(explosion);
+		//					RemoveGameObject(explosion.Id);
+		//				}
+		//			}
+		//		}
 
-		public void RemoveGameObject(Guid id)
-		{
-			DrawableGameObject drawableGameObject;
-			if (!GameObjects.TryRemove(id, out drawableGameObject))
-				Trace.WriteLine("DrawableGameObject with such ID does not exist", "GameModel/RemoveMob");
-		}
-
-		public DrawableGameObject GetGameObject(Guid id)
-		{
-			DrawableGameObject drawableGameObject;
-			if (GameObjects.TryGetValue(id, out drawableGameObject))
-				return drawableGameObject;
-			Trace.WriteLine("DrawableGameObject with such ID does not exist (" + id.ToString() + ")", "GameModel/GetMob");
-			return null;
-		}
-
-		public void UpdateExplosions()
-		{
-			// todo придумать что-нибудь
-			var keys = new DrawableGameObject[_explosions.Count];
-			_explosions.Keys.CopyTo(keys, 0);
-
-			foreach (DrawableGameObject explosion in keys)
-			{
-				if (DateTime.Now.Ticks / 10000 - _explosions[explosion] > Constants.EXPLOSION_LIFE_DISTANCE)
-				{
-					_explosions.Remove(explosion);
-					RemoveGameObject(explosion.Id);
-				}
-			}
-		}
-
-		public void ApplyEvents(AGameEvent[] gameEvents)
+		private void ApplyEvents(AGameEvent[] gameEvents)
 		{
 			Logger.PrintEvents(gameEvents);
-			foreach (var gameEvent in gameEvents)
-			{
-				// todo проверить, выполняется ли
-				Debug.Assert(gameEvent != null);
-
-				if (gameEvent.Type == EventType.NewObjectEvent)
-				{
-					var newGameObject = new AGameObject();
-					gameEvent.UpdateMob(newGameObject);
-
-					DrawableGameObject newDrawableGameObject = GameFactory.CreateClientGameObject(newGameObject);
-					AddGameObject(newDrawableGameObject);
-
-					if (newDrawableGameObject.Is(AGameObject.EnumObjectType.Explosion))
-					{
-						_explosions.Add(newDrawableGameObject, DateTime.Now.Ticks / 10000);
-					}
-				}
-				else
-				{
-					// todo когда выполняется
-					Debug.Assert(gameEvent.GameObjectId != null);
-
-					DrawableGameObject drawableGameObject = GetGameObject(gameEvent.GameObjectId.Value);
-					if (drawableGameObject != null)
-					{
-						gameEvent.UpdateMob(drawableGameObject);
-						if (drawableGameObject.IsActive == false)
-						{
-							// if object is explosion, just ignore his deletion
-							if (drawableGameObject.Is(AGameObject.EnumObjectType.Explosion))
-							{
-								drawableGameObject.IsActive = true;
-							}
-							else
-							{
-								GameController.Instance.GameObjectDead(drawableGameObject);
-							}
-						}
-					}
-				}
-			}
+			_gameSnapshot.ApplyEvents(gameEvents.Where(x => x.TimeStamp >= _gameSnapshot.Time));
 		}
 
 		/// <summary>
@@ -139,40 +74,21 @@ namespace SkyShoot.Game.Game
 		/// </summary>
 		public void ApplySynchroFrame(SynchroFrame synchroFrame)
 		{
-			_localSynchroFrame = synchroFrame;
+			_gameSnapshot = new GameSnapshot(synchroFrame, _gameLevel);
+
+			_gameSnapshot.ApplyEvents(_serverGameEvents.Where(x => x.TimeStamp >= _gameSnapshot.Time));
 
 			Trace.WriteLine(synchroFrame);
-
-			// это уже не нужно
-			//			foreach (AGameObject serverGameObject in synchroFrame)
-			//			{
-			//				AGameObject clientGameObject = GetGameObject(serverGameObject.Id);
-			//
-			//				if (clientGameObject == null)
-			//					GameObjects.TryAdd(serverGameObject.Id, GameFactory.CreateClientGameObject(serverGameObject));
-			//				else
-			//					clientGameObject.Copy(serverGameObject);
-			//			}
-			foreach (AGameObject serverGameObject in synchroFrame)
-			{
-				AGameObject clientGameObject = GetGameObject(serverGameObject.Id);
-
-				if (clientGameObject != null)
-					clientGameObject.Copy(serverGameObject);
-			}
 		}
-
-		private int _updateCouter;
 
 		public void Update(GameTime gameTime)
 		{
+			// todo
 			// update explosions
-			UpdateExplosions();
+			// UpdateExplosions();
 
 			#region применение синхрокадра
 
-			// var sw = new Stopwatch();
-			// sw.Start();
 			if (_updateCouter++ % 30 == 0)
 			{
 				SynchroFrame serverSynchroFrame = ConnectionManager.Instance.SynchroFrame();
@@ -184,14 +100,9 @@ namespace SkyShoot.Game.Game
 				}
 				ApplySynchroFrame(serverSynchroFrame);
 
-				// todo учесть Event'ы с последнего синхрокадра
-
 				// очистка списка GameEvent'ов c последнего синхрокадра
 				_serverGameEvents.Clear();
 			}
-			// sw.Stop();
-			// Trace.WriteLine("SW:sync: "+sw.ElapsedMilliseconds);
-			// sw.Restart();
 
 			#endregion
 
@@ -207,21 +118,36 @@ namespace SkyShoot.Game.Game
 
 			#endregion
 
+			#region экстраполяция
+
+			_drawableGameObjects = _gameSnapshot.ExtrapolateTo(_timeHelper.GetTime());
+
+			#endregion
+
 			#region обнаружение столкновений
 
-			foreach (var gameObject in GameObjects)
+			foreach (DrawableGameObject gameObject in _drawableGameObjects)
 			{
-				gameObject.Value.Update(gameTime);
-				foreach (var slaver in GameObjects)
+				foreach (DrawableGameObject slaver in _drawableGameObjects)
 				{
-					if (gameObject.Value != slaver.Value && slaver.Value.Is(AGameObject.EnumObjectType.Block) && gameObject.Value.Is(AGameObject.EnumObjectType.Block))
-						if (gameObject.Value.Radius * gameObject.Value.Radius + slaver.Value.Radius * slaver.Value.Radius <=
-							(gameObject.Value.Coordinates - slaver.Value.Coordinates).LengthSquared())
-							gameObject.Value.Coordinates += CollisionDetector.FitObjects(gameObject.Value.Coordinates,
-																						 gameObject.Value.RunVector,
-																						 gameObject.Value.Bounding, slaver.Value.Coordinates,
-																						 slaver.Value.RunVector, slaver.Value.Bounding);
+					if (gameObject != slaver && slaver.Is(AGameObject.EnumObjectType.Block) &&
+						gameObject.Is(AGameObject.EnumObjectType.Block))
+						if (gameObject.Radius * gameObject.Radius + slaver.Radius * slaver.Radius <=
+							(gameObject.Coordinates - slaver.Coordinates).LengthSquared())
+							gameObject.Coordinates += CollisionDetector.FitObjects(gameObject.Coordinates,
+																				   gameObject.RunVector,
+																				   gameObject.Bounding, slaver.Coordinates,
+																				   slaver.RunVector, slaver.Bounding);
 				}
+			}
+
+			#endregion
+
+			#region обновление текстур
+
+			foreach (DrawableGameObject gameObject in _drawableGameObjects)
+			{
+				gameObject.Update(gameTime);
 			}
 
 			#endregion
@@ -230,12 +156,6 @@ namespace SkyShoot.Game.Game
 		public void Draw(SpriteBatch spriteBatch)
 		{
 			var me = GetGameObject(GameController.MyId);
-
-			if (me == null)
-			{
-				Trace.Write("DRAW WARNING");
-				return;
-			}
 
 			Vector2 myPosition = me.CoordinatesM;
 
@@ -250,16 +170,20 @@ namespace SkyShoot.Game.Game
 							  Camera2D.GetTransformation(Textures.GraphicsDevice));
 
 			// draw background
-			GameLevel.Draw(spriteBatch);
+			_gameLevel.Draw(spriteBatch);
 
-			// draw mobs
-			foreach (var aMob in GameObjects)
+			// draw game objects
+			foreach (DrawableGameObject drawableGameObject in _drawableGameObjects)
 			{
-				// Trace.WriteLine(aMob.Value.Coordinates);
-				aMob.Value.Draw(spriteBatch);
+				drawableGameObject.Draw(spriteBatch);
 			}
 
 			spriteBatch.End();
+		}
+
+		public DrawableGameObject GetGameObject(Guid id)
+		{
+			return _drawableGameObjects.First(x => x.Id == GameController.MyId);
 		}
 	}
 }

@@ -44,11 +44,6 @@ namespace SkyShoot.Game.Screens
 			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 		}
 
-		public override bool IsMenuScreen
-		{
-			get { return true; }
-		}
-
 		public override void LoadContent()
 		{
 			_texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");

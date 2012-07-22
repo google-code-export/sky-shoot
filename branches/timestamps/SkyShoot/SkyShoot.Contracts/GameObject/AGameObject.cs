@@ -271,14 +271,14 @@ namespace SkyShoot.Contracts.GameObject
 			return new AGameEvent[] { };
 		}
 
-		public virtual Vector2 ComputeMovement(long updateDelay, GameLevel gameLevel)
+		public virtual Vector2 ComputeMovement(long time, GameLevel gameLevel)
 		{
 			// если вектор не ноль то можно делать нормирование
 			if (RunVector.LengthSquared() > 0.01f)
 			{
 				RunVector = Vector2.Normalize(RunVector);
 			}
-			var newCoord = RunVector * Speed * updateDelay + Coordinates;
+			var newCoord = RunVector * Speed * time + Coordinates;
 
 			return newCoord;
 		}

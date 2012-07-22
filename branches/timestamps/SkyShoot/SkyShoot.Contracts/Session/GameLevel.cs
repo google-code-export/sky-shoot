@@ -1,5 +1,4 @@
 ﻿using System.Runtime.Serialization;
-using SkyShoot.Contracts.Service;
 
 namespace SkyShoot.Contracts.Session
 {
@@ -7,26 +6,19 @@ namespace SkyShoot.Contracts.Session
 	public class GameLevel
 	{
 		[DataMember]
-		public float Height;
+		public int Height { get; private set; }
 
 		[DataMember]
-		public float Width;
+		public int Width { get; private set; }
 
-		public float LevelBorder;
+		[DataMember]
+		public TileSet UsedTileSet { get; private set; }
 
-		public GameLevel()
+		public GameLevel(int width, int height, TileSet usedTileSet)
 		{
-		}
-
-		public GameLevel(TileSet usedTileSet)
-		{
-			Height = 1000;
-			Width = 1000;
-			LevelBorder = Constants.LEVELBORDER;
+			Width = width;
+			Height = height;
 			UsedTileSet = usedTileSet;
 		}
-
-		[DataMember]
-		public TileSet UsedTileSet { get; set; }
 	}
 }
