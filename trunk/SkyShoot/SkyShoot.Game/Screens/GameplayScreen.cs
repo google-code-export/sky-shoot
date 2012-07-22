@@ -188,32 +188,6 @@ namespace SkyShoot.Game.Screens
 
 			#endregion
 
-			#region список доступного оружия
-			_levelLabel = new LabelControl
-			{
-				Text = "Level",
-				Bounds = new UniRectangle(new UniVector(-60, -40), new UniVector(0, 0)),
-			};
-
-			_expLabel = new LabelControl
-			{
-				Text = "Exp",
-				Bounds = new UniRectangle(new UniVector(-60, -20), new UniVector(0, 0)),
-			};
-
-			_fragLabel = new LabelControl
-			{
-				Text = "Frag",
-				Bounds = new UniRectangle(new UniVector(-60, 0), new UniVector(0, 0)),
-			};
-
-			_creepsLabel = new LabelControl
-			{
-				Text = "Creeps",
-				Bounds = new UniRectangle(new UniVector(-60, 20), new UniVector(0, 0)),
-			};
-			#endregion
-
 			#region список оружия
 
 			const int labelWidth = 160;
