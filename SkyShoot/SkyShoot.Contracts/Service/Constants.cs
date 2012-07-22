@@ -169,6 +169,8 @@
 		public const int LEVEL_WIDTH = 1000;
 		public const int LEVEL_HEIGHT = 1000;
 
+		public const int SHOOT_RATE = 1000 / 10;
+
 		#endregion
 
 		#region bonuses

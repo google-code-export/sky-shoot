@@ -1,12 +1,11 @@
 ﻿using System;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Nuclex.Input;
 using Nuclex.UserInterface.Controls;
 using Nuclex.UserInterface.Controls.Desktop;
 using SkyShoot.Game.Screens;
-using SkyShoot.Game.Network;
-using SkyShoot.Contracts.Weapon;
 
 namespace SkyShoot.Game.Input
 {
@@ -52,6 +51,29 @@ namespace SkyShoot.Game.Input
 			get { return _currentMouseState.LeftButton; }
 		}
 
+		private Vector2 GetRunVector(KeyboardState keyboardState)
+		{
+			Vector2 runVector = Vector2.Zero;
+			switch (Settings.Default.KeyboardLayout)
+			{
+				case 0:
+					if (keyboardState.IsKeyDown(Keys.W)) runVector -= Vector2.UnitY;
+					if (keyboardState.IsKeyDown(Keys.S)) runVector += Vector2.UnitY;
+					if (keyboardState.IsKeyDown(Keys.A)) runVector -= Vector2.UnitX;
+					if (keyboardState.IsKeyDown(Keys.D)) runVector += Vector2.UnitX;
+					break;
+				case 1:
+					if (keyboardState.IsKeyDown(Keys.Up)) runVector -= Vector2.UnitY;
+					if (keyboardState.IsKeyDown(Keys.Down)) runVector += Vector2.UnitY;
+					if (keyboardState.IsKeyDown(Keys.Left)) runVector -= Vector2.UnitX;
+					if (keyboardState.IsKeyDown(Keys.Right)) runVector += Vector2.UnitX;
+					break;
+			}
+			if (runVector.Length() > 0)
+				runVector.Normalize();
+			return runVector;
+		}
+
 		public override void Update()
 		{
 			_lastKeyState = _currentKeyboardState;
@@ -88,41 +110,14 @@ namespace SkyShoot.Game.Input
 		public override void AddListener(Control control, EventHandler buttonPressed)
 		{
 			base.AddListener(control, buttonPressed);
+
+			Debug.Assert(control is ButtonControl);
 			(control as ButtonControl).Pressed += buttonPressed;
 		}
 
 		public bool IsNewKeyPressed(Keys key)
 		{
 			return _currentKeyboardState.IsKeyUp(key) && _lastKeyState.IsKeyDown(key);
-		}
-
-		private Vector2 GetRunVector(KeyboardState keyboardState)
-		{
-			Vector2 runVector = Vector2.Zero;
-			switch (Settings.Default.KeyboardLayout)
-			{
-				case 0:
-					if (keyboardState.IsKeyDown(Keys.W)) runVector -= Vector2.UnitY;
-					if (keyboardState.IsKeyDown(Keys.S)) runVector += Vector2.UnitY;
-					if (keyboardState.IsKeyDown(Keys.A)) runVector -= Vector2.UnitX;
-					if (keyboardState.IsKeyDown(Keys.D)) runVector += Vector2.UnitX;
-					break;
-				case 1:
-					if (keyboardState.IsKeyDown(Keys.Up)) runVector -= Vector2.UnitY;
-					if (keyboardState.IsKeyDown(Keys.Down)) runVector += Vector2.UnitY;
-					if (keyboardState.IsKeyDown(Keys.Left)) runVector -= Vector2.UnitX;
-					if (keyboardState.IsKeyDown(Keys.Right)) runVector += Vector2.UnitX;
-					break;
-			}
-			if (keyboardState.IsKeyDown(Keys.D1)) ConnectionManager.Instance.ChangeWeapon(WeaponType.Pistol);
-			if (keyboardState.IsKeyDown(Keys.D2)) ConnectionManager.Instance.ChangeWeapon(WeaponType.Shotgun);
-			if (keyboardState.IsKeyDown(Keys.D3)) ConnectionManager.Instance.ChangeWeapon(WeaponType.FlamePistol);
-			if (keyboardState.IsKeyDown(Keys.D4)) ConnectionManager.Instance.ChangeWeapon(WeaponType.RocketPistol);
-			if (keyboardState.IsKeyDown(Keys.D5)) ConnectionManager.Instance.ChangeWeapon(WeaponType.Heater);
-			if (keyboardState.IsKeyDown(Keys.D6)) ConnectionManager.Instance.ChangeWeapon(WeaponType.TurretMaker);
-			if (runVector.Length() > 0)
-				runVector.Normalize();
-			return runVector;
 		}
 	}
 }

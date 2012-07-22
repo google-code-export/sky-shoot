@@ -1,12 +1,10 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Globalization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Nuclex.UserInterface;
 using Nuclex.UserInterface.Controls;
-using Nuclex.UserInterface.Controls.Desktop;
 using SkyShoot.Contracts.Weapon;
 using SkyShoot.Game.Game;
 using SkyShoot.Game.Input;
@@ -21,17 +19,17 @@ namespace SkyShoot.Game.Screens
 
 		private readonly ContentManager _content;
 
-		private ButtonControl _pistolButton;
-		private ButtonControl _shotgunButton;
-		private ButtonControl _rocketButton;
-		private ButtonControl _flameButton;
-		private ButtonControl _heaterButton;
-		private ButtonControl _turretButton;
+		private LabelControl _pistolLabel;
+		private LabelControl _shotgunLabel;
+		private LabelControl _rocketLabel;
+		private LabelControl _flameLabel;
+		private LabelControl _heaterLabel;
+		private LabelControl _turretLabel;
 
-		private LabelControl _lableLevel;
-		private LabelControl _lableExp;
-		private LabelControl _lableFrag;
-		private LabelControl _lableCreeps;
+		private LabelControl _levelLabel;
+		private LabelControl _expLabel;
+		private LabelControl _fragLabel;
+		private LabelControl _creepsLabel;
 
 		private int _counter;
 
@@ -140,19 +138,10 @@ namespace SkyShoot.Game.Screens
 				var stat = ConnectionManager.Instance.GetStats();
 				if (stat != null)
 				{
-					_lableLevel.Text = "Level " + stat.Value.Lvl.ToString(CultureInfo.InvariantCulture);
-				}
-				if (stat != null)
-				{
-					_lableExp.Text = "Exp " + stat.Value.Exp.ToString(CultureInfo.InvariantCulture);
-				}
-				if (stat != null)
-				{
-					_lableFrag.Text = "Frag " + stat.Value.Frag.ToString(CultureInfo.InvariantCulture);
-				}
-				if (stat != null)
-				{
-					_lableCreeps.Text = "Creeps " + stat.Value.Creeps.ToString(CultureInfo.InvariantCulture);
+					_levelLabel.Text = "Level " + stat.Value.Level.ToString(CultureInfo.InvariantCulture);
+					_expLabel.Text = "Exp " + stat.Value.Experience.ToString(CultureInfo.InvariantCulture);
+					_fragLabel.Text = "Frag " + stat.Value.Frag.ToString(CultureInfo.InvariantCulture);
+					_creepsLabel.Text = "Creeps " + stat.Value.Creeps.ToString(CultureInfo.InvariantCulture);
 				}
 			}
 			_counter++;
@@ -160,7 +149,6 @@ namespace SkyShoot.Game.Screens
 
 		public override void Draw(GameTime gameTime)
 		{
-			// todo remove this?
 			Debug.Assert(GameController.Instance.IsGameStarted);
 
 			GraphicsDevice graphicsDevice = ScreenManager.Instance.GraphicsDevice;
@@ -174,25 +162,25 @@ namespace SkyShoot.Game.Screens
 		{
 			#region Вывод статистики на экран
 
-			_lableLevel = new LabelControl
+			_levelLabel = new LabelControl
 							{
 								Text = "Level",
 								Bounds = new UniRectangle(new UniVector(-60, -40), new UniVector(0, 0)),
 							};
 
-			_lableExp = new LabelControl
+			_expLabel = new LabelControl
 							{
 								Text = "Exp",
 								Bounds = new UniRectangle(new UniVector(-60, -20), new UniVector(0, 0)),
 							};
 
-			_lableFrag = new LabelControl
+			_fragLabel = new LabelControl
 							{
 								Text = "Frag",
 								Bounds = new UniRectangle(new UniVector(-60, 0), new UniVector(0, 0)),
 							};
 
-			_lableCreeps = new LabelControl
+			_creepsLabel = new LabelControl
 							{
 								Text = "Creeps",
 								Bounds = new UniRectangle(new UniVector(-60, 20), new UniVector(0, 0)),
@@ -200,110 +188,90 @@ namespace SkyShoot.Game.Screens
 
 			#endregion
 
-			_pistolButton = new ButtonControl
+			#region список доступного оружия
+			_levelLabel = new LabelControl
+			{
+				Text = "Level",
+				Bounds = new UniRectangle(new UniVector(-60, -40), new UniVector(0, 0)),
+			};
+
+			_expLabel = new LabelControl
+			{
+				Text = "Exp",
+				Bounds = new UniRectangle(new UniVector(-60, -20), new UniVector(0, 0)),
+			};
+
+			_fragLabel = new LabelControl
+			{
+				Text = "Frag",
+				Bounds = new UniRectangle(new UniVector(-60, 0), new UniVector(0, 0)),
+			};
+
+			_creepsLabel = new LabelControl
+			{
+				Text = "Creeps",
+				Bounds = new UniRectangle(new UniVector(-60, 20), new UniVector(0, 0)),
+			};
+			#endregion
+
+			#region список оружия
+
+			const int labelWidth = 160;
+			const float xLeft = 800 - labelWidth;
+			const int y = -50;
+
+			_pistolLabel = new LabelControl
 								{
-									Text = "Pistol",
-									Bounds = new UniRectangle(new UniVector(70, 470), new UniVector(80, 40)),
+									Text = "1 - Pistol",
+									Bounds = new UniRectangle(new UniVector(xLeft, y), new UniVector(0, 0)),
 								};
 
-			_shotgunButton = new ButtonControl
+			_shotgunLabel = new LabelControl
 								{
-									Text = "Shotgun",
-									Bounds = new UniRectangle(new UniVector(160, 470), new UniVector(80, 40)),
+									Text = "2 - Shotgun",
+									Bounds = new UniRectangle(new UniVector(xLeft, y + 20), new UniVector(0, 0)),
 								};
 
-			_flameButton = new ButtonControl
+			_flameLabel = new LabelControl
 							{
-								Text = "Flame",
-								Bounds = new UniRectangle(new UniVector(250, 470), new UniVector(80, 40)),
+								Text = "3 - Flame",
+								Bounds = new UniRectangle(new UniVector(xLeft, y + 40), new UniVector(0, 0)),
 							};
 
-			_rocketButton = new ButtonControl
+			_rocketLabel = new LabelControl
 								{
-									Text = "Rocket",
-									Bounds = new UniRectangle(new UniVector(340, 470), new UniVector(80, 40)),
+									Text = "4 - Rocket",
+									Bounds = new UniRectangle(new UniVector(xLeft, y + 60), new UniVector(0, 0)),
 								};
 
-			_heaterButton = new ButtonControl
+			_heaterLabel = new LabelControl
 								{
-									Text = "Heater",
-									Bounds = new UniRectangle(new UniVector(430, 470), new UniVector(80, 40)),
+									Text = "5 - Heater",
+									Bounds = new UniRectangle(new UniVector(xLeft, y + 80), new UniVector(0, 0)),
 								};
 
-			_turretButton = new ButtonControl
+			_turretLabel = new LabelControl
 								{
-									Text = "Turret",
-									Bounds = new UniRectangle(new UniVector(520, 470), new UniVector(80, 40)),
+									Text = "6 - Turret",
+									Bounds = new UniRectangle(new UniVector(xLeft, y + 100), new UniVector(0, 0)),
 								};
+
+			#endregion
 		}
 
 		private void InitializeControls()
 		{
-			Desktop.Children.Add(_pistolButton);
-			Desktop.Children.Add(_shotgunButton);
-			Desktop.Children.Add(_flameButton);
-			Desktop.Children.Add(_rocketButton);
-			Desktop.Children.Add(_heaterButton);
-			Desktop.Children.Add(_turretButton);
-			Desktop.Children.Add(_lableLevel);
-			Desktop.Children.Add(_lableExp);
-			Desktop.Children.Add(_lableFrag);
-			Desktop.Children.Add(_lableCreeps);
+			Desktop.Children.Add(_pistolLabel);
+			Desktop.Children.Add(_shotgunLabel);
+			Desktop.Children.Add(_flameLabel);
+			Desktop.Children.Add(_rocketLabel);
+			Desktop.Children.Add(_heaterLabel);
+			Desktop.Children.Add(_turretLabel);
 
-			_pistolButton.Pressed += PistolButtonPressed;
-			_shotgunButton.Pressed += ShotgunButtonPressed;
-			_flameButton.Pressed += FlameButtonPressed;
-			_rocketButton.Pressed += RocketButtonPressed;
-			_heaterButton.Pressed += HeaterButtonPressed;
-			_turretButton.Pressed += TurretButtonPressed;
-
-			ScreenManager.Instance.Controller.AddListener(_pistolButton, PistolButtonPressed);
-			ScreenManager.Instance.Controller.AddListener(_shotgunButton, ShotgunButtonPressed);
-			ScreenManager.Instance.Controller.AddListener(_flameButton, FlameButtonPressed);
-			ScreenManager.Instance.Controller.AddListener(_rocketButton, RocketButtonPressed);
-			ScreenManager.Instance.Controller.AddListener(_heaterButton, HeaterButtonPressed);
-			ScreenManager.Instance.Controller.AddListener(_turretButton, TurretButtonPressed);
-		}
-
-		private void RocketButtonPressed(object sender, EventArgs e)
-		{
-			_weapon = WeaponType.RocketPistol;
-			UpdateWeapon();
-		}
-
-		private void FlameButtonPressed(object sender, EventArgs e)
-		{
-			_weapon = WeaponType.FlamePistol;
-			UpdateWeapon();
-		}
-
-		private void PistolButtonPressed(object sender, EventArgs e)
-		{
-			_weapon = WeaponType.Pistol;
-			UpdateWeapon();
-		}
-
-		private void ShotgunButtonPressed(object sender, EventArgs e)
-		{
-			_weapon = WeaponType.Shotgun;
-			UpdateWeapon();
-		}
-
-		private void HeaterButtonPressed(object sender, EventArgs e)
-		{
-			_weapon = WeaponType.Heater;
-			UpdateWeapon();
-		}
-
-		private void TurretButtonPressed(object sender, EventArgs e)
-		{
-			_weapon = WeaponType.TurretMaker;
-			UpdateWeapon();
-		}
-
-		private void UpdateWeapon()
-		{
-			ConnectionManager.Instance.ChangeWeapon(_weapon);
+			Desktop.Children.Add(_levelLabel);
+			Desktop.Children.Add(_expLabel);
+			Desktop.Children.Add(_fragLabel);
+			Desktop.Children.Add(_creepsLabel);
 		}
 	}
 }
