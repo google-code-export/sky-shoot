@@ -1,9 +1,6 @@
 ﻿using System;
-using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Session;
-using SkyShoot.Service.Mobs;
-using SkyShoot.Service.Weapon;
 using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.ServProgram.Mobs

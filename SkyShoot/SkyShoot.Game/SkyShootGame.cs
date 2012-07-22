@@ -43,7 +43,6 @@ namespace SkyShoot.Game
 			_screenManager = ScreenManager.Instance;
 			Components.Add(_screenManager);
 
-			SoundManager.Initialize();
 			_soundManager = SoundManager.Instance;
 			_soundManager.SoundPlay(SoundManager.SoundEnum.MainTheme);
 

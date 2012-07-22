@@ -59,7 +59,7 @@ namespace SkyShoot.Service.Session
 			}
 
 			IsStarted = false;
-			GameLevel = new GameLevel(tileSet);
+			GameLevel = new GameLevel(Constants.LEVEL_WIDTH, Constants.LEVEL_HEIGHT, tileSet);
 
 			var playerNames = new List<string>();
 
@@ -85,7 +85,7 @@ namespace SkyShoot.Service.Session
 		{
 			#region инициализация объектов
 
-			Random random_number_generator = new Random();
+			var randomNumberGenerator = new Random();
 
 			for (int i = 0; i < _gameObjects.Count; i++)
 			{
@@ -106,7 +106,7 @@ namespace SkyShoot.Service.Session
 				player.MeShot += SomebodyShot;
 				player.MeChangeWeapon += SomebodyChangedWeapon;
 
-				player.Coordinates = new Vector2(500 + (random_number_generator.Next() % 200 - 100), 500 + (random_number_generator.Next() % 200 - 100));
+				player.Coordinates = new Vector2(500 + (randomNumberGenerator.Next() % 200 - 100), 500 + (randomNumberGenerator.Next() % 200 - 100));
 				player.Speed = Constants.PLAYER_DEFAULT_SPEED;
 				player.Radius = Constants.PLAYER_RADIUS;
 				player.Weapon = new Weapon.Pistol(Guid.NewGuid(), player);

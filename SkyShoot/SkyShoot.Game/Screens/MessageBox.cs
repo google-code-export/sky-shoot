@@ -22,7 +22,6 @@ namespace SkyShoot.Game.Screens
 			CreateControls();
 			InitializeControls();
 
-			SoundManager.Initialize();
 			_soundManager = SoundManager.Instance;
 			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 		}
@@ -30,11 +29,6 @@ namespace SkyShoot.Game.Screens
 		public static ScreenManager.ScreenEnum Next { get; set; }
 
 		public static string Message { get; set; }
-
-		public override bool IsMenuScreen
-		{
-			get { return false; }
-		}
 
 		public override void LoadContent()
 		{

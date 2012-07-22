@@ -2,13 +2,13 @@ using System;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using SkyShoot.Contracts.GameObject;
 using SkyShoot.Contracts.Service;
+using SkyShoot.Contracts.Utils;
 using SkyShoot.Game.Input;
 using SkyShoot.Game.Network;
 using SkyShoot.Game.Screens;
 using SkyShoot.Game.Utils;
-using SkyShoot.Contracts.Utils;
+using SkyShoot.Game.View;
 
 namespace SkyShoot.Game.Game
 {
@@ -25,58 +25,48 @@ namespace SkyShoot.Game.Game
 
 		private GameController()
 		{
-			SoundManager.Initialize();
+
 		}
 
 		#endregion
 
 		public static Guid MyId { get; private set; }
 
+		// todo temporary
+		public static long StartTime { get; set; }
+
 		public bool IsGameStarted { get; private set; }
 
 		public GameModel GameModel { get; private set; }
 
-		// todo temporary
-		public static long StartTime { get; set; }
+		private void Shoot(Vector2 direction)
+		{
+			ConnectionManager.Instance.Shoot(TypeConverter.Xna2XnaLite(direction));
+		}
+
+		private void Move(Vector2 direction)
+		{
+			ConnectionManager.Instance.Move(TypeConverter.Xna2XnaLite(direction));
+		}
 
 		public void GameStart(Contracts.Session.GameLevel arena, int gameId)
 		{
 			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.GameplayScreen);
 
-			var logger = new Logger(Logger.SolutionPath + "\\logs\\client_game_" + gameId + ".txt", new TimeHelper(StartTime));
+			var timeHelper = new TimeHelper(StartTime);
 
-			GameModel = new GameModel(GameFactory.CreateClientGameLevel(arena), logger);
+			var logger = new Logger(Logger.SolutionPath + "\\logs\\client_game_" + gameId + ".txt", timeHelper);
 
-			var serverGameObjects = ConnectionManager.Instance.SynchroFrame();
+			GameModel = new GameModel(GameFactory.CreateClientGameLevel(arena), timeHelper);
 
-			// todo remove
-			foreach (AGameObject gameObject in serverGameObjects)
-			{
-				var clientGameObject = GameFactory.CreateClientGameObject(gameObject);
-				GameModel.AddGameObject(clientGameObject);
-			}
-			// todo uncomment
-			// GameModel.ApplySynchroFrame(serverGameObjects);
+			GameModel.Update(new GameTime());
 
 			Trace.Listeners.Add(logger);
-
 			Trace.WriteLine("Game initialized (model created, first synchroframe applied)");
-
 			Trace.Listeners.Remove(Logger.ClientLogger);
 
 			// GameModel initialized, set boolean flag  
 			IsGameStarted = true;
-		}
-
-		#region бывший callbacks
-
-		public void GameObjectDead(AGameObject mob)
-		{
-			GameModel.RemoveGameObject(mob.Id);
-			// todo //!!
-			//GameModel.GameLevel.AddTexture(mob.Is(AGameObject.EnumObjectType.Player)
-			//                                ? Textures.DeadPlayerTexture
-			//                                : Textures.DeadSpiderTexture, TypeConverter.XnaLite2Xna(mob.Coordinates));
 		}
 
 		public void GameOver()
@@ -87,8 +77,6 @@ namespace SkyShoot.Game.Game
 			IsGameStarted = false;
 		}
 
-		#endregion
-
 		#region обработка ввода
 
 		private DateTime _dateTime;
@@ -96,10 +84,7 @@ namespace SkyShoot.Game.Game
 
 		public void HandleInput(Controller controller)
 		{
-			var player = GameModel.GetGameObject(MyId);
-
-			if (player == null)
-				return;
+			DrawableGameObject player = GameModel.GetGameObject(MyId);
 
 			// current RunVector
 			Vector2? currentRunVector = controller.RunVector;
@@ -137,16 +122,6 @@ namespace SkyShoot.Game.Game
 				MyId = id.Value;
 			}
 			return MyId;
-		}
-
-		public void Shoot(Vector2 direction)
-		{
-			ConnectionManager.Instance.Shoot(TypeConverter.Xna2XnaLite(direction));
-		}
-
-		public void Move(Vector2 direction)
-		{
-			ConnectionManager.Instance.Move(TypeConverter.Xna2XnaLite(direction));
 		}
 	}
 }

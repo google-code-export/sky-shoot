@@ -14,7 +14,7 @@ namespace SkyShoot.Contracts.SynchroFrames
 		/// в момент времени Time
 		/// </summary>
 		[DataMember]
-		private readonly AGameObject[] _gameObjects;
+		private AGameObject[] _gameObjects;
 
 		/// <summary>
 		/// Время с начала игры на сервере, к которому относится синхрокадр
@@ -47,10 +47,5 @@ namespace SkyShoot.Contracts.SynchroFrames
 		{
 			return String.Format("SynchroFrame, Time = {0}", Time);
 		}
-
-//		public AGameObject[] ExtrapolateTo(GameTime gameTime)
-//		{
-//			
-//		}
 	}
 }

@@ -2,7 +2,6 @@
 {
 	public static class Constants
 	{
-
 		#region weapons
 
 		public const float DEFAULT_BULLET_RADIUS = 5f;
@@ -146,7 +145,7 @@
 		#region  CATERPILLAR
 		public const float CATERPILLAR_SPEED = 0.06f;
 		public const float CATERPILLAR_RADIUS = 3f;
-		public const long CATERPILLAR_ChildBornInterval = 1000;
+		public const long CATERPILLAR_CHILD_BORN_INTERVAL = 100000;
 		public const float CATERPILLAR_START_HEALTH = .7f;
 		public const float CATERPILLAR_DAMAGE = 0.12f;
 		#endregion
@@ -167,6 +166,9 @@
 		public const int FPS = 1000 / 60;
 		public const float LEVELBORDER = 50;
 
+		public const int LEVEL_WIDTH = 1000;
+		public const int LEVEL_HEIGHT = 1000;
+
 		#endregion
 
 		#region bonuses
@@ -177,6 +179,12 @@
 		public const int REMEDY_MILLISECONDS = 30000; // redundant
 		public const int MIRROR_MILLISECONDS = 30000; // redundant
 		public const int SPEEDUP_MILLISECONDS = 10000;
+		#endregion
+
+		#region view
+
+		public const int HEALTH_TEXTURE_HEIGHT = 5;
+
 		#endregion
 	}
 }

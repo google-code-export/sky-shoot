@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Linq;
-using SkyShoot.Contracts.Mobs;
 using SkyShoot.Contracts.Service;
 using SkyShoot.Contracts.Session;
-using SkyShoot.Service.Mobs;
-using SkyShoot.Service.Weapon;
 using SkyShoot.XNA.Framework;
 
 namespace SkyShoot.ServProgram.Mobs
@@ -16,7 +13,7 @@ namespace SkyShoot.ServProgram.Mobs
 		private readonly float _border;
 		private readonly Random _random;
 		private float _health;
-		private int[] _allowedMobs;
+		private readonly int[] _allowedMobs;
 		private int _simpleMobsWasBorn; //чтобы разбавлять обычных мобов мощными
 
 		public DeathmatchSpiderFactory(GameLevel gameLevel)
@@ -27,7 +24,7 @@ namespace SkyShoot.ServProgram.Mobs
 			_border = Constants.LEVELBORDER;
 			_health = 10; //change to real value
 
-			_allowedMobs = new int[] 
+			_allowedMobs = new[] 
 			{ 
 				(int)MobType.Spider,
 				(int)MobType.ShootingMob,
@@ -41,7 +38,7 @@ namespace SkyShoot.ServProgram.Mobs
 
 		public override Mob CreateMob()
 		{
-			int nextMob = 0;
+			int nextMob;
 			do
 			{
 				nextMob = _random.Next(360)%_allowedMobs.Count();
