@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Nuclex.UserInterface;
 using Nuclex.UserInterface.Controls.Desktop;
@@ -15,8 +14,6 @@ namespace SkyShoot.Game.Screens
 	internal class WaitScreen : GameScreen
 	{
 		private static Texture2D _texture;
-
-		private readonly ContentManager _content;
 
 		private ListControl _playersList;
 		private ButtonControl _leaveButton;
@@ -31,7 +28,6 @@ namespace SkyShoot.Game.Screens
 			CreateControls();
 			InititalizeControls();
 
-			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 			_updateCount = 0;
 		}
 
@@ -45,8 +41,8 @@ namespace SkyShoot.Game.Screens
 
 		public override void LoadContent()
 		{
-			_texture = _content.Load<Texture2D>("Textures/screens/screen_02_fix");
-			_spriteFont = _content.Load<SpriteFont>("Times New Roman");
+			_texture = ContentManager.Load<Texture2D>("Textures/screens/screen_02_fix");
+			_spriteFont = ContentManager.Load<SpriteFont>("Times New Roman");
 
 			// вывод списка игроков
 			GameDescription[] gameDescriptions = ConnectionManager.Instance.GetGameList();
@@ -75,7 +71,7 @@ namespace SkyShoot.Game.Screens
 
 		public override void UnloadContent()
 		{
-			_content.Unload();
+			ContentManager.Unload();
 		}
 
 		public void ChangePlayerList(string[] names)
@@ -92,13 +88,15 @@ namespace SkyShoot.Game.Screens
 			SpriteBatch.Begin();
 			SpriteBatch.Draw(_texture, Vector2.Zero, Color.White);
 
-			DrawString(SpriteBatch, "Players", 20f, 25f);
-			DrawString(SpriteBatch, "Map: ", 280f, 260f);
-			DrawString(SpriteBatch, Tile, 400f, 260f);
-			DrawString(SpriteBatch, "Game Mode:", 280f, 290f);
-			DrawString(SpriteBatch, GameMode, 400f, 290f);
-			DrawString(SpriteBatch, "Max Players:", 280f, 320f);
-			DrawString(SpriteBatch, MaxPlayers, 400f, 320f);
+			SpriteFont = _spriteFont;
+
+			DrawString("Players", 20f, 25f, Color.Red);
+			DrawString("Map: ", 280f, 260f, Color.Red);
+			DrawString(Tile, 400f, 260f, Color.Red);
+			DrawString("Game Mode:", 280f, 290f, Color.Red);
+			DrawString(GameMode, 400f, 290f, Color.Red);
+			DrawString("Max Players:", 280f, 320f, Color.Red);
+			DrawString(MaxPlayers, 400f, 320f, Color.Red);
 
 			SpriteBatch.End();
 		}
@@ -155,18 +153,6 @@ namespace SkyShoot.Game.Screens
 		{
 			ConnectionManager.Instance.LeaveGame();
 			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MultiplayerScreen);
-		}
-
-		private void DrawString(SpriteBatch spriteBatch, string text, float positionX, float positionY)
-		{
-			// spriteBatch.DrawString(_spriteFont, text, new Vector2(positionX, positionY), Color.Red);
-			// spriteBatch.
-			spriteBatch.DrawString(
-				_spriteFont,
-				text,
-				new Vector2(positionX, positionY),
-				Color.Red, 0, new Vector2(0f, 0f), 0.8f, SpriteEffects.None,
-				layerDepth: 1f);
 		}
 	}
 }

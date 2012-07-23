@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,26 +15,28 @@ namespace SkyShoot.Game.Screens
 {
 	internal class GameplayScreen : GameScreen
 	{
-		private static WeaponType _weapon = WeaponType.Pistol;
-
-		private LabelControl _pistolLabel;
-		private LabelControl _shotgunLabel;
-		private LabelControl _rocketLabel;
-		private LabelControl _flameLabel;
-		private LabelControl _heaterLabel;
-		private LabelControl _turretLabel;
-		private LabelControl _mobGenerator;
+		// оружие -> описание оружия
+		private readonly IDictionary<WeaponType, string> _weapons;
 
 		private LabelControl _levelLabel;
 		private LabelControl _expLabel;
 		private LabelControl _fragLabel;
 		private LabelControl _creepsLabel;
-		private LabelControl _healthPoints;
 
 		private int _counter;
 
 		public GameplayScreen()
 		{
+			_weapons = new Dictionary<WeaponType, string>
+			           {
+			           	{WeaponType.Pistol, "Pistol"},
+			           	{WeaponType.Shotgun, "Shotgun"},
+			           	{WeaponType.FlamePistol, "Flame"},
+			           	{WeaponType.RocketPistol, "Rocket"},
+			           	{WeaponType.Heater, "Heater"},
+			           	{WeaponType.TurretMaker, "Turret"}
+			           };
+
 			CreateControls();
 			InitializeControls();
 		}
@@ -155,11 +158,32 @@ namespace SkyShoot.Game.Screens
 			graphicsDevice.Clear(Color.SkyBlue);
 
 			GameController.Instance.DrawWorld(SpriteBatch);
+
+			#region список оружия
+
+			WeaponType currentWeapon = GameController.Instance.CurrentWeapon;
+
+			const int positionX = 735;
+			int positionY = 0;
+
+			SpriteFont = ContentManager.Load<SpriteFont>("Times New Roman");
+
+			SpriteBatch.Begin();
+
+			foreach (var weapon in _weapons)
+			{
+				DrawString(weapon.Value, positionX, positionY, weapon.Key == currentWeapon ? Color.Red : Color.Black);
+				positionY += 20;
+			}
+
+			SpriteBatch.End();
+
+			#endregion
 		}
 
 		private void CreateControls()
 		{
-			#region Вывод статистики на экран
+			#region статистика
 
 			_levelLabel = new LabelControl
 							{
@@ -184,79 +208,16 @@ namespace SkyShoot.Game.Screens
 								Text = "Creeps",
 								Bounds = new UniRectangle(new UniVector(-60, 20), new UniVector(0, 0)),
 							};
-			/*_healthPoints = new LabelControl
-			{
-				Text = "Health points",
-				Bounds = new UniRectangle(new UniVector(-60, 500), new UniVector(0, 0)),
-			};*/
-
-			#endregion
-
-			#region список оружия
-
-			const int labelWidth = 210;
-			const float xLeft = 800 - labelWidth;
-			const int y = -50;
-
-			_pistolLabel = new LabelControl
-								{
-									Text = "1 - Pistol",
-									Bounds = new UniRectangle(new UniVector(xLeft, y), new UniVector(0, 0)),
-								};
-
-			_shotgunLabel = new LabelControl
-								{
-									Text = "2 - Shotgun",
-									Bounds = new UniRectangle(new UniVector(xLeft, y + 20), new UniVector(0, 0)),
-								};
-
-			_flameLabel = new LabelControl
-								{
-									Text = "3 - Flame",
-									Bounds = new UniRectangle(new UniVector(xLeft, y + 40), new UniVector(0, 0)),
-								};
-
-			_rocketLabel = new LabelControl
-								{
-									Text = "4 - Rocket",
-									Bounds = new UniRectangle(new UniVector(xLeft, y + 60), new UniVector(0, 0)),
-								};
-
-			_heaterLabel = new LabelControl
-								{
-									Text = "5 - Heater",
-									Bounds = new UniRectangle(new UniVector(xLeft, y + 80), new UniVector(0, 0)),
-								};
-
-			_turretLabel = new LabelControl
-								{
-									Text = "6 - Turret",
-									Bounds = new UniRectangle(new UniVector(xLeft, y + 100), new UniVector(0, 0)),
-								};
-			_mobGenerator = new LabelControl
-								{
-									Text = "7 - MobGenerator",
-									Bounds = new UniRectangle(new UniVector(xLeft, y + 120), new UniVector(0, 0)),
-								};
 
 			#endregion
 		}
 
 		private void InitializeControls()
 		{
-			Desktop.Children.Add(_pistolLabel);
-			Desktop.Children.Add(_shotgunLabel);
-			Desktop.Children.Add(_flameLabel);
-			Desktop.Children.Add(_rocketLabel);
-			Desktop.Children.Add(_heaterLabel);
-			Desktop.Children.Add(_turretLabel);
-			Desktop.Children.Add(_mobGenerator);
-
 			Desktop.Children.Add(_levelLabel);
 			Desktop.Children.Add(_expLabel);
 			Desktop.Children.Add(_fragLabel);
 			Desktop.Children.Add(_creepsLabel);
-//			Desktop.Children.Add(_healthPoints);
 		}
 	}
 }
