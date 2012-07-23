@@ -5,7 +5,7 @@ using SkyShoot.Contracts.Weapon;
 using SkyShoot.ServProgram.Mobs;
 using SkyShoot.XNA.Framework;
 
-namespace SkyShoot.ServProgram.Weapon
+namespace SkyShoot.Service.Weapon
 {
 	class MobGenerator : AWeapon
 	{
@@ -24,10 +24,6 @@ namespace SkyShoot.ServProgram.Weapon
 				mob.Coordinates = new Vector2(Owner.Coordinates.X + Owner.RunVector.X*Owner.Radius*1.5f,
 				                              Owner.Coordinates.Y + Owner.RunVector.Y*Owner.Radius*1.5f);
 				mob.TeamIdentity = Owner.TeamIdentity;
-				if (mob.TeamIdentity != null)
-				{
-					Owner.TeamIdentity.Members.Add(mob);
-				}
 			}
 			return mobs;
 		}

@@ -208,6 +208,7 @@ namespace SkyShoot.WinFormsClient
 			weapons.Add(WeaponType.Heater);
 			weapons.Add(WeaponType.RocketPistol);
 			weapons.Add(WeaponType.TurretMaker);
+			weapons.Add(WeaponType.MobGenerator);
 			_buttons = new WeaponButton[weapons.Count];
 			foreach (var weapon in weapons)
 			{
