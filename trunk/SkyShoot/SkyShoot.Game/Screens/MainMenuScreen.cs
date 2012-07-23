@@ -4,6 +4,8 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Nuclex.UserInterface;
 using Nuclex.UserInterface.Controls.Desktop;
+using SkyShoot.Contracts.Service;
+using SkyShoot.Game.Game;
 
 namespace SkyShoot.Game.Screens
 {
@@ -97,6 +99,29 @@ namespace SkyShoot.Game.Screens
 
 		private void LogoffMenuButtonPressed(object sender, EventArgs e)
 		{
+			AccountManagerErrorCode errorCode = GameController.Instance.Logout();
+			if (errorCode != AccountManagerErrorCode.Ok) {
+				string message;
+				switch (errorCode)
+				{
+					case AccountManagerErrorCode.UnknownExceptionOccured:
+						message = "Unknown exception occured";
+						break;
+					case AccountManagerErrorCode.UserIsAlreadyOffline:
+						message = "You is already offline";
+						break;
+					case AccountManagerErrorCode.UnknownError:
+						message = "Unknown error occured";
+						break;
+					default:
+						message = "Unexpected error code returned";
+						break;
+				}
+				MessageBox.Message = message;
+				MessageBox.Next = ScreenManager.ScreenEnum.LoginScreen;
+				ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MessageBoxScreen);
+			}
+
 			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.LoginScreen);
 		}
 	}

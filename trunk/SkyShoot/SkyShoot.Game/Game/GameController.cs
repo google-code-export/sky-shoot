@@ -145,5 +145,9 @@ namespace SkyShoot.Game.Game
 			}
 			return MyId;
 		}
+
+		public AccountManagerErrorCode Logout() {
+			return ConnectionManager.Instance.Logout();
+		}
 	}
 }

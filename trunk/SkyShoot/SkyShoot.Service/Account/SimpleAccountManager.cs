@@ -12,11 +12,27 @@ namespace SkyShoot.ServProgram.Account
 		private const string FILE_NAME = "./accounts";
 		private IDictionary<string, AccountInfo> _accounts;
 
-		private static readonly SimpleAccountManager LocalInstance = new SimpleAccountManager();
+		private static SimpleAccountManager LocalInstance = null;
+		private HashSet<string> _usersOnline;
+		private static Object _lock = new Object();
+
+		protected SimpleAccountManager() {
+			_usersOnline = new HashSet<string>();
+		}
 
 		public static SimpleAccountManager Instance
 		{
-			get { return LocalInstance; }
+			get
+			{
+				if (LocalInstance == null) {
+					lock (_lock)
+					{
+						if (LocalInstance == null)
+							LocalInstance = new SimpleAccountManager();
+					}
+				}
+				return LocalInstance;
+			}
 		}
 
 		private void ReadAccounts()
@@ -42,11 +58,11 @@ namespace SkyShoot.ServProgram.Account
 			outputStream.Close();
 		}
 
-		public AccountManagerErrorCode Register(string username, string password/*,  string email*/)
+		public AccountManagerErrorCode Register(string username, string password)
 		{
 			try
 			{
-				LocalInstance.ReadAccounts();
+				ReadAccounts();
 				if (_accounts.ContainsKey(username))
 				{
 					return AccountManagerErrorCode.UsernameTaken;
@@ -59,7 +75,7 @@ namespace SkyShoot.ServProgram.Account
 									 Info = "--"
 								 };
 				_accounts.Add(username, newAccount);
-				LocalInstance.WriteAccounts();
+				WriteAccounts();
 			}
 			catch (Exception)
 			{
@@ -72,12 +88,18 @@ namespace SkyShoot.ServProgram.Account
 		{
 			try
 			{
-				LocalInstance.ReadAccounts();
+				ReadAccounts();
 				AccountInfo account;
 				if (!_accounts.TryGetValue(username, out account) || !account.Password.Equals(password))
 				{
 					return AccountManagerErrorCode.InvalidUsernameOrPassword;
 				}
+				if (_usersOnline.Contains(username))
+				{
+					return AccountManagerErrorCode.UserIsAlreadyOnline;
+				}
+				WriteAccounts();
+				_usersOnline.Add(username);
 			}
 			catch (Exception)
 			{
@@ -86,18 +108,40 @@ namespace SkyShoot.ServProgram.Account
 			return AccountManagerErrorCode.Ok;
 		}
 
+		public AccountManagerErrorCode Logout(string username)
+		{
+			try
+			{
+				ReadAccounts();
+				AccountInfo account;
+				if (!_accounts.TryGetValue(username, out account))
+				{
+					return AccountManagerErrorCode.InvalidUsernameOrPassword;
+				}
+				if (!_usersOnline.Contains(username)) {
+					return AccountManagerErrorCode.UserIsAlreadyOffline;
+				}
+				_usersOnline.Remove(username);
+				WriteAccounts();
+			}
+			catch (Exception)
+			{
+				return AccountManagerErrorCode.UnknownExceptionOccured;
+			}
+			return AccountManagerErrorCode.Ok;
+		}
 		public AccountManagerErrorCode DeleteAccount(string username, string password)
 		{
 			try
 			{
-				LocalInstance.ReadAccounts();
+				ReadAccounts();
 				AccountInfo account;
 				if (!_accounts.TryGetValue(username, out account) || !account.Password.Equals(password))
 				{
 					return AccountManagerErrorCode.InvalidUsernameOrPassword;
 				}
 				_accounts.Remove(username);
-				LocalInstance.WriteAccounts();
+				WriteAccounts();
 			}
 			catch (Exception)
 			{
