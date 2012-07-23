@@ -77,7 +77,7 @@
 		#region poisonGun
 
 		public const float POISON_BULLET_SPEED = 0.1f;
-		public const float POISON_BULLET_DAMAGE = 10f;
+		public const float POISON_BULLET_DAMAGE = 1f;
 		public const float POISON_BULLET_LIFE_DISTANCE = 3000f;
 		public const int POISON_GUN_ATTACK_RATE = 3000;
 		public const float POISON_BULLET_RADIUS = 4f;

@@ -23,7 +23,6 @@ namespace SkyShoot.ServProgram.Mobs
 			_shootingDelay = Constants.POISONTICK_ATTACK_RATE;
 			Damage = Constants.POISONTICK_DAMAGE;
 			TeamIdentity = null;
-			_afflicted = afflicted;
 			Coordinates.X = -100;
 			Coordinates.Y = -100;
 		}
