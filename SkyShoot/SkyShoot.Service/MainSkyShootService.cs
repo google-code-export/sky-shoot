@@ -33,6 +33,8 @@ namespace SkyShoot.Service
 
 		private float _speed;
 
+		private readonly InstanceContext channelContext;
+
 		private readonly Queue<AGameEvent> _filteredEvents = new Queue<AGameEvent>();
 
 		private readonly IAccountManager _accountManager = SimpleAccountManager.Instance;
@@ -72,6 +74,9 @@ namespace SkyShoot.Service
 		public MainSkyShootService()
 			: base(new Vector2(0, 0), Guid.NewGuid())
 		{
+			channelContext = OperationContext.Current.InstanceContext;
+			channelContext.Faulted += OnChannelStopped;
+			channelContext.Closed += OnChannelStopped;
 			ObjectType = EnumObjectType.Player;
 			NewEvents = new Queue<AGameEvent>();
 			_localID = _globalID;
@@ -79,6 +84,13 @@ namespace SkyShoot.Service
 			Bonuses = new List<AGameBonus>();
 
 			InitWeapons();
+		}
+
+		void OnChannelStopped(object sender, EventArgs e)
+		{
+			channelContext.Faulted -= OnChannelStopped;
+			channelContext.Closed -= OnChannelStopped;
+			// all the trolology of closing the session on a high level
 		}
 
 		#region private methods
@@ -380,7 +392,7 @@ namespace SkyShoot.Service
 		}
 
 		public override IEnumerable<AGameEvent> Think(List<AGameObject> players, List<AGameObject> newGameObjects,
-													  long time)
+														long time)
 		{
 			// empty list
 			var res = base.Think(players, newGameObjects, time);
