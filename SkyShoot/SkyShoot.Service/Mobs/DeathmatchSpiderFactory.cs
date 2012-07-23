@@ -72,26 +72,7 @@ namespace SkyShoot.ServProgram.Mobs
 		/// </summary>
 		protected override Vector2 GetRandomCoord()
 		{
-			int x;
-			int y;
-			if (_random.Next(2) == 0) // длина
-			{
-				x = _random.Next(0, (int)(_width + _border * 2));
-
-				y = _random.Next(2) == 0
-						? _random.Next(0, (int)_border)
-						: _random.Next((int)(_height + _border), (int)(_height + _border * 2));
-			}
-			else // высота
-			{
-				y = _random.Next(0, (int)(_height + _border * 2));
-
-				x = _random.Next(2) == 0
-						? _random.Next(0, (int)_border)
-						: _random.Next((int)(_width + _border), (int)(_width + _border * 2));
-			}
-
-			return new Vector2(x, y);
+			return new Vector2(500 + _random.Next(-150, 150), 500 + _random.Next(-150, 150));//Чтобы игроки бегали по периферии, а не устраивали арену в центре.
 		}
 	}
 }
