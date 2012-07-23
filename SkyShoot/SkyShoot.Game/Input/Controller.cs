@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Nuclex.Input;
 using Nuclex.UserInterface.Controls;
+using Nuclex.UserInterface.Controls.Desktop;
+using SkyShoot.Game.Game;
 using SkyShoot.Game.Screens;
 
 namespace SkyShoot.Game.Input
@@ -56,6 +59,11 @@ namespace SkyShoot.Game.Input
 
 		public abstract void Update();
 
+		private void OnButtonPressed(object sender, EventArgs args)
+		{
+			SoundManager.Instance.SoundPlay(SoundManager.SoundEnum.Click);
+		}
+
 		public virtual void AddListener(Control control, EventHandler eventHandler)
 		{
 			List<EventHandler> currentListeners;
@@ -67,6 +75,9 @@ namespace SkyShoot.Game.Input
 			}
 
 			currentListeners.Add(eventHandler);
+
+			Debug.Assert(control is ButtonControl);
+			(control as ButtonControl).Pressed += OnButtonPressed;
 		}
 
 		public virtual void RemoveListener(Control control, EventHandler eventHandler)

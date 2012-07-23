@@ -30,7 +30,6 @@ namespace SkyShoot.Game.Game
 		}
 
 		public static Dictionary<SoundEnum, Cue> Sounds = new Dictionary<SoundEnum, Cue>();
-		//public static Cue[] sounds = new Cue [CueAmount];
 
 		public static SoundManager Instance
 		{
@@ -63,21 +62,6 @@ namespace SkyShoot.Game.Game
 			Sounds.Add(SoundEnum.Snow, _soundBank.GetCue("wind01b"));
 			Sounds.Add(SoundEnum.Spider, _soundBank.GetCue("angry"));
 		}
-
-		/*private void RenewSound(SoundEnum sound)
-		{
-			sounds[SoundEnum.Click] = _soundBank.GetCue("RICOCHET");
-			sounds[SoundEnum.Desert] = _soundBank.GetCue("wind03");
-			sounds[SoundEnum.Grass] = _soundBank.GetCue("cricket00");
-			sounds[SoundEnum.Gunshot] = _soundBank.GetCue("GUNSHOT");
-			sounds[SoundEnum.Laser] = _soundBank.GetCue("LASER");
-			sounds[SoundEnum.Lava] = _soundBank.GetCue("lava_burn1");
-			sounds[SoundEnum.Lava2] = _soundBank.GetCue("lava");
-			sounds[SoundEnum.MainTheme] = _soundBank.GetCue("STARWARS");
-			sounds[SoundEnum.Sand] = _soundBank.GetCue("wind03");
-			sounds[SoundEnum.Snow] = _soundBank.GetCue("wind01b");
-			sounds[SoundEnum.Spider] = _soundBank.GetCue("angry");
-		}*/
 
 		public void SoundPlay(SoundEnum sound)
 		{

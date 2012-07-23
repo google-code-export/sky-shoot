@@ -10,7 +10,6 @@ namespace SkyShoot.Game.Screens
 {
 	internal class MessageBox : GameScreen
 	{
-		private readonly SoundManager _soundManager;
 		private readonly ContentManager _content;
 
 		private Texture2D _texture;
@@ -22,7 +21,6 @@ namespace SkyShoot.Game.Screens
 			CreateControls();
 			InitializeControls();
 
-			_soundManager = SoundManager.Instance;
 			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 		}
 
@@ -42,8 +40,6 @@ namespace SkyShoot.Game.Screens
 
 		public void OkButtonPressed(object sender, EventArgs e)
 		{
-			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);
-
 			ScreenManager.Instance.SetActiveScreen(Next); // = Next;
 		}
 

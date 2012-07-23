@@ -16,7 +16,6 @@ namespace SkyShoot.Game.Screens
 		private static Texture2D _texture;
 
 		private readonly ContentManager _content;
-		private readonly SoundManager _soundManager;
 
 		private LabelControl _loginLabel;
 		private LabelControl _passwordLabel;
@@ -35,7 +34,6 @@ namespace SkyShoot.Game.Screens
 			CreateControls();
 			InitializeControls();
 
-			_soundManager = SoundManager.Instance;
 			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 		}
 
@@ -128,15 +126,11 @@ namespace SkyShoot.Game.Screens
 
 		private void ExitButtonPressed(object sender, EventArgs args)
 		{
-			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);
-
 			ScreenManager.Instance.Game.Exit();
 		}
 
 		private void LoginButtonPressed(object sender, EventArgs args)
 		{
-			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);
-
 			if (_loginBox.Text.Length < 3)
 			{
 				MessageBox.Message = "Username is too short!\nPress Ok to continue";
@@ -189,8 +183,6 @@ namespace SkyShoot.Game.Screens
 
 		private void NewAccountButtonPressed(object sender, EventArgs args)
 		{
-			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);
-
 			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.NewAccountScreen);
 		}
 	}
