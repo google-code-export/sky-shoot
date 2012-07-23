@@ -31,7 +31,8 @@ namespace SkyShoot.ServProgram.Mobs
 				(int)MobType.ParentMob,
 				(int)MobType.Hydra,
 				(int)MobType.Poisoner,
-				(int)MobType.SpiderWithSimpleMind
+				(int)MobType.SpiderWithSimpleMind,
+				(int)MobType.Caterpillar
 			};
 			_simpleMobsWasBorn = 0;
 		}

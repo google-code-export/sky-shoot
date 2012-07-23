@@ -15,7 +15,8 @@ namespace SkyShoot.ServProgram.Mobs
 		ParentMob = 2,
 		Hydra = 3,
 		Poisoner = 4,
-		SpiderWithSimpleMind = 5
+		SpiderWithSimpleMind = 5,
+		Caterpillar = 6
 	};
 
 	public class SpiderFactory : IMobFactory
