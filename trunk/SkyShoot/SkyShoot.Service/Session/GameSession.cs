@@ -22,30 +22,30 @@ namespace SkyShoot.Service.Session
 	{
 		#region private fields
 
-		private readonly List<AGameObject> _gameObjects;
-		private readonly List<AGameObject> _newObjects;
+		protected readonly List<AGameObject> _gameObjects;
+		protected readonly List<AGameObject> _newObjects;
 
-		private readonly SpiderFactory _spiderFactory;
-		private readonly BonusFactory _bonusFactory;
-		private readonly WallFactory _wallFactory;
+		protected readonly SpiderFactory _spiderFactory;
+		protected readonly BonusFactory _bonusFactory;
+		protected readonly WallFactory _wallFactory;
 
-		private readonly TeamsList _sessionTeamsList = new TeamsList();
+		protected readonly TeamsList _sessionTeamsList = new TeamsList();
 
-		private long _timerCounter;
-		private long _intervalToSpawn;
+		protected long _timerCounter;
+		protected long _intervalToSpawn;
 
-		private long _lastUpdate;
-		private long _updateDelay;
+		protected long _lastUpdate;
+		protected long _updateDelay;
 
-		private Timer _gameTimer;
-		private object _updating;
+		protected Timer _gameTimer;
+		protected object _updating;
 
-		private TimeHelper _timeHelper;
+		protected TimeHelper _timeHelper;
 
 		#endregion
 
 		public GameDescription LocalGameDescription { get; private set; }
-		public bool IsStarted { get; private set; }
+		public bool IsStarted { get; protected set; }
 		public GameLevel GameLevel { get; private set; }
 
 		public GameSession(TileSet tileSet, int maxPlayersAllowed,
@@ -81,7 +81,7 @@ namespace SkyShoot.Service.Session
 
 		#region private methods
 
-		private void Start()
+		public virtual void Start()
 		{
 			#region инициализация объектов
 
@@ -140,12 +140,12 @@ namespace SkyShoot.Service.Session
 			IsStarted = true;
 		}
 
-		private void SomebodyChangedWeapon(AGameObject sender, Contracts.Weapon.WeaponType type)
+		protected void SomebodyChangedWeapon(AGameObject sender, Contracts.Weapon.WeaponType type)
 		{
 			sender.ChangeWaponTo(type);
 		}
 
-		private void SomebodyMoved(AGameObject sender, Vector2 direction)
+		protected void SomebodyMoved(AGameObject sender, Vector2 direction)
 		{
 			sender.RunVector = direction;
 			lock (_gameObjects)
@@ -154,7 +154,7 @@ namespace SkyShoot.Service.Session
 			}
 		}
 
-		private void SomebodyShot(AGameObject sender, Vector2 direction)
+		protected void SomebodyShot(AGameObject sender, Vector2 direction)
 		{
 			sender.ShootVector = direction;
 			sender.ShootVector.Normalize();
@@ -184,13 +184,13 @@ namespace SkyShoot.Service.Session
 			}
 		}
 
-		private IEnumerable<AGameEvent> NewBonusDropped(AGameObject bonus, long time)
+		protected IEnumerable<AGameEvent> NewBonusDropped(AGameObject bonus, long time)
 		{
 			_newObjects.Add(bonus);
 			return new[] { new NewObjectEvent(bonus, time) };
 		}
 
-		private void PushEvent(AGameEvent gameEvent)
+		protected void PushEvent(AGameEvent gameEvent)
 		{
 			foreach (var playerConverted in _gameObjects.Where(player => player.Is(AGameObject.EnumObjectType.Player)).OfType<MainSkyShootService>())
 			{
@@ -201,7 +201,7 @@ namespace SkyShoot.Service.Session
 			}
 		}
 
-		private void TimerElapsedListener(object sender, EventArgs e)
+		protected void TimerElapsedListener(object sender, EventArgs e)
 		{
 			Update();
 		}
@@ -209,7 +209,7 @@ namespace SkyShoot.Service.Session
 		/// <summary>
 		/// здесь будут производится обработка всех действий
 		/// </summary>
-		private void Update()
+		public virtual void Update()
 		{
 			if (!System.Threading.Monitor.TryEnter(_updating)) return;
 
@@ -323,7 +323,7 @@ namespace SkyShoot.Service.Session
 			System.Threading.Monitor.Exit(_updating);
 		}
 
-		private IEnumerable<AGameEvent> SpawnMob(long time)
+		protected IEnumerable<AGameEvent> SpawnMob(long time)
 		{
 			var events = new List<AGameEvent>();
 #if false
@@ -351,7 +351,7 @@ namespace SkyShoot.Service.Session
 			return events;
 		}
 
-		private IEnumerable<AGameEvent> MobDead(AGameObject mob, long time)
+		protected IEnumerable<AGameEvent> MobDead(AGameObject mob, long time)
 		{
 			var events = new List<AGameEvent>();
 			//SomebodyDied(mob);
@@ -373,7 +373,7 @@ namespace SkyShoot.Service.Session
 			return events;
 		}
 
-		private void PlayerDead(MainSkyShootService player)
+		protected void PlayerDead(MainSkyShootService player)
 		{
 			if (player == null)
 			{
@@ -407,7 +407,7 @@ namespace SkyShoot.Service.Session
 			Trace.WriteLine(player.Name + " leaved game");
 		}
 
-		public void Stop()
+		public virtual void Stop()
 		{
 			if (_gameTimer != null)
 			{

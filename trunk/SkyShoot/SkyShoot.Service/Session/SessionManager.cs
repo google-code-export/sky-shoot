@@ -49,7 +49,16 @@ namespace SkyShoot.Service.Session
 		/// </summary>
 		public GameDescription CreateGame(GameMode mode, int maxPlayers, MainSkyShootService client, TileSet tileSet, int teams)
 		{
-			var gameSession = new GameSession(tileSet, maxPlayers, mode, _gameId, teams);
+			GameSession gameSession;
+
+			if (mode == GameMode.Coop)
+			{
+				gameSession = new CoopSession(tileSet, maxPlayers, mode, _gameId, teams);
+			}
+			else
+			{
+				gameSession = new GameSession(tileSet, maxPlayers, mode, _gameId, teams);//Пока сессии специально для дефматча нет.
+			}
 			_gameSessions.Add(gameSession);
 			SessionTable.Add(client.Id, gameSession);
 			_gameId++;
