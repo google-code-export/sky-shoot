@@ -124,6 +124,7 @@
     <Compile Include="Mobs\DefaultSpiderFactory.cs" />
     <Compile Include="Mobs\SpiderFactory.cs" />
     <Compile Include="Session\CoopSession.cs" />
+    <Compile Include="Session\DeathmatchSession.cs" />
     <Compile Include="Statistics\ExponentialExpTracker.cs" />
     <Compile Include="Statistics\ExpTracker.cs" />
     <Compile Include="Statistics\LinearExpTracker.cs" />

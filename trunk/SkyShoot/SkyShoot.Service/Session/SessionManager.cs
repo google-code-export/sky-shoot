@@ -53,11 +53,15 @@ namespace SkyShoot.Service.Session
 
 			if (mode == GameMode.Coop)
 			{
-				gameSession = new CoopSession(tileSet, maxPlayers, mode, _gameId, teams);
+			    gameSession = new CoopSession(tileSet, maxPlayers, mode, _gameId, teams);
+			}
+			else if (mode == GameMode.Deathmatch)
+			{
+				gameSession = new DeathmatchSession(tileSet, maxPlayers, mode, _gameId, teams);
 			}
 			else
 			{
-				gameSession = new GameSession(tileSet, maxPlayers, mode, _gameId, teams);//Пока сессии специально для дефматча нет.
+				gameSession = new GameSession(tileSet, maxPlayers, mode, _gameId, teams);
 			}
 			_gameSessions.Add(gameSession);
 			SessionTable.Add(client.Id, gameSession);
