@@ -16,7 +16,6 @@ namespace SkyShoot.Game.Screens
 		private static short _curs = 1;
 		private static Texture2D _texture;
 
-		private readonly SoundManager _soundManager;
 		private readonly ContentManager _content;
 
 		private ListControl _keyboardList;
@@ -46,7 +45,6 @@ namespace SkyShoot.Game.Screens
 			CreateControls();
 			InitializeControls();
 
-			_soundManager = SoundManager.Instance;
 			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 		}
 
@@ -237,8 +235,6 @@ namespace SkyShoot.Game.Screens
 
 		private void ArrowButtonPressed(object sender, EventArgs e)
 		{
-			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);
-
 			_curs = 1;
 			Settings.Default.Cursor = _curs;
 			Settings.Default.Save();
@@ -246,8 +242,6 @@ namespace SkyShoot.Game.Screens
 
 		private void PlusButtonPressed(object sender, EventArgs e)
 		{
-			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);
-
 			_curs = 2;
 			Settings.Default.Cursor = _curs;
 			Settings.Default.Save();
@@ -255,8 +249,6 @@ namespace SkyShoot.Game.Screens
 
 		private void CrossButtonPressed(object sender, EventArgs e)
 		{
-			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);
-
 			_curs = 3;
 			Settings.Default.Cursor = _curs;
 			Settings.Default.Save();
@@ -264,8 +256,6 @@ namespace SkyShoot.Game.Screens
 
 		private void TargetButtonPressed(object sender, EventArgs e)
 		{
-			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);
-
 			_curs = 4;
 			Settings.Default.Cursor = _curs;
 			Settings.Default.Save();
@@ -279,8 +269,6 @@ namespace SkyShoot.Game.Screens
 
 		private void BackButtonPressed(object sender, EventArgs e)
 		{
-			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);
-
 			ScreenManager.Instance.SetActiveScreen(GameController.Instance.IsGameStarted
 													? ScreenManager.ScreenEnum.GameplayScreen
 													: ScreenManager.ScreenEnum.MainMenuScreen);
@@ -288,8 +276,6 @@ namespace SkyShoot.Game.Screens
 
 		private void UpButtonPressed(object sender, EventArgs e)
 		{
-			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);
-
 			Settings.Default.Volume = MathHelper.Clamp(Settings.Default.Volume + 0.05f, 0.0f, 1.0f);
 			Settings.Default.Save();
 			//musicCategory.SetVolume(Settings.Default.Volume);
@@ -298,8 +284,6 @@ namespace SkyShoot.Game.Screens
 
 		private void DownButtonPressed(object sender, EventArgs e)
 		{
-			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);
-
 			Settings.Default.Volume = MathHelper.Clamp(Settings.Default.Volume - 0.05f, 0.0f, 1.0f);
 			Settings.Default.Save();
 			//musicCategory.SetVolume(Settings.Default.Volume);
@@ -308,8 +292,6 @@ namespace SkyShoot.Game.Screens
 
 		private void FullScreenSelected(object sender, EventArgs e)
 		{
-			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);
-
 			Settings.Default.FullScreenSelected = _fullscreenButton.Selected;
 			Settings.Default.Save();
 		}

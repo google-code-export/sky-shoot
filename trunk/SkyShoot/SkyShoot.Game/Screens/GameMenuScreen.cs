@@ -13,7 +13,6 @@ namespace SkyShoot.Game.Screens
 	{
 		private static Texture2D _texture;
 
-		private readonly SoundManager _soundManager;
 		private readonly ContentManager _content;
 
 		private SpriteBatch _spriteBatch;
@@ -26,7 +25,6 @@ namespace SkyShoot.Game.Screens
 			CreateControls();
 			InitializeControls();
 
-			_soundManager = SoundManager.Instance;
 			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 		}
 
@@ -98,22 +96,16 @@ namespace SkyShoot.Game.Screens
 
 		private void ContinueButtonPressed(object sender, EventArgs e)
 		{
-			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);
-
 			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.GameplayScreen);
 		}
 
 		private void OptionsButtonPressed(object sender, EventArgs e)
 		{
-			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);
-
 			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.OptionsMenuScreen);
 		}
 
 		private void ExitButtonPressed(object sender, EventArgs e)
 		{
-			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);
-
 			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.LoginScreen);
 			ConnectionManager.Instance.LeaveGame();
 		}

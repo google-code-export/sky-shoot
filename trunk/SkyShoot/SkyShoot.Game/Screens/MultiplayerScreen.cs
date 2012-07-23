@@ -17,7 +17,6 @@ namespace SkyShoot.Game.Screens
 		private static Texture2D _texture;
 
 		private readonly ContentManager _content;
-		private readonly SoundManager _soundManager;
 
 		private LabelControl _mapLabel;
 
@@ -37,7 +36,6 @@ namespace SkyShoot.Game.Screens
 			CreateControls();
 			InititalizeControls();
 
-			_soundManager = SoundManager.Instance;
 			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 		}
 
@@ -145,15 +143,11 @@ namespace SkyShoot.Game.Screens
 
 		private void BackButtonPressed(object sender, EventArgs args)
 		{
-			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);
-
 			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MainMenuScreen);
 		}
 
 		private void JoinGameButtonPressed(object sender, EventArgs args)
 		{
-			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);
-
 			_tempGameList = ConnectionManager.Instance.GetGameList();
 
 			if (_tempGameList == null)
@@ -179,15 +173,11 @@ namespace SkyShoot.Game.Screens
 
 		private void CreateGameButtonPressed(object sender, EventArgs args)
 		{
-			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);
-
 			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.CreateGameScreen);
 		}
 
 		private void RefreshButtonPressed(object sender, EventArgs args)
 		{
-			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);
-
 			_gameList.Items.Clear();
 			_tempGameList = ConnectionManager.Instance.GetGameList();
 

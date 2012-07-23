@@ -15,7 +15,6 @@ namespace SkyShoot.Game.Screens
 	{
 		private static Texture2D _texture;
 
-		private readonly SoundManager _soundManager;
 		private readonly ContentManager _content;
 
 		private ListControl _maxPlayersList;
@@ -39,7 +38,6 @@ namespace SkyShoot.Game.Screens
 			CreateControls();
 			InitializeControls();
 
-			_soundManager = SoundManager.Instance;
 			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 		}
 
@@ -215,14 +213,11 @@ namespace SkyShoot.Game.Screens
 
 		private void BackButtonPressed(object sender, EventArgs args)
 		{
-			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);
 			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MultiplayerScreen);
 		}
 
 		private void CreateButtonPressed(object sender, EventArgs args)
 		{
-			_soundManager.SoundPlay(SoundManager.SoundEnum.Click);
-
 			GameMode m;
 			TileSet ts;
 			switch (_gameMode.Text)
