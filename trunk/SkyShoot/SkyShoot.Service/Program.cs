@@ -25,8 +25,16 @@ namespace SkyShoot.ServProgram
 
 				var host = new ServiceHost(typeof(MainSkyShootService), new Uri("net.tcp://localhost:555"));
 
-				host.AddServiceEndpoint(typeof(ISkyShootService), new NetTcpBinding(SecurityMode.None), "SkyShootService");
-
+				host.AddServiceEndpoint(typeof(ISkyShootService), new NetTcpBinding(SecurityMode.None
+	{
+						ReceiveTimeout = new TimeSpan(0,0,0,10),
+																															CloseTimeout = new TimeSpan(0,0,0,10),
+																															OpenTimeout = new TimeSpan(0, 0, 0,10),
+																															SendTimeout = new TimeSpan(0, 0, 0, 10),
+					}, "SkyShootService");
+				host.CloseTimeout = new TimeSpan(0, 0, 0, 10);
+				host.Closed += new EventHandler(host_Closed);
+				host.Faulted += new EventHandler(host_Faulted);
 				var metadataBehavior =
 						host.Description.Behaviors.Find<ServiceMetadataBehavior>();
 				if (metadataBehavior == null)
@@ -49,6 +57,16 @@ namespace SkyShoot.ServProgram
 				Trace.WriteLine("Server crashed: " + exc);
 				throw;
 			}
+		}
+
+		static void host_Faulted(object sender, EventArgs e)
+		{
+
+		}
+
+		static void host_Closed(object sender, EventArgs e)
+		{
+
 		}
 	}
 }
