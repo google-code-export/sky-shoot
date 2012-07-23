@@ -139,7 +139,7 @@
 		public const float HYDRA_SPEED = 0.03f;
 		public const int HYDRA_RADIUS_MIN = 15;
 		public const int HYDRA_RADIUS_MAX = 20;
-		public const float POISONER_MOB_SPEED = PLAYER_DEFAULT_SPEED * 3;
+		public const float POISONER_MOB_SPEED = 0.07f;
 		public const float POISONER_MOB_HEALTH = 100f;
 
 		#region  CATERPILLAR
@@ -151,10 +151,10 @@
 		#endregion
 
 		#region poisoning
-		public const float POISONTICK_DAMAGE = 7f;
+		public const float POISONTICK_DAMAGE = 3f;
 		public const int POISONTICK_ATTACK_RATE = 2000;
-		public const float POISONING_TICK_TIMES = 4f; //Сколько раз потравит
-		public const float POISONING_MOB_SPEED = 0.12f; //Чтобы догонял даже при ускорении.
+		public const float POISONING_TICK_TIMES = 5f; //Сколько раз потравит
+		public const float POISONING_MOB_SPEED = PLAYER_DEFAULT_SPEED * 3.0f; //Не нужна ему скорость
 		#endregion
 
 
