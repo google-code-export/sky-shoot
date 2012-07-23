@@ -22,6 +22,7 @@ namespace SkyShoot.Game.Screens
 		private LabelControl _flameLabel;
 		private LabelControl _heaterLabel;
 		private LabelControl _turretLabel;
+		private LabelControl _mobGenerator;
 
 		private LabelControl _levelLabel;
 		private LabelControl _expLabel;
@@ -193,7 +194,7 @@ namespace SkyShoot.Game.Screens
 
 			#region список оружия
 
-			const int labelWidth = 160;
+			const int labelWidth = 210;
 			const float xLeft = 800 - labelWidth;
 			const int y = -50;
 
@@ -210,10 +211,10 @@ namespace SkyShoot.Game.Screens
 								};
 
 			_flameLabel = new LabelControl
-							{
-								Text = "3 - Flame",
-								Bounds = new UniRectangle(new UniVector(xLeft, y + 40), new UniVector(0, 0)),
-							};
+								{
+									Text = "3 - Flame",
+									Bounds = new UniRectangle(new UniVector(xLeft, y + 40), new UniVector(0, 0)),
+								};
 
 			_rocketLabel = new LabelControl
 								{
@@ -232,6 +233,11 @@ namespace SkyShoot.Game.Screens
 									Text = "6 - Turret",
 									Bounds = new UniRectangle(new UniVector(xLeft, y + 100), new UniVector(0, 0)),
 								};
+			_mobGenerator = new LabelControl
+								{
+									Text = "7 - MobGenerator",
+									Bounds = new UniRectangle(new UniVector(xLeft, y + 120), new UniVector(0, 0)),
+								};
 
 			#endregion
 		}
@@ -244,6 +250,7 @@ namespace SkyShoot.Game.Screens
 			Desktop.Children.Add(_rocketLabel);
 			Desktop.Children.Add(_heaterLabel);
 			Desktop.Children.Add(_turretLabel);
+			Desktop.Children.Add(_mobGenerator);
 
 			Desktop.Children.Add(_levelLabel);
 			Desktop.Children.Add(_expLabel);

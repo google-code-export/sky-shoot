@@ -92,7 +92,7 @@ namespace SkyShoot.ServProgram.Mobs
 			//  return;
 
 			// ничего не кусаем окромя игроков злобных
-			if (Wait < 1 && (obj.Is(EnumObjectType.Player) || obj.Is(EnumObjectType.Turret)) && (obj != null)) //Кусать игроков и турели
+			if (Wait < 1 && TeamIdentity != obj.TeamIdentity && obj != null && obj.Is(EnumObjectType.LivingObject)) //Кусать игроков и турели
 			{
 				if (obj.Is(EnumObjectType.Player))
 				{
@@ -100,11 +100,28 @@ namespace SkyShoot.ServProgram.Mobs
 					var shield = player.GetBonus(EnumObjectType.Shield);
 					var damage = shield == null ? 1f : shield.DamageFactor;
 					obj.HealthAmount -= damage * Damage;
-					
+					if (TeamIdentity != null)
+					{
+						int teamMembers = TeamIdentity.Members.Count;
+						foreach (AGameObject member in TeamIdentity.Members)
+						{
+							var _player = member as MainSkyShootService;
+							if (_player != null) _player.Tracker.AddExpTeam(_player, obj, (int)(damage * Damage), teamMembers);
+						}
+					}
 				}
 				else
 				{
 					obj.HealthAmount -= Damage;
+					if (TeamIdentity != null)
+					{
+						int teamMembers = TeamIdentity.Members.Count;
+						foreach (AGameObject member in TeamIdentity.Members)
+						{
+							var _player = member as MainSkyShootService;
+							if (_player != null) _player.Tracker.AddExpTeam(_player, obj, (int)(Damage), teamMembers);
+						}
+					}
 				}
 				Stop();
 				return new AGameEvent[]

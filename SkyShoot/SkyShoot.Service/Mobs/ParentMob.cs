@@ -4,7 +4,8 @@ using System.Linq;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.GameObject;
 using SkyShoot.Contracts.Service;
-using SkyShoot.ServProgram.Weapon;
+using SkyShoot.Contracts.Weapon;
+using SkyShoot.Service.Weapon;
 
 namespace SkyShoot.ServProgram.Mobs
 {

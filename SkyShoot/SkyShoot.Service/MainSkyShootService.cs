@@ -113,6 +113,7 @@ namespace SkyShoot.Service
 			Weapons.Add(WeaponType.Heater, new Weapon.Heater(Guid.NewGuid(), this));
 			Weapons.Add(WeaponType.FlamePistol, new Weapon.FlamePistol(Guid.NewGuid(), this));
 			Weapons.Add(WeaponType.TurretMaker, new Weapon.TurretMaker(Guid.NewGuid(), this));
+			Weapons.Add(WeaponType.MobGenerator, new Weapon.MobGenerator(Guid.NewGuid(), this));
 
 			ChangeWaponTo(WeaponType.Pistol);
 		}

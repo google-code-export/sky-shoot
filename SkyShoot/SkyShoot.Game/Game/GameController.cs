@@ -115,6 +115,7 @@ namespace SkyShoot.Game.Game
 				if (keyboardAndMouse.IsNewKeyPressed(Keys.D4)) ConnectionManager.Instance.ChangeWeapon(WeaponType.RocketPistol);
 				if (keyboardAndMouse.IsNewKeyPressed(Keys.D5)) ConnectionManager.Instance.ChangeWeapon(WeaponType.Heater);
 				if (keyboardAndMouse.IsNewKeyPressed(Keys.D6)) ConnectionManager.Instance.ChangeWeapon(WeaponType.TurretMaker);
+				if (keyboardAndMouse.IsNewKeyPressed(Keys.D7)) ConnectionManager.Instance.ChangeWeapon(WeaponType.MobGenerator);
 			}
 
 			Vector2 mouseCoordinates = controller.SightPosition;
