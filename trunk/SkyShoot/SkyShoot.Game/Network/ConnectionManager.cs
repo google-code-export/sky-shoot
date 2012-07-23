@@ -105,13 +105,13 @@ namespace SkyShoot.Game.Network
 
 		private void InitializeThreadAndTimers()
 		{
+			_lastClientGameEvents = new Queue<AGameEvent>();
+
 			_thread = new Thread(Run)
 			{
 				Name = "ConnectionManager"
 			};
 			_thread.Start();
-
-			_lastClientGameEvents = new Queue<AGameEvent>();
 
 			_eventTimer.Elapsed += (sender, args) =>
 			{
