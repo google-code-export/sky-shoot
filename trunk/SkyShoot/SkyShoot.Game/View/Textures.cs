@@ -76,6 +76,7 @@ namespace SkyShoot.Game.View
 		public static Texture2D PlayerTexture;
 		public static Texture2D[] MobTextures = new Texture2D[MOBS_AMOUNT];
 		public static Texture2D Poisoner;
+		//public static Texture2D Poisoning;
 		public static Texture2D Hydra;
 		public static Texture2D ParentMob;
 		public static Texture2D Caterpillar;
