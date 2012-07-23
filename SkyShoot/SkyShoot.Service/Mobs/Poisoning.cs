@@ -8,8 +8,9 @@ namespace SkyShoot.ServProgram.Mobs
 {
 	class Poisoning : Mob
 	{
-		private readonly int _shootingDelay = 1000;
+		private readonly int _shootingDelay;
 		private long _lastShoot;
+		private AGameObject _afflicted;
 
 		public Poisoning(float health, AWeapon weapon, AGameObject afflicted)//3--Наш страдалец.
 			: base(health)
@@ -18,17 +19,19 @@ namespace SkyShoot.ServProgram.Mobs
 			Weapon.Owner = this;
 			Target = afflicted;//Только один будет жертвой.
 			Radius = 1; //Должен помещаться в игрока, и не взаимодействовать ни с чем.
-			Speed = 0.12f;//Чтобы наверняка догнал.
+			Speed = Constants.POISONING_MOB_SPEED;
 			_shootingDelay = Constants.POISONTICK_ATTACK_RATE;
 			Damage = Constants.POISONTICK_DAMAGE;
 			TeamIdentity = null;
+			_afflicted = afflicted;
 		}
 
 		public override IEnumerable<AGameEvent> Think(List<AGameObject> gameObjects, List<AGameObject> newGameObjects, long time)
 		{
 			var res = new List<AGameEvent>(base.Think(gameObjects, newGameObjects, time));
-			ShootVector = RunVector;
-			ShootVector.Normalize();
+			//ShootVector = RunVector;
+			//ShootVector.Normalize();
+			Coordinates = _afflicted.Coordinates;//телепортируемся на жертву
 			if (time - _lastShoot > _shootingDelay)
 			{
 				_lastShoot = time;
