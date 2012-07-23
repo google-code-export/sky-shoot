@@ -24,11 +24,19 @@ namespace SkyShoot.Service.Weapon.Bullets
 			var res = new List<AGameEvent>(base.Do(obj, newObjects, time));
 			if (obj.TeamIdentity!= Owner.TeamIdentity && obj.Is(EnumObjectType.Block) && !obj.Is(EnumObjectType.Poisoning))
 			{
-				var mult = Damage/Constants.ROCKET_BULLET_DAMAGE;
-				var explosion = new Explosion(Owner, Guid.NewGuid(), Coordinates, Constants.ROCKET_EXPLOSION_CIRCLES, 1)
+				int circles;
+				if (Damage/Constants.ROCKET_BULLET_DAMAGE>1)
+				{
+					circles = Constants.ROCKET_EXPLOSION_CIRCLES + 2;
+				}
+				else
+				{
+					circles = Constants.ROCKET_EXPLOSION_CIRCLES;
+				}
+				var explosion = new Explosion(Owner, Guid.NewGuid(), Coordinates, circles, 1)
 				                	{
 				                		Radius = Constants.ROCKET_EXPLOSION_RADIUS,
-										Damage = Constants.ROCKET_EXPLOSION_DAMAGE*mult,
+										Damage = Constants.ROCKET_EXPLOSION_DAMAGE,
 				                	};
 
 				res.Add(new NewObjectEvent(explosion, time));
