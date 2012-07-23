@@ -30,6 +30,7 @@ namespace SkyShoot.Game.Screens
 		private LabelControl _expLabel;
 		private LabelControl _fragLabel;
 		private LabelControl _creepsLabel;
+		private LabelControl _healthPoints;
 
 		private int _counter;
 
@@ -142,6 +143,7 @@ namespace SkyShoot.Game.Screens
 					_expLabel.Text = "Exp " + stat.Value.Experience.ToString(CultureInfo.InvariantCulture);
 					_fragLabel.Text = "Frag " + stat.Value.Frag.ToString(CultureInfo.InvariantCulture);
 					_creepsLabel.Text = "Creeps " + stat.Value.Creeps.ToString(CultureInfo.InvariantCulture);
+					//_healthPoints.Text = "Health points " + 100.ToString(CultureInfo.InvariantCulture);
 				}
 			}
 			_counter++;
@@ -185,6 +187,11 @@ namespace SkyShoot.Game.Screens
 								Text = "Creeps",
 								Bounds = new UniRectangle(new UniVector(-60, 20), new UniVector(0, 0)),
 							};
+			/*_healthPoints = new LabelControl
+			{
+				Text = "Health points",
+				Bounds = new UniRectangle(new UniVector(-60, 500), new UniVector(0, 0)),
+			};*/
 
 			#endregion
 
@@ -246,6 +253,7 @@ namespace SkyShoot.Game.Screens
 			Desktop.Children.Add(_expLabel);
 			Desktop.Children.Add(_fragLabel);
 			Desktop.Children.Add(_creepsLabel);
+//			Desktop.Children.Add(_healthPoints);
 		}
 	}
 }
