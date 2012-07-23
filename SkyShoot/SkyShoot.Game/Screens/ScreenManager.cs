@@ -32,12 +32,6 @@ namespace SkyShoot.Game.Screens
 		private readonly InputManager _inputManager;
 		private readonly Dictionary<ScreenEnum, GameScreen> _screens = new Dictionary<ScreenEnum, GameScreen>();
 
-		private readonly Controller _controller;
-
-		private SpriteBatch _spriteBatch;
-
-		private SpriteFont _font;
-
 		private GameScreen _activeScreen;
 
 		private ScreenManager(Microsoft.Xna.Framework.Game game)
@@ -50,9 +44,9 @@ namespace SkyShoot.Game.Screens
 			Game.Components.Add(_inputManager);
 
 			if (Settings.Default.IsGamepad)
-				_controller = new Gamepad(_inputManager);
+				Controller = new Gamepad(_inputManager);
 			else
-				_controller = new KeyboardAndMouse(_inputManager);
+				Controller = new KeyboardAndMouse(_inputManager);
 		}
 
 		public static ScreenManager Instance
@@ -60,20 +54,13 @@ namespace SkyShoot.Game.Screens
 			get { return _instance; }
 		}
 
-		public Controller Controller
-		{
-			get { return _controller; }
-		}
+		public Controller Controller { get; private set; }
 
-		public SpriteBatch SpriteBatch
-		{
-			get { return _spriteBatch; }
-		}
+		public SpriteBatch SpriteBatch { get; private set; }
 
-		public SpriteFont Font
-		{
-			get { return _font; }
-		}
+		public SpriteFont Font { get; private set; }
+
+		public ContentManager ContentManager { get; private set; }
 
 		public int Height
 		{
@@ -101,6 +88,7 @@ namespace SkyShoot.Game.Screens
 			{
 				_activeScreen = _screens[screenName];
 				_gui.Screen = _activeScreen;
+
 				_activeScreen.LoadContent();
 			}
 			else
@@ -130,8 +118,8 @@ namespace SkyShoot.Game.Screens
 		{
 			_activeScreen.Update(gameTime);
 
-			_controller.Update();
-			_activeScreen.HandleInput(_controller);
+			Controller.Update();
+			_activeScreen.HandleInput(Controller);
 		}
 
 		public override void Draw(GameTime gameTime)
@@ -143,15 +131,15 @@ namespace SkyShoot.Game.Screens
 		// todo remove
 		public Vector2 GetMousePosition()
 		{
-			return _controller.SightPosition;
+			return Controller.SightPosition;
 		}
 
 		// todo rewrite!
 		protected override void LoadContent()
 		{
-			ContentManager content = Game.Content;
-			_spriteBatch = new SpriteBatch(GraphicsDevice);
-			_font = content.Load<SpriteFont>("menufont");
+			ContentManager = Game.Content;
+			SpriteBatch = new SpriteBatch(GraphicsDevice);
+			Font = ContentManager.Load<SpriteFont>("menufont");
 
 			RegisterScreen(ScreenEnum.LoginScreen, new LoginScreen());
 			RegisterScreen(ScreenEnum.MessageBoxScreen, new MessageBox());

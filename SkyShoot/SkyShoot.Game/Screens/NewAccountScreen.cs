@@ -16,8 +16,6 @@ namespace SkyShoot.Game.Screens
 	{
 		private static Texture2D _texture;
 
-		private readonly ContentManager _content;
-
 		private LabelControl _loginLabel;
 		private LabelControl _passwordLabel;
 
@@ -27,33 +25,27 @@ namespace SkyShoot.Game.Screens
 		private ButtonControl _backButton;
 		private ButtonControl _okButton;
 
-		private SpriteBatch _spriteBatch;
-
 		public NewAccountScreen()
 		{
 			CreateControls();
 			InitializeControls();
-
-			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 		}
 
 		public override void LoadContent()
 		{
-			_texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");
+			_texture = ContentManager.Load<Texture2D>("Textures/screens/screen_05_fix");
 		}
 
 		public override void UnloadContent()
 		{
-			_content.Unload();
+			ContentManager.Unload();
 		}
 
 		public override void Draw(GameTime gameTime)
 		{
-			_spriteBatch = ScreenManager.Instance.SpriteBatch;
-
-			_spriteBatch.Begin();
-			_spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
-			_spriteBatch.End();
+			SpriteBatch.Begin();
+			SpriteBatch.Draw(_texture, Vector2.Zero, Color.White);
+			SpriteBatch.End();
 		}
 
 		private void CreateControls()
@@ -120,7 +112,7 @@ namespace SkyShoot.Game.Screens
 
 		private void BackButtonPressed(object sender, EventArgs args)
 		{
-			throw new NotImplementedException();
+			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.LoginScreen);
 		}
 
 		private void OkButtonPressed(object sender, EventArgs args)

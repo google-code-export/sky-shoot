@@ -4,14 +4,11 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Nuclex.UserInterface;
 using Nuclex.UserInterface.Controls.Desktop;
-using SkyShoot.Game.Game;
 
 namespace SkyShoot.Game.Screens
 {
 	internal class MessageBox : GameScreen
 	{
-		private readonly ContentManager _content;
-
 		private Texture2D _texture;
 
 		private ButtonControl _okButton;
@@ -20,8 +17,6 @@ namespace SkyShoot.Game.Screens
 		{
 			CreateControls();
 			InitializeControls();
-
-			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 		}
 
 		public static ScreenManager.ScreenEnum Next { get; set; }
@@ -30,12 +25,12 @@ namespace SkyShoot.Game.Screens
 
 		public override void LoadContent()
 		{
-			_texture = _content.Load<Texture2D>("Textures/screens/message_box");
+			_texture = ContentManager.Load<Texture2D>("Textures/screens/message_box");
 		}
 
 		public override void UnloadContent()
 		{
-			_content.Unload();
+			ContentManager.Unload();
 		}
 
 		public void OkButtonPressed(object sender, EventArgs e)
@@ -45,8 +40,6 @@ namespace SkyShoot.Game.Screens
 
 		public override void Draw(GameTime gameTime)
 		{
-			SpriteBatch spriteBatch = ScreenManager.Instance.SpriteBatch;
-
 			SpriteFont font = ScreenManager.Instance.Font;
 			Viewport viewport = ScreenManager.Instance.GraphicsDevice.Viewport;
 			var viewportSize = new Vector2(viewport.Width, viewport.Height);
@@ -54,10 +47,10 @@ namespace SkyShoot.Game.Screens
 			Vector2 textPosition = (viewportSize - textSize) / 2;
 			var backgroundRectangle = new Rectangle(0, 0, (int)viewportSize.X, (int)viewportSize.Y);
 
-			spriteBatch.Begin();
-			spriteBatch.Draw(_texture, backgroundRectangle, Color.White);
-			spriteBatch.DrawString(font, Message, textPosition, Color.White);
-			spriteBatch.End();
+			SpriteBatch.Begin();
+			SpriteBatch.Draw(_texture, backgroundRectangle, Color.White);
+			SpriteBatch.DrawString(font, Message, textPosition, Color.White);
+			SpriteBatch.End();
 		}
 
 		private void CreateControls()

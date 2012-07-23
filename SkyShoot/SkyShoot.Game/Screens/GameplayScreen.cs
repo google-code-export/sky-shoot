@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Nuclex.UserInterface;
 using Nuclex.UserInterface.Controls;
@@ -16,8 +15,6 @@ namespace SkyShoot.Game.Screens
 	internal class GameplayScreen : GameScreen
 	{
 		private static WeaponType _weapon = WeaponType.Pistol;
-
-		private readonly ContentManager _content;
 
 		private LabelControl _pistolLabel;
 		private LabelControl _shotgunLabel;
@@ -36,7 +33,6 @@ namespace SkyShoot.Game.Screens
 
 		public GameplayScreen()
 		{
-			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 			CreateControls();
 			InitializeControls();
 		}
@@ -44,70 +40,70 @@ namespace SkyShoot.Game.Screens
 		public override void LoadContent()
 		{
 			// load landscapes
-			Textures.SandLandscape = _content.Load<Texture2D>("Textures/Landscapes/SandLandscape");
-			Textures.GrassLandscape = _content.Load<Texture2D>("Textures/Landscapes/GrassLandscape");
-			Textures.SnowLandscape = _content.Load<Texture2D>("Textures/Landscapes/SnowLandscape");
-			Textures.DesertLandscape = _content.Load<Texture2D>("Textures/Landscapes/DesertLandscape");
-			Textures.VolcanicLandscape = _content.Load<Texture2D>("Textures/Landscapes/VolcanicLandscape");
+			Textures.SandLandscape = ContentManager.Load<Texture2D>("Textures/Landscapes/SandLandscape");
+			Textures.GrassLandscape = ContentManager.Load<Texture2D>("Textures/Landscapes/GrassLandscape");
+			Textures.SnowLandscape = ContentManager.Load<Texture2D>("Textures/Landscapes/SnowLandscape");
+			Textures.DesertLandscape = ContentManager.Load<Texture2D>("Textures/Landscapes/DesertLandscape");
+			Textures.VolcanicLandscape = ContentManager.Load<Texture2D>("Textures/Landscapes/VolcanicLandscape");
 
 			// load weapon
-			Textures.Gun = _content.Load<Texture2D>("Textures/Weapon/Gun");
-			Textures.Laser = _content.Load<Texture2D>("Textures/Weapon/Laser");
-			Textures.FlameProjectile = _content.Load<Texture2D>("Textures/Weapon/FlameProjectile");
-			Textures.ShotgunProjectile = _content.Load<Texture2D>("Textures/Weapon/ShotProjectile");
-			Textures.RocketProjectile = _content.Load<Texture2D>("Textures/Weapon/RocketProjectile");
-			Textures.TurretProjectile = _content.Load<Texture2D>("Textures/Weapon/TurretProjectile");
-			Textures.PoisonProjectile = _content.Load<Texture2D>("Textures/Weapon/PoisonProjectile");
-			Textures.SpiderProjectile = _content.Load<Texture2D>("Textures/Weapon/SpiderProjectile");
-			Textures.Explosion = _content.Load<Texture2D>("Textures/Weapon/Explosion");
-			Textures.DoubleDamage = _content.Load<Texture2D>("Textures/BonusesIcons/DoubleDamage");
-			Textures.Fire = _content.Load<Texture2D>("Textures/BonusesIcons/Fire");
-			Textures.Frozen = _content.Load<Texture2D>("Textures/BonusesIcons/Frozen");
-			Textures.MedChest = _content.Load<Texture2D>("Textures/BonusesIcons/MedChest");
-			Textures.Mirror = _content.Load<Texture2D>("Textures/BonusesIcons/Mirror");
-			Textures.Protection = _content.Load<Texture2D>("Textures/BonusesIcons/Protection");
-			Textures.Speed = _content.Load<Texture2D>("Textures/BonusesIcons/Speed");
-			Textures.Poisoner = _content.Load<Texture2D>("Textures/Mobs/Spider1");
-			Textures.Hydra = _content.Load<Texture2D>("Textures/Mobs/Spider2");
-			Textures.ParentMob = _content.Load<Texture2D>("Textures/Mobs/Spider3");
-			Textures.Caterpillar = _content.Load<Texture2D>("Textures/Mobs/CaterpillerSegmentHead");
+			Textures.Gun = ContentManager.Load<Texture2D>("Textures/Weapon/Gun");
+			Textures.Laser = ContentManager.Load<Texture2D>("Textures/Weapon/Laser");
+			Textures.FlameProjectile = ContentManager.Load<Texture2D>("Textures/Weapon/FlameProjectile");
+			Textures.ShotgunProjectile = ContentManager.Load<Texture2D>("Textures/Weapon/ShotProjectile");
+			Textures.RocketProjectile = ContentManager.Load<Texture2D>("Textures/Weapon/RocketProjectile");
+			Textures.TurretProjectile = ContentManager.Load<Texture2D>("Textures/Weapon/TurretProjectile");
+			Textures.PoisonProjectile = ContentManager.Load<Texture2D>("Textures/Weapon/PoisonProjectile");
+			Textures.SpiderProjectile = ContentManager.Load<Texture2D>("Textures/Weapon/SpiderProjectile");
+			Textures.Explosion = ContentManager.Load<Texture2D>("Textures/Weapon/Explosion");
+			Textures.DoubleDamage = ContentManager.Load<Texture2D>("Textures/BonusesIcons/DoubleDamage");
+			Textures.Fire = ContentManager.Load<Texture2D>("Textures/BonusesIcons/Fire");
+			Textures.Frozen = ContentManager.Load<Texture2D>("Textures/BonusesIcons/Frozen");
+			Textures.MedChest = ContentManager.Load<Texture2D>("Textures/BonusesIcons/MedChest");
+			Textures.Mirror = ContentManager.Load<Texture2D>("Textures/BonusesIcons/Mirror");
+			Textures.Protection = ContentManager.Load<Texture2D>("Textures/BonusesIcons/Protection");
+			Textures.Speed = ContentManager.Load<Texture2D>("Textures/BonusesIcons/Speed");
+			Textures.Poisoner = ContentManager.Load<Texture2D>("Textures/Mobs/Spider1");
+			Textures.Hydra = ContentManager.Load<Texture2D>("Textures/Mobs/Spider2");
+			Textures.ParentMob = ContentManager.Load<Texture2D>("Textures/Mobs/Spider3");
+			Textures.Caterpillar = ContentManager.Load<Texture2D>("Textures/Mobs/CaterpillerSegmentHead");
 			//load minions
 
-			Textures.Turret = _content.Load<Texture2D>("Textures/Mobs/Turret");
+			Textures.Turret = ContentManager.Load<Texture2D>("Textures/Mobs/Turret");
 
 			// load stones
 			for (int i = 1; i <= Textures.STONES_AMOUNT; i++)
-				Textures.Stones[i - 1] = _content.Load<Texture2D>("Textures/Landscapes/Stone" + i);
-			Textures.OneStone = _content.Load<Texture2D>("Textures/Landscapes/Stone" + 1);
+				Textures.Stones[i - 1] = ContentManager.Load<Texture2D>("Textures/Landscapes/Stone" + i);
+			Textures.OneStone = ContentManager.Load<Texture2D>("Textures/Landscapes/Stone" + 1);
 
 			// load bricks
-			Textures.Brick = _content.Load<Texture2D>("Textures/Landscapes/Brick");
+			Textures.Brick = ContentManager.Load<Texture2D>("Textures/Landscapes/Brick");
 
 			// load player
-			Textures.PlayerTexture = _content.Load<Texture2D>("Textures/Mobs/Man");
+			Textures.PlayerTexture = ContentManager.Load<Texture2D>("Textures/Mobs/Man");
 
 			// load mobs
 			for (int i = 1; i <= Textures.MOBS_AMOUNT; i++)
-				Textures.MobTextures[i - 1] = _content.Load<Texture2D>("Textures/Mobs/Spider" + i);
+				Textures.MobTextures[i - 1] = ContentManager.Load<Texture2D>("Textures/Mobs/Spider" + i);
 
 			// load dead player
 			Textures.DeadPlayerTexture =
-				_content.Load<Texture2D>("Textures/Mobs/man_animation(new man)/death_animation/death_animation_06");
+				ContentManager.Load<Texture2D>("Textures/Mobs/man_animation(new man)/death_animation/death_animation_06");
 
 			// load dead spider
 			Textures.DeadSpiderTexture =
-				_content.Load<Texture2D>(
+				ContentManager.Load<Texture2D>(
 					"Textures/Mobs/mob_animation(v.2)/paukan_death_animation/paukan_death_animation_03");
 
 			// load mob animation
 			for (int i = 1; i <= Textures.SPIDER_ANIMATION_FRAME_COUNT; i++)
 				Textures.SpiderAnimation.AddFrame(
-					_content.Load<Texture2D>("Textures/Mobs/spider_animation(uncomplete)/spider_" + i.ToString("D2")));
+					ContentManager.Load<Texture2D>("Textures/Mobs/spider_animation(uncomplete)/spider_" + i.ToString("D2")));
 
 			// load player animation
 			for (int i = 1; i <= Textures.PLAYER_ANIMATION_FRAME_COUNT; i++)
 				Textures.PlayerAnimation.AddFrame(
-					_content.Load<Texture2D>("Textures/Mobs/man_animation(new man)/run/run_" + i.ToString("D2")));
+					ContentManager.Load<Texture2D>("Textures/Mobs/man_animation(new man)/run/run_" + i.ToString("D2")));
 
 			ScreenManager.Instance.Game.ResetElapsedTime();
 		}
@@ -117,8 +113,8 @@ namespace SkyShoot.Game.Screens
 			Textures.PlayerAnimation.Clear();
 			Textures.SpiderAnimation.Clear();
 
-			if (_content != null)
-				_content.Unload();
+			if (ContentManager != null)
+				ContentManager.Unload();
 		}
 
 		public override void HandleInput(Controller controller)
@@ -154,10 +150,9 @@ namespace SkyShoot.Game.Screens
 			Debug.Assert(GameController.Instance.IsGameStarted);
 
 			GraphicsDevice graphicsDevice = ScreenManager.Instance.GraphicsDevice;
-			SpriteBatch spriteBatch = ScreenManager.Instance.SpriteBatch;
 			graphicsDevice.Clear(Color.SkyBlue);
 
-			GameController.Instance.DrawWorld(spriteBatch);
+			GameController.Instance.DrawWorld(SpriteBatch);
 		}
 
 		private void CreateControls()

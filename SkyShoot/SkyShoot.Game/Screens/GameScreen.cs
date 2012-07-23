@@ -1,4 +1,6 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using Nuclex.UserInterface;
 using SkyShoot.Game.Input;
 
@@ -7,6 +9,10 @@ namespace SkyShoot.Game.Screens
 	public abstract class GameScreen : Screen
 	{
 		public bool OtherScreenHasFocus;
+
+		protected SpriteBatch SpriteBatch { get; private set; }
+
+		protected ContentManager ContentManager { get; private set; }
 
 		protected GameScreen()
 		{
@@ -18,6 +24,10 @@ namespace SkyShoot.Game.Screens
 
 			Height = ScreenManager.Instance.Height;
 			Width = ScreenManager.Instance.Width;
+
+			SpriteBatch = ScreenManager.Instance.SpriteBatch;
+
+			ContentManager = ScreenManager.Instance.ContentManager;
 		}
 
 		public bool IsActive { get; set; }

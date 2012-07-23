@@ -22,8 +22,6 @@ namespace SkyShoot.Game.Screens
 		private ButtonControl _leaveButton;
 
 		private List<string> _players;
-
-		private SpriteBatch _spriteBatch;
 		private SpriteFont _spriteFont;
 
 		private int _updateCount;
@@ -91,20 +89,18 @@ namespace SkyShoot.Game.Screens
 
 		public override void Draw(GameTime gameTime)
 		{
-			_spriteBatch = ScreenManager.Instance.SpriteBatch;
+			SpriteBatch.Begin();
+			SpriteBatch.Draw(_texture, Vector2.Zero, Color.White);
 
-			_spriteBatch.Begin();
-			_spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
+			DrawString(SpriteBatch, "Players", 20f, 25f);
+			DrawString(SpriteBatch, "Map: ", 280f, 260f);
+			DrawString(SpriteBatch, Tile, 400f, 260f);
+			DrawString(SpriteBatch, "Game Mode:", 280f, 290f);
+			DrawString(SpriteBatch, GameMode, 400f, 290f);
+			DrawString(SpriteBatch, "Max Players:", 280f, 320f);
+			DrawString(SpriteBatch, MaxPlayers, 400f, 320f);
 
-			DrawString(_spriteBatch, "Players", 20f, 25f);
-			DrawString(_spriteBatch, "Map: ", 280f, 260f);
-			DrawString(_spriteBatch, Tile, 400f, 260f);
-			DrawString(_spriteBatch, "Game Mode:", 280f, 290f);
-			DrawString(_spriteBatch, GameMode, 400f, 290f);
-			DrawString(_spriteBatch, "Max Players:", 280f, 320f);
-			DrawString(_spriteBatch, MaxPlayers, 400f, 320f);
-
-			_spriteBatch.End();
+			SpriteBatch.End();
 		}
 
 		public override void Update(GameTime gameTime)
@@ -163,6 +159,8 @@ namespace SkyShoot.Game.Screens
 
 		private void DrawString(SpriteBatch spriteBatch, string text, float positionX, float positionY)
 		{
+			// spriteBatch.DrawString(_spriteFont, text, new Vector2(positionX, positionY), Color.Red);
+			// spriteBatch.
 			spriteBatch.DrawString(
 				_spriteFont,
 				text,

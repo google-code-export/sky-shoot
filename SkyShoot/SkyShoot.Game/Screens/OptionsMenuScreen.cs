@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Globalization;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Nuclex.UserInterface;
 using Nuclex.UserInterface.Controls;
@@ -15,8 +14,6 @@ namespace SkyShoot.Game.Screens
 	{
 		private static short _curs = 1;
 		private static Texture2D _texture;
-
-		private readonly ContentManager _content;
 
 		private ListControl _keyboardList;
 
@@ -38,24 +35,20 @@ namespace SkyShoot.Game.Screens
 		private ButtonControl _downVolume;
 		private LabelControl _volumeValueLabel;
 
-		private SpriteBatch _spriteBatch;
-
 		public OptionsMenuScreen()
 		{
 			CreateControls();
 			InitializeControls();
-
-			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 		}
 
 		public override void LoadContent()
 		{
-			_texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");
+			_texture = ContentManager.Load<Texture2D>("Textures/screens/screen_05_fix");
 
-			Textures.Arrow = _content.Load<Texture2D>("Textures/Cursors/Arrow");
-			Textures.Plus = _content.Load<Texture2D>("Textures/Cursors/Plus");
-			Textures.Cross = _content.Load<Texture2D>("Textures/Cursors/Cross");
-			Textures.Target = _content.Load<Texture2D>("Textures/Cursors/Target");
+			Textures.Arrow = ContentManager.Load<Texture2D>("Textures/Cursors/Arrow");
+			Textures.Plus = ContentManager.Load<Texture2D>("Textures/Cursors/Plus");
+			Textures.Cross = ContentManager.Load<Texture2D>("Textures/Cursors/Cross");
+			Textures.Target = ContentManager.Load<Texture2D>("Textures/Cursors/Target");
 
 			_keyboardList.SelectedItems.Add(Settings.Default.KeyboardLayout == 0 ? 0 : 1);
 
@@ -82,22 +75,20 @@ namespace SkyShoot.Game.Screens
 
 		public override void Draw(GameTime gameTime)
 		{
-			_spriteBatch = ScreenManager.Instance.SpriteBatch;
+			SpriteBatch.Begin();
+			SpriteBatch.Draw(_texture, Vector2.Zero, Color.White);
+			SpriteBatch.End();
 
-			_spriteBatch.Begin();
-			_spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
-			_spriteBatch.End();
-
-			_spriteBatch.Begin(SpriteSortMode.Texture, BlendState.AlphaBlend);
+			SpriteBatch.Begin(SpriteSortMode.Texture, BlendState.AlphaBlend);
 			var pos1 = new Vector2(250f, 270f);
 			var pos2 = new Vector2(340f, 270f);
 			var pos3 = new Vector2(430f, 270f);
 			var pos4 = new Vector2(520f, 270f);
-			_spriteBatch.Draw(Textures.Arrow, pos1, Color.White);
-			_spriteBatch.Draw(Textures.Plus, pos2, Color.White);
-			_spriteBatch.Draw(Textures.Cross, pos3, Color.White);
-			_spriteBatch.Draw(Textures.Target, pos4, Color.White);
-			_spriteBatch.End();
+			SpriteBatch.Draw(Textures.Arrow, pos1, Color.White);
+			SpriteBatch.Draw(Textures.Plus, pos2, Color.White);
+			SpriteBatch.Draw(Textures.Cross, pos3, Color.White);
+			SpriteBatch.Draw(Textures.Target, pos4, Color.White);
+			SpriteBatch.End();
 		}
 
 		private void CreateControls()

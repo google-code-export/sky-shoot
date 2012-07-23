@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Nuclex.UserInterface;
 using Nuclex.UserInterface.Controls;
 using Nuclex.UserInterface.Controls.Desktop;
 using SkyShoot.Contracts.Session;
-using SkyShoot.Game.Game;
 using SkyShoot.Game.Network;
 
 namespace SkyShoot.Game.Screens
@@ -15,8 +13,6 @@ namespace SkyShoot.Game.Screens
 	internal class MultiplayerScreen : GameScreen
 	{
 		private static Texture2D _texture;
-
-		private readonly ContentManager _content;
 
 		private LabelControl _mapLabel;
 
@@ -29,19 +25,15 @@ namespace SkyShoot.Game.Screens
 
 		private GameDescription[] _tempGameList;
 
-		private SpriteBatch _spriteBatch;
-
 		public MultiplayerScreen()
 		{
 			CreateControls();
 			InititalizeControls();
-
-			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 		}
 
 		public override void LoadContent()
 		{
-			_texture = _content.Load<Texture2D>("Textures/screens/screen_05_fix");
+			_texture = ContentManager.Load<Texture2D>("Textures/screens/screen_05_fix");
 
 			// ToDo: запрос списка игр с сервера и его вывод
 			_tempGameList = ConnectionManager.Instance.GetGameList();
@@ -60,16 +52,14 @@ namespace SkyShoot.Game.Screens
 
 		public override void UnloadContent()
 		{
-			_content.Unload();
+			ContentManager.Unload();
 		}
 
 		public override void Draw(GameTime gameTime)
 		{
-			_spriteBatch = ScreenManager.Instance.SpriteBatch;
-
-			_spriteBatch.Begin();
-			_spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
-			_spriteBatch.End();
+			SpriteBatch.Begin();
+			SpriteBatch.Draw(_texture, Vector2.Zero, Color.White);
+			SpriteBatch.End();
 		}
 
 		private void CreateControls()
