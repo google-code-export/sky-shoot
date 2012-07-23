@@ -15,8 +15,7 @@ namespace SkyShoot.ServProgram.Mobs
 		ParentMob = 2,
 		Hydra = 3,
 		Poisoner = 4,
-		SpiderWithSimpleMind = 5,
-		Caterpillar = 6
+		Caterpillar = 5
 	};
 
 	public class SpiderFactory : IMobFactory
@@ -43,7 +42,10 @@ namespace SkyShoot.ServProgram.Mobs
 			_health = 10; //change to real value
 		}
 
-		public virtual Mob CreateMob() { Mob spider = new SpiderWithSimpleMind(Constants.CHILDREN_MOB_HEALTH); return spider; }
+		public virtual Mob CreateMob() 
+		{ 
+			return CreateMob(_random.Next(100) % 10);//Простые паучки генерируются чаще других.
+		}
 
 		public Mob CreateMob(int newMob)
 		{
