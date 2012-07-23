@@ -119,5 +119,15 @@ namespace SkyShoot.Game.Input
 		{
 			return _currentKeyboardState.IsKeyUp(key) && _lastKeyboardState.IsKeyDown(key);
 		}
+
+		public int MouseWheelValue
+		{
+			get
+			{
+				int currentScroolWheel = _currentMouseState.ScrollWheelValue;
+				int prevScrollWheel = _lastMouseState.ScrollWheelValue;
+				return currentScroolWheel - prevScrollWheel;
+			}
+		}
 	}
 }
