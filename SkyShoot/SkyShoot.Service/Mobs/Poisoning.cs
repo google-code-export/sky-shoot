@@ -24,14 +24,16 @@ namespace SkyShoot.ServProgram.Mobs
 			Damage = Constants.POISONTICK_DAMAGE;
 			TeamIdentity = null;
 			_afflicted = afflicted;
+			Coordinates.X = -100;
+			Coordinates.Y = -100;
 		}
 
 		public override IEnumerable<AGameEvent> Think(List<AGameObject> gameObjects, List<AGameObject> newGameObjects, long time)
 		{
 			var res = new List<AGameEvent>(base.Think(gameObjects, newGameObjects, time));
-			//ShootVector = RunVector;
-			//ShootVector.Normalize();
-			Coordinates = _afflicted.Coordinates;//телепортируемся на жертву
+			Coordinates.X = -100;
+			Coordinates.Y = -100;
+			
 			if (time - _lastShoot > _shootingDelay)
 			{
 				_lastShoot = time;
