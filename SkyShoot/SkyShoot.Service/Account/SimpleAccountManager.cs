@@ -60,92 +60,105 @@ namespace SkyShoot.ServProgram.Account
 
 		public AccountManagerErrorCode Register(string username, string password)
 		{
-			try
+			lock (_lock)
 			{
-				ReadAccounts();
-				if (_accounts.ContainsKey(username))
+				try
 				{
-					return AccountManagerErrorCode.UsernameTaken;
+					ReadAccounts();
+					if (_accounts.ContainsKey(username))
+					{
+						return AccountManagerErrorCode.UsernameTaken;
+					}
+					var newAccount = new AccountInfo
+									 {
+										 Login = username,
+										 Password = password,
+										 Email = "--",
+										 Info = "--"
+									 };
+					_accounts.Add(username, newAccount);
+					WriteAccounts();
 				}
-				var newAccount = new AccountInfo
-								 {
-									 Login = username,
-									 Password = password,
-									 Email = "--",
-									 Info = "--"
-								 };
-				_accounts.Add(username, newAccount);
-				WriteAccounts();
-			}
-			catch (Exception)
-			{
-				return AccountManagerErrorCode.UnknownExceptionOccured;
+				catch (Exception)
+				{
+					return AccountManagerErrorCode.UnknownExceptionOccured;
+				}
 			}
 			return AccountManagerErrorCode.Ok;
 		}
 
 		public AccountManagerErrorCode Login(string username, string password)
 		{
-			try
+			lock (_lock)
 			{
-				ReadAccounts();
-				AccountInfo account;
-				if (!_accounts.TryGetValue(username, out account) || !account.Password.Equals(password))
+				try
 				{
-					return AccountManagerErrorCode.InvalidUsernameOrPassword;
+					ReadAccounts();
+					AccountInfo account;
+					if (!_accounts.TryGetValue(username, out account) || !account.Password.Equals(password))
+					{
+						return AccountManagerErrorCode.InvalidUsernameOrPassword;
+					}
+					if (_usersOnline.Contains(username))
+					{
+						return AccountManagerErrorCode.UserIsAlreadyOnline;
+					}
+					WriteAccounts();
+					_usersOnline.Add(username);
 				}
-				if (_usersOnline.Contains(username))
+				catch (Exception)
 				{
-					return AccountManagerErrorCode.UserIsAlreadyOnline;
+					return AccountManagerErrorCode.UnknownExceptionOccured;
 				}
-				WriteAccounts();
-				_usersOnline.Add(username);
-			}
-			catch (Exception)
-			{
-				return AccountManagerErrorCode.UnknownExceptionOccured;
 			}
 			return AccountManagerErrorCode.Ok;
 		}
 
 		public AccountManagerErrorCode Logout(string username)
 		{
-			try
+			lock (_lock)
 			{
-				ReadAccounts();
-				AccountInfo account;
-				if (!_accounts.TryGetValue(username, out account))
+				try
 				{
-					return AccountManagerErrorCode.InvalidUsernameOrPassword;
+					ReadAccounts();
+					AccountInfo account;
+					if (!_accounts.TryGetValue(username, out account))
+					{
+						return AccountManagerErrorCode.InvalidUsernameOrPassword;
+					}
+					if (!_usersOnline.Contains(username))
+					{
+						return AccountManagerErrorCode.UserIsAlreadyOffline;
+					}
+					_usersOnline.Remove(username);
+					WriteAccounts();
 				}
-				if (!_usersOnline.Contains(username)) {
-					return AccountManagerErrorCode.UserIsAlreadyOffline;
+				catch (Exception)
+				{
+					return AccountManagerErrorCode.UnknownExceptionOccured;
 				}
-				_usersOnline.Remove(username);
-				WriteAccounts();
-			}
-			catch (Exception)
-			{
-				return AccountManagerErrorCode.UnknownExceptionOccured;
 			}
 			return AccountManagerErrorCode.Ok;
 		}
 		public AccountManagerErrorCode DeleteAccount(string username, string password)
 		{
-			try
+			lock (_lock)
 			{
-				ReadAccounts();
-				AccountInfo account;
-				if (!_accounts.TryGetValue(username, out account) || !account.Password.Equals(password))
+				try
 				{
-					return AccountManagerErrorCode.InvalidUsernameOrPassword;
+					ReadAccounts();
+					AccountInfo account;
+					if (!_accounts.TryGetValue(username, out account) || !account.Password.Equals(password))
+					{
+						return AccountManagerErrorCode.InvalidUsernameOrPassword;
+					}
+					_accounts.Remove(username);
+					WriteAccounts();
 				}
-				_accounts.Remove(username);
-				WriteAccounts();
-			}
-			catch (Exception)
-			{
-				return AccountManagerErrorCode.UnknownExceptionOccured;
+				catch (Exception)
+				{
+					return AccountManagerErrorCode.UnknownExceptionOccured;
+				}
 			}
 			return AccountManagerErrorCode.Ok;
 		}

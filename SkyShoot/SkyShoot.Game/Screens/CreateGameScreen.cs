@@ -245,7 +245,7 @@ namespace SkyShoot.Game.Screens
 			}
 
 			GameDescription gameDescription =
-				ConnectionManager.Instance.CreateGame(m, Convert.ToInt32(_maxPlayers.Text), ts, 1); //Заглушка "1"
+				ConnectionManager.Instance.CreateGame(m, Convert.ToInt32(_maxPlayers.Text), ts, Convert.ToInt32(_maxPlayers.Text));
 			if (gameDescription == null)
 				return;
 			WaitScreen.Tile = _tile.Text;
