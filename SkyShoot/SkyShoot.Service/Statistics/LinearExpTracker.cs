@@ -6,7 +6,6 @@ namespace SkyShoot.Service.Statistics
 	{
 		public override void AddExpPlayer(AGameObject owner, AGameObject wounded, int damage)
 		{
-
 			if (wounded.Is(AGameObject.EnumObjectType.Player) && wounded.HealthAmount < 0.1) if (owner != null) Value.Frag += 1;
 			// Опыт всем игрокам
 			if (wounded.HealthAmount < 0.1) if (owner != null)

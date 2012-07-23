@@ -9,7 +9,7 @@ namespace SkyShoot.Service.Statistics
 
 		protected ExpTracker()
 		{
-			Value = new Stats { Experience = 0, Frag = 0, Level = 1 };
+			Value = new Stats { Experience = 0, Frag = 0, Level = 1};
 		}
 
 		protected ExpTracker(Stats st)
