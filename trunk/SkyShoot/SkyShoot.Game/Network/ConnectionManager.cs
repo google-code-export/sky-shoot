@@ -188,16 +188,18 @@ namespace SkyShoot.Game.Network
 				lock (_synchroFrameLocker)
 				{
 					_lastServerSynchroFrame = _service.SynchroFrame();
-					// todo!!! Придумать!!!
-					DifferenceTime = _lastServerSynchroFrame.Time - (TimeHelper.NowMilliseconds - GameController.StartTime);
-					Trace.Write("Diff time = " + DifferenceTime);
+
+					if (_lastServerSynchroFrame != null)
+					{
+						// todo!!! Придумать!!!
+						DifferenceTime = _lastServerSynchroFrame.Time - (TimeHelper.NowMilliseconds - GameController.StartTime);
+						Trace.Write("Diff time = " + DifferenceTime);
+					}
 				}
 			}
 			catch (Exception exc)
 			{
 				Trace.WriteLine("game:SynchroFrame" + exc);
-				// todo rewrite
-				Debug.Assert(_lastServerSynchroFrame != null, "_lastServerSynchroFrame != null");
 			}
 		}
 

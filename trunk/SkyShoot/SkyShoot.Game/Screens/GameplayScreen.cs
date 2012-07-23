@@ -131,7 +131,7 @@ namespace SkyShoot.Game.Screens
 
 			Debug.Assert(GameController.Instance.IsGameStarted);
 
-			GameController.Instance.GameModel.Update(gameTime);
+			GameController.Instance.UpdateWorld(gameTime);
 
 			if (_counter % 60 == 0)
 			{
@@ -155,7 +155,7 @@ namespace SkyShoot.Game.Screens
 			SpriteBatch spriteBatch = ScreenManager.Instance.SpriteBatch;
 			graphicsDevice.Clear(Color.SkyBlue);
 
-			GameController.Instance.GameModel.Draw(spriteBatch);
+			GameController.Instance.DrawWorld(spriteBatch);
 		}
 
 		private void CreateControls()

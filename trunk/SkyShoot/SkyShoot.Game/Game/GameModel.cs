@@ -185,7 +185,7 @@ namespace SkyShoot.Game.Game
 
 		public DrawableGameObject GetGameObject(Guid id)
 		{
-			return _drawableGameObjects.First(x => x.Id == GameController.MyId);
+			return _drawableGameObjects.First(x => x.Id == id);
 		}
 	}
 }
