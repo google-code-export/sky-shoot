@@ -373,6 +373,27 @@ namespace SkyShoot.Game.Network
 			return login;
 		}
 
+		public AccountManagerErrorCode Logout()
+		{
+			AccountManagerErrorCode errorCode = AccountManagerErrorCode.UnknownError;
+			try
+			{
+				errorCode = _service.Logout();
+			}
+			catch (Exception e)
+			{
+				FatalError(e);
+			}
+
+			if (errorCode != AccountManagerErrorCode.Ok)
+			{
+				MessageBox.Message = "Logout error!";
+				MessageBox.Next = ScreenManager.ScreenEnum.LoginScreen;
+				ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MessageBoxScreen);
+			}
+			return errorCode;
+		}
+
 		public GameDescription[] GetGameList()
 		{
 			try

@@ -33,6 +33,8 @@ namespace SkyShoot.Service
 
 		private float _speed;
 
+		private string _username;
+
 		private readonly InstanceContext channelContext;
 
 		private readonly Queue<AGameEvent> _filteredEvents = new Queue<AGameEvent>();
@@ -90,6 +92,8 @@ namespace SkyShoot.Service
 		{
 			channelContext.Faulted -= OnChannelStopped;
 			channelContext.Closed -= OnChannelStopped;
+			LeaveGame();
+			Logout();
 			// all the trolology of closing the session on a high level
 		}
 
@@ -187,7 +191,14 @@ namespace SkyShoot.Service
 				return null;
 			}
 
+			_username = username;
+
 			return Id;
+		}
+
+		public AccountManagerErrorCode Logout()
+		{
+			return _accountManager.Logout(_username);
 		}
 
 		public GameDescription[] GetGameList()

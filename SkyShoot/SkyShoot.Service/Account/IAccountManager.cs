@@ -8,6 +8,8 @@ namespace SkyShoot.ServProgram.Account
 
 		AccountManagerErrorCode Login(string username, string password);
 
+		AccountManagerErrorCode Logout(string username);
+
 		AccountManagerErrorCode DeleteAccount(string username, string password);
 	}
 }

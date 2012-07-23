@@ -19,6 +19,9 @@ namespace SkyShoot.Contracts.Service
 		[OperationContract(IsInitiating = true)]
 		Guid? Login(string username, string password, out AccountManagerErrorCode errorCode);
 
+		[OperationContract(IsInitiating = true)]
+		AccountManagerErrorCode Logout();
+
 		[OperationContract]
 		GameDescription[] GetGameList();
 

@@ -158,6 +158,9 @@ namespace SkyShoot.Game.Screens
 						case AccountManagerErrorCode.InvalidUsernameOrPassword:
 							message = "Invalid username or password";
 							break;
+						case AccountManagerErrorCode.UserIsAlreadyOnline:
+							message = "You are already online";
+							break;
 						case AccountManagerErrorCode.UnknownError:
 							message = "Unknown error occured";
 							break;
