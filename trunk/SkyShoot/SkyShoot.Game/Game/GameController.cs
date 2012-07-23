@@ -48,7 +48,12 @@ namespace SkyShoot.Game.Game
 		// todo temporary
 		public static long StartTime { get; set; }
 
-		public WeaponType CurrentWeapon { get; private set; }
+		private int _weaponIndex;
+
+		public WeaponType CurrentWeapon
+		{
+			get { return _weaponKeys[_weaponIndex + Keys.D1]; }
+		}
 
 		public bool IsGameStarted { get; private set; }
 
@@ -56,7 +61,7 @@ namespace SkyShoot.Game.Game
 		/// <summary>
 		/// key -> weapon
 		/// </summary>
-		private IDictionary<Keys, WeaponType> _weaponKeys;
+		private readonly IDictionary<Keys, WeaponType> _weaponKeys;
 
 		private void Shoot(Vector2 direction)
 		{
@@ -109,6 +114,7 @@ namespace SkyShoot.Game.Game
 		#region обработка ввода
 
 		private DateTime _dateTime;
+		private DateTime _lastWeaponChanged;
 
 		public void HandleInput(Controller controller)
 		{
@@ -134,15 +140,39 @@ namespace SkyShoot.Game.Game
 				{
 					if (keyboardAndMouse.IsNewKeyPressed(weapon.Key))
 					{
-						CurrentWeapon = weapon.Value;
+						_weaponIndex = weapon.Key - Keys.D1;
 						weaponSwitched = true;
 					}
+				}
+
+				if ((DateTime.Now - _lastWeaponChanged).Milliseconds > 100)
+				{
+					int mouseWheelValue = keyboardAndMouse.MouseWheelValue;
+
+					if (mouseWheelValue < 0)
+					{
+						_weaponIndex++;
+						if (_weaponIndex == _weaponKeys.Count)
+							_weaponIndex = 0;
+						weaponSwitched = true;
+					}
+
+					if (mouseWheelValue > 0)
+					{
+						_weaponIndex--;
+						if (_weaponIndex == -1)
+							_weaponIndex = _weaponKeys.Count - 1;
+						weaponSwitched = true;
+					}
+					_lastWeaponChanged = DateTime.Now;
 				}
 
 				if (weaponSwitched)
 				{
 					ConnectionManager.Instance.ChangeWeapon(CurrentWeapon);
 				}
+
+				// todo remove this
 				if (keyboardAndMouse.IsNewKeyPressed(Keys.D7)) ConnectionManager.Instance.ChangeWeapon(WeaponType.MobGenerator);
 			}
 

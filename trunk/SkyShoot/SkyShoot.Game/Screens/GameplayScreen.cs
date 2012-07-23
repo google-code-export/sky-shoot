@@ -144,7 +144,6 @@ namespace SkyShoot.Game.Screens
 					_expLabel.Text = "Exp " + stat.Value.Experience.ToString(CultureInfo.InvariantCulture);
 					_fragLabel.Text = "Frag " + stat.Value.Frag.ToString(CultureInfo.InvariantCulture);
 					_creepsLabel.Text = "Creeps " + stat.Value.Creeps.ToString(CultureInfo.InvariantCulture);
-					//_healthPoints.Text = "Health points " + 100.ToString(CultureInfo.InvariantCulture);
 				}
 			}
 			_counter++;
@@ -163,16 +162,18 @@ namespace SkyShoot.Game.Screens
 
 			WeaponType currentWeapon = GameController.Instance.CurrentWeapon;
 
-			const int positionX = 735;
+			const int positionX = 720;
 			int positionY = 0;
 
 			SpriteFont = ContentManager.Load<SpriteFont>("Times New Roman");
 
 			SpriteBatch.Begin();
 
+			int currentIndex = 1;
 			foreach (var weapon in _weapons)
 			{
-				DrawString(weapon.Value, positionX, positionY, weapon.Key == currentWeapon ? Color.Red : Color.Black);
+				DrawString(currentIndex++ + "-" + weapon.Value, positionX, positionY,
+				           weapon.Key == currentWeapon ? Color.Red : Color.Black);
 				positionY += 20;
 			}
 
