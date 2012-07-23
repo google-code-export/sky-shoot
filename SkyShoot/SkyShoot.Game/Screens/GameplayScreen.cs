@@ -64,6 +64,7 @@ namespace SkyShoot.Game.Screens
 			Textures.Protection = ContentManager.Load<Texture2D>("Textures/BonusesIcons/Protection");
 			Textures.Speed = ContentManager.Load<Texture2D>("Textures/BonusesIcons/Speed");
 			Textures.Poisoner = ContentManager.Load<Texture2D>("Textures/Mobs/Spider1");
+			//Textures.Poisoning = ContentManager.Load<Texture2D>("Textures/Mobs/Poisoning");
 			Textures.Hydra = ContentManager.Load<Texture2D>("Textures/Mobs/Spider2");
 			Textures.ParentMob = ContentManager.Load<Texture2D>("Textures/Mobs/Spider3");
 			Textures.Caterpillar = ContentManager.Load<Texture2D>("Textures/Mobs/CaterpillerSegmentHead");
