@@ -23,23 +23,26 @@ namespace SkyShoot.Service.Weapon.Bullets
 		public override IEnumerable<AGameEvent> Do(AGameObject obj, List<AGameObject> newObjects, long time)
 		{
 			var res = new List<AGameEvent>(base.Do(obj, newObjects, time));
-			var afflicted = obj as MainSkyShootService; //Ради проверки на наличие зеркала
-			if (afflicted != null)
+			
+			
+			Bonuses.AGameBonus mirror = null;
+			if (obj.Is(EnumObjectType.Player))
 			{
-				var mirror = afflicted.GetBonus(EnumObjectType.Mirror);
-
-				if (obj.Is(EnumObjectType.Player) && (obj.HealthAmount >= Constants.POISON_BULLET_DAMAGE) &&
-					(mirror == null) && (obj.TeamIdentity != Owner.TeamIdentity))
-				{
-					var wp = new Pistol(Guid.NewGuid());//Просто для конструктора. Заглушка.
-					var poison = new Poisoning(Constants.POISONING_TICK_TIMES, wp, obj)
-								 {
-									 ObjectType = EnumObjectType.Poisoning,
-									 Coordinates = obj.Coordinates
-								 }; //Время жизни--через здоровье
-					newObjects.Add(poison);
-				}
+				var afflicted = obj as MainSkyShootService; //Ради проверки на наличие зеркала
+				if (afflicted != null) mirror = afflicted.GetBonus(EnumObjectType.Mirror);
 			}
+
+			if (obj.Is(EnumObjectType.LivingObject) && (obj.HealthAmount >= Constants.POISON_BULLET_DAMAGE) &&
+				(mirror == null) && (obj.TeamIdentity != Owner.TeamIdentity) && !obj.Is(EnumObjectType.Turret))
+			{
+				var wp = new Pistol(Guid.NewGuid());//Просто для конструктора. Заглушка.
+				var poison = new Poisoning(Constants.POISONING_TICK_TIMES, wp, obj)
+								{
+									ObjectType = EnumObjectType.Poisoning,
+								}; //Время жизни--через здоровье
+				newObjects.Add(poison);
+			}
+			
 			return res;
 		}
 	}

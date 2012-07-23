@@ -21,8 +21,8 @@ namespace SkyShoot.Service.Weapon
 			var mobs = new AGameObject[] { new ChildrenMob() };
 			foreach (var mob in mobs)
 			{
-				mob.Coordinates = new Vector2(Owner.Coordinates.X + Owner.RunVector.X*Owner.Radius*1.5f,
-				                              Owner.Coordinates.Y + Owner.RunVector.Y*Owner.Radius*1.5f);
+				mob.Coordinates = new Vector2(Owner.Coordinates.X + Owner.RunVector.X*(Owner.Radius + mob.Radius)*1.5f,
+				                              Owner.Coordinates.Y + Owner.RunVector.Y*(Owner.Radius + mob.Radius)*1.5f);
 				mob.TeamIdentity = Owner.TeamIdentity;
 			}
 			return mobs;
