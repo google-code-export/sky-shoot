@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Nuclex.UserInterface;
 using Nuclex.UserInterface.Controls.Desktop;
-using SkyShoot.Game.Game;
 using SkyShoot.Game.Network;
 
 namespace SkyShoot.Game.Screens
@@ -13,9 +12,6 @@ namespace SkyShoot.Game.Screens
 	{
 		private static Texture2D _texture;
 
-		private readonly ContentManager _content;
-
-		private SpriteBatch _spriteBatch;
 		private ButtonControl _continueButton;
 		private ButtonControl _optionsButton;
 		private ButtonControl _exitButton;
@@ -24,27 +20,23 @@ namespace SkyShoot.Game.Screens
 		{
 			CreateControls();
 			InitializeControls();
-
-			_content = new ContentManager(ScreenManager.Instance.Game.Services, "Content");
 		}
 
 		public override void Draw(GameTime gameTime)
 		{
-			_spriteBatch = ScreenManager.Instance.SpriteBatch;
-
-			_spriteBatch.Begin();
-			_spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
-			_spriteBatch.End();
+			SpriteBatch.Begin();
+			SpriteBatch.Draw(_texture, Vector2.Zero, Color.White);
+			SpriteBatch.End();
 		}
 
 		public override void LoadContent()
 		{
-			_texture = _content.Load<Texture2D>("Textures/screens/screen_06");
+			_texture = ContentManager.Load<Texture2D>("Textures/screens/screen_06");
 		}
 
 		public override void UnloadContent()
 		{
-			_content.Unload();
+			ContentManager.Unload();
 		}
 
 		private void CreateControls()

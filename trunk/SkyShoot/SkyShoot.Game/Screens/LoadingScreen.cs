@@ -15,7 +15,6 @@ namespace SkyShoot.Game.Screens
 		{
 			if (ShowLoadingMessage)
 			{
-				SpriteBatch spriteBatch = ScreenManager.Instance.SpriteBatch;
 				SpriteFont font = ScreenManager.Instance.Font;
 				const string message = "Loading...";
 				Viewport viewport = ScreenManager.Instance.GraphicsDevice.Viewport;
@@ -23,9 +22,9 @@ namespace SkyShoot.Game.Screens
 				Vector2 textSize = font.MeasureString(message);
 				Vector2 textPosition = (viewportSize - textSize) / 2;
 
-				spriteBatch.Begin();
-				spriteBatch.DrawString(font, message, textPosition, Color.White);
-				spriteBatch.End();
+				SpriteBatch.Begin();
+				SpriteBatch.DrawString(font, message, textPosition, Color.White);
+				SpriteBatch.End();
 			}
 		}
 	}

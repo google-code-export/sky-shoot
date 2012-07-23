@@ -12,7 +12,7 @@ namespace SkyShoot.Game.Input
 	internal class KeyboardAndMouse : Controller
 	{
 		private KeyboardState _currentKeyboardState;
-		private KeyboardState _lastKeyState;
+		private KeyboardState _lastKeyboardState;
 
 		private MouseState _currentMouseState;
 		private MouseState _lastMouseState;
@@ -76,7 +76,7 @@ namespace SkyShoot.Game.Input
 
 		public override void Update()
 		{
-			_lastKeyState = _currentKeyboardState;
+			_lastKeyboardState = _currentKeyboardState;
 			_lastMouseState = _currentMouseState;
 
 			_currentKeyboardState = InputManager.GetKeyboard().GetState();
@@ -117,7 +117,7 @@ namespace SkyShoot.Game.Input
 
 		public bool IsNewKeyPressed(Keys key)
 		{
-			return _currentKeyboardState.IsKeyUp(key) && _lastKeyState.IsKeyDown(key);
+			return _currentKeyboardState.IsKeyUp(key) && _lastKeyboardState.IsKeyDown(key);
 		}
 	}
 }
