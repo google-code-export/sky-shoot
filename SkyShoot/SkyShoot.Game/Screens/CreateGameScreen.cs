@@ -177,11 +177,6 @@ namespace SkyShoot.Game.Screens
 								Bounds =
 									new UniRectangle(new UniScalar(0.5f, -380f), new UniScalar(0.4f, 170f), 120, 32)
 							};
-
-			// todo !?
-			_gameModList.Bounds = new UniRectangle(new UniVector(-1000, -1000), new UniVector(100, 100));
-			_gameModeLabel.Bounds = new UniRectangle(new UniVector(-1000, -1000), new UniVector(100, 100));
-			_gameMode.Bounds = new UniRectangle(new UniVector(-1000, -1000), new UniVector(100, 100));
 		}
 
 		private void InitializeControls()
