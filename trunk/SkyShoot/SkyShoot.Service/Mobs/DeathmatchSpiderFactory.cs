@@ -55,7 +55,10 @@ namespace SkyShoot.ServProgram.Mobs
 				}
 				else
 				{
-					_simpleMobsWasBorn++;
+					if (_simpleMobsWasBorn < 250)
+					{
+						_simpleMobsWasBorn++;
+					}
 				}
 			}
 			while (!_allowedMobs.Contains(nextMob));//Генерирует следующее число, пока не попадёт в одно из массива.
