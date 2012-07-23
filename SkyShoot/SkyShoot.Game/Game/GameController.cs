@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -27,6 +28,15 @@ namespace SkyShoot.Game.Game
 
 		private GameController()
 		{
+			_weaponKeys = new Dictionary<Keys, WeaponType>
+			              {
+			              	{Keys.D1, WeaponType.Pistol},
+			              	{Keys.D2, WeaponType.Shotgun},
+			              	{Keys.D3, WeaponType.FlamePistol},
+			              	{Keys.D4, WeaponType.RocketPistol},
+			              	{Keys.D5, WeaponType.Heater},
+			              	{Keys.D6, WeaponType.TurretMaker}
+			              };
 		}
 
 		#endregion
@@ -38,7 +48,15 @@ namespace SkyShoot.Game.Game
 		// todo temporary
 		public static long StartTime { get; set; }
 
+		public WeaponType CurrentWeapon { get; private set; }
+
 		public bool IsGameStarted { get; private set; }
+
+		// todo move to another place
+		/// <summary>
+		/// key -> weapon
+		/// </summary>
+		private IDictionary<Keys, WeaponType> _weaponKeys;
 
 		private void Shoot(Vector2 direction)
 		{
@@ -109,12 +127,22 @@ namespace SkyShoot.Game.Game
 			if (controller is KeyboardAndMouse)
 			{
 				var keyboardAndMouse = controller as KeyboardAndMouse;
-				if (keyboardAndMouse.IsNewKeyPressed(Keys.D1)) ConnectionManager.Instance.ChangeWeapon(WeaponType.Pistol);
-				if (keyboardAndMouse.IsNewKeyPressed(Keys.D2)) ConnectionManager.Instance.ChangeWeapon(WeaponType.Shotgun);
-				if (keyboardAndMouse.IsNewKeyPressed(Keys.D3)) ConnectionManager.Instance.ChangeWeapon(WeaponType.FlamePistol);
-				if (keyboardAndMouse.IsNewKeyPressed(Keys.D4)) ConnectionManager.Instance.ChangeWeapon(WeaponType.RocketPistol);
-				if (keyboardAndMouse.IsNewKeyPressed(Keys.D5)) ConnectionManager.Instance.ChangeWeapon(WeaponType.Heater);
-				if (keyboardAndMouse.IsNewKeyPressed(Keys.D6)) ConnectionManager.Instance.ChangeWeapon(WeaponType.TurretMaker);
+
+				bool weaponSwitched = false;
+
+				foreach (var weapon in _weaponKeys)
+				{
+					if (keyboardAndMouse.IsNewKeyPressed(weapon.Key))
+					{
+						CurrentWeapon = weapon.Value;
+						weaponSwitched = true;
+					}
+				}
+
+				if (weaponSwitched)
+				{
+					ConnectionManager.Instance.ChangeWeapon(CurrentWeapon);
+				}
 				if (keyboardAndMouse.IsNewKeyPressed(Keys.D7)) ConnectionManager.Instance.ChangeWeapon(WeaponType.MobGenerator);
 			}
 
@@ -147,7 +175,8 @@ namespace SkyShoot.Game.Game
 			return MyId;
 		}
 
-		public AccountManagerErrorCode Logout() {
+		public AccountManagerErrorCode Logout()
+		{
 			return ConnectionManager.Instance.Logout();
 		}
 	}
