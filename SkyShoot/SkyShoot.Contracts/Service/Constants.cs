@@ -186,6 +186,9 @@
 		#region view
 
 		public const int HEALTH_TEXTURE_HEIGHT = 5;
+		public const float BACKGROUND_TEXTURE_LAYER = 1f;
+		public const float GAME_OBJECTS_TEXTURE_LAYER = 0.5f;
+		public const float HEALTHBAR_TEXTURE_LAYER = 0f;
 
 		#endregion
 	}

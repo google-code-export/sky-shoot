@@ -48,7 +48,6 @@ namespace SkyShoot.Service
 		public Queue<AGameEvent> NewEvents;
 		public List<AGameBonus> Bonuses;
 		public ExperienceTracker Tracker;
-		public string Username;
 
 		public delegate void SomebodyMovesHandler(AGameObject sender, Vector2 direction);
 		public delegate void ClientShootsHandler(AGameObject sender, Vector2 direction);
@@ -191,14 +190,12 @@ namespace SkyShoot.Service
 				return null;
 			}
 
-			Username = username;
-
 			return Id;
 		}
 
 		public AccountManagerErrorCode Logout()
 		{
-			return _accountManager.Logout(Username);
+			return _accountManager.Logout(Name);
 		}
 
 		public GameDescription[] GetGameList()

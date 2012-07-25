@@ -129,7 +129,15 @@ namespace SkyShoot.Game.View
 				if (_healthTextureWidth > 0)
 				{
 					HealthTexture = Textures.HealthRect(_healthTextureWidth, Constants.HEALTH_TEXTURE_HEIGHT, _healthTextureColor);
-					spriteBatch.Draw(HealthTexture, HealthPosition, null, Color.White);
+					spriteBatch.Draw(HealthTexture,
+									 HealthPosition,
+									 null,
+									 Color.White,
+									 0,
+									 Vector2.Zero,
+									 1,
+									 SpriteEffects.None,
+									 Constants.HEALTHBAR_TEXTURE_LAYER);
 				}
 			}
 
@@ -145,7 +153,7 @@ namespace SkyShoot.Game.View
 								 new Vector2(Animation.CurrentTexture.Width / 2f, Animation.CurrentTexture.Height / 2f),
 								 scale,
 								 SpriteEffects.None,
-								 0);
+								 Constants.GAME_OBJECTS_TEXTURE_LAYER);
 			}
 			else
 			{
@@ -166,8 +174,7 @@ namespace SkyShoot.Game.View
 								 new Vector2(StaticTexture.Width / 2f, StaticTexture.Height / 2f),
 								 scale,
 								 SpriteEffects.None,
-								 0);
-
+								 Constants.GAME_OBJECTS_TEXTURE_LAYER);
 			}
 		}
 

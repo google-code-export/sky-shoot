@@ -163,7 +163,7 @@ namespace SkyShoot.Game.Game
 
 			Camera2D.Position = myPosition;
 
-			spriteBatch.Begin(SpriteSortMode.Immediate,
+			spriteBatch.Begin(SpriteSortMode.BackToFront,
 							  BlendState.AlphaBlend,
 							  null,
 							  null,
