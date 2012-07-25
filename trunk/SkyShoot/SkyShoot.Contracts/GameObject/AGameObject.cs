@@ -280,6 +280,12 @@ namespace SkyShoot.Contracts.GameObject
 			}
 			var newCoord = RunVector * Speed * time + Coordinates;
 
+			if (Is(EnumObjectType.Player))
+			{
+				newCoord.X = MathHelper.Clamp(newCoord.X, 0, gameLevel.Width);
+				newCoord.Y = MathHelper.Clamp(newCoord.Y, 0, gameLevel.Height);
+			}
+
 			return newCoord;
 		}
 

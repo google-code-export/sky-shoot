@@ -11,7 +11,7 @@ namespace SkyShoot.Game.Game
 
 		private readonly SoundManager _soundManager;
 
-		public GameLevel(int width, int height, TileSet tileSet) :base(width, height, tileSet)
+		public GameLevel(int width, int height, TileSet tileSet) : base(width, height, tileSet)
 		{
 			_soundManager = SoundManager.Instance;
 

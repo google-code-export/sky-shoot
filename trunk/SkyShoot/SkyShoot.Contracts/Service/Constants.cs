@@ -166,8 +166,8 @@
 		public const int FPS = 1000 / 60;
 		public const float LEVELBORDER = 50;
 
-		public const int LEVEL_WIDTH = 1000;
-		public const int LEVEL_HEIGHT = 1000;
+		public const int LEVEL_WIDTH = 800;
+		public const int LEVEL_HEIGHT = 600;
 
 		public const int SHOOT_RATE = 1000 / 10;
 
