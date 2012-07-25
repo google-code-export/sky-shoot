@@ -219,6 +219,25 @@ namespace SkyShoot.Service.Session
 			//_updated = false;
 			System.Threading.Monitor.Exit(base._updating);
 		}
-
+		protected override void PlayerDead(MainSkyShootService player)
+		{
+			base.PlayerDead(player);
+			if (player.TeamIdentity.Members.Count == 0)
+			{
+				_sessionTeamsList.Teams.Remove(player.TeamIdentity);
+			}
+			if (_sessionTeamsList.Teams.Count <= 1)
+			{
+				if (_sessionTeamsList.Teams.Count == 1) {
+					List<AGameObject> remainingTeams = _sessionTeamsList.Teams.First().Members;
+					Debug.Assert(remainingTeams.Count == 1);
+					MainSkyShootService lastPlayer = remainingTeams.First() as MainSkyShootService;
+					System.Console.WriteLine(lastPlayer.Username + " wins");
+					lastPlayer.Disconnect();
+					player.TeamIdentity.Members.Remove(lastPlayer);
+				}
+				// TODO: final screen?
+			}
+		}
 	}
 }

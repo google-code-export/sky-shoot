@@ -88,15 +88,18 @@ namespace SkyShoot.Service.Weapon.Bullets
 				#region Изменение статистики
 				int teamMembers = 1;
 
-				if (owner != null) teamMembers = owner.TeamIdentity.Members.Count;
+				if (owner != null)
+				{
+					teamMembers = owner.TeamIdentity.Members.Count;
+					owner.Tracker.AddExpPlayer(owner, obj, (int)(Damage * damageMod));
 
-				if (owner != null) owner.Tracker.AddExpPlayer(owner, obj, (int)(Damage * damageMod));
-
-				if (owner != null) foreach (AGameObject member in owner.TeamIdentity.Members)
+					foreach (AGameObject member in owner.TeamIdentity.Members)
 					{
 						var player = member as MainSkyShootService;
-						if (player != null) player.Tracker.AddExpTeam(player, obj, (int)(Damage * damageMod), teamMembers);
+						if (player != null) //TODO: assert?
+							player.Tracker.AddExpTeam(player, obj, (int)(Damage * damageMod), teamMembers);
 					}
+				}
 				#endregion
 
 				res.Add(new ObjectHealthChanged(obj.HealthAmount, obj.Id, time));
