@@ -96,8 +96,7 @@ namespace SkyShoot.ServProgram.Mobs
 			//if(obj.Is(EnumObjectType.Mob))
 			//  return;
 
-			// ничего не кусаем окромя игроков злобных
-			if (Wait < 1 && TeamIdentity != obj.TeamIdentity && obj != null && obj.Is(EnumObjectType.LivingObject)) //Кусать игроков и турели
+			if (Wait < 1 && TeamIdentity != obj.TeamIdentity && obj != null && obj.Is(EnumObjectType.LivingObject)) //Кусать живые обьекты не из своей команды
 			{
 				if (obj.Is(EnumObjectType.Player))
 				{
