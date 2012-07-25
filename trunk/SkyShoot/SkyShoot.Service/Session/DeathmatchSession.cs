@@ -232,7 +232,7 @@ namespace SkyShoot.Service.Session
 					List<AGameObject> remainingTeams = _sessionTeamsList.Teams.First().Members;
 					Debug.Assert(remainingTeams.Count == 1);
 					MainSkyShootService lastPlayer = remainingTeams.First() as MainSkyShootService;
-					System.Console.WriteLine(lastPlayer.Username + " wins");
+					System.Console.WriteLine(lastPlayer.Name + " wins");
 					lastPlayer.Disconnect();
 					player.TeamIdentity.Members.Remove(lastPlayer);
 				}

@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SkyShoot.Contracts.Session;
 using SkyShoot.Game.View;
+using SkyShoot.Contracts.Service;
 
 namespace SkyShoot.Game.Game
 {
@@ -48,7 +49,15 @@ namespace SkyShoot.Game.Game
 
 		public void Draw(SpriteBatch spriteBatch)
 		{
-			spriteBatch.Draw(_texture, Vector2.Zero, new Rectangle(0, 0, Width, Height), Color.White);
+			spriteBatch.Draw(_texture,
+							  Vector2.Zero,
+							  new Rectangle(0, 0, Width, Height),
+							  Color.White,
+							  0,
+							  Vector2.Zero,
+							  1,
+							  SpriteEffects.None,
+							  Constants.BACKGROUND_TEXTURE_LAYER);
 		}
 	}
 }
