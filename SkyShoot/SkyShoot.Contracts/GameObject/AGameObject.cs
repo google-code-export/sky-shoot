@@ -38,7 +38,7 @@ namespace SkyShoot.Contracts.GameObject
 			 */
 
 			[EnumMember]//!!
-			Block = 0x020000000000000L, //0x1 << CommonAttributesShift, //1125899906842624
+			Block = 0x020000000000000UL, //0x1 << CommonAttributesShift, //1125899906842624
 			[EnumMember]
 			LivingObject = 0x0001UL | Block, //1125899906842625
 			[EnumMember]
