@@ -164,13 +164,19 @@ namespace SkyShoot.Game.Screens
 			foreach (var weapon in _weapons)
 			{
 				DrawString(currentIndex++ + "-" + weapon.Value, positionX, positionY,
-				           weapon.Key == currentWeapon ? Color.Red : Color.Black);
+						   weapon.Key == currentWeapon ? Color.Red : Color.Black);
 				positionY += 20;
 			}
 
 			SpriteBatch.End();
 
 			#endregion
+		}
+
+		public override void Destroy()
+		{
+			base.Destroy();
+			GameController.Instance.Destroy();
 		}
 
 		private void CreateControls()

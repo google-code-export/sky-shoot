@@ -165,6 +165,10 @@ namespace SkyShoot.Game.Screens
 		protected override void UnloadContent()
 		{
 			ContentManager.Unload();
+			foreach (GameScreen gameScreen in _screens.Values)
+			{
+				gameScreen.Destroy();
+			}
 		}
 	}
 }
