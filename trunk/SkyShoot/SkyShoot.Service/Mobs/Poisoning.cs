@@ -23,15 +23,15 @@ namespace SkyShoot.ServProgram.Mobs
 			_shootingDelay = Constants.POISONTICK_ATTACK_RATE;
 			Damage = Constants.POISONTICK_DAMAGE;
 			TeamIdentity = null;
-			Coordinates.X = -100;
-			Coordinates.Y = -100;
+			Coordinates.X = -300;
+			Coordinates.Y = -300;
 		}
 
 		public override IEnumerable<AGameEvent> Think(List<AGameObject> gameObjects, List<AGameObject> newGameObjects, long time)
 		{
 			var res = new List<AGameEvent>(base.Think(gameObjects, newGameObjects, time));
-			Coordinates.X = -100;
-			Coordinates.Y = -100;
+			Coordinates.X = -300;
+			Coordinates.Y = -300;
 			
 			if (time - _lastShoot > _shootingDelay)
 			{

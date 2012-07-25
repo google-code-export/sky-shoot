@@ -145,7 +145,7 @@
 		#region  CATERPILLAR
 		public const float CATERPILLAR_SPEED = 0.06f;
 		public const float CATERPILLAR_RADIUS = 3f;
-		public const long CATERPILLAR_CHILD_BORN_INTERVAL = 100000;
+		public const long CATERPILLAR_CHILD_BORN_INTERVAL = 3000;
 		public const float CATERPILLAR_START_HEALTH = .7f;
 		public const float CATERPILLAR_DAMAGE = 0.12f;
 		#endregion
@@ -154,7 +154,7 @@
 		public const float POISONTICK_DAMAGE = 3f;
 		public const int POISONTICK_ATTACK_RATE = 2000;
 		public const float POISONING_TICK_TIMES = 5f; //Сколько раз потравит
-		public const float POISONING_MOB_SPEED = PLAYER_DEFAULT_SPEED * 3.0f; //Не нужна ему скорость
+		public const float POISONING_MOB_SPEED = 0;//PLAYER_DEFAULT_SPEED * 3.0f; //Не нужна ему скорость
 		#endregion
 
 
