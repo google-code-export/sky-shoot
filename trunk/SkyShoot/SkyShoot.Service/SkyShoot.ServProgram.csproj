@@ -126,7 +126,7 @@
     <Compile Include="Session\CoopSession.cs" />
     <Compile Include="Session\DeathmatchSession.cs" />
     <Compile Include="Statistics\ExponentialExpTracker.cs" />
-    <Compile Include="Statistics\ExpTracker.cs" />
+    <Compile Include="Statistics\ExperienceTracker.cs" />
     <Compile Include="Statistics\LinearExpTracker.cs" />
     <Compile Include="Turrets\Turret.cs" />
     <Compile Include="Walls\Brick.cs" />

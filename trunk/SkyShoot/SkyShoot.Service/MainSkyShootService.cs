@@ -47,7 +47,7 @@ namespace SkyShoot.Service
 		public string Name;
 		public Queue<AGameEvent> NewEvents;
 		public List<AGameBonus> Bonuses;
-		public ExpTracker Tracker;
+		public ExperienceTracker Tracker;
 		public string Username;
 
 		public delegate void SomebodyMovesHandler(AGameObject sender, Vector2 direction);
