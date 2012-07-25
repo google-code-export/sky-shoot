@@ -356,7 +356,7 @@ namespace SkyShoot.Service.Session
 			var events = new List<AGameEvent>();
 			//SomebodyDied(mob);
 			//mob.MeMoved -= SomebodyMoved;
-			if ((mob.Is(AGameObject.EnumObjectType.LivingObject)) && !mob.Is(AGameObject.EnumObjectType.Poisoning) && !mob.Is(AGameObject.EnumObjectType.Turret))
+			if ((mob.Is(AGameObject.EnumObjectType.LivingObject)) && !mob.Is(AGameObject.EnumObjectType.Poisoning) && !mob.Is(AGameObject.EnumObjectType.Turret) && !mob.Is(AGameObject.EnumObjectType.Caterpillar))
 			{
 				AGameBonus gameBonus = _bonusFactory.CreateBonus(mob.Coordinates);
 				gameBonus.IsActive = true;
