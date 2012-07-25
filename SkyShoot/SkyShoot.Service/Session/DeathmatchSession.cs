@@ -49,18 +49,19 @@ namespace SkyShoot.Service.Session
 
 				base._gameObjects[i].TeamIdentity = base._sessionTeamsList.GetTeamByNymber(nextTeamRefill);//Закидываем игроков поочерёдно в разные команды
 				base._gameObjects[i].TeamIdentity.Members.Add(_gameObjects[i]);
-				nextTeamRefill++;
-
+				
 				player.MeMoved += SomebodyMoved;
 				player.MeShot += SomebodyShot;
 				player.MeChangeWeapon += SomebodyChangedWeapon;
 
-				player.Coordinates = new Vector2(500 + (randomNumberGenerator.Next() % 200 - 100), 500 + (randomNumberGenerator.Next() % 200 - 100));
+				player.Coordinates = new Vector2((float)(500 + (400 * Math.Sin(2 * nextTeamRefill * Math.PI / PlayersCount()))),
+					(float)(500 + 400 * Math.Cos(2 * nextTeamRefill * Math.PI / PlayersCount())));//Раскидываем игроков подальше друг от друга. Командами.
 				player.Speed = Constants.PLAYER_DEFAULT_SPEED;
 				player.Radius = Constants.PLAYER_RADIUS;
 				player.Weapon = new Weapon.Pistol(Guid.NewGuid(), player);
 				player.RunVector = new Vector2(0, 0);
 				player.MaxHealthAmount = player.HealthAmount = Constants.PLAYER_HEALTH;
+				nextTeamRefill++;
 			}
 
 			base._gameObjects.AddRange(_wallFactory.CreateWalls());
