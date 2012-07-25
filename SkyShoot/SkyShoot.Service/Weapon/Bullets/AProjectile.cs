@@ -88,11 +88,9 @@ namespace SkyShoot.Service.Weapon.Bullets
 				obj.HealthAmount -= Damage * damageMod;
 
 				#region Изменение статистики
-				int teamMembers = 1;
-
 				if (owner != null)
 				{
-					teamMembers = owner.TeamIdentity.Members.Count;
+					int teamMembers = owner.TeamIdentity.Members.Count;
 					owner.Tracker.AddExpPlayer(owner, obj, (int)(dmg));
 
 					foreach (AGameObject member in owner.TeamIdentity.Members)

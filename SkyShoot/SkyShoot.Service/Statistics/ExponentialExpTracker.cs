@@ -4,8 +4,8 @@ using System.Diagnostics;
 namespace SkyShoot.Service.Statistics
 {
 	class ExponentialExpTracker : ExperienceTracker
-	{
-		public override void AddExpPlayer(AGameObject owner, AGameObject wounded, int damage)
+	{ 
+		public override void AddExpPlayer(AGameObject owner, AGameObject wounded, int damage) // Опыт подстрелившему
 		{
 			Debug.Assert(owner != null);
 			if (wounded.Is(AGameObject.EnumObjectType.Player) && wounded.HealthAmount < 0.1) 
@@ -21,7 +21,7 @@ namespace SkyShoot.Service.Statistics
 			}
 		}
 
-		public override void AddExpTeam(AGameObject player, AGameObject wounded, int damage, int teamMembers)
+		public override void AddExpTeam(AGameObject player, AGameObject wounded, int damage, int teamMembers) // Опыт члену команды подстрелившего
 		{
 			Debug.Assert(player != null);
 			Value.Experience += damage / teamMembers;
