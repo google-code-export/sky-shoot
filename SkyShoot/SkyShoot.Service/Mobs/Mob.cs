@@ -55,10 +55,6 @@ namespace SkyShoot.ServProgram.Mobs
 			//{
 			//    RunVector = new Vector2(500f - Coordinates.X, 500f - Coordinates.Y);
 			//}
-			if ((Target == null) || (Target.IsActive))
-			{
-				RunVector = new Vector2(500f - Coordinates.X, 500f - Coordinates.Y);
-			}
 		}
 
 		public override IEnumerable<AGameEvent> Think(List<AGameObject> gameObjects, List<AGameObject> newGameObjects, long time)
@@ -83,10 +79,7 @@ namespace SkyShoot.ServProgram.Mobs
 				Wait--;
 			}
 			ShootVector = RunVector;
-			if ((Target == null) || (Target.IsActive))
-			{
-				RunVector = new Vector2(500f - Coordinates.X, 500f - Coordinates.Y);
-			}
+		
 			return res;
 		}
 
