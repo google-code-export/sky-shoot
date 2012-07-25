@@ -98,7 +98,17 @@ namespace SkyShoot.Game.Game
 			ConnectionManager.Instance.Stop();
 			_gameModel = null;
 			ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.MainMenuScreen);
+
 			IsGameStarted = false;
+		}
+
+		public void Destroy()
+		{
+			if (IsGameStarted)
+			{
+				// todo leave game
+				ConnectionManager.Instance.Stop();
+			}
 		}
 
 		public void DrawWorld(SpriteBatch spriteBatch)
