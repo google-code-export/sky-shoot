@@ -51,6 +51,10 @@ namespace SkyShoot.ServProgram.Mobs
 					Target = pl;
 				}
 			}
+			//if ((Target == null) || (Target.IsActive))
+			//{
+			//    RunVector = new Vector2(500f - Coordinates.X, 500f - Coordinates.Y);
+			//}
 			if ((Target == null) || (Target.IsActive))
 			{
 				RunVector = new Vector2(500f - Coordinates.X, 500f - Coordinates.Y);
