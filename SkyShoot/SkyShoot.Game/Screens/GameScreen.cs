@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Nuclex.UserInterface;
 using SkyShoot.Game.Input;
 using Color = Microsoft.Xna.Framework.Color;
+using SkyShoot.Contracts.Service;
 
 namespace SkyShoot.Game.Screens
 {
@@ -86,7 +87,7 @@ namespace SkyShoot.Game.Screens
 				text,
 				new Vector2(positionX, positionY),
 				color, 0, new Vector2(0f, 0f), 0.8f, SpriteEffects.None,
-				layerDepth: 1f);
+				layerDepth: Constants.TEXT_TEXTURE_LAYER);
 		}
 	}
 }

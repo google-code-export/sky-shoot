@@ -166,8 +166,8 @@
 		public const int FPS = 1000 / 60;
 		public const float LEVELBORDER = 50;
 
-		public const int LEVEL_WIDTH = 800;
-		public const int LEVEL_HEIGHT = 600;
+		public const int LEVEL_WIDTH = 1500;
+		public const int LEVEL_HEIGHT = 1500;
 
 		public const int SHOOT_RATE = 1000 / 10;
 
@@ -187,8 +187,10 @@
 
 		public const int HEALTH_TEXTURE_HEIGHT = 5;
 		public const float BACKGROUND_TEXTURE_LAYER = 1f;
-		public const float GAME_OBJECTS_TEXTURE_LAYER = 0.5f;
-		public const float HEALTHBAR_TEXTURE_LAYER = 0f;
+		public const float WALLS_TEXTURE_LAYER = 0.9f;
+		public const float MOVING_GAME_OBJECTS_TEXTURE_LAYER = 0.2f;
+		public const float HEALTHBAR_TEXTURE_LAYER = 0.1f;
+		public const float TEXT_TEXTURE_LAYER = 0f;
 
 		#endregion
 	}

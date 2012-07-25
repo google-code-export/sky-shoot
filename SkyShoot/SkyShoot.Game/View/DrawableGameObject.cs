@@ -143,6 +143,13 @@ namespace SkyShoot.Game.View
 
 			float scale = 0.5f;
 
+			float textureLayer = Constants.MOVING_GAME_OBJECTS_TEXTURE_LAYER;
+
+			if (Is(EnumObjectType.Wall))
+			{
+				textureLayer = Constants.WALLS_TEXTURE_LAYER;
+			}
+
 			if (Animation != null)
 			{
 				spriteBatch.Draw(Animation.CurrentTexture,
@@ -153,7 +160,7 @@ namespace SkyShoot.Game.View
 								 new Vector2(Animation.CurrentTexture.Width / 2f, Animation.CurrentTexture.Height / 2f),
 								 scale,
 								 SpriteEffects.None,
-								 Constants.GAME_OBJECTS_TEXTURE_LAYER);
+								 textureLayer);
 			}
 			else
 			{
@@ -174,7 +181,7 @@ namespace SkyShoot.Game.View
 								 new Vector2(StaticTexture.Width / 2f, StaticTexture.Height / 2f),
 								 scale,
 								 SpriteEffects.None,
-								 Constants.GAME_OBJECTS_TEXTURE_LAYER);
+								 textureLayer);
 			}
 		}
 
