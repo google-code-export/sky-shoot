@@ -33,8 +33,6 @@ namespace SkyShoot.Service
 
 		private float _speed;
 
-		private string _username;
-
 		private readonly InstanceContext channelContext;
 
 		private readonly Queue<AGameEvent> _filteredEvents = new Queue<AGameEvent>();
@@ -50,6 +48,7 @@ namespace SkyShoot.Service
 		public Queue<AGameEvent> NewEvents;
 		public List<AGameBonus> Bonuses;
 		public ExpTracker Tracker;
+		public string Username;
 
 		public delegate void SomebodyMovesHandler(AGameObject sender, Vector2 direction);
 		public delegate void ClientShootsHandler(AGameObject sender, Vector2 direction);
@@ -192,14 +191,14 @@ namespace SkyShoot.Service
 				return null;
 			}
 
-			_username = username;
+			Username = username;
 
 			return Id;
 		}
 
 		public AccountManagerErrorCode Logout()
 		{
-			return _accountManager.Logout(_username);
+			return _accountManager.Logout(Username);
 		}
 
 		public GameDescription[] GetGameList()

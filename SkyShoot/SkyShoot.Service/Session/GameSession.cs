@@ -373,7 +373,7 @@ namespace SkyShoot.Service.Session
 			return events;
 		}
 
-		protected void PlayerDead(MainSkyShootService player)
+		protected virtual void PlayerDead(MainSkyShootService player)
 		{
 			if (player == null)
 			{
