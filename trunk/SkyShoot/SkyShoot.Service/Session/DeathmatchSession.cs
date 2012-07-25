@@ -60,7 +60,7 @@ namespace SkyShoot.Service.Session
 				player.Radius = Constants.PLAYER_RADIUS;
 				player.Weapon = new Weapon.Pistol(Guid.NewGuid(), player);
 				player.RunVector = new Vector2(0, 0);
-				player.MaxHealthAmount = player.HealthAmount = Constants.PLAYER_HEALTH * 10;
+				player.MaxHealthAmount = player.HealthAmount = Constants.PLAYER_HEALTH * 10;//Только в этом режиме.
 				nextTeamRefill++;
 			}
 
