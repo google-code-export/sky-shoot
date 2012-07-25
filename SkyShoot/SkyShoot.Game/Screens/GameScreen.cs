@@ -1,4 +1,3 @@
-
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -36,12 +35,20 @@ namespace SkyShoot.Game.Screens
 
 		public bool IsActive { get; set; }
 
+		/// <summary>
+		/// Загрузка контента, необходимого
+		/// для отображения экрана 
+		/// </summary>
 		public virtual void LoadContent()
 		{
 		}
 
-		public virtual void UnloadContent()
+		/// <summary>
+		/// Уничтожение экрана, освобождение всех ресурсов
+		/// </summary>
+		public virtual void Destroy()
 		{
+			
 		}
 
 		public virtual void Update(GameTime gameTime)
@@ -54,6 +61,22 @@ namespace SkyShoot.Game.Screens
 
 		public virtual void Draw(GameTime gameTime)
 		{
+		}
+
+		/// <summary>
+		/// Вызывается перед отображением экрана
+		/// </summary>
+		public virtual void OnShow()
+		{
+			
+		}
+
+		/// <summary>
+		/// Вызывается при скрытии экрана
+		/// </summary>
+		public virtual void OnHide()
+		{
+			
 		}
 
 		protected void DrawString(string text, float positionX, float positionY, Color color)

@@ -36,27 +36,29 @@ namespace SkyShoot.Game.Screens
 		public override void LoadContent()
 		{
 			_texture = ContentManager.Load<Texture2D>("Textures/screens/screen_05_fix");
+		}
 
-			// todo move to another place
-			// кол-во игроков
-			_maxPlayersList.SelectedItems[0] = 0;
+		public override void OnShow()
+		{
+			const int maxPlayers = 0;
+			const int tile = 0;
+			const int gameMode = 0;
+
+			// число игроков
+			_maxPlayersList.SelectedItems[0] = maxPlayers;
+			_maxPlayers.Text = _maxPlayersList.Items[maxPlayers];
 
 			// карта
 			_tileList.SelectedItems[0] = 0;
+			_tile.Text = _tileList.Items[tile];
 
 			// мод
 			_gameModList.SelectedItems[0] = 0;
-		}
-
-		public override void UnloadContent()
-		{
-			ContentManager.Unload();
+			_gameMode.Text = _gameModList.Items[gameMode];
 		}
 
 		public override void Update(GameTime gameTime)
 		{
-			if (_maxPlayersList == null) return;
-
 			_maxPlayers.Text = _maxPlayersList.Items[_maxPlayersList.SelectedItems[0]];
 			_tile.Text = _tileList.Items[_tileList.SelectedItems[0]];
 			_gameMode.Text = _gameModList.Items[_gameModList.SelectedItems[0]];
@@ -94,12 +96,13 @@ namespace SkyShoot.Game.Screens
 			_tileList.Items.Add("Grass");
 			_tileList.Items.Add("Sand");
 			_tileList.Items.Add("Volcanic");
+			_tileList.SelectionMode = ListSelectionMode.Single;
+			_tileList.SelectedItems.Add(0);
+
 			_tileList.Slider.Bounds.Location.X.Offset -= 1.0f;
 			_tileList.Slider.Bounds.Location.Y.Offset += 1.0f;
 			_tileList.Slider.Bounds.Size.Y.Offset -= 2.0f;
-			_tileList.SelectionMode = ListSelectionMode.Single;
-			_tileList.SelectedItems.Add(4);
-
+			
 			// выбор режима игры
 			_gameModeLabel = new LabelControl
 								{
@@ -114,52 +117,42 @@ namespace SkyShoot.Game.Screens
 			_maxPlayersList.Slider.Bounds.Location.X.Offset -= 1.0f;
 			_maxPlayersList.Slider.Bounds.Location.Y.Offset += 1.0f;
 			_maxPlayersList.Slider.Bounds.Size.Y.Offset -= 2.0f;
-			_maxPlayersList.SelectionMode = ListSelectionMode.Single;
-			_maxPlayersList.SelectedItems.Add(4);
-
+			
 			for (int i = 1; i < 11; i++)
 			{
 				_maxPlayersList.Items.Add(i + string.Empty);
 			}
+			_maxPlayersList.SelectionMode = ListSelectionMode.Single;
+			_maxPlayersList.SelectedItems.Add(0);
 
 			_maxPlayers = new LabelControl
 							{
 								Bounds = new UniRectangle(500f, 50f, 150f, 24f),
-								Text = _maxPlayersList.Items[_maxPlayersList.SelectedItems[0]] + string.Empty
 							};
 
 			_tile = new LabelControl
 						{
 							Bounds = new UniRectangle(500f, 80f, 150f, 24f),
-							Text = _tileList.Items[_tileList.SelectedItems[0]] + string.Empty
 						};
 
 			_gameModList = new ListControl
 							{
 								Bounds = new UniRectangle(230f, -4f, 150f, 300f)
 							};
+
 			_gameModList.Items.Add("Coop");
 			_gameModList.Items.Add("Deathmatch");
 			_gameModList.Items.Add("Campaign");
+			_gameModList.SelectionMode = ListSelectionMode.Single;
+			_gameModList.SelectedItems.Add(0);
+
 			_gameModList.Slider.Bounds.Location.X.Offset -= 1.0f;
 			_gameModList.Slider.Bounds.Location.Y.Offset += 1.0f;
 			_gameModList.Slider.Bounds.Size.Y.Offset -= 2.0f;
-			_gameModList.SelectionMode = ListSelectionMode.Single;
-			_gameModList.SelectedItems.Add(4);
-
-			// кол-во игроков
-			_maxPlayersList.SelectedItems[0] = 0;
-
-			// карта
-			_tileList.SelectedItems[0] = 0;
-
-			// мод
-			_gameModList.SelectedItems[0] = 0;
 
 			_gameMode = new LabelControl
 							{
 								Bounds = new UniRectangle(500f, 110f, 150f, 24f),
-								Text = _gameModList.Items[_gameModList.SelectedItems[0]] + string.Empty
 							};
 
 			// Create Button

@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Nuclex.UserInterface;
 using Nuclex.UserInterface.Controls.Desktop;
@@ -26,11 +25,6 @@ namespace SkyShoot.Game.Screens
 		public override void LoadContent()
 		{
 			_texture = ContentManager.Load<Texture2D>("Textures/screens/message_box");
-		}
-
-		public override void UnloadContent()
-		{
-			ContentManager.Unload();
 		}
 
 		public void OkButtonPressed(object sender, EventArgs e)

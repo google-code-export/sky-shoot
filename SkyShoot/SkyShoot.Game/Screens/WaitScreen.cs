@@ -64,14 +64,6 @@ namespace SkyShoot.Game.Screens
 			{
 				_playersList.Items.Add(player);
 			}
-
-			// ToDo: Разобраться
-			_playersList.SelectedItems.Add(4);
-		}
-
-		public override void UnloadContent()
-		{
-			ContentManager.Unload();
 		}
 
 		public void ChangePlayerList(string[] names)

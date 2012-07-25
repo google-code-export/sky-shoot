@@ -86,10 +86,13 @@ namespace SkyShoot.Game.Screens
 		{
 			if (_screens.ContainsKey(screenName))
 			{
+				if (_activeScreen != null)
+					_activeScreen.OnHide();
+
 				_activeScreen = _screens[screenName];
 				_gui.Screen = _activeScreen;
 
-				_activeScreen.LoadContent();
+				_activeScreen.OnShow();
 			}
 			else
 			{
@@ -152,14 +155,16 @@ namespace SkyShoot.Game.Screens
 			RegisterScreen(ScreenEnum.LoadingScreen, new LoadingScreen());
 			RegisterScreen(ScreenEnum.GameplayScreen, new GameplayScreen());
 			RegisterScreen(ScreenEnum.GameMenuScreen, new GameMenuScreen());
+
+			foreach (var gameScreen in _screens.Values)
+			{
+				gameScreen.LoadContent();
+			}
 		}
 
 		protected override void UnloadContent()
 		{
-			foreach (GameScreen screen in _screens.Values)
-			{
-				screen.UnloadContent();
-			}
+			ContentManager.Unload();
 		}
 	}
 }
