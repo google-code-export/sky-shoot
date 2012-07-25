@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.GameObject;
 using SkyShoot.Contracts.Service;
@@ -83,6 +84,7 @@ namespace SkyShoot.Service.Weapon.Bullets
 						damageMod = shield == null ? 1f : shield.DamageFactor;
 					}
 				}
+				var dmg = Math.Min(obj.HealthAmount, Damage*damageMod);
 				obj.HealthAmount -= Damage * damageMod;
 
 				#region Изменение статистики
@@ -91,13 +93,13 @@ namespace SkyShoot.Service.Weapon.Bullets
 				if (owner != null)
 				{
 					teamMembers = owner.TeamIdentity.Members.Count;
-					owner.Tracker.AddExpPlayer(owner, obj, (int)(Damage * damageMod));
+					owner.Tracker.AddExpPlayer(owner, obj, (int)(dmg));
 
 					foreach (AGameObject member in owner.TeamIdentity.Members)
 					{
 						var player = member as MainSkyShootService;
-						if (player != null) //TODO: assert?
-							player.Tracker.AddExpTeam(player, obj, (int)(Damage * damageMod), teamMembers);
+						Debug.Assert(player != null);
+						player.Tracker.AddExpTeam(player, obj, (int)(dmg), teamMembers);
 					}
 				}
 				#endregion

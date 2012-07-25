@@ -392,7 +392,9 @@ namespace SkyShoot.Service.Session
 
 		public void PlayerLeave(MainSkyShootService player)
 		{
-			LocalGameDescription.Players.Remove(player.Name);
+			if (LocalGameDescription.Players.Contains(player.Name)) LocalGameDescription.Players.Remove(player.Name);
+
+			else return;
 
 			player.MeMoved -= SomebodyMoved;
 			player.MeShot -= SomebodyShot;

@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace SkyShoot.Service.Statistics
 {
-	class ExponentialExpTracker : ExpTracker
+	class ExponentialExpTracker : ExperienceTracker
 	{
 		public override void AddExpPlayer(AGameObject owner, AGameObject wounded, int damage)
 		{
