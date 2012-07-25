@@ -113,15 +113,6 @@ namespace SkyShoot.Game.Screens
 			ScreenManager.Instance.Game.ResetElapsedTime();
 		}
 
-		public override void UnloadContent()
-		{
-			Textures.PlayerAnimation.Clear();
-			Textures.SpiderAnimation.Clear();
-
-			if (ContentManager != null)
-				ContentManager.Unload();
-		}
-
 		public override void HandleInput(Controller controller)
 		{
 			GameController.Instance.HandleInput(controller);

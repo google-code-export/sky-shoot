@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Globalization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Nuclex.UserInterface;
@@ -23,7 +24,7 @@ namespace SkyShoot.Game.Screens
 
 		private ListControl _gameList;
 
-		private GameDescription[] _tempGameList;
+		private GameDescription[] _gameDescriptions;
 
 		public MultiplayerScreen()
 		{
@@ -31,28 +32,28 @@ namespace SkyShoot.Game.Screens
 			InititalizeControls();
 		}
 
-		public override void LoadContent()
+		public override void OnShow()
 		{
-			_texture = ContentManager.Load<Texture2D>("Textures/screens/screen_05_fix");
+			base.OnShow();
 
-			// ToDo: запрос списка игр с сервера и его вывод
-			_tempGameList = ConnectionManager.Instance.GetGameList();
+			_gameDescriptions = ConnectionManager.Instance.GetGameList();
 
-			if (_tempGameList == null)
+			// todo ?
+			if (_gameDescriptions == null)
 				return;
 
-			foreach (GameDescription gameDescription in _tempGameList)
+			_gameList.Items.Clear();
+			foreach (GameDescription gameDescription in _gameDescriptions)
 			{
 				_gameList.Items.Add(gameDescription.ToString());
 			}
 
-			_gameList.SelectedItems.Add(4);
-			_gameList.SelectedItems[0] = 0;
+			// _gameList.SelectedItems[0] = 0;
 		}
 
-		public override void UnloadContent()
+		public override void LoadContent()
 		{
-			ContentManager.Unload();
+			_texture = ContentManager.Load<Texture2D>("Textures/screens/screen_05_fix");
 		}
 
 		public override void Draw(GameTime gameTime)
@@ -138,26 +139,22 @@ namespace SkyShoot.Game.Screens
 
 		private void JoinGameButtonPressed(object sender, EventArgs args)
 		{
-			_tempGameList = ConnectionManager.Instance.GetGameList();
-
-			if (_tempGameList == null)
+			if (_gameList.Items.Count == 0)
 				return;
 
-			if (_gameList.Items.Count != 0)
+			if (!ConnectionManager.Instance.JoinGame(_gameDescriptions[_gameList.SelectedItems[0]]))
 			{
-				if (!ConnectionManager.Instance.JoinGame(_tempGameList[_gameList.SelectedItems[0]]))
-				{
-					Trace.WriteLine("Join game failed");
-				}
-				else
-				{
-					WaitScreen.Tile = _tempGameList[_gameList.SelectedItems[0]].UsedTileSet + string.Empty;
-					WaitScreen.GameMode = _tempGameList[_gameList.SelectedItems[0]].GameType + string.Empty;
-					WaitScreen.MaxPlayers = _tempGameList[_gameList.SelectedItems[0]].MaximumPlayersAllowed + string.Empty;
-					WaitScreen.GameId = _tempGameList[_gameList.SelectedItems[0]].GameId;
+				Trace.WriteLine("Join game failed");
+			}
+			else
+			{
+				WaitScreen.Tile = _gameDescriptions[_gameList.SelectedItems[0]].UsedTileSet.ToString();
+				WaitScreen.GameMode = _gameDescriptions[_gameList.SelectedItems[0]].GameType.ToString();
+				WaitScreen.MaxPlayers =
+					_gameDescriptions[_gameList.SelectedItems[0]].MaximumPlayersAllowed.ToString(CultureInfo.InvariantCulture);
+				WaitScreen.GameId = _gameDescriptions[_gameList.SelectedItems[0]].GameId;
 
-					ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.WaitScreen);
-				}
+				ScreenManager.Instance.SetActiveScreen(ScreenManager.ScreenEnum.WaitScreen);
 			}
 		}
 
@@ -169,12 +166,12 @@ namespace SkyShoot.Game.Screens
 		private void RefreshButtonPressed(object sender, EventArgs args)
 		{
 			_gameList.Items.Clear();
-			_tempGameList = ConnectionManager.Instance.GetGameList();
+			_gameDescriptions = ConnectionManager.Instance.GetGameList();
 
-			if (_tempGameList == null)
+			if (_gameDescriptions == null)
 				return;
 
-			foreach (GameDescription gameDescription in _tempGameList)
+			foreach (GameDescription gameDescription in _gameDescriptions)
 			{
 				_gameList.Items.Add(gameDescription.ToString());
 			}

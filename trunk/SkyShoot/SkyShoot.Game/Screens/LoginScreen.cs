@@ -35,11 +35,6 @@ namespace SkyShoot.Game.Screens
 			_texture = ContentManager.Load<Texture2D>("Textures/screens/screen_05_fix");
 		}
 
-		public override void UnloadContent()
-		{
-			ContentManager.Unload();
-		}
-
 		public override void Draw(GameTime gameTime)
 		{
 			SpriteBatch.Begin();

@@ -69,10 +69,6 @@ namespace SkyShoot.Game.Screens
 			}
 		}
 
-		public override void UnloadContent()
-		{
-		}
-
 		public override void Draw(GameTime gameTime)
 		{
 			SpriteBatch.Begin();
