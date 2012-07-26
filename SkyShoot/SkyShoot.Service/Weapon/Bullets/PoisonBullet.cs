@@ -41,7 +41,7 @@ namespace SkyShoot.Service.Weapon.Bullets
 									ObjectType = EnumObjectType.Poisoning,
 								}; //Время жизни--через здоровье
 				newObjects.Add(poison);
-			}
+			}//Отравление реализовано через создание моба. Он отправляется за край карты, и оттуда крадёт здоровье у своей жертвы.
 			
 			return res;
 		}
