@@ -200,7 +200,10 @@ namespace SkyShoot.Service.Session
 				}
 
 				// flush of events cash
-				PushEvents(eventsCash);
+				foreach (var ev in eventsCash)
+				{
+					PushEvent(ev);
+				}
 
 				base._gameObjects.RemoveAll(m => !m.IsActive);
 				lock (_newObjects)

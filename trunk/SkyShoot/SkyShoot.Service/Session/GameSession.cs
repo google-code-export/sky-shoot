@@ -131,7 +131,7 @@ namespace SkyShoot.Service.Session
 			_gameTimer.Start();
 
 			// todo номер игры
-			Trace.Listeners.Add(new Logger(Logger.SolutionPath + "\\logs\\server_game_" + LocalGameDescription.GameId + ".txt", _timeHelper) {Name = "game logger"});
+			//Trace.Listeners.Add(new Logger(Logger.SolutionPath + "\\logs\\server_game_" + LocalGameDescription.GameId + ".txt", _timeHelper) {Name = "game logger"});
 
 			Trace.WriteLine("Game Started");
 			
@@ -197,20 +197,6 @@ namespace SkyShoot.Service.Session
 				lock (playerConverted.NewEvents)
 				{
 					playerConverted.NewEvents.Enqueue(gameEvent);
-				}
-			}
-		}
-
-		protected void PushEvents(IList<AGameEvent> events)
-		{
-			foreach (var playerConverted in _gameObjects.Where(player => player.Is(AGameObject.EnumObjectType.Player)).OfType<MainSkyShootService>())
-			{
-				lock (playerConverted.NewEvents)
-				{
-					foreach (AGameEvent aGameEvent in events)
-					{
-						playerConverted.NewEvents.Enqueue(aGameEvent);	
-					}
 				}
 			}
 		}
@@ -317,7 +303,10 @@ namespace SkyShoot.Service.Session
 				}
 
 				// flush of events cash
-				PushEvents(eventsCash);
+				foreach (var ev in eventsCash)
+				{
+					PushEvent(ev);
+				}
 
 				_gameObjects.RemoveAll(m => !m.IsActive);
 				lock (_newObjects)

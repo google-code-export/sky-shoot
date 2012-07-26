@@ -43,27 +43,6 @@ namespace SkyShoot.Game.Screens
 		{
 			_texture = ContentManager.Load<Texture2D>("Textures/screens/screen_02_fix");
 			_spriteFont = ContentManager.Load<SpriteFont>("Times New Roman");
-
-			// вывод списка игроков
-			GameDescription[] gameDescriptions = ConnectionManager.Instance.GetGameList();
-
-			if (gameDescriptions == null)
-				return;
-
-			GameDescription gameDescription = gameDescriptions.FirstOrDefault(description => GameId == description.GameId);
-
-			// todo переписать
-			if (gameDescription != null) 
-				_players = gameDescription.Players;
-
-			// todo ?
-			if (_players == null)
-				return;
-
-			foreach (string player in _players)
-			{
-				_playersList.Items.Add(player);
-			}
 		}
 
 		public void ChangePlayerList(string[] names)
@@ -91,6 +70,31 @@ namespace SkyShoot.Game.Screens
 			DrawString(MaxPlayers, 400f, 320f, Color.Red);
 
 			SpriteBatch.End();
+		}
+
+		public override void OnShow()
+		{
+			base.OnShow();
+			// вывод списка игроков
+			GameDescription[] gameDescriptions = ConnectionManager.Instance.GetGameList();
+
+			if (gameDescriptions == null)
+				return;
+
+			GameDescription gameDescription = gameDescriptions.FirstOrDefault(description => GameId == description.GameId);
+
+			// todo переписать
+			if (gameDescription != null)
+				_players = gameDescription.Players;
+
+			// todo ?
+			if (_players == null)
+				return;
+
+			foreach (string player in _players)
+			{
+				_playersList.Items.Add(player);
+			}
 		}
 
 		public override void Update(GameTime gameTime)

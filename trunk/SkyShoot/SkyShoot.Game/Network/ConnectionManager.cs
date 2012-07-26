@@ -46,7 +46,7 @@ namespace SkyShoot.Game.Network
 		/// <summary>
 		/// Разница времени между клиентом и сервером
 		/// </summary>
-		public static long DifferenceTime { get; private set; }
+		// public static long DifferenceTime { get; private set; }
 
 		#region local thread
 
@@ -189,12 +189,10 @@ namespace SkyShoot.Game.Network
 				{
 					_lastServerSynchroFrame = _service.SynchroFrame();
 
-					if (_lastServerSynchroFrame != null)
-					{
-						// todo!!! Придумать!!!
-						DifferenceTime = _lastServerSynchroFrame.Time - (TimeHelper.NowMilliseconds - GameController.StartTime);
-						Trace.Write("Diff time = " + DifferenceTime);
-					}
+//					if (_lastServerSynchroFrame != null)
+//					{
+//						Trace.Write("Diff time = " + DifferenceTime);
+//					}
 				}
 			}
 			catch (Exception exc)
@@ -452,8 +450,11 @@ namespace SkyShoot.Game.Network
 				var level = _service.GameStart(gameId);
 				if (level != null)
 				{
+					long serverTime = GetServerGameTime();
 					// todo change
-					GameController.StartTime = TimeHelper.NowMilliseconds;
+					GameController.StartTime = TimeHelper.NowMilliseconds - serverTime;
+
+					// DifferenceTime = serverTime;
 
 					Trace.WriteLine("Game started on server");
 
@@ -469,6 +470,11 @@ namespace SkyShoot.Game.Network
 				FatalError(e);
 				throw;
 			}
+		}
+
+		public long GetServerGameTime()
+		{
+			return _service.GetServerGameTime();
 		}
 
 		public string[] PlayerListUpdate()
