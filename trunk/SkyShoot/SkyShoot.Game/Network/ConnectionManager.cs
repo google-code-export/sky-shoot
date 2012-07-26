@@ -180,6 +180,7 @@ namespace SkyShoot.Game.Network
 
 			_eventTimer.Dispose();
 			_synchroFrameTimer.Dispose();
+			_pingTimer.Dispose();
 		}
 
 		#endregion
