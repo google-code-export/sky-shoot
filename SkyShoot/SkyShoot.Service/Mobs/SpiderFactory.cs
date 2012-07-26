@@ -82,7 +82,7 @@ namespace SkyShoot.ServProgram.Mobs
 			
 			_health = 10 + 10 * (float)Math.Log(_nToHealth,2);
 			_nToHealth++;
-			System.Console.WriteLine((int)_health);
+			//System.Console.WriteLine((int)_health);
 			spider.Coordinates = GetRandomCoord();
 			//spider.Weapon = new Claw(Guid.NewGuid(), spider);
 			return spider;
