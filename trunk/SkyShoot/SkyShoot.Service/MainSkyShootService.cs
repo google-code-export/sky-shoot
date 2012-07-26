@@ -33,9 +33,7 @@ namespace SkyShoot.Service
 
 		private float _speed;
 
-		private readonly InstanceContext channelContext;
-
-		private readonly Queue<AGameEvent> _filteredEvents = new Queue<AGameEvent>();
+		private readonly InstanceContext _channelContext;
 
 		private readonly IAccountManager _accountManager = SimpleAccountManager.Instance;
 		private readonly SessionManager _sessionManager = SessionManager.Instance;
@@ -74,9 +72,9 @@ namespace SkyShoot.Service
 		public MainSkyShootService()
 			: base(new Vector2(0, 0), Guid.NewGuid())
 		{
-			channelContext = OperationContext.Current.InstanceContext;
-			channelContext.Faulted += OnChannelStopped;
-			channelContext.Closed += OnChannelStopped;
+			_channelContext = OperationContext.Current.InstanceContext;
+			_channelContext.Faulted += OnChannelStopped;
+			_channelContext.Closed += OnChannelStopped;
 			ObjectType = EnumObjectType.Player;
 			NewEvents = new Queue<AGameEvent>();
 			_localID = _globalID;
@@ -88,8 +86,8 @@ namespace SkyShoot.Service
 
 		void OnChannelStopped(object sender, EventArgs e)
 		{
-			channelContext.Faulted -= OnChannelStopped;
-			channelContext.Closed -= OnChannelStopped;
+			_channelContext.Faulted -= OnChannelStopped;
+			_channelContext.Closed -= OnChannelStopped;
 			LeaveGame();
 			Logout();
 			// all the trolology of closing the session on a high level
@@ -303,9 +301,6 @@ namespace SkyShoot.Service
 
 		public AGameEvent[] GetEvents()
 		{
-			// TODO uncomment just for test
-			// Thread.Sleep(5000);
-
 			AGameEvent[] events;
 			try
 			{
@@ -318,21 +313,7 @@ namespace SkyShoot.Service
 
 				#region Фильтрация эвентов
 
-				_filteredEvents.Clear();
-				for (int i = 0; i < events.Count(); i++)
-				{
-					bool mismatch = true;
-					for (int j = i + 1; j < events.Count(); j++)
-					{
-						if ((events[i].GameObjectId == events[j].GameObjectId) & (events[i].Type == events[j].Type))
-						{
-							mismatch = false;
-							break;
-						}
-					}
-					if (mismatch) _filteredEvents.Enqueue(events[i]);
-				}
-				events = _filteredEvents.ToArray();
+				events = events.OrderByDescending(x => x.TimeStamp).GroupBy(x => new {x.GameObjectId, x.Type}).Select(x => x.First()).Reverse().ToArray();
 				//System.Console.WriteLine(_filteredEvents.Count);
 
 				#endregion

@@ -18,72 +18,33 @@ namespace SkyShoot.Game.Game
 	{
 		public Camera2D Camera2D { get; private set; }
 
-		// explosions -> exploded time
-		// private readonly Dictionary<DrawableGameObject, long> _explosions;
-
 		private int _updateCouter;
 
-		private GameSnapshot _gameSnapshot;
+		private readonly GameSnapshot _gameSnapshot;
 
 		private readonly TimeHelper _timeHelper;
 
-		/// <summary>
-		/// Все GameEvent'ы с момента последнего синхрокадра,
-		/// нужно хранить их! 
-		/// </summary>
-		private readonly List<AGameEvent> _serverGameEvents = new List<AGameEvent>();
-
 		private readonly GameLevel _gameLevel;
 
-		private DrawableGameObject[] _drawableGameObjects;
+		private IEnumerable<DrawableGameObject> _drawableGameObjects;
 
 		public GameModel(GameLevel gameLevel, TimeHelper timeHelper)
 		{
 			_gameLevel = gameLevel;
 			_timeHelper = timeHelper;
 
+			_gameSnapshot = new GameSnapshot(gameLevel);
+
 			Camera2D = new Camera2D(gameLevel.Width, gameLevel.Height);
-
-			// _explosions = new Dictionary<DrawableGameObject, long>();
 		}
-
-		// todo придумать что-нибудь
-		//		public void UpdateExplosions()
-		//		{
-		//			var keys = new DrawableGameObject[_explosions.Count];
-		//			_explosions.Keys.CopyTo(keys, 0);
-		//
-		//			foreach (DrawableGameObject explosion in keys)
-		//			{
-		//				if (DateTime.Now.Ticks / 10000 - _explosions[explosion] > Constants.EXPLOSION_LIFE_DISTANCE)
-		//				{
-		//					_explosions.Remove(explosion);
-		//					RemoveGameObject(explosion.Id);
-		//				}
-		//			}
-		//		}
 
 		private void ApplyEvents(IEnumerable<AGameEvent> gameEvents)
 		{
 			_gameSnapshot.ApplyEvents(gameEvents.Where(x => x.TimeStamp >= _gameSnapshot.Time));
 		}
 
-		/// <summary>
-		/// Обновление позиций игровых объектов
-		/// </summary>
-		private void ApplySynchroFrame(SynchroFrame synchroFrame)
-		{
-			_gameSnapshot = new GameSnapshot(synchroFrame, _gameLevel);
-
-			_gameSnapshot.ApplyEvents(_serverGameEvents.Where(x => x.TimeStamp >= _gameSnapshot.Time));
-		}
-
 		public void Update(GameTime gameTime)
 		{
-			// todo
-			// update explosions
-			// UpdateExplosions();
-
 			#region применение синхрокадра
 
 			if (_updateCouter % 30 == 0)
@@ -96,10 +57,7 @@ namespace SkyShoot.Game.Game
 					return;
 				}
 				Trace.WriteLine(serverSynchroFrame);
-				ApplySynchroFrame(serverSynchroFrame);
-
-				// очистка списка GameEvent'ов c последнего синхрокадра
-				_serverGameEvents.Clear();
+				_gameSnapshot.ApplySynchroFrame(serverSynchroFrame);
 			}
 
 			#endregion
@@ -109,7 +67,6 @@ namespace SkyShoot.Game.Game
 			if (_updateCouter % 5 == 0)
 			{
 				AGameEvent[] serverGameEvents = ConnectionManager.Instance.GetEvents();
-				_serverGameEvents.AddRange(serverGameEvents);
 
 				Logger.PrintEvents(serverGameEvents);
 				ApplyEvents(serverGameEvents);
