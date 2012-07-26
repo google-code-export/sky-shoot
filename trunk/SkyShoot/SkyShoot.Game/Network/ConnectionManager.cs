@@ -33,6 +33,7 @@ namespace SkyShoot.Game.Network
 		{
 			_eventTimer = new Timer(EVENT_TIMER_DELAY_TIME);
 			_synchroFrameTimer = new Timer(SYNCHRO_FRAME_DELAY_TIME);
+			_pingTimer = new Timer(1000);
 		}
 
 		#endregion
@@ -73,6 +74,7 @@ namespace SkyShoot.Game.Network
 
 		private readonly Timer _eventTimer;
 		private readonly Timer _synchroFrameTimer;
+		private readonly Timer _pingTimer;
 
 		private const int EVENT_TIMER_DELAY_TIME = 25;
 		private const int SYNCHRO_FRAME_DELAY_TIME = 500;
@@ -85,6 +87,9 @@ namespace SkyShoot.Game.Network
 			{
 				var channelFactory = new ChannelFactory<ISkyShootService>("SkyShootEndpoint");
 				_service = channelFactory.CreateChannel();
+
+				_pingTimer.Elapsed += (sender, args) => _service.GetServerGameTime();
+				_pingTimer.Start();
 			}
 			catch (Exception e)
 			{
@@ -453,6 +458,8 @@ namespace SkyShoot.Game.Network
 					long serverTime = GetServerGameTime();
 					// todo change
 					GameController.StartTime = TimeHelper.NowMilliseconds - serverTime;
+
+					_pingTimer.Stop();
 
 					// DifferenceTime = serverTime;
 

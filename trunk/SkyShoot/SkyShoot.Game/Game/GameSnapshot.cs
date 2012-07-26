@@ -58,7 +58,7 @@ namespace SkyShoot.Game.Game
 
 				// моделируем мир ко времени GameEvent'а
 				long elapsedTime = gameEvent.TimeStamp - Time;
-				Debug.Assert(elapsedTime >= 0);
+				// Debug.Assert(elapsedTime >= 0);
 
 				ComputeMovement(elapsedTime);
 				Time = gameEvent.TimeStamp;
