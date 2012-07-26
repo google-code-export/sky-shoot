@@ -16,6 +16,7 @@ namespace SkyShoot.Game.Game
 				case AGameObject.EnumObjectType.TurretGunBullet:
 					return new DrawableGameObject(serverGameObject, Textures.TurretProjectile);
 				case AGameObject.EnumObjectType.Mob:
+				case AGameObject.EnumObjectType.ShootingSpider:
 					return new DrawableGameObject(serverGameObject, Textures.SpiderAnimation);
 				case AGameObject.EnumObjectType.Flame:
 					return new DrawableGameObject(serverGameObject, Textures.FlameProjectile);
