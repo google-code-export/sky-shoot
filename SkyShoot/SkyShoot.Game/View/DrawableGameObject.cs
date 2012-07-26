@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SkyShoot.Contracts.GameObject;
 using SkyShoot.Contracts.Service;
-using SkyShoot.Game.Game;
 using SkyShoot.Game.Utils;
 
 namespace SkyShoot.Game.View
@@ -58,18 +57,6 @@ namespace SkyShoot.Game.View
 			StaticTexture = staticTexture;
 			Copy(other);
 			MakeOriginalRadius();
-		}
-
-		public DrawableGameObject()
-		{
-		}
-
-		public void Copy(DrawableGameObject other)
-		{
-			base.Copy(other);
-			Animation = other.Animation;
-			StaticTexture = other.StaticTexture;
-			_originalRadius = other._originalRadius;
 		}
 
 		void MakeOriginalRadius()
