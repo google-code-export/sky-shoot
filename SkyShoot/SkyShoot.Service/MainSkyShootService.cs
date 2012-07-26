@@ -265,8 +265,11 @@ namespace SkyShoot.Service
 		public long GetServerGameTime()
 		{
 			GameSession gameSession;
-			_sessionManager.SessionTable.TryGetValue(Id, out gameSession);
-			return gameSession.GetTime();
+			if (_sessionManager.SessionTable.TryGetValue(Id, out gameSession))
+			{
+				return gameSession.GetTime();
+			}
+			return TimeHelper.NowMilliseconds;
 		}
 
 		public String[] PlayerListUpdate()
