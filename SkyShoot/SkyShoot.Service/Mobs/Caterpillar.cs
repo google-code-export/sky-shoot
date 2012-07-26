@@ -14,6 +14,7 @@ namespace SkyShoot.Service.Mobs
 		{
 			_parent = parent;
 			Speed = Constants.CATERPILLAR_SPEED;
+			DefaultSpeed = Speed;
 			Radius = Constants.CATERPILLAR_RADIUS;
 			Damage = Constants.CATERPILLAR_DAMAGE;
 			_childBornTime = -1;

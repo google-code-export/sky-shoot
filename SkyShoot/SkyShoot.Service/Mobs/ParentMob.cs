@@ -19,6 +19,7 @@ namespace SkyShoot.ServProgram.Mobs
 		{
 			Radius = new Random().Next(Constants.PARENT_MOB_RADIUS_MIN, Constants.PARENT_MOB_RADIUS_MAX);
 			Speed = Constants.PARENT_MOB_SPEED;
+			DefaultSpeed = Speed;
 			Weapon = new MobGenerator(Guid.NewGuid(), this);
 			this.ObjectType = EnumObjectType.ParentMob;
 		}
