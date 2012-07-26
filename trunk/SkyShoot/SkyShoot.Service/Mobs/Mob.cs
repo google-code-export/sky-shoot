@@ -4,6 +4,7 @@ using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.GameObject;
 using SkyShoot.Service;
 using SkyShoot.XNA.Framework;
+using SkyShoot.Contracts.Service;
 
 namespace SkyShoot.ServProgram.Mobs
 {
@@ -13,6 +14,7 @@ namespace SkyShoot.ServProgram.Mobs
 		// todo //!! convert this to time from the update counnter
 		protected int ThinkCounter;
 		protected int Wait;
+		protected float DefaultSpeed;
 
 		public Mob(float healthAmount)
 			: base(Vector2.Zero, Guid.NewGuid())
@@ -62,6 +64,7 @@ namespace SkyShoot.ServProgram.Mobs
 			var res = new AGameEvent[] { };
 			if (Wait == 0)
 			{
+				Speed = DefaultSpeed;
 				if (ThinkCounter % 10 == 0)
 				{
 					if (!gameObjects.Contains(Target) || Target == null)
@@ -70,7 +73,9 @@ namespace SkyShoot.ServProgram.Mobs
 					}
 					if (Target == null)
 						return res;
-					RunVector = new Vector2(Target.Coordinates.X - Coordinates.X, Target.Coordinates.Y - Coordinates.Y);
+					Vector2 DirectionOnTarget = new Vector2(Target.Coordinates.X - Coordinates.X, Target.Coordinates.Y - Coordinates.Y);
+					if (DirectionOnTarget.LengthSquared() > Constants.EPSILON)
+						RunVector = DirectionOnTarget;
 				}
 				ThinkCounter++;
 			}
@@ -79,14 +84,14 @@ namespace SkyShoot.ServProgram.Mobs
 				Wait--;
 			}
 			ShootVector = RunVector;
-		
+
 			return res;
 		}
 
 
 		private void Stop()
 		{
-			RunVector = new Vector2(0, 0);
+			Speed = 0;
 			Wait = 30;
 		}
 

@@ -3,6 +3,7 @@ using System.Linq;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.GameObject;
 using SkyShoot.Contracts.Weapon;
+using SkyShoot.Contracts.Service;
 
 namespace SkyShoot.ServProgram.Mobs
 {
@@ -18,7 +19,9 @@ namespace SkyShoot.ServProgram.Mobs
 			Weapon.Owner = this;
 			ShootingDelay = shootingDelay;
 			Radius = 10;
-			Speed = 0.03f;
+			Speed = Constants.SPIDER_SPEED;
+			DefaultSpeed = Speed;
+			ObjectType = EnumObjectType.ShootingSpider;
 		}
 
 		public override IEnumerable<AGameEvent> Think(List<AGameObject> gameObjects, List<AGameObject> newGameObjects, long time)

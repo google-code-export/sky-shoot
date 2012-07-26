@@ -11,6 +11,7 @@ namespace SkyShoot.Service.Mobs
 		{
 			Radius = new Random().Next(Constants.SPIDER_RADIUS_MIN, Constants.SPIDER_RADIUS_MAX);
 			Speed = Constants.SPIDER_SPEED;
+			DefaultSpeed = Speed;
 		}
 	}
 }

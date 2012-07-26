@@ -12,6 +12,7 @@ namespace SkyShoot.ServProgram.Mobs
 			TeamIdentity = null;
 			Radius = new Random().Next(Constants.CHILDREN_MOB_RADIUS_MIN, Constants.CHILDREN_MOB_RADIUS_MAX);
 			Speed = Constants.SPIDER_SPEED;
+			DefaultSpeed = Speed;
 		}
 	}
 }

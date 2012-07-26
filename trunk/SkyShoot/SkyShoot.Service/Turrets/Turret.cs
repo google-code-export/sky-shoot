@@ -31,8 +31,8 @@ namespace SkyShoot.Service.Weapon.Bullets
 			ObjectType = EnumObjectType.Turret;
 			TeamIdentity = (owner.TeamIdentity);
 			Radius = Constants.TURRET_RADIUS;
-;
 			Speed = 0f;
+			DefaultSpeed = Speed;
 			ThinkCounter = 0;
 			Id = Guid.NewGuid();
 			MaxHealthAmount = HealthAmount = health;

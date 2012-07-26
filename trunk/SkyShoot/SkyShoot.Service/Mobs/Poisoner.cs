@@ -3,6 +3,7 @@ using System.Linq;
 using SkyShoot.Contracts.GameEvents;
 using SkyShoot.Contracts.GameObject;
 using SkyShoot.Contracts.Weapon;
+using SkyShoot.Contracts.Service;
 
 namespace SkyShoot.ServProgram.Mobs
 {
@@ -18,7 +19,8 @@ namespace SkyShoot.ServProgram.Mobs
 			Weapon.Owner = this;
 			_shootingDelay = shootingDelay;
 			Radius = 10;
-			Speed = 0.03f;
+			Speed = Constants.POISONER_MOB_SPEED;
+			DefaultSpeed = Speed;
 			this.ObjectType = EnumObjectType.Poisoner;
 		}
 
