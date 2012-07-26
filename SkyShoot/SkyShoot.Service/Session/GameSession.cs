@@ -336,7 +336,7 @@ namespace SkyShoot.Service.Session
 			if (_intervalToSpawn < 1)
 			{
 				// todo //!! rewrite!!
-				_intervalToSpawn = 3 * (long)Math.Exp(4.8f - _timerCounter / 4000f);
+				_intervalToSpawn = Math.Max(3 * (long)Math.Exp(4.8f - _timerCounter / 4000f), 80);
 
 				var mob = _spiderFactory.CreateMob();
 				// System.Diagnostics.Trace.WriteLine("mob spawned" + mob.Id);

@@ -20,6 +20,7 @@ namespace SkyShoot.ServProgram.Mobs
 
 	public class SpiderFactory : IMobFactory
 	{
+		private int _nToHealth = 1;
 		private readonly float _width;
 		private readonly float _height;
 		private readonly float _border;
@@ -78,7 +79,10 @@ namespace SkyShoot.ServProgram.Mobs
 			}
 
 			spider.TeamIdentity = null;//Мобам зануляем
-			_health *= 1.05f;
+			
+			_health = 10 + 10 * (float)Math.Log(_nToHealth,2);
+			_nToHealth++;
+			System.Console.WriteLine((int)_health);
 			spider.Coordinates = GetRandomCoord();
 			//spider.Weapon = new Claw(Guid.NewGuid(), spider);
 			return spider;
