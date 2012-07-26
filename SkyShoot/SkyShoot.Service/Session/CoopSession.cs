@@ -77,7 +77,7 @@ namespace SkyShoot.Service.Session
 			base._gameTimer.Start();
 
 			// todo номер игры
-			Trace.Listeners.Add(new Logger(Logger.SolutionPath + "\\logs\\server_game_" + LocalGameDescription.GameId + ".txt", _timeHelper) {Name = "game logger"});
+			//Trace.Listeners.Add(new Logger(Logger.SolutionPath + "\\logs\\server_game_" + LocalGameDescription.GameId + ".txt", _timeHelper) {Name = "game logger"});
 
 			Trace.WriteLine("Game Started");
 
@@ -196,7 +196,10 @@ namespace SkyShoot.Service.Session
 				}
 
 				// flush of events cash
-				PushEvents(eventsCash);
+				foreach (var ev in eventsCash)
+				{
+					PushEvent(ev);
+				}
 
 				base._gameObjects.RemoveAll(m => !m.IsActive);
 				lock (_newObjects)

@@ -89,8 +89,6 @@ namespace SkyShoot.Game.Game
 			Trace.WriteLine("Game initialized (model created, first synchroframe applied)");
 			Trace.Listeners.Remove(Logger.ClientLogger);
 
-			ScreenManager.Instance.Game.ResetElapsedTime();
-
 			// GameModel initialized, set boolean flag  
 			IsGameStarted = true;
 		}
@@ -141,8 +139,7 @@ namespace SkyShoot.Game.Game
 				player.RunVectorM = currentRunVector.Value;
 			}
 
-			#region переключение оружия
-
+			// переключение оружия на цифры и колесико мыши(todo)
 			if (controller is KeyboardAndMouse)
 			{
 				var keyboardAndMouse = controller as KeyboardAndMouse;
@@ -188,8 +185,6 @@ namespace SkyShoot.Game.Game
 				// todo remove this
 				if (keyboardAndMouse.IsNewKeyPressed(Keys.D7)) ConnectionManager.Instance.ChangeWeapon(WeaponType.MobGenerator);
 			}
-
-			#endregion
 
 			Vector2 mouseCoordinates = controller.SightPosition;
 

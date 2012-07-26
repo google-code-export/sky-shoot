@@ -42,6 +42,9 @@ namespace SkyShoot.Contracts.Service
 		[OperationContract]
 		GameLevel GameStart(int gameId);
 
+		[OperationContract]
+		long GetServerGameTime();
+
 		/// <summary>
 		/// возвращает список игроков
 		/// </summary>
