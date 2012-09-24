@@ -3,7 +3,7 @@
 
 == Первый запуск ==
  # Установите все компоненты, указанные в [SystemRequirements требованиях]
- # Скачайте [http://code.google.com/p/sky-shoot/downloads/detail?name=SkyShoot.Release.zip файл]
+ # Скачайте [http://code.google.com/p/sky-shoot/downloads/detail?name=SkyShoot.Release.Gamma.zip файл]
  # Распакуйте всё в одну директорию
  # Запустите *SkyShoot.ServProgram.exe* 
   * Это серверное приложение, запускайте его только на том компьютере, который будет сервером
@@ -17,4 +17,4 @@
  # По окончании игры Вы будете возвращены обратно к созданию игры
 
 == Запуск по сети ==
- Для подключения по сети измените в файле *SkyShoot.Game.exe.config* (или WinClient.exe.config, если Вы используете WinClient.exe) в секции *`<configuration><client><endpoint>`* значение атрибута `address="net.tcp://`*_localhost_*`:777/SkyShootService"`: вместо *_localhost_* укажите IP-адрес компьютера сервера
+ Для подключения по сети измените в файле *SkyShoot.Game.exe.config* (или WinClient.exe.config, если Вы используете WinClient.exe) в секции *`<configuration><client><endpoint>`* значение атрибута `address="net.tcp://`*_localhost_*`:555/SkyShootService"`: вместо *_localhost_* укажите IP-адрес компьютера сервера
